@@ -1,0 +1,166 @@
+/**
+ * Oledrion module
+ *
+ * You may not change or alter any portion of this comment or credits
+ * of supporting developers from this source code or any supporting source code
+ * which is considered copyrighted (c) material of the original comment or credit authors.
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ *
+ * @copyright    The XOOPS Project http://sourceforge.net/projects/xoops/
+ * @license      http://www.fsf.org/copyleft/gpl.html GNU public license
+ * @package      Oledrion
+ * @since        2.5.0
+ * @author       Hossein Azizabadi(AKA Voltan)
+ * @version      $Id $
+ **/
+html, body {
+    margin: 0;
+    padding: 0;
+    font-size: 9pt;
+    font-family: "Lucida Grande", Verdana, sans-serif;
+    background: #fff;
+    color: #000;
+    width: 750px;
+}
+
+#xo-print {
+    width: 730px;
+    border: 0 solid #222;
+    padding: 0;
+    margin: 0 auto;
+}
+
+#print-info {
+    margin: 10px 0 30px 0;
+}
+
+/*select {	display: none;}*/
+/*textarea { display: none;}*/
+/* display for print */
+h1, h2, h3, h4, h5, h6 {
+    text-decoration: none;
+}
+
+h1 {
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+h2 {
+    font-size: 1.1em;
+}
+
+h3, h4, h5, h6 {
+    font-size: 1em;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    page-break-after: avoid !important;
+}
+
+img {
+    border: 0;
+}
+
+abbr, acronym {
+    border: 0;
+}
+
+abbr[title]:after, acronym[title]:after {
+    content: " (" attr(title) ")";
+    font-style: italic;
+}
+
+blockquote, q {
+    font-style: italic;
+    quotes: "\00AB\00A0" "\00A0\00BB" "\0022" "\0022";
+}
+
+pre, code, table {
+    page-break-inside: avoid !important;
+}
+
+pre {
+    border: 1px dotted;
+    padding: 12pt;
+}
+
+#print-factor {
+    margin-bottom: 10px;
+}
+
+#print-factor table th {
+    font-size: 1.1em;
+    font-weight: bold;
+    padding-bottom: 1em;
+    /* background: #7A7979  !important; */
+    border: 1px solid #222;
+}
+
+#print-factor table td {
+    /* background: #ccc; */
+    border: 1px solid #222;
+    padding: 5px;
+}
+
+#print-check td {
+    padding: 8px 2px;
+}
+
+.attribute_options {
+
+}
+
+.attribute_options table {
+    /* background: #AAAAAA !important; */
+}
+
+.attribute_options table td {
+    /* border: 1px dotted #222;*/
+}
+
+.box {
+    width: 16px !important;
+    height: 16px !important;
+    border: 1px solid #222;
+    /* background: #ccc; */
+    padding: 1px 10px;
+    margin-left: 10px;
+}
+
+.moreinfo {
+    padding: 10px 2px;
+}
+
+/* formulaire */
+form, input, select {
+    font-size: .9em;
+}
+
+input[type=text] {
+    border-width: 0 0 1px 0 !important;
+    border-style: dotted;
+    border-color: #666;
+}
+
+input[type=checkbox] {
+    margin: 0;
+    border: none;
+}
+
+select {
+    font-size: .8em;
+    border-width: 0 0 1px 0 !important;
+    border-style: dotted;
+    border-color: #666;
+}
+
+textarea {
+    border: 1px dotted #666 !important;
+    height: auto;
+    overflow: hidden;
+    font-size: .9em;
+    font-style: italic;
+}
