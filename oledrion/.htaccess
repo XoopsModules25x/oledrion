@@ -1,0 +1,6 @@
+RewriteEngine On
+RewriteRule	^category-([0-9]+)(-).*(\.html)$	category.php?cat_cid=$1
+RewriteRule	^category-([0-9]+)(-)([0-9]+)(-).*(\.html)$	category.php?cat_cid=$1&start=$3
+RewriteRule	^product-([0-9]+)(-).*(\.html)$	product.php?product_id=$1
+RewriteRule	^manufacturer-([0-9]+)(-).*(\.html)$	manufacturer.php?manu_id=$1
+RewriteRule	^list-([0-9]+)(-).*(\.html)$	list.php?list_id=$1

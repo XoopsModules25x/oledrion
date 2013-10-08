@@ -1,0 +1,551 @@
+img, .box_blue-clip_01, .box_blue-clip_03, .box_blue-clip_06, .box_blue-clip_08, .oledrion_productthumb, .view-product-shad1_01, .view-product-shad1_02, .view-product-shad1_03, .view-product-shad2_01, .view-product-shad2_02, .view-product-shad2_03, {
+    behavior: url('include/iepngfix.htc')
+}
+
+.oledrion_productdescription {
+    width: auto;
+}
+
+.oledrion_lettrine {
+    color: #D26502;
+    border: 1px solid #D56A00;
+    background-color: #FFF;
+    padding: 3px;
+    text-align: center;
+    font-family: "Trebuchet MS",sans-serif;
+    font-size: 160%;
+    font-weight: bold;
+    width: 10px;
+}
+
+.oledrion_lettrine-L {
+    color: #D26502;
+}
+
+/* Start layout CSS */
+.tableWidget_headerCell, .tableWigdet_headerCellOver, .tableWigdet_headerCellDown {
+    /* General rules for both standard column header and mouse on header of sortable columns */
+    cursor: pointer;
+    border-bottom: 3px solid #C5C2B2;
+    border-right: 1px solid #ACA899;
+    border-left: 1px solid #FFF;
+    background-color: #ECE9D8;
+}
+
+.tableWidget_headerCell {
+    /* Standard column header */
+    border-top: 2px solid #ECE9D8;
+}
+
+.tableWigdet_headerCellOver {
+    /* Rollover on sortable column header */
+    border-top: 2px solid #FFC83C;
+}
+
+.tableWidget tbody .tableWidget_dataRollOver {
+    /* Rollover style on mouse over (Data) */
+    background-color: #FFF; /* No mouseover color in this example - specify another color if you want this */
+}
+
+.tableWigdet_headerCellDown {
+    border-top: 2px solid #FFC83C;
+    background-color: #DBD8C5;
+    border-left: 1px solid #ACA899;
+    border-right: 1px solid #FFF;
+}
+
+.tableWidget td {
+    margin: 0;
+    padding: 2px;
+    border-bottom: 1px solid #EAE9E1; /* Border bottom of table data cells */
+}
+
+.tableWidget tbody {
+    background-color: #FFF;
+}
+
+.tableWidget {
+    font-family: arial,sans-serif;
+    font-size: 12px;
+    width: 400px;
+}
+
+/* End layout CSS */
+
+div.widget_tableDiv {
+    border: 1px solid #ACA899; /* Border around entire widget */
+    height: 200px;
+    overflow: auto;
+    overflow-y: auto;
+    overflow: -moz-scrollbars-vertical;
+    width: 400px;
+}
+
+html>body div.widget_tableDiv {
+    overflow: hidden;
+    width: 400px;
+}
+
+.tableWidget thead {
+    position: relative;
+}
+
+.tableWidget thead tr {
+    position: relative;
+    top: 0;
+    bottom: 0;
+}
+
+.tableWidget .scrollingContent {
+    overflow-y: auto;
+    overflow: -moz-scrollbars-vertical;
+    width: 100%;
+
+}
+
+/* New styles */
+
+.box_blue-clip_01 {
+    background: url('../images/welcome/welcome_01.png') no-repeat left top;
+    height: 52px;
+    width: 44px;
+}
+
+.box_blue-clip_02 {
+    background: url('../images/welcome/welcome_02.gif') repeat-x left top;
+    height: 19px;
+}
+
+.box_blue-clip_03 {
+    background: url('../images/welcome/welcome_03.png') no-repeat right top;
+    height: 52px;
+    width: 33px;
+}
+
+.box_blue-clip_04 {
+    background: url('../images/welcome/welcome_04.gif') repeat-y left top;
+    width: 44px;
+}
+
+.box_blue-clip_05 {
+    background: url('../images/welcome/welcome_05.gif') repeat-y right top;
+    width: 33px;
+}
+
+.box_blue-clip_06 {
+    background: url('../images/welcome/welcome_06.png') no-repeat left bottom;
+    height: 24px;
+    width: 44px;
+}
+
+.box_blue-clip_07 {
+    background: url('../images/welcome/welcome_07.gif') repeat-x left bottom;
+    height: 17px;
+}
+
+.box_blue-clip_08 {
+    background: url('../images/welcome/welcome_08.png') no-repeat right bottom;
+    height: 24px;
+    width: 33px;
+}
+
+.welcome-message, .category-list, .oledrion_catdescription {
+    background-color: #fafafb;
+}
+
+.oledrion_productthumb {
+    text-align: center;
+    height: 122px;
+    width: 106px;
+    padding-top: 16px;
+    background-repeat: no-repeat;
+}
+
+.oledrion_productthumb-big {
+    width: 25%;
+}
+
+#oledrion-logo {
+    text-align: center;
+}
+
+#oledrion_publicite {
+    border: 1px solid #E9E9E9;
+    background-color: #F7F7F7;
+    margin: 10px;
+    padding: 5px;
+}
+
+#oledrion_caddy {
+    margin: 10px;
+    width: 98%;
+}
+
+.oledrion_productssummary {
+    padding: 0 10px 10px 10px;
+}
+
+.oledrion_productssummary_view-product h3, .oledrion_description_view-product h3, .oledrion_otherinf h3 {
+    color: #000000;
+    margin-top: 0;
+}
+
+.oledrion_producttitle {
+    font-size: 120%;
+    padding: 10px 78px 5px 10px;
+}
+
+.oledrion_producttitle  a {
+    text-decoration: underline;
+}
+
+.oledrion_producttitle  a:hover {
+    text-decoration: none;
+}
+
+.oledrion_producttitle_view-product h2 {
+    color: #000000;
+}
+
+.oledrion_productauthor {
+    padding: 0 10px 10px 10px;
+    font-weight: bold;
+    font-size: 90%;
+}
+
+.oledrion_productauthor_view-product, .oledrion_producttranslators_view-product {
+    font-weight: bold;
+    font-size: 90%;
+    padding-top: 10px;
+}
+
+.oledrion_productauthor_view-product a, .oledrion_producttranslators_view-product a {
+    text-decoration: underline;
+}
+
+.oledrion_productauthor_view-product a:hover, .oledrion_producttranslators_view-product a:hover {
+    text-decoration: none;
+}
+
+.oledrion_productprice {
+    padding: 0 10px 10px 10px;
+}
+
+.oledrion_productprice a {
+    font-size: 120%;
+}
+
+/* page curl */
+.page-curl_01 {
+    background-color: #fcfcfc;
+    background-repeat: no-repeat;
+    background-position: right top;
+    background-image: url(../images/page-curl/page-curl_01-1.gif);
+    background-color: #fcfcfc;
+    border: 1px solid #E8E8E8;
+    padding: 0 14px 10px 10px;
+}
+
+#oledrion_publicite-category {
+    border: 1px solid #E9E9E9;
+    background-color: #F7F7F7;
+    margin: 10px;
+    padding: 5px;
+}
+
+.oledrion_catdescription h2 {
+    text-align: center;
+}
+
+.oledrion_description {
+    padding: 0 15px 10px 10px;
+}
+
+.oledrion_read-more {
+    text-align: right;
+    padding: 0 15px 10px 10px;
+}
+
+.oledrion_catdescription h2, .featured-blocks-titles h2 {
+    margin-top: 0;
+}
+
+/* View product*/
+
+.view-product-shad1_01 {
+    background: url(../images/view-product/view-product-shad1_01.png) no-repeat right bottom;
+    height: 4px;
+    width: 4px;
+}
+
+.view-product-shad1_02 {
+    background: url(../images/view-product/view-product-shad1_02.png) no-repeat left bottom;
+    height: 4px;
+}
+
+.view-product-shad1_03 {
+    background: url(../images/view-product/view-product-shad1_03.png) no-repeat right top;
+    width: 4px;
+}
+
+.view-product-shad2_01 {
+    background: url(../images/view-product/view-product-shad2_01.png) no-repeat left top;
+    height: 4px;
+    width: 4px;
+}
+
+.view-product-shad2_02 {
+    background: url(../images/view-product/view-product-shad2_02.png) no-repeat right top;
+    height: 4px;
+}
+
+.view-product-shad2_03 {
+    width: 4px;
+    background: url(../images/view-product/view-product-shad2_03.png) no-repeat left bottom;
+}
+
+/* end view product */
+
+.oledrion_productdescription {
+    background-color: #FFFFFF;
+    padding: 0 10px 10px 10px;
+    color: #575757;
+}
+
+.oledrion_productdescription-contentTitles {
+    color: #000;
+    font-weight: bold;
+}
+
+.oledrion_productprice_view-product {
+    background-color: #FCF7DA;
+    border: 1px solid #F9EEB5;
+    padding: 5px;
+    margin: 10px 0 10px 0;
+}
+
+.oledrion_view-product_price {
+    padding: 0 0 4px 0;
+}
+
+.oledrion_view-product_shipping-price {
+    padding: 4px 0 0 0;
+}
+
+.oledrion_productdate {
+    padding-bottom: 2px;
+}
+
+.oledrion_productlangue {
+    padding-top: 2px;
+}
+
+.oledrion_otherinf {
+    background-color: #EEF2F7;
+    margin: 10px;
+    padding: 5px;
+    border: 1px solid #D1DBE7;
+}
+
+.oledrion_authorbio {
+    margin-top: 15px;
+}
+
+.oledrion_authorphotos img {
+    border: 1px solid #4F4F4F;
+}
+
+.oledrion_alphabet {
+    text-align: center;
+}
+
+.oledrion_alphabet a {
+    font-size: 120%;
+    text-decoration: none;
+}
+
+.oledrion_alphabet a:hover {
+    text-decoration: underline;
+}
+
+.oledrion_listauthors {
+    width: 50%;
+}
+
+.oledrion_listauthors a {
+    font-weight: normal;
+    text-decoration: none;
+}
+
+.oledrion_listauthors a:hover {
+    text-decoration: underline;
+}
+
+.oledrion_cat-map li {
+    height: 1.5em;
+}
+
+.oledrion_cat-map li a {
+    font-weight: normal;
+    text-decoration: none;
+    height: 1.5em;
+}
+
+.oledrion_cat-map li a:hover {
+    text-decoration: underline;
+}
+
+#oledrion_caddy td {
+    background: #fdfdfd url(../images/bg-degrad-soft-grey.gif) repeat-x left top;
+    border: 1px solid #ececec;
+    border-top-color: #F2F2F2;
+    border-right-color: #FFFFFF;
+    padding: 3px;
+    color: #000000;
+}
+
+#oledrion_caddy th {
+    /*
+    background-color: #dd8a07;
+background-image: url(../images/bg-degrad-soft-orange.gif);
+background-repeat: repeat-x;
+background-position: left bottom;
+    */
+    background-color: #232832;
+    color: #FFF;
+    text-align: center;
+    /*
+border-top-width: 1px;
+border-right-width: 1px;
+border-bottom-width: 1px;
+border-left-width: 1px;
+border-top-style: solid;
+border-right-style: solid;
+border-bottom-style: solid;
+border-left-style: solid;
+border-top-color: #b87c27;
+border-right-color: #E4BD74;
+border-bottom-color: #b87c27;
+border-left-color: #b87c27;
+    */
+}
+
+.oledrion_caddy-titles {
+    color: #FFF;
+}
+
+.oledrion_discount-description {
+    background-color: #FCF7DA;
+    border: 1px solid #F9EEB5;
+    padding: 5px;
+    margin: 10px 0 10px 0;
+    font-weight: normal;
+    color: #4B4B4B;
+    font-size: 11px;
+}
+
+.oledrion_discounts h3 {
+    color: #A40004;
+}
+
+.oledrion_alert {
+    text-align: center;
+    color: #FF0000;
+    font-weight: bold;
+    border: solid 1px #000000;
+    padding: 10px;
+}
+
+#frmUpdate input, #frmCheckout input, #frmGoOn input, #frmEmpty input {
+    font-size: 90%;
+    font-weight: normal;
+    text-transform: uppercase;
+    /*
+    color: #FFFFFF;
+background-color: #f6b958;
+border: 1px solid #B06C11;
+background-image: url(../images/bg-degrad-input-orange.gif);
+background-repeat: repeat-x;
+background-position: left top;
+    */
+    color: #000;
+    background-color: #ccc;
+    border: 1px solid #666;
+}
+
+#btnCheckout, #btnGoOn, #btnEmpty, #btnUpdate {
+    border: 0 !important;
+}
+
+.red-line {
+    background-color: #bd420e;
+    height: 2px;
+    margin-top: 1px;
+    padding: 0;
+    border-top: 1px solid #FFF;
+}
+
+.oledrion {
+}
+
+.oledrion_product {
+    margin: 2px;
+    padding: 2px;
+}
+
+.oledrion_productindex {
+}
+
+.endline {
+    clear: both;
+    width: 100%;
+}
+
+.tablefix {
+    border-spacing: 0 !important;
+}
+
+.oledrion_htmlform {
+	height: 130px;
+}
+
+.oledrion_htmlimage {
+	float: right;
+	width: 120px;
+	height: 120px;
+	padding: 1px;
+	margin: 1px;
+}
+
+.oledrion_step_body {
+
+}
+
+.oledrion_step_body_width {
+	width: 98%;
+	padding: 10px;
+	margin: 10px;
+}
+
+.oledrion_step_img, .oledrion_step_img img {
+	width: 16px;
+	height: 32px;
+	padding: 0;
+	margin: 0;
+}
+
+.oledrion_step_active {
+	padding: 6px;
+	font-weight: bold;
+		background-color: #ccc;
+}
+
+.oledrion_step {
+	padding: 6px;
+	font-weight: bold;
+		background-color: #eee;
+}
+
+.oledrion_step_text {
+
+}

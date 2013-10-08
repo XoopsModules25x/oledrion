@@ -1,0 +1,30 @@
+---------------------------------------
+2.34
+---------------------------------------
+Needed options :
+1- Make a calculation of Shipping costs based on the weight of the package.
+2- Add PDF 
+3- Final and printable Sales Invoice for user at finish of ordring (finish)
+4- User order / invoice history
+5- AJAX checkout levels 
+
+Bugs :
+1- Print page didnt work (finish)
+2- Attachment didnt work (finish)
+3- Fix RSS page in debug mode
+4- Check Shopping cart be empty after add product
+5- Check maintain page error (finish)
+6- Check Block , that work or not :
+       - Recommended products (OK)
+       - Best Sellers (OK)
+       - Shopping cart (OK)
+       - Categories (OK)
+       - Best Rated Products (OK)
+       - Recently Sold (OK)
+       - Products on Promotion (OK)
+       - Last lists (OK)
+       - Lists of the current category (OK)
+       - Random lists (OK)
+       - Most viewed lists (OK)
+7- Shipping price accumulate when buying multiple items. Example, if I buy two items, the addition contains 2 times the shipping price.
+8- Upload image in order steps on admin didnt work
