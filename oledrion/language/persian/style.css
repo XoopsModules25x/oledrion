@@ -1,0 +1,58 @@
+/*============= Start added for right to left images for Persian and Aarabic language =============*/
+.box_blue-clip_01 {
+    background-image: url('../../images/welcome/welcome_03.png') !important;
+}
+
+.box_blue-clip_02 {
+    background-image: url('../../images/welcome/welcome_02.gif') !important;
+}
+
+.box_blue-clip_03 {
+    background-image: url('../../images/welcome/welcome_01.png') !important;
+}
+
+.box_blue-clip_04 {
+    background-image: url('../../images/welcome/welcome_05.gif') !important;
+}
+
+.box_blue-clip_05 {
+    background-image: url('../../images/welcome/welcome_04.gif') !important;
+}
+
+.box_blue-clip_06 {
+    background-image: url('../../images/welcome/welcome_08.png') !important;
+}
+
+.box_blue-clip_07 {
+    background-image: url('../../images/welcome/welcome_07.gif') !important;
+}
+
+.box_blue-clip_08 {
+    background-image: url('../../images/welcome/welcome_06.png') !important;
+}
+
+.breadcrumb_01 {
+    background-image: url(../../images/breadcrumb_03.png) !important;
+}
+
+.breadcrumb_02 {
+    background-image: url(../../images/breadcrumb_02.gif) !important;
+}
+
+.breadcrumb_03 {
+    background-image: url(../../images/breadcrumb_01.png) !important;
+}
+
+.box_blue-clip_01 {
+    width: 33px !important;
+}
+
+.box_blue-clip_03 {
+    width: 44px !important;
+}
+
+.page-curl_01 {
+    padding: 10px 28px 10px 10px !important;
+}
+
+/*============= End added for right to left module for Persian and Aarabic language =============*/

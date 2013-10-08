@@ -1,0 +1,32 @@
+label {
+    font-weight: bold;
+}
+
+em {
+    font-weight: bold;
+    padding-right: 1em;
+    vertical-align: top;
+}
+
+.fieldLabel {
+    text-align: left;
+}
+
+label.error {
+    color: #ff0000;
+    font-style: italic;
+    font-weight: normal;
+}
+
+input.error[type=checkbox], input.error[type=radio] {
+    border: 2px solid #ff0000;
+}
+
+select.error {
+    border: 2px solid #ff0000;
+}
+
+div.error {
+    color: #ff0000;
+    font-weight: bold;
+}

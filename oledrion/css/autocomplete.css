@@ -1,0 +1,76 @@
+#searchField {
+    width: 300px;
+}
+
+#results {
+    border: 1px solid #BFBFBF;
+    border-bottom: 0;
+    font-size: 12px;
+    font-family: arial,sans-serif;
+    padding: 0;
+    display: none;
+}
+
+#results .selected {
+    background-color: #666;
+    color: #fff;
+}
+
+#results .unselected {
+    background-color: #fff;
+    color: #666;
+}
+
+#results .searchbox {
+    border-bottom: 1px solid #BFBFBF;
+    padding: 3px;
+}
+
+#results .searchboxleft {
+    float: left;
+    width: 55px;
+}
+
+#results .searchboxleft img {
+    height: 48px;
+    width: 48px;
+}
+
+#results .searchboxright {
+    float: right;
+    width: 230px;
+}
+
+.clear {
+    clear: both;
+    display: block;
+    overflow: hidden;
+    visibility: hidden;
+    width: 0;
+    height: 0;
+}
+
+/* http://www.yuiblog.com/blog/2010/09/27/clearfix-reloaded-overflowhidden-demystified */
+
+.clearfix:before,
+.clearfix:after {
+    content: '\0020';
+    display: block;
+    overflow: hidden;
+    visibility: hidden;
+    width: 0;
+    height: 0;
+}
+
+.clearfix:after {
+    clear: both;
+}
+
+/*
+	The following zoom:1 rule is specifically for IE6 + IE7.
+	Move to separate stylesheet if invalid CSS is a problem.
+*/
+
+.clearfix {
+    zoom: 1;
+}
