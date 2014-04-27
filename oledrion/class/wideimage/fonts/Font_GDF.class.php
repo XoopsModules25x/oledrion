@@ -1,5 +1,5 @@
 <?php
-	/**
+    /**
     This file is part of WideImage.
 
     WideImage is free software; you can redistribute it and/or modify
@@ -17,27 +17,26 @@
     Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
   **/
 
-	class wiFont_GDF
-	{
-		protected $font;
-		protected $color;
+    class wiFont_GDF
+    {
+        protected $font;
+        protected $color;
 
-		function __construct($face, $color)
-		{
-			if (is_int($face) && $face >= 1 && $face <= 5)
-				$this->font = $face;
-			else
-				$this->font = imageloadfont($face);
-			$this->color = $color;
-		}
+        function __construct($face, $color)
+        {
+            if (is_int($face) && $face >= 1 && $face <= 5)
+                $this->font = $face;
+            else
+                $this->font = imageloadfont($face);
+            $this->color = $color;
+        }
 
-		function getBoundingBox($text)
-		{
-		}
+        function getBoundingBox($text)
+        {
+        }
 
-		function writeText($image, $x, $y, $text, $angle = 0)
-		{
-			imagestring($image->getHandle(), $this->font, $x, $y, $text, $this->color);
-		}
-	}
-
+        function writeText($image, $x, $y, $text, $angle = 0)
+        {
+            imagestring($image->getHandle(), $this->font, $x, $y, $text, $this->color);
+        }
+    }

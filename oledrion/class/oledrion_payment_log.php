@@ -15,7 +15,7 @@
  * @copyright   The XOOPS Project http://sourceforge.net/projects/xoops/
  * @license     http://www.fsf.org/copyleft/gpl.html GNU public license
  * @author      Hossein Azizabadi (azizabadi@faragostaresh.com)
- * @version     $Id$
+ * @version     $Id: oledrion_payment_log.php 12290 2014-02-07 11:05:17Z beckmi $
  */
 
 require 'classheader.php';
@@ -37,7 +37,6 @@ class oledrion_payment_log extends Oledrion_Object
         $this->initVar('log_authority', XOBJ_DTYPE_TXTBOX, null, false);
     }
 }
-
 
 class OledrionOledrion_payment_logHandler extends Oledrion_XoopsPersistableObjectHandler
 {

@@ -15,18 +15,14 @@
  * @copyright   The XOOPS Project http://sourceforge.net/projects/xoops/
  * @license     http://www.fsf.org/copyleft/gpl.html GNU public license
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
- * @version     $Id$
+ * @version     $Id: oledrion_currency.php 12290 2014-02-07 11:05:17Z beckmi $
  */
 
 /**
  * Gestion de la monnaie
  */
 
-
-if (!defined('XOOPS_ROOT_PATH')) {
-    die("XOOPS root path not defined");
-}
-
+defined('XOOPS_ROOT_PATH') || die('XOOPS root path not defined');
 
 class oledrion_Currency
 {
@@ -53,7 +49,7 @@ class oledrion_Currency
     /**
      * Access the only instance of this class
      *
-     * @return    object
+     * @return object
      *
      * @static
      * @staticvar   object
@@ -65,13 +61,14 @@ class oledrion_Currency
         if (!isset($instance)) {
             $instance = new oledrion_Currency();
         }
+
         return $instance;
     }
 
     /**
      * Returns an amount according to the currency's preferences (defined in the module's options)
      *
-     * @param float $amount The amount to work on
+     * @param  float  $amount The amount to work on
      * @return string The amount formated according to the currency
      */
     public function amountInCurrency($amount = 0)
@@ -83,8 +80,8 @@ class oledrion_Currency
     /**
      * Format an amount for display according to module's preferences
      *
-     * @param float $originalAmount The amount to format
-     * @param string $format Format to use, 's' for Short and 'l' for Long
+     * @param  float  $originalAmount The amount to format
+     * @param  string $format         Format to use, 's' for Short and 'l' for Long
      * @return string The amount formated
      */
     public function amountForDisplay($originalAmount, $format = 's')
@@ -106,5 +103,3 @@ class oledrion_Currency
         }
     }
 }
-
-

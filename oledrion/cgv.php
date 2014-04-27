@@ -15,7 +15,7 @@
  * @copyright   The XOOPS Project http://sourceforge.net/projects/xoops/
  * @license     http://www.fsf.org/copyleft/gpl.html GNU public license
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
- * @version     $Id$
+ * @version     $Id: cgv.php 12290 2014-02-07 11:05:17Z beckmi $
  */
 
 /**
@@ -23,7 +23,7 @@
  */
 require 'header.php';
 $GLOBALS['current_category'] = -1;
-$xoopsOption['template_main'] = 'oledrion_cgv.html';
+$xoopsOption['template_main'] = 'oledrion_cgv.tpl';
 require_once XOOPS_ROOT_PATH . '/header.php';
 require_once OLEDRION_PATH . 'class/registryfile.php';
 
@@ -39,4 +39,3 @@ oledrion_utils::setCSS();
 oledrion_utils::setLocalCSS($xoopsConfig['language']);
 oledrion_utils::setMetas(_OLEDRION_CGV . ' ' . oledrion_utils::getModuleName(), _OLEDRION_CGV . ' ' . oledrion_utils::getModuleName());
 require_once(XOOPS_ROOT_PATH . '/footer.php');
-

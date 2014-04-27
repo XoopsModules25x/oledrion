@@ -76,6 +76,7 @@ class DirectoryChecker
                 ) . "<a href=" . $_SERVER['PHP_SELF'] . "?mode&amp;path=$path&amp;redirect=$redirectFile&amp;languageConstants=$myWords2> "
                 . $languageConstants[4] . '</a>';
         }
+
         return $path_status;
     }
 
@@ -104,6 +105,7 @@ class DirectoryChecker
                 }
 
         */
+
         return is_dir($target) or (self::createDirectory(dirname($target), $mode) and mkdir($target, $mode));
     }
 
@@ -116,7 +118,8 @@ class DirectoryChecker
     public static function setDirectoryPermissions($target, $mode = 0777)
     {
         $target = str_replace("..", "", $target);
-        return @chmod($target, (int)$mode);
+
+        return @chmod($target, (int) $mode);
     }
 }
 

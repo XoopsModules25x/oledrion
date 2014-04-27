@@ -11,6 +11,8 @@
 - Add final user invoice page and print page for user invoice (voltan)
 - Add import test data option (voltan)
 - Add local setting for some preferences (voltan)
+- Add support to send sms (voltan)
+- Add user panle (voltan)
 - Improve search (voltan)
 - Improve gateway ( checkout.php admin/gateways/gateway.php ) (voltan)
 - Improve admin order page (voltan)
@@ -20,6 +22,7 @@
 - Improve code style (voltan)
 - Improve product print page (voltan)
 - Improve other product list (voltan)
+- Improve admin order page (voltan)
 - Update SQL file and full support InnoDB (voltan)
 - Update copyright header  (voltan)
 - Update all files to utf-8 (voltan)
@@ -29,6 +32,8 @@
 - Fix bug on attach file (voltan)
 - Remove Cache Lite Support(voltan)
 - Remove class/lite.php class/PEAR.php class/PEAR5.php admin/main.php files (voltan)
+- moved all images, CSS, and JS files to /assets (mamba)
+- renamed .html Smarty templates to .tpl (mamba)
 
 TODO:
 - Rebuild admin files and add template

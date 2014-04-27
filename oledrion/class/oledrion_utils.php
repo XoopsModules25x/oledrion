@@ -15,7 +15,7 @@
  * @copyright   The XOOPS Project http://sourceforge.net/projects/xoops/
  * @license     http://www.fsf.org/copyleft/gpl.html GNU public license
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
- * @version     $Id$
+ * @version     $Id: oledrion_utils.php 12290 2014-02-07 11:05:17Z beckmi $
  */
 
 /**
@@ -28,9 +28,7 @@
  * Note: You should be able to use it without the need to instanciate it.
  *
  */
-if (!defined('XOOPS_ROOT_PATH')) {
-    die("XOOPS root path not defined");
-}
+defined('XOOPS_ROOT_PATH') || die('XOOPS root path not defined');
 
 class oledrion_utils
 {
@@ -40,7 +38,7 @@ class oledrion_utils
     /**
      * Access the only instance of this class
      *
-     * @return    object
+     * @return object
      *
      * @static
      * @staticvar   object
@@ -51,16 +49,16 @@ class oledrion_utils
         if (!isset($instance)) {
             $instance = new oledrion_utils();
         }
+
         return $instance;
     }
-
 
     /**
      * Returns a module's option (with cache)
      *
-     * @param string $option module option's name
-     * @param boolean $withCache    Do we have to use some cache ?
-     * @return mixed option's value
+     * @param  string  $option    module option's name
+     * @param  boolean $withCache Do we have to use some cache ?
+     * @return mixed   option's value
      */
     public static function getModuleOption($option, $withCache = true)
     {
@@ -88,6 +86,7 @@ class oledrion_utils
             }
         }
         $options[$option] = $retval;
+
         return $retval;
     }
 
@@ -104,6 +103,7 @@ class oledrion_utils
         if (intval(substr($xv, 2, 1)) >= 3) {
             $x23 = true;
         }
+
         return $x23;
     }
 
@@ -119,6 +119,7 @@ class oledrion_utils
         if (substr($xv, 2, 1) == '0') {
             $x20 = true;
         }
+
         return $x20;
     }
 
@@ -126,11 +127,11 @@ class oledrion_utils
     /**
      * Retreive an editor according to the module's option "form_options"
      *
-     * @param string $caption Caption to give to the editor
-     * @param string $name Editor's name
-     * @param string $value Editor's value
-     * @param string $width Editor's width
-     * @param string $height Editor's height
+     * @param  string $caption Caption to give to the editor
+     * @param  string $name    Editor's name
+     * @param  string $value   Editor's value
+     * @param  string $width   Editor's width
+     * @param  string $height  Editor's height
      * @return object The editor to use
      */
     public static function getWysiwygForm($caption, $name, $value = '', $width = '100%', $height = '400px', $supplemental = '')
@@ -148,6 +149,7 @@ class oledrion_utils
 
         if (self::isX23()) {
             $editor = new XoopsFormEditor($caption, $editor_option, $editor_configs);
+
             return $editor;
         }
 
@@ -190,16 +192,16 @@ class oledrion_utils
                 }
                 break;
         }
+
         return $editor;
     }
-
 
     /**
      * Create (in a link) a javascript confirmation's box
      *
-     * @param string $message    Message to display
-     * @param boolean $form    Is this a confirmation for a form ?
-     * @return string the javascript code to insert in the link (or in the form)
+     * @param  string  $message Message to display
+     * @param  boolean $form    Is this a confirmation for a form ?
+     * @return string  the javascript code to insert in the link (or in the form)
      */
     public static function javascriptLinkConfirm($message, $form = false)
     {
@@ -209,7 +211,6 @@ class oledrion_utils
             return "onSubmit=\"javascript:return confirm('" . str_replace("'", " ", $message) . "')\"";
         }
     }
-
 
     /**
      * Get current user IP
@@ -221,17 +222,17 @@ class oledrion_utils
         $proxy_ip = '';
         if (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
             $proxy_ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
-        } else if (!empty($_SERVER['HTTP_X_FORWARDED'])) {
+        } elseif (!empty($_SERVER['HTTP_X_FORWARDED'])) {
             $proxy_ip = $_SERVER['HTTP_X_FORWARDED'];
-        } else if (!empty($_SERVER['HTTP_FORWARDED_FOR'])) {
+        } elseif (!empty($_SERVER['HTTP_FORWARDED_FOR'])) {
             $proxy_ip = $_SERVER['HTTP_FORWARDED_FOR'];
-        } else if (!empty($_SERVER['HTTP_FORWARDED'])) {
+        } elseif (!empty($_SERVER['HTTP_FORWARDED'])) {
             $proxy_ip = $_SERVER['HTTP_FORWARDED'];
-        } else if (!empty($_SERVER['HTTP_VIA'])) {
+        } elseif (!empty($_SERVER['HTTP_VIA'])) {
             $proxy_ip = $_SERVER['HTTP_VIA'];
-        } else if (!empty($_SERVER['HTTP_X_COMING_FROM'])) {
+        } elseif (!empty($_SERVER['HTTP_X_COMING_FROM'])) {
             $proxy_ip = $_SERVER['HTTP_X_COMING_FROM'];
-        } else if (!empty($_SERVER['HTTP_COMING_FROM'])) {
+        } elseif (!empty($_SERVER['HTTP_COMING_FROM'])) {
             $proxy_ip = $_SERVER['HTTP_COMING_FROM'];
         }
         $regs = array();
@@ -241,6 +242,7 @@ class oledrion_utils
         } else {
             $the_IP = $_SERVER['REMOTE_ADDR'];
         }
+
         return $the_IP;
     }
 
@@ -248,9 +250,9 @@ class oledrion_utils
      * Set the page's title, meta description and meta keywords
      * Datas are supposed to be sanitized
      *
-     * @param string $pageTitle    Page's Title
-     * @param string $metaDescription    Page's meta description
-     * @param string $metaKeywords    Page's meta keywords
+     * @param  string $pageTitle       Page's Title
+     * @param  string $metaDescription Page's meta description
+     * @param  string $metaKeywords    Page's meta keywords
      * @return void
      */
     public static function setMetas($pageTitle = '', $metaDescription = '', $metaKeywords = '')
@@ -274,14 +276,13 @@ class oledrion_utils
         }
     }
 
-
     /**
      * Send an email from a template to a list of recipients
      *
-     * @param string $tpl_name    Template's name
-     * @param array $recipients    List of recipients
-     * @param string $subject    Email's subject
-     * @param array $variables    Varirables to give to the template
+     * @param  string  $tpl_name   Template's name
+     * @param  array   $recipients List of recipients
+     * @param  string  $subject    Email's subject
+     * @param  array   $variables  Varirables to give to the template
      * @return boolean Result of the send
      */
     public static function sendEmailFromTpl($tplName, $recipients, $subject, $variables)
@@ -343,9 +344,9 @@ class oledrion_utils
             fwrite($fp, "Transmited variables : " . implode(',', $variables) . "\n");
             fclose($fp);
         }
+
         return $res;
     }
-
 
     /**
      * Remove module's cache
@@ -381,7 +382,7 @@ class oledrion_utils
      * Redirect user with a message
      *
      * @param string $message message to display
-     * @param string $url The place where to go
+     * @param string $url     The place where to go
      * @param integer timeout Time to wait before to redirect
      */
     public static function redirect($message = '', $url = 'index.php', $time = 2)
@@ -389,7 +390,6 @@ class oledrion_utils
         redirect_header($url, $time, $message);
         exit();
     }
-
 
     /**
      * Internal function used to get the handler of the current module
@@ -408,6 +408,7 @@ class oledrion_utils
                 $mymodule = $hModule->getByDirname(OLEDRION_DIRNAME);
             }
         }
+
         return $mymodule;
     }
 
@@ -422,28 +423,28 @@ class oledrion_utils
             $mymodule = self::_getModule();
             $moduleName = $mymodule->getVar('name');
         }
+
         return $moduleName;
     }
-
 
     /**
      * Create a title for the href tags inside html links
      *
-     * @param string $title Text to use
+     * @param  string $title Text to use
      * @return string Formated text
      */
     public static function makeHrefTitle($title)
     {
         $s = "\"'";
         $r = '  ';
+
         return strtr($title, $s, $r);
     }
-
 
     /**
      * Retourne la liste des utilisateurs appartenants à un groupe
      *
-     * @param int $groupId    Searched group
+     * @param  int   $groupId Searched group
      * @return array Array of XoopsUsers
      */
     public function getUsersFromGroup($groupId)
@@ -451,14 +452,14 @@ class oledrion_utils
         $users = array();
         $member_handler = xoops_gethandler('member');
         $users = $member_handler->getUsersByGroup($groupId, true);
+
         return $users;
     }
-
 
     /**
      * Retourne la liste des emails des utilisateurs membres d'un groupe
      *
-     * @param int $group_id    Group's number
+     * @param  int   $group_id Group's number
      * @return array Emails list
      */
     public static function getEmailsFromGroup($groupId)
@@ -468,9 +469,9 @@ class oledrion_utils
         foreach ($users as $user) {
             $ret[] = $user->getVar('email');
         }
+
         return $ret;
     }
-
 
     /**
      * Vérifie que l'utilisateur courant fait partie du groupe des administrateurs
@@ -487,6 +488,7 @@ class oledrion_utils
                 return true;
             }
         }
+
         return false;
     }
 
@@ -509,7 +511,7 @@ class oledrion_utils
     /**
      * Convert a Mysql date to the human's format
      *
-     * @param string $date The date to convert
+     * @param  string $date The date to convert
      * @return string The date in a human form
      */
     public function SQLDateToHuman($date, $format = 'l')
@@ -524,8 +526,8 @@ class oledrion_utils
     /**
      * Convert a timestamp to a Mysql date
      *
-     * @param integer $timestamp The timestamp to use
-     * @return string The date in the Mysql format
+     * @param  integer $timestamp The timestamp to use
+     * @return string  The date in the Mysql format
      */
     public function timestampToMysqlDate($timestamp)
     {
@@ -542,8 +544,8 @@ class oledrion_utils
 
     /**
      * Convert a timestamp to a Mysql datetime form
-     * @param integer $timestamp The timestamp to use
-     * @return string The date and time in the Mysql format
+     * @param  integer $timestamp The timestamp to use
+     * @return string  The date and time in the Mysql format
      */
     public function timestampToMysqlDateTime($timestamp)
     {
@@ -570,14 +572,15 @@ class oledrion_utils
                 return false;
             }
         }
+
         return true;
     }
 
     /**
      * Mark the mandatory fields of a form with a star
      *
-     * @param object $sform The form to modify
-     * @param string $caracter The character to use to mark fields
+     * @param  object $sform    The form to modify
+     * @param  string $caracter The character to use to mark fields
      * @return object The modified form
      */
     public static function &formMarkRequiredFields(&$sform)
@@ -597,6 +600,7 @@ class oledrion_utils
                 }
             }
         }
+
         return $sform;
     }
 
@@ -604,9 +608,9 @@ class oledrion_utils
     /**
      * Create an html heading (from h1 to h6)
      *
-     * @param string $title The text to use
-     * @param integer $level Level to return
-     * @return string The heading
+     * @param  string  $title The text to use
+     * @param  integer $level Level to return
+     * @return string  The heading
      */
     public static function htitle($title = '', $level = 1)
     {
@@ -616,10 +620,10 @@ class oledrion_utils
     /**
      * Create a unique upload filename
      *
-     * @param string $folder The folder where the file will be saved
-     * @param string $fileName Original filename (coming from the user)
-     * @param boolean $trimName Do we need to create a "short" unique name ?
-     * @return string The unique filename to use (with its extension)
+     * @param  string  $folder   The folder where the file will be saved
+     * @param  string  $fileName Original filename (coming from the user)
+     * @param  boolean $trimName Do we need to create a "short" unique name ?
+     * @return string  The unique filename to use (with its extension)
      */
     public function createUploadName($folder, $fileName, $trimName = false)
     {
@@ -634,8 +638,8 @@ class oledrion_utils
         while ($true) {
             $ipbits = explode('.', $_SERVER['REMOTE_ADDR']);
             list($usec, $sec) = explode(' ', microtime());
-            $usec = (integer)($usec * 65536);
-            $sec = ((integer)$sec) & 0xFFFF;
+            $usec = (integer) ($usec * 65536);
+            $sec = ((integer) $sec) & 0xFFFF;
 
             if ($trimName) {
                 $uid = sprintf("%06x%04x%04x", ($ipbits[0] << 24) | ($ipbits[1] << 16) | ($ipbits[2] << 8) | $ipbits[3], $sec, $usec);
@@ -646,13 +650,14 @@ class oledrion_utils
                 $true = false;
             }
         }
+
         return $uid . $ext;
     }
 
     /**
      * Replace html entities with their ASCII equivalent
      *
-     * @param string $chaine The string undecode
+     * @param  string $chaine The string undecode
      * @return string The undecoded string
      */
     public function unhtml($chaine)
@@ -915,6 +920,7 @@ class oledrion_utils
         $replace[] = '';
         $search[] = '&Yuml;';
         $chaine = str_replace($search, $replace, $chaine);
+
         return $chaine;
     }
 
@@ -922,10 +928,10 @@ class oledrion_utils
     /**
      * Création d'une titre pour être utilisé par l'url rewriting
      *
-     * @param string $content Le texte à utiliser pour créer l'url
-     * @param integer $urw La limite basse pour créer les mots
-     * @return string Le texte à utiliser pour l'url
-     * Note, some parts are from Solo's code
+     * @param  string  $content Le texte à utiliser pour créer l'url
+     * @param  integer $urw     La limite basse pour créer les mots
+     * @return string  Le texte à utiliser pour l'url
+     *                         Note, some parts are from Solo's code
      */
     public static function makeSeoUrl($content, $urw = 1)
     {
@@ -964,6 +970,7 @@ class oledrion_utils
         if (substr($keywords, strlen($keywords) - 1, 1) == '-') {
             $keywords = substr($keywords, 0, strlen($keywords) - 1);
         }
+
         return $keywords;
     }
 
@@ -971,7 +978,7 @@ class oledrion_utils
     /**
      * Create the meta keywords based on the content
      *
-     * @param string $content Content from which we have to create metakeywords
+     * @param  string $content Content from which we have to create metakeywords
      * @return string The list of meta keywords
      */
     public static function createMetaKeywords($content)
@@ -1045,8 +1052,8 @@ class oledrion_utils
     /**
      * Fonction chargée de gérer l'upload
      *
-     * @param integer $indice L'indice du fichier à télécharger
-     * @return mixed True si l'upload s'est bien déroulé sinon le message d'erreur correspondant
+     * @param  integer $indice L'indice du fichier à télécharger
+     * @return mixed   True si l'upload s'est bien déroulé sinon le message d'erreur correspondant
      */
     public static function uploadFile($indice, $dstpath = XOOPS_UPLOAD_PATH, $mimeTypes = null, $uploadMaxSize = null, $maxWidth = null, $maxHeight = null)
     {
@@ -1093,12 +1100,12 @@ class oledrion_utils
     /**
      * Resize a Picture to some given dimensions (using the wideImage library)
      *
-     * @param string $src_path    Picture's source
-     * @param string $dst_path    Picture's destination
-     * @param integer $param_width Maximum picture's width
-     * @param integer $param_height    Maximum picture's height
-     * @param boolean $keep_original    Do we have to keep the original picture ?
-     * @param string $fit    Resize mode (see the wideImage library for more information)
+     * @param string  $src_path      Picture's source
+     * @param string  $dst_path      Picture's destination
+     * @param integer $param_width   Maximum picture's width
+     * @param integer $param_height  Maximum picture's height
+     * @param boolean $keep_original Do we have to keep the original picture ?
+     * @param string  $fit           Resize mode (see the wideImage library for more information)
      */
     public function resizePicture($src_path, $dst_path, $param_width, $param_height, $keep_original = false, $fit = 'inside')
     {
@@ -1127,6 +1134,7 @@ class oledrion_utils
         if (!$keep_original) {
             @unlink($src_path);
         }
+
         return true;
     }
 
@@ -1134,10 +1142,10 @@ class oledrion_utils
     /**
      * Déclenchement d'une alerte Xoops suite à un évènement
      *
-     * @param string $category    La catégorie de l'évènement
-     * @param integer $itemId    L'ID de l'élément (trop général pour être décris précisément)
+     * @param string       $category La catégorie de l'évènement
+     * @param integer      $itemId   L'ID de l'élément (trop général pour être décris précisément)
      * @param unknown_type $event    L'évènement qui est déclencé
-     * @param unknown_type $tags    Les variables à passer au template
+     * @param unknown_type $tags     Les variables à passer au template
      */
     public function notify($category, $itemId, $event, $tags)
     {
@@ -1150,7 +1158,7 @@ class oledrion_utils
      * Ajoute des jours à une date et retourne la nouvelle date au format Date de Mysql
      *
      * @param integer $durations    Durée en jours
-     * @param integer $startingDate    Date de départ (timestamp)
+     * @param integer $startingDate Date de départ (timestamp)
      */
     public function addDaysToDate($duration = 1, $startingDate = 0)
     {
@@ -1158,14 +1166,15 @@ class oledrion_utils
             $startingDate = time();
         }
         $endingDate = $startingDate + ($duration * 86400);
+
         return date('Y-m-d', $endingDate);
     }
 
     /**
      * Retourne un breadcrumb en fonction des paramètres passés et en partant (d'office) de la racine du module
      *
-     * @param array $path    Le chemin complet (excepté la racine) du breadcrumb sous la forme clé=url valeur=titre
-     * @param string $raquo    Le séparateur par défaut à utiliser
+     * @param  array  $path  Le chemin complet (excepté la racine) du breadcrumb sous la forme clé=url valeur=titre
+     * @param  string $raquo Le séparateur par défaut à utiliser
      * @return string le breadcrumb
      */
     public static function breadcrumb($path, $raquo = ' &raquo; ')
@@ -1186,6 +1195,7 @@ class oledrion_utils
             }
             $breadcrumb = implode($raquo, $workingBreadcrumb);
         }
+
         return $breadcrumb;
     }
 
@@ -1217,6 +1227,7 @@ class oledrion_utils
                 $string .= '</' . $complete_tags[$i] . '>';
             }
         }
+
         return $string;
     }
 
@@ -1231,6 +1242,7 @@ class oledrion_utils
                 $string = preg_replace('/<[^>]*$/', '', $string);
                 $string = self::close_tags($string);
             }
+
             return $string . $etc;
         } else {
             return $string;
@@ -1249,6 +1261,7 @@ class oledrion_utils
             $myts = MyTextSanitizer::getInstance();
             $ret = $myts->htmlSpecialChars(xoops_substr(strip_tags($text), 0, $infotips));
         }
+
         return $ret;
     }
 
@@ -1260,7 +1273,7 @@ class oledrion_utils
     {
         global $xoopsTpl, $xoTheme;
         if ($url == '') {
-            $url = OLEDRION_URL . 'css/oledrion.css';
+            $url = OLEDRION_URL . 'assets/css/oledrion.css';
         }
 
         if (!is_object($xoTheme)) {
@@ -1289,11 +1302,11 @@ class oledrion_utils
     /**
      * Calcul du TTC à partir du HT et de la TVA
      *
-     * @param float $ht        Montant HT
-     * @param float $vat    Taux de TVA
-     * @param boolean $edit    Si faux alors le montant est formaté pour affichage sinon il reste tel quel
-     * @param string $format    Format d'affichage du résultat (long ou court)
-     * @return mixed    Soit une chaine soit un flottant
+     * @param  float   $ht     Montant HT
+     * @param  float   $vat    Taux de TVA
+     * @param  boolean $edit   Si faux alors le montant est formaté pour affichage sinon il reste tel quel
+     * @param  string  $format Format d'affichage du résultat (long ou court)
+     * @return mixed   Soit une chaine soit un flottant
      */
     public static function getTTC($ht, $vat, $edit = false, $format = 's')
     {
@@ -1317,9 +1330,9 @@ class oledrion_utils
     /**
      * Retourne le montant TTC
      *
-     * @param floatval $product_price    Le montant du produit
-     * @param integer $vat_id            Le numéro de TVA
-     * @return floatval                    Le montant TTC si on a trouvé sa TVA sinon
+     * @param  floatval $product_price Le montant du produit
+     * @param  integer  $vat_id        Le numéro de TVA
+     * @return floatval Le montant TTC si on a trouvé sa TVA sinon
      */
     public static function getAmountWithVat($product_price, $vat_id)
     {
@@ -1360,13 +1373,14 @@ class oledrion_utils
             "Content-Type: application/x-www-form-urlencoded\r\n" .
             "Content-Length: $contentlength\r\n\r\n" .
             "$reqbody\r\n";
+
         return $reqheader;
     }
 
     /**
      * Retourne le type Mime d'un fichier en utilisant d'abord finfo puis mime_content
      *
-     * @param string $filename    Le fichier (avec son chemin d'accès complet) dont on veut connaître le type mime
+     * @param  string $filename Le fichier (avec son chemin d'accès complet) dont on veut connaître le type mime
      * @return string
      */
     public static function getMimeType($filename)
@@ -1375,7 +1389,8 @@ class oledrion_utils
             $finfo = finfo_open();
             $mimetype = finfo_file($finfo, $filename, FILEINFO_MIME_TYPE);
             finfo_close($finfo);
-			return $mimetype;
+
+            return $mimetype;
         } else {
             if (function_exists('mime_content_type')) {
                 return mime_content_type($filename);
@@ -1397,14 +1412,15 @@ class oledrion_utils
         $criteriaThisMonth = new CriteriaCompo();
         $criteriaThisMonth->add(new Criteria('product_submitted', $start, '>='));
         $criteriaThisMonth->add(new Criteria('product_submitted', $end, '<='));
+
         return $criteriaThisMonth;
     }
 
     /**
      * Retourne une liste d'objets XoopsUsers à partir d'une liste d'identifiants
      *
-     * @param array $xoopsUsersIDs    La liste des ID
-     * @return array    Les objets XoopsUsers
+     * @param  array $xoopsUsersIDs La liste des ID
+     * @return array Les objets XoopsUsers
      */
     public static function getUsersFromIds($xoopsUsersIDs)
     {
@@ -1419,25 +1435,25 @@ class oledrion_utils
                 $users = $member_handler->getObjects($criteria, true);
             }
         }
+
         return $users;
     }
 
-
     /**
      * Retourne l'ID de l'utilisateur courant (s'il est connecté)
-     * @return integer    L'uid ou 0
+     * @return integer L'uid ou 0
      */
     public static function getCurrentUserID()
     {
         global $xoopsUser;
         $uid = is_object($xoopsUser) ? $xoopsUser->getVar('uid') : 0;
+
         return $uid;
     }
 
-
     /**
      * Retourne la liste des groupes de l'utilisateur courant (avec cache)
-     * @return array    Les ID des groupes auquel l'utilisateur courant appartient
+     * @return array Les ID des groupes auquel l'utilisateur courant appartient
      */
     public function getMemberGroups($uid = 0)
     {
@@ -1456,13 +1472,14 @@ class oledrion_utils
                 $buffer[$uid] = array(XOOPS_GROUP_ANONYMOUS);
             }
         }
+
         return $buffer[$uid];
     }
 
     /**
      * Indique si l'utilisateur courant fait partie d'une groupe donné (avec gestion de cache)
      *
-     * @param integer $group Groupe recherché
+     * @param  integer $group Groupe recherché
      * @return boolean vrai si l'utilisateur fait partie du groupe, faux sinon
      */
     public static function isMemberOfGroup($group = 0, $uid = 0)
@@ -1480,13 +1497,14 @@ class oledrion_utils
             $retval = in_array($group, $groups);
             $buffer[$group] = $retval;
         }
+
         return $retval;
     }
 
     /**
      * Fonction chargée de vérifier qu'un répertoire existe, qu'on peut écrire dedans et création d'un fichier index.html
      *
-     * @param string $folder    Le chemin complet du répertoire à vérifier
+     * @param  string $folder Le chemin complet du répertoire à vérifier
      * @return void
      */
     public static function prepareFolder($folder)
@@ -1495,15 +1513,15 @@ class oledrion_utils
             mkdir($folder, 0777);
             file_put_contents($folder . '/index.html', '<script>history.go(-1);</script>');
         }
-		chmod($folder, 0777);
+        chmod($folder, 0777);
     }
 
     /**
      * Duplicate a file in local
      *
-     * @param string $path    The file's path
-     * @param string $filename    The filename
-     * @return mixed    If the copy succeed, the new filename else false
+     * @param  string $path     The file's path
+     * @param  string $filename The filename
+     * @return mixed  If the copy succeed, the new filename else false
      * @since 2.1
      */
     public function duplicateFile($path, $filename)
@@ -1519,8 +1537,8 @@ class oledrion_utils
     /**
      * Load a language file
      *
-     * @param string $languageFile        The required language file
-     * @param string $defaultExtension    Default extension to use
+     * @param string $languageFile     The required language file
+     * @param string $defaultExtension Default extension to use
      * @since 2.2.2009.02.13
      */
     public static function loadLanguageFile($languageFile, $defaultExtension = '.php')
@@ -1549,7 +1567,6 @@ class oledrion_utils
         return number_format($amount, 2, '.', '');
     }
 
-
     /**
      * Appelle un fichier Javascript à la manière de Xoops
      *
@@ -1558,7 +1575,7 @@ class oledrion_utils
      * on appelle un fichier de langue, la méthode ajoute l'url vers le répertoire de
      * langue, dans le cas contraire on ajoute l'url vers le répertoire JS du module.
      *
-     * @param string $javascriptFile
+     * @param  string $javascriptFile
      * @return void
      * @since 2.3.2009.03.14
      */
@@ -1585,8 +1602,8 @@ class oledrion_utils
     /**
      * Create the <option> of an html select
      *
-     * @param array $array    Array of index and labels
-     * @param mixed $default    the default value
+     * @param  array  $array   Array of index and labels
+     * @param  mixed  $default the default value
      * @return string
      * @since 2.3.2009.03.13
      */
@@ -1608,16 +1625,17 @@ class oledrion_utils
             }
             $ret[] = "<option value=\"" . $index . "\"" . $selected . ">" . $label . '</option>';
         }
+
         return implode("\n", $ret);
     }
 
     /**
      * Creates an html select
      *
-     * @param string $selectName    Selector's name
-     * @param array $array            Options
-     * @param mixed $default        Default's value
-     * @param boolean $withNull        Do we include a null option ?
+     * @param  string  $selectName Selector's name
+     * @param  array   $array      Options
+     * @param  mixed   $default    Default's value
+     * @param  boolean $withNull   Do we include a null option ?
      * @return string
      * @since 2.3.2009.03.13
      */
@@ -1627,6 +1645,7 @@ class oledrion_utils
         $ret .= "<select name='" . $selectName . "' id='" . $selectName . "'>\n";
         $ret .= self::htmlSelectOptions($array, $default, $withNull);
         $ret .= "</select>\n";
+
         return $ret;
     }
 
@@ -1634,8 +1653,8 @@ class oledrion_utils
      * Extrait l'id d'une chaine formatée sous la forme xxxx-99 (duquel on récupère 99)
      *
      * @note: utilisé par les attributs produits
-     * @param string $string    La chaine de travail
-     * @param string $separator    Le séparateur
+     * @param  string $string    La chaine de travail
+     * @param  string $separator Le séparateur
      * @return string
      */
     public function getId($string, $separator = '_')
@@ -1652,8 +1671,8 @@ class oledrion_utils
      * Fonction "inverse" de getId (depuis xxxx-99 on récupère xxxx)
      *
      * @note: utilisé par les attributs produits
-     * @param string $string    La chaine de travail
-     * @param string $separator    Le séparateur
+     * @param  string $string    La chaine de travail
+     * @param  string $separator Le séparateur
      * @return string
      */
     public function getName($string, $separator = '_')
@@ -1669,7 +1688,7 @@ class oledrion_utils
     /**
      * Renvoie un montant nul si le montant est négatif
      *
-     * @param float $amount
+     * @param  float $amount
      * @return float
      */
     public static function doNotAcceptNegativeAmounts(&$amount)
@@ -1682,8 +1701,8 @@ class oledrion_utils
     /**
      * Returns a string from the request
      *
-     * @param string $valueName    Name of the parameter you want to get
-     * @param mixed $defaultValue    Default value to return if the parameter is not set in the request
+     * @param  string $valueName    Name of the parameter you want to get
+     * @param  mixed  $defaultValue Default value to return if the parameter is not set in the request
      * @return mixed
      */
     public function getFromRequest($valueName, $defaultValue = '')
@@ -1702,6 +1721,7 @@ class oledrion_utils
     {
         global $xoopsDB;
         $result = $xoopsDB->queryF("SHOW TABLES LIKE '$tablename'");
+
         return ($xoopsDB->getRowsNum($result) > 0);
     }
 
@@ -1716,14 +1736,15 @@ class oledrion_utils
     {
         global $xoopsDB;
         $result = $xoopsDB->queryF("SHOW COLUMNS FROM $table LIKE '$fieldname'");
+
         return ($xoopsDB->getRowsNum($result) > 0);
     }
 
     /**
      * Retourne la définition d'un champ
      *
-     * @param string $fieldname
-     * @param string $table
+     * @param  string $fieldname
+     * @param  string $table
      * @return array
      */
     public function getFieldDefinition($fieldname, $table)
@@ -1733,6 +1754,7 @@ class oledrion_utils
         if ($result) {
             return $xoopsDB->fetchArray($result);
         }
+
         return '';
     }
 
@@ -1747,56 +1769,61 @@ class oledrion_utils
     {
         global $xoopsDB;
         $result = $xoopsDB->queryF("ALTER TABLE $table ADD $field;");
+
         return $result;
     }
 
     public function packingHtmlSelect($info)
     {
-    	     $ret = '';
-        	  $ret .= '<div class="oledrion_htmlform">';
-        	  $ret .= '<img class="oledrion_htmlimage" src="' . $info['packing_image_url'] . '" alt="' .$info['packing_title'] . '" />';
-        	  $ret .= '<h3>' .$info['packing_title'] . '</h3>';
-        	  if($info['packing_price'] > 0) {
-	        	  $ret .= '<p><span class="bold">' . _OLEDRION_PRICE . '</span> : ' . $info['packing_price_fordisplay'] . '</p>';
+             $ret = '';
+              $ret .= '<div class="oledrion_htmlform">';
+              $ret .= '<img class="oledrion_htmlimage" src="' . $info['packing_image_url'] . '" alt="' .$info['packing_title'] . '" />';
+              $ret .= '<h3>' .$info['packing_title'] . '</h3>';
+              if ($info['packing_price'] > 0) {
+                  $ret .= '<p><span class="bold">' . _OLEDRION_PRICE . '</span> : ' . $info['packing_price_fordisplay'] . '</p>';
            } else {
-	           $ret .= '<p><span class="bold">' . _OLEDRION_PRICE . '</span> : ' . _OLEDRION_FREE . '</p>';
+               $ret .= '<p><span class="bold">' . _OLEDRION_PRICE . '</span> : ' . _OLEDRION_FREE . '</p>';
            }
-        	  $ret .= '<p>' . $info['packing_description'] . '</p>';
-        	  $ret .= '</div>';
-        	  return $ret;
+              $ret .= '<p>' . $info['packing_description'] . '</p>';
+              $ret .= '</div>';
+
+              return $ret;
     }
 
     public function deliveryHtmlSelect($info)
     {
-        	  $ret = '';
-        	  $ret .= '<div class="oledrion_htmlform">';
-        	  $ret .= '<img class="oledrion_htmlimage" src="' . $info['delivery_image_url'] . '" alt="' . $info['delivery_title'] . '" />';
-        	  $ret .= '<h3>' . $info['delivery_title'] . '</h3>';
-        	  if($info['delivery_price'] > 0) {
-	        	  $ret .= '<p><span class="bold">' . _OLEDRION_PRICE . '</span> : ' . $info['delivery_price_fordisplay'] . '</p>';
-        	  } else {
-	           $ret .= '<p><span class="bold">' . _OLEDRION_PRICE . '</span> : ' . _OLEDRION_FREE . '</p>';
+              $ret = '';
+              $ret .= '<div class="oledrion_htmlform">';
+              $ret .= '<img class="oledrion_htmlimage" src="' . $info['delivery_image_url'] . '" alt="' . $info['delivery_title'] . '" />';
+              $ret .= '<h3>' . $info['delivery_title'] . '</h3>';
+              if ($info['delivery_price'] > 0) {
+                  $ret .= '<p><span class="bold">' . _OLEDRION_PRICE . '</span> : ' . $info['delivery_price_fordisplay'] . '</p>';
+              } else {
+               $ret .= '<p><span class="bold">' . _OLEDRION_PRICE . '</span> : ' . _OLEDRION_FREE . '</p>';
            }
-        	  $ret .= '<p><span class="bold">' . _OLEDRION_DELIVERY_TIME . '</span> : ' . $info['delivery_time'] . _OLEDRION_DELIVERY_DAY . '</p>';
-        	  $ret .= '<p>' . $info['delivery_description'] . '</p>';
-        	  $ret .= '</div>';
-        	  return $ret;
+              $ret .= '<p><span class="bold">' . _OLEDRION_DELIVERY_TIME . '</span> : ' . $info['delivery_time'] . _OLEDRION_DELIVERY_DAY . '</p>';
+              $ret .= '<p>' . $info['delivery_description'] . '</p>';
+              $ret .= '</div>';
+
+              return $ret;
     }
 
     public function paymentHtmlSelect($info)
     {
-        	  $ret = '';
-        	  $ret .= '<div class="oledrion_htmlform">';
-        	  $ret .= '<img class="oledrion_htmlimage" src="' . $info['payment_image_url'] . '" alt="' . $info['payment_title'] . '" />';
-        	  $ret .= '<h3>' . $info['payment_title'] . '</h3>';
-        	  $ret .= '<p>' . $info['payment_description'] . '</p>';
-        	  $ret .= '</div>';
-        	  return $ret;
+              $ret = '';
+              $ret .= '<div class="oledrion_htmlform">';
+              $ret .= '<img class="oledrion_htmlimage" src="' . $info['payment_image_url'] . '" alt="' . $info['payment_title'] . '" />';
+              $ret .= '<h3>' . $info['payment_title'] . '</h3>';
+              $ret .= '<p>' . $info['payment_description'] . '</p>';
+              $ret .= '</div>';
+
+              return $ret;
     }
 
     public function getCountriesList()
     {
         require_once XOOPS_ROOT_PATH . '/class/xoopslists.php';
+
         return XoopsLists::getCountryList();
     }
 

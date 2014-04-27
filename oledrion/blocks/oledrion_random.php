@@ -15,7 +15,7 @@
  * @copyright   The XOOPS Project http://sourceforge.net/projects/xoops/
  * @license     http://www.fsf.org/copyleft/gpl.html GNU public license
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
- * @version     $Id$
+ * @version     $Id: oledrion_random.php 12290 2014-02-07 11:05:17Z beckmi $
  */
 
 /**
@@ -41,7 +41,8 @@ function b_oledrion_random_show($options)
     if (count($products) > 0) {
         $block['nostock_msg'] = oledrion_utils::getModuleOption('nostock_msg');
         $block['block_products'] = $products;
-        $xoTheme->addStylesheet(OLEDRION_URL . 'css/oledrion.css');
+        $xoTheme->addStylesheet(OLEDRION_URL . 'assets/css/oledrion.css');
+
         return $block;
     } else {
         return false;
@@ -72,6 +73,7 @@ function b_oledrion_random_edit($options)
     $checked[$options[2]] = "checked='checked'";
     $form .= '<tr><td>' . _MB_OLEDRION_THIS_MONTH . "</td><td><input type='radio' name='options[]' id='options' value='1'" . $checked[1] . " />" . _YES . " <input type='radio' name='options[]' id='options' value='0'" . $checked[0] . " />" . _NO . "</td></tr>";
     $form .= '</table>';
+
     return $form;
 }
 
@@ -85,5 +87,5 @@ function b_oledrion_random_show_duplicatable($options)
 
     $tpl = new XoopsTpl();
     $tpl->assign('block', $block);
-    $tpl->display('db:oledrion_block_random.html');
+    $tpl->display('db:oledrion_block_random.tpl');
 }

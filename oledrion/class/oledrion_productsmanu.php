@@ -15,7 +15,7 @@
  * @copyright   The XOOPS Project http://sourceforge.net/projects/xoops/
  * @license     http://www.fsf.org/copyleft/gpl.html GNU public license
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
- * @version     $Id$
+ * @version     $Id: oledrion_productsmanu.php 12290 2014-02-07 11:05:17Z beckmi $
  */
 
 /**
@@ -35,7 +35,6 @@ class oledrion_productsmanu extends Oledrion_Object
     }
 }
 
-
 class OledrionOledrion_productsmanuHandler extends Oledrion_XoopsPersistableObjectHandler
 {
     public function __construct($db)
@@ -46,20 +45,21 @@ class OledrionOledrion_productsmanuHandler extends Oledrion_XoopsPersistableObje
     /**
      * Retourne le nombre de produits associé à un fabricant
      *
-     * @param integer $pm_manu_id    L'identifiant du fabricant
-     * @return integer    Le nombre de fabricants
+     * @param  integer $pm_manu_id L'identifiant du fabricant
+     * @return integer Le nombre de fabricants
      */
     public function getManufacturerProductsCount($pm_manu_id)
     {
         $criteria = new Criteria('pm_manu_id', $pm_manu_id, '=');
+
         return $this->getCount($criteria);
     }
 
     /**
      * Retourne des fabricants de produits en fonction de leur IDs
      *
-     * @param array $ids    Les identifiants des produits
-     * @return array    Tableau d'objets de type oledrion_productsmanu
+     * @param  array $ids Les identifiants des produits
+     * @return array Tableau d'objets de type oledrion_productsmanu
      */
     public function getFromProductsIds($ids)
     {
@@ -68,14 +68,15 @@ class OledrionOledrion_productsmanuHandler extends Oledrion_XoopsPersistableObje
             $criteria = new Criteria('pm_product_id', '(' . implode(',', $ids) . ')', 'IN');
             $ret = $this->getObjects($criteria, true, true, '*', false);
         }
+
         return $ret;
     }
 
     /**
      * Retourne les identifiants des produits d'un fabricant
      *
-     * @param intege $pm_manu_id    L'identifiant du fabricant
-     * @return array    Les ID des produits
+     * @param  intege $pm_manu_id L'identifiant du fabricant
+     * @return array  Les ID des produits
      */
     public function getProductsIdsFromManufacturer($pm_manu_id, $start = 0, $limit = 0)
     {
@@ -89,18 +90,20 @@ class OledrionOledrion_productsmanuHandler extends Oledrion_XoopsPersistableObje
                 $ret[] = $item['pm_product_id'];
             }
         }
+
         return $ret;
     }
 
     /**
      * Supprime un produit d'un fabricant
      *
-     * @param integer $pm_product_id
+     * @param  integer $pm_product_id
      * @return boolean
      */
     public function removeManufacturerProduct($pm_product_id)
     {
         $pm_product_id = intval($pm_product_id);
+
         return $this->deleteAll(new criteria('pm_product_id', $pm_product_id, '='));
     }
 }

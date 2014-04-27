@@ -15,7 +15,7 @@
  * @copyright   The XOOPS Project http://sourceforge.net/projects/xoops/
  * @license     http://www.fsf.org/copyleft/gpl.html GNU public license
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
- * @version     $Id$
+ * @version     $Id: search.php 12290 2014-02-07 11:05:17Z beckmi $
  */
 
 /**
@@ -24,7 +24,7 @@
 require 'header.php';
 require_once OLEDRION_PATH . 'class/tree.php';
 $GLOBALS['current_category'] = -1; // Pour le bloc des catégories
-$xoopsOption['template_main'] = 'oledrion_search.html';
+$xoopsOption['template_main'] = 'oledrion_search.tpl';
 require_once XOOPS_ROOT_PATH . '/header.php';
 
 $limit = oledrion_utils::getModuleOption('newproducts'); // Nombre maximum d'éléments à afficher

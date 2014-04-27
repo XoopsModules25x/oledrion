@@ -1,5 +1,5 @@
 <?php
-	/**
+    /**
     This file is part of WideImage.
 
     WideImage is free software; you can redistribute it and/or modify
@@ -17,24 +17,24 @@
     Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
   **/
 
-	class wiImageFileMapper_GIF
-	{
-		function load($uri)
-		{
-			return imagecreatefromgif($uri);
-		}
+    class wiImageFileMapper_GIF
+    {
+        function load($uri)
+        {
+            return imagecreatefromgif($uri);
+        }
 
-		function save($handle, $uri = null)
-		{
-			// This is a workaround for a bug, for which PHP devs claim it's not
-			// really a bug. Well, it IS.
-			// You can't pass null as the second parameter, because php is
-			// then trying to save an image to a '' location (which results in an
-			// error, of course). And the same thing works fine for imagepng() and
-			// imagejpeg(). It's a bug! ;)
-			if ($uri)
-				imagegif($handle, $uri);
-			else
-				imagegif($handle);
-		}
-	}
+        function save($handle, $uri = null)
+        {
+            // This is a workaround for a bug, for which PHP devs claim it's not
+            // really a bug. Well, it IS.
+            // You can't pass null as the second parameter, because php is
+            // then trying to save an image to a '' location (which results in an
+            // error, of course). And the same thing works fine for imagepng() and
+            // imagejpeg(). It's a bug! ;)
+            if ($uri)
+                imagegif($handle, $uri);
+            else
+                imagegif($handle);
+        }
+    }

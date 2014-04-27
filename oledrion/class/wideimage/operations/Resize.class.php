@@ -1,5 +1,5 @@
 <?php
-	/**
+    /**
     This file is part of WideImage.
 
     WideImage is free software; you can redistribute it and/or modify
@@ -17,69 +17,70 @@
     Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
   **/
 
-	class wiInvalidFitMethodException extends wiException {}
+    class wiInvalidFitMethodException extends wiException {}
 
-	class wioResize
-	{
-		protected function prepareDimensions($img, $width, $height, $fit)
-		{
-			if ($width === null)
-				$width = $height;
+    class wioResize
+    {
+        protected function prepareDimensions($img, $width, $height, $fit)
+        {
+            if ($width === null)
+                $width = $height;
 
-			if ($height === null)
-				$height = $width;
+            if ($height === null)
+                $height = $width;
 
-			$width = wiDimension::fix($img->getWidth(), $width);
-			$height = wiDimension::fix($img->getHeight(), $height);
+            $width = wiDimension::fix($img->getWidth(), $width);
+            $height = wiDimension::fix($img->getHeight(), $height);
 
-			$dim = array();
-			if ($fit == 'fill')
-			{
-				$dim['width'] = $width;
-				$dim['height'] = $height;
-			}
-			elseif ($fit == 'inside' || $fit == 'outside')
-			{
-				$rx = $img->getWidth() / $width;
-				$ry = $img->getHeight() / $height;
+            $dim = array();
+            if ($fit == 'fill')
+            {
+                $dim['width'] = $width;
+                $dim['height'] = $height;
+            }
+            elseif ($fit == 'inside' || $fit == 'outside')
+            {
+                $rx = $img->getWidth() / $width;
+                $ry = $img->getHeight() / $height;
 
-				if ($fit == 'inside')
-					$ratio = ($rx > $ry) ? $rx : $ry;
-				else
-					$ratio = ($rx < $ry) ? $rx : $ry;
+                if ($fit == 'inside')
+                    $ratio = ($rx > $ry) ? $rx : $ry;
+                else
+                    $ratio = ($rx < $ry) ? $rx : $ry;
 
-				$dim['width'] = round($img->getWidth() / $ratio);
-				$dim['height'] = round($img->getHeight() / $ratio);
-			}
-			else
-				throw new wiInvalidFitMethodException("{$fit} is not a valid resize-fit method.");
+                $dim['width'] = round($img->getWidth() / $ratio);
+                $dim['height'] = round($img->getHeight() / $ratio);
+            }
+            else
+                throw new wiInvalidFitMethodException("{$fit} is not a valid resize-fit method.");
 
-			return $dim;
-		}
+            return $dim;
+        }
 
-		function execute($img, $width, $height, $fit)
-		{
-			if (!$img instanceof wiImage || !$img->isValid())
-				throw new wiInvalidImageException("Can't resize an invalid image.");
+        function execute($img, $width, $height, $fit)
+        {
+            if (!$img instanceof wiImage || !$img->isValid())
+                throw new wiInvalidImageException("Can't resize an invalid image.");
 
-			$dim = $this->prepareDimensions($img, $width, $height, $fit);
-			$new = wiTrueColorImage::create($dim['width'], $dim['height']);
+            $dim = $this->prepareDimensions($img, $width, $height, $fit);
+            $new = wiTrueColorImage::create($dim['width'], $dim['height']);
 
-			if ($img->isTransparent())
-			{
-				$new->copyTransparencyFrom($img);
-				imagecopyresized(
-					$new->getHandle(), $img->getHandle(), 0, 0, 0, 0, $new->getWidth(), $new->getHeight(), $img->getWidth(), $img->getHeight()
-					);
-			}
-			else
-			{
-				$new->alphaBlending(false);
-				$new->saveAlpha(true);
-				imagecopyresampled(
-					$new->getHandle(), $img->getHandle(), 0, 0, 0, 0, $new->getWidth(), $new->getHeight(), $img->getWidth(), $img->getHeight()
-					);
-			}
-			return $new;
-		}
-	}
+            if ($img->isTransparent())
+            {
+                $new->copyTransparencyFrom($img);
+                imagecopyresized(
+                    $new->getHandle(), $img->getHandle(), 0, 0, 0, 0, $new->getWidth(), $new->getHeight(), $img->getWidth(), $img->getHeight()
+                    );
+            }
+            else
+            {
+                $new->alphaBlending(false);
+                $new->saveAlpha(true);
+                imagecopyresampled(
+                    $new->getHandle(), $img->getHandle(), 0, 0, 0, 0, $new->getWidth(), $new->getHeight(), $img->getWidth(), $img->getHeight()
+                    );
+            }
+
+            return $new;
+        }
+    }

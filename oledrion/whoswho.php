@@ -15,7 +15,7 @@
  * @copyright   The XOOPS Project http://sourceforge.net/projects/xoops/
  * @license     http://www.fsf.org/copyleft/gpl.html GNU public license
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
- * @version     $Id$
+ * @version     $Id: whoswho.php 12290 2014-02-07 11:05:17Z beckmi $
  */
 
 /**
@@ -23,7 +23,7 @@
  */
 require 'header.php';
 $GLOBALS['current_category'] = -1;
-$xoopsOption['template_main'] = 'oledrion_whoswho.html';
+$xoopsOption['template_main'] = 'oledrion_whoswho.tpl';
 require_once XOOPS_ROOT_PATH . '/header.php';
 
 $tblAll = $tblAnnuaire = array();

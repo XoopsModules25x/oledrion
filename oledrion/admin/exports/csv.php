@@ -15,15 +15,13 @@
  * @copyright   The XOOPS Project http://sourceforge.net/projects/xoops/
  * @license     http://www.fsf.org/copyleft/gpl.html GNU public license
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
- * @version     $Id$
+ * @version     $Id: csv.php 12290 2014-02-07 11:05:17Z beckmi $
  */
 
 /**
  * Export au format CSV
  */
-if (!defined('XOOPS_ROOT_PATH')) {
-    die("XOOPS root path not defined");
-}
+defined('XOOPS_ROOT_PATH') || die('XOOPS root path not defined');
 
 class oledrion_csv_export extends oledrion_export
 {
@@ -41,18 +39,20 @@ class oledrion_csv_export extends oledrion_export
 
     /**
      * Export des données
-     * @return boolean    Vrai si l'export a réussi sinon faux
+     * @return boolean Vrai si l'export a réussi sinon faux
      */
     function export()
     {
-        $fp = fopen($this->folder . DIRECTORY_SEPARATOR . $this->filename, 'w');
+        $file = $this->folder . DIRECTORY_SEPARATOR . $this->filename;
+        $fp = fopen($file, 'w');
         if (!$fp) {
             $this->success = false;
+
             return false;
         }
 
         // Création de l'entête du fichier
-        $entete1 = $entete2 = array();
+        $list = $entete1 = $entete2 = array();
         $s = $this->separator;
         $cmd = new oledrion_commands();
         foreach ($cmd->getVars() as $fieldName => $properties) {
@@ -63,8 +63,8 @@ class oledrion_csv_export extends oledrion_export
         foreach ($cart->getVars() as $fieldName => $properties) {
             $entete2[] = $fieldName;
         }
-        fwrite($fp, implode($s, array_merge($entete1, $entete2)) . "\n");
-
+        $list[] = array_merge($entete1, $entete2);
+        // make item array
         $criteria = new CriteriaCompo();
         $criteria->add(new Criteria('cmd_id', 0, '<>'));
         $criteria->add(new Criteria('cmd_state', $this->orderType, '='));
@@ -78,22 +78,30 @@ class oledrion_csv_export extends oledrion_export
             foreach ($carts as $cart) {
                 $ligne = array();
                 foreach ($entete1 as $commandField) {
-                    $ligne[] = $order->getVar($commandField);
+                   $ligne[] = $order->getVar($commandField);
                 }
                 foreach ($entete2 as $cartField) {
                     $ligne[] = $cart->getVar($cartField);
                 }
+                // Add to main array
+                $list[] = $ligne;
             }
-            fwrite($fp, implode($s, $ligne) . "\n");
         }
+
+        // import information on csv file
+        foreach ($list as $fields) {
+            fputcsv($fp, $fields);
+        }
+
         fclose($fp);
         $this->success = true;
+
         return true;
     }
 
     /**
      * Retourne le lien à utiliser pour télécharger le fichier d'export
-     * @return string    Le lien à utiliser
+     * @return string Le lien à utiliser
      */
     function getDownloadUrl()
     {

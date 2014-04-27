@@ -15,7 +15,7 @@
  * @copyright   The XOOPS Project http://sourceforge.net/projects/xoops/
  * @license     http://www.fsf.org/copyleft/gpl.html GNU public license
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
- * @version     $Id$
+ * @version     $Id: index.php 12290 2014-02-07 11:05:17Z beckmi $
  */
 
 require_once '../../../include/cp_header.php';
@@ -69,6 +69,17 @@ if (isset($_POST['action'])) {
     $action = filter_input(INPUT_POST, 'action', FILTER_SANITIZE_STRING);
 } elseif (isset($_GET['action'])) {
     $action = filter_input(INPUT_GET, 'action', FILTER_SANITIZE_STRING);
+}
+
+// Check admin have access to this page
+$part = oledrion_utils::getModuleOption('admin_groups_part');
+$part = explode('|', $part);
+if (!in_array($op, $part)) {
+    $group = $xoopsUser->getGroups ();
+    $groups = oledrion_utils::getModuleOption('admin_groups');
+    if (count(array_intersect($group, $groups)) <= 0) {
+        redirect_header('index.php', 3, _NOPERM);
+    }
 }
 
 $op = str_replace('..', '', $op);

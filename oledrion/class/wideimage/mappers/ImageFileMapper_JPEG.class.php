@@ -1,5 +1,5 @@
 <?php
-	/**
+    /**
     This file is part of WideImage.
 
     WideImage is free software; you can redistribute it and/or modify
@@ -17,15 +17,15 @@
     Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
   **/
 
-	class wiImageFileMapper_JPEG
-	{
-		function load($uri)
-		{
-			return imagecreatefromjpeg($uri);
-		}
+    class wiImageFileMapper_JPEG
+    {
+        function load($uri)
+        {
+            return imagecreatefromjpeg($uri);
+        }
 
-		function save($handle, $uri = null, $quality = 100)
-		{
-			imagejpeg($handle, $uri, $quality);
-		}
-	}
+        function save($handle, $uri = null, $quality = 100)
+        {
+            imagejpeg($handle, $uri, $quality);
+        }
+    }

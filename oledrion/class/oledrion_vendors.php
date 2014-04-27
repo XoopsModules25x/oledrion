@@ -15,7 +15,7 @@
  * @copyright   The XOOPS Project http://sourceforge.net/projects/xoops/
  * @license     http://www.fsf.org/copyleft/gpl.html GNU public license
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
- * @version     $Id$
+ * @version     $Id: oledrion_vendors.php 12290 2014-02-07 11:05:17Z beckmi $
  */
 
 /**
@@ -32,7 +32,6 @@ class oledrion_vendors extends Oledrion_Object
     }
 }
 
-
 class OledrionOledrion_vendorsHandler extends Oledrion_XoopsPersistableObjectHandler
 {
     public function __construct($db)
@@ -43,12 +42,12 @@ class OledrionOledrion_vendorsHandler extends Oledrion_XoopsPersistableObjectHan
     /**
      * Renvoie la liste de tous les vendeurs du module
      *
-     * @param integer $start Position de départ
-     * @param integer $limit Nombre total d'enregistrements à renvoyer
-     * @param string $order Champ sur lequel faire le tri
-     * @param string $order Ordre du tri
-     * @param boolean $idaskey Indique si le tableau renvoyé doit avoir pour clé l'identifiant unique de l'enregistrement
-     * @return array tableau d'objets de type vendors
+     * @param  integer $start   Position de départ
+     * @param  integer $limit   Nombre total d'enregistrements à renvoyer
+     * @param  string  $order   Champ sur lequel faire le tri
+     * @param  string  $order   Ordre du tri
+     * @param  boolean $idaskey Indique si le tableau renvoyé doit avoir pour clé l'identifiant unique de l'enregistrement
+     * @return array   tableau d'objets de type vendors
      */
     public function getAllVendors(oledrion_parameters $parameters)
     {
@@ -60,26 +59,28 @@ class OledrionOledrion_vendorsHandler extends Oledrion_XoopsPersistableObjectHan
         $critere->setOrder($parameters['order']);
         $categories = array();
         $categories = $this->getObjects($critere, $parameters['idaskey']);
+
         return $categories;
     }
 
     /**
      * Retourne le nombre de produits associés à un vendeur
      *
-     * @param integer    $vendor_id    L'ID du vendeur
-     * @return integer    Le nombre de produits du vendeur
+     * @param  integer $vendor_id L'ID du vendeur
+     * @return integer Le nombre de produits du vendeur
      */
     public function getVendorProductsCount($vendor_id)
     {
         global $h_oledrion_products;
+
         return $h_oledrion_products->getVendorProductsCount($vendor_id);
     }
 
     /**
      * Supprime un vendeur
      *
-     * @param oledrion_vendors $vendor
-     * @return boolean    Le résultat de la suppression
+     * @param  oledrion_vendors $vendor
+     * @return boolean          Le résultat de la suppression
      */
     public function deleteVendor(oledrion_vendors $vendor)
     {
@@ -89,8 +90,8 @@ class OledrionOledrion_vendorsHandler extends Oledrion_XoopsPersistableObjectHan
     /**
      * Retourne des vendeurs selon leur ID
      *
-     * @param array $ids    Les ID des vendeurs à retrouver
-     * @return array    Objets de type oledrion_vendors
+     * @param  array $ids Les ID des vendeurs à retrouver
+     * @return array Objets de type oledrion_vendors
      */
     public function getVendorsFromIds($ids)
     {
@@ -99,6 +100,7 @@ class OledrionOledrion_vendorsHandler extends Oledrion_XoopsPersistableObjectHan
             $criteria = new Criteria('vendor_id', '(' . implode(',', $ids) . ')', 'IN');
             $ret = $this->getObjects($criteria, true, true, '*', false);
         }
+
         return $ret;
     }
 }

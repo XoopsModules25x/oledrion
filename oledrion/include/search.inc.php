@@ -15,7 +15,7 @@
  * @copyright   The XOOPS Project http://sourceforge.net/projects/xoops/
  * @license     http://www.fsf.org/copyleft/gpl.html GNU public license
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
- * @version     $Id$
+ * @version     $Id: search.inc.php 12290 2014-02-07 11:05:17Z beckmi $
  */
 
 function oledrion_search($queryarray, $andor, $limit, $offset, $userid)
@@ -74,13 +74,13 @@ function oledrion_search($queryarray, $andor, $limit, $offset, $userid)
     $myts = MyTextSanitizer::getInstance();
     $result = $xoopsDB->query($sql, $limit, $offset);
     while ($myrow = $xoopsDB->fetchArray($result)) {
-        $ret[$i]['image'] = 'images/product.png';
+        $ret[$i]['image'] = 'assets/images/product.png';
         $ret[$i]['link'] = "product.php?product_id=" . $myrow['product_id'];
         $ret[$i]['title'] = $myts->htmlSpecialChars($myrow['product_title']);
         $ret[$i]['time'] = $myrow['product_submitted'];
         $ret[$i]['uid'] = $myrow['product_submitter'];
         $i++;
     }
+
     return $ret;
 }
-

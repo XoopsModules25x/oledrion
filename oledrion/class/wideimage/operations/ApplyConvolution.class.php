@@ -1,5 +1,5 @@
 <?php
-	/**
+    /**
     This file is part of WideImage.
 
     WideImage is free software; you can redistribute it and/or modify
@@ -17,12 +17,13 @@
     Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
   **/
 
-	class wioApplyConvolution
-	{
-		function execute($image, $matrix, $div, $offset)
-		{
-			$new = $image->asTrueColor();
-			imageconvolution($new->getHandle(), $matrix, $div, $offset);
-			return $new;
-		}
-	}
+    class wioApplyConvolution
+    {
+        function execute($image, $matrix, $div, $offset)
+        {
+            $new = $image->asTrueColor();
+            imageconvolution($new->getHandle(), $matrix, $div, $offset);
+
+            return $new;
+        }
+    }

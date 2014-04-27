@@ -15,7 +15,7 @@
  * @copyright   The XOOPS Project http://sourceforge.net/projects/xoops/
  * @license     http://www.fsf.org/copyleft/gpl.html GNU public license
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
- * @version     $Id$
+ * @version     $Id: dashboard.php 12290 2014-02-07 11:05:17Z beckmi $
  */
 
 /**
@@ -32,7 +32,7 @@ switch ($action) {
 
         oledrion_utils::htitle(_MI_OLEDRION_ADMENU10, 4);
         $indexAdmin = new ModuleAdmin();
-//        $indexAdmin->addConfigBoxLine(OLEDRION_UPLOAD_PATH, 'folder');
+        //$indexAdmin->addConfigBoxLine(OLEDRION_UPLOAD_PATH, 'folder');
         //$indexAdmin->addConfigBoxLine(array(OLEDRION_UPLOAD_PATH, '777'), 'chmod');
         //$indexAdmin->addConfigBoxLine(OLEDRION_ATTACHED_FILES_PATH, 'folder');
         //$indexAdmin->addConfigBoxLine(array(OLEDRION_ATTACHED_FILES_PATH, '777'), 'chmod');
@@ -43,14 +43,14 @@ switch ($action) {
         //$indexAdmin->addConfigBoxLine(OLEDRION_CACHE_PATH, 'folder');
         //$indexAdmin->addConfigBoxLine(array(OLEDRION_CACHE_PATH, '777'), 'chmod');
 
-		$categories = $h_oledrion_cat->getCategoriesCount();
-		if($categories == 0) {
-			$link = OLEDRION_ADMIN_URL . 'index.php?op=maintain&action=import';
-			$link = sprintf('<a href="%s">%s</a>', $link, _AM_OLEDRION_IMPORT_DATA_TITLE);
-			$text = sprintf(_AM_OLEDRION_IMPORT_DATA_TEXT, $link);
-			$indexAdmin->addInfoBox(_AM_OLEDRION_IMPORT_DATA);
-		    $indexAdmin->addInfoBoxLine(_AM_OLEDRION_IMPORT_DATA, $text);
-		}
+        $categories = $h_oledrion_cat->getCategoriesCount();
+        if ($categories == 0) {
+            $link = OLEDRION_ADMIN_URL . 'index.php?op=maintain&action=import';
+            $link = sprintf('<a href="%s">%s</a>', $link, _AM_OLEDRION_IMPORT_DATA_TITLE);
+            $text = sprintf(_AM_OLEDRION_IMPORT_DATA_TEXT, $link);
+            $indexAdmin->addInfoBox(_AM_OLEDRION_IMPORT_DATA);
+            $indexAdmin->addInfoBoxLine(_AM_OLEDRION_IMPORT_DATA, $text);
+        }
 
 
 //------ check directories ---------------
@@ -84,9 +84,6 @@ $indexAdmin->addConfigBoxLine(DirectoryChecker::getDirectoryStatus(OLEDRION_TEXT
 //echo $indexAdmin->renderIndex();
 //echo wfd_serverstats();
 //---------------------------
-
-
-
         echo $indexAdmin->addNavigation('index.php');
         echo $indexAdmin->renderIndex();
 
@@ -182,7 +179,6 @@ $indexAdmin->addConfigBoxLine(DirectoryChecker::getDirectoryStatus(OLEDRION_TEXT
         }
         include_once OLEDRION_ADMIN_PATH . 'admin_footer.php';
         break;
-
 
     // ****************************************************************************************************************
     case 'deleterating': // Delete a rating

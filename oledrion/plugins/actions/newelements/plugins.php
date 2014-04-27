@@ -15,7 +15,7 @@
  * @copyright   The XOOPS Project http://sourceforge.net/projects/xoops/
  * @license     http://www.fsf.org/copyleft/gpl.html GNU public license
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
- * @version     $Id$
+ * @version     $Id: plugins.php 12290 2014-02-07 11:05:17Z beckmi $
  */
 
 /**
@@ -49,13 +49,14 @@ class newelementsAction extends oledrion_action
             basename(__FILE__),
             __CLASS__,
             'fireNewCategory');
+
         return $events;
     }
 
     /**
      * Méthode appelée pour indiquer qu'un nouveau produit a été crée
      *
-     * @param object $product    Le produit qui vient d'être crée
+     * @param  object $product Le produit qui vient d'être crée
      * @return void
      */
     public function fireNewProduct($parameters)
@@ -74,7 +75,7 @@ class newelementsAction extends oledrion_action
     /**
      * Méthode appelée pour indiquer qu'une nouvelle catégorie a été crée
      *
-     * @param object $category
+     * @param  object $category
      * @return void
      */
     public function fireNewCategory($parameters)

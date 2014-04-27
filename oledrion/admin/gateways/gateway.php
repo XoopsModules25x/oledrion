@@ -15,15 +15,13 @@
  * @copyright   The XOOPS Project http://sourceforge.net/projects/xoops/
  * @license     http://www.fsf.org/copyleft/gpl.html GNU public license
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
- * @version     $Id$
+ * @version     $Id: gateway.php 12290 2014-02-07 11:05:17Z beckmi $
  */
 
 /**
  * Every gateway script must extends this class
  */
-if (!defined('XOOPS_ROOT_PATH')) {
-    die("XOOPS root path not defined");
-}
+defined('XOOPS_ROOT_PATH') || die('XOOPS root path not defined');
 
 abstract class oledrion_gateway
 {
@@ -71,7 +69,7 @@ abstract class oledrion_gateway
     /**
      * Verifies if the gateway log exists and create it if it does not
      *
-     * @param string $gatewaysLogPath    The full path (and name) to the gateway's log file
+     * @param  string $gatewaysLogPath The full path (and name) to the gateway's log file
      * @return void
      */
     function verifyIfGatewayLogExists($gatewaysLogPath)
@@ -84,8 +82,8 @@ abstract class oledrion_gateway
     /**
      * Ecriture d'un texte dans le fichier log des passerelles
      *
-     * @param string $gatewaysLogPath    Le chemin d'accès complet (et le nom) au fichier log
-     * @param string $text    Le texte à écrire
+     * @param  string $gatewaysLogPath Le chemin d'accès complet (et le nom) au fichier log
+     * @param  string $text            Le texte à écrire
      * @return void
      */
     function appendToLog($gatewaysLogPath, $text)
@@ -108,8 +106,8 @@ abstract class oledrion_gateway
      *
      * If your gateway does not requires parameters, then you must return false
      *
-     * @param string $posstUrl    The url to use to post data to
-     * @return mixed (object if there is a form, else false)
+     * @param  string $posstUrl The url to use to post data to
+     * @return mixed  (object if there is a form, else false)
      */
     abstract function getParametersForm($postUrl);
 
@@ -117,7 +115,7 @@ abstract class oledrion_gateway
      * This method is called by the module to save the gateway's parameters
      * It's up to you to verify data and eventually to complain about uncomplete or missing data
      *
-     * @param array $data    Receives $_POST
+     * @param  array   $data Receives $_POST
      * @return boolean True if you succeed to save data else false
      */
     abstract function saveParametersForm($data);
@@ -131,8 +129,8 @@ abstract class oledrion_gateway
     /**
      * Returns the form to use before to redirect user to the gateway
      *
-     * @param object    $order    Objects of type oledrion_commands
-     * @return array    Key = element's name, Value = Element's value
+     * @param  object $order Objects of type oledrion_commands
+     * @return array  Key = element's name, Value = Element's value
      */
     abstract function getCheckoutFormContent($order);
 
@@ -145,7 +143,7 @@ abstract class oledrion_gateway
     /**
      * This method is in charge to dialog with the gateway to verify the payment's statuts
      *
-     * @param string $gatewaysLogPath    The full path (and name) to the log file
+     * @param  string $gatewaysLogPath The full path (and name) to the log file
      * @return void
      */
     abstract function gatewayNotify($gatewaysLogPath);

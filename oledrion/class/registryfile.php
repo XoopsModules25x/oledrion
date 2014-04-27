@@ -15,7 +15,7 @@
  * @copyright   The XOOPS Project http://sourceforge.net/projects/xoops/
  * @license     http://www.fsf.org/copyleft/gpl.html GNU public license
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
- * @version     $Id$
+ * @version     $Id: registryfile.php 12290 2014-02-07 11:05:17Z beckmi $
  */
 
 /**
@@ -28,7 +28,7 @@ class oledrion_registryfile
     /**
      * Access the only instance of this class
      *
-     * @return    object
+     * @return object
      *
      * @static
      * @staticvar   object
@@ -39,9 +39,9 @@ class oledrion_registryfile
         if (!isset($instance)) {
             $instance = new oledrion_registryfile();
         }
+
         return $instance;
     }
-
 
     public function __construct($fichier = null)
     {
@@ -85,6 +85,7 @@ class oledrion_registryfile
         $fp = fopen($fw, 'w') or die("Error, impossible to create the file " . $this->filename);
         fwrite($fp, $content);
         fclose($fp);
+
         return true;
     }
 }

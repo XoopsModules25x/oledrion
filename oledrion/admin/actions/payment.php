@@ -15,7 +15,7 @@
  * @copyright   The XOOPS Project http://sourceforge.net/projects/xoops/
  * @license     http://www.fsf.org/copyleft/gpl.html GNU public license
  * @author      Hossein Azizabadi (azizabadi@faragostaresh.com)
- * @version     $Id$
+ * @version     $Id: payment.php 12290 2014-02-07 11:05:17Z beckmi $
  */
 
 /**
@@ -146,7 +146,6 @@ switch ($action) {
         if ($_POST['payment_type'] == 'online' && !in_array($_POST['payment_gateway'], oledrion_gateways::getInstalledGatewaysList())) {
             $item->setVar('payment_gateway', oledrion_gateways::getDefaultGateway());
         }
-
 
         if (isset($_POST['delpicture']) && intval($_POST['delpicture']) == 1) {
             $item->deletePicture();

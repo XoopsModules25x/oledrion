@@ -15,7 +15,7 @@
  * @copyright   The XOOPS Project http://sourceforge.net/projects/xoops/
  * @license     http://www.fsf.org/copyleft/gpl.html GNU public license
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
- * @version     $Id$
+ * @version     $Id: oledrion_recentlysold.php 12290 2014-02-07 11:05:17Z beckmi $
  */
 
 /**
@@ -39,7 +39,8 @@ function b_oledrion_recentlysold_show($options)
         $block = array();
         $block['nostock_msg'] = oledrion_utils::getModuleOption('nostock_msg');
         $block['block_products'] = $products;
-        $xoTheme->addStylesheet(OLEDRION_URL . 'css/oledrion.css');
+        $xoTheme->addStylesheet(OLEDRION_URL . 'assets/css/oledrion.css');
+
         return $block;
     } else {
         return false;
@@ -59,6 +60,7 @@ function b_oledrion_recentlysold_edit($options)
     $form .= "<table border='0'>";
     $form .= '<tr><td>' . _MB_OLEDRION_PRODUCTS_CNT . "</td><td><input type='text' name='options[]' id='options' value='" . $options[0] . "' /></td></tr>";
     $form .= '</table>';
+
     return $form;
 }
 
@@ -74,5 +76,5 @@ function b_oledrion_recentlysold_duplicatable($options)
 
     $tpl = new XoopsTpl();
     $tpl->assign('block', $block);
-    $tpl->display('db:oledrion_block_recentlysold.html');
+    $tpl->display('db:oledrion_block_recentlysold.tpl');
 }

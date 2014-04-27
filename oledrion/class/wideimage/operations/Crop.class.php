@@ -1,5 +1,5 @@
 <?php
-	/**
+    /**
     This file is part of WideImage.
 
     WideImage is free software; you can redistribute it and/or modify
@@ -17,29 +17,30 @@
     Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
   **/
 
-	class wioCrop
-	{
-		function execute($img, $left, $top, $width, $height)
-		{
-			$width = wiDimension::fix($img->getWidth(), $width);
-			$height = wiDimension::fix($img->getHeight(), $height);
-			$new = wiTrueColorImage::create($width, $height);
+    class wioCrop
+    {
+        function execute($img, $left, $top, $width, $height)
+        {
+            $width = wiDimension::fix($img->getWidth(), $width);
+            $height = wiDimension::fix($img->getHeight(), $height);
+            $new = wiTrueColorImage::create($width, $height);
 
-			if ($img->isTransparent())
-			{
-				$new->copyTransparencyFrom($img);
-				imagecopyresized(
-					$new->getHandle(), $img->getHandle(), 0, 0, $left, $top, $width, $height, $width, $height
-					);
-			}
-			else
-			{
-				$new->alphaBlending(false);
-				$new->saveAlpha(true);
-				imagecopyresampled(
-					$new->getHandle(), $img->getHandle(), 0, 0, $left, $top, $width, $height, $width, $height
-					);
-			}
-			return $new;
-		}
-	}
+            if ($img->isTransparent())
+            {
+                $new->copyTransparencyFrom($img);
+                imagecopyresized(
+                    $new->getHandle(), $img->getHandle(), 0, 0, $left, $top, $width, $height, $width, $height
+                    );
+            }
+            else
+            {
+                $new->alphaBlending(false);
+                $new->saveAlpha(true);
+                imagecopyresampled(
+                    $new->getHandle(), $img->getHandle(), 0, 0, $left, $top, $width, $height, $width, $height
+                    );
+            }
+
+            return $new;
+        }
+    }

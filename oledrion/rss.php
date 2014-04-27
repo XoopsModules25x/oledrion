@@ -15,7 +15,7 @@
  * @copyright   The XOOPS Project http://sourceforge.net/projects/xoops/
  * @license     http://www.fsf.org/copyleft/gpl.html GNU public license
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
- * @version     $Id$
+ * @version     $Id: rss.php 12290 2014-02-07 11:05:17Z beckmi $
  */
 
 /**
@@ -39,7 +39,7 @@ $tpl = new XoopsTpl();
 $tpl->xoops_setCaching(2); // 1 = Cache global, 2 = Cache individuel (par template)
 $tpl->xoops_setCacheTime(OLEDRION_RSS_CACHE); // Temps de cache en secondes
 
-if (!$tpl->is_cached('db:oledrion_rss.html', $cat_cid)) {
+if (!$tpl->is_cached('db:oledrion_rss.tpl', $cat_cid)) {
     $categoryTitle = '';
     if (!empty($cat_cid)) {
         $category = null;
@@ -90,4 +90,4 @@ if (!$tpl->is_cached('db:oledrion_rss.html', $cat_cid)) {
             'description' => xoops_utf8_encode($description)));
     }
 }
-$tpl->display('db:oledrion_rss.html', $cat_cid);
+$tpl->display('db:oledrion_rss.tpl', $cat_cid);

@@ -1,5 +1,5 @@
 <?php
-	/**
+    /**
     This file is part of WideImage.
 
     WideImage is free software; you can redistribute it and/or modify
@@ -17,35 +17,36 @@
     Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
   **/
 
-	class wioGetMask
-	{
-		function execute($image)
-		{
-			$width = $image->getWidth();
-			$height = $image->getHeight();
+    class wioGetMask
+    {
+        function execute($image)
+        {
+            $width = $image->getWidth();
+            $height = $image->getHeight();
 
-			$mask = wiTrueColorImage::create($width, $height);
-			$mask->setTransparentColor(-1);
-			$mask->alphaBlending(false);
-			$mask->saveAlpha(false);
+            $mask = wiTrueColorImage::create($width, $height);
+            $mask->setTransparentColor(-1);
+            $mask->alphaBlending(false);
+            $mask->saveAlpha(false);
 
-			for ($i = 0; $i <= 255; $i++)
-				$greyscale[$i] = ImageColorAllocate($mask->getHandle(), $i, $i, $i);
+            for ($i = 0; $i <= 255; $i++)
+                $greyscale[$i] = ImageColorAllocate($mask->getHandle(), $i, $i, $i);
 
-			imagefilledrectangle($mask->getHandle(), 0, 0, $width, $height, $greyscale[255]);
+            imagefilledrectangle($mask->getHandle(), 0, 0, $width, $height, $greyscale[255]);
 
-			$transparentColor = $image->getTransparentColor();
-			$alphaToGreyRatio = 255 / 127;
-			for ($x = 0; $x < $width; $x++)
-				for ($y = 0; $y < $height; $y++)
-				{
-					$color = $image->getColorAt($x, $y);
-					if ($color == $transparentColor)
-						$rgba['alpha'] = 127;
-					else
-						$rgba = $image->getColorRGB($color);
-					imagesetpixel($mask->getHandle(), $x, $y, $greyscale[255 - round($rgba['alpha'] * $alphaToGreyRatio)]);
-				}
-			return $mask;
-		}
-	}
+            $transparentColor = $image->getTransparentColor();
+            $alphaToGreyRatio = 255 / 127;
+            for ($x = 0; $x < $width; $x++)
+                for ($y = 0; $y < $height; $y++)
+                {
+                    $color = $image->getColorAt($x, $y);
+                    if ($color == $transparentColor)
+                        $rgba['alpha'] = 127;
+                    else
+                        $rgba = $image->getColorRGB($color);
+                    imagesetpixel($mask->getHandle(), $x, $y, $greyscale[255 - round($rgba['alpha'] * $alphaToGreyRatio)]);
+                }
+
+            return $mask;
+        }
+    }

@@ -15,7 +15,7 @@
  * @copyright   The XOOPS Project http://sourceforge.net/projects/xoops/
  * @license     http://www.fsf.org/copyleft/gpl.html GNU public license
  * @author      Hossein Azizabadi (azizabadi@faragostaresh.com)
- * @version     $Id$
+ * @version     $Id: oledrion_delivery_payment.php 12290 2014-02-07 11:05:17Z beckmi $
  */
 
 require 'classheader.php';
@@ -32,17 +32,17 @@ class oledrion_delivery_payment extends Oledrion_Object
     /**
      * Retourne les éléments du produits formatés pour affichage
      *
-     * @param string $format
+     * @param  string $format
      * @return array
      */
     public function toArray($format = 's')
     {
         $ret = array();
         $ret = parent::toArray($format);
+
         return $ret;
     }
 }
-
 
 class OledrionOledrion_delivery_paymentHandler extends Oledrion_XoopsPersistableObjectHandler
 {
@@ -67,7 +67,7 @@ class OledrionOledrion_delivery_paymentHandler extends Oledrion_XoopsPersistable
                 $ret[$root->getVar('dp_payment')] = $tab;
             }
         }
+
         return $ret;
     }
 }
-

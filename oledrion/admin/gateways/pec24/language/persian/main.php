@@ -15,7 +15,7 @@
  * @copyright   The XOOPS Project http://sourceforge.net/projects/xoops/
  * @license     http://www.fsf.org/copyleft/gpl.html GNU public license
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
- * @version     $Id$
+ * @version     $Id: main.php 12290 2014-02-07 11:05:17Z beckmi $
  */
 define("_OLEDRION_SAMAN_PARAMETERS", "پارامترها");
 define('_OLEDRION_SAMAN_MID', "کد فروشنده");

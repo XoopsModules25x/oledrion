@@ -15,7 +15,7 @@
  * @copyright   The XOOPS Project http://sourceforge.net/projects/xoops/
  * @license     http://www.fsf.org/copyleft/gpl.html GNU public license
  * @author      Hossein Azizabadi (azizabadi@faragostaresh.com)
- * @version     $Id$
+ * @version     $Id: oledrion_location_delivery.php 12290 2014-02-07 11:05:17Z beckmi $
  */
 
 require 'classheader.php';
@@ -34,17 +34,17 @@ class oledrion_location_delivery extends Oledrion_Object
     /**
      * Retourne les éléments du produits formatés pour affichage
      *
-     * @param string $format
+     * @param  string $format
      * @return array
      */
     public function toArray($format = 's')
     {
         $ret = array();
         $ret = parent::toArray($format);
+
         return $ret;
     }
 }
-
 
 class OledrionOledrion_location_deliveryHandler extends Oledrion_XoopsPersistableObjectHandler
 {
@@ -69,6 +69,7 @@ class OledrionOledrion_location_deliveryHandler extends Oledrion_XoopsPersistabl
                 $ret[$root->getVar('ld_delivery')] = $tab;
             }
         }
+
         return $ret;
     }
 
@@ -86,6 +87,7 @@ class OledrionOledrion_location_deliveryHandler extends Oledrion_XoopsPersistabl
                 $ret = $root->toArray();
             }
         }
+
         return $ret;
     }
 }

@@ -15,14 +15,12 @@
  * @copyright   The XOOPS Project http://sourceforge.net/projects/xoops/
  * @license     http://www.fsf.org/copyleft/gpl.html GNU public license
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
- * @version     $Id$
+ * @version     $Id: dbase.php 12290 2014-02-07 11:05:17Z beckmi $
  */
 /**
  * Export au format Dbase 3
  */
-if (!defined('XOOPS_ROOT_PATH')) {
-    die("XOOPS root path not defined");
-}
+defined('XOOPS_ROOT_PATH') || die('XOOPS root path not defined');
 
 class oledrion_dbase_export extends oledrion_export
 {
@@ -39,7 +37,7 @@ class oledrion_dbase_export extends oledrion_export
 
     /**
      * Export des données
-     * @return boolean    Vrai si l'export a réussi sinon faux
+     * @return boolean Vrai si l'export a réussi sinon faux
      */
     function export()
     {
@@ -104,11 +102,13 @@ class oledrion_dbase_export extends oledrion_export
            */
         if (!dbase_create($this->folder . DIRECTORY_SEPARATOR . $this->filename, $def)) {
             $this->success = false;
+
             return false;
         }
         $dbf = dbase_open($this->folder . DIRECTORY_SEPARATOR . $this->filename, 2);
         if ($dbf === false) {
             $this->success = false;
+
             return false;
         }
 
@@ -155,12 +155,13 @@ class oledrion_dbase_export extends oledrion_export
         }
         dbase_close($dbf);
         $this->success = true;
+
         return true;
     }
 
     /**
      * Retourne le lien à utiliser pour télécharger le fichier d'export
-     * @return string    Le lien à utiliser
+     * @return string Le lien à utiliser
      */
     function getDownloadUrl()
     {
@@ -180,4 +181,3 @@ class oledrion_dbase_export extends oledrion_export
         }
     }
 }
-

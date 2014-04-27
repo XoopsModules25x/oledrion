@@ -1,5 +1,5 @@
 <?php
-	/**
+    /**
     This file is part of WideImage.
 
     WideImage is free software; you can redistribute it and/or modify
@@ -17,40 +17,41 @@
     Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
   **/
 
-	class wioCopyChannelsTrueColor
-	{
-		static function getInstance()
-		{
-			static $instance;
-			if (!$instance)
-				$instance = new wioCopyChannelsTrueColor();
-			return $instance;
-		}
+    class wioCopyChannelsTrueColor
+    {
+        static function getInstance()
+        {
+            static $instance;
+            if (!$instance)
+                $instance = new wioCopyChannelsTrueColor();
 
-		function execute($img, $channels)
-		{
-			$blank = array('red' => 0, 'green' => 0, 'blue' => 0, 'alpha' => 0);
+            return $instance;
+        }
 
-			$width = $img->getWidth();
-			$height = $img->getHeight();
-			$copy = wiTrueColorImage::create($width, $height);
+        function execute($img, $channels)
+        {
+            $blank = array('red' => 0, 'green' => 0, 'blue' => 0, 'alpha' => 0);
 
-			if (count($channels) > 0)
-				for ($x = 0; $x < $width; $x++)
-					for ($y = 0; $y < $height; $y++)
-					{
-						$RGBA = $img->getRGBAt($x, $y);
-						$newRGBA = $blank;
-						foreach ($channels as $channel)
-							$newRGBA[$channel] = $RGBA[$channel];
+            $width = $img->getWidth();
+            $height = $img->getHeight();
+            $copy = wiTrueColorImage::create($width, $height);
 
-						$color = $copy->getExactColorAlpha($newRGBA);
-						if ($color == -1)
-							$color = $copy->allocateColorAlpha($newRGBA);
+            if (count($channels) > 0)
+                for ($x = 0; $x < $width; $x++)
+                    for ($y = 0; $y < $height; $y++)
+                    {
+                        $RGBA = $img->getRGBAt($x, $y);
+                        $newRGBA = $blank;
+                        foreach ($channels as $channel)
+                            $newRGBA[$channel] = $RGBA[$channel];
 
-						$copy->setColorAt($x, $y, $color);
-					}
+                        $color = $copy->getExactColorAlpha($newRGBA);
+                        if ($color == -1)
+                            $color = $copy->allocateColorAlpha($newRGBA);
 
-			return $copy;
-		}
-	}
+                        $copy->setColorAt($x, $y, $color);
+                    }
+
+            return $copy;
+        }
+    }

@@ -1,5 +1,5 @@
 <?php
-	/**
+    /**
     This file is part of WideImage.
 
     WideImage is free software; you can redistribute it and/or modify
@@ -17,35 +17,35 @@
     Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
   **/
 
-	class wioMerge
-	{
-		function execute($base, $overlay, $x, $y, $pct)
-		{
-			$result = $base->asTrueColor();
-			$result->alphaBlending(true);
-			$result->saveAlpha(true);
+    class wioMerge
+    {
+        function execute($base, $overlay, $x, $y, $pct)
+        {
+            $result = $base->asTrueColor();
+            $result->alphaBlending(true);
+            $result->saveAlpha(true);
 
-			if ($pct == 0)
-				return $result;
+            if ($pct == 0)
+                return $result;
 
-			if ($pct < 100)
-				imagecopymerge(
-					$result->getHandle(),
-					$overlay->getHandle(),
-					$x, $y, 0, 0,
-					$overlay->getWidth(),
-					$overlay->getHeight(),
-					$pct
-				);
-			else
-				imagecopy(
-					$result->getHandle(),
-					$overlay->getHandle(),
-					$x, $y, 0, 0,
-					$overlay->getWidth(),
-					$overlay->getHeight()
-				);
+            if ($pct < 100)
+                imagecopymerge(
+                    $result->getHandle(),
+                    $overlay->getHandle(),
+                    $x, $y, 0, 0,
+                    $overlay->getWidth(),
+                    $overlay->getHeight(),
+                    $pct
+                );
+            else
+                imagecopy(
+                    $result->getHandle(),
+                    $overlay->getHandle(),
+                    $x, $y, 0, 0,
+                    $overlay->getWidth(),
+                    $overlay->getHeight()
+                );
 
-			return $result;
-		}
-	}
+            return $result;
+        }
+    }

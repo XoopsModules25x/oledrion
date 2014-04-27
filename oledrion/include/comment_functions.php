@@ -15,12 +15,10 @@
  * @copyright   The XOOPS Project http://sourceforge.net/projects/xoops/
  * @license     http://www.fsf.org/copyleft/gpl.html GNU public license
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
- * @version     $Id$
+ * @version     $Id: comment_functions.php 12290 2014-02-07 11:05:17Z beckmi $
  */
 
-if (!defined('XOOPS_ROOT_PATH')) {
-    die("XOOPS root path not defined");
-}
+defined('XOOPS_ROOT_PATH') || die('XOOPS root path not defined');
 
 function oledrion_com_update($product_id, $total_num)
 {
@@ -38,4 +36,3 @@ function oledrion_com_approve(&$comment)
 {
     // notification mail here
 }
-

@@ -15,7 +15,7 @@
  * @copyright   The XOOPS Project http://sourceforge.net/projects/xoops/
  * @license     http://www.fsf.org/copyleft/gpl.html GNU public license
  * @author      Hossein Azizabadi (azizabadi@faragostaresh.com)
- * @version     $Id$
+ * @version     $Id: oledrion_payment.php 12290 2014-02-07 11:05:17Z beckmi $
  */
 
 require 'classheader.php';
@@ -35,7 +35,7 @@ class oledrion_payment extends Oledrion_Object
 
     /**
      * Retourne l'URL de l'image de la catégorie courante
-     * @return string    L'URL
+     * @return string L'URL
      */
     public function getPictureUrl()
     {
@@ -49,7 +49,7 @@ class oledrion_payment extends Oledrion_Object
     /**
      * Indique si l'image de la catégorie existe
      *
-     * @return boolean    Vrai si l'image existe sinon faux
+     * @return boolean Vrai si l'image existe sinon faux
      */
     public function pictureExists()
     {
@@ -57,6 +57,7 @@ class oledrion_payment extends Oledrion_Object
         if (xoops_trim($this->getVar('payment_image')) != '' && file_exists(OLEDRION_PICTURES_PATH . DIRECTORY_SEPARATOR . $this->getVar('payment_image'))) {
             $return = true;
         }
+
         return $return;
     }
 
@@ -75,7 +76,7 @@ class oledrion_payment extends Oledrion_Object
     /**
      * Retourne les éléments du produits formatés pour affichage
      *
-     * @param string $format
+     * @param  string $format
      * @return array
      */
     public function toArray($format = 's')
@@ -83,10 +84,10 @@ class oledrion_payment extends Oledrion_Object
         $ret = array();
         $ret = parent::toArray($format);
         $ret['payment_image_url'] = $this->getPictureUrl();
+
         return $ret;
     }
 }
-
 
 class OledrionOledrion_paymentHandler extends Oledrion_XoopsPersistableObjectHandler
 {
@@ -105,6 +106,7 @@ class OledrionOledrion_paymentHandler extends Oledrion_XoopsPersistableObjectHan
         $critere->setOrder($parameters['order']);
         $categories = array();
         $categories = $this->getObjects($critere);
+
         return $categories;
     }
 
@@ -114,8 +116,8 @@ class OledrionOledrion_paymentHandler extends Oledrion_XoopsPersistableObjectHan
         $ret = array();
         $parameters = array('delivery' => $delivery_id);
         $delivery_payment = $h_oledrion_delivery_payment->getDeliveryPaymantId($parameters);
-        foreach($delivery_payment as $payment) {
-	        	$id[] = $payment['dp_payment'];
+        foreach ($delivery_payment as $payment) {
+                $id[] = $payment['dp_payment'];
         }
 
         $critere = new CriteriaCompo ();
@@ -129,6 +131,7 @@ class OledrionOledrion_paymentHandler extends Oledrion_XoopsPersistableObjectHan
                 $ret[] = $tab;
             }
         }
+
         return $ret;
     }
 }

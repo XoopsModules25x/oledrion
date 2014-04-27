@@ -15,7 +15,7 @@
  * @copyright   The XOOPS Project http://sourceforge.net/projects/xoops/
  * @license     http://www.fsf.org/copyleft/gpl.html GNU public license
  * @author      Hossein Azizabadi (AKA Voltan)
- * @version     $Id$
+ * @version     $Id: comment_fast.php 12290 2014-02-07 11:05:17Z beckmi $
  */
 
 $productid = isset($_GET['product_id']) ? intval($_GET['product_id']) : 0;

@@ -15,7 +15,7 @@
  * @copyright   The XOOPS Project http://sourceforge.net/projects/xoops/
  * @license     http://www.fsf.org/copyleft/gpl.html GNU public license
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
- * @version     $Id$
+ * @version     $Id: oledrion_products.php 12290 2014-02-07 11:05:17Z beckmi $
  */
 
 /**
@@ -106,13 +106,14 @@ class oledrion_products extends Oledrion_Object
                 return false;
             }
         }
+
         return true;
     }
 
     /**
      * Retourne l'URL de l'image du produit courant
      *
-     * @return string    L'URL
+     * @return string L'URL
      */
     public function getPictureUrl()
     {
@@ -126,7 +127,7 @@ class oledrion_products extends Oledrion_Object
     /**
      * Retourne le chemin de l'image du produit courant
      *
-     * @return string    Le chemin
+     * @return string Le chemin
      */
     public function getPicturePath()
     {
@@ -140,7 +141,7 @@ class oledrion_products extends Oledrion_Object
     /**
      * Retourne l'URL de la vignette du produit courant
      *
-     * @return string    L'URL
+     * @return string L'URL
      */
     public function getThumbUrl()
     {
@@ -154,7 +155,7 @@ class oledrion_products extends Oledrion_Object
     /**
      * Retourne l'URL de la vignette du produit courant
      *
-     * @return string    L'URL
+     * @return string L'URL
      */
     public function getThumbPath()
     {
@@ -165,11 +166,10 @@ class oledrion_products extends Oledrion_Object
         }
     }
 
-
     /**
      * Indique si l'image du produit existe
      *
-     * @return boolean    Vrai si l'image existe sinon faux
+     * @return boolean Vrai si l'image existe sinon faux
      */
     public function pictureExists()
     {
@@ -177,13 +177,14 @@ class oledrion_products extends Oledrion_Object
         if (xoops_trim($this->getVar('product_image_url')) != '' && file_exists(OLEDRION_PICTURES_PATH . DIRECTORY_SEPARATOR . $this->getVar('product_image_url'))) {
             $return = true;
         }
+
         return $return;
     }
 
     /**
      * Indique si la vignette du produit existe
      *
-     * @return boolean    Vrai si l'image existe sinon faux
+     * @return boolean Vrai si l'image existe sinon faux
      */
     public function thumbExists()
     {
@@ -191,6 +192,7 @@ class oledrion_products extends Oledrion_Object
         if (xoops_trim($this->getVar('product_thumb_url')) != '' && file_exists(OLEDRION_PICTURES_PATH . DIRECTORY_SEPARATOR . $this->getVar('product_thumb_url'))) {
             $return = true;
         }
+
         return $return;
     }
 
@@ -218,6 +220,7 @@ class oledrion_products extends Oledrion_Object
         if (xoops_trim($this->getVar('product_attachment')) != '' && file_exists(OLEDRION_ATTACHED_FILES_PATH . DIRECTORY_SEPARATOR . $this->getVar('product_attachment'))) {
             $return = true;
         }
+
         return $return;
     }
 
@@ -233,7 +236,6 @@ class oledrion_products extends Oledrion_Object
         }
         $this->setVar('product_attachment', '');
     }
-
 
     /**
      * Supprime la miniature associée à un produit
@@ -262,7 +264,7 @@ class oledrion_products extends Oledrion_Object
     /**
      * Retourne le prix TTC du prix réduit du produit courant
      *
-     * @return floatval    Le montant TTC du prix réduit
+     * @return floatval Le montant TTC du prix réduit
      */
     public function getDiscountTTC()
     {
@@ -282,7 +284,7 @@ class oledrion_products extends Oledrion_Object
     /**
      * Indique si le produit courant est recommandé.
      *
-     * @return boolean    Vrai si le produit est recommandé sinon faux
+     * @return boolean Vrai si le produit est recommandé sinon faux
      */
     public function isRecommended($withDescription = false)
     {
@@ -316,7 +318,7 @@ class oledrion_products extends Oledrion_Object
     /**
      * Retourne l'image qui indique si le produit est recommandé ou pas
      *
-     * @return string    La chaine à utiliser pour voir l'image
+     * @return string La chaine à utiliser pour voir l'image
      */
     public function recommendedPicture()
     {
@@ -330,9 +332,9 @@ class oledrion_products extends Oledrion_Object
     /**
      * Retourne le lien du produit courant en tenant compte de l'URL Rewriting
      *
-     * @param integer $product_id    L'identifiant du produit
-     * @param string $product_title    Le titre du produit
-     * @param boolean $shortVersion    Indique si on veut la version avec l'url complpète ou la version avec juste la page et le paramètre
+     * @param  integer $product_id    L'identifiant du produit
+     * @param  string  $product_title Le titre du produit
+     * @param  boolean $shortVersion  Indique si on veut la version avec l'url complpète ou la version avec juste la page et le paramètre
      * @return string
      */
     public function getLink($product_id = 0, $product_title = '', $shortVersion = false)
@@ -355,6 +357,7 @@ class oledrion_products extends Oledrion_Object
                 $url = 'product.php?product_id=' . $product_id;
             }
         }
+
         return $url;
     }
 
@@ -431,8 +434,8 @@ class oledrion_products extends Oledrion_Object
     /**
      * Retourne les éléments du produits formatés pour affichage
      *
-     * @param string $format    Le format à utiliser
-     * @return array    Les informations formatées
+     * @param  string $format Le format à utiliser
+     * @return array  Les informations formatées
      */
     public function toArray($format = 's')
     {
@@ -497,6 +500,7 @@ class oledrion_products extends Oledrion_Object
         $ret['product_shorten_summary'] = oledrion_utils::truncate_tagsafe($this->getVar('product_summary'), OLEDRION_SUMMARY_MAXLENGTH);
         $ret['product_shorten_description'] = oledrion_utils::truncate_tagsafe($this->getVar('product_description'), OLEDRION_SUMMARY_MAXLENGTH);
         $ret['product_new'] = $this->isNewProduct();
+
         return $ret;
     }
 }
@@ -513,12 +517,12 @@ class OledrionOledrion_productsHandler extends Oledrion_XoopsPersistableObjectHa
     /**
      * Retourne la liste des x produits les plus vus par les visiteurs
      *
-     * @param integer $start        Début des données
-     * @param integer $limit        Nombre maximum d'enregistrements à renvoyer
-     * @param integer $category Identifiant de la catégorie (évenutellement)
-     * @param string $sort    Champ sur lequel trier
-     * @param string $order    Sens du tri
-     * @return array Tableau de produits (sous la forme d'objets)
+     * @param  integer $start    Début des données
+     * @param  integer $limit    Nombre maximum d'enregistrements à renvoyer
+     * @param  integer $category Identifiant de la catégorie (évenutellement)
+     * @param  string  $sort     Champ sur lequel trier
+     * @param  string  $order    Sens du tri
+     * @return array   Tableau de produits (sous la forme d'objets)
      */
     public function getMostViewedProducts(oledrion_parameters $parameters)
     {
@@ -544,16 +548,17 @@ class OledrionOledrion_productsHandler extends Oledrion_XoopsPersistableObjectHa
         $criteria->setSort($parameters['sort']);
         $criteria->setOrder($parameters['order']);
         $data = $this->getObjects($criteria, true);
+
         return $data;
     }
 
     /**
      * Retourne la liste des x produits les mieux notés par les visiteurs
      *
-     * @param integer $start        Début des données
-     * @param integer $limit        Nombre maximum d'enregistrements à renvoyer
-     * @param integer $category Identifiant de la catégorie (évenutellement)
-     * @return array Tableau de produits (sous la forme d'objets)
+     * @param  integer $start    Début des données
+     * @param  integer $limit    Nombre maximum d'enregistrements à renvoyer
+     * @param  integer $category Identifiant de la catégorie (évenutellement)
+     * @return array   Tableau de produits (sous la forme d'objets)
      */
     public function getBestRatedProducts(oledrion_parameters $parameters)
     {
@@ -578,16 +583,17 @@ class OledrionOledrion_productsHandler extends Oledrion_XoopsPersistableObjectHa
         $criteria->setSort($parameters['sort']);
         $criteria->setOrder($parameters['order']);
         $data = $this->getObjects($criteria, true);
+
         return $data;
     }
 
     /**
      * Retourne la liste des x derniers produits recommandés
      *
-     * @param integer $start        Indice de départ
-     * @param integer $limit        Nombre maximum d'enregistrements à renvoyer
-     * @param integer $category Identifiant de la catégorie (évenutellement)
-     * @return array Tableau de produits (sous la forme d'objets)
+     * @param  integer $start    Indice de départ
+     * @param  integer $limit    Nombre maximum d'enregistrements à renvoyer
+     * @param  integer $category Identifiant de la catégorie (évenutellement)
+     * @return array   Tableau de produits (sous la forme d'objets)
      */
     public function getRecentRecommended(oledrion_parameters $parameters)
     {
@@ -612,6 +618,7 @@ class OledrionOledrion_productsHandler extends Oledrion_XoopsPersistableObjectHa
         $criteria->setSort($parameters['sort']);
         $criteria->setOrder($parameters['order']);
         $data = $this->getObjects($criteria, true);
+
         return $data;
     }
 
@@ -631,6 +638,7 @@ class OledrionOledrion_productsHandler extends Oledrion_XoopsPersistableObjectHa
         if (oledrion_utils::getModuleOption('nostock_display') == 0) { // Se limiter aux seuls produits encore en stock
             $criteria->add(new Criteria('product_stock', 0, '>'));
         }
+
         return $this->getCount($criteria);
     }
 
@@ -638,14 +646,14 @@ class OledrionOledrion_productsHandler extends Oledrion_XoopsPersistableObjectHa
     /**
      * Retourne la liste des x derniers produits parus toutes catégories confondues ou dans une catégorie spécifique
      *
-     * @param integer $start    Début des données
-     * @param integer $limit    Nombre maximum d'enregistrements à renvoyer
-     * @param mixed $category Identifiant de la catégorie (évenutellement) ou tableau d'ID ou rien du tout
-     * @param string $sort        Champ(s) à utiliser pour le tri
-     * @param string $order        Ordre de tri
-     * @param integer $excluded    Produit à exclure de la liste (éventuellement)
-     * @param boolean $thisMonthOnly    Indique s'il ne faut prendre que les produits du mois
-     * @return array Tableau de produits (sous la forme d'objets)
+     * @param  integer $start         Début des données
+     * @param  integer $limit         Nombre maximum d'enregistrements à renvoyer
+     * @param  mixed   $category      Identifiant de la catégorie (évenutellement) ou tableau d'ID ou rien du tout
+     * @param  string  $sort          Champ(s) à utiliser pour le tri
+     * @param  string  $order         Ordre de tri
+     * @param  integer $excluded      Produit à exclure de la liste (éventuellement)
+     * @param  boolean $thisMonthOnly Indique s'il ne faut prendre que les produits du mois
+     * @return array   Tableau de produits (sous la forme d'objets)
      */
     public function getRecentProducts(oledrion_parameters $parameters)
     {
@@ -679,14 +687,15 @@ class OledrionOledrion_productsHandler extends Oledrion_XoopsPersistableObjectHa
             $criteria->setOrder($parameters['order']);
         }
         $data = $this->getObjects($criteria, true);
+
         return $data;
     }
 
     /**
      * Retourne le nombre total de produits récents (éventuellement dans une catégorie)
      *
-     * @param mixed $category    Array ou Integer
-     * @param integer    $excludedProduct    ID d'un produit à exclure
+     * @param  mixed   $category        Array ou Integer
+     * @param  integer $excludedProduct ID d'un produit à exclure
      * @return integer
      */
     public function getRecentProductsCount($category = 0, $excludedProduct = 0)
@@ -707,19 +716,19 @@ class OledrionOledrion_productsHandler extends Oledrion_XoopsPersistableObjectHa
         if ($excludedProduct > 0) {
             $criteria->add(new Criteria('product_id', $excludedProduct, '<>'));
         }
+
         return $this->getCount($criteria);
     }
-
 
     /**
      * Retourne la liste des produits qui correspondent à des "critères" de manière à les utiliser pour la newsletter
      *
-     * @param integer $startingDate        Date de soumission du produit à prendre comme borne inférieure
-     * @param integer $endingDate        Date de soumission du produit à prendre comme borne supérieure
-     * @param mixed $category            Soit un tableau d'ID de catégories soit un ID unique de catégorie
-     * @param integer $start            Position de départ
-     * @param integer $limit            Nombre d'enregistrements à retourner
-     * @return array    Des objects de type produits
+     * @param  integer $startingDate Date de soumission du produit à prendre comme borne inférieure
+     * @param  integer $endingDate   Date de soumission du produit à prendre comme borne supérieure
+     * @param  mixed   $category     Soit un tableau d'ID de catégories soit un ID unique de catégorie
+     * @param  integer $start        Position de départ
+     * @param  integer $limit        Nombre d'enregistrements à retourner
+     * @return array   Des objects de type produits
      */
     public function getProductsForNewsletter(oledrion_parameters $parameters)
     {
@@ -744,14 +753,14 @@ class OledrionOledrion_productsHandler extends Oledrion_XoopsPersistableObjectHa
         $criteria->setStart($parameters['start']);
         $criteria->setSort('product_title');
         $data = $this->getObjects($criteria, true);
+
         return $data;
     }
-
 
     /**
      * Retourne le nombre total de produits publiés dans la base en tenant compte des préférences du module
      *
-     * @param intefer $product_cid Catégorie du produit
+     * @param  intefer $product_cid Catégorie du produit
      * @return integer Le nombre de produits publiés
      */
     public function getTotalPublishedProductsCount($product_cid = 0)
@@ -767,14 +776,15 @@ class OledrionOledrion_productsHandler extends Oledrion_XoopsPersistableObjectHa
         if ($product_cid > 0) {
             $criteria->add(new Criteria('product_cid', intval($product_cid), '='));
         }
+
         return $this->getCount($criteria);
     }
 
     /**
      * Récupération de l'ID et du titre d'une série de produits répondants à un critère
      *
-     * @param object $criteria    critère de sélection
-     * @return array Tableau dont la clé = ID produit et la valeur le titre du produit
+     * @param  object $criteria critère de sélection
+     * @return array  Tableau dont la clé = ID produit et la valeur le titre du produit
      */
     public function getIdTitle($criteria)
     {
@@ -796,14 +806,14 @@ class OledrionOledrion_productsHandler extends Oledrion_XoopsPersistableObjectHa
         while ($myrow = $this->db->fetchArray($result)) {
             $ret[$myrow['product_id']] = $myts->htmlSpecialChars($myrow['product_title']);
         }
+
         return $ret;
     }
-
 
     /**
      * Mise à jour du compteur de lectures du produit
      *
-     * @param integer $product_id L'identifiant du produit dont il faut mettre à jour le compteur de lectures
+     * @param  integer $product_id L'identifiant du produit dont il faut mettre à jour le compteur de lectures
      * @return boolean Le résultat de la mise à jour
      */
     public function addCounter($product_id)
@@ -817,21 +827,22 @@ class OledrionOledrion_productsHandler extends Oledrion_XoopsPersistableObjectHa
     /**
      * Mise à jour de la notation d'un produit
      *
-     * @param integer $product_id Identifiant du produit
-     * @param float $rating la notation
-     * @param integer $votes Le nombre de votes du produit
+     * @param  integer $product_id Identifiant du produit
+     * @param  float   $rating     la notation
+     * @param  integer $votes      Le nombre de votes du produit
      * @return boolean Le résultat de la mise à jour
      */
     public function updateRating($product_id, $rating, $votes)
     {
         $sql = 'UPDATE ' . $this->table . ' SET product_rating = ' . intval($rating) . ', product_votes = ' . intval($votes) . ' WHERE product_id = ' . intval($product_id);
+
         return $this->db->queryF($sql);
     }
 
     /**
      * Mise à jour du nombre de commentaires d'un produit
      *
-     * @param integer $product_id Identifiant du produit
+     * @param integer $product_id    Identifiant du produit
      * @param integer $commentsCount Nombre total de commentaires
      */
     public function updateCommentsCount($product_id, $commentsCount)
@@ -847,13 +858,13 @@ class OledrionOledrion_productsHandler extends Oledrion_XoopsPersistableObjectHa
     /**
      * Retourne x produits au hasard
      *
-     * @param integer $start        Début des données
-     * @param integer $limit        Nombre maximum d'enregistrements à renvoyer
-     * @param integer $category Identifiant de la catégorie (évenutellement)
-     * @param string $sort    Zone sur laquelle faire le tri
-     * @param string $order    Ordre de tri
-     * @param boolean $thisMonthOnly    Uniquement les produits du mois en cours ?
-     * @return array Tableau de produits (sous la forme d'objets)
+     * @param  integer $start         Début des données
+     * @param  integer $limit         Nombre maximum d'enregistrements à renvoyer
+     * @param  integer $category      Identifiant de la catégorie (évenutellement)
+     * @param  string  $sort          Zone sur laquelle faire le tri
+     * @param  string  $order         Ordre de tri
+     * @param  boolean $thisMonthOnly Uniquement les produits du mois en cours ?
+     * @return array   Tableau de produits (sous la forme d'objets)
      */
     public function getRandomProducts(oledrion_parameters $parameters)
     {
@@ -882,6 +893,7 @@ class OledrionOledrion_productsHandler extends Oledrion_XoopsPersistableObjectHa
         $criteria->setSort($parameters['sort']);
         $criteria->setOrder($parameters['order']);
         $data = $this->getObjects($criteria, true);
+
         return $data;
     }
 
@@ -889,10 +901,10 @@ class OledrionOledrion_productsHandler extends Oledrion_XoopsPersistableObjectHa
     /**
      * Retourne x produits en promo
      *
-     * @param integer $start        Début des données
-     * @param integer $limit        Nombre maximum d'enregistrements à renvoyer
-     * @param integer $category Identifiant de la catégorie (évenutellement)
-     * @return array Tableau de produits (sous la forme d'objets)
+     * @param  integer $start    Début des données
+     * @param  integer $limit    Nombre maximum d'enregistrements à renvoyer
+     * @param  integer $category Identifiant de la catégorie (évenutellement)
+     * @return array   Tableau de produits (sous la forme d'objets)
      */
     public function getPromotionalProducts(oledrion_parameters $parameters)
     {
@@ -917,6 +929,7 @@ class OledrionOledrion_productsHandler extends Oledrion_XoopsPersistableObjectHa
         $criteria->setSort($parameters['sort']);
         $criteria->setOrder($parameters['order']);
         $data = $this->getObjects($criteria, true);
+
         return $data;
     }
 
@@ -924,9 +937,9 @@ class OledrionOledrion_productsHandler extends Oledrion_XoopsPersistableObjectHa
     /**
      * Retourne les produits dont les stocks sont bas
      *
-     * @param integer $start        Début des données
-     * @param integer $limit        Nombre maximum d'enregistrements à renvoyer
-     * @return array Tableau de produits (sous la forme d'objets)
+     * @param  integer $start Début des données
+     * @param  integer $limit Nombre maximum d'enregistrements à renvoyer
+     * @return array   Tableau de produits (sous la forme d'objets)
      */
     public function getLowStocks($start = 0, $limit = 0)
     {
@@ -944,6 +957,7 @@ class OledrionOledrion_productsHandler extends Oledrion_XoopsPersistableObjectHa
         }
 
         $ret = $this->convertResultSet($result, true, true);
+
         return $ret;
     }
 
@@ -967,6 +981,7 @@ class OledrionOledrion_productsHandler extends Oledrion_XoopsPersistableObjectHa
         }
         $count = 0;
         list($count) = $this->db->fetchRow($result);
+
         return $count;
     }
 
@@ -980,6 +995,7 @@ class OledrionOledrion_productsHandler extends Oledrion_XoopsPersistableObjectHa
     {
         $product->setVar('product_stock', $product->getVar('product_stock') + $quantity);
         $this->insert($product, true);
+
         return true;
     }
 
@@ -997,14 +1013,14 @@ class OledrionOledrion_productsHandler extends Oledrion_XoopsPersistableObjectHa
         } else {
             $product->setVar('product_stock', 0);
         }
+
         return true;
     }
-
 
     /**
      * Indique si la quantité d'alerte d'un produit est atteinte
      *
-     * @param object $products L'objet produit concerné
+     * @param  object  $products L'objet produit concerné
      * @return boolean Vrai si la quantité d'alerte est atteinte, sinon faux
      */
     public function isAlertStockReached(&$product)
@@ -1019,7 +1035,7 @@ class OledrionOledrion_productsHandler extends Oledrion_XoopsPersistableObjectHa
     /**
      * Méthode chargée de vérifier si le stock d'alerte est atteint et si c'est le cas, d'envoyer une alerte
      *
-     * @param object $product Produit dont il faut faire la vérification
+     * @param  object  $product Produit dont il faut faire la vérification
      * @return boolean vrai si l'alerte à du être générée sinon faux
      */
     public function verifyLowStock(&$product)
@@ -1032,6 +1048,7 @@ class OledrionOledrion_productsHandler extends Oledrion_XoopsPersistableObjectHa
             $msg['PUBLIC_URL'] = $product->getLink();
             $msg['ADMIN_URL'] = OLEDRION_URL . 'admin/index.php?op=editproduct&id=' . $product->getVar('product_id');
             oledrion_utils::sendEmailFromTpl('shop_lowstock.tpl', oledrion_utils::getEmailsFromGroup(oledrion_utils::getModuleOption('stock_alert_email')), _OLEDRION_STOCK_ALERT, $msg);
+
             return true;
         } else {
             return false;
@@ -1041,8 +1058,8 @@ class OledrionOledrion_productsHandler extends Oledrion_XoopsPersistableObjectHa
     /**
      * Retourne la plus petite date de création d'un produit ainsi que la "plus grande" date de création d'un produit
      *
-     * @param integer $minDate Date mini (parmètre de sortie)
-     * @param integer $maxDate Date maxi (paramètre de sortie)
+     * @param  integer $minDate Date mini (parmètre de sortie)
+     * @param  integer $maxDate Date maxi (paramètre de sortie)
      * @return boolean Vrai si on a pu récupérer ces valeurs, faux sinon
      */
     public function getMinMaxPublishedDate(&$minDate, &$maxDate)
@@ -1055,15 +1072,16 @@ class OledrionOledrion_productsHandler extends Oledrion_XoopsPersistableObjectHa
         $myrow = $this->db->fetchArray($result);
         $minDate = $myrow['minDate'];
         $maxDate = $myrow['maxDate'];
+
         return true;
     }
 
     /**
      * Retourne des produits en fonction de leur IDs tout en tenant compte du fait qu'ils sont en ligne et payés !
      *
-     * @param array $ids    Les identifiants des produits
-     * @param boolean    $showAll    Afficher les produits même s'ils ne sont plus en stock ?
-     * @return array    Tableau d'objets de type oledrion_products, Clé = Id Produit
+     * @param  array   $ids     Les identifiants des produits
+     * @param  boolean $showAll Afficher les produits même s'ils ne sont plus en stock ?
+     * @return array   Tableau d'objets de type oledrion_products, Clé = Id Produit
      */
     public function getProductsFromIDs($ids, $showAll = false)
     {
@@ -1079,6 +1097,7 @@ class OledrionOledrion_productsHandler extends Oledrion_XoopsPersistableObjectHa
             $criteria->add(new Criteria('product_id', '(' . implode(',', $ids) . ')', 'IN'));
             $ret = $this->getObjects($criteria, true, true, '*', false);
         }
+
         return $ret;
     }
 
@@ -1086,8 +1105,8 @@ class OledrionOledrion_productsHandler extends Oledrion_XoopsPersistableObjectHa
     /**
      * Retourne le nombre de produits d'une ou de plusieurs catégories
      *
-     * @param mixed $cat_cid    Soit un ID de catégorie unique soit un tableau d'ID de catégories
-     * @return integer    Le nombre de produits associés à cette catégorie
+     * @param  mixed   $cat_cid Soit un ID de catégorie unique soit un tableau d'ID de catégories
+     * @return integer Le nombre de produits associés à cette catégorie
      */
     public function getCategoryProductsCount($cat_cid)
     {
@@ -1097,38 +1116,41 @@ class OledrionOledrion_productsHandler extends Oledrion_XoopsPersistableObjectHa
         } else {
             $criteria = new Criteria('product_cid', $cat_cid, '=');
         }
+
         return $this->getCount($criteria);
     }
 
     /**
      * Retourne le nombre de produits associés à un vendeur
      *
-     * @param integer    $product_vendor_id    L'ID du vendeur
-     * @return integer    Le nombre de produits
+     * @param  integer $product_vendor_id L'ID du vendeur
+     * @return integer Le nombre de produits
      */
     public function getVendorProductsCount($product_vendor_id)
     {
         $criteria = new Criteria('product_vendor_id', $product_vendor_id, '=');
+
         return $this->getCount($criteria);
     }
 
     /**
      * Retourne le nombre de produits associés à une TVA
      *
-     * @param integer $product_vat_id    L'identifiant de la TVA
-     * @return integer    Le nombre de produits
+     * @param  integer $product_vat_id L'identifiant de la TVA
+     * @return integer Le nombre de produits
      */
     public function getVatProductsCount($product_vat_id)
     {
         $criteria = new Criteria('product_vat_id', $product_vat_id, '=');
+
         return $this->getCount($criteria);
     }
 
     /**
      * Clone d'un produit
      *
-     * @param object $originalProduct    Le produit à cloner
-     * @return mixed    Soit l'objet représentant le nouveau produit soit false
+     * @param  object $originalProduct Le produit à cloner
+     * @return mixed  Soit l'objet représentant le nouveau produit soit false
      */
     public function cloneProduct(oledrion_products $originalProduct)
     {
@@ -1221,6 +1243,7 @@ class OledrionOledrion_productsHandler extends Oledrion_XoopsPersistableObjectHa
                     $oledrion_handlers->h_oledrion_attributes->insert($newAttribute, true);
                 }
             }
+
             return $newProduct;
         } else {
             return false;
@@ -1231,19 +1254,19 @@ class OledrionOledrion_productsHandler extends Oledrion_XoopsPersistableObjectHa
      * Construit un sélecteur de produit(s) en fonction des paramètres et en tenant compte du nombre total de produits dans la base
      *
      * @todo: Remplacer les paramètres par un objet paramètre et/ou un tableau
-     * @param string $caption        Le titre du sélecteur
-     * @param string $name            Le nom du champ qui receuille les produits
-     * @param mixed $value            La valeur sélectionnées
-     * @param integer $size            Le nombre d'éléments visibles dans le sélecteur
-     * @param boolean $multiple        Indique si c'est un sélecteur multiple ou pas
-     * @param array $values            Les valeurs sélectionnées ou les valeurs qui font le sélecteur
-     * @param boolean $showAll        Indique s'il faut voir tous les produits ou pas (pas publiés et en stock)
-     * @param string $sort            Zone de tri
-     * @param string $order            Ordre de tri
-     * @param string $formName        Nom du formulaire
-     * @param string $description    Description à rajouter à la zone
-     * @param mixed $withNull        Option à rajouter en premier
-     * @return object                Retourne soit un objet de type tray {@link XoopsFormElementTray} soit un select {@link XoopsFormSelect}
+     * @param  string  $caption     Le titre du sélecteur
+     * @param  string  $name        Le nom du champ qui receuille les produits
+     * @param  mixed   $value       La valeur sélectionnées
+     * @param  integer $size        Le nombre d'éléments visibles dans le sélecteur
+     * @param  boolean $multiple    Indique si c'est un sélecteur multiple ou pas
+     * @param  array   $values      Les valeurs sélectionnées ou les valeurs qui font le sélecteur
+     * @param  boolean $showAll     Indique s'il faut voir tous les produits ou pas (pas publiés et en stock)
+     * @param  string  $sort        Zone de tri
+     * @param  string  $order       Ordre de tri
+     * @param  string  $formName    Nom du formulaire
+     * @param  string  $description Description à rajouter à la zone
+     * @param  mixed   $withNull    Option à rajouter en premier
+     * @return object  Retourne soit un objet de type tray {@link XoopsFormElementTray} soit un select {@link XoopsFormSelect}
      */
     public function productSelector(oledrion_parameters $parameters)
     {
@@ -1324,6 +1347,7 @@ class OledrionOledrion_productsHandler extends Oledrion_XoopsPersistableObjectHa
         if (trim($parameters['description']) != '') {
             $productTray->setDescription($parameters['description']);
         }
+
         return $productTray;
     }
 }

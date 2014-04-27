@@ -15,7 +15,7 @@
  * @copyright   The XOOPS Project http://sourceforge.net/projects/xoops/
  * @license     http://www.fsf.org/copyleft/gpl.html GNU public license
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
- * @version     $Id$
+ * @version     $Id: oledrion_manufacturer.php 12290 2014-02-07 11:05:17Z beckmi $
  */
 
 /**
@@ -45,8 +45,8 @@ class oledrion_manufacturer extends Oledrion_Object
     /**
      * Retourne l'URL d'une des 5 images du fabricant courant
      *
-     * @param integer    $pictureNumber    Le numéro (de 1 à 5) de l'image que l'on souhaite récupérer
-     * @return mixed    L'URL    Soit l'url de l'image soit False si l'indice passé en paramètre n'est pas correct
+     * @param  integer $pictureNumber Le numéro (de 1 à 5) de l'image que l'on souhaite récupérer
+     * @return mixed   L'URL    Soit l'url de l'image soit False si l'indice passé en paramètre n'est pas correct
      */
     public function getPictureUrl($pictureNumber)
     {
@@ -61,8 +61,8 @@ class oledrion_manufacturer extends Oledrion_Object
     /**
      * Retourne le chemin de l'une des 5 images du fabricant courant
      *
-     * @param integer    $pictureNumber    Le numéro (de 1 à 5) de l'image que l'on souhaite récupérer
-     * @return string    Le chemin
+     * @param  integer $pictureNumber Le numéro (de 1 à 5) de l'image que l'on souhaite récupérer
+     * @return string  Le chemin
      */
     public function getPicturePath($pictureNumber)
     {
@@ -77,8 +77,8 @@ class oledrion_manufacturer extends Oledrion_Object
     /**
      * Indique si une des 5 images du fabricant existe
      *
-     * @param integer    $pictureNumber    Le numéro (de 1 à 5) de l'image que l'on souhaite récupérer
-     * @return boolean    Vrai si l'image existe sinon faux
+     * @param  integer $pictureNumber Le numéro (de 1 à 5) de l'image que l'on souhaite récupérer
+     * @return boolean Vrai si l'image existe sinon faux
      */
     public function pictureExists($pictureNumber)
     {
@@ -89,13 +89,14 @@ class oledrion_manufacturer extends Oledrion_Object
                 $return = true;
             }
         }
+
         return $return;
     }
 
     /**
      * Supprime une des 5 images du fabricant
      *
-     * @param integer    $pictureNumber    Le numéro (de 1 à 5) de l'image que l'on souhaite récupérer
+     * @param  integer $pictureNumber Le numéro (de 1 à 5) de l'image que l'on souhaite récupérer
      * @return void
      */
     public function deletePicture($pictureNumber)
@@ -133,6 +134,7 @@ class oledrion_manufacturer extends Oledrion_Object
         } else { // Pas d'utilisation de l'url rewriting
             $url = OLEDRION_URL . 'manufacturer.php?manu_id=' . $this->getVar('manu_id');
         }
+
         return $url;
     }
 
@@ -148,7 +150,7 @@ class oledrion_manufacturer extends Oledrion_Object
 
     /**
      * Retourne l'initiale du fabricant (à modifier selon le sens de l'écriture !)
-     * @return string    L'initiale
+     * @return string L'initiale
      */
     public function getInitial()
     {
@@ -158,8 +160,8 @@ class oledrion_manufacturer extends Oledrion_Object
     /**
      * Retourne les éléments du fabricant formatés pour affichage
      *
-     * @param string $format    Le format à utiliser
-     * @return array    Les informations formatées
+     * @param  string $format Le format à utiliser
+     * @return array  Les informations formatées
      */
     public function toArray($format = 's')
     {
@@ -171,11 +173,11 @@ class oledrion_manufacturer extends Oledrion_Object
         $ret['manu_url_rewrited'] = $this->getLink();
         $ret['manu_href_title'] = $this->getHrefTitle();
         $ret['manu_initial'] = $this->getInitial();
+
         return $ret;
     }
 
 }
-
 
 class OledrionOledrion_manufacturerHandler extends Oledrion_XoopsPersistableObjectHandler
 {
@@ -201,38 +203,41 @@ class OledrionOledrion_manufacturerHandler extends Oledrion_XoopsPersistableObje
         while ($myrow = $this->db->fetchArray($result)) {
             $ret[] = $myts->htmlSpecialChars($myrow['oneletter']);
         }
+
         return $ret;
     }
 
     /**
      * Supprime un fabricant et tout ce qui est relatif
      *
-     * @param oledrion_manufacturer $manufacturer
-     * @return boolean    Le résultat de la suppression
+     * @param  oledrion_manufacturer $manufacturer
+     * @return boolean               Le résultat de la suppression
      */
     public function deleteManufacturer(oledrion_manufacturer $manufacturer)
     {
         $manufacturer->deletePictures();
+
         return $this->delete($manufacturer, true);
     }
 
     /**
      * Retourne le nombre de produits associés à un fabricant
      *
-     * @param integer $manu_id    L'identifiant du fabricant
-     * @return integer    Le nombre de produis associés à un fabricant
+     * @param  integer $manu_id L'identifiant du fabricant
+     * @return integer Le nombre de produis associés à un fabricant
      */
     public function getManufacturerProductsCount($manu_id)
     {
         global $h_oledrion_productsmanu;
+
         return $h_oledrion_productsmanu->getManufacturerProductsCount($manu_id);
     }
 
     /**
      * Retourne des fabricants en fonction de leur IDs
      *
-     * @param array $ids    Les identifiants des produits
-     * @return array    Tableau d'objets de type oledrion_productsmanu
+     * @param  array $ids Les identifiants des produits
+     * @return array Tableau d'objets de type oledrion_productsmanu
      */
     public function getManufacturersFromIds($ids)
     {
@@ -241,16 +246,17 @@ class OledrionOledrion_manufacturerHandler extends Oledrion_XoopsPersistableObje
             $criteria = new Criteria('manu_id', '(' . implode(',', $ids) . ')', 'IN');
             $ret = $this->getObjects($criteria, true, true, '*', false);
         }
+
         return $ret;
     }
 
     /**
      * Retourne les produits d'un fabricant (note, ce code serait mieux dans une facade)
      *
-     * @param integer    $manu_id    Le fabricant dont on veut récupérer les produits
-     * @param integer    $start        Position de départ
-     * @param integer    $limit        Nombre maximum d'enregistrements à renvoyer
-     * @return array    Objects de type oledrion_products
+     * @param  integer $manu_id Le fabricant dont on veut récupérer les produits
+     * @param  integer $start   Position de départ
+     * @param  integer $limit   Nombre maximum d'enregistrements à renvoyer
+     * @return array   Objects de type oledrion_products
      */
     public function getManufacturerProducts($manu_id, $start = 0, $limit = 0)
     {
@@ -260,6 +266,7 @@ class OledrionOledrion_manufacturerHandler extends Oledrion_XoopsPersistableObje
         $productsIds = $h_oledrion_productsmanu->getProductsIdsFromManufacturer($manu_id, $start, $limit);
         // Puis les produits eux même
         $ret = $h_oledrion_products->getProductsFromIDs($productsIds);
+
         return $ret;
     }
 }

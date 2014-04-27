@@ -15,15 +15,13 @@
  * @copyright   The XOOPS Project http://sourceforge.net/projects/xoops/
  * @license     http://www.fsf.org/copyleft/gpl.html GNU public license
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
- * @version     $Id$
+ * @version     $Id: product_search_form.php 12290 2014-02-07 11:05:17Z beckmi $
  */
 
 /**
  * Recherche avancée dans les produits, formulaire de sélection des critères
  */
-if (!defined('XOOPS_ROOT_PATH')) {
-    die('XOOPS root path not defined');
-}
+defined('XOOPS_ROOT_PATH') || die('XOOPS root path not defined');
 require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
 require_once OLEDRION_PATH . 'class/tree.php';
 

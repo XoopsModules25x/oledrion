@@ -15,15 +15,13 @@
  * @copyright   The XOOPS Project http://sourceforge.net/projects/xoops/
  * @license     http://www.fsf.org/copyleft/gpl.html GNU public license
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
- * @version     $Id$
+ * @version     $Id: oledrion_shelf.php 12290 2014-02-07 11:05:17Z beckmi $
  */
 
 /**
  * Facade pour les produits
  */
-if (!defined('XOOPS_ROOT_PATH')) {
-    die("XOOPS root path not defined");
-}
+defined('XOOPS_ROOT_PATH') || die('XOOPS root path not defined');
 
 class oledrion_shelf
 {
@@ -45,7 +43,7 @@ class oledrion_shelf
     /**
      * Retourne le nombre de produits d'un certain type
      *
-     * @param string $type    Le type de produits dont on veut récupérer le nombre
+     * @param string $type Le type de produits dont on veut récupérer le nombre
      */
     public function getProductsCount($type = 'recent', $category = 0, $excluded = 0)
     {
@@ -54,6 +52,7 @@ class oledrion_shelf
                 return $this->handlers->h_oledrion_products->getRecentProductsCount($category, $excluded);
                 break;
         }
+
         return 0;
     }
 
@@ -108,8 +107,8 @@ class oledrion_shelf
     /**
      * Cherche et retourne la liste de produits relatifs à une liste de produits
      *
-     * @param array $productsIds    La liste des produits dont on cherche les produits relatifs
-     * @return array    Clé = ID Produit, valeurs (deuxième dimension) = liste des produits relatifs
+     * @param  array $productsIds La liste des produits dont on cherche les produits relatifs
+     * @return array Clé = ID Produit, valeurs (deuxième dimension) = liste des produits relatifs
      */
     private function getRelatedProductsFromProductsIds($productsIds)
     {
@@ -133,6 +132,7 @@ class oledrion_shelf
                 }
             }
         }
+
         return $relatedProducts;
     }
 
@@ -140,8 +140,8 @@ class oledrion_shelf
     /**
      * Retourne une liste de produits selon certains critères
      *
-     * @param oledrion_shelf_parameters $parameters    Les paramètres de filtrage
-     * @return array    Tableau prêt à être utilisé dans les templates
+     * @param  oledrion_shelf_parameters $parameters Les paramètres de filtrage
+     * @return array                     Tableau prêt à être utilisé dans les templates
      */
     public function getProducts(oledrion_shelf_parameters $parameters)
     {
@@ -311,6 +311,7 @@ class oledrion_shelf
             $count++;
         }
         $ret['lastTitle'] = $lastTitle;
+
         return $ret;
     }
 }

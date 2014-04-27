@@ -15,7 +15,7 @@
  * @copyright   The XOOPS Project http://sourceforge.net/projects/xoops/
  * @license     http://www.fsf.org/copyleft/gpl.html GNU public license
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
- * @version     $Id$
+ * @version     $Id: common.php 12290 2014-02-07 11:05:17Z beckmi $
  */
 
 if (!defined("XOOPS_ROOT_PATH")) {
@@ -41,8 +41,7 @@ require_once OLEDRION_CLASS_PATH . 'oledrion_reductions.php';
 require_once OLEDRION_CLASS_PATH . 'oledrion_gateways.php';
 require_once OLEDRION_ADMIN_PATH . 'gateways/gateway.php'; // La classe abstraite
 require_once OLEDRION_CLASS_PATH . 'oledrion_lists.php';
-
-
+require_once OLEDRION_CLASS_PATH . 'oledrion_sms.php';
 
 $oledrion_handlers = oledrion_handler::getInstance();
 
@@ -103,7 +102,11 @@ $icones = array(
     'ok' => "<img src='" . OLEDRION_IMAGES_URL . "ok.png' alt='" . _OLEDRION_VALIDATE_COMMAND . "' align='middle' />",
     'copy' => "<img src='" . $pathIcon16 . "/editcopy.png' alt='" . _OLEDRION_DUPLICATE_PRODUCT . "' align='middle' />",
     'details' => "<img src='" . OLEDRION_IMAGES_URL . "details.png' alt='" . _OLEDRION_DETAILS . "' align='middle' />",
-    'print' => "<img src='" . OLEDRION_IMAGES_URL . "print.png' alt='" . _OLEDRION_PRINT_VERSION . "' align='middle' />"
+    'print' => "<img src='" . OLEDRION_IMAGES_URL . "print.png' alt='" . _OLEDRION_PRINT_VERSION . "' align='middle' />",
+    'delivery' => "<img src='" . OLEDRION_IMAGES_URL . "delivery.png' alt='" . _OLEDRION_DELIVERY . "' align='middle' />",
+    'package' => "<img src='" . OLEDRION_IMAGES_URL . "package.png' alt='" . _OLEDRION_PACK . "' align='middle' />",
+    'submit' => "<img src='" . OLEDRION_IMAGES_URL . "submit.png' alt='" . _OLEDRION_SUBMIT . "' align='middle' />",
+    'track' => "<img src='" . OLEDRION_IMAGES_URL . "track.png' alt='" . _OLEDRION_TRACK . "' align='middle' />",
 );
 
 // Chargement de quelques préférences

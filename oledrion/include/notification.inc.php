@@ -15,7 +15,7 @@
  * @copyright   The XOOPS Project http://sourceforge.net/projects/xoops/
  * @license     http://www.fsf.org/copyleft/gpl.html GNU public license
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
- * @version     $Id$
+ * @version     $Id: notification.inc.php 12290 2014-02-07 11:05:17Z beckmi $
  */
 
 function oledrion_notify_iteminfo($category, $item_id)
@@ -37,6 +37,7 @@ function oledrion_notify_iteminfo($category, $item_id)
     if ($category == 'global') {
         $item['name'] = '';
         $item['url'] = '';
+
         return $item;
     }
 
@@ -48,6 +49,7 @@ function oledrion_notify_iteminfo($category, $item_id)
             $item['name'] = $category->getVar('cat_title');
             $item['url'] = OLEDRION_URL . 'category.php?cat_cid=' . $item_id;
         }
+
         return $item;
     }
 
@@ -59,6 +61,7 @@ function oledrion_notify_iteminfo($category, $item_id)
             $item['name'] = $product->getVar('product_title');
             $item['url'] = OLEDRION_URL . 'product.php?product_id=' . $item_id;
         }
+
         return $item;
     }
 }

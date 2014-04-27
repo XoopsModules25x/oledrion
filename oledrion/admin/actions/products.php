@@ -15,7 +15,7 @@
  * @copyright   The XOOPS Project http://sourceforge.net/projects/xoops/
  * @license     http://www.fsf.org/copyleft/gpl.html GNU public license
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
- * @version     $Id$
+ * @version     $Id: products.php 12290 2014-02-07 11:05:17Z beckmi $
  */
 
 /**
@@ -163,6 +163,9 @@ switch ($action) {
             }
 
             $actions = array();
+
+            $actions[] = "<a href='$baseurl?op=products&action=related&id=" . $id . "' title='" . _OLEDRION_RELATED_PRODUCTS . "'>" . $icones['details'] . '</a>';
+
             $actions[] = "<a href='$baseurl?op=products&action=edit&id=" . $id . "' title='" . _OLEDRION_EDIT . "'>" . $icones['edit'] . '</a>';
             $actions[] = "<a href='$baseurl?op=products&action=copy&id=" . $id . "' title='" . _OLEDRION_DUPLICATE_PRODUCT . "'>" . $icones['copy'] . '</a>';
             $actions[] = "<a href='$baseurl?op=products&action=confdelete&id=" . $id . "' title='" . _OLEDRION_DELETE . "'>" . $icones['delete'] . '</a>';
@@ -200,7 +203,6 @@ switch ($action) {
         //include_once OLEDRION_ADMIN_PATH . 'admin_footer.php';
         break;
 
-
     // ****************************************************************************************************************
     case 'unrecommend': // Arrêter de recommander un produit
         // ****************************************************************************************************************
@@ -224,7 +226,6 @@ switch ($action) {
         }
         break;
 
-
     // ****************************************************************************************************************
     case 'recommend': // Recommander un produit
         // ****************************************************************************************************************
@@ -247,7 +248,6 @@ switch ($action) {
             oledrion_utils::redirect(_AM_OLEDRION_ERROR_1, $baseurl . $opRedirect, 4);
         }
         break;
-
 
     // ****************************************************************************************************************
     case 'add': // Ajout d'un produit
@@ -650,7 +650,6 @@ switch ($action) {
             }
         }
 
-
         // Téléchargement du fichier attaché
         $destname = '';
         $res3 = oledrion_utils::uploadFile($indiceAttached, OLEDRION_ATTACHED_FILES_PATH);
@@ -715,7 +714,6 @@ switch ($action) {
         }
         break;
 
-
     // ****************************************************************************************************************
     case 'copy': // Copier un produit
         // ****************************************************************************************************************
@@ -737,7 +735,6 @@ switch ($action) {
             }
         }
         break;
-
 
     // ****************************************************************************************************************
     case 'confdelete': // Confirmation de la suppression d'un produit
@@ -799,5 +796,78 @@ switch ($action) {
             echo '</table>';
             include_once OLEDRION_ADMIN_PATH . 'admin_footer.php';
         }
+        break;
+
+    // **********************************************************************************************
+    case 'related':
+        // ******************************************************************************************
+        xoops_cp_header();
+        global $xoopsUser;
+
+        $id = isset($_GET['id']) ? intval($_GET['id']) : 0;
+        if (empty($id)) {
+            oledrion_utils::redirect(_AM_OLEDRION_ERROR_1, $baseurl, 5);
+        }
+        // Item exits ?
+        $item = null;
+        $item = $h_oledrion_products->get($id);
+        if (!is_object($item)) {
+            oledrion_utils::redirect(_AM_OLEDRION_NOT_FOUND, $baseurl, 5);
+        }
+
+        $criteria = new Criteria(/*'product_id', $item->getVar('product_id'), '<>'*/);
+        $criteria->setSort('product_title');
+        $relatedProducts = $h_oledrion_products->getObjects($criteria);
+        foreach ($relatedProducts as $oneitem) {
+            $relatedProducts_d[$oneitem->getVar('product_id')] = xoops_trim($oneitem->getVar('product_title'));
+        }
+
+        $criteria = new CriteriaCompo();
+        $criteria->add(new Criteria('related_product_id', $item->getVar('product_id'), '='));
+        $productRelated = $h_oledrion_related->getObjects($criteria);
+        foreach ($productRelated as $oneproduct) {
+            $productRelated_d[$oneproduct->getVar('related_product_related')]['id'] = $oneproduct->getVar('related_product_related');
+            $productRelated_d[$oneproduct->getVar('related_product_related')]['title'] = $relatedProducts_d[$oneproduct->getVar('related_product_related')];
+            $productRelated_d[$oneproduct->getVar('related_product_related')]['percent'] = $oneproduct->getVar('related_product_percent');
+        }
+
+        $sform = new XoopsThemeForm(_D, 'frmproduct', $baseurl);
+        $sform->setExtra('enctype="multipart/form-data"');
+        $sform->addElement(new XoopsFormHidden('op', 'products'));
+        $sform->addElement(new XoopsFormHidden('action', 'relatedsave'));
+        $sform->addElement(new XoopsFormHidden('product_id', $item->getVar('product_id')));
+
+        foreach ($productRelated_d as $value) {
+            $sform->addElement(new XoopsFormText($value['title'], $value['id'], 5, 5, $value['percent']), false);
+        }
+
+        $button_tray = new XoopsFormElementTray('', '');
+        $submit_btn = new XoopsFormButton('', 'post', _SUBMIT, 'submit');
+        $button_tray->addElement($submit_btn);
+        $sform->addElement($button_tray);
+        $sform = oledrion_utils::formMarkRequiredFields($sform);
+        $sform->display();
+
+        include_once OLEDRION_ADMIN_PATH . 'admin_footer.php';
+        break;
+
+    // **********************************************************************************************
+    case 'relatedsave':
+        // ******************************************************************************************
+        xoops_cp_header();
+        $id = isset($_POST['product_id']) ? intval($_POST['product_id']) : 0;
+        $item = $h_oledrion_products->get($id);
+        if (!is_object($item)) {
+            oledrion_utils::redirect(_AM_OLEDRION_NOT_FOUND, $baseurl, 5);
+        }
+
+        foreach ($_POST as $related => $percent) {
+            if (is_numeric($related)) {
+                $h_oledrion_related->updatePercent($id, $related, $percent);
+            }
+        }
+
+        $opRedirect = 'products';
+        oledrion_utils::redirect(_AM_OLEDRION_SAVE_OK, $baseurl . '?op=' . $opRedirect, 5);
         break;
 }

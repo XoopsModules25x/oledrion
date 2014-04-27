@@ -15,7 +15,7 @@
  * @copyright   The XOOPS Project http://sourceforge.net/projects/xoops/
  * @license     http://www.fsf.org/copyleft/gpl.html GNU public license
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
- * @version     $Id$
+ * @version     $Id: oledrion_mostviewed_lists.php 12290 2014-02-07 11:05:17Z beckmi $
  */
 
 /**
@@ -41,6 +41,7 @@ function b_oledrion_mostviewed_lists_show($options)
             $block['mostviewd_lists'][] = $item->toArray();
         }
     }
+
     return $block;
 }
 
@@ -60,6 +61,7 @@ function b_oledrion__mostviewed_lists_edit($options)
     $listTypeSelect = oledrion_utils::htmlSelect('options[]', $listTypes, intval($options[1]), false);
     $form .= '<tr><td>' . _MB_OLEDRION_LISTS_TYPE . "</td><td>" . $listTypeSelect . "</td></tr>";
     $form .= '</table>';
+
     return $form;
 }
 
@@ -73,5 +75,5 @@ function b_oledrion_mostviewed_lists_duplicatable($options)
 
     $tpl = new XoopsTpl();
     $tpl->assign('block', $block);
-    $tpl->display('oledrion_block_mostviewed_lists.html');
+    $tpl->display('oledrion_block_mostviewed_lists.tpl');
 }
