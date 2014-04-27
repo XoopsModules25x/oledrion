@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="<{$xoops_langcode}>" lang="<{$xoops_langcode}>">
 <head>
     <title><{if $xoops_pagetitle !=''}><{$xoops_pagetitle}> : <{/if}><{$xoops_sitename}></title>
-    
+
     <meta http-equiv="content-type" content="text/html; charset=<{$xoops_charset}>" />
     <meta name="keywords" content="<{$meta_keywords}>" />
     <meta name="description" content="<{$meta_description}>" />
@@ -10,17 +10,17 @@
     <meta name="copyright" content="<{$meta_copyright}>"/>
     <meta name="generator" content="Bluefish 2.2.4" />
     <meta name="robots" content="noindex,nofollow" />
-    
+
     <link rel="shortcut icon" type="image/ico" href="<{$xoops_url}>/favicon.ico" />
     <link rel="stylesheet" type="text/css" media="all" href="<{$xoops_url}>/xoops.css" />
-    <link rel="stylesheet" type="text/css" media="all" href="<{$xoops_url}>/modules/oledrion/css/print.css" />
+    <link rel="stylesheet" type="text/css" media="all" href="<{$xoops_url}>/modules/oledrion/assets/css/print.css" />
     <link rel="stylesheet" type="text/css" media="all" href="<{$xoops_url}>/language/persian/style.css" />
 
 </head>
 <body onload="window.print()">
 <div id="xo-print">
 	<h2 class="center"><{$smarty.const._OLEDRION_BILL}></h2>
-	
+
 	<div id="print-info">
 		<div class="pad2"><span class="bold"><{$smarty.const._OLEDRION_ORDERID}></span> : <{$order.cmd_id}></div>
 		<div class="pad2"><span class="bold"><{$smarty.const._DATE}></span> : <{if $order.cmd_create > 0 }><{$order.cmd_create_date}><{else}><{$order.cmd_date|date_format:"%d/%m/%Y"}><{/if}></div>
@@ -30,11 +30,11 @@
 			<div class="pad2"><{$smarty.const._OLEDRION_VAT_NUMBER}> : <{$order.cmd_vat_number}></div>
 		<{/if}>
 		<div class="pad2"><span class="bold"><{$smarty.const._OLEDRION_CITY}></span> : <{$order.cmd_town}></div>
-		
+
       <div class="pad2"><span class="bold"><{$smarty.const._OLEDRION_CP}></span> : <{$order.cmd_zip}></div>
 		<div class="pad2"><span class="bold"><{$smarty.const._OLEDRION_PHONE}></span> : <{$order.cmd_telephone}></div>
 		<div class="pad2"><span class="bold"><{$smarty.const._OLEDRION_MOBILE}></span> : <{$order.cmd_mobile}></div>
-		
+
 		<div class="pad2"><span class="bold"><{$smarty.const._OLEDRION_EMAIL}></span> : <{$order.cmd_email}></div>
 		<{if $order.cmd_uname}>
 		<div class="pad2"><span class="bold"><{$smarty.const._OLEDRION_UNAME}></span> : <{$order.cmd_uname}></div>
@@ -68,7 +68,7 @@
 						<{foreach item=option from=$attribute.attribute_options}>
 							<div class="attribute_options"><{$option.ca_attribute_name}> : <{$option.ca_attribute_price_formated}></div>
 						<{/foreach}>
-						</li>			
+						</li>
 					<{/foreach}>
 					</ul>
 				</td>

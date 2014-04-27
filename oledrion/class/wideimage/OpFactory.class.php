@@ -1,5 +1,5 @@
 <?php
-	/**
+    /**
     This file is part of WideImage.
 
     WideImage is free software; you can redistribute it and/or modify
@@ -17,27 +17,28 @@
     Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
   **/
 
-	class wiUnknownImageOperationException extends wiException {}
+    class wiUnknownImageOperationException extends wiException {}
 
-	class wiOpFactory
-	{
-		static protected $cache = array();
+    class wiOpFactory
+    {
+        static protected $cache = array();
 
-		static function get($operationName)
-		{
-			if (!isset(self::$cache[$operationName]))
-			{
-				$opClassName = "wio" . $operationName;
-				if (!class_exists($opClassName))
-				{
-					$fileName = WI_LIB_PATH . 'operations/' . $operationName . '.class.php';
-					if (file_exists($fileName))
-						require_once($fileName);
-					else
-						throw new wiUnknownImageOperationException("Can't load '{$operationName}' operation.");
-				}
-				self::$cache[$operationName] = new $opClassName();
-			}
-			return self::$cache[$operationName];
-		}
-	}
+        static function get($operationName)
+        {
+            if (!isset(self::$cache[$operationName]))
+            {
+                $opClassName = "wio" . $operationName;
+                if (!class_exists($opClassName))
+                {
+                    $fileName = WI_LIB_PATH . 'operations/' . $operationName . '.class.php';
+                    if (file_exists($fileName))
+                        require_once($fileName);
+                    else
+                        throw new wiUnknownImageOperationException("Can't load '{$operationName}' operation.");
+                }
+                self::$cache[$operationName] = new $opClassName();
+            }
+
+            return self::$cache[$operationName];
+        }
+    }

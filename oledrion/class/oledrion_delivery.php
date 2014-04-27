@@ -15,7 +15,7 @@
  * @copyright   The XOOPS Project http://sourceforge.net/projects/xoops/
  * @license     http://www.fsf.org/copyleft/gpl.html GNU public license
  * @author      Hossein Azizabadi (azizabadi@faragostaresh.com)
- * @version     $Id$
+ * @version     $Id: oledrion_delivery.php 12290 2014-02-07 11:05:17Z beckmi $
  */
 
 require 'classheader.php';
@@ -35,7 +35,7 @@ class oledrion_delivery extends Oledrion_Object
 
     /**
      * Retourne l'URL de l'image de la catégorie courante
-     * @return string    L'URL
+     * @return string L'URL
      */
     public function getPictureUrl()
     {
@@ -49,7 +49,7 @@ class oledrion_delivery extends Oledrion_Object
     /**
      * Indique si l'image de la catégorie existe
      *
-     * @return boolean    Vrai si l'image existe sinon faux
+     * @return boolean Vrai si l'image existe sinon faux
      */
     public function pictureExists()
     {
@@ -57,6 +57,7 @@ class oledrion_delivery extends Oledrion_Object
         if (xoops_trim($this->getVar('delivery_image')) != '' && file_exists(OLEDRION_PICTURES_PATH . DIRECTORY_SEPARATOR . $this->getVar('delivery_image'))) {
             $return = true;
         }
+
         return $return;
     }
 
@@ -75,7 +76,7 @@ class oledrion_delivery extends Oledrion_Object
     /**
      * Retourne les éléments du produits formatés pour affichage
      *
-     * @param string $format
+     * @param  string $format
      * @return array
      */
     public function toArray($format = 's')
@@ -84,10 +85,10 @@ class oledrion_delivery extends Oledrion_Object
         $ret = array();
         $ret = parent::toArray($format);
         $ret['delivery_image_url'] = $this->getPictureUrl();
+
         return $ret;
     }
 }
-
 
 class OledrionOledrion_deliveryHandler extends Oledrion_XoopsPersistableObjectHandler
 {
@@ -106,6 +107,7 @@ class OledrionOledrion_deliveryHandler extends Oledrion_XoopsPersistableObjectHa
         $critere->setOrder($parameters['order']);
         $categories = array();
         $categories = $this->getObjects($critere);
+
         return $categories;
     }
 
@@ -137,6 +139,7 @@ class OledrionOledrion_deliveryHandler extends Oledrion_XoopsPersistableObjectHa
                 $ret[] = $tab;
             }
         }
+
         return $ret;
     }
 
@@ -147,8 +150,8 @@ class OledrionOledrion_deliveryHandler extends Oledrion_XoopsPersistableObjectHa
         $ret = array();
         $parameters = array('location' => $location_id);
         $location_delivery = $h_oledrion_location_delivery->getLocationDeliveryId($parameters);
-        foreach($location_delivery as $location) {
-	        	$id[] = $location['ld_delivery'];
+        foreach ($location_delivery as $location) {
+                $id[] = $location['ld_delivery'];
         }
 
         $critere = new CriteriaCompo ();
@@ -165,6 +168,7 @@ class OledrionOledrion_deliveryHandler extends Oledrion_XoopsPersistableObjectHa
                 $ret[] = $tab;
             }
         }
+
         return $ret;
     }
 
@@ -173,11 +177,11 @@ class OledrionOledrion_deliveryHandler extends Oledrion_XoopsPersistableObjectHa
         global $h_oledrion_location_delivery;
         $location_delivery = $h_oledrion_location_delivery->getDelivery($location_id, $delivery_id);
         $ret = array();
-	     $obj = $this->get($location_id);
-	     $ret = $obj->toArray();
-	     $ret['delivery_price'] = $location_delivery['ld_price'];
-	     $ret['delivery_time'] = $location_delivery['ld_delivery_time'];
-	     return $ret;
+         $obj = $this->get($location_id);
+         $ret = $obj->toArray();
+         $ret['delivery_price'] = $location_delivery['ld_price'];
+         $ret['delivery_time'] = $location_delivery['ld_delivery_time'];
+
+         return $ret;
     }
 }
-

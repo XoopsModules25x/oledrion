@@ -15,7 +15,7 @@
  * @copyright   The XOOPS Project http://sourceforge.net/projects/xoops/
  * @license     http://www.fsf.org/copyleft/gpl.html GNU public license
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
- * @version     $Id$
+ * @version     $Id: oledrion_parameters.php 12290 2014-02-07 11:05:17Z beckmi $
  */
 
 /**
@@ -58,13 +58,14 @@ class oledrion_parameters extends ArrayObject
      *
      * @example $enregistrement->nom_du_champ = 'ma chaine'
      *
-     * @param string $key    Le nom du champ à traiter
-     * @param mixed $value    La valeur à lui attribuer
+     * @param  string $key   Le nom du champ à traiter
+     * @param  mixed  $value La valeur à lui attribuer
      * @return object
      */
     public function __set($key, $value)
     {
         parent::offsetSet($key, $value);
+
         return $this;
     }
 
@@ -73,16 +74,18 @@ class oledrion_parameters extends ArrayObject
      *         $maClasse->setLimit(10);
      * Il est possible de chainer comme ceci : $maClasse->setStart(0)->setLimit(10);
      *
-     * @param string $method
-     * @param mixed $args
+     * @param  string $method
+     * @param  mixed  $args
      * @return object
      */
     public function __call($method, $args)
     {
         if (substr($method, 0, 3) == 'set') {
             parent::offsetSet(strtolower(substr($method, 3, 1)) . substr($method, 4), $args[0]);
+
             return $this;
         } else { // Affichage de la valeur
+
             return parent::offsetGet($method);
         }
     }
@@ -93,7 +96,7 @@ class oledrion_parameters extends ArrayObject
      * On lui passe les valeurs par défaut que l'on attend et la méthode les compare avec les valeurs actuelles
      * Si des valeurs manquent, elles sont ajoutées
      *
-     * @param oledrion_parameters $defaultValues
+     * @param  oledrion_parameters $defaultValues
      * @return oledrion_parameters
      */
     public function extend(self $defaultValues)
@@ -105,7 +108,7 @@ class oledrion_parameters extends ArrayObject
                 $result[$key] = $value;
             }
         }
+
         return $result;
     }
 }
-

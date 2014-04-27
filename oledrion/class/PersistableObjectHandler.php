@@ -15,12 +15,10 @@
  * @copyright   The XOOPS Project http://sourceforge.net/projects/xoops/
  * @license     http://www.fsf.org/copyleft/gpl.html GNU public license
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
- * @version     $Id$
+ * @version     $Id: PersistableObjectHandler.php 12290 2014-02-07 11:05:17Z beckmi $
  */
 
-if (!defined('XOOPS_ROOT_PATH')) {
-    die('XOOPS root path not defined');
-}
+defined('XOOPS_ROOT_PATH') || die('XOOPS root path not defined');
 
 class Oledrion_Object extends XoopsObject
 {
@@ -30,6 +28,7 @@ class Oledrion_Object extends XoopsObject
         foreach ($this->vars as $k => $v) {
             $ret[$k] = $this->getVar($k, $format);
         }
+
         return $ret;
     }
 
@@ -40,8 +39,8 @@ class Oledrion_Object extends XoopsObject
      *
      * @example $enregistrement->nom_du_champ = 'ma chaine'
      *
-     * @param string $key    Le nom du champ à traiter
-     * @param mixed $value    La valeur à lui attribuer
+     * @param  string $key   Le nom du champ à traiter
+     * @param  mixed  $value La valeur à lui attribuer
      * @return void
      */
     function __set($key, $value)
@@ -54,7 +53,7 @@ class Oledrion_Object extends XoopsObject
      *
      * @example echo $enregistrement->nom_du_champ;
      *
-     * @param string $key    Le nom du champ que l'on souhaite récupérer
+     * @param  string $key Le nom du champ que l'on souhaite récupérer
      * @return mixed
      */
     function __get($key)
@@ -88,12 +87,12 @@ class Oledrion_XoopsPersistableObjectHandler extends XoopsObjectHandler
 
     /**
      * Constructor - called from child classes
-     * @param object     $db         {@link XoopsDatabase} object
-     * @param string     $tablename  Name of database table
-     * @param string     $classname  Name of Class, this handler is managing
-     * @param string     $keyname    Name of the property, holding the key
-     * @param string     $idenfierName Name of the property, holding the label
-     * @param array         $cacheOptions Optional, options for the cache
+     * @param object $db           {@link XoopsDatabase} object
+     * @param string $tablename    Name of database table
+     * @param string $classname    Name of Class, this handler is managing
+     * @param string $keyname      Name of the property, holding the key
+     * @param string $idenfierName Name of the property, holding the label
+     * @param array  $cacheOptions Optional, options for the cache
      *
      * @return void
      */
@@ -124,14 +123,15 @@ class Oledrion_XoopsPersistableObjectHandler extends XoopsObjectHandler
     /**
      * Generates a unique ID for a Sql Query
      *
-     * @param string $query The SQL query for which we want a unidque ID
-     * @param integer $start Which record to start at
-     * @param integer $limit Max number of objects to fetch
-     * @return string An MD5 of the query
+     * @param  string  $query The SQL query for which we want a unidque ID
+     * @param  integer $start Which record to start at
+     * @param  integer $limit Max number of objects to fetch
+     * @return string  An MD5 of the query
      */
     protected function _getIdForCache($query, $start, $limit)
     {
         $id = md5($query . '-' . strval($start) . '-' . strval($limit));
+
         return $id;
     }
 
@@ -148,14 +148,15 @@ class Oledrion_XoopsPersistableObjectHandler extends XoopsObjectHandler
         if ($isNew === true) {
             $obj->setNew();
         }
+
         return $obj;
     }
 
     /**
      * retrieve an object
      *
-     * @param mixed $id ID of the object - or array of ids for joint keys. Joint keys MUST be given in the same order as in the constructor
-     * @param bool $as_object whether to return an object or an array
+     * @param  mixed $id        ID of the object - or array of ids for joint keys. Joint keys MUST be given in the same order as in the constructor
+     * @param  bool  $as_object whether to return an object or an array
      * @return mixed reference to the object, FALSE if failed
      */
     function get($id, $as_object = true)
@@ -176,15 +177,16 @@ class Oledrion_XoopsPersistableObjectHandler extends XoopsObjectHandler
         } else {
             $ret = $obj_array[0];
         }
+
         return $ret;
     }
 
     /**
      * retrieve objects from the database
      *
-     * @param object $criteria {@link CriteriaElement} conditions to be met
-     * @param bool $id_as_key use the ID as key for the array?
-     * @param bool $as_object return an array of objects?
+     * @param object $criteria  {@link CriteriaElement} conditions to be met
+     * @param bool   $id_as_key use the ID as key for the array?
+     * @param bool   $as_object return an array of objects?
      *
      * @return array
      */
@@ -227,10 +229,10 @@ class Oledrion_XoopsPersistableObjectHandler extends XoopsObjectHandler
     /**
      * Convert a database resultset to a returnable array
      *
-     * @param object $result database resultset
+     * @param object  $result    database resultset
      * @param boolean $id_as_key - should NOT be used with joint keys
      * @param boolean $as_object
-     * @param string $fields Requested fields from the query
+     * @param string  $fields    Requested fields from the query
      *
      * @return array
      */
@@ -271,6 +273,7 @@ class Oledrion_XoopsPersistableObjectHandler extends XoopsObjectHandler
             }
             unset($obj);
         }
+
         return $ret;
     }
 
@@ -278,8 +281,8 @@ class Oledrion_XoopsPersistableObjectHandler extends XoopsObjectHandler
     /**
      * get IDs of objects matching a condition
      *
-     * @param     object    $criteria {@link CriteriaElement} to match
-     * @return     array of object IDs
+     * @param  object $criteria {@link CriteriaElement} to match
+     * @return array  of object IDs
      */
     function getIds($criteria = null)
     {
@@ -321,7 +324,7 @@ class Oledrion_XoopsPersistableObjectHandler extends XoopsObjectHandler
     /**
      * Retrieve a list of objects as arrays - DON'T USE WITH JOINT KEYS
      *
-     * @param object $criteria {@link CriteriaElement} conditions to be met
+     * @param  object $criteria {@link CriteriaElement} conditions to be met
      * @return array
      */
     function getList($criteria = null)
@@ -375,8 +378,8 @@ class Oledrion_XoopsPersistableObjectHandler extends XoopsObjectHandler
     /**
      * Retourne des éléments selon leur ID
      *
-     * @param array $ids    Les ID des éléments à retrouver
-     * @return array    Tableau d'objets (clé = id key name)
+     * @param  array $ids Les ID des éléments à retrouver
+     * @return array Tableau d'objets (clé = id key name)
      */
     function getItemsFromIds($ids)
     {
@@ -385,6 +388,7 @@ class Oledrion_XoopsPersistableObjectHandler extends XoopsObjectHandler
             $criteria = new Criteria($this->keyName, '(' . implode(',', $ids) . ')', 'IN');
             $ret = $this->getObjects($criteria, true);
         }
+
         return $ret;
     }
 
@@ -392,8 +396,8 @@ class Oledrion_XoopsPersistableObjectHandler extends XoopsObjectHandler
     /**
      * count objects matching a condition
      *
-     * @param object $criteria {@link CriteriaElement} to match
-     * @return int count of objects
+     * @param  object $criteria {@link CriteriaElement} to match
+     * @return int    count of objects
      */
     function getCount($criteria = null)
     {
@@ -425,6 +429,7 @@ class Oledrion_XoopsPersistableObjectHandler extends XoopsObjectHandler
         if (!$result) {
             $ret = 0;
             $Cache_Lite->save($ret);
+
             return $ret;
         }
         if ($groupby == false) {
@@ -447,9 +452,9 @@ class Oledrion_XoopsPersistableObjectHandler extends XoopsObjectHandler
     /**
      * Retourne le total d'un champ
      *
-     * @param string $field    Le champ dont on veut calculer le total
-     * @param object $criteria {@link CriteriaElement} to match
-     * @return integer    le total
+     * @param  string  $field    Le champ dont on veut calculer le total
+     * @param  object  $criteria {@link CriteriaElement} to match
+     * @return integer le total
      */
     function getSum($field, $criteria = null)
     {
@@ -487,9 +492,9 @@ class Oledrion_XoopsPersistableObjectHandler extends XoopsObjectHandler
     /**
      * delete an object from the database
      *
-     * @param object $obj reference to the object to delete
-     * @param bool $force
-     * @return bool FALSE if failed.
+     * @param  object $obj   reference to the object to delete
+     * @param  bool   $force
+     * @return bool   FALSE if failed.
      */
     function delete(&$obj, $force = false)
     {
@@ -515,6 +520,7 @@ class Oledrion_XoopsPersistableObjectHandler extends XoopsObjectHandler
         if (!$result) {
             return false;
         }
+
         return true;
     }
 
@@ -522,9 +528,9 @@ class Oledrion_XoopsPersistableObjectHandler extends XoopsObjectHandler
     /**
      * Quickly insert a record like this $myobject_handler->quickInsert('field1' => field1value, 'field2' => $field2value)
      *
-     * @param    array    $vars    Array containing the fields name and value
-     * @param bool $force whether to force the query execution despite security settings
-     * @return bool @link insert's value
+     * @param  array $vars  Array containing the fields name and value
+     * @param  bool  $force whether to force the query execution despite security settings
+     * @return bool  @link insert's value
      */
     function quickInsert($vars = null, $force = true)
     {
@@ -535,17 +541,17 @@ class Oledrion_XoopsPersistableObjectHandler extends XoopsObjectHandler
 
         // Clear cache
         $this->forceCacheClean();
+
         return $retval;
     }
-
 
     /**
      * insert a new object in the database
      *
-     * @param object $obj reference to the object
-     * @param bool $force whether to force the query execution despite security settings
-     * @param bool $checkObject check if the object is dirty and clean the attributes
-     * @return bool FALSE if failed, TRUE if already present and unchanged or successful
+     * @param  object $obj         reference to the object
+     * @param  bool   $force       whether to force the query execution despite security settings
+     * @param  bool   $checkObject check if the object is dirty and clean the attributes
+     * @return bool   FALSE if failed, TRUE if already present and unchanged or successful
      */
 
     function insert(&$obj, $force = false, $checkObject = true)
@@ -553,6 +559,7 @@ class Oledrion_XoopsPersistableObjectHandler extends XoopsObjectHandler
         if ($checkObject != false) {
             if (!is_object($obj)) {
                 trigger_error('Error, not object');
+
                 return false;
             }
             /**
@@ -560,10 +567,12 @@ class Oledrion_XoopsPersistableObjectHandler extends XoopsObjectHandler
              */
             if (!is_a($obj, $this->className)) {
                 $obj->setErrors(get_class($obj) . ' Differs from ' . $this->className);
+
                 return false;
             }
             if (!$obj->isDirty()) {
                 $obj->setErrors('Not dirty'); //will usually not be outputted as errors are not displayed when the method returns true, but it can be helpful when troubleshooting code - Mith
+
                 return true;
             }
         }
@@ -571,6 +580,7 @@ class Oledrion_XoopsPersistableObjectHandler extends XoopsObjectHandler
             foreach ($obj->getErrors() as $oneerror) {
                 trigger_error($oneerror);
             }
+
             return false;
         }
         foreach ($obj->cleanVars as $k => $v) {
@@ -634,17 +644,18 @@ class Oledrion_XoopsPersistableObjectHandler extends XoopsObjectHandler
         if ($obj->isNew() && !is_array($this->keyName)) {
             $obj->assignVar($this->keyName, $this->db->getInsertId());
         }
+
         return true;
     }
 
     /**
      * Change a value for objects with a certain criteria
      *
-     * @param   string  $fieldname  Name of the field
-     * @param   string  $fieldvalue Value to write
-     * @param   object  $criteria   {@link CriteriaElement}
+     * @param string $fieldname  Name of the field
+     * @param string $fieldvalue Value to write
+     * @param object $criteria   {@link CriteriaElement}
      *
-     * @return  bool
+     * @return bool
      **/
     function updateAll($fieldname, $fieldvalue, $criteria = null, $force = false)
     {
@@ -672,6 +683,7 @@ class Oledrion_XoopsPersistableObjectHandler extends XoopsObjectHandler
         if (!$result) {
             return false;
         }
+
         return true;
     }
 
@@ -689,16 +701,17 @@ class Oledrion_XoopsPersistableObjectHandler extends XoopsObjectHandler
         }
         if ($this->getCount($criteria)) {
             $obj->setErrors($error);
+
             return true;
         }
+
         return false;
     }
-
 
     /**
      * delete all objects meeting the conditions
      *
-     * @param object $criteria {@link CriteriaElement} with conditions to meet
+     * @param  object $criteria {@link CriteriaElement} with conditions to meet
      * @return bool
      */
     function deleteAll($criteria = null)
@@ -716,16 +729,16 @@ class Oledrion_XoopsPersistableObjectHandler extends XoopsObjectHandler
 
             return $rows > 0 ? $rows : true;
         }
+
         return false;
     }
-
 
     /**
      * Compare two objects and returns, in an array, the differences
      *
-     * @param XoopsObject $old_object     The first object to compare
-     * @param XoopsObject $new_object    The new object
-     * @return array differences    key = fieldname, value = array('old_value', 'new_value')
+     * @param  XoopsObject $old_object The first object to compare
+     * @param  XoopsObject $new_object The new object
+     * @return array       differences    key = fieldname, value = array('old_value', 'new_value')
      */
     function compareObjects($old_object, $new_object)
     {
@@ -738,16 +751,17 @@ class Oledrion_XoopsPersistableObjectHandler extends XoopsObjectHandler
                 $ret[$one_var] = array($old_object->getVar($one_var), $new_object->getVar($one_var));
             }
         }
+
         return $ret;
     }
 
     /**
      * Get distincted values of a field in the table
      *
-     * @param string $field    Field's name
-     * @param object $criteria {@link CriteriaElement} conditions to be met
-     * @param string $format    Format in wich we want the datas
-     * @return array containing the distinct values
+     * @param  string $field    Field's name
+     * @param  object $criteria {@link CriteriaElement} conditions to be met
+     * @param  string $format   Format in wich we want the datas
+     * @return array  containing the distinct values
      */
     function getDistincts($field, $criteria = null, $format = 's')
     {
@@ -764,7 +778,7 @@ class Oledrion_XoopsPersistableObjectHandler extends XoopsObjectHandler
         //$Cache_Lite = new oledrion_Cache_Lite($this->cacheOptions);
         $id = $this->_getIdForCache($sql, $start, $limit);
         //$cacheData = $Cache_Lite->get($id);
-        //if ( $cacheData === false ) {
+        //if ($cacheData === false) {
         $result = $this->db->query($sql, $limit, $start);
         $ret = array();
         $obj = new $this->className();
@@ -785,12 +799,12 @@ class Oledrion_XoopsPersistableObjectHandler extends XoopsObjectHandler
      *
      * @author Herve Thouzard - Instant Zero
      *
-     * @param integer $start Starting position
-     * @param integer $limit Maximum count of elements to return
-     * @param string $sort Field to use for the sort
-     * @param string $order Sort order
-     * @param boolean $idAsKey Do we have to return an array whoses keys are the record's ID ?
-     * @return array Array of current objects
+     * @param  integer $start   Starting position
+     * @param  integer $limit   Maximum count of elements to return
+     * @param  string  $sort    Field to use for the sort
+     * @param  string  $order   Sort order
+     * @param  boolean $idAsKey Do we have to return an array whoses keys are the record's ID ?
+     * @return array   Array of current objects
      */
     function getItems($start = 0, $limit = 0, $sort = '', $order = 'ASC', $idAsKey = true)
     {
@@ -808,6 +822,7 @@ class Oledrion_XoopsPersistableObjectHandler extends XoopsObjectHandler
         $critere->setSort($sort);
         $critere->setOrder($order);
         $items = $this->getObjects($critere, $idAsKey);
+
         return $items;
     }
 

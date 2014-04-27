@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="<{$xoops_langcode}>" lang="<{$xoops_langcode}>">
 <head>
     <title><{if $xoops_pagetitle !=''}><{$xoops_pagetitle}> : <{/if}><{$xoops_sitename}></title>
-    
+
     <meta http-equiv="content-type" content="text/html; charset=<{$xoops_charset}>" />
     <meta name="keywords" content="<{$meta_keywords}>" />
     <meta name="description" content="<{$meta_description}>" />
@@ -10,10 +10,10 @@
     <meta name="copyright" content="<{$meta_copyright}>"/>
     <meta name="generator" content="Bluefish 2.2.3" />
     <meta name="robots" content="noindex,nofollow" />
-    
+
     <link rel="shortcut icon" type="image/ico" href="<{$xoops_url}>/favicon.ico" />
     <link rel="stylesheet" type="text/css" media="all" href="<{$xoops_url}>/xoops.css" />
-    <link rel="stylesheet" type="text/css" media="all" href="<{$xoops_url}>/modules/oledrion/css/print.css" />
+    <link rel="stylesheet" type="text/css" media="all" href="<{$xoops_url}>/modules/oledrion/assets/css/print.css" />
     <link rel="stylesheet" type="text/css" media="all" href="<{$xoops_url}>/language/persian/style.css" />
 
 </head>
@@ -21,7 +21,7 @@
 <div id="xo-print">
 	<h2 class="center">فاکتور اینترنتی</h2>
 	<h3 class="center">لیلیوم رایحه خوش با هم بودن</h3>
-	
+
 	<div id="print-info">
 		<div class="pad2"><span class="bold">شماره سفارش</span> : <{$order.cmd_id}></div>
 		<div class="pad2"><span class="bold">تاریخ سفارش</span> : <{if $order.cmd_create > 0 }><{$order.cmd_create_date}><{else}><{$order.cmd_date|date_format:"%d/%m/%Y"}><{/if}></div>
@@ -38,8 +38,11 @@
 		<{if $order.cmd_uname}>
 		<div class="pad2"><span class="bold">نام کاربری</span> : <{$order.cmd_uname}></div>
 		<{/if}>
+		<{if $order.cmd_gift}>
+		<div class="pad2"><span class="bold">کد کارت هدیه</span> : <{$order.cmd_gift}></div>
+		<{/if}>
 	</div>
-   
+
    <div id="print-factor">
 		<table class="center">
 		<tr>
@@ -93,7 +96,7 @@
 		</tr>
 		</table>
 	</div>
-	
+
 	<div id="print-check">
 		<table>
 			<tr>
@@ -116,7 +119,7 @@
 		<div class="moreinfo"><span class="bold">شماره کارت ( ۴ رقم )</span> :‌ </div>
 		<div class="moreinfo"><span class="bold">شماره پیگیری</span> :‌ </div>
 	</div>
-	
+
 	 <{if $order.cmd_text_fordisplay != ''}>
 		<div class="oledrion_discounts">
 			<h4><{$smarty.const._OLEDRION_CART4}></h4>

@@ -15,7 +15,7 @@
  * @copyright   The XOOPS Project http://sourceforge.net/projects/xoops/
  * @license     http://www.fsf.org/copyleft/gpl.html GNU public license
  * @author      Hossein Azizabadi (azizabadi@faragostaresh.com)
- * @version     $Id$
+ * @version     $Id: oledrion_location.php 12290 2014-02-07 11:05:17Z beckmi $
  */
 
 require 'classheader.php';
@@ -34,17 +34,17 @@ class oledrion_location extends Oledrion_Object
     /**
      * Retourne les éléments du produits formatés pour affichage
      *
-     * @param string $format
+     * @param  string $format
      * @return array
      */
     public function toArray($format = 's')
     {
         $ret = array();
         $ret = parent::toArray($format);
+
         return $ret;
     }
 }
-
 
 class OledrionOledrion_locationHandler extends Oledrion_XoopsPersistableObjectHandler
 {
@@ -63,6 +63,7 @@ class OledrionOledrion_locationHandler extends Oledrion_XoopsPersistableObjectHa
         $critere->setOrder($parameters['order']);
         $location = array();
         $location = $this->getObjects($critere);
+
         return $location;
     }
 
@@ -77,6 +78,7 @@ class OledrionOledrion_locationHandler extends Oledrion_XoopsPersistableObjectHa
         $critere->setOrder($parameters['order']);
         $pid = array();
         $pid = $this->getObjects($critere);
+
         return $pid;
     }
 
@@ -88,6 +90,7 @@ class OledrionOledrion_locationHandler extends Oledrion_XoopsPersistableObjectHa
         $critere->add(new Criteria('location_pid', $id));
         $location = array();
         $location = $this->getObjects($critere);
+
         return $location;
     }
 
@@ -102,4 +105,3 @@ class OledrionOledrion_locationHandler extends Oledrion_XoopsPersistableObjectHa
         return $location;
     }
 }
-

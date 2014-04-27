@@ -1,5 +1,5 @@
 <?php
-	/**
+    /**
     This file is part of WideImage.
 
     WideImage is free software; you can redistribute it and/or modify
@@ -17,41 +17,41 @@
     Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
   **/
 
-	class wioRotate
-	{
-		function execute($image, $angle, $bgColor, $ignoreTransparent)
-		{
-			$angle = -floatval($angle);
-			if ($angle < 0)
-				$angle = 360 + $angle;
-			$angle = $angle % 360;
+    class wioRotate
+    {
+        function execute($image, $angle, $bgColor, $ignoreTransparent)
+        {
+            $angle = -floatval($angle);
+            if ($angle < 0)
+                $angle = 360 + $angle;
+            $angle = $angle % 360;
 
-			if ($angle == 0)
-				return $image->copy();
+            if ($angle == 0)
+                return $image->copy();
 
-			if ($bgColor === null)
-			{
-				if ($image->isTransparent())
-					$bgColor = $image->getTransparentColor();
-				else
-				{
-					$tc = array('red' => 255, 'green' => 255, 'blue' => 255, 'alpha' => 127);
+            if ($bgColor === null)
+            {
+                if ($image->isTransparent())
+                    $bgColor = $image->getTransparentColor();
+                else
+                {
+                    $tc = array('red' => 255, 'green' => 255, 'blue' => 255, 'alpha' => 127);
 
-					if ($image->isTrueColor())
-					{
-						$bgColor = $image->getExactColorAlpha($tc);
-						if ($bgColor == -1)
-							$bgColor = $image->allocateColorAlpha($tc);
-					}
-					else
-					{
-						$bgColor = $image->getExactColor($tc);
-						if ($bgColor == -1)
-							$bgColor = $image->allocateColor($tc);
-					}
-				}
-			}
+                    if ($image->isTrueColor())
+                    {
+                        $bgColor = $image->getExactColorAlpha($tc);
+                        if ($bgColor == -1)
+                            $bgColor = $image->allocateColorAlpha($tc);
+                    }
+                    else
+                    {
+                        $bgColor = $image->getExactColor($tc);
+                        if ($bgColor == -1)
+                            $bgColor = $image->allocateColor($tc);
+                    }
+                }
+            }
 
-			return new wiTrueColorImage(imagerotate($image->getHandle(), $angle, $bgColor, $ignoreTransparent));
-		}
-	}
+            return new wiTrueColorImage(imagerotate($image->getHandle(), $angle, $bgColor, $ignoreTransparent));
+        }
+    }

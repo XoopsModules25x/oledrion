@@ -15,16 +15,13 @@
  * @copyright   The XOOPS Project http://sourceforge.net/projects/xoops/
  * @license     http://www.fsf.org/copyleft/gpl.html GNU public license
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
- * @version     $Id$
+ * @version     $Id: gateway.php 12290 2014-02-07 11:05:17Z beckmi $
  */
 
 /**
  * Paypal Gateway
  */
-if (!defined('XOOPS_ROOT_PATH')) {
-    die("XOOPS root path not defined");
-}
-
+defined('XOOPS_ROOT_PATH') || die('XOOPS root path not defined');
 
 class oledrion_paypal extends oledrion_gateway
 {
@@ -85,14 +82,15 @@ class oledrion_paypal extends oledrion_gateway
         $submit_btn = new XoopsFormButton('', 'post', _AM_OLEDRION_GATEWAYS_UPDATE, 'submit');
         $button_tray->addElement($submit_btn);
         $sform->addElement($button_tray);
+
         return $sform;
     }
 
     /**
      * Sauvegarde des paramètres de la passerelle de paiement
      *
-     * @param array $data Les données du formulaire
-     * @return boolean    Le résultat de l'enregistrement des données
+     * @param  array   $data Les données du formulaire
+     * @return boolean Le résultat de l'enregistrement des données
      */
     function saveParametersForm($data)
     {
@@ -103,6 +101,7 @@ class oledrion_paypal extends oledrion_gateway
         foreach ($parameters as $parameter) {
             if (!$this->handlers->h_oledrion_gateways_options->setGatewayOptionValue($gatewayName, $parameter, $data[$parameter])) return false;
         }
+
         return true;
     }
 
@@ -132,7 +131,7 @@ class oledrion_paypal extends oledrion_gateway
     /**
      * Retourne les éléments à ajouter au formulaire en tant que zones cachées
      *
-     * @param array $order     La commande client
+     * @param array $order La commande client
      * @param array
      */
     function getCheckoutFormContent($order)
@@ -165,6 +164,7 @@ class oledrion_paypal extends oledrion_gateway
         if ($use_ipn == 1) {
             $ret['notify_url'] = OLEDRION_URL . 'gateway-notify.php'; // paypal-notify.php
         }
+
         return $ret;
     }
 
@@ -176,6 +176,7 @@ class oledrion_paypal extends oledrion_gateway
     function getCountriesList()
     {
         require_once XOOPS_ROOT_PATH . '/class/xoopslists.php';
+
         return XoopsLists::getCountryList();
     }
 
@@ -183,7 +184,7 @@ class oledrion_paypal extends oledrion_gateway
      * Utilisée lors du dialog avec Paypal dans le cas de l'utilisation de l'IPN
      * Note : Spécifique Paypal
      *
-     * @return string    L'URL chez Paypal à appeler pour obtenir des informations
+     * @return string L'URL chez Paypal à appeler pour obtenir des informations
      */
     private function getdialogURL()
     {
@@ -199,7 +200,7 @@ class oledrion_paypal extends oledrion_gateway
      * Dialogue avec la passerelle de paiement pour indiquer l'état de la commande
      * L'appellant se charge de vérifier que le fichier log existe
      *
-     * @param string $gatewaysLogPath    Le chemin d'accès complet au fichier log
+     * @param  string $gatewaysLogPath Le chemin d'accès complet au fichier log
      * @return void
      */
     function gatewayNotify($gatewaysLogPath)

@@ -1,5 +1,5 @@
 <?php
-	/**
+    /**
     This file is part of WideImage.
 
     WideImage is free software; you can redistribute it and/or modify
@@ -17,24 +17,25 @@
     Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
   **/
 
-	class wioMirror
-	{
-		function execute($image)
-		{
-			$new = $image->copy();
+    class wioMirror
+    {
+        function execute($image)
+        {
+            $new = $image->copy();
 
-			$width = $image->getWidth();
-			$height = $image->getHeight();
-			for ($x = 0; $x < $width; $x++)
-			{
-				imagecopy(
-					$new->getHandle(),
-					$image->getHandle(),
-					$x, 0, $width - $x - 1, 0,
-					1,
-					$height
-				);
-			}
-			return $new;
-		}
-	}
+            $width = $image->getWidth();
+            $height = $image->getHeight();
+            for ($x = 0; $x < $width; $x++)
+            {
+                imagecopy(
+                    $new->getHandle(),
+                    $image->getHandle(),
+                    $x, 0, $width - $x - 1, 0,
+                    1,
+                    $height
+                );
+            }
+
+            return $new;
+        }
+    }

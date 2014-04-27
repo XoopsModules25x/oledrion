@@ -15,7 +15,7 @@
  * @copyright   The XOOPS Project http://sourceforge.net/projects/xoops/
  * @license     http://www.fsf.org/copyleft/gpl.html GNU public license
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
- * @version     $Id$
+ * @version     $Id: oledrion_persistent_cart.php 12290 2014-02-07 11:05:17Z beckmi $
  */
 
 /**
@@ -50,7 +50,7 @@ class OledrionOledrion_persistent_cartHandler extends Oledrion_XoopsPersistableO
     /**
      * Supprime un produit des paniers enregistrés
      *
-     * @param mixed $persistent_product_id    L'ID du produit à supprimer ou un tableau d'identifiants à supprimer
+     * @param  mixed   $persistent_product_id L'ID du produit à supprimer ou un tableau d'identifiants à supprimer
      * @return boolean
      */
     public function deleteProductForAllCarts($persistent_product_id)
@@ -63,14 +63,15 @@ class OledrionOledrion_persistent_cartHandler extends Oledrion_XoopsPersistableO
         } else {
             $criteria = new Criteria('persistent_product_id', $persistent_product_id, '=');
         }
+
         return $this->deleteAll($criteria);
     }
 
     /**
      * Purge des produits d'un utilisateur
      *
-     * @param integer $persistent_uid    L'identifiant de l'utilisateur
-     * @return boolean    Le résultat de la suppression
+     * @param  integer $persistent_uid L'identifiant de l'utilisateur
+     * @return boolean Le résultat de la suppression
      */
     public function deleteAllUserProducts($persistent_uid = 0)
     {
@@ -80,15 +81,16 @@ class OledrionOledrion_persistent_cartHandler extends Oledrion_XoopsPersistableO
         $persistent_uid = $persistent_uid == 0 ? oledrion_utils::getCurrentUserID() : $persistent_uid;
 
         $criteria = new Criteria('persistent_uid', $persistent_uid, '=');
+
         return $this->deleteAll($criteria);
     }
 
     /**
      * Supprime UN produit d'un utilisateur
      *
-     * @param integer $persistent_product_id    L'identifiant du produit
-     * @param integer $persistent_uid    L'identifiant de l'utilisateur
-     * @return boolean    Le résultat de la suppression
+     * @param  integer $persistent_product_id L'identifiant du produit
+     * @param  integer $persistent_uid        L'identifiant de l'utilisateur
+     * @return boolean Le résultat de la suppression
      */
     public function deleteUserProduct($persistent_product_id, $persistent_uid = 0)
     {
@@ -99,16 +101,17 @@ class OledrionOledrion_persistent_cartHandler extends Oledrion_XoopsPersistableO
         $criteria = new CriteriaCompo();
         $criteria->add(new Criteria('persistent_uid', $persistent_uid, '='));
         $criteria->add(new Criteria('persistent_product_id', $persistent_product_id, '='));
+
         return $this->deleteAll($criteria);
     }
 
     /**
      * Ajoute un produit au panier d'un utilisateur
      *
-     * @param integer $persistent_product_id    L'ID du produit
-     * @param integer $persistent_qty    La quantité de produits
-     * @param integer $persistent_uid    L'ID de l'utilisateur
-     * @return boolean    Le résultat de l'ajout du produit
+     * @param  integer $persistent_product_id L'ID du produit
+     * @param  integer $persistent_qty        La quantité de produits
+     * @param  integer $persistent_uid        L'ID de l'utilisateur
+     * @return boolean Le résultat de l'ajout du produit
      */
     public function addUserProduct($persistent_product_id, $persistent_qty, $persistent_uid = 0)
     {
@@ -121,16 +124,17 @@ class OledrionOledrion_persistent_cartHandler extends Oledrion_XoopsPersistableO
         $persistent_cart->setVar('persistent_uid', $persistent_uid);
         $persistent_cart->setVar('persistent_date', time());
         $persistent_cart->setVar('persistent_qty', $persistent_qty);
+
         return $this->insert($persistent_cart, true);
     }
 
     /**
      * Mise à jour de la quantité de produit d'un utilisateur
      *
-     * @param integer $persistent_product_id    L'identifiant du produit
-     * @param integer $persistent_qty    La quantité de produit
-     * @param integer $persistent_uid    L'ID de l'utilisateur
-     * @return boolean    Le résultat de la mise à jour
+     * @param  integer $persistent_product_id L'identifiant du produit
+     * @param  integer $persistent_qty        La quantité de produit
+     * @param  integer $persistent_uid        L'ID de l'utilisateur
+     * @return boolean Le résultat de la mise à jour
      */
     public function updateUserProductQuantity($persistent_product_id, $persistent_qty, $persistent_uid = 0)
     {
@@ -141,13 +145,14 @@ class OledrionOledrion_persistent_cartHandler extends Oledrion_XoopsPersistableO
         $criteria = new CriteriaCompo();
         $criteria->add(new Criteria('persistent_uid', $persistent_uid, '='));
         $criteria->add(new Criteria('persistent_product_id', $persistent_product_id, '='));
+
         return $this->updateAll('persistent_qty', $persistent_qty, $criteria, true);
     }
 
     /**
      * Indique s'il existe un panier pour un utilisateur
      *
-     * @param integer $persistent_uid    L'id de l'utilisateur
+     * @param  integer $persistent_uid L'id de l'utilisateur
      * @return boolean
      */
     public function isCartExists($persistent_uid = 0)
@@ -157,14 +162,15 @@ class OledrionOledrion_persistent_cartHandler extends Oledrion_XoopsPersistableO
         }
         $persistent_uid = $persistent_uid == 0 ? oledrion_utils::getCurrentUserID() : $persistent_uid;
         $criteria = new Criteria('persistent_uid', $persistent_uid, '=');
-        return (bool)$this->getCount($criteria);
+
+        return (bool) $this->getCount($criteria);
     }
 
     /**
      * Retourne les produits d'un utilisateur
      *
-     * @param integer $persistent_uid    L'ID de l'utilisateur
-     * @return array    Tableaux d'objets de type oledrion_persistent_cart
+     * @param  integer $persistent_uid L'ID de l'utilisateur
+     * @return array   Tableaux d'objets de type oledrion_persistent_cart
      */
     public function getUserProducts($persistent_uid = 0)
     {
@@ -173,7 +179,7 @@ class OledrionOledrion_persistent_cartHandler extends Oledrion_XoopsPersistableO
         }
         $persistent_uid = $persistent_uid == 0 ? oledrion_utils::getCurrentUserID() : $persistent_uid;
         $criteria = new Criteria('persistent_uid', $persistent_uid, '=');
+
         return $this->getObjects($criteria);
     }
 }
-

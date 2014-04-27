@@ -152,7 +152,6 @@ Version 1.63
 - Bugs corrections in the emails sent to the website and to the client after his/her order
 - You have a plugin for RssFit & Sitemap
 
-
 *************
 Version 1.62
 *************
@@ -233,7 +232,6 @@ Version 1.2
 - Correction d'un bug dans l'administration du module, il était possible d'uploader n'importe quel type de fichier
 - Dans l'administration, les noms des produits sont maintenant cliquables
 - Mise à jour de tcpdf
-
 
 ************
 Version 1.1

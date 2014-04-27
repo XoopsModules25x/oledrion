@@ -1,5 +1,5 @@
 <?php
-	/**
+    /**
     This file is part of WideImage.
 
     WideImage is free software; you can redistribute it and/or modify
@@ -17,12 +17,13 @@
     Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
   **/
 
-	class wioAsGrayscale
-	{
-		function execute($image)
-		{
-			$new = $image->asTrueColor();
-			imagefilter($new->getHandle(), IMG_FILTER_GRAYSCALE);
-			return $new;
-		}
-	}
+    class wioAsGrayscale
+    {
+        function execute($image)
+        {
+            $new = $image->asTrueColor();
+            imagefilter($new->getHandle(), IMG_FILTER_GRAYSCALE);
+
+            return $new;
+        }
+    }

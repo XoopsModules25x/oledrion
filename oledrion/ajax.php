@@ -15,7 +15,7 @@
  * @copyright   The XOOPS Project http://sourceforge.net/projects/xoops/
  * @license     http://www.fsf.org/copyleft/gpl.html GNU public license
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
- * @version     $Id$
+ * @version     $Id: ajax.php 12290 2014-02-07 11:05:17Z beckmi $
  */
 
 /**
@@ -34,7 +34,6 @@ if ($op == '') {
 $return = '';
 $uid = oledrion_utils::getCurrentUserID();
 $isAdmin = oledrion_utils::isAdmin();
-
 
 switch ($op) {
     // ****************************************************************************************************************
@@ -113,7 +112,7 @@ switch ($op) {
             }
             $templateProduct['product_vat_amount_formated_long'] = $oledrion_Currency->amountForDisplay($productPriceTTC - $productPrice, 'l');
             $template->assign('product', $templateProduct);
-            $return = $template->fetch('db:oledrion_product_price.html');
+            $return = $template->fetch('db:oledrion_product_price.tpl');
         }
         break;
     // ajax search
@@ -152,7 +151,7 @@ switch ($op) {
             // search colors
             foreach ($items as $item) {
                 // if it starts with 'part' add to results
-                //if( strpos($item['title'], $key) === 0 || strpos($item['title'], ucfirst($key)) === 0 ){
+                //if ( strpos($item['title'], $key) === 0 || strpos($item['title'], ucfirst($key)) === 0 ) {
                 if ($item['type'] == 'product') {
                     $results[] = '<div class="searchbox">
                          <div class="searchboxright"><a href="' . $item['link'] . '"><img src="' . $item['image'] . '" alt="" /></a></div>
@@ -255,18 +254,18 @@ switch ($op) {
                 $ret = array(
                     'product_id' => $product->getVar('product_id'),
                     'product_price' => $product_price,
-                ); 
+                );
             } else {
                 $ret = array(
                     'product_id' => $product->getVar('product_id'),
                     'product_price' => 0,
-                ); 
+                );
             }
         } else {
             $ret = array(
                 'product_id' => 0,
                 'product_price' => 0,
-            );  
+            );
         }
         $return = json_encode($ret);
         break;
@@ -291,30 +290,204 @@ switch ($op) {
                     }
                 }
                 if ($canRate) {
-                    if ($_POST['rating'] == '--') {
+                    /* if ($_POST['rating'] == '--') {
                         oledrion_utils::redirect(_OLEDRION_NORATING, OLEDRION_URL . 'product.php?product_id=' . $product->getVar('product_id'), 4);
-                    }
+                    } */
                     $rating = intval($_POST['rating']);
-                    if ($rating < 1 || $rating > 10) {
+                    /* if ($rating < 1 || $rating > 10) {
                         exit(_ERRORS);
+                    } */
+                    if ($rating == 1 || $rating == -1) {
+                        $result = $h_oledrion_votedata->createRating($product->getVar('product_id'), $ratinguser, $rating);
+
+                        $totalVotes = 0;
+                        $sumRating = 0;
+                        $ret = 0;
+                        $ret = $h_oledrion_votedata->getCountRecordSumRating($product->getVar('product_id'), $totalVotes, $sumRating);
+
+                        //$finalrating = $sumRating / $totalVotes;
+                        //$finalrating = number_format($finalrating, 4);
+
+                        $h_oledrion_products->updateRating($product_id, $sumRating, $totalVotes);
+                        //$ratemessage = _OLEDRION_VOTEAPPRE . '<br />' . sprintf(_OLEDRION_THANKYOU, $xoopsConfig['sitename']);
+                        //oledrion_utils::redirect($ratemessage, OLEDRION_URL . 'product.php?product_id=' . $product->getVar('product_id'), 2);
+                    } else {
+                        $return = false;
+
                     }
-                    $result = $h_oledrion_votedata->createRating($product->getVar('product_id'), $ratinguser, $rating);
-
-                    // Calcul du nombre de votes et du total des votes pour mettre à jour les informations du produit
-                    $totalVotes = 0;
-                    $sumRating = 0;
-                    $ret = 0;
-                    $ret = $h_oledrion_votedata->getCountRecordSumRating($product->getVar('product_id'), $totalVotes, $sumRating);
-
-                    $finalrating = $sumRating / $totalVotes;
-                    $finalrating = number_format($finalrating, 4);
-                    $h_oledrion_products->updateRating($product_id, $finalrating, $totalVotes);
-                    $ratemessage = _OLEDRION_VOTEAPPRE . '<br />' . sprintf(_OLEDRION_THANKYOU, $xoopsConfig['sitename']);
-                    oledrion_utils::redirect($ratemessage, OLEDRION_URL . 'product.php?product_id=' . $product->getVar('product_id'), 2);
+                } else {
+                    $return = false;
                 }
             }
         }
         break;
+
+    case 'order':
+        $ret = array();
+        $ret['status'] = 0;
+        $ret['message'] = 'error';
+        if (isset($_POST['product_id']) && is_numeric($_POST['product_id'])) {
+            // Set from post
+            $product_id = isset($_POST['product_id']) ? $_POST['product_id'] : '';
+            $cmd_lastname = isset($_POST['cmd_lastname']) ? $_POST['cmd_lastname'] : '';
+            $cmd_firstname = isset($_POST['cmd_firstname']) ? $_POST['cmd_firstname'] : '';
+            $cmd_adress = isset($_POST['cmd_adress']) ? $_POST['cmd_adress'] : '';
+            $cmd_zip = isset($_POST['cmd_zip']) ? $_POST['cmd_zip'] : '';
+            $cmd_town = isset($_POST['cmd_town']) ? $_POST['cmd_town'] : '';
+            $cmd_country = isset($_POST['cmd_country']) ? $_POST['cmd_country'] : '';
+            $cmd_telephone = isset($_POST['cmd_telephone']) ? $_POST['cmd_telephone'] : '';
+            $cmd_mobile = isset($_POST['cmd_mobile']) ? $_POST['cmd_mobile'] : '';
+            $cmd_email = isset($_POST['cmd_email']) ? $_POST['cmd_email'] : '';
+            //$cmd_total = isset($_POST['cmd_total']) ? $_POST['cmd_total'] : '';
+            //$cmd_shipping = isset($_POST['cmd_shipping']) ? $_POST['cmd_shipping'] : '';
+            $cmd_packing_price = isset($_POST['cmd_packing_price']) ? $_POST['cmd_packing_price'] : '';
+            $cmd_bill = isset($_POST['cmd_bill']) ? $_POST['cmd_bill'] : '';
+            $cmd_text = isset($_POST['cmd_text']) ? $_POST['cmd_text'] : '';
+            $cmd_comment = isset($_POST['cmd_comment']) ? $_POST['cmd_comment'] : '';
+            $cmd_vat_number = isset($_POST['cmd_vat_number']) ? $_POST['cmd_vat_number'] : '';
+            $cmd_packing = isset($_POST['cmd_packing']) ? $_POST['cmd_packing'] : '';
+            $cmd_packing_id = isset($_POST['cmd_packing_id']) ? $_POST['cmd_packing_id'] : '';
+            $cmd_location = isset($_POST['cmd_location']) ? $_POST['cmd_location'] : '';
+            $cmd_location_id = isset($_POST['cmd_location_id']) ? $_POST['cmd_location_id'] : '';
+            $cmd_delivery = isset($_POST['cmd_delivery']) ? $_POST['cmd_delivery'] : '';
+            $cmd_delivery_id = isset($_POST['cmd_delivery_id']) ? $_POST['cmd_delivery_id'] : '';
+            $cmd_payment = isset($_POST['cmd_payment']) ? $_POST['cmd_payment'] : '';
+            $cmd_payment_id = isset($_POST['cmd_payment_id']) ? $_POST['cmd_payment_id'] : '';
+            $cmd_track = isset($_POST['cmd_track']) ? $_POST['cmd_track'] : '';
+            $cmd_gift = isset($_POST['cmd_gift']) ? $_POST['cmd_gift'] : '';
+            $attributes = isset($_POST['attributes']) ? $_POST['attributes'] : '';
+            // Get product
+            $product = $h_oledrion_products->get($product_id);
+            $product_price = $product->getVar('product_price');
+            if ($h_oledrion_attributes->getProductAttributesCount($product->getVar('product_id')) > 0) {
+                $criteria = new CriteriaCompo ();
+                $criteria->add(new Criteria('attribute_product_id', $product->getVar('product_id')));
+                $attribute = $h_oledrion_attributes->getObjects($criteria, false);
+                foreach ($attribute as $root) {
+                    $product_price = $root->getVar('attribute_default_value');
+                }
+            }
+            if ($product->getVar('product_online') && $product->getVar('product_stock') > 0) {
+                // Set parameter
+                $password = md5(xoops_makepass());
+                $passwordCancel = md5(xoops_makepass());
+                $uid = oledrion_utils::getCurrentUserID();
+                $cmd_total = $product_price;
+                $cmd_shipping = 0;
+                // Save command
+            $commande = $h_oledrion_commands->create(true);
+            $commande->setVar('cmd_uid', $uid);
+            $commande->setVar('cmd_date', date("Y-m-d"));
+            $commande->setVar('cmd_create', time());
+            $commande->setVar('cmd_state', OLEDRION_STATE_NOINFORMATION);
+            $commande->setVar('cmd_ip', oledrion_utils::IP());
+            $commande->setVar('cmd_lastname', $cmd_lastname);
+            $commande->setVar('cmd_firstname', $cmd_firstname);
+            $commande->setVar('cmd_adress', $cmd_adress);
+            $commande->setVar('cmd_zip', $cmd_zip);
+            $commande->setVar('cmd_town', $cmd_town);
+            $commande->setVar('cmd_country', $cmd_country);
+            $commande->setVar('cmd_telephone', $cmd_telephone);
+            $commande->setVar('cmd_mobile', $cmd_mobile);
+            $commande->setVar('cmd_email', $cmd_email);
+            $commande->setVar('cmd_articles_count', 1);
+            $commande->setVar('cmd_total', oledrion_utils::formatFloatForDB($cmd_total));
+            $commande->setVar('cmd_shipping', oledrion_utils::formatFloatForDB($cmd_shipping));
+            $commande->setVar('cmd_packing_price', $cmd_packing_price);
+            $commande->setVar('cmd_bill', $cmd_bill);
+            $commande->setVar('cmd_password', $password);
+            $commande->setVar('cmd_text', $cmd_text);
+            $commande->setVar('cmd_cancel', $passwordCancel);
+            $commande->setVar('cmd_comment', $cmd_comment);
+            $commande->setVar('cmd_vat_number', $cmd_vat_number);
+            $commande->setVar('cmd_packing', $cmd_packing);
+            $commande->setVar('cmd_packing_id', $cmd_packing_id);
+            $commande->setVar('cmd_location', $cmd_location);
+            $commande->setVar('cmd_location_id', $cmd_location_id);
+            $commande->setVar('cmd_delivery', $cmd_delivery);
+            $commande->setVar('cmd_delivery_id', $cmd_delivery_id);
+            $commande->setVar('cmd_payment', $cmd_payment);
+            $commande->setVar('cmd_payment_id', $cmd_payment_id);
+            $commande->setVar('cmd_status', 2);
+            $commande->setVar('cmd_track', $cmd_track);
+            $commande->setVar('cmd_gift', $cmd_gift);
+            $res1 = $h_oledrion_commands -> insert($commande, true);
+            // Save caddy
+            $caddy = $h_oledrion_caddy->create(true);
+            $caddy->setVar('caddy_product_id', $product_id);
+            $caddy->setVar('caddy_qte', $product->getVar('product_qty'));
+            $caddy->setVar('caddy_price', oledrion_utils::formatFloatForDB($cmd_total));
+            $caddy->setVar('caddy_cmd_id', $commande->getVar('cmd_id'));
+            $caddy->setVar('caddy_shipping', oledrion_utils::formatFloatForDB($cmd_shipping));
+            $caddy->setVar('caddy_pass', md5(xoops_makepass()));
+            $res2 = $h_oledrion_caddy->insert($caddy, true);
+            // Attributs
+            /* if ($res2 && is_array($attributes) && count($attributes) > 0) {
+                foreach ($attributes as $attributeId => $attributeInformation) {
+                    $caddyAttribute = $handlers->h_oledrion_caddy_attributes->create(true);
+                    $caddyAttribute->setVar('ca_cmd_id', $commande->getVar('cmd_id'));
+                    $caddyAttribute->setVar('ca_caddy_id', $caddy->getVar('caddy_id'));
+                    $caddyAttribute->setVar('ca_attribute_id', $attributeId);
+                    $selectedOptions = $attributeInformation['attribute_options'];
+                    $msgCommande .= '- ' . $attributeInformation['attribute_title'] . "\n";
+                    foreach ($selectedOptions as $selectedOption) {
+                        $caddyAttribute ->addOption($selectedOption['option_name'], $selectedOption['option_value'], $selectedOption['option_price']);
+                        $msgCommande .= '    ' . $selectedOption['option_name'] . ' : ' . $selectedOption['option_ttc_formated'] . "\n";
+                    }
+                    $handlers->h_oledrion_caddy_attributes->insert($caddyAttribute, true);
+                }
+            } */
+                if (!$res1) {
+                    $ret['status'] = 0;
+                    $ret['message'] = _OLEDRION_ERROR10;
+                } else {
+                    $ret['status'] = 1;
+                    $ret['message'] = 'ok';
+                    // Send mail
+                    /* $msgCommande = '';
+                    $msgCommande .= str_pad($product_id, 5, ' ') . ' ';
+                    $msgCommande .= str_pad('', 10, ' ', STR_PAD_LEFT) . ' ';
+                    $msgCommande .= str_pad($product->getVar('product_title'), 19, ' ', STR_PAD_LEFT) . ' ';
+                    $msgCommande .= str_pad($product->getVar('product_qty'), 8, ' ', STR_PAD_LEFT) . ' ';
+                    $msgCommande .= str_pad($oledrion_Currency->amountForDisplay($product_price), 15, ' ', STR_PAD_LEFT) . ' ';+
+                    $msgCommande .= "\n";
+                    $msgCommande .= "\n\n" . _OLEDRION_TOTAL . " " . $oledrion_Currency->mountForDisplay($cmd_total) . "\n";
+                    $msg = array();
+                    $msg['COMMANDE'] = $msgCommande;
+                    $msg['NUM_COMMANDE'] = $commande->getVar('cmd_id');
+                    $msg['NOM'] = $commande->getVar('cmd_lastname');
+                    $msg['PRENOM'] = $commande->getVar('cmd_firstname');
+                    $msg['ADRESSE'] = $commande->getVar('cmd_adress', 'n');
+                    $msg['CP'] = $commande->getVar('cmd_zip');
+                    $msg['VILLE'] = $commande->getVar('cmd_town');
+                    $msg['PAYS'] = $countries[$commande->getVar('cmd_country')];
+                    $msg['TELEPHONE'] = $commande->getVar('cmd_telephone');
+                    $msg['EMAIL'] = $commande->getVar('cmd_email');
+                    $msg['URL_BILL'] = OLEDRION_URL . 'invoice.php?id=' . $commande->getVar('cmd_id') . '&pass=' . $commande->getVar('cmd_password');
+                    $msg['IP'] = oledrion_utils::IP();
+                    if ($commande->getVar('cmd_bill') == 1) {
+                        $msg['FACTURE'] = _YES;
+                    } else {
+                        $msg['FACTURE'] = _NO;
+                    }
+                    // Send mail to client
+                    oledrion_utils::sendEmailFromTpl('command_client.tpl', $commande -> getVar('cmd_email'), sprintf(_OLEDRION_THANKYOU_CMD, $xoopsConfig['sitename']), $msg);
+                    // Send mail to admin
+                    oledrion_utils::sendEmailFromTpl('command_shop.tpl', oledrion_utils::getEmailsFromGroup(oledrion_utils::getModuleOption('grp_sold')), _OLEDRION_NEW_COMMAND, $msg);
+                    */
+                    // Send SMS
+                    if (oledrion_utils::getModuleOption('sms_checkout')) {
+                        $information['to'] = ltrim($commande->getVar('cmd_mobile'), 0);
+                        $information['text'] = oledrion_utils::getModuleOption('sms_checkout_text');
+                        $sms = oledrion_sms::sendSms($information);
+                    }
+                }
+            } else {
+                $ret['status'] = 0;
+                $ret['message'] = _OLEDRION_ERROR10;
+            }
+        }
+        $return = json_encode($ret);
+        break;
 }
 echo $return;
-

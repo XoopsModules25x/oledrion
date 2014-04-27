@@ -15,11 +15,10 @@
  * @copyright   The XOOPS Project http://sourceforge.net/projects/xoops/
  * @license     http://www.fsf.org/copyleft/gpl.html GNU public license
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
- * @version     $Id$
+ * @version     $Id: functions.php 12290 2014-02-07 11:05:17Z beckmi $
  */
 function oledrion_adminMenu($currentoption = 0, $breadcrumb = '')
 {
-
 
 }
 
@@ -29,6 +28,7 @@ function oledrion_adminMenu($currentoption = 0, $breadcrumb = '')
 function oledrion_get_mid()
 {
     global $xoopsModule;
+
     return $xoopsModule->getVar('mid');
 
 }
@@ -69,9 +69,9 @@ function oledrion_get_module_option($optionName = '')
         $option = $tbl_options[0];
         $ret = $option;
     }
+
     return $ret;
 }
-
 
 /**
  * Set a module's option
@@ -82,6 +82,7 @@ function oledrion_set_module_option($optionName = '', $optionValue = '')
     $option = oledrion_get_module_option($optionName, true);
     $option->setVar('conf_value', $optionValue);
     $retval = $config_handler->insertConfig($option, true);
+
     return $retval;
 }
 
@@ -93,5 +94,5 @@ function oledrion_set_module_option($optionName = '', $optionValue = '')
  */
 function show_footer()
 {
-//	echo "<br /><br /><div align='center'><a href='http://www.herve-thouzard.com/' target='_blank'><img src='../images/instantzero.gif'></a></div>";
+//	echo "<br /><br /><div align='center'><a href='http://www.herve-thouzard.com/' target='_blank'><img src='../assets/images/instantzero.gif'></a></div>";
 }

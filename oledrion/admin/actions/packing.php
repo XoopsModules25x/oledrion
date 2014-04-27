@@ -15,7 +15,7 @@
  * @copyright   The XOOPS Project http://sourceforge.net/projects/xoops/
  * @license     http://www.fsf.org/copyleft/gpl.html GNU public license
  * @author      Hossein Azizabadi (azizabadi@faragostaresh.com)
- * @version     $Id$
+ * @version     $Id: packing.php 12290 2014-02-07 11:05:17Z beckmi $
  */
 
 /**
@@ -126,7 +126,6 @@ switch ($action) {
         }
         $opRedirect = 'packing';
         $item->setVars($_POST);
-
 
         if (isset($_POST['delpicture']) && intval($_POST['delpicture']) == 1) {
             $item->deletePicture();

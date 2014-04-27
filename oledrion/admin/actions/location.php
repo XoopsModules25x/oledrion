@@ -15,7 +15,7 @@
  * @copyright   The XOOPS Project http://sourceforge.net/projects/xoops/
  * @license     http://www.fsf.org/copyleft/gpl.html GNU public license
  * @author      Hossein Azizabadi (azizabadi@faragostaresh.com)
- * @version     $Id$
+ * @version     $Id: location.php 12290 2014-02-07 11:05:17Z beckmi $
  */
 
 /**
@@ -160,8 +160,8 @@ switch ($action) {
 
         $opRedirect = 'location';
         $item->setVars($post);
-        if($post['location_type'] == 'parent') {
-	        $item->setVar('location_pid', 0);
+        if ($post['location_type'] == 'parent') {
+            $item->setVar('location_pid', 0);
         }
         $res = $h_oledrion_location->insert($item);
 

@@ -15,7 +15,7 @@
  * @copyright   The XOOPS Project http://sourceforge.net/projects/xoops/
  * @license     http://www.fsf.org/copyleft/gpl.html GNU public license
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
- * @version     $Id$
+ * @version     $Id: oledrion_categories.php 12290 2014-02-07 11:05:17Z beckmi $
  */
 
 /**
@@ -26,7 +26,7 @@ function b_oledrion_category_show($options)
     global $xoTheme;
     $block = array();
     include XOOPS_ROOT_PATH . '/modules/oledrion/include/common.php';
-    $xoTheme->addStylesheet(OLEDRION_URL . 'css/oledrion.css');
+    $xoTheme->addStylesheet(OLEDRION_URL . 'assets/css/oledrion.css');
 
     $block['nostock_msg'] = oledrion_utils::getModuleOption('nostock_msg');
 
@@ -86,6 +86,7 @@ function b_oledrion_category_show($options)
         $block['block_option'] = 2;
         $block['liMenu'] = $h_oledrion_cat->getUlMenu('category_title');
     }
+
     return $block;
 }
 
@@ -98,6 +99,7 @@ function b_oledrion_category_edit($options)
     $checkeds[$options[0]] = 'checked';
     $form = '';
     $form .= '<b>' . _MB_OLEDRION_TYPE_BLOCK . "</b><br /><input type='radio' name='options[]' id='options[]' value='0' " . $checkeds[0] . " />" . _MB_OLEDRION_TYPE_BLOCK2 . "<br /><input type='radio' name='options[]' id='options[]' value='1' " . $checkeds[1] . " />" . _MB_OLEDRION_TYPE_BLOCK1 . "<br /><input type='radio' name='options[]' id='options[]' value='2' " . $checkeds[2] . " />" . _MB_OLEDRION_TYPE_BLOCK3 . '</td></tr>';
+
     return $form;
 }
 
@@ -111,5 +113,5 @@ function b_oledrion_category_duplicatable($options)
 
     $tpl = new XoopsTpl();
     $tpl->assign('block', $block);
-    $tpl->display('db:oledrion_block_categories.html');
+    $tpl->display('db:oledrion_block_categories.tpl');
 }

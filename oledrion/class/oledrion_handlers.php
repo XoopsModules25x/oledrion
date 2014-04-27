@@ -15,16 +15,14 @@
  * @copyright   The XOOPS Project http://sourceforge.net/projects/xoops/
  * @license     http://www.fsf.org/copyleft/gpl.html GNU public license
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
- * @version     $Id$
+ * @version     $Id: oledrion_handlers.php 12290 2014-02-07 11:05:17Z beckmi $
  */
 
 /**
  * Chargement des handlers utilisés par le module
  */
 
-if (!defined('XOOPS_ROOT_PATH')) {
-    die("XOOPS root path not defined");
-}
+defined('XOOPS_ROOT_PATH') || die('XOOPS root path not defined');
 
 class oledrion_handler
 {
@@ -51,8 +49,8 @@ class oledrion_handler
     /**
      * Méthode chargée de renvoyer les handlers de données en les chargeant à la volée
      *
-     * @param string $name
-     * @return mixed    Null si on échoue, sinon l'objet demandé
+     * @param  string $name
+     * @return mixed  Null si on échoue, sinon l'objet demandé
      */
     public function __get($name)
     {
@@ -65,6 +63,7 @@ class oledrion_handler
         if (!isset($this->handlersNames[$name])) {
             $this->handlers[$name] = xoops_getmodulehandler(substr($name, 2), OLEDRION_DIRNAME);
         }
+
         return $this->handlers[$name];
     }
 
@@ -83,6 +82,7 @@ class oledrion_handler
         if (!self::$instance instanceof self) {
             self::$instance = new self;
         }
+
         return self::$instance;
     }
 }

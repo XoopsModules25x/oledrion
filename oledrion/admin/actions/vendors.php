@@ -15,7 +15,7 @@
  * @copyright   The XOOPS Project http://sourceforge.net/projects/xoops/
  * @license     http://www.fsf.org/copyleft/gpl.html GNU public license
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
- * @version     $Id$
+ * @version     $Id: vendors.php 12290 2014-02-07 11:05:17Z beckmi $
  */
 
 /**
@@ -93,7 +93,6 @@ switch ($action) {
         $sform->display();
         include_once OLEDRION_ADMIN_PATH . 'admin_footer.php';
         break;
-
 
     // ****************************************************************************************************************
     case 'saveedit': // Sauvegarde d'un vendeur (édition et ajout)

@@ -15,7 +15,7 @@
  * @copyright   The XOOPS Project http://sourceforge.net/projects/xoops/
  * @license     http://www.fsf.org/copyleft/gpl.html GNU public license
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
- * @version     $Id$
+ * @version     $Id: oledrion_plugins.php 12290 2014-02-07 11:05:17Z beckmi $
  */
 
 /**
@@ -109,7 +109,6 @@ class oledrion_plugins
      */
     private static $events = array();
 
-
     /**
      * Retourne l'instance unique de la classe
      *
@@ -120,6 +119,7 @@ class oledrion_plugins
         if (!self::$instance instanceof self) {
             self::$instance = new self;
         }
+
         return self::$instance;
     }
 
@@ -147,9 +147,9 @@ class oledrion_plugins
 
     /**
      * Vérifie que le fichier Php passé en paramètre contient bien une classe de filtre ou d'action et si c'est le cas, le charge dans la liste des plugins
-     * @param string $fullPathName    Chemin complet vers le fichier (répertoire + nom)
-     * @param integer $type            Type de plugin recherché (action ou filtre)
-     * @param string $pluginFolder    Le nom du répertoire dans lequel se trouve le fichier (le "dernier nom")
+     * @param  string  $fullPathName Chemin complet vers le fichier (répertoire + nom)
+     * @param  integer $type         Type de plugin recherché (action ou filtre)
+     * @param  string  $pluginFolder Le nom du répertoire dans lequel se trouve le fichier (le "dernier nom")
      * @return void
      */
     private function loadClass($fullPathName, $type, $pluginFolder)
@@ -173,8 +173,8 @@ class oledrion_plugins
     /**
      * Part à la recherche d'un type de plugin dans les répertoires
      *
-     * @param string $path    La racine
-     * @param integer $type    Le type de plugin recherché (action ou filtre)
+     * @param  string  $path La racine
+     * @param  integer $type Le type de plugin recherché (action ou filtre)
      * @return void
      */
     private function loadPluginsFiles($path, $type)
@@ -193,14 +193,15 @@ class oledrion_plugins
     /**
      * Déclenchement d'une action et appel des plugins liés
      *
-     * @param string $eventToFire    L'action déclenchée
-     * @param object $parameters    Les paramètres à passer à chaque plugin
-     * @return object                L'objet lui même pour chaîner
+     * @param  string $eventToFire L'action déclenchée
+     * @param  object $parameters  Les paramètres à passer à chaque plugin
+     * @return object L'objet lui même pour chaîner
      */
     public function fireAction($eventToFire, oledrion_parameters $parameters = null)
     {
         if (!isset($this->events[self::PLUGIN_ACTION][$eventToFire])) {
             trigger_error(sprintf(_OLEDRION_PLUGINS_ERROR_1, $eventToFire));
+
             return $this;
         }
         ksort($this->events[self::PLUGIN_ACTION][$eventToFire]); // Tri par priorité
@@ -220,20 +221,22 @@ class oledrion_plugins
                 unset($class);
             }
         }
+
         return $this;
     }
 
     /**
      * Déclenchement d'un filtre et appel des plugins liés
      *
-     * @param string $eventToFire    Le filtre appelé
-     * @param object $parameters    Les paramètres à passer à chaque plugin
-     * @return object                Le contenu de l'objet passé en paramètre
+     * @param  string $eventToFire Le filtre appelé
+     * @param  object $parameters  Les paramètres à passer à chaque plugin
+     * @return object Le contenu de l'objet passé en paramètre
      */
     public function fireFilter($eventToFire, oledrion_parameters &$parameters)
     {
         if (!isset($this->events[self::PLUGIN_FILTER][$eventToFire])) {
             trigger_error(sprintf(_OLEDRION_PLUGINS_ERROR_1, $eventToFire));
+
             return $this;
         }
         ksort($this->events[self::PLUGIN_FILTER][$eventToFire]); // Tri par priorité
@@ -262,11 +265,11 @@ class oledrion_plugins
     /**
      * Indique si un plugin s'est détaché d'un évènement particulier
      *
-     * @param integer $eventType
-     * @param string $eventToFire
-     * @param string $fullPathName
-     * @param string $className
-     * @param string $method
+     * @param  integer $eventType
+     * @param  string  $eventToFire
+     * @param  string  $fullPathName
+     * @param  string  $className
+     * @param  string  $method
      * @return boolean
      */
     public function isUnplug($eventType, $eventToFire, $fullPathName, $className, $method)
@@ -277,17 +280,18 @@ class oledrion_plugins
         } else {
             return false;
         }
+
         return isset($unplug[$eventType][$eventToFire][$fullPathName][$className][$method]);
     }
 
     /**
      * Permet à un plugin de se détacher d'un évènement
      *
-     * @param integer $eventType
-     * @param string $eventToFire
-     * @param string $fullPathName
-     * @param string $className
-     * @param string $method
+     * @param  integer $eventType
+     * @param  string  $eventToFire
+     * @param  string  $fullPathName
+     * @param  string  $className
+     * @param  string  $method
      * @return void
      */
     public function unplugFromEvent($eventType, $eventToFire, $fullPathName, $className, $method)

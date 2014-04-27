@@ -1,7 +1,5 @@
 <?php
-if (!defined('XOOPS_ROOT_PATH')) {
-    die("XOOPS root path not defined");
-}
+defined('XOOPS_ROOT_PATH') || die('XOOPS root path not defined');
 //require_once('nusoap.php');
 
 class oledrion_pec24 extends oledrion_gateway
@@ -35,6 +33,7 @@ class oledrion_pec24 extends oledrion_gateway
         $submit_btn = new XoopsFormButton('', 'post', _AM_OLEDRION_GATEWAYS_UPDATE, 'submit');
         $button_tray->addElement($submit_btn);
         $sform->addElement($button_tray);
+
         return $sform;
     }
 
@@ -81,12 +80,14 @@ class oledrion_pec24 extends oledrion_gateway
         global $xoopsConfig;
         $gatewayName = $this->gatewayInformation['foldername'];
         $parsian_mid = $this->handlers->h_oledrion_gateways_options->getGatewayOptionValue($gatewayName, 'parsian_mid');
+
         return $parsian_mid;
     }
 
     function getRedirectURL($cmd_total, $cmd_id)
     {
         $authority = $this->getAuthority($cmd_total, $cmd_id);
+
         return "https://www.pecco24.com:27635/pecpaymentgateway/?au=" . $authority;
     }
 
@@ -99,12 +100,14 @@ class oledrion_pec24 extends oledrion_gateway
         $ret['callbackUrl'] = OLEDRION_URL . 'gateway-notify.php?cmd_id=' . $order->getVar('cmd_id') . '&cmd_total=' . intval($this->formatAmount($order->getVar('cmd_total')));
         $ret['authority'] = 0;
         $ret['status'] = 1;
+
         return $ret;
     }
 
     function getCountriesList()
     {
         require_once XOOPS_ROOT_PATH . '/class/xoopslists.php';
+
         return XoopsLists::getCountryList();
     }
 
@@ -212,6 +215,7 @@ class oledrion_pec24 extends oledrion_gateway
             fwrite($fp, "Peyment note : " . $user_log . "\n");
             fclose($fp);
         }
+
         return $user_log;
     }
 }

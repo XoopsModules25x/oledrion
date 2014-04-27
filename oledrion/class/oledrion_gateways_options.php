@@ -15,7 +15,7 @@
  * @copyright   The XOOPS Project http://sourceforge.net/projects/xoops/
  * @license     http://www.fsf.org/copyleft/gpl.html GNU public license
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
- * @version     $Id$
+ * @version     $Id: oledrion_gateways_options.php 12290 2014-02-07 11:05:17Z beckmi $
  */
 
 /**
@@ -34,7 +34,6 @@ class oledrion_gateways_options extends Oledrion_Object
     }
 }
 
-
 class OledrionOledrion_gateways_optionsHandler extends Oledrion_XoopsPersistableObjectHandler
 {
     public function __construct($db)
@@ -45,50 +44,53 @@ class OledrionOledrion_gateways_optionsHandler extends Oledrion_XoopsPersistable
     /**
      * Retourne toutes les options d'une passerelle de paiement
      *
-     * @param string $option_gateway    Le nom de la passerelle de paiement
-     * @return array    Tableau d'objets de type oledrion_gateways_options
+     * @param  string $option_gateway Le nom de la passerelle de paiement
+     * @return array  Tableau d'objets de type oledrion_gateways_options
      */
     public function getGatewayOptions($option_gateway)
     {
         $criteria = new Criteria('option_gateway', $option_gateway, '=');
+
         return $this->getObjects($criteria);
     }
 
     /**
      * Supprime toutes les options d'une passerelle de paiement
      *
-     * @param string $option_gateway
-     * @return boolean    Le résultat de la suppression des options
+     * @param  string  $option_gateway
+     * @return boolean Le résultat de la suppression des options
      */
     public function deleteGatewayOptions($option_gateway)
     {
         $criteria = new Criteria('option_gateway', $option_gateway, '=');
+
         return $this->deleteAll($criteria);
     }
 
     /**
      * Retourne une option d'une passerelle de paiement
      *
-     * @param string $option_gateway    Le nom de la passerelle de paiement
-     * @param string $option_name        L'option que l'on souhaite récupérer
-     * @return object    Objet de type oledrion_gateways_options
+     * @param  string $option_gateway Le nom de la passerelle de paiement
+     * @param  string $option_name    L'option que l'on souhaite récupérer
+     * @return object Objet de type oledrion_gateways_options
      */
     public function getGatewayOption($option_gateway, $option_name)
     {
         $criteria = new CriteriaCompo();
         $criteria->add(new Criteria('option_gateway', $option_gateway, '='));
         $criteria->add(new Criteria('option_name', $option_name, '='));
+
         return $this->getObjects($criteria);
     }
 
     /**
      * Retourne la VALEUR d'une option d'une passerelle de paiement
      *
-     * @param string $option_gateway    Le nom d'une passerelle de paiement
-     * @param string $option_name        L'option que l'on souhaite récupérer
-     * @param string $format            Le format dans lequel on souhaite récupérer la valeur (par rapport au getVar())
-     * @param boolean $unserialize        Indique s'il faut désérialiser la valeur de retour
-     * @return mixed    La valeur de l'option ou null si l'option ne peut pas être trouvée
+     * @param  string  $option_gateway Le nom d'une passerelle de paiement
+     * @param  string  $option_name    L'option que l'on souhaite récupérer
+     * @param  string  $format         Le format dans lequel on souhaite récupérer la valeur (par rapport au getVar())
+     * @param  boolean $unserialize    Indique s'il faut désérialiser la valeur de retour
+     * @return mixed   La valeur de l'option ou null si l'option ne peut pas être trouvée
      */
     public function getGatewayOptionValue($option_gateway, $option_name, $format = 'N', $unserialize = false)
     {
@@ -111,11 +113,11 @@ class OledrionOledrion_gateways_optionsHandler extends Oledrion_XoopsPersistable
     /**
      * Positionne la valeur d'une option d'une passerelle de paiement et l'enregistre
      *
-     * @param string $option_gateway     Le nom de la passerelle de paiement
-     * @param string $option_name         Le nom de l'option
-     * @param mixed $option_value         La valeur de l'option
-     * @param boolean $serialize        Indique s'il faut sérialiser la valeur avant de l'enregistrer
-     * @return boolean                    Le résultat de la mise à jour (vrai si la mise à jour s'est faite sinon faux)
+     * @param  string  $option_gateway Le nom de la passerelle de paiement
+     * @param  string  $option_name    Le nom de l'option
+     * @param  mixed   $option_value   La valeur de l'option
+     * @param  boolean $serialize      Indique s'il faut sérialiser la valeur avant de l'enregistrer
+     * @return boolean Le résultat de la mise à jour (vrai si la mise à jour s'est faite sinon faux)
      */
     public function setGatewayOptionValue($option_gateway, $option_name, $option_value, $serialize = false)
     {
@@ -131,14 +133,15 @@ class OledrionOledrion_gateways_optionsHandler extends Oledrion_XoopsPersistable
             } else {
                 $option->setVar('option_value', $option_value);
             }
+
             return $this->insert($option, true);
         } else { // Option introuvable, on va la créer
             $option = $this->create(true);
             $option->setVar('option_gateway', $option_gateway);
             $option->setVar('option_name', $option_name);
             $option->setVar('option_value', $option_value);
+
             return $this->insert($option, true);
         }
     }
 }
-

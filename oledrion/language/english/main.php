@@ -15,7 +15,7 @@
  * @copyright   The XOOPS Project http://sourceforge.net/projects/xoops/
  * @license     http://www.fsf.org/copyleft/gpl.html GNU public license
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
- * @version     $Id$
+ * @version     $Id: main.php 12290 2014-02-07 11:05:17Z beckmi $
  */
 
 define('_OLEDRION_SEARCHFOR', 'Search for');
@@ -314,3 +314,8 @@ define('_OLEDRION_AMOUNT_PRICE', 'Product price');
 define('_OLEDRION_STEP_1', '1- Add to cart');
 define('_OLEDRION_STEP_2', '2- Input personal information');
 define('_OLEDRION_STEP_3', '3- Confirm information');
+
+define('_OLEDRION_TRACK', 'Tracking Code');
+define('_OLEDRION_GIFT', 'Gift Cards');
+define('_OLEDRION_PACK', 'Package');
+define('_OLEDRION_SUBMIT', 'Submit');

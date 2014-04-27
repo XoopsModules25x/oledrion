@@ -15,7 +15,7 @@
  * @copyright   The XOOPS Project http://sourceforge.net/projects/xoops/
  * @license     http://www.fsf.org/copyleft/gpl.html GNU public license
  * @author      Hossein Azizabadi (azizabadi@faragostaresh.com)
- * @version     $Id$
+ * @version     $Id: oledrion_packing.php 12290 2014-02-07 11:05:17Z beckmi $
  */
 
 require 'classheader.php';
@@ -37,7 +37,7 @@ class oledrion_packing extends Oledrion_Object
 
     /**
      * Retourne l'URL de l'image de la catégorie courante
-     * @return string    L'URL
+     * @return string L'URL
      */
     public function getPictureUrl()
     {
@@ -51,7 +51,7 @@ class oledrion_packing extends Oledrion_Object
     /**
      * Indique si l'image de la catégorie existe
      *
-     * @return boolean    Vrai si l'image existe sinon faux
+     * @return boolean Vrai si l'image existe sinon faux
      */
     public function pictureExists()
     {
@@ -59,6 +59,7 @@ class oledrion_packing extends Oledrion_Object
         if (xoops_trim($this->getVar('packing_image')) != '' && file_exists(OLEDRION_PICTURES_PATH . DIRECTORY_SEPARATOR . $this->getVar('packing_image'))) {
             $return = true;
         }
+
         return $return;
     }
 
@@ -77,7 +78,7 @@ class oledrion_packing extends Oledrion_Object
     /**
      * Retourne les éléments du produits formatés pour affichage
      *
-     * @param string $format
+     * @param  string $format
      * @return array
      */
     public function toArray($format = 's')
@@ -87,10 +88,10 @@ class oledrion_packing extends Oledrion_Object
         $ret = parent::toArray($format);
         $ret['packing_price_fordisplay'] = $oledrion_Currency->amountForDisplay($this->getVar('packing_price'));
         $ret['packing_image_url'] = $this->getPictureUrl();
+
         return $ret;
     }
 }
-
 
 class OledrionOledrion_packingHandler extends Oledrion_XoopsPersistableObjectHandler
 {
@@ -109,6 +110,7 @@ class OledrionOledrion_packingHandler extends Oledrion_XoopsPersistableObjectHan
         $critere->setOrder($parameters['order']);
         $packings = array();
         $packings = $this->getObjects($critere);
+
         return $packings;
     }
 
@@ -118,11 +120,12 @@ class OledrionOledrion_packingHandler extends Oledrion_XoopsPersistableObjectHan
         $critere = new CriteriaCompo();
         $critere->add(new Criteria('packing_online', '1'));
         $packings = $this->getObjects($critere);
-        foreach($packings as $root) {
-	        	$tab = array();
-	        	$tab = $root->toArray();
-	        	$ret[] = $tab;
+        foreach ($packings as $root) {
+                $tab = array();
+                $tab = $root->toArray();
+                $ret[] = $tab;
         }
+
         return $ret;
     }
 }

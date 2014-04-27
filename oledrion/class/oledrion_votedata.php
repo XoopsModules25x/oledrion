@@ -15,7 +15,7 @@
  * @copyright   The XOOPS Project http://sourceforge.net/projects/xoops/
  * @license     http://www.fsf.org/copyleft/gpl.html GNU public license
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
- * @version     $Id$
+ * @version     $Id: oledrion_votedata.php 12290 2014-02-07 11:05:17Z beckmi $
  */
 
 /**
@@ -36,7 +36,6 @@ class oledrion_votedata extends Oledrion_Object
     }
 }
 
-
 class OledrionOledrion_votedataHandler extends Oledrion_XoopsPersistableObjectHandler
 {
     public function __construct($db)
@@ -44,14 +43,13 @@ class OledrionOledrion_votedataHandler extends Oledrion_XoopsPersistableObjectHa
         parent::__construct($db, 'oledrion_votedata', 'oledrion_votedata', 'vote_ratingid');
     }
 
-
     /**
      * Renvoie le nombre total de votes pour un produit ainsi que la sommes des votes
      *
-     * @param integer $product_id Identifiant du produit
-     * @param integer $totalVotes Variable passée par référence et devant contenir le nombre total de votes du produit
-     * @param integer $sumRating Variable passée par référence et devant contenir le cumul des votes
-     * @return none Rien
+     * @param  integer $product_id Identifiant du produit
+     * @param  integer $totalVotes Variable passée par référence et devant contenir le nombre total de votes du produit
+     * @param  integer $sumRating  Variable passée par référence et devant contenir le cumul des votes
+     * @return none    Rien
      */
     public function getCountRecordSumRating($product_id, &$totalVotes, &$sumRating)
     {
@@ -69,9 +67,9 @@ class OledrionOledrion_votedataHandler extends Oledrion_XoopsPersistableObjectHa
     /**
      * Returns the (x) last votes
      *
-     * @param integer $start Starting position
-     * @param integer $limit count of items to return
-     * @return array Array of votedata objects
+     * @param  integer $start Starting position
+     * @param  integer $limit count of items to return
+     * @return array   Array of votedata objects
      */
     public function getLastVotes($start = 0, $limit = 0)
     {
@@ -82,27 +80,29 @@ class OledrionOledrion_votedataHandler extends Oledrion_XoopsPersistableObjectHa
         $criteria->setSort('vote_ratingtimestamp');
         $criteria->setOrder('DESC');
         $tbl_datas = $this->getObjects($criteria, true);
+
         return $tbl_datas;
     }
 
     /**
      * Suppression des votes d'un produit
      *
-     * @param integer $vote_product_id    L'identifiant du produit
-     * @return le résultat de la suppression
+     * @param  integer $vote_product_id L'identifiant du produit
+     * @return le      résultat de la suppression
      */
     public function deleteProductRatings($vote_product_id)
     {
         $criteria = new Criteria('vote_product_id', $vote_product_id, '=');
+
         return $this->deleteAll($criteria);
     }
 
     /**
      * Indique si un utilisateur a déjà voté pour un produit
      *
-     * @param integer $vote_uid    L'identifiant de l'utilisateur
-     * @param integer $vote_product_id    Le numéro du produit
-     * @return boolean    True s'il a déjà voté sinon False
+     * @param  integer $vote_uid        L'identifiant de l'utilisateur
+     * @param  integer $vote_product_id Le numéro du produit
+     * @return boolean True s'il a déjà voté sinon False
      */
     public function hasUserAlreadyVoted($vote_uid, $vote_product_id)
     {
@@ -123,8 +123,8 @@ class OledrionOledrion_votedataHandler extends Oledrion_XoopsPersistableObjectHa
     /**
      * Indique si un utilisateur anonyme a déjà voté (d'après son adresse IP)
      *
-     * @param string $ip    L'adresse IP
-     * @param integer $vote_product_id    Ld'identifiant du produit
+     * @param  string  $ip              L'adresse IP
+     * @param  integer $vote_product_id Ld'identifiant du produit
      * @return boolean
      */
     public function hasAnonymousAlreadyVoted($ip = '', $vote_product_id = 0)
@@ -150,10 +150,10 @@ class OledrionOledrion_votedataHandler extends Oledrion_XoopsPersistableObjectHa
     /**
      * Crée un vote pour un produit
      *
-     * @param integer $vote_product_id    L'identifiant du produit
-     * @param integer $vote_uid    L'identifiant de l'utilisateur
-     * @param integer $vote_rating    Le vote
-     * @return le résultat de la création du vote
+     * @param  integer $vote_product_id L'identifiant du produit
+     * @param  integer $vote_uid        L'identifiant de l'utilisateur
+     * @param  integer $vote_rating     Le vote
+     * @return le      résultat de la création du vote
      */
     public function createRating($vote_product_id, $vote_uid, $vote_rating)
     {
@@ -163,6 +163,7 @@ class OledrionOledrion_votedataHandler extends Oledrion_XoopsPersistableObjectHa
         $product->setVar('vote_rating', $vote_rating);
         $product->setVar('vote_ratinghostname', oledrion_utils::IP());
         $product->setVar('vote_ratingtimestamp', time());
+
         return $this->insert($product);
     }
 }

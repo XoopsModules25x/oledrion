@@ -23,7 +23,7 @@
  */
 require 'header.php';
 $GLOBALS['current_category'] = -1;
-$xoopsOption['template_main'] = 'oledrion_index.html';
+$xoopsOption['template_main'] = 'oledrion_index.tpl';
 require_once XOOPS_ROOT_PATH . '/header.php';
 require_once OLEDRION_PATH . 'class/registryfile.php';
 
@@ -32,6 +32,7 @@ $start = isset($_GET['start']) ? intval($_GET['start']) : 0;
 $limit = oledrion_utils::getModuleOption('newproducts'); // Nombre maximum d'éléments à afficher
 $baseurl = OLEDRION_URL . basename(__FILE__); // URL de ce script (sans son nom)
 $registry = new oledrion_registryfile();
+$lastTitle = '';
 
 // Quelques options pour le template
 $xoopsTpl->assign('nostock_msg', oledrion_utils::getModuleOption('nostock_msg'));

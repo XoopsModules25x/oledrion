@@ -15,7 +15,7 @@
  * @copyright   The XOOPS Project http://sourceforge.net/projects/xoops/
  * @license     http://www.fsf.org/copyleft/gpl.html GNU public license
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
- * @version     $Id$
+ * @version     $Id: oledrion_cart.php 12290 2014-02-07 11:05:17Z beckmi $
  */
 
 /**
@@ -54,6 +54,7 @@ function b_oledrion_cart_show($options)
         array_slice($cartForTemplate, 0, $productsCount - 1);
     }
     $block['block_caddieProducts'] = $cartForTemplate; // Produits dans le caddy
+
     return $block;
 }
 
@@ -65,5 +66,6 @@ function b_oledrion_cart_edit($options)
     $form .= "<table border='0'>";
     $form .= '<tr><td>' . _MB_OLEDRION_MAX_ITEMS . "</td><td><input type='text' name='options[]' id='options' value='" . $options[0] . "' /></td></tr>";
     $form .= '</table>';
+
     return $form;
 }

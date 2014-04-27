@@ -1,5 +1,5 @@
 <?php
-	/**
+    /**
     This file is part of WideImage.
 
     WideImage is free software; you can redistribute it and/or modify
@@ -17,68 +17,69 @@
     Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
   **/
 
-	class wiUnsupportedFormatException extends wiException {}
+    class wiUnsupportedFormatException extends wiException {}
 
-	abstract class wiFileMapperFactory
-	{
-		static protected $mappers = array();
+    abstract class wiFileMapperFactory
+    {
+        static protected $mappers = array();
 
-		static protected $mimeTable = array(
-			'image/jpg' => 'jpeg',
-			'image/jpeg' => 'jpeg',
-			'image/pjpeg' => 'jpeg',
-			'image/gif' => 'gif',
-			'image/png' => 'png'
-			);
+        static protected $mimeTable = array(
+            'image/jpg' => 'jpeg',
+            'image/jpeg' => 'jpeg',
+            'image/pjpeg' => 'jpeg',
+            'image/gif' => 'gif',
+            'image/png' => 'png'
+            );
 
-		static function selectMapper($uri, $format = null)
-		{
-			$format = self::determineFormat($uri, $format);
+        static function selectMapper($uri, $format = null)
+        {
+            $format = self::determineFormat($uri, $format);
 
-			if (array_key_exists($format, self::$mappers))
-				return self::$mappers[$format];
+            if (array_key_exists($format, self::$mappers))
+                return self::$mappers[$format];
 
-			$mapperClassName = 'wi' . 'ImageFileMapper_' . $format;
-			if (!class_exists($mapperClassName))
-			{
-				$mapperFileName = WI_LIB_PATH . 'mappers/' . 'ImageFileMapper_' . $format . '.class.php';
-				if (file_exists($mapperFileName))
-					require_once($mapperFileName);
-			}
+            $mapperClassName = 'wi' . 'ImageFileMapper_' . $format;
+            if (!class_exists($mapperClassName))
+            {
+                $mapperFileName = WI_LIB_PATH . 'mappers/' . 'ImageFileMapper_' . $format . '.class.php';
+                if (file_exists($mapperFileName))
+                    require_once($mapperFileName);
+            }
 
-			if (class_exists($mapperClassName))
-			{
-				self::$mappers[$format] = new $mapperClassName();
-				return self::$mappers[$format];
-			}
+            if (class_exists($mapperClassName))
+            {
+                self::$mappers[$format] = new $mapperClassName();
 
-			throw new wiUnsupportedFormatException("Format '{$format}' is not supported.");
-		}
+                return self::$mappers[$format];
+            }
 
-		static function determineFormat($uri, $format = null)
-		{
-			if ($format == null)
-				$format = self::extractExtension($uri);
+            throw new wiUnsupportedFormatException("Format '{$format}' is not supported.");
+        }
 
-			// mime-type match
-			if (preg_match('~[a-z]*/[a-z-]*~i', $format))
-				if (isset(self::$mimeTable[strtolower($format)]))
-					return self::$mimeTable[strtolower($format)];
+        static function determineFormat($uri, $format = null)
+        {
+            if ($format == null)
+                $format = self::extractExtension($uri);
 
-			// clean the string
-			$format = strtoupper(preg_replace('/[^a-z0-9_-]/i', '', $format));
-			if ($format == 'JPG')
-				$format = 'JPEG';
+            // mime-type match
+            if (preg_match('~[a-z]*/[a-z-]*~i', $format))
+                if (isset(self::$mimeTable[strtolower($format)]))
+                    return self::$mimeTable[strtolower($format)];
 
-			return $format;
-		}
+            // clean the string
+            $format = strtoupper(preg_replace('/[^a-z0-9_-]/i', '', $format));
+            if ($format == 'JPG')
+                $format = 'JPEG';
 
-		static function extractExtension($uri)
-		{
-			$p = strrpos($uri, '.');
-			if ($p === false)
-				return '';
-			else
-				return substr($uri, $p + 1);
-		}
-	}
+            return $format;
+        }
+
+        static function extractExtension($uri)
+        {
+            $p = strrpos($uri, '.');
+            if ($p === false)
+                return '';
+            else
+                return substr($uri, $p + 1);
+        }
+    }

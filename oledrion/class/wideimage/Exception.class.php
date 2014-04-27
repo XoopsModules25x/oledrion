@@ -1,5 +1,5 @@
 <?php
-	/**
+    /**
     This file is part of WideImage.
 
     WideImage is free software; you can redistribute it and/or modify
@@ -17,12 +17,12 @@
     Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
   **/
 
-	// hack for those without SPL -- define RuntimeException
-	if (!class_exists('RuntimeException'))
-	{
-		class RuntimeException extends Exception {}
-	}
+    // hack for those without SPL -- define RuntimeException
+    if (!class_exists('RuntimeException'))
+    {
+        class RuntimeException extends Exception {}
+    }
 
-	class wiException extends RuntimeException
-	{
-	}
+    class wiException extends RuntimeException
+    {
+    }

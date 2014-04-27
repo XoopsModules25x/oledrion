@@ -15,7 +15,7 @@
  * @copyright   The XOOPS Project http://sourceforge.net/projects/xoops/
  * @license     http://www.fsf.org/copyleft/gpl.html GNU public license
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
- * @version     $Id$
+ * @version     $Id: oledrion_top.php 12290 2014-02-07 11:05:17Z beckmi $
  */
 /**
  * Affiche les produits les plus vus
@@ -37,9 +37,11 @@ function b_oledrion_top_show($options)
     if (count($products) > 0) {
         $block['nostock_msg'] = oledrion_utils::getModuleOption('nostock_msg');
         $block['block_products'] = $products;
-        $xoTheme->addStylesheet(OLEDRION_URL . 'css/oledrion.css');
+        $xoTheme->addStylesheet(OLEDRION_URL . 'assets/css/oledrion.css');
+
         return $block;
     } else { // La liste des produits est introuvable (on ne trouve pas les produits vendus dans le stock des produits)
+
         return false;
     }
 }
@@ -65,6 +67,7 @@ function b_oledrion_top_edit($options)
     $select = $mytree->makeSelBox('options[]', 'cat_title', '-', $options[1], _MB_OLEDRION_ALL_CATEGORIES);
     $form .= '<tr><td>' . _MB_OLEDRION_CATEGORY . '</td><td>' . $select . '</td></tr>';
     $form .= '</table>';
+
     return $form;
 }
 
@@ -78,5 +81,5 @@ function b_oledrion_top_show_duplicatable($options)
 
     $tpl = new XoopsTpl();
     $tpl->assign('block', $block);
-    $tpl->display('db:oledrion_block_top.html');
+    $tpl->display('db:oledrion_block_top.tpl');
 }

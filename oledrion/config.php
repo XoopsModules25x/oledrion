@@ -15,7 +15,7 @@
  * @copyright   The XOOPS Project http://sourceforge.net/projects/xoops/
  * @license     http://www.fsf.org/copyleft/gpl.html GNU public license
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
- * @version     $Id$
+ * @version     $Id: config.php 12290 2014-02-07 11:05:17Z beckmi $
  */
 
 /**
@@ -36,9 +36,9 @@ if (!defined("OLEDRION_ATTACHED_FILES_URL")) {
     define("OLEDRION_CLASS_PATH", OLEDRION_PATH . 'class/');
 
     // Set image , js and css url
-    define("OLEDRION_IMAGES_URL", OLEDRION_URL . 'images/');
-    define("OLEDRION_JS_URL", OLEDRION_URL . 'js/');
-    define("OLEDRION_CSS_URL", OLEDRION_URL . 'css/');
+    define("OLEDRION_IMAGES_URL", OLEDRION_URL . 'assets/images/');
+    define("OLEDRION_JS_URL", OLEDRION_URL . 'assets/js/');
+    define("OLEDRION_CSS_URL", OLEDRION_URL . 'assets/css/');
 
     // Set admin URL and PATH
     define("OLEDRION_ADMIN_URL", OLEDRION_URL . 'admin/');
@@ -149,4 +149,7 @@ if (!defined("OLEDRION_ATTACHED_FILES_URL")) {
     define("OLEDRION_TEXTFILE5", 'oledrion_restrictorders.txt');
     define("OLEDRION_TEXTFILE6", 'oledrion_checkout1.txt');
     define("OLEDRION_TEXTFILE7", 'oledrion_checkout2.txt');
+
+    // Set SMS gateway
+    define("OLEDRION_SMS_GATEWAY", 'example');
 }

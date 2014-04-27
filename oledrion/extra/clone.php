@@ -3,11 +3,11 @@
 
 Usage:
 
-	Copy clone.php in <xoops_root>
-	Change current working directory to <xoops_root>
-	Update mappings as per new modulename.
+    Copy clone.php in <xoops_root>
+    Change current working directory to <xoops_root>
+    Update mappings as per new modulename.
 
-	php -q clone.php
+    php -q clone.php
 
 */
 
@@ -32,6 +32,7 @@ if (!function_exists('file_put_contents')) {
         $fp = fopen($filename, (!$file_append ? 'w+' : 'a+'));
         if (!$fp) {
             trigger_error('file_put_contents cannot write in file.', E_USER_ERROR);
+
             return;
         }
         fputs($fp, $data);
@@ -76,4 +77,4 @@ cloneFileFolder('modules/oledrion');
 
 echo "Happy cloning...\n";
 echo "check directory modules/" . $patterns['oledrion'] . " for cloned module \n";
-echo "Consider modifying new module by editing language/english/modinfo.php and images/oledrion_logo.png manually (if you care)\n";
+echo "Consider modifying new module by editing language/english/modinfo.php and assets/images/oledrion_logo.png manually (if you care)\n";

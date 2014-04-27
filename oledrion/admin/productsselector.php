@@ -15,7 +15,7 @@
  * @copyright   The XOOPS Project http://sourceforge.net/projects/xoops/
  * @license     http://www.fsf.org/copyleft/gpl.html GNU public license
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
- * @version     $Id$
+ * @version     $Id: productsselector.php 12290 2014-02-07 11:05:17Z beckmi $
  */
 
 /**
@@ -154,4 +154,4 @@ $xoopsTpl->assign('searchField', $searchFields);
 $xoopsTpl->assign('searchCategory', $categoriesSelect);
 $xoopsTpl->assign('searchFieldSelected', $selectedSearchField);
 
-echo $xoopsTpl->fetch('db:oledrion_productsselector.html');
+echo $xoopsTpl->fetch('db:oledrion_productsselector.tpl');

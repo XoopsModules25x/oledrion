@@ -15,14 +15,12 @@
  * @copyright   The XOOPS Project http://sourceforge.net/projects/xoops/
  * @license     http://www.fsf.org/copyleft/gpl.html GNU public license
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
- * @version     $Id$
+ * @version     $Id: oledrion_shelf_parameters.php 12290 2014-02-07 11:05:17Z beckmi $
  */
 /**
  * Classe interne dont le but est de passer des paramètres à la classe oeldrion_shelf
  */
-if (!defined('XOOPS_ROOT_PATH')) {
-    die("XOOPS root path not defined");
-}
+defined('XOOPS_ROOT_PATH') || die('XOOPS root path not defined');
 
 /**
  * Utilisé comme paramètre dans la façcade oledrion_shelf
@@ -59,6 +57,7 @@ class oledrion_shelf_parameters
         $this->parameters['withQuantity'] = false;
         $this->parameters['thisMonthOnly'] = false;
         $this->parameters['productsType'] = '';
+
         return $this;
     }
 
@@ -75,132 +74,143 @@ class oledrion_shelf_parameters
     /**
      * Positione la valeur de début
      *
-     * @param integer $value
+     * @param  integer $value
      * @return object
      */
     public function setStart($value)
     {
         $this->parameters['start'] = intval($value);
+
         return $this;
     }
 
     /**
      * Fixe le nombre maximum d'enregistrements à retourner
      *
-     * @param integer $value
+     * @param  integer $value
      * @return object
      */
     public function setLimit($value)
     {
         $this->parameters['limit'] = intval($value);
+
         return $this;
     }
 
     /**
      * Fixe la catégorie à utiliser
      *
-     * @param integer $value
+     * @param  integer $value
      * @return object
      */
     public function setCategory($value)
     {
         $this->parameters['category'] = $value;
+
         return $this;
     }
 
     /**
      * Fixe la zone qui sert de tri
      *
-     * @param string $value
+     * @param  string $value
      * @return object
      */
     public function setSort($value)
     {
         $this->parameters['sort'] = $value;
+
         return $this;
     }
 
     /**
      * Fixe l'ordre de tri
      *
-     * @param string $value
+     * @param  string $value
      * @return array
      */
     public function setOrder($value)
     {
         $this->parameters['order'] = $value;
+
         return $this;
     }
 
     /**
      * Fixe la liste des produits à exclure
      *
-     * @param mixed $value
+     * @param  mixed  $value
      * @return string
      */
     public function setExcluded($value)
     {
         $this->parameters['excluded'] = $value;
+
         return $this;
     }
 
     /**
      * Indique s'il faut retourner les utilisateurs Xoops
      *
-     * @param boolean $value
+     * @param  boolean $value
      * @return object
      */
     public function setWithXoopsUser($value)
     {
         $this->parameters['withXoopsUser'] = $value;
+
         return $this;
     }
 
     /**
      * Indique s'il faut retourner les produits relatifs
      *
-     * @param boolean $value
+     * @param  boolean $value
      * @return object
      */
     public function setWithRelatedProducts($value)
     {
         $this->parameters['withRelatedProducts'] = $value;
+
         return $this;
     }
 
     /**
      * Indique s'il faut retourner les quantités
      *
-     * @param boolean $value
+     * @param  boolean $value
      * @return object
      */
     public function setWithQuantity($value)
     {
         $this->parameters['withQuantity'] = $value;
+
         return $this;
     }
 
     /**
      * Fixe le type de produits à retourner
      *
-     * @param string $value
+     * @param  string $value
      * @return object
      */
     public function setProductsType($value)
     {
         $this->parameters['productsType'] = $value;
+
         return $this;
     }
 
     /**
      * Indique s'il faut retourner seulement les mois
      *
-     * @param boolean $value
+     * @param  boolean $value
      * @return object
      */
     public function setThisMonthOnly($value)
     {
         $this->parameters['thisMonthOnly'] = $value;
+
         return $this;
     }
 }

@@ -1,5 +1,5 @@
 <?php
-	/**
+    /**
     This file is part of WideImage.
 
     WideImage is free software; you can redistribute it and/or modify
@@ -17,43 +17,43 @@
     Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
   **/
 
-	class wiFont_TTF
-	{
-		public $face;
-		public $size;
-		public $color;
+    class wiFont_TTF
+    {
+        public $face;
+        public $size;
+        public $color;
 
-		function __construct($face, $size, $color)
-		{
-			$this->face = $face;
-			$this->size = $size;
-			$this->color = $color;
-		}
+        function __construct($face, $size, $color)
+        {
+            $this->face = $face;
+            $this->size = $size;
+            $this->color = $color;
+        }
 
-		function getBoundsRect($text)
-		{
-			$box = imagettfbbox($this->size, 0, $this->face, $text);
+        function getBoundsRect($text)
+        {
+            $box = imagettfbbox($this->size, 0, $this->face, $text);
 
-			$rect = array(
-				'offset_x' => - $box[0] - 1,
-				'offset_y' => abs($box[7]) - 1,
-				'width' => abs($box[2] - $box[0]),
-				'height' => abs($box[1] - $box[7])
-				);
-			/**
-			print_r($box);
-			print_r($rect);
-			exit;
-			/**/
-			return $rect;
-		}
+            $rect = array(
+                'offset_x' => - $box[0] - 1,
+                'offset_y' => abs($box[7]) - 1,
+                'width' => abs($box[2] - $box[0]),
+                'height' => abs($box[1] - $box[7])
+                );
+            /**
+            print_r($box);
+            print_r($rect);
+            exit;
+            /**/
 
-		function writeText($image, $x, $y, $text, $angle = 0)
-		{
-			if ($image->isTrueColor())
-				$image->alphaBlending(true);
+            return $rect;
+        }
 
-			imagettftext($image->getHandle(), $this->size, $angle, $x, $y, $this->color, $this->face, $text);
-		}
-	}
+        function writeText($image, $x, $y, $text, $angle = 0)
+        {
+            if ($image->isTrueColor())
+                $image->alphaBlending(true);
 
+            imagettftext($image->getHandle(), $this->size, $angle, $x, $y, $this->color, $this->face, $text);
+        }
+    }

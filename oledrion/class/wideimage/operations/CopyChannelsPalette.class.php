@@ -1,5 +1,5 @@
 <?php
-	/**
+    /**
     This file is part of WideImage.
 
     WideImage is free software; you can redistribute it and/or modify
@@ -17,55 +17,56 @@
     Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
   **/
 
-	class wioCopyChannelsPalette
-	{
-		static function getInstance()
-		{
-			static $instance;
-			if (!$instance)
-				$instance = new wioCopyChannelsPalette();
-			return $instance;
-		}
+    class wioCopyChannelsPalette
+    {
+        static function getInstance()
+        {
+            static $instance;
+            if (!$instance)
+                $instance = new wioCopyChannelsPalette();
 
-		function execute($img, $channels)
-		{
-			$blank = array('red' => 0, 'green' => 0, 'blue' => 0);
-			if (isset($channels['alpha']))
-				unset($channels['alpha']);
+            return $instance;
+        }
 
-			$width = $img->getWidth();
-			$height = $img->getHeight();
-			$copy = wiPaletteImage::create($width, $height);
+        function execute($img, $channels)
+        {
+            $blank = array('red' => 0, 'green' => 0, 'blue' => 0);
+            if (isset($channels['alpha']))
+                unset($channels['alpha']);
 
-			if ($img->isTransparent())
-			{
-				$TRGB = $img->getTransparentColorRGB();
-				$newTRGB = $blank;
-				foreach ($channels as $channel)
-					$newTRGB[$channel] = $TRGB[$channel];
+            $width = $img->getWidth();
+            $height = $img->getHeight();
+            $copy = wiPaletteImage::create($width, $height);
 
-				$tci = $copy->allocateColor($newTRGB);
-			}
+            if ($img->isTransparent())
+            {
+                $TRGB = $img->getTransparentColorRGB();
+                $newTRGB = $blank;
+                foreach ($channels as $channel)
+                    $newTRGB[$channel] = $TRGB[$channel];
 
-			if (count($channels) > 0)
-				for ($x = 0; $x < $width; $x++)
-					for ($y = 0; $y < $height; $y++)
-					{
-						$RGB = $img->getRGBAt($x, $y);
-						$newRGB = $blank;
-						foreach ($channels as $channel)
-							$newRGB[$channel] = $RGB[$channel];
+                $tci = $copy->allocateColor($newTRGB);
+            }
 
-						$color = $copy->getExactColor($newRGB);
-						if ($color == -1)
-							$color = $copy->allocateColor($newRGB);
+            if (count($channels) > 0)
+                for ($x = 0; $x < $width; $x++)
+                    for ($y = 0; $y < $height; $y++)
+                    {
+                        $RGB = $img->getRGBAt($x, $y);
+                        $newRGB = $blank;
+                        foreach ($channels as $channel)
+                            $newRGB[$channel] = $RGB[$channel];
 
-						$copy->setColorAt($x, $y, $color);
-					}
+                        $color = $copy->getExactColor($newRGB);
+                        if ($color == -1)
+                            $color = $copy->allocateColor($newRGB);
 
-			if ($img->isTransparent())
-				$copy->setTransparentColor($tci);
+                        $copy->setColorAt($x, $y, $color);
+                    }
 
-			return $copy;
-		}
-	}
+            if ($img->isTransparent())
+                $copy->setTransparentColor($tci);
+
+            return $copy;
+        }
+    }

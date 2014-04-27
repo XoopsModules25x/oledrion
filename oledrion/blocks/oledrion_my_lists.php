@@ -15,7 +15,7 @@
  * @copyright   The XOOPS Project http://sourceforge.net/projects/xoops/
  * @license     http://www.fsf.org/copyleft/gpl.html GNU public license
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
- * @version     $Id$
+ * @version     $Id: oledrion_my_lists.php 12290 2014-02-07 11:05:17Z beckmi $
  */
 
 /**
@@ -44,6 +44,7 @@ function b_oledrion_my_lists_show($options)
             $block['my_lists'][] = $item->toArray();
         }
     }
+
     return $block;
 }
 
@@ -60,6 +61,7 @@ function b_oledrion_my_lists_edit($options)
     $form .= "<table border='0'>";
     $form .= '<tr><td>' . _MB_OLEDRION_LISTS_COUNT . "</td><td><input type='text' name='options[]' id='options' value='" . intval($options[0]) . "' /></td></tr>";
     $form .= '</table>';
+
     return $form;
 }
 
@@ -73,5 +75,5 @@ function b_oledrion_my_lists_duplicatable($options)
 
     $tpl = new XoopsTpl();
     $tpl->assign('block', $block);
-    $tpl->display('db:oledrion_block_my_lists.html');
+    $tpl->display('db:oledrion_block_my_lists.tpl');
 }

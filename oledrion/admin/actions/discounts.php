@@ -15,7 +15,7 @@
  * @copyright   The XOOPS Project http://sourceforge.net/projects/xoops/
  * @license     http://www.fsf.org/copyleft/gpl.html GNU public license
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
- * @version     $Id$
+ * @version     $Id: discounts.php 12290 2014-02-07 11:05:17Z beckmi $
  */
 
 /**
@@ -245,7 +245,7 @@ switch ($action) {
         //$editor = oledrion_utils::getWysiwygForm(_AM_OLEDRION_DISCOUNT_DESCR, 'disc_description', $item->getVar('disc_description','e'), 15, 60, 'description_hidden');
         //$xoopsTpl->assign('editor', $editor->render());
 
-        $xoopsTpl->display('db:oledrion_admin_discounts.html');
+        $xoopsTpl->display('db:oledrion_admin_discounts.tpl');
         include_once OLEDRION_ADMIN_PATH . 'admin_footer.php';
 
 

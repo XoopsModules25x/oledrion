@@ -1,5 +1,5 @@
 <?php
-	/**
+    /**
     This file is part of WideImage.
 
     WideImage is free software; you can redistribute it and/or modify
@@ -17,23 +17,23 @@
     Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
   **/
 
-	class wiDimension
-	{
-		static function isPercent($dim)
-		{
-			return preg_match('/^[0-9]+(\.[0-9]+)?\%$/', $dim);
-		}
+    class wiDimension
+    {
+        static function isPercent($dim)
+        {
+            return preg_match('/^[0-9]+(\.[0-9]+)?\%$/', $dim);
+        }
 
-		static function calculateRelativeDimension($max, $dim)
-		{
-			return intval(round($max * floatval(str_replace('%', '', $dim)) / 100));
-		}
+        static function calculateRelativeDimension($max, $dim)
+        {
+            return intval(round($max * floatval(str_replace('%', '', $dim)) / 100));
+        }
 
-		static function fix($max, $dim)
-		{
-			if (self::isPercent($dim))
-				return self::calculateRelativeDimension($max, $dim);
-			else
-				return intval(round(floatval($dim)));
-		}
-	}
+        static function fix($max, $dim)
+        {
+            if (self::isPercent($dim))
+                return self::calculateRelativeDimension($max, $dim);
+            else
+                return intval(round(floatval($dim)));
+        }
+    }

@@ -1,5 +1,5 @@
 <?php
-	/**
+    /**
     This file is part of WideImage.
 
     WideImage is free software; you can redistribute it and/or modify
@@ -17,21 +17,21 @@
     Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
   **/
 
-	class wioApplyFilter
-	{
-		static protected $one_arg_filters = array(IMG_FILTER_SMOOTH, IMG_FILTER_CONTRAST, IMG_FILTER_BRIGHTNESS);
+    class wioApplyFilter
+    {
+        static protected $one_arg_filters = array(IMG_FILTER_SMOOTH, IMG_FILTER_CONTRAST, IMG_FILTER_BRIGHTNESS);
 
-		function execute($image, $filter, $arg1 = null, $arg2 = null, $arg3 = null)
-		{
-			$new = $image->asTrueColor();
+        function execute($image, $filter, $arg1 = null, $arg2 = null, $arg3 = null)
+        {
+            $new = $image->asTrueColor();
 
-			if (in_array($filter, self::$one_arg_filters))
-				imagefilter($new->getHandle(), $filter, $arg1);
-			elseif ($filter == IMG_FILTER_COLORIZE)
-				imagefilter($new->getHandle(), $filter, $arg1, $arg2, $arg3);
-			else
-				imagefilter($new->getHandle(), $filter);
+            if (in_array($filter, self::$one_arg_filters))
+                imagefilter($new->getHandle(), $filter, $arg1);
+            elseif ($filter == IMG_FILTER_COLORIZE)
+                imagefilter($new->getHandle(), $filter, $arg1, $arg2, $arg3);
+            else
+                imagefilter($new->getHandle(), $filter);
 
-			return $new;
-		}
-	}
+            return $new;
+        }
+    }

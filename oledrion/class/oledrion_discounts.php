@@ -15,7 +15,7 @@
  * @copyright   The XOOPS Project http://sourceforge.net/projects/xoops/
  * @license     http://www.fsf.org/copyleft/gpl.html GNU public license
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
- * @version     $Id$
+ * @version     $Id: oledrion_discounts.php 12290 2014-02-07 11:05:17Z beckmi $
  */
 /**
  * Gestion des réductions
@@ -151,6 +151,7 @@ class OledrionOledrion_discountsHandler extends Oledrion_XoopsPersistableObjectH
 
             $buffer = $this->getObjects($critere);
         }
+
         return $buffer;
     }
 
@@ -180,6 +181,7 @@ class OledrionOledrion_discountsHandler extends Oledrion_XoopsPersistableObjectH
             }
             $buffer = $this->getObjects($critere);
         }
+
         return $buffer;
     }
 
@@ -201,6 +203,7 @@ class OledrionOledrion_discountsHandler extends Oledrion_XoopsPersistableObjectH
             $critere->add(new Criteria('disc_group', '(' . implode(',', $tblGroups) . ')', 'IN'));
             $buffer = $this->getObjects($critere);
         }
+
         return $buffer;
     }
 
@@ -222,6 +225,7 @@ class OledrionOledrion_discountsHandler extends Oledrion_XoopsPersistableObjectH
             $critere->add(new Criteria('disc_group', '(' . implode(',', $tblGroups) . ')', 'IN'));
             $buffer = $this->getObjects($critere);
         }
+
         return $buffer;
     }
 
@@ -244,6 +248,7 @@ class OledrionOledrion_discountsHandler extends Oledrion_XoopsPersistableObjectH
             $critere->add(new Criteria('disc_group', '(' . implode(',', $tblGroups) . ')', 'IN'));
             $buffer = $this->getObjects($critere);
         }
+
         return $buffer;
     }
 
@@ -265,16 +270,16 @@ class OledrionOledrion_discountsHandler extends Oledrion_XoopsPersistableObjectH
             $critere->add(new Criteria('disc_group', '(' . implode(',', $tblGroups) . ')', 'IN'));
             $buffer = $this->getObjects($critere);
         }
+
         return $buffer;
     }
-
 
     /**
      * Deuxième lot de réductions, à appliquer sur les frais de port
      *
-     * @param float $montantShipping         Montant des frais de port
-     * @param float $commandAmount            Le montant total de la commande
-     * @param array $discountsDescription     Descriptions des réductions appliquées
+     * @param float $montantShipping      Montant des frais de port
+     * @param float $commandAmount        Le montant total de la commande
+     * @param array $discountsDescription Descriptions des réductions appliquées
      */
     public function applyDiscountOnShipping2(&$montantShipping, $commandAmount, &$discountsDescription)
     {
@@ -290,12 +295,11 @@ class OledrionOledrion_discountsHandler extends Oledrion_XoopsPersistableObjectH
         }
     }
 
-
     /**
      * Réductions à appliquer sur le montant global de la commande
      *
-     * @param float $montantHT                 Montant HT des produits
-     * @param array $discountsDescription     Descriptions des réductions appliquées
+     * @param float $montantHT            Montant HT des produits
+     * @param array $discountsDescription Descriptions des réductions appliquées
      */
     public function applyDiscountOnCommand(&$montantHT, &$discountsDescription)
     {
@@ -345,9 +349,9 @@ class OledrionOledrion_discountsHandler extends Oledrion_XoopsPersistableObjectH
     /**
      * Réductions à appliquer sur les frais de port de chaque produit
      *
-     * @param float $montantHT                 Montant HT des produits
-     * @param array $discountsDescription     Descriptions des réductions appliquées
-     * @param integer $productQty             Quantité commandée du produit
+     * @param float   $montantHT            Montant HT des produits
+     * @param array   $discountsDescription Descriptions des réductions appliquées
+     * @param integer $productQty           Quantité commandée du produit
      */
     public function applyDiscountOnShipping(&$montantHT, &$discountsDescription, $productQty)
     {
@@ -444,13 +448,12 @@ class OledrionOledrion_discountsHandler extends Oledrion_XoopsPersistableObjectH
         }
     }
 
-
     /**
      * Réductions à appliquer sur le montant HT de TOUS les produits
      *
-     * @param float $montantHT                 Montant HT des produits
-     * @param array $discountsDescription     Descriptions des réductions appliquées
-     * @param integer $productQty             Quantité commandée du produit
+     * @param float   $montantHT            Montant HT des produits
+     * @param array   $discountsDescription Descriptions des réductions appliquées
+     * @param integer $productQty           Quantité commandée du produit
      */
     public function applyDiscountOnAllProducts(&$montantHT, &$discountsDescription, $productQty)
     {
@@ -547,14 +550,13 @@ class OledrionOledrion_discountsHandler extends Oledrion_XoopsPersistableObjectH
         }
     }
 
-
     /**
      * Recalcul du prix HT du produit en appliquant les réductions, s'il y a lieu
      *
-     * @param integer $productId             Identifiant du produit
-     * @param float $prixHT                 Prix HT du produit
-     * @param array $discountsDescription     Descriptions des réductions appliquées
-     * @param integer $productQty             Quantité commandée du produit
+     * @param integer $productId            Identifiant du produit
+     * @param float   $prixHT               Prix HT du produit
+     * @param array   $discountsDescription Descriptions des réductions appliquées
+     * @param integer $productQty           Quantité commandée du produit
      */
     public function applyDiscountOnEachProduct($productId, &$prixHT, &$discountsDescription, $productQty)
     {
@@ -671,13 +673,13 @@ class OledrionOledrion_discountsHandler extends Oledrion_XoopsPersistableObjectH
     /**
      * Supprime les remises associées à un produit
      *
-     * @param integer $disc_product_id
+     * @param  integer $disc_product_id
      * @return boolean
      */
     public function removeProductFromDiscounts($disc_product_id)
     {
         $disc_product_id = intval($disc_product_id);
+
         return $this->deleteAll(new Criteria('disc_product_id', $disc_product_id, '='));
     }
 }
-

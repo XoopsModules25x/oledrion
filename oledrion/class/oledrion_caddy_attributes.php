@@ -15,7 +15,7 @@
  * @copyright   The XOOPS Project http://sourceforge.net/projects/xoops/
  * @license     http://www.fsf.org/copyleft/gpl.html GNU public license
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
- * @version     $Id$
+ * @version     $Id: oledrion_caddy_attributes.php 12290 2014-02-07 11:05:17Z beckmi $
  */
 
 /**
@@ -39,8 +39,8 @@ class oledrion_caddy_attributes extends Oledrion_Object
     /**
      * Retourne une option de l'attribut
      *
-     * @param string $valueToGet
-     * @param string $format
+     * @param  string $valueToGet
+     * @param  string $format
      * @return array
      * @since 2.3.2009.03.11
      */
@@ -50,6 +50,7 @@ class oledrion_caddy_attributes extends Oledrion_Object
         if (xoops_trim($this->getVar($valueToGet, $format)) != '') {
             $names = explode(OLEDRION_ATTRIBUTE_SEPARATOR, $this->getVar($valueToGet, $format));
         }
+
         return $names;
     }
 
@@ -57,9 +58,9 @@ class oledrion_caddy_attributes extends Oledrion_Object
     /**
      * Ajout d'une option à l'attribut (soit une option vide soit une option valorisée)
      *
-     * @param string $name
-     * @param string $value
-     * @param string $price
+     * @param  string  $name
+     * @param  string  $value
+     * @param  string  $price
      * @return boolean
      * @since 2.3.2009.03.16
      */
@@ -82,6 +83,7 @@ class oledrion_caddy_attributes extends Oledrion_Object
         if (oledrion_utils::getModuleOption('use_price')) {
             $this->setVar('ca_attribute_prices', implode(OLEDRION_ATTRIBUTE_SEPARATOR, $prices));
         }
+
         return true;
     }
 
@@ -89,9 +91,9 @@ class oledrion_caddy_attributes extends Oledrion_Object
     /**
      * Ajoute une nouvelle option à l'attribut
      *
-     * @param string $name
-     * @param string $value
-     * @param string $price
+     * @param  string  $name
+     * @param  string  $value
+     * @param  string  $price
      * @return boolean
      * @since 2.3.2009.03.16
      */
@@ -100,11 +102,10 @@ class oledrion_caddy_attributes extends Oledrion_Object
         return $this->appendOption($name, $value, $price);
     }
 
-
     /**
      * Retourne les informations formatées de l'attribut pour affichage dans la facture
      *
-     * @param oledrion_products $product    Le produit concerné par l'attribut
+     * @param  oledrion_products $product Le produit concerné par l'attribut
      * @return array
      * @since 2.3.2009.03.23
      */
@@ -129,10 +130,10 @@ class oledrion_caddy_attributes extends Oledrion_Object
             $ret[] = array('ca_attribute_name' => $name, 'ca_attribute_price_formated' => $price);
             $counter++;
         }
+
         return $ret;
     }
 }
-
 
 class OledrionOledrion_caddy_attributesHandler extends Oledrion_XoopsPersistableObjectHandler
 {
@@ -144,7 +145,7 @@ class OledrionOledrion_caddy_attributesHandler extends Oledrion_XoopsPersistable
     /**
      * Retourne le nombre d'attributs liés à un caddy
      *
-     * @param integer $ca_caddy_id    L'ID du caddy concerné
+     * @param  integer $ca_caddy_id L'ID du caddy concerné
      * @return integer
      * @since 2.3.2009.03.23
      */
@@ -156,8 +157,8 @@ class OledrionOledrion_caddy_attributesHandler extends Oledrion_XoopsPersistable
     /**
      * Retourne la liste formatée des attributs liés à un caddy
      *
-     * @param integer $ca_caddy_id    L'identifiant de caddy
-     * @param object $product        Le produit concerné par le caddy
+     * @param  integer $ca_caddy_id L'identifiant de caddy
+     * @param  object  $product     Le produit concerné par le caddy
      * @return array
      * @since 2.3.2009.03.23
      */
@@ -179,13 +180,14 @@ class OledrionOledrion_caddy_attributesHandler extends Oledrion_XoopsPersistable
             $data['attribute_options'] = $caddyAttribute->renderForInvoice($product);
             $ret[] = $data;
         }
+
         return $ret;
     }
 
     /**
      * Retourne le nombre de caddy attributs liés à un attribut
      *
-     * @param integer $ca_attribute_id    L'Identifiant de l'attribut concerné
+     * @param  integer $ca_attribute_id L'Identifiant de l'attribut concerné
      * @return integer
      * @since 2.3.2009.03.23
      */
@@ -197,7 +199,7 @@ class OledrionOledrion_caddy_attributesHandler extends Oledrion_XoopsPersistable
     /**
      * Retourne la liste des numéros de commandes "liés" à un attribut
      *
-     * @param integer $ca_attribute_id
+     * @param  integer $ca_attribute_id
      * @return array
      */
     public function getCommandIdFromAttribute($ca_attribute_id)
@@ -208,19 +210,20 @@ class OledrionOledrion_caddy_attributesHandler extends Oledrion_XoopsPersistable
         foreach ($ordersIds as $order) {
             $ret[] = $order->ca_cmd_id;
         }
+
         return $ret;
     }
 
     /**
      * Supprime les caddies associés à une commande
      *
-     * @param integer $caddy_cmd_id
+     * @param  integer $caddy_cmd_id
      * @return boolean
      */
     public function removeCartsFromOrderId($ca_cmd_id)
     {
         $ca_cmd_id = intval($ca_cmd_id);
+
         return $this->deleteAll(new criteria('ca_cmd_id', $ca_cmd_id, '='));
     }
 }
-

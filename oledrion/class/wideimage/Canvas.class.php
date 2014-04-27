@@ -1,5 +1,5 @@
 <?php
-	/**
+    /**
     This file is part of WideImage.
 
     WideImage is free software; you can redistribute it and/or modify
@@ -17,31 +17,31 @@
     Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
   **/
 
-	class wiCanvas
-	{
-		protected $handle = 0;
-		protected $image = null;
-		protected $font = null;
+    class wiCanvas
+    {
+        protected $handle = 0;
+        protected $image = null;
+        protected $font = null;
 
-		function __construct($img)
-		{
-			$this->handle = $img->getHandle();
-			$this->image = $img;
-		}
+        function __construct($img)
+        {
+            $this->handle = $img->getHandle();
+            $this->image = $img;
+        }
 
-		function setFont($font)
-		{
-			$this->font = $font;
-		}
+        function setFont($font)
+        {
+            $this->font = $font;
+        }
 
-		function writeText($x, $y, $text, $angle)
-		{
-			$angle = - floatval($angle);
-			if ($angle < 0)
-				$angle = 360 + $angle;
-			$angle = $angle % 360;
+        function writeText($x, $y, $text, $angle)
+        {
+            $angle = - floatval($angle);
+            if ($angle < 0)
+                $angle = 360 + $angle;
+            $angle = $angle % 360;
 
-			$box = $this->font->getBoundsRect($text);
-			$this->font->writeText($this->image, $x + $box['offset_x'], $y + $box['offset_y'], $text, $angle);
-		}
-	}
+            $box = $this->font->getBoundsRect($text);
+            $this->font->writeText($this->image, $x + $box['offset_x'], $y + $box['offset_y'], $text, $angle);
+        }
+    }

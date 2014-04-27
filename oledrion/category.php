@@ -15,7 +15,7 @@
  * @copyright   The XOOPS Project http://sourceforge.net/projects/xoops/
  * @license     http://www.fsf.org/copyleft/gpl.html GNU public license
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
- * @version     $Id$
+ * @version     $Id: category.php 12290 2014-02-07 11:05:17Z beckmi $
  */
 /**
  * Page des catégories
@@ -36,7 +36,7 @@ if ($cat_cid > 0) {
     }
 }
 // On peut afficher les blocs *********************************************************************
-$xoopsOption['template_main'] = 'oledrion_category.html';
+$xoopsOption['template_main'] = 'oledrion_category.tpl';
 require_once XOOPS_ROOT_PATH . '/header.php';
 $vatArray = $tbl_categories = array();
 $limit = oledrion_utils::getModuleOption('perpage');
@@ -222,7 +222,6 @@ if (is_object($category) && $cat_cid > 0) { // On est sur une catégorie défini
         $metaKeywords = xoops_trim($category->getVar('cat_metakeywords'));
         oledrion_utils::setMetas($pageTitle, $metaDescription, $metaKeywords);
     }
-
 
     // Données des Produits *************************************************************************
     $products = array();

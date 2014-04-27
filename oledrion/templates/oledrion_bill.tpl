@@ -12,7 +12,17 @@
 		<div class="pad2"><{$order.cmd_zip}> <{$order.cmd_town}></div>
 		<div class="pad2"><{$order.cmd_country_label}></div>
 		<div class="pad2"><{$order.cmd_telephone}> - <{$order.cmd_email}></div>
+		<{if $order.cmd_gift}>
+		<div class="pad2"><{$smarty.const._OLEDRION_GIFT}> : <{$order.cmd_gift}></div>
+		<{/if}>
 	</div>
+
+	<{if $order.cmd_track}>
+	<div class="oledrion_otherinf">
+		<div class="pad2"><strong><{$smarty.const._OLEDRION_TRACK}></strong> : <{$order.cmd_track}></div>
+		<p>برای مشاهده مکان بسته خود به وب سایت <a href="http://tntsearch.post.ir/">tntsearch.post.ir</a> مراجعه نمایید و با زدن کد رهگیری خود از مکان بسته با خبر شوید.</p>
+	</div>
+	<{/if}>
 
 	<table id="oledrion_caddy" width="90%">
 	<tr>

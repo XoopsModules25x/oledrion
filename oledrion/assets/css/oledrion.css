@@ -1,5 +1,5 @@
 img, .box_blue-clip_01, .box_blue-clip_03, .box_blue-clip_06, .box_blue-clip_08, .oledrion_productthumb, .view-product-shad1_01, .view-product-shad1_02, .view-product-shad1_03, .view-product-shad2_01, .view-product-shad2_02, .view-product-shad2_03, {
-    behavior: url('include/iepngfix.htc')
+    behavior: url('../js/iepngfix.htc')
 }
 
 .oledrion_productdescription {

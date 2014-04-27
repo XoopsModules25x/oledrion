@@ -1,5 +1,5 @@
 <?php
-	/**
+    /**
     This file is part of WideImage.
 
     WideImage is free software; you can redistribute it and/or modify
@@ -17,15 +17,15 @@
     Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
   **/
 
-	require_once(dirname(__FILE__) . DIRECTORY_SEPARATOR . 'Exception.class.php');
-	require_once(dirname(__FILE__) . DIRECTORY_SEPARATOR . 'Image.class.php');
+    require_once(dirname(__FILE__) . DIRECTORY_SEPARATOR . 'Exception.class.php');
+    require_once(dirname(__FILE__) . DIRECTORY_SEPARATOR . 'Image.class.php');
 
-	require_once(WI_LIB_PATH . 'Dimension.class.php');
-	require_once(WI_LIB_PATH . 'Canvas.class.php');
-	require_once(WI_LIB_PATH . 'PaletteImage.class.php');
-	require_once(WI_LIB_PATH . 'TrueColorImage.class.php');
-	require_once(WI_LIB_PATH . 'FileMapperFactory.class.php');
-	require_once(WI_LIB_PATH . 'OpFactory.class.php');
+    require_once(WI_LIB_PATH . 'Dimension.class.php');
+    require_once(WI_LIB_PATH . 'Canvas.class.php');
+    require_once(WI_LIB_PATH . 'PaletteImage.class.php');
+    require_once(WI_LIB_PATH . 'TrueColorImage.class.php');
+    require_once(WI_LIB_PATH . 'FileMapperFactory.class.php');
+    require_once(WI_LIB_PATH . 'OpFactory.class.php');
 
-	require_once(WI_LIB_PATH . 'fonts/Font_TTF.class.php');
-	require_once(WI_LIB_PATH . 'fonts/Font_GDF.class.php');
+    require_once(WI_LIB_PATH . 'fonts/Font_TTF.class.php');
+    require_once(WI_LIB_PATH . 'fonts/Font_GDF.class.php');

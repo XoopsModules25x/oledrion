@@ -15,7 +15,7 @@
  * @copyright   The XOOPS Project http://sourceforge.net/projects/xoops/
  * @license     http://www.fsf.org/copyleft/gpl.html GNU public license
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
- * @version     $Id$
+ * @version     $Id: lowstock.php 12290 2014-02-07 11:05:17Z beckmi $
  */
 
 /**
@@ -83,6 +83,5 @@ switch ($action) {
         }
         oledrion_utils::redirect(_AM_OLEDRION_SAVE_OK, $baseurl . '?op=lowstock', 2);
         break;
-
 
 }

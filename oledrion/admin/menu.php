@@ -29,7 +29,6 @@ $pathIcon32 = $module->getInfo('icons32');
 $pathModuleAdmin = $module->getInfo('dirmoduleadmin');
 $pathLanguage = $path . $pathModuleAdmin;
 
-
 if (!file_exists($fileinc = $pathLanguage . '/language/' . $GLOBALS['xoopsConfig']['language'] . '/' . 'main.php')) {
     $fileinc = $pathLanguage . '/language/english/main.php';
 }
@@ -48,7 +47,7 @@ $adminmenu[$i]["icon"] = $pathIcon32 . '/user-icon.png';
 $i++;
 $adminmenu[$i]['title'] = _MI_OLEDRION_ADMENU1;
 $adminmenu[$i]['link'] = "admin/index.php?op=vat";
-$adminmenu[$i]["icon"] = '/images/icons/32/money_delete.png';
+$adminmenu[$i]["icon"] = '/assets/images/icons/32/money_delete.png';
 $i++;
 $adminmenu[$i]['title'] = _MI_OLEDRION_ADMENU2;
 $adminmenu[$i]['link'] = "admin/index.php?op=categories";
@@ -56,7 +55,7 @@ $adminmenu[$i]["icon"] = $pathIcon32 . '/category.png';
 $i++;
 $adminmenu[$i]['title'] = _MI_OLEDRION_ADMENU3;
 $adminmenu[$i]['link'] = "admin/index.php?op=manufacturers";
-$adminmenu[$i]["icon"] = '/images/icons/32/factory.png';
+$adminmenu[$i]["icon"] = '/assets/images/icons/32/factory.png';
 $i++;
 $adminmenu[$i]['title'] = _MI_OLEDRION_ADMENU4;
 $adminmenu[$i]['link'] = "admin/index.php?op=products";
@@ -104,7 +103,7 @@ $adminmenu[$i]["icon"] = $pathIcon32 . '/index.png';
 $i++;
 $adminmenu[$i]['title'] = _MI_OLEDRION_ADMENU18;
 $adminmenu[$i]['link'] = "admin/index.php?op=packing";
-$adminmenu[$i]["icon"] = '/images/icons/32/package.png';
+$adminmenu[$i]["icon"] = '/assets/images/icons/32/package.png';
 $i++;
 $adminmenu[$i]['title'] = _MI_OLEDRION_ADMENU19;
 $adminmenu[$i]['link'] = "admin/index.php?op=location";
