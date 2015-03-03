@@ -45,6 +45,7 @@ class oledrion_pec24 extends oledrion_gateway
         $gatewayName = $this->gatewayInformation['foldername'];
         $this->handlers->h_oledrion_gateways_options->deleteGatewayOptions($gatewayName);
         if (!$this->handlers->h_oledrion_gateways_options->setGatewayOptionValue($gatewayName, 'parsian_mid', $data['parsian_mid'])) return false;
+
         return true;
     }
 

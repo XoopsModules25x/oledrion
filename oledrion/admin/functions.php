@@ -86,7 +86,6 @@ function oledrion_set_module_option($optionName = '', $optionValue = '')
     return $retval;
 }
 
-
 /**
  * Affichage du pied de page de l'administration
  *

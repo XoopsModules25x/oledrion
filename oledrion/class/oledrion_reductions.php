@@ -578,8 +578,8 @@ class oledrion_reductions {
                                 $discountedShipping = floatval($rule -> getVar('disc_shipping_degress_l5total', 'n'));
                             }
                             break;
-                    }	// Sélection du type de réduction sur les frais de port
-                }	// Il faut appliquer la règle de réduction
+                    }    // Sélection du type de réduction sur les frais de port
+                }    // Il faut appliquer la règle de réduction
             }// Boucle sur les réductions
 
             // Calcul de la TVA du produit
@@ -693,8 +693,8 @@ class oledrion_reductions {
                             $discountsCount++;
                         }// Règle à appliquer sur le panier
                         break;
-                }	// Switch
-            }	// Foreach
+                }    // Switch
+            }    // Foreach
         }// S'il y a des règles globales
         // Les totaux "renvoyés" à l'appelant
         $shippingAmount = $totalShipping;

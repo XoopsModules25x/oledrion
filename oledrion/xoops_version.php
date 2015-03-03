@@ -1258,7 +1258,6 @@ $modversion['config'][$cpto]['formtype'] = 'yesno';
 $modversion['config'][$cpto]['valuetype'] = 'int';
 $modversion['config'][$cpto]['default'] = 1;
 
-
 $cpto++;
 $modversion['config'][$cpto]['name'] = 'checkout_level';
 $modversion['config'][$cpto]['title'] = '_MI_OLEDRION_CHECKOUT_LEVEL';
@@ -1267,7 +1266,6 @@ $modversion['config'][$cpto]['formtype'] = 'select';
 $modversion['config'][$cpto]['valuetype'] = 'int';
 $modversion['config'][$cpto]['default'] = 1;
 $modversion['config'][$cpto]['options'] = array('_MI_OLEDRION_CHECKOUT_LEVEL_1' => 1, '_MI_OLEDRION_CHECKOUT_LEVEL_2' => 2, '_MI_OLEDRION_CHECKOUT_LEVEL_3' => 3);
-
 
 $cpto++;
 $modversion['config'][$cpto]['name'] = 'checkout_country';

@@ -75,7 +75,6 @@ class oledrion_commands extends Oledrion_Object
         $this->initVar('cmd_gift', XOBJ_DTYPE_TXTBOX, null, false);
     }
 
-
     /**
      * Retourne les éléments du produits formatés pour affichage
      *

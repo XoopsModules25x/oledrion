@@ -52,7 +52,6 @@ switch ($action) {
             $indexAdmin->addInfoBoxLine(_AM_OLEDRION_IMPORT_DATA, $text);
         }
 
-
 //------ check directories ---------------
 
 $indexAdmin->addConfigBoxLine('');
@@ -69,13 +68,11 @@ $indexAdmin->addConfigBoxLine(DirectoryChecker::getDirectoryStatus(OLEDRION_ATTA
 //$path = XOOPS_ROOT_PATH . '/' . $xoopsModuleConfig['catimage'] . '/';
 $indexAdmin->addConfigBoxLine(DirectoryChecker::getDirectoryStatus(OLEDRION_PICTURES_PATH,0777,$languageConstants,$redirectFile));
 
-
 //$path = XOOPS_ROOT_PATH . '/' . $xoopsModuleConfig['mainimagedir'] . '/';
 $indexAdmin->addConfigBoxLine(DirectoryChecker::getDirectoryStatus(OLEDRION_CSV_PATH,0777,$languageConstants,$redirectFile));
 
 //$path = XOOPS_ROOT_PATH . '/' . $xoopsModuleConfig['catimage'] . '/';
 $indexAdmin->addConfigBoxLine(DirectoryChecker::getDirectoryStatus(OLEDRION_CACHE_PATH,0777,$languageConstants,$redirectFile));
-
 
 //$path = XOOPS_ROOT_PATH . '/' . $xoopsModuleConfig['mainimagedir'] . '/';
 $indexAdmin->addConfigBoxLine(DirectoryChecker::getDirectoryStatus(OLEDRION_TEXT_PATH,0777,$languageConstants,$redirectFile));

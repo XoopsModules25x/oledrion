@@ -22,4 +22,5 @@ $option = array();
 $option['username'] = '';
 $option['password'] = '';
 $option['number'] = '';
+
 return $option;

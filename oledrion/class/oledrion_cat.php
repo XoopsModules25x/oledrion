@@ -115,7 +115,6 @@ class oledrion_cat extends Oledrion_Object
         return oledrion_utils::makeHrefTitle($this->getVar('cat_title'));
     }
 
-
     /**
      * Retourne les éléments du produits formatés pour affichage
      *
@@ -133,7 +132,6 @@ class oledrion_cat extends Oledrion_Object
         return $ret;
     }
 }
-
 
 class OledrionOledrion_catHandler extends Oledrion_XoopsPersistableObjectHandler
 {

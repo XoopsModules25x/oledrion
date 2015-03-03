@@ -73,7 +73,6 @@ switch ($action) {
         include_once OLEDRION_ADMIN_PATH . 'admin_footer.php';
         break;
 
-
     // ****************************************************************************************************************
     case 'add': // Ajout d'un fabricant
     case 'edit': // Edition d'un fabricant
@@ -184,7 +183,6 @@ switch ($action) {
             oledrion_utils::redirect(_AM_OLEDRION_SAVE_PB, $baseurl . '?op=' . $opRedirect, 5);
         }
         break;
-
 
     // ****************************************************************************************************************
     case 'delete': // Suppression d'un fabricant

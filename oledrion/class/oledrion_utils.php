@@ -90,7 +90,6 @@ class oledrion_utils
         return $retval;
     }
 
-
     /**
      * Is Xoops 2.3.x ?
      *
@@ -122,7 +121,6 @@ class oledrion_utils
 
         return $x20;
     }
-
 
     /**
      * Retreive an editor according to the module's option "form_options"
@@ -492,7 +490,6 @@ class oledrion_utils
         return false;
     }
 
-
     /**
      * Returns the current date in the Mysql format
      *
@@ -552,7 +549,6 @@ class oledrion_utils
         return date('Y-m-d H:i:s', $timestamp);
     }
 
-
     /**
      * This function indicates if the current Xoops version needs to add asterisks to required fields in forms
      *
@@ -603,7 +599,6 @@ class oledrion_utils
 
         return $sform;
     }
-
 
     /**
      * Create an html heading (from h1 to h6)
@@ -924,7 +919,6 @@ class oledrion_utils
         return $chaine;
     }
 
-
     /**
      * Création d'une titre pour être utilisé par l'url rewriting
      *
@@ -973,7 +967,6 @@ class oledrion_utils
 
         return $keywords;
     }
-
 
     /**
      * Create the meta keywords based on the content
@@ -1138,7 +1131,6 @@ class oledrion_utils
         return true;
     }
 
-
     /**
      * Déclenchement d'une alerte Xoops suite à un évènement
      *
@@ -1249,7 +1241,6 @@ class oledrion_utils
         }
     }
 
-
     /**
      * Create an infotip
      */
@@ -1264,7 +1255,6 @@ class oledrion_utils
 
         return $ret;
     }
-
 
     /**
      * Mise en place de l'appel à la feuille de style du module dans le template

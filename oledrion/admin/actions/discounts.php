@@ -23,7 +23,6 @@
  */
 if (!defined("OLEDRION_ADMIN")) exit();
 
-
 switch ($action) {
     // ****************************************************************************************************************
     case 'default': // Gestion des réductions
@@ -247,7 +246,6 @@ switch ($action) {
 
         $xoopsTpl->display('db:oledrion_admin_discounts.tpl');
         include_once OLEDRION_ADMIN_PATH . 'admin_footer.php';
-
 
         break;
 

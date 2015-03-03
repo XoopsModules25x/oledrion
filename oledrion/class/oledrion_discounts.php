@@ -116,7 +116,6 @@ class oledrion_discounts extends Oledrion_Object
     }
 }
 
-
 class OledrionOledrion_discountsHandler extends Oledrion_XoopsPersistableObjectHandler
 {
     public function __construct($db)
@@ -155,12 +154,10 @@ class OledrionOledrion_discountsHandler extends Oledrion_XoopsPersistableObjectH
         return $buffer;
     }
 
-
     /**
      *
      * @deprecated
      */
-
 
     /**
      * Renvoie la liste des règles à appliquer sur chaque produit (avec gestion de cache) pour l'utilisateur courant
@@ -185,7 +182,6 @@ class OledrionOledrion_discountsHandler extends Oledrion_XoopsPersistableObjectH
         return $buffer;
     }
 
-
     /**
      * Renvoie la liste des règles à appliquer sur tous les produits (avec gestion de cache) pour l'utilisateur courant
      *
@@ -206,7 +202,6 @@ class OledrionOledrion_discountsHandler extends Oledrion_XoopsPersistableObjectH
 
         return $buffer;
     }
-
 
     /**
      * Renvoie la liste des règles à appliquer sur les frais de ports (avec gestion de cache) pour l'utilisateur courant
@@ -229,7 +224,6 @@ class OledrionOledrion_discountsHandler extends Oledrion_XoopsPersistableObjectH
         return $buffer;
     }
 
-
     /**
      * Renvoie la liste des règles à appliquer sur les frais de ports (avec gestion de cache) pour l'utilisateur courant
      *
@@ -251,7 +245,6 @@ class OledrionOledrion_discountsHandler extends Oledrion_XoopsPersistableObjectH
 
         return $buffer;
     }
-
 
     /**
      * Renvoie la liste des règles à appliquer sur l'intégralité de la commande (avec gestion de cache) pour l'utilisateur courant

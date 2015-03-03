@@ -54,7 +54,6 @@ class oledrion_caddy_attributes extends Oledrion_Object
         return $names;
     }
 
-
     /**
      * Ajout d'une option à l'attribut (soit une option vide soit une option valorisée)
      *
@@ -86,7 +85,6 @@ class oledrion_caddy_attributes extends Oledrion_Object
 
         return true;
     }
-
 
     /**
      * Ajoute une nouvelle option à l'attribut

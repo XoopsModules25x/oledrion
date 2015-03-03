@@ -103,7 +103,6 @@ class oledrion_shelf
         return $this->handlers->h_oledrion_products->delete($product, true);
     }
 
-
     /**
      * Cherche et retourne la liste de produits relatifs à une liste de produits
      *
@@ -135,7 +134,6 @@ class oledrion_shelf
 
         return $relatedProducts;
     }
-
 
     /**
      * Retourne une liste de produits selon certains critères

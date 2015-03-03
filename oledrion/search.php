@@ -38,7 +38,6 @@ $categories = $h_oledrion_cat->getAllCategories(new oledrion_parameters());
 $vendors = $h_oledrion_vendors->getAllVendors(new oledrion_parameters());
 $manufacturers = $h_oledrion_manufacturer->getItems(0, 0, 'manu_name', 'ASC', false);
 
-
 if ((isset($_POST['op']) && $_POST['op'] == 'go') || isset($_GET['start'])) { // Recherche des résultats
     $xoopsTpl->assign('search_results', true);
     $xoopsTpl->assign('global_advert', oledrion_utils::getModuleOption('advertisement'));
