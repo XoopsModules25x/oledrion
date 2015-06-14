@@ -79,7 +79,6 @@ class oledrion_attributes extends Oledrion_Object
         return false;
     }
 
-
     /**
      * Retourne le nom du champs tel qu'il est construit dans le formulaire sur la fiche produit
      *
@@ -452,7 +451,6 @@ class oledrion_attributes extends Oledrion_Object
         return xoops_trim($this->getVar('attribute_default_value', $format));
     }
 
-
     /**
      * Retourne une liste combinée des options de l'attribut
      *
@@ -599,7 +597,6 @@ class oledrion_attributes extends Oledrion_Object
         return $ret;
     }
 
-
     /**
      * Création du code html de l'attribut
      *
@@ -706,7 +703,7 @@ class oledrion_attributes extends Oledrion_Object
 class OledrionOledrion_attributesHandler extends Oledrion_XoopsPersistableObjectHandler
 {
     public function __construct($db)
-    {	//							    Table			    Classe			        Id
+    {    //							    Table			    Classe			        Id
         parent::__construct($db, 'oledrion_attributes', 'oledrion_attributes', 'attribute_id');
     }
 
@@ -939,7 +936,7 @@ class OledrionOledrion_attributesHandler extends Oledrion_XoopsPersistableObject
                         $vatAmountFormated = $oledrion_Currency->amountForDisplay($vatAmount);
                         $htFormated = $oledrion_Currency->amountForDisplay($price);
                         $ttcFormated = $oledrion_Currency->amountForDisplay($ttc);
-                        $dataForDescriptions[] = array('option_name' => $optionDescription,	'option_value' => $optionName, 'option_price' => $price, 'option_vat' => $vatAmount, 'option_ttc' => $ttc, 'option_price_ht_formated' => $htFormated, 'option_vat_formated' => $vatAmountFormated, 'option_ttc_formated' => $ttcFormated);
+                        $dataForDescriptions[] = array('option_name' => $optionDescription,    'option_value' => $optionName, 'option_price' => $price, 'option_vat' => $vatAmount, 'option_ttc' => $ttc, 'option_price_ht_formated' => $htFormated, 'option_vat_formated' => $vatAmountFormated, 'option_ttc_formated' => $ttcFormated);
                         $ret += $price;    // Total de toutes les options
                     }
                 } else {
@@ -951,7 +948,7 @@ class OledrionOledrion_attributesHandler extends Oledrion_XoopsPersistableObject
                     $vatAmountFormated = $oledrion_Currency->amountForDisplay($vatAmount);
                     $htFormated = $oledrion_Currency->amountForDisplay($price);
                     $ttcFormated = $oledrion_Currency->amountForDisplay($ttc);
-                    $dataForDescriptions[] = array('option_name' => $optionDescription,	'option_value' => $optionName, 'option_price' => $price, 'option_vat' => $vatAmount, 'option_ttc' => $ttc, 'option_price_ht_formated' => $htFormated, 'option_vat_formated' => $vatAmountFormated, 'option_ttc_formated' => $ttcFormated);
+                    $dataForDescriptions[] = array('option_name' => $optionDescription,    'option_value' => $optionName, 'option_price' => $price, 'option_vat' => $vatAmount, 'option_ttc' => $ttc, 'option_price_ht_formated' => $htFormated, 'option_vat_formated' => $vatAmountFormated, 'option_ttc_formated' => $ttcFormated);
                     $ret += $price;    // Total de toutes les options
                 }
                 if (is_array($descriptions)) {

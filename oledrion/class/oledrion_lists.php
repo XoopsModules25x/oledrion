@@ -182,7 +182,6 @@ class OledrionOledrion_listsHandler extends Oledrion_XoopsPersistableObjectHandl
         return $res;
     }
 
-
     /**
      * Incrémente le nombre de produits dans une liste
      *
@@ -215,7 +214,6 @@ class OledrionOledrion_listsHandler extends Oledrion_XoopsPersistableObjectHandl
 
         return $res;
     }
-
 
     /**
      * Retourne la liste des listes récentes

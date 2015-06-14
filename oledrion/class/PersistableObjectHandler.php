@@ -62,7 +62,6 @@ class Oledrion_Object extends XoopsObject
     }
 }
 
-
 /**
  * Persistable Object Handler class.
  * This class is responsible for providing data access mechanisms to the data source
@@ -225,7 +224,6 @@ class Oledrion_XoopsPersistableObjectHandler extends XoopsObjectHandler
         //}
     }
 
-
     /**
      * Convert a database resultset to a returnable array
      *
@@ -277,7 +275,6 @@ class Oledrion_XoopsPersistableObjectHandler extends XoopsObjectHandler
         return $ret;
     }
 
-
     /**
      * get IDs of objects matching a condition
      *
@@ -319,7 +316,6 @@ class Oledrion_XoopsPersistableObjectHandler extends XoopsObjectHandler
         //	return $cacheData;
         //}
     }
-
 
     /**
      * Retrieve a list of objects as arrays - DON'T USE WITH JOINT KEYS
@@ -391,7 +387,6 @@ class Oledrion_XoopsPersistableObjectHandler extends XoopsObjectHandler
 
         return $ret;
     }
-
 
     /**
      * count objects matching a condition
@@ -523,7 +518,6 @@ class Oledrion_XoopsPersistableObjectHandler extends XoopsObjectHandler
 
         return true;
     }
-
 
     /**
      * Quickly insert a record like this $myobject_handler->quickInsert('field1' => field1value, 'field2' => $field2value)
@@ -792,7 +786,6 @@ class Oledrion_XoopsPersistableObjectHandler extends XoopsObjectHandler
         //return $cacheData;
         // }
     }
-
 
     /**
      * A generic shortcut to getObjects

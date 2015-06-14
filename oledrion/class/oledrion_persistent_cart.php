@@ -39,7 +39,6 @@ class oledrion_persistent_cart extends Oledrion_Object
     }
 }
 
-
 class OledrionOledrion_persistent_cartHandler extends Oledrion_XoopsPersistableObjectHandler
 {
     public function __construct($db)

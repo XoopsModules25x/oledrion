@@ -112,7 +112,6 @@ class oledrion_gateways
         return $gatewayPath . DIRECTORY_SEPARATOR . 'language/' . $xoopsConfig['language'] . '/main.php';
     }
 
-
     /**
      * Charge le fichier de traductions d'une passerelle de paiement
      *

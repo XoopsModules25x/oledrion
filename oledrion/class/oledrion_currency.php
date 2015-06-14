@@ -76,7 +76,6 @@ class oledrion_Currency
         return number_format($amount, $this->_decimalsCount, $this->_decimalSep, $this->_thousandsSep);
     }
 
-
     /**
      * Format an amount for display according to module's preferences
      *

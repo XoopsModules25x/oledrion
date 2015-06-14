@@ -104,7 +104,6 @@ class oledrion_files extends Oledrion_Object
     }
 }
 
-
 class OledrionOledrion_filesHandler extends Oledrion_XoopsPersistableObjectHandler
 {
     public function __construct($db)

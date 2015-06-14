@@ -577,7 +577,6 @@ switch ($action) {
         include_once OLEDRION_ADMIN_PATH . 'admin_footer.php';
         break;
 
-
     // ****************************************************************************************************************
     case 'saveedit': // Sauvegarde des informations d'un produit
         // ****************************************************************************************************************
@@ -751,7 +750,6 @@ switch ($action) {
         }
         xoops_confirm(array('op' => 'products', 'action' => 'delete', 'id' => $id), 'index.php', _AM_OLEDRION_CONF_DELITEM . '<br />' . $item->getVar('product_title'));
         break;
-
 
     // ****************************************************************************************************************
     case 'delete': // Suppression d'un produit

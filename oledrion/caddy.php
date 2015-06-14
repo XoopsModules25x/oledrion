@@ -75,18 +75,18 @@ function listCart()
     $reductions = new oledrion_reductions();
     $reductions->computeCart($cartForTemplate, $emptyCart, $shippingAmount, $commandAmount, $vatAmount, $goOn, $commandAmountTTC, $discountsDescription, $discountsCount, $ecotaxeAmount, $discountAmount, $totalSavings );
     $oledrion_Currency = & oledrion_Currency::getInstance();
-    $xoopsTpl->assign('emptyCart', $emptyCart);											// Caddy Vide ?
-    $xoopsTpl->assign('caddieProducts', $cartForTemplate);								// Produits dans le caddy
-    $xoopsTpl->assign('shippingAmount', $oledrion_Currency->amountForDisplay($shippingAmount));		// Montant des frais de port
-    $xoopsTpl->assign('ecotaxeAmount', $oledrion_Currency->amountForDisplay($ecotaxeAmount));		// Montant des frais de port
-    $xoopsTpl->assign('commandAmount', $oledrion_Currency->amountForDisplay($commandAmount));		// Montant HT de la commande
-    $xoopsTpl->assign('discountAmount', $oledrion_Currency->amountForDisplay($discountAmount));		// Total Discount
-    $xoopsTpl->assign('totalSavings', $oledrion_Currency->amountForDisplay($totalSavings));		// Total Savings
-    $xoopsTpl->assign('vatAmount', $oledrion_Currency->amountForDisplay($vatAmount));				// Montant de la TVA
-    $xoopsTpl->assign('discountsCount', $discountsCount);								// Nombre de réductions appliquées
-    $xoopsTpl->assign('goOn', $goOn);													// Adresse à utiliser pour continuer ses achats
-    $xoopsTpl->assign('commandAmountTTC', $oledrion_Currency->amountForDisplay($commandAmountTTC, 'l'));	// Montant TTC de la commande
-    $xoopsTpl->assign('discountsDescription', $discountsDescription);					// Liste des réductions accordées
+    $xoopsTpl->assign('emptyCart', $emptyCart);                                            // Caddy Vide ?
+    $xoopsTpl->assign('caddieProducts', $cartForTemplate);                                // Produits dans le caddy
+    $xoopsTpl->assign('shippingAmount', $oledrion_Currency->amountForDisplay($shippingAmount));        // Montant des frais de port
+    $xoopsTpl->assign('ecotaxeAmount', $oledrion_Currency->amountForDisplay($ecotaxeAmount));        // Montant des frais de port
+    $xoopsTpl->assign('commandAmount', $oledrion_Currency->amountForDisplay($commandAmount));        // Montant HT de la commande
+    $xoopsTpl->assign('discountAmount', $oledrion_Currency->amountForDisplay($discountAmount));        // Total Discount
+    $xoopsTpl->assign('totalSavings', $oledrion_Currency->amountForDisplay($totalSavings));        // Total Savings
+    $xoopsTpl->assign('vatAmount', $oledrion_Currency->amountForDisplay($vatAmount));                // Montant de la TVA
+    $xoopsTpl->assign('discountsCount', $discountsCount);                                // Nombre de réductions appliquées
+    $xoopsTpl->assign('goOn', $goOn);                                                    // Adresse à utiliser pour continuer ses achats
+    $xoopsTpl->assign('commandAmountTTC', $oledrion_Currency->amountForDisplay($commandAmountTTC, 'l'));    // Montant TTC de la commande
+    $xoopsTpl->assign('discountsDescription', $discountsDescription);                    // Liste des réductions accordées
     $showOrderButton = true;
     $showRegistredOnly = false;
     if (oledrion_utils::getModuleOption('restrict_orders', false) && $uid == 0) {

@@ -430,7 +430,6 @@ class oledrion_products extends Oledrion_Object
         }
     }
 
-
     /**
      * Retourne les éléments du produits formatés pour affichage
      *
@@ -505,14 +504,12 @@ class oledrion_products extends Oledrion_Object
     }
 }
 
-
 class OledrionOledrion_productsHandler extends Oledrion_XoopsPersistableObjectHandler
 {
     public function __construct($db)
     { //							Table				Classe			 	Id			Libellé
         parent::__construct($db, 'oledrion_products', 'oledrion_products', 'product_id', 'product_title');
     }
-
 
     /**
      * Retourne la liste des x produits les plus vus par les visiteurs
@@ -641,7 +638,6 @@ class OledrionOledrion_productsHandler extends Oledrion_XoopsPersistableObjectHa
 
         return $this->getCount($criteria);
     }
-
 
     /**
      * Retourne la liste des x derniers produits parus toutes catégories confondues ou dans une catégorie spécifique
@@ -823,7 +819,6 @@ class OledrionOledrion_productsHandler extends Oledrion_XoopsPersistableObjectHa
         return $this->db->queryF($sql);
     }
 
-
     /**
      * Mise à jour de la notation d'un produit
      *
@@ -897,7 +892,6 @@ class OledrionOledrion_productsHandler extends Oledrion_XoopsPersistableObjectHa
         return $data;
     }
 
-
     /**
      * Retourne x produits en promo
      *
@@ -932,7 +926,6 @@ class OledrionOledrion_productsHandler extends Oledrion_XoopsPersistableObjectHa
 
         return $data;
     }
-
 
     /**
      * Retourne les produits dont les stocks sont bas
@@ -1100,7 +1093,6 @@ class OledrionOledrion_productsHandler extends Oledrion_XoopsPersistableObjectHa
 
         return $ret;
     }
-
 
     /**
      * Retourne le nombre de produits d'une ou de plusieurs catégories

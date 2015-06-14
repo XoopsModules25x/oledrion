@@ -85,7 +85,6 @@ class OledrionOledrion_caddyHandler extends Oledrion_XoopsPersistableObjectHandl
         }
     }
 
-
     /**
      * Renvoie la liste des produits les plus vendus toutes catégories confondues
      *
@@ -311,7 +310,6 @@ class OledrionOledrion_caddyHandler extends Oledrion_XoopsPersistableObjectHandl
 
         return false;
     }
-
 
     /**
      * Renumérotage des produits dans le caddy après une suppression

@@ -144,7 +144,6 @@ class oledrion_plugins
         $this->loadPluginsFiles(OLEDRION_PLUGINS_PATH . $this->pluginsTypesFolder[self::PLUGIN_FILTER], self::PLUGIN_FILTER);
     }
 
-
     /**
      * Vérifie que le fichier Php passé en paramètre contient bien une classe de filtre ou d'action et si c'est le cas, le charge dans la liste des plugins
      * @param  string  $fullPathName Chemin complet vers le fichier (répertoire + nom)
