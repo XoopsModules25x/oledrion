@@ -1,9 +1,9 @@
 ![alt XOOPS CMS](http://xoops.org/images/logoXoops4GithubRepository.png)
 ## Oledrion module for [XOOPS CMS 2.5.7+](https://xoops.org)
 [![Software License](https://img.shields.io/badge/license-GPL-brightgreen.svg?style=flat)](LICENSE) 
-[![Scrutinizer Code Quality](https://img.shields.io/scrutinizer/g/mambax7/presenter.svg?style=flat)](https://scrutinizer-ci.com/g/mambax7/presenter/?branch=master)
-[![Latest Pre-Resease](https://img.shields.io/github/tag/XoopsModules25x/presenter.svg?style=flat)](https://github.com/XoopsModules25x/presenter/tags/)
-[![Latest Version](https://img.shields.io/github/release/XoopsModules25x/presenter.svg?style=flat)](https://github.com/XoopsModules25x/presenter/releases/)
+[![Scrutinizer Code Quality](https://img.shields.io/scrutinizer/g/XoopsModules25x/oledrion.svg?style=flat)](https://scrutinizer-ci.com/g/XoopsModules25x/oledrion/?branch=master)
+[![Latest Pre-Resease](https://img.shields.io/github/tag/XoopsModules25x/oledrion.svg?style=flat)](https://github.com/XoopsModules25x/oledrion/tags/)
+[![Latest Version](https://img.shields.io/github/release/XoopsModules25x/oledrion.svg?style=flat)](https://github.com/XoopsModules25x/oledrion/releases/)
 
 Advanced eCommerce module for [XOOPS CMS](http://xoops.org) 
 
