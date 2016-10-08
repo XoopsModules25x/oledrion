@@ -12,19 +12,28 @@
 /**
  * oledrion
  *
- * @copyright   The XOOPS Project http://sourceforge.net/projects/xoops/
- * @license     http://www.fsf.org/copyleft/gpl.html GNU public license
+ * @copyright   {@link http://xoops.org/ XOOPS Project}
+ * @license     {@link http://www.fsf.org/copyleft/gpl.html GNU public license}
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
- * @version     $Id: oledrion_gateways_options.php 12290 2014-02-07 11:05:17Z beckmi $
  */
 
 /**
  * Gestion des options des passerelles de paiement
  */
-require 'classheader.php';
+require __DIR__ . '/classheader.php';
 
-class oledrion_gateways_options extends Oledrion_Object
+/**
+ * Class Oledrion_gateways_options
+ */
+class Oledrion_gateways_options extends Oledrion_Object
 {
+    /**
+     * constructor
+     *
+     * normally, this is called from child classes only
+     *
+     * @access public
+     */
     public function __construct()
     {
         $this->initVar('option_id', XOBJ_DTYPE_INT, null, false);
@@ -34,10 +43,17 @@ class oledrion_gateways_options extends Oledrion_Object
     }
 }
 
+/**
+ * Class OledrionOledrion_gateways_optionsHandler
+ */
 class OledrionOledrion_gateways_optionsHandler extends Oledrion_XoopsPersistableObjectHandler
 {
-    public function __construct($db)
-    { //							    Table					    Classe				        Id
+    /**
+     * OledrionOledrion_gateways_optionsHandler constructor.
+     * @param XoopsDatabase|null $db
+     */
+    public function __construct(XoopsDatabase $db)
+    { //                                Table                       Classe                      Id
         parent::__construct($db, 'oledrion_gateways_options', 'oledrion_gateways_options', 'option_id');
     }
 
@@ -57,7 +73,7 @@ class OledrionOledrion_gateways_optionsHandler extends Oledrion_XoopsPersistable
     /**
      * Supprime toutes les options d'une passerelle de paiement
      *
-     * @param  string  $option_gateway
+     * @param  string $option_gateway
      * @return boolean Le résultat de la suppression des options
      */
     public function deleteGatewayOptions($option_gateway)
@@ -94,7 +110,7 @@ class OledrionOledrion_gateways_optionsHandler extends Oledrion_XoopsPersistable
      */
     public function getGatewayOptionValue($option_gateway, $option_name, $format = 'N', $unserialize = false)
     {
-        $ret = array();
+        $ret      = array();
         $criteria = new CriteriaCompo();
         $criteria->add(new Criteria('option_gateway', $option_gateway, '='));
         $criteria->add(new Criteria('option_name', $option_name, '='));
@@ -121,7 +137,7 @@ class OledrionOledrion_gateways_optionsHandler extends Oledrion_XoopsPersistable
      */
     public function setGatewayOptionValue($option_gateway, $option_name, $option_value, $serialize = false)
     {
-        $ret = array();
+        $ret      = array();
         $criteria = new CriteriaCompo();
         $criteria->add(new Criteria('option_gateway', $option_gateway, '='));
         $criteria->add(new Criteria('option_name', $option_name, '='));

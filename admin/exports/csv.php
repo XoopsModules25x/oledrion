@@ -12,26 +12,29 @@
 /**
  * oledrion
  *
- * @copyright   The XOOPS Project http://sourceforge.net/projects/xoops/
- * @license     http://www.fsf.org/copyleft/gpl.html GNU public license
+ * @copyright   {@link http://xoops.org/ XOOPS Project}
+ * @license     {@link http://www.fsf.org/copyleft/gpl.html GNU public license}
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
- * @version     $Id: csv.php 12290 2014-02-07 11:05:17Z beckmi $
  */
 
 /**
  * Export au format CSV
  */
-defined('XOOPS_ROOT_PATH') || die('XOOPS root path not defined');
+// defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
 
-class oledrion_csv_export extends oledrion_export
+class Oledrion_csv_export extends Oledrion_export
 {
-    function __construct($parameters = '')
+    /**
+     * Oledrion_csv_export constructor.
+     * @param string $parameters
+     */
+    public function __construct($parameters = '')
     {
         if (!is_array($parameters)) {
             $this->separator = OLEDRION_CSV_SEP;
-            $this->filename = 'oledrion.csv';
-            $this->folder = OLEDRION_CSV_PATH;
-            $this->url = OLEDRION_CSV_URL;
+            $this->filename  = 'oledrion.csv';
+            $this->folder    = OLEDRION_CSV_PATH;
+            $this->url       = OLEDRION_CSV_URL;
             $this->orderType = OLEDRION_STATE_VALIDATED;
         }
         parent::__construct($parameters);
@@ -41,10 +44,10 @@ class oledrion_csv_export extends oledrion_export
      * Export des données
      * @return boolean Vrai si l'export a réussi sinon faux
      */
-    function export()
+    public function export()
     {
-        $file = $this->folder . DIRECTORY_SEPARATOR . $this->filename;
-        $fp = fopen($file, 'w');
+        $file = $this->folder . '/' . $this->filename;
+        $fp   = fopen($file, 'w');
         if (!$fp) {
             $this->success = false;
 
@@ -53,8 +56,8 @@ class oledrion_csv_export extends oledrion_export
 
         // Création de l'entête du fichier
         $list = $entete1 = $entete2 = array();
-        $s = $this->separator;
-        $cmd = new oledrion_commands();
+        $s    = $this->separator;
+        $cmd  = new oledrion_commands();
         foreach ($cmd->getVars() as $fieldName => $properties) {
             $entete1[] = $fieldName;
         }
@@ -78,7 +81,7 @@ class oledrion_csv_export extends oledrion_export
             foreach ($carts as $cart) {
                 $ligne = array();
                 foreach ($entete1 as $commandField) {
-                   $ligne[] = $order->getVar($commandField);
+                    $ligne[] = $order->getVar($commandField);
                 }
                 foreach ($entete2 as $cartField) {
                     $ligne[] = $cart->getVar($cartField);
@@ -103,7 +106,7 @@ class oledrion_csv_export extends oledrion_export
      * Retourne le lien à utiliser pour télécharger le fichier d'export
      * @return string Le lien à utiliser
      */
-    function getDownloadUrl()
+    public function getDownloadUrl()
     {
         if ($this->success) {
             return $this->url . '/' . $this->filename;
@@ -112,10 +115,13 @@ class oledrion_csv_export extends oledrion_export
         }
     }
 
-    function getDownloadPath()
+    /**
+     * @return bool|string
+     */
+    public function getDownloadPath()
     {
         if ($this->success) {
-            return $this->folder . DIRECTORY_SEPARATOR . $this->filename;
+            return $this->folder . '/' . $this->filename;
         } else {
             return false;
         }

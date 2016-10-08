@@ -12,21 +12,23 @@
 /**
  * oledrion
  *
- * @copyright   The XOOPS Project http://sourceforge.net/projects/xoops/
- * @license     http://www.fsf.org/copyleft/gpl.html GNU public license
+ * @copyright   {@link http://xoops.org/ XOOPS Project}
+ * @license     {@link http://www.fsf.org/copyleft/gpl.html GNU public license}
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
- * @version     $Id: oledrion_shelf.php 12290 2014-02-07 11:05:17Z beckmi $
  */
 
 /**
  * Facade pour les produits
  */
-defined('XOOPS_ROOT_PATH') || die('XOOPS root path not defined');
+// defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
 
-class oledrion_shelf
+class Oledrion_shelf
 {
     private $handlers;
 
+    /**
+     * Oledrion_shelf constructor.
+     */
     public function __construct()
     {
         $this->initHandlers();
@@ -37,13 +39,16 @@ class oledrion_shelf
      */
     private function initHandlers()
     {
-        $this->handlers = oledrion_handler::getInstance();
+        $this->handlers = OledrionHandler::getInstance();
     }
 
     /**
      * Retourne le nombre de produits d'un certain type
      *
-     * @param string $type Le type de produits dont on veut récupérer le nombre
+     * @param  string $type Le type de produits dont on veut récupérer le nombre
+     * @param  int    $category
+     * @param  int    $excluded
+     * @return int
      */
     public function getProductsCount($type = 'recent', $category = 0, $excluded = 0)
     {
@@ -60,7 +65,7 @@ class oledrion_shelf
      * Supprime un produit (et tout ce qui lui est relatif)
      * @param oledrion_products $product
      */
-    public function deleteProduct(oledrion_products $product)
+    public function deleteProduct(Oledrion_products $product)
     {
         global $xoopsModule;
         $id = $product->getVar('product_id');
@@ -141,26 +146,34 @@ class oledrion_shelf
      * @param  oledrion_shelf_parameters $parameters Les paramètres de filtrage
      * @return array                     Tableau prêt à être utilisé dans les templates
      */
-    public function getProducts(oledrion_shelf_parameters $parameters)
+    public function getProducts(Oledrion_shelf_parameters $parameters)
     {
         global $vatArray;
-        $parametersValues = $parameters->getParameters();
-        $productType = $parametersValues['productsType'];
-        $start = $parametersValues['start'];
-        $limit = $parametersValues['limit'];
-        $category = $parametersValues['category'];
-        $sort = $parametersValues['sort'];
-        $order = $parametersValues['order'];
-        $excluded = $parametersValues['excluded'];
-        $withXoopsUser = $parametersValues['withXoopsUser'];
+        $parametersValues    = $parameters->getParameters();
+        $productType         = $parametersValues['productsType'];
+        $start               = $parametersValues['start'];
+        $limit               = $parametersValues['limit'];
+        $category            = $parametersValues['category'];
+        $sort                = $parametersValues['sort'];
+        $order               = $parametersValues['order'];
+        $excluded            = $parametersValues['excluded'];
+        $withXoopsUser       = $parametersValues['withXoopsUser'];
         $withRelatedProducts = $parametersValues['withRelatedProducts'];
-        $withQuantity = $parametersValues['withQuantity'];
-        $thisMonthOnly = $parametersValues['thisMonthOnly'];
-        $ret = $xoopsUsersIDs = $users = $relatedProducts = $productsManufacturers = $manufacturersPerProduct = $products = $productsIds = $categoriesIds = $vendorsIds = $manufacturersIds = $manufacturers = $categories = $vendors = array();
+        $withQuantity        = $parametersValues['withQuantity'];
+        $thisMonthOnly       = $parametersValues['thisMonthOnly'];
+        $ret                 = $xoopsUsersIDs = $users = $relatedProducts = $productsManufacturers = $manufacturersPerProduct = $products = $productsIds = $categoriesIds = $vendorsIds = $manufacturersIds = $manufacturers = $categories = $vendors = array();
         // On commence par récupérer la liste des produits
         switch (strtolower($productType)) {
             case 'recent':
-                $products = $this->handlers->h_oledrion_products->getRecentProducts(new oledrion_parameters(array('start' => $start, 'limit' => $limit, 'category' => $category, 'sort' => $sort, 'order' => $order, 'excluded' => $excluded, 'thisMonthOnly' => $thisMonthOnly)));
+                $products = $this->handlers->h_oledrion_products->getRecentProducts(new Oledrion_parameters(array(
+                                                                                                                'start'         => $start,
+                                                                                                                'limit'         => $limit,
+                                                                                                                'category'      => $category,
+                                                                                                                'sort'          => $sort,
+                                                                                                                'order'         => $order,
+                                                                                                                'excluded'      => $excluded,
+                                                                                                                'thisMonthOnly' => $thisMonthOnly
+                                                                                                            )));
                 break;
 
             case 'mostsold':
@@ -183,23 +196,54 @@ class oledrion_shelf
                 break;
 
             case 'mostviewed':
-                $products = $this->handlers->h_oledrion_products->getMostViewedProducts(new oledrion_parameters(array('start' => $start, 'limit' => $limit, 'category' => $category, 'sort' => $sort, 'order' => $order)));
+                $products = $this->handlers->h_oledrion_products->getMostViewedProducts(new Oledrion_parameters(array(
+                                                                                                                    'start'    => $start,
+                                                                                                                    'limit'    => $limit,
+                                                                                                                    'category' => $category,
+                                                                                                                    'sort'     => $sort,
+                                                                                                                    'order'    => $order
+                                                                                                                )));
                 break;
 
             case 'bestrated':
-                $products = $this->handlers->h_oledrion_products->getBestRatedProducts(new oledrion_parameters(array('start' => $start, 'limit' => $limit, 'category' => $category, 'sort' => $sort, 'order' => $order)));
+                $products = $this->handlers->h_oledrion_products->getBestRatedProducts(new Oledrion_parameters(array(
+                                                                                                                   'start'    => $start,
+                                                                                                                   'limit'    => $limit,
+                                                                                                                   'category' => $category,
+                                                                                                                   'sort'     => $sort,
+                                                                                                                   'order'    => $order
+                                                                                                               )));
                 break;
 
             case 'recommended':
-                $products = $this->handlers->h_oledrion_products->getRecentRecommended(new oledrion_parameters(array('start' => $start, 'limit' => $limit, 'category' => $category, 'sort' => $sort, 'order' => $order)));
+                $products = $this->handlers->h_oledrion_products->getRecentRecommended(new Oledrion_parameters(array(
+                                                                                                                   'start'    => $start,
+                                                                                                                   'limit'    => $limit,
+                                                                                                                   'category' => $category,
+                                                                                                                   'sort'     => $sort,
+                                                                                                                   'order'    => $order
+                                                                                                               )));
                 break;
 
             case 'promotional':
-                $products = $this->handlers->h_oledrion_products->getPromotionalProducts(new oledrion_parameters(array('start' => $start, 'limit' => $limit, 'category' => $category, 'sort' => $sort, 'order' => $order)));
+                $products = $this->handlers->h_oledrion_products->getPromotionalProducts(new Oledrion_parameters(array(
+                                                                                                                     'start'    => $start,
+                                                                                                                     'limit'    => $limit,
+                                                                                                                     'category' => $category,
+                                                                                                                     'sort'     => $sort,
+                                                                                                                     'order'    => $order
+                                                                                                                 )));
                 break;
 
             case 'random':
-                $products = $this->handlers->h_oledrion_products->getRandomProducts(new oledrion_parameters(array('start' => $start, 'limit' => $limit, 'category' => $category, 'sort' => $sort, 'order' => $order, 'thisMonthOnly' => $thisMonthOnly)));
+                $products = $this->handlers->h_oledrion_products->getRandomProducts(new Oledrion_parameters(array(
+                                                                                                                'start'         => $start,
+                                                                                                                'limit'         => $limit,
+                                                                                                                'category'      => $category,
+                                                                                                                'sort'          => $sort,
+                                                                                                                'order'         => $order,
+                                                                                                                'thisMonthOnly' => $thisMonthOnly
+                                                                                                            )));
         }
 
         if (count($products) > 0) {
@@ -211,7 +255,7 @@ class oledrion_shelf
         // Recherche des Id des catégories et des vendeurs
         foreach ($products as $product) {
             $categoriesIds[] = $product->getVar('product_cid');
-            $vendorsIds[] = $product->getVar('product_vendor_id');
+            $vendorsIds[]    = $product->getVar('product_vendor_id');
             if ($withXoopsUser) {
                 $xoopsUsersIDs[] = $product->getVar('product_submitter');
             }
@@ -220,12 +264,12 @@ class oledrion_shelf
         $productsManufacturers = $this->handlers->h_oledrion_productsmanu->getFromProductsIds($productsIds);
         // Regroupement des fabricants par produit
         foreach ($productsManufacturers as $item) {
-            $manufacturersIds[] = $item->getVar('pm_manu_id');
+            $manufacturersIds[]                                        = $item->getVar('pm_manu_id');
             $manufacturersPerProduct[$item->getVar('pm_product_id')][] = $item;
         }
         // On récupère la liste des personnes qui ont soumis les produits
         if ($withXoopsUser) {
-            $users = oledrion_utils::getUsersFromIds($xoopsUsersIDs);
+            $users = Oledrion_utils::getUsersFromIds($xoopsUsersIDs);
         }
 
         // Il faut récupérer la liste des produits relatifs
@@ -253,11 +297,11 @@ class oledrion_shelf
             $vendors = $this->handlers->h_oledrion_vendors->getVendorsFromIds($vendorsIds);
         }
 
-        $count = 1;
+        $count     = 1;
         $lastTitle = '';
         foreach ($products as $product) {
-            $tmp = array();
-            $tmp = $product->toArray();
+            $tmp       = array();
+            $tmp       = $product->toArray();
             $lastTitle = $product->getVar('product_title');
             // Le vendeur
             if (isset($vendors[$product->getVar('product_vendor_id')])) {
@@ -282,9 +326,9 @@ class oledrion_shelf
                 $tmpManufacturersList = array();
                 foreach ($productManufacturers as $productManufacturer) {
                     if (isset($manufacturers[$productManufacturer->getVar('pm_manu_id')])) {
-                        $manufacturer = $manufacturers[$productManufacturer->getVar('pm_manu_id')];
+                        $manufacturer                   = $manufacturers[$productManufacturer->getVar('pm_manu_id')];
                         $tmp['product_manufacturers'][] = $manufacturer->toArray();
-                        $tmpManufacturersList[] = $manufacturer->getVar('manu_commercialname') . ' ' . $manufacturer->getVar('manu_name');
+                        $tmpManufacturersList[]         = $manufacturer->getVar('manu_commercialname') . ' ' . $manufacturer->getVar('manu_name');
                     }
                 }
                 if (count($tmpManufacturersList) > 0) {
@@ -301,12 +345,12 @@ class oledrion_shelf
                     $name = $thisUser->getVar('uname');
                 }
                 $tmp['product_submiter_name'] = $name;
-                $userLink = '<a href="' . XOOPS_URL . '/userinfo.php?uid=' . $thisUser->getVar('uid') . '">' . $name . '</a>';
+                $userLink                     = '<a href="' . XOOPS_URL . '/userinfo.php?uid=' . $thisUser->getVar('uid') . '">' . $name . '</a>';
                 $tmp['product_submiter_link'] = $userLink;
             }
             $tmp['product_count'] = $count; // Compteur pour les templates (pour gérer les colonnes)
-            $ret[] = $tmp;
-            $count++;
+            $ret[]                = $tmp;
+            ++$count;
         }
         $ret['lastTitle'] = $lastTitle;
 

@@ -1,5 +1,16 @@
-img, .box_blue-clip_01, .box_blue-clip_03, .box_blue-clip_06, .box_blue-clip_08, .oledrion_productthumb, .view-product-shad1_01, .view-product-shad1_02, .view-product-shad1_03, .view-product-shad2_01, .view-product-shad2_02, .view-product-shad2_03, {
-    behavior: url('../js/iepngfix.htc')
+img,
+.box_blue-clip_01,
+.box_blue-clip_03,
+.box_blue-clip_06,
+.box_blue-clip_08,
+.oledrion_productthumb,
+.view-product-shad1_01,
+.view-product-shad1_02,
+.view-product-shad1_03,
+.view-product-shad2_01,
+.view-product-shad2_02,
+.view-product-shad2_03 {
+    behavior: url('../js/iepngfix.htc');
 }
 
 .oledrion_productdescription {
@@ -12,7 +23,7 @@ img, .box_blue-clip_01, .box_blue-clip_03, .box_blue-clip_06, .box_blue-clip_08,
     background-color: #FFF;
     padding: 3px;
     text-align: center;
-    font-family: "Trebuchet MS",sans-serif;
+    font-family: "Trebuchet MS", sans-serif;
     font-size: 160%;
     font-weight: bold;
     width: 10px;
@@ -65,7 +76,7 @@ img, .box_blue-clip_01, .box_blue-clip_03, .box_blue-clip_06, .box_blue-clip_08,
 }
 
 .tableWidget {
-    font-family: arial,sans-serif;
+    font-family: arial, sans-serif;
     font-size: 12px;
     width: 400px;
 }
@@ -81,7 +92,7 @@ div.widget_tableDiv {
     width: 400px;
 }
 
-html>body div.widget_tableDiv {
+html > body div.widget_tableDiv {
     overflow: hidden;
     width: 400px;
 }
@@ -195,11 +206,11 @@ html>body div.widget_tableDiv {
     padding: 10px 78px 5px 10px;
 }
 
-.oledrion_producttitle  a {
+.oledrion_producttitle a {
     text-decoration: underline;
 }
 
-.oledrion_producttitle  a:hover {
+.oledrion_producttitle a:hover {
     text-decoration: none;
 }
 
@@ -237,7 +248,6 @@ html>body div.widget_tableDiv {
 
 /* page curl */
 .page-curl_01 {
-    background-color: #fcfcfc;
     background-repeat: no-repeat;
     background-position: right top;
     background-image: url(../images/page-curl/page-curl_01-1.gif);
@@ -506,15 +516,15 @@ background-position: left top;
 }
 
 .oledrion_htmlform {
-	height: 130px;
+    height: 130px;
 }
 
 .oledrion_htmlimage {
-	float: right;
-	width: 120px;
-	height: 120px;
-	padding: 1px;
-	margin: 1px;
+    float: right;
+    width: 120px;
+    height: 120px;
+    padding: 1px;
+    margin: 1px;
 }
 
 .oledrion_step_body {
@@ -522,28 +532,28 @@ background-position: left top;
 }
 
 .oledrion_step_body_width {
-	width: 98%;
-	padding: 10px;
-	margin: 10px;
+    width: 98%;
+    padding: 10px;
+    margin: 10px;
 }
 
 .oledrion_step_img, .oledrion_step_img img {
-	width: 16px;
-	height: 32px;
-	padding: 0;
-	margin: 0;
+    width: 16px;
+    height: 32px;
+    padding: 0;
+    margin: 0;
 }
 
 .oledrion_step_active {
-	padding: 6px;
-	font-weight: bold;
-		background-color: #ccc;
+    padding: 6px;
+    font-weight: bold;
+    background-color: #ccc;
 }
 
 .oledrion_step {
-	padding: 6px;
-	font-weight: bold;
-		background-color: #eee;
+    padding: 6px;
+    font-weight: bold;
+    background-color: #eee;
 }
 
 .oledrion_step_text {

@@ -12,16 +12,17 @@
 /**
  * oledrion
  *
- * @copyright   The XOOPS Project http://sourceforge.net/projects/xoops/
- * @license     http://www.fsf.org/copyleft/gpl.html GNU public license
+ * @copyright   {@link http://xoops.org/ XOOPS Project}
+ * @license     {@link http://www.fsf.org/copyleft/gpl.html GNU public license}
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
- * @version     $Id: texts.php 12290 2014-02-07 11:05:17Z beckmi $
  */
 
 /**
  * Gestion des textes affichés sur certaines pages pour les utilisateurs
  */
-if (!defined("OLEDRION_ADMIN")) exit();
+if (!defined('OLEDRION_ADMIN')) {
+    exit();
+}
 switch ($action) {
     // ****************************************************************************************************************
     case 'default': // Gestion des textes
@@ -33,46 +34,46 @@ switch ($action) {
         $sform = new XoopsThemeForm(_MI_OLEDRION_ADMENU8, 'frmatxt', $baseurl);
         $sform->addElement(new XoopsFormHidden('op', 'texts'));
         $sform->addElement(new XoopsFormHidden('action', 'savetexts'));
-        $editor1 = oledrion_utils::getWysiwygForm(_AM_OLEDRION_INDEX_PAGE, 'welcome1', $registry->getfile(OLEDRION_TEXTFILE1), 5, 60, 'hometext1_hidden');
+        $editor1 = Oledrion_utils::getWysiwygForm(_AM_OLEDRION_INDEX_PAGE, 'welcome1', $registry->getfile(OLEDRION_TEXTFILE1), 5, 60, 'hometext1_hidden');
         if ($editor1) {
             $sform->addElement($editor1, false);
         }
 
-        $editor2 = oledrion_utils::getWysiwygForm(_OLEDRION_CGV, 'welcome2', $registry->getfile(OLEDRION_TEXTFILE2), 5, 60, 'hometext2_hidden');
+        $editor2 = Oledrion_utils::getWysiwygForm(_OLEDRION_CGV, 'welcome2', $registry->getfile(OLEDRION_TEXTFILE2), 5, 60, 'hometext2_hidden');
         if ($editor2) {
             $sform->addElement($editor2, false);
         }
 
-        $editor3 = oledrion_utils::getWysiwygForm(_AM_OLEDRION_RECOMM_TEXT, 'welcome3', $registry->getfile(OLEDRION_TEXTFILE3), 5, 60, 'hometext3_hidden');
+        $editor3 = Oledrion_utils::getWysiwygForm(_AM_OLEDRION_RECOMM_TEXT, 'welcome3', $registry->getfile(OLEDRION_TEXTFILE3), 5, 60, 'hometext3_hidden');
         if ($editor3) {
             $sform->addElement($editor3, false);
         }
 
-        $editor4 = oledrion_utils::getWysiwygForm(_AM_OLEDRION_OFFLINEPAY_TEXT, 'welcome4', $registry->getfile(OLEDRION_TEXTFILE4), 5, 60, 'hometext4_hidden');
+        $editor4 = Oledrion_utils::getWysiwygForm(_AM_OLEDRION_OFFLINEPAY_TEXT, 'welcome4', $registry->getfile(OLEDRION_TEXTFILE4), 5, 60, 'hometext4_hidden');
         if ($editor4) {
             $sform->addElement($editor4, false);
         }
 
-        $editor5 = oledrion_utils::getWysiwygForm(_AM_OLEDRION_RESTRICT_TEXT, 'welcome5', $registry->getfile(OLEDRION_TEXTFILE5), 5, 60, 'hometext5_hidden');
+        $editor5 = Oledrion_utils::getWysiwygForm(_AM_OLEDRION_RESTRICT_TEXT, 'welcome5', $registry->getfile(OLEDRION_TEXTFILE5), 5, 60, 'hometext5_hidden');
         if ($editor5) {
             $sform->addElement($editor5, false);
         }
 
-        $editor6 = oledrion_utils::getWysiwygForm(_AM_OLEDRION_CHECKOUT_TEXT1, 'welcome6', $registry->getfile(OLEDRION_TEXTFILE6), 5, 60, 'hometext6_hidden');
+        $editor6 = Oledrion_utils::getWysiwygForm(_AM_OLEDRION_CHECKOUT_TEXT1, 'welcome6', $registry->getfile(OLEDRION_TEXTFILE6), 5, 60, 'hometext6_hidden');
         if ($editor6) {
             $sform->addElement($editor6, false);
         }
 
-        $editor7 = oledrion_utils::getWysiwygForm(_AM_OLEDRION_CHECKOUT_TEXT2, 'welcome7', $registry->getfile(OLEDRION_TEXTFILE7), 5, 60, 'hometext7_hidden');
+        $editor7 = Oledrion_utils::getWysiwygForm(_AM_OLEDRION_CHECKOUT_TEXT2, 'welcome7', $registry->getfile(OLEDRION_TEXTFILE7), 5, 60, 'hometext7_hidden');
         if ($editor7) {
             $sform->addElement($editor7, false);
         }
 
         $button_tray = new XoopsFormElementTray('', '');
-        $submit_btn = new XoopsFormButton('', 'post', _AM_OLEDRION_MODIFY, 'submit');
+        $submit_btn  = new XoopsFormButton('', 'post', _AM_OLEDRION_MODIFY, 'submit');
         $button_tray->addElement($submit_btn);
         $sform->addElement($button_tray);
-        $sform = oledrion_utils::formMarkRequiredFields($sform);
+        $sform =& Oledrion_utils::formMarkRequiredFields($sform);
         $sform->display();
         break;
 
@@ -88,7 +89,7 @@ switch ($action) {
         $registry->savefile($myts->stripSlashesGPC($_POST['welcome5']), OLEDRION_TEXTFILE5);
         $registry->savefile($myts->stripSlashesGPC($_POST['welcome6']), OLEDRION_TEXTFILE6);
         $registry->savefile($myts->stripSlashesGPC($_POST['welcome7']), OLEDRION_TEXTFILE7);
-        oledrion_utils::updateCache();
-        oledrion_utils::redirect(_AM_OLEDRION_SAVE_OK, $baseurl . '?op=texts', 2);
+        Oledrion_utils::updateCache();
+        Oledrion_utils::redirect(_AM_OLEDRION_SAVE_OK, $baseurl . '?op=texts', 2);
         break;
 }

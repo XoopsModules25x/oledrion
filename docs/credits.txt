@@ -4,6 +4,6 @@ Credits
 Originally developed by  by Sultan El Turrah (www.theclubbing.com)
 based on work done by XtremDj (www.clubxtrem.net),Lmaix (www.bahut.com), and Solo (www.wolfpackclan.com)
 
-Version 2.0 has been completely rewritten by Hervé Thouzard (hervet).
+Version 2.0 has been completely rewritten by HervÃ© Thouzard (hervet).
 
 Version 2.3 was updated to XOOPS 2.5.0 Standard GUI by Michael Beck (Mamba)

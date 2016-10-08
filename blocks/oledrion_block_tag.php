@@ -12,10 +12,11 @@
 /**
  * oledrion
  *
- * @copyright   The XOOPS Project http://sourceforge.net/projects/xoops/
- * @license     http://www.fsf.org/copyleft/gpl.html GNU public license
+ * @copyright   {@link http://xoops.org/ XOOPS Project}
+ * @license     {@link http://www.fsf.org/copyleft/gpl.html GNU public license}
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
- * @version     $Id: oledrion_block_tag.php 12290 2014-02-07 11:05:17Z beckmi $
+ * @param $options
+ * @return array
  */
 
 function oledrion_tag_block_cloud_show($options)
@@ -25,6 +26,10 @@ function oledrion_tag_block_cloud_show($options)
     return tag_block_cloud_show($options, 'oledrion');
 }
 
+/**
+ * @param $options
+ * @return string
+ */
 function oledrion_tag_block_cloud_edit($options)
 {
     require_once XOOPS_ROOT_PATH . '/modules/tag/blocks/block.php';
@@ -32,6 +37,10 @@ function oledrion_tag_block_cloud_edit($options)
     return tag_block_cloud_edit($options);
 }
 
+/**
+ * @param $options
+ * @return array
+ */
 function oledrion_tag_block_top_show($options)
 {
     require_once XOOPS_ROOT_PATH . '/modules/tag/blocks/block.php';
@@ -39,6 +48,10 @@ function oledrion_tag_block_top_show($options)
     return tag_block_top_show($options, 'oledrion');
 }
 
+/**
+ * @param $options
+ * @return string
+ */
 function oledrion_tag_block_top_edit($options)
 {
     require_once XOOPS_ROOT_PATH . '/modules/tag/blocks/block.php';

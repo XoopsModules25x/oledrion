@@ -12,7 +12,7 @@ Usage:
 */
 
 // ##########################################################
-//	Define your mapping here
+//  Define your mapping here
 // ##########################################################
 $patterns = array(
     // first one must be module directory name
@@ -22,11 +22,16 @@ $patterns = array(
     'Oledrion' => 'Bouquins'
 );
 
-$patKeys = array_keys($patterns);
+$patKeys   = array_keys($patterns);
 $patValues = array_values($patterns);
 
 // work around for PHP < 5.0.x
 if (!function_exists('file_put_contents')) {
+    /**
+     * @param      $filename
+     * @param      $data
+     * @param bool $file_append
+     */
     function file_put_contents($filename, $data, $file_append = false)
     {
         $fp = fopen($filename, (!$file_append ? 'w+' : 'a+'));
@@ -35,12 +40,15 @@ if (!function_exists('file_put_contents')) {
 
             return;
         }
-        fputs($fp, $data);
+        fwrite($fp, $data);
         fclose($fp);
     }
 }
 
 // recursive clonning script
+/**
+ * @param $path
+ */
 function cloneFileFolder($path)
 {
     global $patKeys;
@@ -55,7 +63,7 @@ function cloneFileFolder($path)
         // check all files in dir, and process it
         if ($handle = opendir($path)) {
             while ($file = readdir($handle)) {
-                if ($file != '.' && $file != '..') {
+                if ($file !== '.' && $file !== '..') {
                     cloneFileFolder("$path/$file");
                 }
             }
@@ -76,5 +84,5 @@ function cloneFileFolder($path)
 cloneFileFolder('modules/oledrion');
 
 echo "Happy cloning...\n";
-echo "check directory modules/" . $patterns['oledrion'] . " for cloned module \n";
+echo 'check directory modules/' . $patterns['oledrion'] . " for cloned module \n";
 echo "Consider modifying new module by editing language/english/modinfo.php and assets/images/oledrion_logo.png manually (if you care)\n";

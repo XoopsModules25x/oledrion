@@ -12,16 +12,25 @@
 /**
  * oledrion
  *
- * @copyright   The XOOPS Project http://sourceforge.net/projects/xoops/
- * @license     http://www.fsf.org/copyleft/gpl.html GNU public license
+ * @copyright   {@link http://xoops.org/ XOOPS Project}
+ * @license     {@link http://www.fsf.org/copyleft/gpl.html GNU public license}
  * @author      Hossein Azizabadi (azizabadi@faragostaresh.com)
- * @version     $Id: oledrion_delivery.php 12290 2014-02-07 11:05:17Z beckmi $
  */
 
-require 'classheader.php';
+require __DIR__ . '/classheader.php';
 
-class oledrion_delivery extends Oledrion_Object
+/**
+ * Class Oledrion_delivery
+ */
+class Oledrion_delivery extends Oledrion_Object
 {
+    /**
+     * constructor
+     *
+     * normally, this is called from child classes only
+     *
+     * @access public
+     */
     public function __construct()
     {
         $this->initVar('delivery_id', XOBJ_DTYPE_INT, null, false);
@@ -54,7 +63,9 @@ class oledrion_delivery extends Oledrion_Object
     public function pictureExists()
     {
         $return = false;
-        if (xoops_trim($this->getVar('delivery_image')) != '' && file_exists(OLEDRION_PICTURES_PATH . DIRECTORY_SEPARATOR . $this->getVar('delivery_image'))) {
+        if (xoops_trim($this->getVar('delivery_image')) != ''
+            && file_exists(OLEDRION_PICTURES_PATH . '/' . $this->getVar('delivery_image'))
+        ) {
             $return = true;
         }
 
@@ -68,7 +79,7 @@ class oledrion_delivery extends Oledrion_Object
     public function deletePicture()
     {
         if ($this->pictureExists()) {
-            @unlink(OLEDRION_PICTURES_PATH . DIRECTORY_SEPARATOR . $this->getVar('delivery_image'));
+            @unlink(OLEDRION_PICTURES_PATH . '/' . $this->getVar('delivery_image'));
         }
         $this->setVar('delivery_image', '');
     }
@@ -82,25 +93,41 @@ class oledrion_delivery extends Oledrion_Object
     public function toArray($format = 's')
     {
         global $h_oledrion_location_delivery;
-        $ret = array();
-        $ret = parent::toArray($format);
+        $ret                       = array();
+        $ret                       = parent::toArray($format);
         $ret['delivery_image_url'] = $this->getPictureUrl();
 
         return $ret;
     }
 }
 
+/**
+ * Class OledrionOledrion_deliveryHandler
+ */
 class OledrionOledrion_deliveryHandler extends Oledrion_XoopsPersistableObjectHandler
 {
-    public function __construct($db)
-    { //							            Table					Classe				Id
+    /**
+     * OledrionOledrion_deliveryHandler constructor.
+     * @param XoopsDatabase|null $db
+     */
+    public function __construct(XoopsDatabase $db)
+    { //                                        Table                   Classe              Id
         parent::__construct($db, 'oledrion_delivery', 'oledrion_delivery', 'delivery_id');
     }
 
-    public function getAllDelivery(oledrion_parameters $parameters)
+    /**
+     * @param  Oledrion_parameters $parameters
+     * @return array
+     */
+    public function getAllDelivery(Oledrion_parameters $parameters)
     {
-        $parameters = $parameters->extend(new oledrion_parameters(array('start' => 0, 'limit' => 0, 'sort' => 'delivery_id', 'order' => 'ASC')));
-        $critere = new Criteria('delivery_id', 0, '<>');
+        $parameters = $parameters->extend(new Oledrion_parameters(array(
+                                                                      'start' => 0,
+                                                                      'limit' => 0,
+                                                                      'sort'  => 'delivery_id',
+                                                                      'order' => 'ASC'
+                                                                  )));
+        $critere    = new Criteria('delivery_id', 0, '<>');
         $critere->setLimit($parameters['limit']);
         $critere->setStart($parameters['start']);
         $critere->setSort($parameters['sort']);
@@ -111,14 +138,24 @@ class OledrionOledrion_deliveryHandler extends Oledrion_XoopsPersistableObjectHa
         return $categories;
     }
 
-    public function getLocationDelivery(oledrion_parameters $parameters)
+    /**
+     * @param  Oledrion_parameters $parameters
+     * @return array
+     */
+    public function getLocationDelivery(Oledrion_parameters $parameters)
     {
         global $h_oledrion_location_delivery;
-        $ret = array();
-        $parameters = $parameters->extend(new oledrion_parameters(array('start' => 0, 'limit' => 0, 'sort' => 'delivery_id', 'order' => 'ASC', 'location' => '')));
+        $ret               = array();
+        $parameters        = $parameters->extend(new Oledrion_parameters(array(
+                                                                             'start'    => 0,
+                                                                             'limit'    => 0,
+                                                                             'sort'     => 'delivery_id',
+                                                                             'order'    => 'ASC',
+                                                                             'location' => ''
+                                                                         )));
         $location_delivery = $h_oledrion_location_delivery->getLocationDeliveryId($parameters);
 
-        $critere = new CriteriaCompo ();
+        $critere = new CriteriaCompo();
         $critere->setLimit($parameters['limit']);
         $critere->setStart($parameters['start']);
         $critere->setSort($parameters['sort']);
@@ -128,12 +165,14 @@ class OledrionOledrion_deliveryHandler extends Oledrion_XoopsPersistableObjectHa
             foreach ($obj as $root) {
                 $tab = array();
                 $tab = $root->toArray();
-                if (isset($location_delivery[$root->getVar('delivery_id')]['ld_delivery']) && $location_delivery[$root->getVar('delivery_id')]['ld_delivery'] == $root->getVar('delivery_id')) {
-                    $tab['ld_id']['delivery_select'] = 1;
-                    $tab['ld_id']['ld_id'] = $location_delivery[$root->getVar('delivery_id')]['ld_id'];
-                    $tab['ld_id']['ld_location'] = $location_delivery[$root->getVar('delivery_id')]['ld_location'];
-                    $tab['ld_id']['ld_delivery'] = $location_delivery[$root->getVar('delivery_id')]['ld_delivery'];
-                    $tab['ld_id']['ld_price'] = $location_delivery[$root->getVar('delivery_id')]['ld_price'];
+                if (isset($location_delivery[$root->getVar('delivery_id')]['ld_delivery'])
+                    && $location_delivery[$root->getVar('delivery_id')]['ld_delivery'] == $root->getVar('delivery_id')
+                ) {
+                    $tab['ld_id']['delivery_select']  = 1;
+                    $tab['ld_id']['ld_id']            = $location_delivery[$root->getVar('delivery_id')]['ld_id'];
+                    $tab['ld_id']['ld_location']      = $location_delivery[$root->getVar('delivery_id')]['ld_location'];
+                    $tab['ld_id']['ld_delivery']      = $location_delivery[$root->getVar('delivery_id')]['ld_delivery'];
+                    $tab['ld_id']['ld_price']         = $location_delivery[$root->getVar('delivery_id')]['ld_price'];
                     $tab['ld_id']['ld_delivery_time'] = $location_delivery[$root->getVar('delivery_id')]['ld_delivery_time'];
                 }
                 $ret[] = $tab;
@@ -143,45 +182,54 @@ class OledrionOledrion_deliveryHandler extends Oledrion_XoopsPersistableObjectHa
         return $ret;
     }
 
+    /**
+     * @param $location_id
+     * @return array
+     */
     public function getThisLocationDelivery($location_id)
     {
         global $h_oledrion_location_delivery;
-        $oledrion_Currency = oledrion_Currency::getInstance();
-        $ret = array();
-        $parameters = array('location' => $location_id);
+        $oledrion_Currency = Oledrion_Currency::getInstance();
+        $ret               = array();
+        $parameters        = array('location' => $location_id);
         $location_delivery = $h_oledrion_location_delivery->getLocationDeliveryId($parameters);
         foreach ($location_delivery as $location) {
-                $id[] = $location['ld_delivery'];
+            $id[] = $location['ld_delivery'];
         }
 
-        $critere = new CriteriaCompo ();
-        $critere->add(new Criteria('delivery_id', '(' . implode( ',', $id ) . ')', 'IN'));
+        $critere = new CriteriaCompo();
+        $critere->add(new Criteria('delivery_id', '(' . implode(',', $id) . ')', 'IN'));
         $critere->add(new Criteria('delivery_online', 1));
         $obj = $this->getObjects($critere);
         if ($obj) {
             foreach ($obj as $root) {
-                $tab = array();
-                $tab = $root->toArray();
-                $tab['delivery_price'] = $location_delivery[$root->getVar('delivery_id')]['ld_price'];
+                $tab                              = array();
+                $tab                              = $root->toArray();
+                $tab['delivery_price']            = $location_delivery[$root->getVar('delivery_id')]['ld_price'];
                 $tab['delivery_price_fordisplay'] = $oledrion_Currency->amountForDisplay($tab['delivery_price']);
-                $tab['delivery_time'] = $location_delivery[$root->getVar('delivery_id')]['ld_delivery_time'];
-                $ret[] = $tab;
+                $tab['delivery_time']             = $location_delivery[$root->getVar('delivery_id')]['ld_delivery_time'];
+                $ret[]                            = $tab;
             }
         }
 
         return $ret;
     }
 
+    /**
+     * @param $location_id
+     * @param $delivery_id
+     * @return array
+     */
     public function getThisLocationThisDelivery($location_id, $delivery_id)
     {
         global $h_oledrion_location_delivery;
-        $location_delivery = $h_oledrion_location_delivery->getDelivery($location_id, $delivery_id);
-        $ret = array();
-         $obj = $this->get($location_id);
-         $ret = $obj->toArray();
-         $ret['delivery_price'] = $location_delivery['ld_price'];
-         $ret['delivery_time'] = $location_delivery['ld_delivery_time'];
+        $location_delivery     = $h_oledrion_location_delivery->getDelivery($location_id, $delivery_id);
+        $ret                   = array();
+        $obj                   = $this->get($location_id);
+        $ret                   = $obj->toArray();
+        $ret['delivery_price'] = $location_delivery['ld_price'];
+        $ret['delivery_time']  = $location_delivery['ld_delivery_time'];
 
-         return $ret;
+        return $ret;
     }
 }

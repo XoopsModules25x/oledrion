@@ -1,1 +1,1 @@
-var confirmDelete = "Do you really want to remove this item ?";
+var confirmDelete = "Do you really want to remove this item?";

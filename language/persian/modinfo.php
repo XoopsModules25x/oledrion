@@ -12,10 +12,9 @@
 /**
  * oledrion
  *
- * @copyright   The XOOPS Project http://sourceforge.net/projects/xoops/
- * @license     http://www.fsf.org/copyleft/gpl.html GNU public license
+ * @copyright   {@link http://xoops.org/ XOOPS Project}
+ * @license     {@link http://www.fsf.org/copyleft/gpl.html GNU public license}
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
- * @version     $Id$
  */
 
 // The name of this module
@@ -124,7 +123,8 @@ define('_MI_OLEDRION_GLOBAL_NEWLINK_NOTIFYDSC', 'دریافت آگاهی‌رس�
 define('_MI_OLEDRION_GLOBAL_NEWLINK_NOTIFYSBJ', '[{X_SITENAME}] {X_MODULE} آگاهی‌رسانی خودکار: محصول جدید');
 
 define('_MI_OLEDRION_FORM_OPTIONS', 'گزینه‌های فرم');
-define('_MI_OLEDRION_FORM_OPTIONS_DESC', 'ویرایشگر متن را برای استفاده انتخاب کنید. اگر شما فقط نصب ساده زوپس را انجام داده‌اید (شما فقط از ویرایشگرهای کلاسیک هسته زوپس استفاده می‌کنید، که در هسته اصلی زوپس قرار گرفته اند)، فقط می‌توانید DHTML و Compact را انتخاب کنید');
+define('_MI_OLEDRION_FORM_OPTIONS_DESC',
+       'ویرایشگر متن را برای استفاده انتخاب کنید. اگر شما فقط نصب ساده زوپس را انجام داده‌اید (شما فقط از ویرایشگرهای کلاسیک هسته زوپس استفاده می‌کنید، که در هسته اصلی زوپس قرار گرفته اند)، فقط می‌توانید DHTML و Compact را انتخاب کنید');
 
 define('_MI_OLEDRION_FORM_COMPACT', 'Compact');
 define('_MI_OLEDRION_FORM_DHTML', 'DHTML');

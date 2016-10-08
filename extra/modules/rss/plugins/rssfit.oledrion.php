@@ -12,28 +12,37 @@
 /**
  * oledrion
  *
- * @copyright   The XOOPS Project http://sourceforge.net/projects/xoops/
- * @license     http://www.fsf.org/copyleft/gpl.html GNU public license
+ * @copyright   {@link http://xoops.org/ XOOPS Project}
+ * @license     {@link http://www.fsf.org/copyleft/gpl.html GNU public license}
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
- * @version     $Id: rssfit.oledrion.php 12290 2014-02-07 11:05:17Z beckmi $
  */
 
 if (!defined('RSSFIT_ROOT_PATH')) {
     exit();
 }
+
+/**
+ * Class RssfitOledrion
+ */
 class RssfitOledrion
 {
-    var $dirname = 'oledrion';
-    var $modname;
-    var $grab;
+    public $dirname = 'oledrion';
+    public $modname;
+    public $grab;
 
-    function RssfitOledrion()
+    /**
+     * RssfitOledrion constructor.
+     */
+    public function __construct()
     {
     }
 
-    function loadModule()
+    /**
+     * @return bool
+     */
+    public function loadModule()
     {
-        $mod = $GLOBALS['module_handler']->getByDirname($this->dirname);
+        $mod = $GLOBALS['moduleHandler']->getByDirname($this->dirname);
         if (!$mod || !$mod->getVar('isactive')) {
             return false;
         }
@@ -42,17 +51,24 @@ class RssfitOledrion
         return $mod;
     }
 
-    function grabEntries(&$obj)
+    /**
+     * @param $obj
+     * @return bool
+     */
+    public function grabEntries($obj)
     {
         $ret = false;
         include XOOPS_ROOT_PATH . '/modules/oledrion/include/common.php';
-        $items = $h_oledrion_products->getRecentProducts(new oledrion_parameters(array('start' => 0, 'limit' => $this->grab)));
-        $i = 0;
+        $items = $h_oledrion_products->getRecentProducts(new Oledrion_parameters(array(
+                                                                                     'start' => 0,
+                                                                                     'limit' => $this->grab
+                                                                                 )));
+        $i     = 0;
 
         if (false != $items && count($items) > 0) {
             foreach ($items as $item) {
-                $ret[$i]['link'] = $ret[$i]['guid'] = $item->getLink();
-                $ret[$i]['title'] = $item->getVar('product_title', 'n');
+                $ret[$i]['link']      = $ret[$i]['guid'] = $item->getLink();
+                $ret[$i]['title']     = $item->getVar('product_title', 'n');
                 $ret[$i]['timestamp'] = $item->getVar('product_submitted');
                 if (xoops_trim($item->getVar('product_summary')) != '') {
                     $description = $item->getVar('product_summary');
@@ -60,9 +76,9 @@ class RssfitOledrion
                     $description = $item->getVar('product_description');
                 }
                 $ret[$i]['description'] = $description;
-                $ret[$i]['category'] = $this->modname;
-                $ret[$i]['domain'] = XOOPS_URL . '/modules/' . $this->dirname . '/';
-                $i++;
+                $ret[$i]['category']    = $this->modname;
+                $ret[$i]['domain']      = XOOPS_URL . '/modules/' . $this->dirname . '/';
+                ++$i;
             }
         }
 

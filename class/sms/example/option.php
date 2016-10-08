@@ -12,15 +12,14 @@
 /**
  * oledrion
  *
- * @copyright   The XOOPS Project http://sourceforge.net/projects/xoops/
- * @license     http://www.fsf.org/copyleft/gpl.html GNU public license
+ * @copyright   {@link http://xoops.org/ XOOPS Project}
+ * @license     {@link http://www.fsf.org/copyleft/gpl.html GNU public license}
  * @author      Hossein Azizabadi (azizabadi@faragostaresh.com)
- * @version     $Id$
  */
 
-$option = array();
+$option             = array();
 $option['username'] = '';
 $option['password'] = '';
-$option['number'] = '';
+$option['number']   = '';
 
 return $option;

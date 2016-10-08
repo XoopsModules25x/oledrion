@@ -12,10 +12,9 @@
 /**
  * oledrion
  *
- * @copyright   The XOOPS Project http://sourceforge.net/projects/xoops/
- * @license     http://www.fsf.org/copyleft/gpl.html GNU public license
+ * @copyright   {@link http://xoops.org/ XOOPS Project}
+ * @license     {@link http://www.fsf.org/copyleft/gpl.html GNU public license}
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
- * @version     $Id: main.php 12290 2014-02-07 11:05:17Z beckmi $
  */
 
 define('_OLEDRION_SEARCHFOR', 'Search for');
@@ -254,7 +253,7 @@ define('_OLEDRION_NA', 'NA'); // Like in Excel
 define('_OLEDRION_VAT_AMOUNT', 'Sales Tax');
 define('_OLEDRION_AMOUNT_WITHOUT_VAT', 'Price');
 define('_OLEDRION_PLEASE_FILL_FIELD', 'This field is required'); // Text used in Javascript
-define('_OLEDRION_VALIDATE_ERROR1', 'You missed some mandatory<br />fields');
+define('_OLEDRION_VALIDATE_ERROR1', 'You missed some mandatory<br>fields');
 define('_OLEDRION_MANDATORY_MISSED', 'You have not filled out the field %s');
 
 define('_OLEDRION_VIEW', 'View');

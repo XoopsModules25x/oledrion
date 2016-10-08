@@ -12,19 +12,28 @@
 /**
  * oledrion
  *
- * @copyright   The XOOPS Project http://sourceforge.net/projects/xoops/
- * @license     http://www.fsf.org/copyleft/gpl.html GNU public license
+ * @copyright   {@link http://xoops.org/ XOOPS Project}
+ * @license     {@link http://www.fsf.org/copyleft/gpl.html GNU public license}
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
- * @version     $Id: oledrion_productsmanu.php 12290 2014-02-07 11:05:17Z beckmi $
  */
 
 /**
  * Classe chargée de faire la liaison entre les produits et les fabricants
  */
-require 'classheader.php';
+require __DIR__ . '/classheader.php';
 
-class oledrion_productsmanu extends Oledrion_Object
+/**
+ * Class Oledrion_productsmanu
+ */
+class Oledrion_productsmanu extends Oledrion_Object
 {
+    /**
+     * constructor
+     *
+     * normally, this is called from child classes only
+     *
+     * @access public
+     */
     public function __construct()
     {
         $this->initVar('pm_id', XOBJ_DTYPE_INT, null, false);
@@ -35,10 +44,17 @@ class oledrion_productsmanu extends Oledrion_Object
     }
 }
 
+/**
+ * Class OledrionOledrion_productsmanuHandler
+ */
 class OledrionOledrion_productsmanuHandler extends Oledrion_XoopsPersistableObjectHandler
 {
-    public function __construct($db)
-    { //							Table					Classe				Id
+    /**
+     * OledrionOledrion_productsmanuHandler constructor.
+     * @param XoopsDatabase|null $db
+     */
+    public function __construct(XoopsDatabase $db)
+    { //                            Table                   Classe              Id
         parent::__construct($db, 'oledrion_productsmanu', 'oledrion_productsmanu', 'pm_id');
     }
 
@@ -66,7 +82,7 @@ class OledrionOledrion_productsmanuHandler extends Oledrion_XoopsPersistableObje
         $ret = array();
         if (is_array($ids)) {
             $criteria = new Criteria('pm_product_id', '(' . implode(',', $ids) . ')', 'IN');
-            $ret = $this->getObjects($criteria, true, true, '*', false);
+            $ret      = $this->getObjects($criteria, true, true, '*', false);
         }
 
         return $ret;
@@ -76,11 +92,13 @@ class OledrionOledrion_productsmanuHandler extends Oledrion_XoopsPersistableObje
      * Retourne les identifiants des produits d'un fabricant
      *
      * @param  intege $pm_manu_id L'identifiant du fabricant
+     * @param  int    $start
+     * @param  int    $limit
      * @return array  Les ID des produits
      */
     public function getProductsIdsFromManufacturer($pm_manu_id, $start = 0, $limit = 0)
     {
-        $ret = array();
+        $ret      = array();
         $criteria = new Criteria('pm_manu_id', $pm_manu_id, '=');
         $criteria->setStart($start);
         $criteria->setLimit($limit);
@@ -102,7 +120,7 @@ class OledrionOledrion_productsmanuHandler extends Oledrion_XoopsPersistableObje
      */
     public function removeManufacturerProduct($pm_product_id)
     {
-        $pm_product_id = intval($pm_product_id);
+        $pm_product_id = (int)$pm_product_id;
 
         return $this->deleteAll(new criteria('pm_product_id', $pm_product_id, '='));
     }

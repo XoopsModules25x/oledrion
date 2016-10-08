@@ -12,24 +12,26 @@
 /**
  * oledrion
  *
- * @copyright   The XOOPS Project http://sourceforge.net/projects/xoops/
- * @license     http://www.fsf.org/copyleft/gpl.html GNU public license
+ * @copyright   {@link http://xoops.org/ XOOPS Project}
+ * @license     {@link http://www.fsf.org/copyleft/gpl.html GNU public license}
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
- * @version     $Id: gateway.php 12290 2014-02-07 11:05:17Z beckmi $
  */
 
 /**
  * Every gateway script must extends this class
  */
-defined('XOOPS_ROOT_PATH') || die('XOOPS root path not defined');
+// defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
 
-abstract class oledrion_gateway
+abstract class Oledrion_gateway
 {
     protected $handlers;
     protected $gatewayInformation;
-    public $languageFilename;
+    public    $languageFilename;
 
-    function __construct()
+    /**
+     * Oledrion_gateway constructor.
+     */
+    public function __construct()
     {
         $this->getHandlers();
         $this->setGatewayInformation();
@@ -45,7 +47,7 @@ abstract class oledrion_gateway
      * $gateway['credits'] = "Hervé Thouzard";
      * $gateway['releaseDate'] = 20081215;    // YYYYMMDD
      */
-    abstract function setGatewayInformation();
+    abstract public function setGatewayInformation();
 
     /**
      * Loads the module's handler
@@ -53,7 +55,7 @@ abstract class oledrion_gateway
      */
     private function getHandlers()
     {
-        $this->handlers = oledrion_handler::getInstance();
+        $this->handlers = OledrionHandler::getInstance();
     }
 
     /**
@@ -72,7 +74,7 @@ abstract class oledrion_gateway
      * @param  string $gatewaysLogPath The full path (and name) to the gateway's log file
      * @return void
      */
-    function verifyIfGatewayLogExists($gatewaysLogPath)
+    public function verifyIfGatewayLogExists($gatewaysLogPath)
     {
         if (!file_exists($gatewaysLogPath)) {
             file_put_contents($gatewaysLogPath, '<?php exit(); ?>');
@@ -86,7 +88,7 @@ abstract class oledrion_gateway
      * @param  string $text            Le texte à écrire
      * @return void
      */
-    function appendToLog($gatewaysLogPath, $text)
+    public function appendToLog($gatewaysLogPath, $text)
     {
         $this->verifyIfGatewayLogExists($gatewaysLogPath);
         $fp = fopen($gatewaysLogPath, 'a');
@@ -106,25 +108,28 @@ abstract class oledrion_gateway
      *
      * If your gateway does not requires parameters, then you must return false
      *
-     * @param  string $posstUrl The url to use to post data to
-     * @return mixed  (object if there is a form, else false)
+     * @param $postUrl
+     * @return mixed
+     * @internal param string $posstUrl The url to use to post data to
      */
-    abstract function getParametersForm($postUrl);
+    abstract public function getParametersForm($postUrl);
 
     /**
      * This method is called by the module to save the gateway's parameters
      * It's up to you to verify data and eventually to complain about uncomplete or missing data
      *
-     * @param  array   $data Receives $_POST
+     * @param  array $data Receives $_POST
      * @return boolean True if you succeed to save data else false
      */
-    abstract function saveParametersForm($data);
+    abstract public function saveParametersForm($data);
 
     /**
      * Returns the URL to redirect user to (for paying)
+     * @param $cmd_total
+     * @param $cmd_id
      * @return string
      */
-    abstract function getRedirectURL($cmd_total, $cmd_id);
+    abstract public function getRedirectURL($cmd_total, $cmd_id);
 
     /**
      * Returns the form to use before to redirect user to the gateway
@@ -132,13 +137,13 @@ abstract class oledrion_gateway
      * @param  object $order Objects of type oledrion_commands
      * @return array  Key = element's name, Value = Element's value
      */
-    abstract function getCheckoutFormContent($order);
+    abstract public function getCheckoutFormContent($order);
 
     /**
      * Returns the list of countries codes used by the gateways
      *
      */
-    abstract function getCountriesList();
+    abstract public function getCountriesList();
 
     /**
      * This method is in charge to dialog with the gateway to verify the payment's statuts
@@ -146,22 +151,22 @@ abstract class oledrion_gateway
      * @param  string $gatewaysLogPath The full path (and name) to the log file
      * @return void
      */
-    abstract function gatewayNotify($gatewaysLogPath);
+    abstract public function gatewayNotify($gatewaysLogPath);
 
     /**
      * Returne the gateway's language file
      *
      * @return the filename to use
      */
-    function getGatewayLanguageFile()
+    public function getGatewayLanguageFile()
     {
         global $xoopsConfig;
-        $gatewayName = $this->gatewayInformation['foldername'];
+        $gatewayName  = $this->gatewayInformation['foldername'];
         $fullFilePath = OLEDRION_GATEWAY_PATH . $gatewayName; // c:/inetpub/wwwroot/xoops3/modules/oledrion/admin/gateways/passerelle
-        if (file_exists($fullFilePath . DIRECTORY_SEPARATOR . 'language' . DIRECTORY_SEPARATOR . $xoopsConfig['language'] . DIRECTORY_SEPARATOR . 'main.php')) {
-            return $fullFilePath . DIRECTORY_SEPARATOR . 'language' . DIRECTORY_SEPARATOR . $xoopsConfig['language'] . DIRECTORY_SEPARATOR . 'main.php';
+        if (file_exists($fullFilePath . '/language/' . $xoopsConfig['language'] . '/main.php')) {
+            return $fullFilePath . '/language/' . $xoopsConfig['language'] . '/main.php';
         } else {
-            return $fullFilePath . DIRECTORY_SEPARATOR . 'language' . DIRECTORY_SEPARATOR . 'english' . DIRECTORY_SEPARATOR . 'main.php';
+            return $fullFilePath . '/language/english/main.php';
         }
     }
 }

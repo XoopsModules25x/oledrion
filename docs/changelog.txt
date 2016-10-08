@@ -1,5 +1,5 @@
 ---------------------------------------
-2.34
+2.34  Beta 5               NOT RELEASED
 ---------------------------------------
 - Add Ajax search system and block (voltan)
 - Add Ajax rate (voltan)
@@ -34,6 +34,19 @@
 - Remove class/lite.php class/PEAR.php class/PEAR5.php admin/main.php files (voltan)
 - moved all images, CSS, and JS files to /assets (mamba)
 - renamed .html Smarty templates to .tpl (mamba)
+- code PSR-2 cosmetics (mamba)
+- updated Help with links to GitBook tutorial
+- removed @version (mamba)
+- PSR-2 code cosmetics (mamba)
+- addNavigation(basename(__FILE__))  (mamba)
+- dirname(__FILE__) to __DIR__ (mamba)
+- XOOPS 2.5.8, PHP 7 (mamba)
+- replaced < b /> with < b > (mamba)
+- Unnecessary double quotes (mamba)
+- reference mismatch (mamba)
+- Hardening to type safe (mamba)
+- update Help (mamba)
+- changed _handler to Handler (mamba)
 
 TODO:
 - Rebuild admin files and add template
@@ -67,7 +80,7 @@ TODO:
 - The page used to show the list of recommended products was added to the Xoops menu
 - In the orders manager, you can now see the total of your orders
 - Addition of wish lists.
-  	There are some new pages and blocks
+    There are some new pages and blocks
 - The module does not use anymore extJs (the module is lighter of 6 Mb), so the "all products" page was changed
 - The module does not use anymore swfobject, instead it uses a jQuery plugin
 - Corrections in the module's administration, in the part used to manage files attached to products
@@ -80,7 +93,7 @@ TODO:
 - Addition of a new block : Recently Sold
   This block shows the products that were recently sold
 - Addition of a new parameter in config.php, OLEDRION_CART_BUG, set this to true if you can't see products when you add them to the cart
-- Correction of several bugs in the cart, be sure to update your templates (Herv�/sailjapan)
+- Correction of several bugs in the cart, be sure to update your templates (Hervet/sailjapan)
 - The product's page now uses a lightview effect to show the product's picture
 - You have a new tab, "blocks", to see the module's blocks
 - The module will automatically update the monetary fields in its tables to decimal(10,2) to accept billions
@@ -90,19 +103,19 @@ TODO:
 - The module now uses jQuery intensively
 - Several bugs corrections when a product is removed
 - Addition of products attributes
-	Addition of 3 new templates (for attributes) :
-			- oledrion_attribute_select.html
-			- oledrion_attribute_checkbox.html
-			- oledrion_attribute_radio.html
-	- YOU MUST UPDATE THE MODULE IN THE XOOPS MODULES MANAGER
-	- YOU MUST GO AT LEAST ONE TIME IN THE MODULE'S ADMINISTRATION (to create some new tables in the database)
-	For this moment, persistent cart does not save products attributes
+    Addition of 3 new templates (for attributes) :
+            - oledrion_attribute_select.html
+            - oledrion_attribute_checkbox.html
+            - oledrion_attribute_radio.html
+    - YOU MUST UPDATE THE MODULE IN THE XOOPS MODULES MANAGER
+    - YOU MUST GO AT LEAST ONE TIME IN THE MODULE'S ADMINISTRATION (to create some new tables in the database)
+    For this moment, persistent cart does not save products attributes
 - You can now use and create plugins for the module (see the "plugins" folder for examples)
-	As an example, the notifications on a new product and new category are made with plugins
+    As an example, the notifications on a new product and new category are made with plugins
 
 - Notes for the translators:
-	- There is a new file (in your language folder) called messages.js to translate, take care, this file is a Javascript file
-	- There's also a picture to "translate", in your language folder, addtocart.png (this picture is used when products have attributes) and addtowishlist.png
+    - There is a new file (in your language folder) called messages.js to translate, take care, this file is a Javascript file
+    - There's also a picture to "translate", in your language folder, addtocart.png (this picture is used when products have attributes) and addtowishlist.png
 
 ---------------------------------------*
 2.2 Final (Hervet)
@@ -119,7 +132,7 @@ TODO:
 - In the module's administration, the count of products is now visible
 - When you add a product, in the module's administration, the module shows you an example for the "Path of the file to download" field
 - Correction of several bugs with the Paypal gateway and orders records on some hosts (burning/herve)
-- Bug correction in the shelf class (Bezoops/Herv�)
+- Bug correction in the shelf class (Bezoops/Hervet)
 - There were 2 minor changes in the translations, see lang.diff
 
 
@@ -131,14 +144,14 @@ TODO:
 - In config.php, addition of an option to select the visible tabs in the module's administration (see config.php for some explanations)
 - There was a problem in the CSS class used to represent the breadcrumb in the categories page
 - The products duplication had several problems :
-	a) The attached files were not save
-	b) The product's picture and thumb was identical to the original product so in case of deletion (the original product), the pictures of the clone product were also removed (de facto)
+    a) The attached files were not save
+    b) The product's picture and thumb was identical to the original product so in case of deletion (the original product), the pictures of the clone product were also removed (de facto)
 - Addition of a new parameter in config.php, "OLEDRION_RELATED_BOTH"
-	When this option is set to false, if Product A has Product B as a related product but Product A is not noted as related to Product B then the display of product A will display Product B as a related product.
-	But Product B will not show Product A as a related product.
-	When this option is set to true, Product A and Product B display each other as two related products even if Product A was not set as a related product to Product A.
+    When this option is set to false, if Product A has Product B as a related product but Product A is not noted as related to Product B then the display of product A will display Product B as a related product.
+    But Product B will not show Product A as a related product.
+    When this option is set to true, Product A and Product B display each other as two related products even if Product A was not set as a related product to Product A.
 
-	By default this option is set to false to respect the initial module's behavior.
+    By default this option is set to false to respect the initial module's behavior.
 - When sending template mails, the module is now verifying that the language folder for your translation exists (if you are not English).
   If the translation folder does not exist then it will use the English folder.
 - The cache Lite class was updated
@@ -201,79 +214,79 @@ _MI_OLEDRION_SHIPPING_QUANTITY
 ---------------------------------------
 1.61 (Hervet)
 ---------------------------------------
-- Rajout d'une option permettant de d�sactiver la zone prix (des produits)
-- Dans la fiche d'un produit, la liste des produits r�cents ne contient plus le produit en cours
-- Ajout d'une zone cat_footer dans les cat�gories (pour pouvoir mettre un pied de page par cat�gorie)
+- Rajout d'une option permettant de désactiver la zone prix (des produits)
+- Dans la fiche d'un produit, la liste des produits récents ne contient plus le produit en cours
+- Ajout d'une zone cat_footer dans les catégories (pour pouvoir mettre un pied de page par catégorie)
 - Eclatement de l'administration en plusieurs fichiers
-- M�nage dans /admin/functions.php
+- Ménage dans /admin/functions.php
 - Ajout de cache aux flux RSS
-- Beaucoup de refactorisation du code (conventions d'�criture)
+- Beaucoup de refactorisation du code (conventions d'écriture)
 - Ajout de ExtJs pour la page qui liste tous les produits
-- Mise � jour de TCPDF
-- Modification de la page des cat�gories afin de pouvoir y afficher les cat�gories m�res ou les cat�gories filles (selon le cas) sur param�trage (cf config.php)
-- Introduction d'une nouvelle classe, une fa�ade, pour traiter les produits (oledrion_shelf.php)
-- Mise � jour de Cache Lite
-- Ajout de l'�cotaxe et du d�lai de livraison
+- Mise à jour de TCPDF
+- Modification de la page des catégories afin de pouvoir y afficher les catégories mères ou les catégories filles (selon le cas) sur paramétrage (cf config.php)
+- Introduction d'une nouvelle classe, une façade, pour traiter les produits (oledrion_shelf.php)
+- Mise à jour de Cache Lite
+- Ajout de l'écotaxe et du délai de livraison
 - Ajout de la persistance du panier
-- Ajout d'une option permettant de restreindre l'achat aux utilisateurs enregistr�s
-- Passage � la librairie "wideimage" pour la gestion des images (notamment le redimensionnement)
-- Ajout d'une option permettant de redimensionner les images des produits et de cr�er automatiquement les vignettes
-- Ajout d'une option permettant de redimensionner les images des cat�gories et des fabricants (aux dimensions d�finies pour les produits)
-- Ajout d'options aux blocs pour qu'on puisse ne choisir comme p�riode que le mois en cours
-- Ajout d'une nouvelle classe pour passer les param�tres � la fa�ade
-- Changement de tous les ent�tes Php afin d'�tre plus explicite sur la licence (� cause des voleurs de chez impress)
+- Ajout d'une option permettant de restreindre l'achat aux utilisateurs enregistrés
+- Passage à la librairie "wideimage" pour la gestion des images (notamment le redimensionnement)
+- Ajout d'une option permettant de redimensionner les images des produits et de créer automatiquement les vignettes
+- Ajout d'une option permettant de redimensionner les images des catégories et des fabricants (aux dimensions définies pour les produits)
+- Ajout d'options aux blocs pour qu'on puisse ne choisir comme période que le mois en cours
+- Ajout d'une nouvelle classe pour passer les paramètres à la façade
+- Changement de tous les entêtes Php afin d'être plus explicite sur la licence (à cause des voleurs de chez impress)
 
 ---------------------------------------
 1.6 (Hervet)
 ---------------------------------------
 - Refactorisation du code pour utiliser la classe oledrion_utils au lieu des fonctions contenues dans include/functions.php
-- Mise � jour de TCPDF
+- Mise à jour de TCPDF
 - Remplacement des tous les book et livre par product et produit
-- Mise � jour du PersistableObjectHandler
-- Renommage des classes Lite et Pear avec le pr�fixe du module
-- Correction d'un bug dans la notation (on pouvait donner la note qu'on voulait � un produit !)
-- Possibilit� de supprimer un produit depuis la fiche produit (c�t� utilisateur)
+- Mise à jour du PersistableObjectHandler
+- Renommage des classes Lite et Pear avec le préfixe du module
+- Correction d'un bug dans la notation (on pouvait donner la note qu'on voulait à un produit !)
+- Possibilité de supprimer un produit depuis la fiche produit (côté utilisateur)
 - Refactorisation du code pour la suppression des produits
-- Rajout de config.php pour pouvoir choisir l'emplacement des images, des fichiers attach�s, du pays par d�faut et autres
-- Dans les pr�f�rences du module (pour le s�parateur des milliers), il est maintenant possible d'utiliser [space] pour "repr�senter" un espace (�tant donn� que Xoops supprime les espaces dans les options de modules)
-- Possibilit� de choisir o� les fichiers sont t�l�charg�s
-- Rajout d'une option afin de pouvoir d�cider si on peut proposer � l'utilisateur de ne pas payer en ligne
-- L'adresse email Paypal sert aussi d'indicateur pour activer ou d�sactiver le paiement en ligne
-- Toutes les pages contiennent breadcrumb et publicit� globale (ou de la cat�gorie)
+- Rajout de config.php pour pouvoir choisir l'emplacement des images, des fichiers attachés, du pays par défaut et autres
+- Dans les préférences du module (pour le séparateur des milliers), il est maintenant possible d'utiliser [space] pour "représenter" un espace (étant donné que Xoops supprime les espaces dans les options de modules)
+- Possibilité de choisir où les fichiers sont téléchargés
+- Rajout d'une option afin de pouvoir décider si on peut proposer à l'utilisateur de ne pas payer en ligne
+- L'adresse email Paypal sert aussi d'indicateur pour activer ou désactiver le paiement en ligne
+- Toutes les pages contiennent breadcrumb et publicité globale (ou de la catégorie)
 
 ---------------------------------------
 1.4 2007-12-06 (Hervet)
 ---------------------------------------
-- Correction d'un bug lors de l'envoi du mail au client, le lien vers la facture n'�tait pas affich�
-- Page d'accueil du module, il n'�tait pas possible d'afficher 0 produits
+- Correction d'un bug lors de l'envoi du mail au client, le lien vers la facture n'était pas affiché
+- Page d'accueil du module, il n'était pas possible d'afficher 0 produits
 - Il manquait un espace dans la liste des revendeurs
-- M�me lorsque l'option "afficher les liens vers les produits pr�c�dents et suivants" �tait d�coch�e, le titre du bloc �tait quand m�me visible
-- La description courte et compl�te ne s'affichent plus si elles ne contiennent rien (le titre des blocs)
+- Même lorsque l'option "afficher les liens vers les produits précédents et suivants" était décochée, le titre du bloc était quand même visible
+- La description courte et complète ne s'affichent plus si elles ne contiennent rien (le titre des blocs)
 
 ---------------------------------------
 1.3 2007-11-17 (Hervet)
 ---------------------------------------
 - Ajout d'une gestion de cache avec Cache_Lite (de Pear)
-- Possibilit� de supprimer images et fichiers attach�s dans les cat�gories, fabricants et produits
+- Possibilité de supprimer images et fichiers attachés dans les catégories, fabricants et produits
 - Modification de toutes les classes pour fonctionner avec Php5
 - Modification de l'ORM
 - Rajout bloc de visualisation du caddy
-- Correction d'un probl�me de formatage des montants dans la partie r�ductions (dans l'administratin)
-- Le type mime dans le script permettant de t�l�charger un fichier est enfin correctement d�tect� (avec finfo) et l'affichage
-  des fichiers envoy�s est correct
+- Correction d'un problème de formatage des montants dans la partie réductions (dans l'administratin)
+- Le type mime dans le script permettant de télécharger un fichier est enfin correctement détecté (avec finfo) et l'affichage
+  des fichiers envoyés est correct
 
 ---------------------------------------
 1.2 2007-08-03 (Hervet)
 ---------------------------------------
-- Correction d'un bug dans l'administration du module, il �tait possible d'uploader n'importe quel type de fichier
+- Correction d'un bug dans l'administration du module, il était possible d'uploader n'importe quel type de fichier
 - Dans l'administration, les noms des produits sont maintenant cliquables
-- Mise � jour de tcpdf
+- Mise à jour de tcpdf
 
 
 ---------------------------------------
 1.1 2007-07-26 (Hervet)
 ---------------------------------------
-- Ajout de nouvelles pr�f�rences afin de mieux g�rer la monnaie (sa position par exemple)
+- Ajout de nouvelles préférences afin de mieux gérer la monnaie (sa position par exemple)
 - Modification de tout le module pour tenir compte de la gestion de la monnaie
 - Ajout de la classe oledrion_currency.php
 

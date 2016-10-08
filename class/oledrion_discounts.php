@@ -12,52 +12,79 @@
 /**
  * oledrion
  *
- * @copyright   The XOOPS Project http://sourceforge.net/projects/xoops/
- * @license     http://www.fsf.org/copyleft/gpl.html GNU public license
+ * @copyright   {@link http://xoops.org/ XOOPS Project}
+ * @license     {@link http://www.fsf.org/copyleft/gpl.html GNU public license}
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
- * @version     $Id: oledrion_discounts.php 12290 2014-02-07 11:05:17Z beckmi $
  */
 /**
  * Gestion des réductions
  */
-require 'classheader.php';
+require __DIR__ . '/classheader.php';
 
 // Les nouveaux define relatifs aux réductions ************************************************************************
-define("OLEDRION_DISCOUNT_PRICE_TYPE0", 0); // Réduction non définie
-define("OLEDRION_DISCOUNT_PRICE_TYPE1", 1); // Réduction dégressive
-define("OLEDRION_DISCOUNT_PRICE_TYPE2", 2); // Réduction d'un montant ou pourcentage
+define('OLEDRION_DISCOUNT_PRICE_TYPE0', 0); // Réduction non définie
+define('OLEDRION_DISCOUNT_PRICE_TYPE1', 1); // Réduction dégressive
+define('OLEDRION_DISCOUNT_PRICE_TYPE2', 2); // Réduction d'un montant ou pourcentage
 
 define('OLEDRION_DISCOUNT_PRICE_REDUCE_PERCENT', 1); // Pourcent
 define('OLEDRION_DISCOUNT_PRICE_REDUCE_MONEY', 2); // Euros
 
-define("OLEDRION_DISCOUNT_PRICE_AMOUNT_ON_PRODUCT", 1); // Réduction d'un montant ou d'un pourcentage sur le produit
-define("OLEDRION_DISCOUNT_PRICE_AMOUNT_ON_CART", 2); // Réduction d'un montant ou d'un pourcentage sur le panier
+define('OLEDRION_DISCOUNT_PRICE_AMOUNT_ON_PRODUCT', 1); // Réduction d'un montant ou d'un pourcentage sur le produit
+define('OLEDRION_DISCOUNT_PRICE_AMOUNT_ON_CART', 2); // Réduction d'un montant ou d'un pourcentage sur le panier
 
-define("OLEDRION_DISCOUNT_PRICE_CASE_ALL", 1); // Dans tous les cas
-define("OLEDRION_DISCOUNT_PRICE_CASE_FIRST_BUY", 2); // si c'est le premier achat du client sur le site
-define("OLEDRION_DISCOUNT_PRICE_CASE_PRODUCT_NEVER", 3); // si le produit n'a jamais été acheté par le client
-define("OLEDRION_DISCOUNT_PRICE_CASE_QTY_IS", 4); // si la quantité de produit est ...
+define('OLEDRION_DISCOUNT_PRICE_CASE_ALL', 1); // Dans tous les cas
+define('OLEDRION_DISCOUNT_PRICE_CASE_FIRST_BUY', 2); // si c'est le premier achat du client sur le site
+define('OLEDRION_DISCOUNT_PRICE_CASE_PRODUCT_NEVER', 3); // si le produit n'a jamais été acheté par le client
+define('OLEDRION_DISCOUNT_PRICE_CASE_QTY_IS', 4); // si la quantité de produit est ...
 
-define("OLEDRION_DISCOUNT_PRICE_QTY_COND1", 1); // si la quantité de produit est > à
-define("OLEDRION_DISCOUNT_PRICE_QTY_COND2", 2); // si la quantité de produit est >= à
-define("OLEDRION_DISCOUNT_PRICE_QTY_COND3", 3); // si la quantité de produit est < à
-define("OLEDRION_DISCOUNT_PRICE_QTY_COND4", 4); // si la quantité de produit est <= à
-define("OLEDRION_DISCOUNT_PRICE_QTY_COND5", 5); // si la quantité de produit est = à
+define('OLEDRION_DISCOUNT_PRICE_QTY_COND1', 1); // si la quantité de produit est > à
+define('OLEDRION_DISCOUNT_PRICE_QTY_COND2', 2); // si la quantité de produit est >= à
+define('OLEDRION_DISCOUNT_PRICE_QTY_COND3', 3); // si la quantité de produit est < à
+define('OLEDRION_DISCOUNT_PRICE_QTY_COND4', 4); // si la quantité de produit est <= à
+define('OLEDRION_DISCOUNT_PRICE_QTY_COND5', 5); // si la quantité de produit est = à
 
-define("OLEDRION_DISCOUNT_PRICE_QTY_COND1_TEXT", '>'); // si la quantité de produit est > à
-define("OLEDRION_DISCOUNT_PRICE_QTY_COND2_TEXT", '>='); // si la quantité de produit est >= à
-define("OLEDRION_DISCOUNT_PRICE_QTY_COND3_TEXT", '<'); // si la quantité de produit est < à
-define("OLEDRION_DISCOUNT_PRICE_QTY_COND4_TEXT", '<='); // si la quantité de produit est <= à
-define("OLEDRION_DISCOUNT_PRICE_QTY_COND5_TEXT", '='); // si la quantité de produit est = à
+define('OLEDRION_DISCOUNT_PRICE_QTY_COND1_TEXT', '>'); // si la quantité de produit est > à
+define('OLEDRION_DISCOUNT_PRICE_QTY_COND2_TEXT', '>='); // si la quantité de produit est >= à
+define('OLEDRION_DISCOUNT_PRICE_QTY_COND3_TEXT', '<'); // si la quantité de produit est < à
+define('OLEDRION_DISCOUNT_PRICE_QTY_COND4_TEXT', '<='); // si la quantité de produit est <= à
+define('OLEDRION_DISCOUNT_PRICE_QTY_COND5_TEXT', '='); // si la quantité de produit est = à
 
 define('OLEDRION_DISCOUNT_SHIPPING_TYPE1', 1); // Les frais de port sont à payer dans leur intégralité
 define('OLEDRION_DISCOUNT_SHIPPING_TYPE2', 2); // Les frais de port sont totalement gratuits
 define('OLEDRION_DISCOUNT_SHIPPING_TYPE3', 3); // Les frais de port sont réduits de ...
 define('OLEDRION_DISCOUNT_SHIPPING_TYPE4', 4); // Les frais de port sont dégressifs
+
+define('OLEDRION_DISCOUNT_ON1', 1);
+define('OLEDRION_DISCOUNT_ON2', 2);
+define('OLEDRION_DISCOUNT_ON3', 3);
+define('OLEDRION_DISCOUNT_ON4', 4);
+define('OLEDRION_DISCOUNT_ON5', 5);
+define('OLEDRION_DISCOUNT_ON6', 6);
+
+define('OLEDRION_DISCOUNT_WHEN1', 1);
+define('OLEDRION_DISCOUNT_WHEN2', 2);
+define('OLEDRION_DISCOUNT_WHEN3', 3);
+define('OLEDRION_DISCOUNT_WHEN4', 4);
+
+define('OLEDRION_DISCOUNT_TYPE1', 1);
+
+
+
+
 // ********************************************************************************************************************
 
-class oledrion_discounts extends Oledrion_Object
+/**
+ * Class Oledrion_discounts
+ */
+class Oledrion_discounts extends Oledrion_Object
 {
+    /**
+     * constructor
+     *
+     * normally, this is called from child classes only
+     *
+     * @access public
+     */
     public function __construct()
     {
         $this->initVar('disc_id', XOBJ_DTYPE_INT, null, false);
@@ -116,13 +143,25 @@ class oledrion_discounts extends Oledrion_Object
     }
 }
 
+/**
+ * Class OledrionOledrion_discountsHandler
+ */
 class OledrionOledrion_discountsHandler extends Oledrion_XoopsPersistableObjectHandler
 {
-    public function __construct($db)
-    { //						Table					Classe	 			Id		  Libellé
+    /**
+     * OledrionOledrion_discountsHandler constructor.
+     * @param XoopsDatabase|null $db
+     */
+    public function __construct(XoopsDatabase $db)
+    { //                        Table                   Classe              Id        Libellé
         parent::__construct($db, 'oledrion_discounts', 'oledrion_discounts', 'disc_id', 'disc_title');
     }
 
+    /**
+     * @param $price
+     * @param $discount
+     * @return mixed
+     */
     private function getDiscountedPrice($price, $discount)
     {
         return $price - ($price * ($discount / 100));
@@ -168,9 +207,8 @@ class OledrionOledrion_discountsHandler extends Oledrion_XoopsPersistableObjectH
     {
         static $buffer = array();
         if (is_array($buffer) && count($buffer) > 0) {
-
         } else {
-            $groups = oledrion_utils::getCurrentMemberGroups();
+            $groups  = Oledrion_utils::getCurrentMemberGroups();
             $critere = new CriteriaCompo();
             $critere->add(new Criteria('disc_on_what', OLEDRION_DISCOUNT_ON3, '='));
             if (count($groups) > 0) {
@@ -191,11 +229,10 @@ class OledrionOledrion_discountsHandler extends Oledrion_XoopsPersistableObjectH
     {
         static $buffer = array();
         if (is_array($buffer) && count($buffer) > 0) {
-
         } else {
             $critere = new CriteriaCompo();
-            $critere->add(new Criteria('disc_on_what', OLEDRION_DISCOUNT_ON2, '='));
-            $tblGroups = oledrion_utils::getCurrentMemberGroups();
+            $critere->add(new Criteria('disc_on_what',  OLEDRION_DISCOUNT_ON2, '='));
+            $tblGroups = Oledrion_utils::getCurrentMemberGroups();
             $critere->add(new Criteria('disc_group', '(' . implode(',', $tblGroups) . ')', 'IN'));
             $buffer = $this->getObjects($critere);
         }
@@ -212,11 +249,10 @@ class OledrionOledrion_discountsHandler extends Oledrion_XoopsPersistableObjectH
     {
         static $buffer = array();
         if (is_array($buffer) && count($buffer) > 0) {
-
         } else {
             $critere = new CriteriaCompo();
-            $critere->add(new Criteria('disc_on_what', OLEDRION_DISCOUNT_ON4, '='));
-            $tblGroups = oledrion_utils::getCurrentMemberGroups();
+            $critere->add(new Criteria('disc_on_what',  OLEDRION_DISCOUNT_ON4, '='));
+            $tblGroups = Oledrion_utils::getCurrentMemberGroups();
             $critere->add(new Criteria('disc_group', '(' . implode(',', $tblGroups) . ')', 'IN'));
             $buffer = $this->getObjects($critere);
         }
@@ -233,12 +269,11 @@ class OledrionOledrion_discountsHandler extends Oledrion_XoopsPersistableObjectH
     {
         static $buffer = array();
         if (is_array($buffer) && count($buffer) > 0) {
-
         } else {
             $critere = new CriteriaCompo();
-            $critere->add(new Criteria('disc_on_what', OLEDRION_DISCOUNT_ON5, '='));
-            $critere->add(new Criteria('disc_shipping', OLEDRION_DISCOUNT_SHIPPING2, '='));
-            $tblGroups = oledrion_utils::getCurrentMemberGroups();
+            $critere->add(new Criteria('disc_on_what',  OLEDRION_DISCOUNT_ON5, '='));
+            $critere->add(new Criteria('disc_shipping', OLEDRION_DISCOUNT_SHIPPING_TYPE2, '='));
+            $tblGroups = Oledrion_utils::getCurrentMemberGroups();
             $critere->add(new Criteria('disc_group', '(' . implode(',', $tblGroups) . ')', 'IN'));
             $buffer = $this->getObjects($critere);
         }
@@ -255,11 +290,10 @@ class OledrionOledrion_discountsHandler extends Oledrion_XoopsPersistableObjectH
     {
         static $buffer = array();
         if (is_array($buffer) && count($buffer) > 0) {
-
         } else {
             $critere = new CriteriaCompo();
             $critere->add(new Criteria('disc_on_what', OLEDRION_DISCOUNT_ON1, '='));
-            $tblGroups = oledrion_utils::getCurrentMemberGroups();
+            $tblGroups = Oledrion_utils::getCurrentMemberGroups();
             $critere->add(new Criteria('disc_group', '(' . implode(',', $tblGroups) . ')', 'IN'));
             $buffer = $this->getObjects($critere);
         }
@@ -280,9 +314,9 @@ class OledrionOledrion_discountsHandler extends Oledrion_XoopsPersistableObjectH
         $tblRules = $this->getRulesOnShipping2(); // Renvoie des objets Discounts
         if (count($tblRules) > 0) {
             foreach ($tblRules as $rule) {
-                if ($commandAmount > floatval($rule->getVar('disc_if_amount'))) {
+                if ($commandAmount > (float)$rule->getVar('disc_if_amount')) {
                     $discountsDescription[] = $rule->getVar('disc_description');
-                    $montantShipping = 0;
+                    $montantShipping        = 0;
                 }
             }
         }
@@ -300,7 +334,7 @@ class OledrionOledrion_discountsHandler extends Oledrion_XoopsPersistableObjectH
         $tblRules = array();
         $tblRules = $this->getRulesOnCommand(); // Renvoie des objets Discounts
         if (count($tblRules) > 0) {
-            $uid = oledrion_utils::getCurrentUserID();
+            $uid = Oledrion_utils::getCurrentUserID();
             foreach ($tblRules as $rule) {
                 switch ($rule->getVar('disc_when')) {
                     case OLEDRION_DISCOUNT_WHEN1: // Dans tous les cas
@@ -352,7 +386,7 @@ class OledrionOledrion_discountsHandler extends Oledrion_XoopsPersistableObjectH
         $tblRules = array();
         $tblRules = $this->getRulesOnShipping(); // Renvoie des objets Discounts
         if (count($tblRules) > 0) {
-            $uid = oledrion_utils::getCurrentUserID();
+            $uid = Oledrion_utils::getCurrentUserID();
             foreach ($tblRules as $rule) {
                 switch ($rule->getVar('disc_when')) {
                     case OLEDRION_DISCOUNT_WHEN1: // Dans tous les cas
@@ -454,7 +488,7 @@ class OledrionOledrion_discountsHandler extends Oledrion_XoopsPersistableObjectH
         $tblRules = array();
         $tblRules = $this->getRulesOnAllProducts(); // Renvoie des objets Discounts
         if (count($tblRules) > 0) {
-            $uid = oledrion_utils::getCurrentUserID();
+            $uid = Oledrion_utils::getCurrentUserID();
             foreach ($tblRules as $rule) {
                 switch ($rule->getVar('disc_when')) {
                     case OLEDRION_DISCOUNT_WHEN1: // Dans tous les cas
@@ -557,7 +591,7 @@ class OledrionOledrion_discountsHandler extends Oledrion_XoopsPersistableObjectH
         $rules = array();
         $rules = $this->getRulesOnEachProduct(); // Renvoie des objets Discounts
         if (count($rules) > 0) {
-            $uid = oledrion_utils::getCurrentUserID();
+            $uid = Oledrion_utils::getCurrentUserID();
             foreach ($rules as $rule) {
                 switch ($rule->getVar('disc_when')) {
                     case OLEDRION_DISCOUNT_WHEN1: // Dans tous les cas
@@ -671,7 +705,7 @@ class OledrionOledrion_discountsHandler extends Oledrion_XoopsPersistableObjectH
      */
     public function removeProductFromDiscounts($disc_product_id)
     {
-        $disc_product_id = intval($disc_product_id);
+        $disc_product_id = (int)$disc_product_id;
 
         return $this->deleteAll(new Criteria('disc_product_id', $disc_product_id, '='));
     }

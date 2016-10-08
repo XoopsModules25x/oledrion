@@ -12,10 +12,15 @@
 /**
  * oledrion
  *
- * @copyright   The XOOPS Project http://sourceforge.net/projects/xoops/
- * @license     http://www.fsf.org/copyleft/gpl.html GNU public license
+ * @copyright   {@link http://xoops.org/ XOOPS Project}
+ * @license     {@link http://www.fsf.org/copyleft/gpl.html GNU public license}
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
- * @version     $Id: search.inc.php 12290 2014-02-07 11:05:17Z beckmi $
+ * @param $queryarray
+ * @param $andor
+ * @param $limit
+ * @param $offset
+ * @param $userid
+ * @return array
  */
 
 function oledrion_search($queryarray, $andor, $limit, $offset, $userid)
@@ -26,10 +31,10 @@ function oledrion_search($queryarray, $andor, $limit, $offset, $userid)
 
     // Recherche dans les produits
     $sql = 'SELECT product_id, product_title, product_submitted, product_submitter FROM ' . $xoopsDB->prefix('oledrion_products') . ' WHERE (product_online = 1';
-    if (oledrion_utils::getModuleOption('show_unpublished') == 0) { // Ne pas afficher les produits qui ne sont pas publiés
+    if (Oledrion_utils::getModuleOption('show_unpublished') == 0) { // Ne pas afficher les produits qui ne sont pas publiés
         $sql .= ' AND product_submitted <= ' . time();
     }
-    if (oledrion_utils::getModuleOption('nostock_display') == 0) { // Se limiter aux seuls produits encore en stock
+    if (Oledrion_utils::getModuleOption('nostock_display') == 0) { // Se limiter aux seuls produits encore en stock
         $sql .= ' AND product_stock > 0';
     }
     if ($userid != 0) {
@@ -38,9 +43,9 @@ function oledrion_search($queryarray, $andor, $limit, $offset, $userid)
     $sql .= ') ';
 
     $tmpObject = new oledrion_products();
-    $datas = $tmpObject->getVars();
+    $datas     =& $tmpObject->getVars();
     $tblFields = array();
-    $cnt = 0;
+    $cnt       = 0;
     foreach ($datas as $key => $value) {
         if ($value['data_type'] == XOBJ_DTYPE_TXTBOX || $value['data_type'] == XOBJ_DTYPE_TXTAREA) {
             if ($cnt == 0) {
@@ -48,12 +53,12 @@ function oledrion_search($queryarray, $andor, $limit, $offset, $userid)
             } else {
                 $tblFields[] = ' OR ' . $key;
             }
-            $cnt++;
+            ++$cnt;
         }
     }
 
     $count = count($queryarray);
-    $more = '';
+    $more  = '';
     if (is_array($queryarray) && $count > 0) {
         $cnt = 0;
         $sql .= ' AND (';
@@ -62,24 +67,24 @@ function oledrion_search($queryarray, $andor, $limit, $offset, $userid)
             $sql .= '(';
             $cond = " LIKE '%" . $oneQuery . "%' ";
             $sql .= implode($cond, $tblFields) . $cond . ')';
-            $cnt++;
+            ++$cnt;
             if ($cnt != $count) {
                 $sql .= ' ' . $andor . ' ';
             }
         }
     }
     $sql .= $more . ' ORDER BY product_submitted DESC';
-    $i = 0;
-    $ret = array();
-    $myts = MyTextSanitizer::getInstance();
+    $i      = 0;
+    $ret    = array();
+    $myts   = MyTextSanitizer::getInstance();
     $result = $xoopsDB->query($sql, $limit, $offset);
     while ($myrow = $xoopsDB->fetchArray($result)) {
         $ret[$i]['image'] = 'assets/images/product.png';
-        $ret[$i]['link'] = "product.php?product_id=" . $myrow['product_id'];
+        $ret[$i]['link']  = 'product.php?product_id=' . $myrow['product_id'];
         $ret[$i]['title'] = $myts->htmlSpecialChars($myrow['product_title']);
-        $ret[$i]['time'] = $myrow['product_submitted'];
-        $ret[$i]['uid'] = $myrow['product_submitter'];
-        $i++;
+        $ret[$i]['time']  = $myrow['product_submitted'];
+        $ret[$i]['uid']   = $myrow['product_submitter'];
+        ++$i;
     }
 
     return $ret;

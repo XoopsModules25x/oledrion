@@ -12,24 +12,27 @@
 /**
  * oledrion
  *
- * @copyright   The XOOPS Project http://sourceforge.net/projects/xoops/
- * @license     http://www.fsf.org/copyleft/gpl.html GNU public license
+ * @copyright   {@link http://xoops.org/ XOOPS Project}
+ * @license     {@link http://www.fsf.org/copyleft/gpl.html GNU public license}
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
- * @version     $Id: dbase.php 12290 2014-02-07 11:05:17Z beckmi $
  */
 /**
  * Export au format Dbase 3
  */
-defined('XOOPS_ROOT_PATH') || die('XOOPS root path not defined');
+// defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
 
-class oledrion_dbase_export extends oledrion_export
+class Oledrion_dbase_export extends Oledrion_export
 {
-    function __construct($parameters = '')
+    /**
+     * Oledrion_dbase_export constructor.
+     * @param string $parameters
+     */
+    public function __construct($parameters = '')
     {
         if (!is_array($parameters)) {
-            $this->filename = 'oledrion.dbf';
-            $this->folder = OLEDRION_CSV_PATH;
-            $this->url = OLEDRION_CSV_URL;
+            $this->filename  = 'oledrion.dbf';
+            $this->folder    = OLEDRION_CSV_PATH;
+            $this->url       = OLEDRION_CSV_URL;
             $this->orderType = OLEDRION_STATE_VALIDATED;
         }
         parent::__construct($parameters);
@@ -39,7 +42,7 @@ class oledrion_dbase_export extends oledrion_export
      * Export des données
      * @return boolean Vrai si l'export a réussi sinon faux
      */
-    function export()
+    public function export()
     {
         $def = array(
             array('o_id', 'N', 10, 0),
@@ -72,7 +75,7 @@ class oledrion_dbase_export extends oledrion_export
         );
         /*
            * Correspondances
-           * cmd_id				   o_id
+           * cmd_id                o_id
            * cmd_uid                 o_uid
            * cmd_date                o_date
            * cmd_state               o_state
@@ -100,12 +103,12 @@ class oledrion_dbase_export extends oledrion_export
            * caddy_shipping          c_shipping
            * caddy_pass              c_pass
            */
-        if (!dbase_create($this->folder . DIRECTORY_SEPARATOR . $this->filename, $def)) {
+        if (!dbase_create($this->folder . '/' . $this->filename, $def)) {
             $this->success = false;
 
             return false;
         }
-        $dbf = dbase_open($this->folder . DIRECTORY_SEPARATOR . $this->filename, 2);
+        $dbf = dbase_open($this->folder . '/' . $this->filename, 2);
         if ($dbf === false) {
             $this->success = false;
 
@@ -163,7 +166,7 @@ class oledrion_dbase_export extends oledrion_export
      * Retourne le lien à utiliser pour télécharger le fichier d'export
      * @return string Le lien à utiliser
      */
-    function getDownloadUrl()
+    public function getDownloadUrl()
     {
         if ($this->success) {
             return $this->url . '/' . $this->filename;
@@ -172,7 +175,10 @@ class oledrion_dbase_export extends oledrion_export
         }
     }
 
-    function getDownloadPath()
+    /**
+     * @return bool|string
+     */
+    public function getDownloadPath()
     {
         if ($this->success) {
             return $this->folder . DIRECTORY_SEPARATOR . $this->filename;

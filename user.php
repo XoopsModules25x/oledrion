@@ -12,24 +12,23 @@
 /**
  * oledrion
  *
- * @copyright   The XOOPS Project http://sourceforge.net/projects/xoops/
- * @license     http://www.fsf.org/copyleft/gpl.html GNU public license
+ * @copyright   {@link http://xoops.org/ XOOPS Project}
+ * @license     {@link http://www.fsf.org/copyleft/gpl.html GNU public license}
  * @author      Hossein Azizabadi (azizabadi@faragostaresh.com)
- * @version     $Id$
  */
 
-require 'header.php';
-$xoopsOption['template_main'] = 'oledrion_user.tpl';
+require __DIR__ . '/header.php';
+$GLOBALS['xoopsOption']['template_main'] = 'oledrion_user.tpl';
 require_once XOOPS_ROOT_PATH . '/header.php';
 // Check is user
-$uid = oledrion_utils::getCurrentUserID();
+$uid = Oledrion_utils::getCurrentUserID();
 if ($uid == 0) {
-    oledrion_utils::redirect(_OLEDRION_ERROR23, XOOPS_URL . '/register.php', 4);
+    Oledrion_utils::redirect(_OLEDRION_ERROR23, XOOPS_URL . '/register.php', 4);
 }
 // Load header
-$handlers = oledrion_handler::getInstance();
+$handlers = OledrionHandler::getInstance();
 // Get list of this user order
-$orders = $list = array();
+$orders   = $list = array();
 $criteria = new CriteriaCompo();
 $criteria->add(new Criteria('cmd_uid', $uid));
 $criteria->setSort('cmd_id');
@@ -92,8 +91,8 @@ if (!empty($orders)) {
 }
 
 $xoopsTpl->assign('list', $list);
-oledrion_utils::setCSS();
-oledrion_utils::setLocalCSS($xoopsConfig['language']);
-$title = _OLEDRION_USER . ' - ' . oledrion_utils::getModuleName();
-oledrion_utils::setMetas($title, $title);
+Oledrion_utils::setCSS();
+Oledrion_utils::setLocalCSS($xoopsConfig['language']);
+$title = _OLEDRION_USER . ' - ' . Oledrion_utils::getModuleName();
+Oledrion_utils::setMetas($title, $title);
 require_once XOOPS_ROOT_PATH . '/footer.php';

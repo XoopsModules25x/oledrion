@@ -12,42 +12,41 @@
 /**
  * oledrion
  *
- * @copyright   The XOOPS Project http://sourceforge.net/projects/xoops/
- * @license     http://www.fsf.org/copyleft/gpl.html GNU public license
+ * @copyright   {@link http://xoops.org/ XOOPS Project}
+ * @license     {@link http://www.fsf.org/copyleft/gpl.html GNU public license}
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
- * @version     $Id: recommended.php 12290 2014-02-07 11:05:17Z beckmi $
  */
 
 /**
  * Affiche la liste des produits recommandés
  */
-require 'header.php';
-$GLOBALS['current_category'] = -1;
-$xoopsOption['template_main'] = 'oledrion_recommended.tpl';
+require __DIR__ . '/header.php';
+$GLOBALS['current_category']             = -1;
+$GLOBALS['xoopsOption']['template_main'] = 'oledrion_recommended.tpl';
 require_once XOOPS_ROOT_PATH . '/header.php';
 require_once OLEDRION_PATH . 'class/registryfile.php';
 require_once XOOPS_ROOT_PATH . '/class/pagenav.php';
 
 // Initialisations
-$tbl_products = $tbl_categories = $tbl_vendors = $tbl_users = $tbl_tmp_user = $tbl_tmp_categ = $tbl_tmp_lang = $tbl_tmp_vat = $tbl_vat = array();
-$tbl_products_id = $tbl_auteurs = $tbl_infos_auteurs = $tbl_tmp_auteurs = array();
-$tbl_tmp_related = $tbl_related = $tbl_info_related_products = array();
+$tbl_products         = $tbl_categories = $tbl_vendors = $tbl_users = $tbl_tmp_user = $tbl_tmp_categ = $tbl_tmp_lang = $tbl_tmp_vat = $tbl_vat = array();
+$tbl_products_id      = $tbl_auteurs = $tbl_infos_auteurs = $tbl_tmp_auteurs = array();
+$tbl_tmp_related      = $tbl_related = $tbl_info_related_products = array();
 $tbl_related_products = array();
-$start = isset($_GET['start']) ? intval($_GET['start']) : 0;
-$limit = oledrion_utils::getModuleOption('perpage');
-$baseurl = OLEDRION_URL . basename(__FILE__); // URL de ce script (sans son nom)
-$oledrion_Currency = oledrion_Currency::getInstance();
+$start                = isset($_GET['start']) ? (int)$_GET['start'] : 0;
+$limit                = Oledrion_utils::getModuleOption('perpage');
+$baseurl              = OLEDRION_URL . basename(__FILE__); // URL de ce script (sans son nom)
+$oledrion_Currency    = Oledrion_Currency::getInstance();
 
 $registry = new oledrion_registryfile();
 
 // Lecture des TVA ********************************************************************************
 $vatArray = array();
-$vatArray = $h_oledrion_vat->getAllVats(new oledrion_parameters());
+$vatArray = $h_oledrion_vat->getAllVats(new Oledrion_parameters());
 
 // Quelques options pour le template
-$xoopsTpl->assign('nostock_msg', oledrion_utils::getModuleOption('nostock_msg'));
+$xoopsTpl->assign('nostock_msg', Oledrion_utils::getModuleOption('nostock_msg'));
 $xoopsTpl->assign('mod_pref', $mod_pref); // Préférences du module
-$xoopsTpl->assign('columnsCount', oledrion_utils::getModuleOption('catagory_colums'));
+$xoopsTpl->assign('columnsCount', Oledrion_utils::getModuleOption('catagory_colums'));
 $xoopsTpl->assign('welcome_msg', nl2br($registry->getfile(OLEDRION_TEXTFILE3)));
 
 // Récupération du nombre total de produits publiés dans la base
@@ -67,10 +66,10 @@ if ($limit > 0) {
     }
     $xoopsTpl->assign('products', $products);
 }
-$xoopsTpl->assign('global_advert', oledrion_utils::getModuleOption('advertisement'));
-$xoopsTpl->assign('breadcrumb', oledrion_utils::breadcrumb(array(OLEDRION_URL . basename(__FILE__) => _OLEDRION_RECOMMENDED)));
+$xoopsTpl->assign('global_advert', Oledrion_utils::getModuleOption('advertisement'));
+$xoopsTpl->assign('breadcrumb', Oledrion_utils::breadcrumb(array(OLEDRION_URL . basename(__FILE__) => _OLEDRION_RECOMMENDED)));
 
-oledrion_utils::setCSS();
-oledrion_utils::setLocalCSS($xoopsConfig['language']);
-oledrion_utils::setMetas(_OLEDRION_RECOMMENDED . ' - ' . oledrion_utils::getModuleName(), oledrion_utils::getModuleName());
-require_once(XOOPS_ROOT_PATH . '/footer.php');
+Oledrion_utils::setCSS();
+Oledrion_utils::setLocalCSS($xoopsConfig['language']);
+Oledrion_utils::setMetas(_OLEDRION_RECOMMENDED . ' - ' . Oledrion_utils::getModuleName(), Oledrion_utils::getModuleName());
+require_once XOOPS_ROOT_PATH . '/footer.php';

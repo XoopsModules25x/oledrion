@@ -12,18 +12,17 @@
 /**
  * oledrion
  *
- * @copyright   The XOOPS Project http://sourceforge.net/projects/xoops/
- * @license     http://www.fsf.org/copyleft/gpl.html GNU public license
+ * @copyright   {@link http://xoops.org/ XOOPS Project}
+ * @license     {@link http://www.fsf.org/copyleft/gpl.html GNU public license}
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
- * @version     $Id$
  */
-include_once dirname(__FILE__) . '/admin_header.php';
+include_once __DIR__ . '/admin_header.php';
 
 xoops_cp_header();
 
 $aboutAdmin = new ModuleAdmin();
 
-echo $aboutAdmin->addNavigation('about.php');
+echo $aboutAdmin->addNavigation(basename(__FILE__));
 echo $aboutAdmin->renderAbout('6KJ7RW5DR3VTJ', false);
 
-include 'admin_footer.php';
+include_once __DIR__ . '/admin_footer.php';

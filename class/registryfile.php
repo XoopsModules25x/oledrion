@@ -12,16 +12,15 @@
 /**
  * oledrion
  *
- * @copyright   The XOOPS Project http://sourceforge.net/projects/xoops/
- * @license     http://www.fsf.org/copyleft/gpl.html GNU public license
+ * @copyright   {@link http://xoops.org/ XOOPS Project}
+ * @license     {@link http://www.fsf.org/copyleft/gpl.html GNU public license}
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
- * @version     $Id: registryfile.php 12290 2014-02-07 11:05:17Z beckmi $
  */
 
 /**
  * Gestion des fichiers textes utilisés pour afficher des messages aux utilisateurs sur certaines pages
  */
-class oledrion_registryfile
+class Oledrion_registryfile
 {
     public $filename; // Nom du fichier à traiter
 
@@ -36,18 +35,25 @@ class oledrion_registryfile
     public function getInstance()
     {
         static $instance;
-        if (!isset($instance)) {
-            $instance = new oledrion_registryfile();
+        if (null === $instance) {
+            $instance = new static();
         }
 
         return $instance;
     }
 
+    /**
+     * Oledrion_registryfile constructor.
+     * @param null $fichier
+     */
     public function __construct($fichier = null)
     {
         $this->setfile($fichier);
     }
 
+    /**
+     * @param null $fichier
+     */
     public function setfile($fichier = null)
     {
         if ($fichier) {
@@ -55,6 +61,10 @@ class oledrion_registryfile
         }
     }
 
+    /**
+     * @param  null $fichier
+     * @return string
+     */
     public function getfile($fichier = null)
     {
         $fw = '';
@@ -71,6 +81,11 @@ class oledrion_registryfile
         }
     }
 
+    /**
+     * @param       $content
+     * @param  null $fichier
+     * @return bool
+     */
     public function savefile($content, $fichier = null)
     {
         $fw = '';
@@ -82,7 +97,7 @@ class oledrion_registryfile
         if (file_exists($fw)) {
             @unlink($fw);
         }
-        $fp = fopen($fw, 'w') or die("Error, impossible to create the file " . $this->filename);
+        $fp = fopen($fw, 'w') || die('Error, impossible to create the file ' . $this->filename);
         fwrite($fp, $content);
         fclose($fp);
 

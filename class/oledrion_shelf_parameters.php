@@ -12,20 +12,19 @@
 /**
  * oledrion
  *
- * @copyright   The XOOPS Project http://sourceforge.net/projects/xoops/
- * @license     http://www.fsf.org/copyleft/gpl.html GNU public license
+ * @copyright   {@link http://xoops.org/ XOOPS Project}
+ * @license     {@link http://www.fsf.org/copyleft/gpl.html GNU public license}
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
- * @version     $Id: oledrion_shelf_parameters.php 12290 2014-02-07 11:05:17Z beckmi $
  */
 /**
  * Classe interne dont le but est de passer des paramètres à la classe oeldrion_shelf
  */
-defined('XOOPS_ROOT_PATH') || die('XOOPS root path not defined');
+// defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
 
 /**
  * Utilisé comme paramètre dans la façcade oledrion_shelf
  */
-class oledrion_shelf_parameters
+class Oledrion_shelf_parameters
 {
     /**
      * Le conteneur de paramètres
@@ -34,6 +33,9 @@ class oledrion_shelf_parameters
      */
     private $parameters = array();
 
+    /**
+     * Oledrion_shelf_parameters constructor.
+     */
     public function __construct()
     {
         $this->resetDefaultValues();
@@ -46,17 +48,17 @@ class oledrion_shelf_parameters
      */
     public function resetDefaultValues()
     {
-        $this->parameters['start'] = 0;
-        $this->parameters['limit'] = 0;
-        $this->parameters['category'] = 0;
-        $this->parameters['sort'] = 'product_submitted DESC, product_title';
-        $this->parameters['order'] = 'ASC';
-        $this->parameters['excluded'] = 0;
-        $this->parameters['withXoopsUser'] = false;
+        $this->parameters['start']               = 0;
+        $this->parameters['limit']               = 0;
+        $this->parameters['category']            = 0;
+        $this->parameters['sort']                = 'product_submitted DESC, product_title';
+        $this->parameters['order']               = 'ASC';
+        $this->parameters['excluded']            = 0;
+        $this->parameters['withXoopsUser']       = false;
         $this->parameters['withRelatedProducts'] = false;
-        $this->parameters['withQuantity'] = false;
-        $this->parameters['thisMonthOnly'] = false;
-        $this->parameters['productsType'] = '';
+        $this->parameters['withQuantity']        = false;
+        $this->parameters['thisMonthOnly']       = false;
+        $this->parameters['productsType']        = '';
 
         return $this;
     }
@@ -79,7 +81,7 @@ class oledrion_shelf_parameters
      */
     public function setStart($value)
     {
-        $this->parameters['start'] = intval($value);
+        $this->parameters['start'] = (int)$value;
 
         return $this;
     }
@@ -92,7 +94,7 @@ class oledrion_shelf_parameters
      */
     public function setLimit($value)
     {
-        $this->parameters['limit'] = intval($value);
+        $this->parameters['limit'] = (int)$value;
 
         return $this;
     }
@@ -139,7 +141,7 @@ class oledrion_shelf_parameters
     /**
      * Fixe la liste des produits à exclure
      *
-     * @param  mixed  $value
+     * @param  mixed $value
      * @return string
      */
     public function setExcluded($value)

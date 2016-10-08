@@ -12,36 +12,35 @@
 /**
  * oledrion
  *
- * @copyright   The XOOPS Project http://sourceforge.net/projects/xoops/
- * @license     http://www.fsf.org/copyleft/gpl.html GNU public license
+ * @copyright   {@link http://xoops.org/ XOOPS Project}
+ * @license     {@link http://www.fsf.org/copyleft/gpl.html GNU public license}
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
- * @version     $Id$
  */
 
 /**
  * Page d'index, liste des derniers produits
  */
-require 'header.php';
-$GLOBALS['current_category'] = -1;
-$xoopsOption['template_main'] = 'oledrion_index.tpl';
+require __DIR__ . '/header.php';
+$GLOBALS['current_category']             = -1;
+$GLOBALS['xoopsOption']['template_main'] = 'oledrion_index.tpl';
 require_once XOOPS_ROOT_PATH . '/header.php';
 require_once OLEDRION_PATH . 'class/registryfile.php';
 
 // Initialisations
-$start = isset($_GET['start']) ? intval($_GET['start']) : 0;
-$limit = oledrion_utils::getModuleOption('newproducts'); // Nombre maximum d'éléments à afficher
-$baseurl = OLEDRION_URL . basename(__FILE__); // URL de ce script (sans son nom)
-$registry = new oledrion_registryfile();
+$start     = isset($_GET['start']) ? (int)$_GET['start'] : 0;
+$limit     = Oledrion_utils::getModuleOption('newproducts'); // Nombre maximum d'éléments à afficher
+$baseurl   = OLEDRION_URL . basename(__FILE__); // URL de ce script (sans son nom)
+$registry  = new oledrion_registryfile();
 $lastTitle = '';
 
 // Quelques options pour le template
-$xoopsTpl->assign('nostock_msg', oledrion_utils::getModuleOption('nostock_msg'));
+$xoopsTpl->assign('nostock_msg', Oledrion_utils::getModuleOption('nostock_msg'));
 $xoopsTpl->assign('mod_pref', $mod_pref); // Préférences du module
 $xoopsTpl->assign('welcome_msg', nl2br($registry->getfile(OLEDRION_TEXTFILE1)));
-$xoopsTpl->assign('columnsCount', oledrion_utils::getModuleOption('index_colums'));
+$xoopsTpl->assign('columnsCount', Oledrion_utils::getModuleOption('index_colums'));
 
 // Lecture des TVA ********************************************************************************
-$vatArray = $h_oledrion_vat->getAllVats(new oledrion_parameters());
+$vatArray = $h_oledrion_vat->getAllVats(new Oledrion_parameters());
 
 // Récupération du nombre total de produits de la base
 $xoopsTpl->assign('total_products_count', sprintf(_OLEDRION_THEREARE, $h_oledrion_products->getTotalPublishedProductsCount()));
@@ -65,16 +64,16 @@ if ($limit > 0) {
 }
 
 // Mise en place des catégories de niveau 1
-$count = 1;
+$count      = 1;
 $categories = $h_oledrion_cat->getMotherCategories();
 foreach ($categories as $category) {
-    $tmp = $category->toArray();
+    $tmp          = $category->toArray();
     $tmp['count'] = $count;
     $xoopsTpl->append('categories', $tmp);
-    $count++;
+    ++$count;
 }
 
-oledrion_utils::setCSS();
-oledrion_utils::setLocalCSS($xoopsConfig['language']);
-oledrion_utils::setMetas($lastTitle . ' - ' . oledrion_utils::getModuleName(), oledrion_utils::getModuleName());
-require_once(XOOPS_ROOT_PATH . '/footer.php');
+Oledrion_utils::setCSS();
+Oledrion_utils::setLocalCSS($xoopsConfig['language']);
+Oledrion_utils::setMetas($lastTitle . ' - ' . Oledrion_utils::getModuleName(), Oledrion_utils::getModuleName());
+require_once XOOPS_ROOT_PATH . '/footer.php';

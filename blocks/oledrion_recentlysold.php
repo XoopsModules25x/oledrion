@@ -12,15 +12,14 @@
 /**
  * oledrion
  *
- * @copyright   The XOOPS Project http://sourceforge.net/projects/xoops/
- * @license     http://www.fsf.org/copyleft/gpl.html GNU public license
+ * @copyright   {@link http://xoops.org/ XOOPS Project}
+ * @license     {@link http://www.fsf.org/copyleft/gpl.html GNU public license}
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
- * @version     $Id: oledrion_recentlysold.php 12290 2014-02-07 11:05:17Z beckmi $
  */
 
 /**
  * This block shows the products that were recently sold
- * @param array $options    [0] = Nombre maximum de produits à voir
+ * @param  array $options [0] = Nombre maximum de produits à voir
  * @return array
  */
 function b_oledrion_recentlysold_show($options)
@@ -28,16 +27,16 @@ function b_oledrion_recentlysold_show($options)
     global $xoopsConfig, $xoTheme;
     require XOOPS_ROOT_PATH . '/modules/oledrion/include/common.php';
     $categoryId = 0;
-    $start = 0;
-    $limit = $options[0];
+    $start      = 0;
+    $limit      = $options[0];
     $oledrion_shelf_parameters->resetDefaultValues()->setProductsType('recentlysold')->setStart($start)->setLimit($limit);
     $products = $oledrion_shelf->getProducts($oledrion_shelf_parameters);
     if (isset($products['lastTitle'])) {
         unset($products['lastTitle']);
     }
     if (count($products) > 0) {
-        $block = array();
-        $block['nostock_msg'] = oledrion_utils::getModuleOption('nostock_msg');
+        $block                   = array();
+        $block['nostock_msg']    = Oledrion_utils::getModuleOption('nostock_msg');
         $block['block_products'] = $products;
         $xoTheme->addStylesheet(OLEDRION_URL . 'assets/css/oledrion.css');
 
@@ -50,7 +49,7 @@ function b_oledrion_recentlysold_show($options)
 /**
  * Edition des paramètres du blocs
  *
- * @param array $options    [0] = Nombre maximum de produits à voir
+ * @param  array $options [0] = Nombre maximum de produits à voir
  * @return string
  */
 function b_oledrion_recentlysold_edit($options)
@@ -66,13 +65,13 @@ function b_oledrion_recentlysold_edit($options)
 
 /**
  * Bloc à la volée
- * @param string $options
+ * @param  string $options
  * @return string
  */
 function b_oledrion_recentlysold_duplicatable($options)
 {
     $options = explode('|', $options);
-    $block = b_oledrion_bestsales_show($options);
+    $block   = b_oledrion_bestsales_show($options);
 
     $tpl = new XoopsTpl();
     $tpl->assign('block', $block);
