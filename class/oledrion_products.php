@@ -1376,7 +1376,7 @@ class OledrionOledrion_productsHandler extends Oledrion_XoopsPersistableObjectHa
         $itemsCount = $this->getCount($criteria);
         if ($itemsCount > Oledrion_utils::getModuleOption('max_products')) { // Il faut créer notre propre sélecteur
             if ($parameters['multiple']) {
-                if ($jqueryIncluded == null) {
+                if (null === $jqueryIncluded) {
                     $jqueryIncluded = true;
                     global $xoTheme;
                     $xoTheme->addScript('browse.php?Frameworks/jquery/jquery.js');

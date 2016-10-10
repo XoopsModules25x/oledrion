@@ -703,7 +703,7 @@ switch ($action) {
 
             $id = $item->getVar('product_id');
             // Notifications ******************************************************
-            if ($add == true) {
+            if (true === $add) {
                 //$plugins = Oledrion_plugins::getInstance();
                 //$plugins->fireAction(Oledrion_plugins::EVENT_ON_PRODUCT_CREATE, new Oledrion_parameters(array('product' => $item)));
             }
