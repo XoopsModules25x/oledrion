@@ -12,23 +12,24 @@
 /**
  * oledrion
  *
- * @copyright   The XOOPS Project http://sourceforge.net/projects/xoops/
- * @license     http://www.fsf.org/copyleft/gpl.html GNU public license
+ * @copyright   {@link http://xoops.org/ XOOPS Project}
+ * @license     {@link http://www.fsf.org/copyleft/gpl.html GNU public license}
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
- * @version     $Id: oledrion_promotion.php 12290 2014-02-07 11:05:17Z beckmi $
  */
 
 /**
  * Affiche x produit(s) en promotion
+ * @param $options
+ * @return array|bool
  */
 function b_oledrion_promotion_show($options)
 {
-    // '10|0';	// Voir 10 produits, pour toutes les catégories ou une catégorie particulière
+    // '10|0';  // Voir 10 produits, pour toutes les catégories ou une catégorie particulière
     global $xoopsConfig, $xoTheme;
     include XOOPS_ROOT_PATH . '/modules/oledrion/include/common.php';
-    $block = $products = array();
-    $start = 0;
-    $limit = $options[0];
+    $block      = $products = array();
+    $start      = 0;
+    $limit      = $options[0];
     $categoryId = $options[1];
 
     $oledrion_shelf_parameters->resetDefaultValues()->setProductsType('promotional')->setStart($start)->setLimit($limit)->setSort('product_submitted DESC, product_title')->setOrder('ASC')->setCategory($categoryId);
@@ -37,7 +38,7 @@ function b_oledrion_promotion_show($options)
         unset($products['lastTitle']);
     }
     if (count($products) > 0) {
-        $block['nostock_msg'] = oledrion_utils::getModuleOption('nostock_msg');
+        $block['nostock_msg']    = Oledrion_utils::getModuleOption('nostock_msg');
         $block['block_products'] = $products;
         $xoTheme->addStylesheet(OLEDRION_URL . 'assets/css/oledrion.css');
 
@@ -49,18 +50,20 @@ function b_oledrion_promotion_show($options)
 
 /**
  * Paramètres du bloc
+ * @param $options
+ * @return string
  */
 function b_oledrion_promotion_edit($options)
 {
-    // '10|0';	// Voir 10 produits, pour toutes les catégories
+    // '10|0';  // Voir 10 produits, pour toutes les catégories
     global $xoopsConfig;
     include XOOPS_ROOT_PATH . '/modules/oledrion/include/common.php';
     include_once OLEDRION_PATH . 'class/tree.php';
-    $tblCategories = array();
-    $tblCategories = $h_oledrion_cat->getAllCategories(new oledrion_parameters());
-    $mytree = new Oledrion_XoopsObjectTree($tblCategories, 'cat_cid', 'cat_pid');
-    $form = '';
-    $checkeds = array('', '');
+    $tblCategories         = array();
+    $tblCategories         = $h_oledrion_cat->getAllCategories(new Oledrion_parameters());
+    $mytree                = new Oledrion_XoopsObjectTree($tblCategories, 'cat_cid', 'cat_pid');
+    $form                  = '';
+    $checkeds              = array('', '');
     $checkeds[$options[1]] = 'checked';
     $form .= "<table border='0'>";
     $form .= '<tr><td>' . _MB_OLEDRION_PRODUCTS_CNT . "</td><td><input type='text' name='options[]' id='options' value='" . $options[0] . "' /></td></tr>";
@@ -74,11 +77,12 @@ function b_oledrion_promotion_edit($options)
 
 /**
  * Bloc à la volée
+ * @param $options
  */
 function b_oledrion_promotion_show_duplicatable($options)
 {
     $options = explode('|', $options);
-    $block = b_oledrion_promotion_show($options);
+    $block   = b_oledrion_promotion_show($options);
 
     $tpl = new XoopsTpl();
     $tpl->assign('block', $block);

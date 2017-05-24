@@ -12,22 +12,22 @@
 /**
  * oledrion
  *
- * @copyright   The XOOPS Project http://sourceforge.net/projects/xoops/
- * @license     http://www.fsf.org/copyleft/gpl.html GNU public license
+ * @copyright   {@link http://xoops.org/ XOOPS Project}
+ * @license     {@link http://www.fsf.org/copyleft/gpl.html GNU public license}
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
- * @version     $Id: oledrion_action.php 12290 2014-02-07 11:05:17Z beckmi $
  */
 
 /**
  * Every action plugin must extend this class
  */
-defined('XOOPS_ROOT_PATH') || die('XOOPS root path not defined');
+// defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
 
-abstract class oledrion_action
+abstract class Oledrion_action
 {
     /**
      * Retourne la liste des évènements traités par le plugin
+     * Returns list of events processed by the plugin
      * @return array
      */
-    abstract static function registerEvents();
+    abstract public static function registerEvents();
 }

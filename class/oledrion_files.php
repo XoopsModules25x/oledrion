@@ -12,20 +12,29 @@
 /**
  * oledrion
  *
- * @copyright   The XOOPS Project http://sourceforge.net/projects/xoops/
- * @license     http://www.fsf.org/copyleft/gpl.html GNU public license
+ * @copyright   {@link http://xoops.org/ XOOPS Project}
+ * @license     {@link http://www.fsf.org/copyleft/gpl.html GNU public license}
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
- * @version     $Id: oledrion_files.php 12290 2014-02-07 11:05:17Z beckmi $
  */
 
 /**
  * Gestion des fichies attachés aux produits
  */
 
-require 'classheader.php';
+require __DIR__ . '/classheader.php';
 
-class oledrion_files extends Oledrion_Object
+/**
+ * Class Oledrion_files
+ */
+class Oledrion_files extends Oledrion_Object
 {
+    /**
+     * constructor
+     *
+     * normally, this is called from child classes only
+     *
+     * @access public
+     */
     public function __construct()
     {
         $this->initVar('file_id', XOBJ_DTYPE_INT, null, false);
@@ -40,10 +49,10 @@ class oledrion_files extends Oledrion_Object
      */
     public function deleteAttachedFile()
     {
-        if (!defined("OLEDRION_ATTACHED_FILES_PATH")) {
+        if (!defined('OLEDRION_ATTACHED_FILES_PATH')) {
             include OLEDRION_PATH . 'config.php';
         }
-        @unlink(OLEDRION_ATTACHED_FILES_PATH . DIRECTORY_SEPARATOR . $this->getVar('file_filename'));
+        @unlink(OLEDRION_ATTACHED_FILES_PATH . '/' . $this->getVar('file_filename'));
     }
 
     /**
@@ -52,7 +61,7 @@ class oledrion_files extends Oledrion_Object
      */
     public function isMP3()
     {
-        return strtolower($this->getVar('file_mimetype')) == 'audio/mpeg' ? true : false;
+        return strtolower($this->getVar('file_mimetype')) === 'audio/mpeg' ? true : false;
     }
 
     /**
@@ -61,11 +70,11 @@ class oledrion_files extends Oledrion_Object
      */
     public function fileExists()
     {
-        if (!defined("OLEDRION_ATTACHED_FILES_PATH")) {
+        if (!defined('OLEDRION_ATTACHED_FILES_PATH')) {
             include OLEDRION_PATH . 'config.php';
         }
 
-        return file_exists(OLEDRION_ATTACHED_FILES_PATH . DIRECTORY_SEPARATOR . $this->getVar('file_filename'));
+        return file_exists(OLEDRION_ATTACHED_FILES_PATH . '/' . $this->getVar('file_filename'));
     }
 
     /**
@@ -74,7 +83,7 @@ class oledrion_files extends Oledrion_Object
      */
     public function getURL()
     {
-        if (!defined("OLEDRION_ATTACHED_FILES_URL")) {
+        if (!defined('OLEDRION_ATTACHED_FILES_URL')) {
             include OLEDRION_PATH . 'config.php';
         }
 
@@ -87,27 +96,38 @@ class oledrion_files extends Oledrion_Object
      */
     public function getPath()
     {
-        if (!defined("OLEDRION_ATTACHED_FILES_URL")) {
+        if (!defined('OLEDRION_ATTACHED_FILES_URL')) {
             include OLEDRION_PATH . 'config.php';
         }
 
-        return OLEDRION_ATTACHED_FILES_PATH . DIRECTORY_SEPARATOR . $this->getVar('file_filename');
+        return OLEDRION_ATTACHED_FILES_PATH . '/' . $this->getVar('file_filename');
     }
 
+    /**
+     * @param  string $format
+     * @return array
+     */
     public function toArray($format = 's')
     {
-        $ret = parent::toArray($format);
-        $ret['file_is_mp3'] = $this->isMP3();
+        $ret                      = parent::toArray($format);
+        $ret['file_is_mp3']       = $this->isMP3();
         $ret['file_download_url'] = $this->getURL();
 
         return $ret;
     }
 }
 
+/**
+ * Class OledrionOledrion_filesHandler
+ */
 class OledrionOledrion_filesHandler extends Oledrion_XoopsPersistableObjectHandler
 {
-    public function __construct($db)
-    { //							Table			Classe		 	Id			Libellé
+    /**
+     * OledrionOledrion_filesHandler constructor.
+     * @param XoopsDatabase|null $db
+     */
+    public function __construct(XoopsDatabase $db)
+    { //                            Table           Classe          Id          Libellé
         parent::__construct($db, 'oledrion_files', 'oledrion_files', 'file_id', 'file_filename');
     }
 
@@ -117,7 +137,7 @@ class OledrionOledrion_filesHandler extends Oledrion_XoopsPersistableObjectHandl
      * @param  oledrion_files $file
      * @return boolean        Le résultat de la suppression
      */
-    public function deleteAttachedFile(oledrion_files $file)
+    public function deleteAttachedFile(Oledrion_files $file)
     {
         if ($file->fileExists()) {
             $file->deleteAttachedFile();
@@ -179,9 +199,9 @@ class OledrionOledrion_filesHandler extends Oledrion_XoopsPersistableObjectHandl
      */
     public function deleteProductFiles($file_product_id)
     {
-        $files = array();
+        $files    = array();
         $criteria = new Criteria('file_product_id', $file_product_id, '=');
-        $files = $this->getObjects($criteria);
+        $files    = $this->getObjects($criteria);
         if (count($files) > 0) {
             foreach ($files as $file) {
                 $file->deleteAttachedFile();

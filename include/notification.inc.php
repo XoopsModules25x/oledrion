@@ -12,54 +12,57 @@
 /**
  * oledrion
  *
- * @copyright   The XOOPS Project http://sourceforge.net/projects/xoops/
- * @license     http://www.fsf.org/copyleft/gpl.html GNU public license
+ * @copyright   {@link http://xoops.org/ XOOPS Project}
+ * @license     {@link http://www.fsf.org/copyleft/gpl.html GNU public license}
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
- * @version     $Id: notification.inc.php 12290 2014-02-07 11:05:17Z beckmi $
+ * @param $category
+ * @param $item_id
+ * @return mixed
  */
 
 function oledrion_notify_iteminfo($category, $item_id)
 {
     global $xoopsModule, $xoopsModuleConfig;
-    $item_id = intval($item_id);
+    $item_id = (int)$item_id;
 
-    if (empty($xoopsModule) || $xoopsModule->getVar('dirname') != 'oledrion') {
-        $module_handler = xoops_gethandler('module');
-        $module = $module_handler->getByDirname('oledrion');
-        $config_handler = xoops_gethandler('config');
-        $config = $config_handler->getConfigsByCat(0, $module->getVar('mid'));
+    if (empty($xoopsModule) || $xoopsModule->getVar('dirname') !== 'oledrion') {
+        /** @var XoopsModuleHandler $moduleHandler */
+        $moduleHandler = xoops_getHandler('module');
+        $module         = $moduleHandler->getByDirname('oledrion');
+        $configHandler = xoops_getHandler('config');
+        $config         = $configHandler->getConfigsByCat(0, $module->getVar('mid'));
     } else {
         $module = $xoopsModule;
         // TODO: Jamais utilisé !!!
         $config = $xoopsModuleConfig;
     }
 
-    if ($category == 'global') {
+    if ($category === 'global') {
         $item['name'] = '';
-        $item['url'] = '';
+        $item['url']  = '';
 
         return $item;
     }
 
-    if ($category == 'new_category') {
+    if ($category === 'new_category') {
         include OLEDRION_PATH . 'include/common.php';
         $category = null;
         $category = $h_oledrion_cat->get($item_id);
         if (is_object($category)) {
             $item['name'] = $category->getVar('cat_title');
-            $item['url'] = OLEDRION_URL . 'category.php?cat_cid=' . $item_id;
+            $item['url']  = OLEDRION_URL . 'category.php?cat_cid=' . $item_id;
         }
 
         return $item;
     }
 
-    if ($category == 'new_product') {
+    if ($category === 'new_product') {
         include OLEDRION_PATH . 'include/common.php';
         $product = null;
         $product = $h_oledrion_products->get($item_id);
         if (is_object($product)) {
             $item['name'] = $product->getVar('product_title');
-            $item['url'] = OLEDRION_URL . 'product.php?product_id=' . $item_id;
+            $item['url']  = OLEDRION_URL . 'product.php?product_id=' . $item_id;
         }
 
         return $item;

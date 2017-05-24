@@ -12,10 +12,9 @@
 /**
  * oledrion
  *
- * @copyright   The XOOPS Project http://sourceforge.net/projects/xoops/
- * @license     http://www.fsf.org/copyleft/gpl.html GNU public license
+ * @copyright   {@link http://xoops.org/ XOOPS Project}
+ * @license     {@link http://www.fsf.org/copyleft/gpl.html GNU public license}
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
- * @version     $Id: oledrion_products_list.php 12290 2014-02-07 11:05:17Z beckmi $
  */
 
 /**
@@ -23,10 +22,20 @@
  *
  * @since 2.3.2009.06.13
  */
-require 'classheader.php';
+require __DIR__ . '/classheader.php';
 
-class oledrion_products_list extends Oledrion_Object
+/**
+ * Class Oledrion_products_list
+ */
+class Oledrion_products_list extends Oledrion_Object
 {
+    /**
+     * constructor
+     *
+     * normally, this is called from child classes only
+     *
+     * @access public
+     */
     public function __construct()
     {
         $this->initVar('productlist_id', XOBJ_DTYPE_INT, null, false);
@@ -36,10 +45,17 @@ class oledrion_products_list extends Oledrion_Object
     }
 }
 
+/**
+ * Class OledrionOledrion_products_listHandler
+ */
 class OledrionOledrion_products_listHandler extends Oledrion_XoopsPersistableObjectHandler
 {
-    public function __construct($db)
-    { //							Table						Classe				 	Id
+    /**
+     * OledrionOledrion_products_listHandler constructor.
+     * @param XoopsDatabase|null $db
+     */
+    public function __construct(XoopsDatabase $db)
+    { //                            Table                       Classe                  Id
         parent::__construct($db, 'oledrion_products_list', 'oledrion_products_list', 'productlist_id');
     }
 
@@ -49,7 +65,7 @@ class OledrionOledrion_products_listHandler extends Oledrion_XoopsPersistableObj
      * @param  oledrion_lists $list
      * @return boolean
      */
-    public function deleteListProducts(oledrion_lists $list)
+    public function deleteListProducts(Oledrion_lists $list)
     {
         return $this->deleteAll(new Criteria('productlist_list_id', $list->list_id, '='));
     }
@@ -71,7 +87,7 @@ class OledrionOledrion_products_listHandler extends Oledrion_XoopsPersistableObj
      * @param  oledrion_lists $list
      * @return array
      */
-    public function getProductsFromList(oledrion_lists $list)
+    public function getProductsFromList(Oledrion_lists $list)
     {
         return $this->getObjects(new criteria('productlist_list_id', $list->getVar('list_id'), '='));
     }
@@ -79,8 +95,9 @@ class OledrionOledrion_products_listHandler extends Oledrion_XoopsPersistableObj
     /**
      * Supprime un produit d'une liste
      *
-     * @param integer $productlist_list_id
-     * @param integer $productlist_product_id
+     * @param  integer $productlist_list_id
+     * @param  integer $productlist_product_id
+     * @return bool
      */
     public function deleteProductFromList($productlist_list_id, $productlist_product_id)
     {
@@ -94,16 +111,17 @@ class OledrionOledrion_products_listHandler extends Oledrion_XoopsPersistableObj
     /**
      * Ajoute un produit à une liste utilisateur
      *
-     * @param  integer $productlist_id         Id de la liste
+     * @param          $productlist_list_id
      * @param  integer $productlist_product_id Id du produit
-     * @return boolean
+     * @return bool
+     * @internal param int $productlist_id Id de la liste
      */
     public function addProductToUserList($productlist_list_id, $productlist_product_id)
     {
         $product_list = $this->create(true);
-        $product_list->setVar('productlist_list_id', intval($productlist_list_id));
-        $product_list->setVar('productlist_product_id', intval($productlist_product_id));
-        $product_list->setVar('productlist_date', oledrion_utils::getCurrentSQLDate());
+        $product_list->setVar('productlist_list_id', (int)$productlist_list_id);
+        $product_list->setVar('productlist_product_id', (int)$productlist_product_id);
+        $product_list->setVar('productlist_date', Oledrion_utils::getCurrentSQLDate());
 
         return $this->insert($product_list, true);
     }
@@ -111,8 +129,9 @@ class OledrionOledrion_products_listHandler extends Oledrion_XoopsPersistableObj
     /**
      * Indique si un produit se trouve déjà dans une liste
      *
-     * @param integer $productlist_list_id
-     * @param integer $productlist_product_id
+     * @param  integer $productlist_list_id
+     * @param  integer $productlist_product_id
+     * @return bool
      */
     public function isProductAlreadyInList($productlist_list_id, $productlist_product_id)
     {

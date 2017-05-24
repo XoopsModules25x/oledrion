@@ -12,19 +12,28 @@
 /**
  * oledrion
  *
- * @copyright   The XOOPS Project http://sourceforge.net/projects/xoops/
- * @license     http://www.fsf.org/copyleft/gpl.html GNU public license
+ * @copyright   {@link http://xoops.org/ XOOPS Project}
+ * @license     {@link http://www.fsf.org/copyleft/gpl.html GNU public license}
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
- * @version     $Id: oledrion_related.php 12290 2014-02-07 11:05:17Z beckmi $
  */
 
 /**
  * Gestion des produits relatifs
  */
-require 'classheader.php';
+require __DIR__ . '/classheader.php';
 
-class oledrion_related extends Oledrion_Object
+/**
+ * Class Oledrion_related
+ */
+class Oledrion_related extends Oledrion_Object
 {
+    /**
+     * constructor
+     *
+     * normally, this is called from child classes only
+     *
+     * @access public
+     */
     public function __construct()
     {
         $this->initVar('related_id', XOBJ_DTYPE_INT, null, false);
@@ -34,10 +43,17 @@ class oledrion_related extends Oledrion_Object
     }
 }
 
+/**
+ * Class OledrionOledrion_relatedHandler
+ */
 class OledrionOledrion_relatedHandler extends Oledrion_XoopsPersistableObjectHandler
 {
-    public function __construct($db)
-    { //							Table				Classe					 Id
+    /**
+     * OledrionOledrion_relatedHandler constructor.
+     * @param XoopsDatabase|null $db
+     */
+    public function __construct(XoopsDatabase $db)
+    { //                            Table               Classe                   Id
         parent::__construct($db, 'oledrion_related', 'oledrion_related', 'related_id');
     }
 
@@ -63,7 +79,7 @@ class OledrionOledrion_relatedHandler extends Oledrion_XoopsPersistableObjectHan
         $ret = array();
         if (is_array($ids)) {
             $criteria = new Criteria('related_product_id', '(' . implode(',', $ids) . ')', 'IN');
-            $ret = $this->getObjects($criteria, true, true, '*', false);
+            $ret      = $this->getObjects($criteria, true, true, '*', false);
         }
 
         return $ret;
@@ -72,15 +88,18 @@ class OledrionOledrion_relatedHandler extends Oledrion_XoopsPersistableObjectHan
     /**
      * Update product percent
      *
-     * @param
-     * @return
+     * @param $id
+     * @param $related
+     * @param $percent
+     * @return bool
+     * @internal param $
      */
     public function updatePercent($id, $related, $percent)
     {
         if ($percent > 100) {
             return false;
         } else {
-            $sql = 'UPDATE ' . $this->table . ' SET `related_product_percent` = ' . intval($percent) . ' WHERE (related_product_id = ' . intval($id) . ') AND (related_product_related = ' . intval($related) . ')';
+            $sql = 'UPDATE ' . $this->table . ' SET `related_product_percent` = ' . (int)$percent . ' WHERE (related_product_id = ' . (int)$id . ') AND (related_product_related = ' . (int)$related . ')';
 
             return $this->db->queryF($sql);
         }

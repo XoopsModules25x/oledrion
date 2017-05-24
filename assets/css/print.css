@@ -8,12 +8,11 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * @copyright    The XOOPS Project http://sourceforge.net/projects/xoops/
+ * @copyright    XOOPS Project (http://xoops.org)
  * @license      http://www.fsf.org/copyleft/gpl.html GNU public license
  * @package      Oledrion
  * @since        2.5.0
  * @author       Hossein Azizabadi(AKA Voltan)
- * @version      $Id $
  **/
 html, body {
     margin: 0;
@@ -36,7 +35,7 @@ html, body {
     margin: 10px 0 30px 0;
 }
 
-/*select {	display: none;}*/
+/*select {  display: none;}*/
 /*textarea { display: none;}*/
 /* display for print */
 h1, h2, h3, h4, h5, h6 {
@@ -57,7 +56,9 @@ h3, h4, h5, h6 {
 }
 
 h1, h2, h3, h4, h5, h6 {
-    page-break-after: avoid !important;
+    -webkit-column-break-after: page-avoid;
+       page-break-after: page-avoid;
+            break-after: page-avoid;
 }
 
 img {
@@ -79,7 +80,9 @@ blockquote, q {
 }
 
 pre, code, table {
-    page-break-inside: avoid !important;
+    -webkit-column-break-inside: page-avoid;
+       page-break-inside: page-avoid;
+            break-inside: page-avoid;
 }
 
 pre {

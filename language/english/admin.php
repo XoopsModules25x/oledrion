@@ -12,10 +12,9 @@
 /**
  * oledrion
  *
- * @copyright   The XOOPS Project http://sourceforge.net/projects/xoops/
- * @license     http://www.fsf.org/copyleft/gpl.html GNU public license
+ * @copyright   {@link http://xoops.org/ XOOPS Project}
+ * @license     {@link http://www.fsf.org/copyleft/gpl.html GNU public license}
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
- * @version     $Id$
  */
 
 define('_AM_OLEDRION_COUNTRY', 'Country');
@@ -75,8 +74,8 @@ define('_AM_OLEDRION_ERROR_10', 'Error, unknown Category');
 define('_AM_OLEDRION_ERROR_11', 'Error, unknown Export format');
 define('_AM_OLEDRION_ERROR_12', 'Error, unknown Action');
 define('_AM_OLEDRION_NOT_FOUND', 'Error, item not found');
-define('_AM_OLEDRION_CONF_DEL_CATEG', 'Are you sure to delete this category and its sub-categories ?<br />%s');
-define('_AM_OLEDRION_CONF_DEL_ITEM', 'Are you sure to delete this item and its sub-items ?<br />%s');
+define('_AM_OLEDRION_CONF_DEL_CATEG', 'Are you sure to delete this category and its sub-categories ?<br>%s');
+define('_AM_OLEDRION_CONF_DEL_ITEM', 'Are you sure to delete this item and its sub-items ?<br>%s');
 define('_AM_OLEDRION_CONF_MAINTAIN', 'Are you sure to maintain all tables in your DB ?');
 
 define('_AM_OLEDRION_MODIFY', 'Modify');
@@ -137,7 +136,7 @@ define('_AM_OLEDRION_NOTE', 'Note');
 define('_AM_OLEDRION_RECOMMEND_IT', 'Recommend it');
 define('_AM_OLEDRION_DONOTRECOMMEND_IT', 'Stop recommending it');
 define('_AM_OLEDRION_RECOMMENDED', 'Recommended');
-define('_AM_OLEDRION_RECOMM_TEXT', 'Text to display on the recommended<br />products pages');
+define('_AM_OLEDRION_RECOMM_TEXT', 'Text to display on the recommended<br>products pages');
 define('_AM_OLEDRION_META_KEYWORDS', 'Meta keywords');
 define('_AM_OLEDRION_META_DESCRIPTION', 'Meta description');
 define('_AM_OLEDRION_META_PAGETITLE', 'Page Title');
@@ -307,13 +306,21 @@ define('_AM_OLEDRION_IMPORT_DATA_TEXT', 'If you want import test information cli
 define('_AM_OLEDRION_IMPORT_CONF', 'Do you want import test information?');
 
 //directories
-define('_AM_OLEDRION_AVAILABLE',"<span style='color : green;'>Available. </span>");
-define('_AM_OLEDRION_NOTAVAILABLE',"<span style='color : red;'>is not available. </span>");
-define('_AM_OLEDRION_NOTWRITABLE',"<span style='color : red;'>".' should have permission ( %1$d ), but it has ( %2$d )'. '</span>');
-define('_AM_OLEDRION_CREATETHEDIR','Create it');
-define('_AM_OLEDRION_SETMPERM','Set the permission');
+define('_AM_OLEDRION_AVAILABLE', "<span style='color : green;'>Available. </span>");
+define('_AM_OLEDRION_NOTAVAILABLE', "<span style='color : red;'>is not available. </span>");
+define('_AM_OLEDRION_NOTWRITABLE', "<span style='color : red;'>" . ' should have permission ( %1$d ), but it has ( %2$d )' . '</span>');
+define('_AM_OLEDRION_CREATETHEDIR', 'Create it');
+define('_AM_OLEDRION_SETMPERM', 'Set the permission');
 
-define('_AM_OLEDRION_DIRCREATED','The directory has been created');
-define('_AM_OLEDRION_DIRNOTCREATED','The directory can not be created');
-define('_AM_OLEDRION_PERMSET','The permission has been set');
-define('_AM_OLEDRION_PERMNOTSET','The permission can not be set');
+define('_AM_OLEDRION_DIRCREATED', 'The directory has been created');
+define('_AM_OLEDRION_DIRNOTCREATED', 'The directory can not be created');
+define('_AM_OLEDRION_PERMSET', 'The permission has been set');
+define('_AM_OLEDRION_PERMNOTSET', 'The permission can not be set');
+
+define('_OLEDRION_CMD_STATE7', 'Option 7');
+define('_OLEDRION_CMD_STATE8', 'Option 8');
+define('_OLEDRION_CMD_STATE9', 'Option 9');
+define('_AM_OLEDRION_CONF_PACK', 'Confirmation pack');
+define('_AM_OLEDRION_CONF_SUBMIT', 'Confirmation Submit');
+define('_AM_OLEDRION_CONF_DELIVERY', 'Delivery');
+//2.34

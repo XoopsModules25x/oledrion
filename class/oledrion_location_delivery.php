@@ -12,16 +12,25 @@
 /**
  * oledrion
  *
- * @copyright   The XOOPS Project http://sourceforge.net/projects/xoops/
- * @license     http://www.fsf.org/copyleft/gpl.html GNU public license
+ * @copyright   {@link http://xoops.org/ XOOPS Project}
+ * @license     {@link http://www.fsf.org/copyleft/gpl.html GNU public license}
  * @author      Hossein Azizabadi (azizabadi@faragostaresh.com)
- * @version     $Id: oledrion_location_delivery.php 12290 2014-02-07 11:05:17Z beckmi $
  */
 
-require 'classheader.php';
+require __DIR__ . '/classheader.php';
 
-class oledrion_location_delivery extends Oledrion_Object
+/**
+ * Class Oledrion_location_delivery
+ */
+class Oledrion_location_delivery extends Oledrion_Object
 {
+    /**
+     * constructor
+     *
+     * normally, this is called from child classes only
+     *
+     * @access public
+     */
     public function __construct()
     {
         $this->initVar('ld_id', XOBJ_DTYPE_INT, null, false);
@@ -46,26 +55,37 @@ class oledrion_location_delivery extends Oledrion_Object
     }
 }
 
+/**
+ * Class OledrionOledrion_location_deliveryHandler
+ */
 class OledrionOledrion_location_deliveryHandler extends Oledrion_XoopsPersistableObjectHandler
 {
-    public function __construct($db)
-    { //							              Table					           Classe				       Id
+    /**
+     * OledrionOledrion_location_deliveryHandler constructor.
+     * @param XoopsDatabase|null $db
+     */
+    public function __construct(XoopsDatabase $db)
+    { //                                          Table                            Classe                      Id
         parent::__construct($db, 'oledrion_location_delivery', 'oledrion_location_delivery', 'ld_id');
     }
 
+    /**
+     * @param $parameters
+     * @return array
+     */
     public function getLocationDeliveryId($parameters)
     {
         $ret = array();
         if (!$parameters['location']) {
             return $ret;
         }
-        $critere = new CriteriaCompo ();
+        $critere = new CriteriaCompo();
         $critere->add(new Criteria('ld_location', $parameters['location']));
         $obj = $this->getObjects($critere);
         if ($obj) {
             foreach ($obj as $root) {
-                $tab = array();
-                $tab = $root->toArray();
+                $tab                               = array();
+                $tab                               = $root->toArray();
                 $ret[$root->getVar('ld_delivery')] = $tab;
             }
         }
@@ -73,10 +93,15 @@ class OledrionOledrion_location_deliveryHandler extends Oledrion_XoopsPersistabl
         return $ret;
     }
 
+    /**
+     * @param $ld_delivery
+     * @param $ld_location
+     * @return array
+     */
     public function getDelivery($ld_delivery, $ld_location)
     {
-        $ret = array();
-        $critere = new CriteriaCompo ();
+        $ret     = array();
+        $critere = new CriteriaCompo();
         $critere->add(new Criteria('ld_delivery', $ld_delivery));
         $critere->add(new Criteria('ld_location', $ld_location));
         $critere->setLimit(1);

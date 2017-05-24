@@ -12,16 +12,25 @@
 /**
  * oledrion
  *
- * @copyright   The XOOPS Project http://sourceforge.net/projects/xoops/
- * @license     http://www.fsf.org/copyleft/gpl.html GNU public license
+ * @copyright   {@link http://xoops.org/ XOOPS Project}
+ * @license     {@link http://www.fsf.org/copyleft/gpl.html GNU public license}
  * @author      Hossein Azizabadi (azizabadi@faragostaresh.com)
- * @version     $Id: oledrion_payment_log.php 12290 2014-02-07 11:05:17Z beckmi $
  */
 
-require 'classheader.php';
+require __DIR__ . '/classheader.php';
 
-class oledrion_payment_log extends Oledrion_Object
+/**
+ * Class Oledrion_payment_log
+ */
+class Oledrion_payment_log extends Oledrion_Object
 {
+    /**
+     * constructor
+     *
+     * normally, this is called from child classes only
+     *
+     * @access public
+     */
     public function __construct()
     {
         $this->initVar('log_id', XOBJ_DTYPE_INT, null, false);
@@ -38,10 +47,17 @@ class oledrion_payment_log extends Oledrion_Object
     }
 }
 
+/**
+ * Class OledrionOledrion_payment_logHandler
+ */
 class OledrionOledrion_payment_logHandler extends Oledrion_XoopsPersistableObjectHandler
 {
-    public function __construct($db)
-    { //							           Table					     Classe				     Id
+    /**
+     * OledrionOledrion_payment_logHandler constructor.
+     * @param XoopsDatabase|null $db
+     */
+    public function __construct(XoopsDatabase $db)
+    { //                                       Table                         Classe                  Id
         parent::__construct($db, 'oledrion_payment_log', 'oledrion_payment_log', 'log_id');
     }
 }

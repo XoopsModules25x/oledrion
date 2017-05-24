@@ -12,20 +12,22 @@
 /**
  * oledrion
  *
- * @copyright   The XOOPS Project http://sourceforge.net/projects/xoops/
- * @license     http://www.fsf.org/copyleft/gpl.html GNU public license
+ * @copyright   {@link http://xoops.org/ XOOPS Project}
+ * @license     {@link http://www.fsf.org/copyleft/gpl.html GNU public license}
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
- * @version     $Id: gateway.php 12290 2014-02-07 11:05:17Z beckmi $
  */
 
 /**
  * Paypal Gateway
  */
-defined('XOOPS_ROOT_PATH') || die('XOOPS root path not defined');
+// defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
 
-class oledrion_paypal extends oledrion_gateway
+class Oledrion_paypal extends Oledrion_gateway
 {
-    function __construct()
+    /**
+     * Oledrion_paypal constructor.
+     */
+    public function __construct()
     {
         parent::__construct();
     }
@@ -35,25 +37,26 @@ class oledrion_paypal extends oledrion_gateway
      *
      * @return array
      */
-    function setGatewayInformation()
+    public function setGatewayInformation()
     {
-        $gateway = array();
-        $gateway['name'] = 'Paypal';
-        $gateway['foldername'] = 'paypal';
-        $gateway['version'] = '1.1';
-        $gateway['description'] = "PayPal is the safer, easier way to pay and get paid online";
-        $gateway['author'] = "Instant Zero (http://www.herve-thouzard.com/)";
-        $gateway['credits'] = "Hervé Thouzard";
-        $gateway['releaseDate'] = 20081215;
+        $gateway                  = array();
+        $gateway['name']          = 'Paypal';
+        $gateway['foldername']    = 'paypal';
+        $gateway['version']       = '1.1';
+        $gateway['description']   = 'PayPal is the safer, easier way to pay and get paid online';
+        $gateway['author']        = 'Instant Zero (http://www.herve-thouzard.com/)';
+        $gateway['credits']       = 'Hervé Thouzard';
+        $gateway['releaseDate']   = 20081215;
         $this->gatewayInformation = $gateway;
     }
 
     /**
      * Retourne le formulaire utilisé pour paramétrer la passerelle de paiement
      *
+     * @param $postUrl
      * @return object de type XoopsThemeForm
      */
-    function getParametersForm($postUrl)
+    public function getParametersForm($postUrl)
     {
         require $this->getGatewayLanguageFile();
 
@@ -68,7 +71,24 @@ class oledrion_paypal extends oledrion_gateway
 
         // Libellé de la monnaie pour Paypal
         $paypal_money = new XoopsFormSelect(_OLEDRION_PAYPAL_MONEY_P, 'paypal_money', $this->handlers->h_oledrion_gateways_options->getGatewayOptionValue($this->gatewayInformation['foldername'], 'paypal_money'));
-        $paypal_money->addOptionArray(array('AUD' => 'Australian Dollar', 'CAD' => 'Canadian Dollar', 'CHF' => 'Swiss Franc', 'CZK' => 'Czech Koruna', 'DKK' => 'Danish Krone', 'EUR' => 'Euro', 'GBP' => 'Pound Sterling', 'HKD' => 'Hong Kong Dollar', 'HUF' => 'Hungarian Forint', 'JPY' => 'Japanese Yen', 'NOK' => 'Norwegian Krone', 'NZD' => 'New Zealand Dollar', 'PLN' => 'Polish Zloty', 'SEK' => 'Swedish Krona', 'SGD' => 'Singapore Dollar', 'USD' => 'U.S. Dollar'));
+        $paypal_money->addOptionArray(array(
+                                          'AUD' => 'Australian Dollar',
+                                          'CAD' => 'Canadian Dollar',
+                                          'CHF' => 'Swiss Franc',
+                                          'CZK' => 'Czech Koruna',
+                                          'DKK' => 'Danish Krone',
+                                          'EUR' => 'Euro',
+                                          'GBP' => 'Pound Sterling',
+                                          'HKD' => 'Hong Kong Dollar',
+                                          'HUF' => 'Hungarian Forint',
+                                          'JPY' => 'Japanese Yen',
+                                          'NOK' => 'Norwegian Krone',
+                                          'NZD' => 'New Zealand Dollar',
+                                          'PLN' => 'Polish Zloty',
+                                          'SEK' => 'Swedish Krona',
+                                          'SGD' => 'Singapore Dollar',
+                                          'USD' => 'U.S. Dollar'
+                                      ));
         $sform->addElement($paypal_money, true);
 
         // Paypal en mode test ?
@@ -79,7 +99,7 @@ class oledrion_paypal extends oledrion_gateway
         $sform->addElement(new XoopsFormHidden('use_ipn', 1));
 
         $button_tray = new XoopsFormElementTray('', '');
-        $submit_btn = new XoopsFormButton('', 'post', _AM_OLEDRION_GATEWAYS_UPDATE, 'submit');
+        $submit_btn  = new XoopsFormButton('', 'post', _AM_OLEDRION_GATEWAYS_UPDATE, 'submit');
         $button_tray->addElement($submit_btn);
         $sform->addElement($button_tray);
 
@@ -89,17 +109,19 @@ class oledrion_paypal extends oledrion_gateway
     /**
      * Sauvegarde des paramètres de la passerelle de paiement
      *
-     * @param  array   $data Les données du formulaire
+     * @param  array $data Les données du formulaire
      * @return boolean Le résultat de l'enregistrement des données
      */
-    function saveParametersForm($data)
+    public function saveParametersForm($data)
     {
         $parameters = array('paypal_email', 'paypal_money', 'paypal_test', 'use_ipn');
         // On commence par supprimer les valeurs actuelles
         $gatewayName = $this->gatewayInformation['foldername'];
         $this->handlers->h_oledrion_gateways_options->deleteGatewayOptions($gatewayName);
         foreach ($parameters as $parameter) {
-            if (!$this->handlers->h_oledrion_gateways_options->setGatewayOptionValue($gatewayName, $parameter, $data[$parameter])) return false;
+            if (!$this->handlers->h_oledrion_gateways_options->setGatewayOptionValue($gatewayName, $parameter, $data[$parameter])) {
+                return false;
+            }
         }
 
         return true;
@@ -107,6 +129,8 @@ class oledrion_paypal extends oledrion_gateway
 
     /**
      * Formate le montant au format Paypal
+     * @param $amount
+     * @return string
      */
     private function formatAmount($amount)
     {
@@ -116,11 +140,13 @@ class oledrion_paypal extends oledrion_gateway
     /**
      * Retourne l'url vers laquelle rediriger l'utilisateur pour le paiement en ligne
      *
+     * @param $cmd_total
+     * @param $cmd_id
      * @return string
      */
-    function getRedirectURL($cmd_total, $cmd_id)
+    public function getRedirectURL($cmd_total, $cmd_id)
     {
-        $test_mode = intval($this->handlers->h_oledrion_gateways_options->getGatewayOptionValue($this->gatewayInformation['foldername'], 'paypal_test'));
+        $test_mode = (int)$this->handlers->h_oledrion_gateways_options->getGatewayOptionValue($this->gatewayInformation['foldername'], 'paypal_test');
         if ($test_mode == 1) {
             return 'https://www.sandbox.paypal.com/cgi-bin/webscr';
         } else {
@@ -132,31 +158,32 @@ class oledrion_paypal extends oledrion_gateway
      * Retourne les éléments à ajouter au formulaire en tant que zones cachées
      *
      * @param array $order La commande client
-     * @param array
+     * @param       array
+     * @return array
      */
-    function getCheckoutFormContent($order)
+    public function getCheckoutFormContent($order)
     {
         global $xoopsConfig;
-        $gatewayName = $this->gatewayInformation['foldername'];
+        $gatewayName  = $this->gatewayInformation['foldername'];
         $paypal_money = $this->handlers->h_oledrion_gateways_options->getGatewayOptionValue($gatewayName, 'paypal_money');
         $paypal_email = $this->handlers->h_oledrion_gateways_options->getGatewayOptionValue($gatewayName, 'paypal_email');
-        $use_ipn = intval($this->handlers->h_oledrion_gateways_options->getGatewayOptionValue($gatewayName, 'use_ipn'));
+        $use_ipn      = (int)$this->handlers->h_oledrion_gateways_options->getGatewayOptionValue($gatewayName, 'use_ipn');
 
-        $ret = array();
-        $ret['cmd'] = '_xclick';
-        $ret['upload'] = '1';
-        $ret['currency_code'] = $paypal_money;
-        $ret['business'] = $paypal_email;
-        $ret['return'] = OLEDRION_URL . 'thankyou.php'; // Page (générique) de remerciement après paiement
-        $ret['image_url'] = XOOPS_URL . '/images/logo.gif';
+        $ret                     = array();
+        $ret['cmd']              = '_xclick';
+        $ret['upload']           = '1';
+        $ret['currency_code']    = $paypal_money;
+        $ret['business']         = $paypal_email;
+        $ret['return']           = OLEDRION_URL . 'thankyou.php'; // Page (générique) de remerciement après paiement
+        $ret['image_url']        = XOOPS_URL . '/images/logo.gif';
         $ret['cpp_header_image'] = XOOPS_URL . '/images/logo.gif';
-        $ret['invoice'] = $order->getVar('cmd_id');
-        $ret['item_name'] = _OLEDRION_COMMAND . $order->getVar('cmd_id') . ' - ' . oledrion_utils::makeHrefTitle($xoopsConfig['sitename']);
-        $ret['item_number'] = $order->getVar('cmd_id');
-        $ret['tax'] = 0; // ajout 25/03/2008
-        $ret['amount'] = $this->formatAmount(floatval($order->getVar('cmd_total', 'n')));
-        $ret['custom'] = $order->getVar('cmd_id');
-        //$ret['rm'] = 2;	// Renvoyer les données par POST (normalement)
+        $ret['invoice']          = $order->getVar('cmd_id');
+        $ret['item_name']        = _OLEDRION_COMMAND . $order->getVar('cmd_id') . ' - ' . Oledrion_utils::makeHrefTitle($xoopsConfig['sitename']);
+        $ret['item_number']      = $order->getVar('cmd_id');
+        $ret['tax']              = 0; // ajout 25/03/2008
+        $ret['amount']           = $this->formatAmount((float)$order->getVar('cmd_total', 'n'));
+        $ret['custom']           = $order->getVar('cmd_id');
+        //$ret['rm'] = 2;   // Renvoyer les données par POST (normalement)
         $ret['email'] = $order->getVar('cmd_email');
         if (xoops_trim($order->getVar('cmd_cancel')) != '') { // URL à laquelle le navigateur du client est ramené si le paiement est annulé
             $ret['cancel_return'] = OLEDRION_URL . 'cancel-payment.php?id=' . $order->getVar('cmd_cancel');
@@ -173,7 +200,7 @@ class oledrion_paypal extends oledrion_gateway
      *
      * @return array
      */
-    function getCountriesList()
+    public function getCountriesList()
     {
         require_once XOOPS_ROOT_PATH . '/class/xoopslists.php';
 
@@ -188,7 +215,7 @@ class oledrion_paypal extends oledrion_gateway
      */
     private function getdialogURL()
     {
-        $test_mode = intval($this->handlers->h_oledrion_gateways_options->getGatewayOptionValue($this->gatewayInformation['foldername'], 'paypal_test'));
+        $test_mode = (int)$this->handlers->h_oledrion_gateways_options->getGatewayOptionValue($this->gatewayInformation['foldername'], 'paypal_test');
         if ($test_mode == 1) {
             return 'www.sandbox.paypal.com';
         } else {
@@ -203,13 +230,13 @@ class oledrion_paypal extends oledrion_gateway
      * @param  string $gatewaysLogPath Le chemin d'accès complet au fichier log
      * @return void
      */
-    function gatewayNotify($gatewaysLogPath)
+    public function gatewayNotify($gatewaysLogPath)
     {
         error_reporting(0);
         @$xoopsLogger->activated = false;
 
-        $log = '';
-        $req = 'cmd=_notify-validate';
+        $log     = '';
+        $req     = 'cmd=_notify-validate';
         $slashes = get_magic_quotes_gpc();
         foreach ($_POST as $key => $value) {
             if ($slashes) {
@@ -221,31 +248,39 @@ class oledrion_paypal extends oledrion_gateway
             }
             $req .= "&$key=$value";
         }
-        $url = $this->getdialogURL();
-        $gatewayName = $this->gatewayInformation['foldername'];
+        $url          = $this->getdialogURL();
+        $gatewayName  = $this->gatewayInformation['foldername'];
         $paypal_email = $this->handlers->h_oledrion_gateways_options->getGatewayOptionValue($gatewayName, 'paypal_email');
         $paypal_money = $this->handlers->h_oledrion_gateways_options->getGatewayOptionValue($gatewayName, 'paypal_money');
-        $header = '';
+        $header       = '';
         $header .= "POST /cgi-bin/webscr HTTP/1.0\r\n";
         $header .= "Content-Type: application/x-www-form-urlencoded\r\n";
-        $header .= "Content-Length: " . strlen($req) . "\r\n\r\n";
-        $errno = 0;
+        $header .= 'Content-Length: ' . strlen($req) . "\r\n\r\n";
+        $errno  = 0;
         $errstr = '';
-        $fp = fsockopen($url, 80, $errno, $errstr, 30);
+        $fp     = fsockopen($url, 80, $errno, $errstr, 30);
         if ($fp) {
-            fputs($fp, "$header$req");
+            fwrite($fp, "$header$req");
             while (!feof($fp)) {
                 $res = fgets($fp, 1024);
-                if (strcmp($res, "VERIFIED") == 0) {
+                if (strcmp($res, 'VERIFIED') == 0) {
                     $log .= "VERIFIED\t";
                     $paypalok = true;
-                    if (strtoupper($_POST['payment_status']) != 'COMPLETED') $paypalok = false;
-                    if (strtoupper($_POST['receiver_email']) != strtoupper($paypal_email)) $paypalok = false;
-                    if (strtoupper($_POST['mc_currency']) != strtoupper($paypal_money)) $paypalok = false;
-                    if (!$_POST['custom']) $paypalok = false;
+                    if (strtoupper($_POST['payment_status']) !== 'COMPLETED') {
+                        $paypalok = false;
+                    }
+                    if (strtoupper($_POST['receiver_email']) != strtoupper($paypal_email)) {
+                        $paypalok = false;
+                    }
+                    if (strtoupper($_POST['mc_currency']) != strtoupper($paypal_money)) {
+                        $paypalok = false;
+                    }
+                    if (!$_POST['custom']) {
+                        $paypalok = false;
+                    }
                     $montant = $_POST['mc_gross'];
                     if ($paypalok) {
-                        $ref = intval($_POST['custom']); // Numéro de la commande
+                        $ref      = (int)$_POST['custom']; // Numéro de la commande
                         $commande = null;
                         $commande = $this->handlers->h_oledrion_commands->get($ref);
                         if (is_object($commande)) {
@@ -257,7 +292,7 @@ class oledrion_paypal extends oledrion_gateway
                         }
                     } else {
                         if (isset($_POST['custom'])) {
-                            $ref = intval($_POST['custom']);
+                            $ref      = (int)$_POST['custom'];
                             $commande = null;
                             $commande = $this->handlers->h_oledrion_commands->get($ref);
                             if (is_object($commande)) {
@@ -287,9 +322,9 @@ class oledrion_paypal extends oledrion_gateway
             fwrite($fp, str_repeat('-', 120) . "\n");
             fwrite($fp, date('d/m/Y H:i:s') . "\n");
             if (isset($_POST['txn_id'])) {
-                fwrite($fp, "Transaction : " . $_POST['txn_id'] . "\n");
+                fwrite($fp, 'Transaction : ' . $_POST['txn_id'] . "\n");
             }
-            fwrite($fp, "Result : " . $log . "\n");
+            fwrite($fp, 'Result : ' . $log . "\n");
             fclose($fp);
         }
     }

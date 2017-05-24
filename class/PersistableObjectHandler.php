@@ -12,17 +12,19 @@
 /**
  * oledrion
  *
- * @copyright   The XOOPS Project http://sourceforge.net/projects/xoops/
- * @license     http://www.fsf.org/copyleft/gpl.html GNU public license
+ * @copyright   {@link http://xoops.org/ XOOPS Project}
+ * @license     {@link http://www.fsf.org/copyleft/gpl.html GNU public license}
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
- * @version     $Id: PersistableObjectHandler.php 12290 2014-02-07 11:05:17Z beckmi $
  */
-
-defined('XOOPS_ROOT_PATH') || die('XOOPS root path not defined');
+// defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
 
 class Oledrion_Object extends XoopsObject
 {
-    function toArray($format = 's')
+    /**
+     * @param  string $format
+     * @return array
+     */
+    public function toArray($format = 's')
     {
         $ret = array();
         foreach ($this->vars as $k => $v) {
@@ -43,7 +45,7 @@ class Oledrion_Object extends XoopsObject
      * @param  mixed  $value La valeur à lui attribuer
      * @return void
      */
-    function __set($key, $value)
+    public function __set($key, $value)
     {
         return $this->setVar($key, $value);
     }
@@ -56,7 +58,7 @@ class Oledrion_Object extends XoopsObject
      * @param  string $key Le nom du champ que l'on souhaite récupérer
      * @return mixed
      */
-    function __get($key)
+    public function __get($key)
     {
         return $this->getVar($key);
     }
@@ -70,13 +72,12 @@ class Oledrion_Object extends XoopsObject
  */
 class Oledrion_XoopsPersistableObjectHandler extends XoopsObjectHandler
 {
-
     /**#@+
      * Information about the class, the handler is managing
      *
      * @var string
      */
-    public $table;
+    public    $table;
     protected $keyName;
     protected $className;
     protected $identifierName;
@@ -93,28 +94,36 @@ class Oledrion_XoopsPersistableObjectHandler extends XoopsObjectHandler
      * @param string $idenfierName Name of the property, holding the label
      * @param array  $cacheOptions Optional, options for the cache
      *
-     * @return void
      */
-    function __construct(&$db, $tablename, $classname, $keyname, $idenfierName = '', $cacheOptions = null)
+    public function __construct($db, $tablename, $classname, $keyname, $idenfierName = '', $cacheOptions = null)
     {
-        //include_once '../include/common.php';
+        //include_once dirname(__DIR__) . '/include/common.php';
         include_once XOOPS_ROOT_PATH . '/modules/oledrion/include/common.php';
-        $this->XoopsObjectHandler($db);
-        $this->table = $db->prefix($tablename);
-        $this->keyName = $keyname;
+        //        $this->XoopsObjectHandler($db);
+        parent::__construct($db);
+        $this->table     = $db->prefix($tablename);
+        $this->keyName   = $keyname;
         $this->className = $classname;
         if (trim($idenfierName) != '') {
             $this->identifierName = $idenfierName;
         }
         // To diable cache, add this line after the first one : 'caching' => false,
-        if (is_null($cacheOptions)) {
-            $this->setCachingOptions(array('cacheDir' => OLEDRION_CACHE_PATH, 'lifeTime' => null, 'automaticSerialization' => true, 'fileNameProtection' => false));
+        if (null === $cacheOptions) {
+            $this->setCachingOptions(array(
+                                         'cacheDir'               => OLEDRION_CACHE_PATH,
+                                         'lifeTime'               => null,
+                                         'automaticSerialization' => true,
+                                         'fileNameProtection'     => false
+                                     ));
         } else {
             $this->setCachingOptions($cacheOptions);
         }
     }
 
-    function setCachingOptions($cacheOptions)
+    /**
+     * @param $cacheOptions
+     */
+    public function setCachingOptions($cacheOptions)
     {
         $this->cacheOptions = $cacheOptions;
     }
@@ -129,7 +138,7 @@ class Oledrion_XoopsPersistableObjectHandler extends XoopsObjectHandler
      */
     protected function _getIdForCache($query, $start, $limit)
     {
-        $id = md5($query . '-' . strval($start) . '-' . strval($limit));
+        $id = md5($query . '-' . (string)$start . '-' . (string)$limit);
 
         return $id;
     }
@@ -141,7 +150,7 @@ class Oledrion_XoopsPersistableObjectHandler extends XoopsObjectHandler
      *
      * @return object
      */
-    function create($isNew = true)
+    public function create($isNew = true)
     {
         $obj = new $this->className();
         if ($isNew === true) {
@@ -158,16 +167,16 @@ class Oledrion_XoopsPersistableObjectHandler extends XoopsObjectHandler
      * @param  bool  $as_object whether to return an object or an array
      * @return mixed reference to the object, FALSE if failed
      */
-    function get($id, $as_object = true)
+    public function get($id, $as_object = true)
     {
         if (is_array($this->keyName)) {
             $criteria = new CriteriaCompo();
-            $vnb = count($this->keyName);
-            for ($i = 0; $i < $vnb; $i++) {
-                $criteria->add(new Criteria($this->keyName[$i], intval($id[$i])));
+            $vnb      = count($this->keyName);
+            for ($i = 0; $i < $vnb; ++$i) {
+                $criteria->add(new Criteria($this->keyName[$i], (int)$id[$i]));
             }
         } else {
-            $criteria = new Criteria($this->keyName, intval($id));
+            $criteria = new Criteria($this->keyName, (int)$id);
         }
         $criteria->setLimit(1);
         $obj_array = $this->getObjects($criteria, false, $as_object);
@@ -183,18 +192,25 @@ class Oledrion_XoopsPersistableObjectHandler extends XoopsObjectHandler
     /**
      * retrieve objects from the database
      *
-     * @param object $criteria  {@link CriteriaElement} conditions to be met
-     * @param bool   $id_as_key use the ID as key for the array?
-     * @param bool   $as_object return an array of objects?
+     * @param object  $criteria  {@link CriteriaElement} conditions to be met
+     * @param bool    $id_as_key use the ID as key for the array?
+     * @param bool    $as_object return an array of objects?
      *
+     * @param  string $fields
+     * @param  bool   $autoSort
      * @return array
      */
-    function getObjects($criteria = null, $id_as_key = false, $as_object = true, $fields = '*', $autoSort = true)
-    {
-        //require_once 'lite.php';
-        $ret = array();
+    public function getObjects(
+        $criteria = null,
+        $id_as_key = false,
+        $as_object = true,
+        $fields = '*',
+        $autoSort = true
+    ) {
+        //require_once __DIR__ . '/lite.php';
+        $ret   = array();
         $limit = $start = 0;
-        $sql = 'SELECT ' . $fields . ' FROM ' . $this->table;
+        $sql   = 'SELECT ' . $fields . ' FROM ' . $this->table;
         if (isset($criteria) && is_subclass_of($criteria, 'criteriaelement')) {
             $sql .= ' ' . $criteria->renderWhere();
             if ($criteria->groupby != '') {
@@ -217,6 +233,7 @@ class Oledrion_XoopsPersistableObjectHandler extends XoopsObjectHandler
             return $ret;
         }
         $ret = $this->convertResultSet($result, $id_as_key, $as_object, $fields);
+
         //$Cache_Lite->save($ret);
         return $ret;
         //} else {
@@ -244,8 +261,8 @@ class Oledrion_XoopsPersistableObjectHandler extends XoopsObjectHandler
                 if ($as_object) {
                     $ret[] = $obj;
                 } else {
-                    $row = array();
-                    $vars = $obj->getVars();
+                    $row     = array();
+                    $vars    = $obj->getVars();
                     $tbl_tmp = array_keys($vars);
                     foreach ($tbl_tmp as $i) {
                         $row[$i] = $obj->getVar($i);
@@ -254,14 +271,14 @@ class Oledrion_XoopsPersistableObjectHandler extends XoopsObjectHandler
                 }
             } else {
                 if ($as_object) {
-                    if ($fields == '*') {
+                    if ($fields === '*') {
                         $ret[$myrow[$this->keyName]] = $obj;
                     } else {
                         $ret[] = $obj;
                     }
                 } else {
-                    $row = array();
-                    $vars = $obj->getVars();
+                    $row     = array();
+                    $vars    = $obj->getVars();
                     $tbl_tmp = array_keys($vars);
                     foreach ($tbl_tmp as $i) {
                         $row[$i] = $obj->getVar($i);
@@ -281,9 +298,9 @@ class Oledrion_XoopsPersistableObjectHandler extends XoopsObjectHandler
      * @param  object $criteria {@link CriteriaElement} to match
      * @return array  of object IDs
      */
-    function getIds($criteria = null)
+    public function getIds($criteria = null)
     {
-        //require_once 'lite.php';
+        //require_once __DIR__ . '/lite.php';
         $limit = $start = 0;
 
         //$Cache_Lite = new oledrion_Cache_Lite($this->cacheOptions);
@@ -306,14 +323,15 @@ class Oledrion_XoopsPersistableObjectHandler extends XoopsObjectHandler
         //$cacheData = $Cache_Lite->get($id);
         //if ($cacheData === false) {
         $result = $this->db->query($sql, $limit, $start);
-        $ret = array();
+        $ret    = array();
         while ($myrow = $this->db->fetchArray($result)) {
             $ret[] = $myrow[$this->keyName];
         }
+
         //$Cache_Lite->save($ret);
         return $ret;
         //} else {
-        //	return $cacheData;
+        //  return $cacheData;
         //}
     }
 
@@ -323,9 +341,9 @@ class Oledrion_XoopsPersistableObjectHandler extends XoopsObjectHandler
      * @param  object $criteria {@link CriteriaElement} conditions to be met
      * @return array
      */
-    function getList($criteria = null)
+    public function getList($criteria = null)
     {
-        //require_once 'lite.php';
+        //require_once __DIR__ . '/lite.php';
         $limit = $start = 0;
         //$Cache_Lite = new oledrion_Cache_Lite($this->cacheOptions);
 
@@ -364,6 +382,7 @@ class Oledrion_XoopsPersistableObjectHandler extends XoopsObjectHandler
             // identifiers should be textboxes, so sanitize them like that
             $ret[$myrow[$this->keyName]] = empty($this->identifierName) ? 1 : $myts->htmlSpecialChars($myrow[$this->identifierName]);
         }
+
         //$Cache_Lite->save($ret);
         return $ret;
         //} else {
@@ -377,12 +396,12 @@ class Oledrion_XoopsPersistableObjectHandler extends XoopsObjectHandler
      * @param  array $ids Les ID des éléments à retrouver
      * @return array Tableau d'objets (clé = id key name)
      */
-    function getItemsFromIds($ids)
+    public function getItemsFromIds($ids)
     {
         $ret = array();
         if (is_array($ids) && count($ids) > 0) {
             $criteria = new Criteria($this->keyName, '(' . implode(',', $ids) . ')', 'IN');
-            $ret = $this->getObjects($criteria, true);
+            $ret      = $this->getObjects($criteria, true);
         }
 
         return $ret;
@@ -394,17 +413,17 @@ class Oledrion_XoopsPersistableObjectHandler extends XoopsObjectHandler
      * @param  object $criteria {@link CriteriaElement} to match
      * @return int    count of objects
      */
-    function getCount($criteria = null)
+    public function getCount($criteria = null)
     {
-        $field = '';
+        $field   = '';
         $groupby = false;
-        $limit = $start = 0;
-        //require_once 'lite.php';
+        $limit   = $start = 0;
+        //require_once __DIR__ . '/lite.php';
 
         if (isset($criteria) && is_subclass_of($criteria, 'criteriaelement')) {
             if ($criteria->groupby != '') {
                 $groupby = true;
-                $field = $criteria->groupby . ', '; //Not entirely secure unless you KNOW that no criteria's groupby clause is going to be mis-used
+                $field   = $criteria->groupby . ', '; //Not entirely secure unless you KNOW that no criteria's groupby clause is going to be mis-used
             }
         }
         $sql = 'SELECT ' . $field . 'COUNT(*) FROM ' . $this->table;
@@ -427,8 +446,9 @@ class Oledrion_XoopsPersistableObjectHandler extends XoopsObjectHandler
 
             return $ret;
         }
-        if ($groupby == false) {
+        if (false === $groupby) {
             list($count) = $this->db->fetchRow($result);
+
             //$Cache_Lite->save($count);
             return $count;
         } else {
@@ -436,7 +456,8 @@ class Oledrion_XoopsPersistableObjectHandler extends XoopsObjectHandler
             while (list($id, $count) = $this->db->fetchRow($result)) {
                 $ret[$id] = $count;
             }
-            //	$Cache_Lite->save($ret);
+
+            //  $Cache_Lite->save($ret);
             return $ret;
         }
         //} else {
@@ -447,14 +468,14 @@ class Oledrion_XoopsPersistableObjectHandler extends XoopsObjectHandler
     /**
      * Retourne le total d'un champ
      *
-     * @param  string  $field    Le champ dont on veut calculer le total
-     * @param  object  $criteria {@link CriteriaElement} to match
+     * @param  string $field    Le champ dont on veut calculer le total
+     * @param  object $criteria {@link CriteriaElement} to match
      * @return integer le total
      */
-    function getSum($field, $criteria = null)
+    public function getSum($field, $criteria = null)
     {
         $limit = $start = 0;
-        //require_once 'lite.php';
+        //require_once __DIR__ . '/lite.php';
 
         $sql = 'SELECT Sum(' . $field . ') as cpt FROM ' . $this->table;
         if (isset($criteria) && is_subclass_of($criteria, 'criteriaelement')) {
@@ -472,31 +493,33 @@ class Oledrion_XoopsPersistableObjectHandler extends XoopsObjectHandler
         $result = $this->db->query($sql, $limit, $start);
         if (!$result) {
             $ret = 0;
+
             //$Cache_Lite->save($ret);
             return $ret;
         }
-        $row = $this->db->fetchArray($result);
+        $row   = $this->db->fetchArray($result);
         $count = $row['cpt'];
+
         //$Cache_Lite->save($count);
         return $count;
         //} else {
-        //	return $cacheData;
+        //  return $cacheData;
         // }
     }
 
     /**
      * delete an object from the database
      *
-     * @param  object $obj   reference to the object to delete
-     * @param  bool   $force
+     * @param  XoopsObject $obj reference to the object to delete
+     * @param  bool        $force
      * @return bool   FALSE if failed.
      */
-    function delete(&$obj, $force = false)
+    public function delete(XoopsObject $obj, $force = false)
     {
         if (is_array($this->keyName)) {
             $clause = array();
-            $vnb = count($this->keyName);
-            for ($i = 0; $i < $vnb; $i++) {
+            $vnb    = count($this->keyName);
+            for ($i = 0; $i < $vnb; ++$i) {
                 $clause[] = $this->keyName[$i] . ' = ' . $obj->getVar($this->keyName[$i]);
             }
             $whereclause = implode(' AND ', $clause);
@@ -504,7 +527,7 @@ class Oledrion_XoopsPersistableObjectHandler extends XoopsObjectHandler
             $whereclause = $this->keyName . ' = ' . $obj->getVar($this->keyName);
         }
         $sql = 'DELETE FROM ' . $this->table . ' WHERE ' . $whereclause;
-        if (false != $force) {
+        if (false !== $force) {
             $result = $this->db->queryF($sql);
         } else {
             $result = $this->db->query($sql);
@@ -520,13 +543,13 @@ class Oledrion_XoopsPersistableObjectHandler extends XoopsObjectHandler
     }
 
     /**
-     * Quickly insert a record like this $myobject_handler->quickInsert('field1' => field1value, 'field2' => $field2value)
+     * Quickly insert a record like this $myobjectHandler->quickInsert('field1' => field1value, 'field2' => $field2value)
      *
      * @param  array $vars  Array containing the fields name and value
      * @param  bool  $force whether to force the query execution despite security settings
      * @return bool  @link insert's value
      */
-    function quickInsert($vars = null, $force = true)
+    public function quickInsert($vars = null, $force = true)
     {
         $object = $this->create(true);
         $object->setVars($vars);
@@ -542,15 +565,15 @@ class Oledrion_XoopsPersistableObjectHandler extends XoopsObjectHandler
     /**
      * insert a new object in the database
      *
-     * @param  object $obj         reference to the object
-     * @param  bool   $force       whether to force the query execution despite security settings
-     * @param  bool   $checkObject check if the object is dirty and clean the attributes
+     * @param  XoopsObject $obj         reference to the object
+     * @param  bool        $force       whether to force the query execution despite security settings
+     * @param  bool        $checkObject check if the object is dirty and clean the attributes
      * @return bool   FALSE if failed, TRUE if already present and unchanged or successful
      */
 
-    function insert(&$obj, $force = false, $checkObject = true)
+    public function insert(XoopsObject $obj, $force = false, $checkObject = true)
     {
-        if ($checkObject != false) {
+        if (false !== $checkObject) {
             if (!is_object($obj)) {
                 trigger_error('Error, not object');
 
@@ -579,7 +602,7 @@ class Oledrion_XoopsPersistableObjectHandler extends XoopsObjectHandler
         }
         foreach ($obj->cleanVars as $k => $v) {
             if ($obj->vars[$k]['data_type'] == XOBJ_DTYPE_INT) {
-                $cleanvars[$k] = intval($v);
+                $cleanvars[$k] = (int)$v;
             } elseif (is_array($v)) {
                 $cleanvars[$k] = $this->db->quoteString(implode(',', $v));
             } else {
@@ -599,7 +622,10 @@ class Oledrion_XoopsPersistableObjectHandler extends XoopsObjectHandler
         } else {
             $sql = 'UPDATE ' . $this->table . ' SET';
             foreach ($cleanvars as $key => $value) {
-                if ((!is_array($this->keyName) && $key == $this->keyName) || (is_array($this->keyName) && in_array($key, $this->keyName))) {
+                if ((!is_array($this->keyName) && $key == $this->keyName)
+                    || (is_array($this->keyName)
+                        && in_array($key, $this->keyName))
+                ) {
                     continue;
                 }
                 if (isset($notfirst)) {
@@ -610,8 +636,8 @@ class Oledrion_XoopsPersistableObjectHandler extends XoopsObjectHandler
             }
             if (is_array($this->keyName)) {
                 $whereclause = '';
-                $vnb = count($this->keyName);
-                for ($i = 0; $i < $vnb; $i++) {
+                $vnb         = count($this->keyName);
+                for ($i = 0; $i < $vnb; ++$i) {
                     if ($i > 0) {
                         $whereclause .= ' AND ';
                     }
@@ -623,7 +649,7 @@ class Oledrion_XoopsPersistableObjectHandler extends XoopsObjectHandler
             $sql .= ' WHERE ' . $whereclause;
         }
 
-        if (false != $force) {
+        if (false !== $force) {
             $result = $this->db->queryF($sql);
         } else {
             $result = $this->db->query($sql);
@@ -649,9 +675,10 @@ class Oledrion_XoopsPersistableObjectHandler extends XoopsObjectHandler
      * @param string $fieldvalue Value to write
      * @param object $criteria   {@link CriteriaElement}
      *
+     * @param  bool  $force
      * @return bool
-     **/
-    function updateAll($fieldname, $fieldvalue, $criteria = null, $force = false)
+     */
+    public function updateAll($fieldname, $fieldvalue, $criteria = null, $force = false)
     {
         $set_clause = $fieldname . ' = ';
         if (is_numeric($fieldvalue)) {
@@ -681,15 +708,21 @@ class Oledrion_XoopsPersistableObjectHandler extends XoopsObjectHandler
         return true;
     }
 
-//	check if target object is attempting to use duplicated info
-    function isDuplicated(&$obj, $field = '', $error = '')
+    //  check if target object is attempting to use duplicated info
+    /**
+     * @param         $obj
+     * @param  string $field
+     * @param  string $error
+     * @return bool
+     */
+    public function isDuplicated($obj, $field = '', $error = '')
     {
         if (empty($field)) {
             return false;
         }
         $criteria = new CriteriaCompo();
         $criteria->add(new Criteria($field, $obj->getVar($field)));
-        //	one more condition if target object exisits in database
+        //  one more condition if target object exisits in database
         if (!$obj->isNew()) {
             $criteria->add(new Criteria($this->_key, $obj->getVar($this->_key), '!='));
         }
@@ -708,7 +741,7 @@ class Oledrion_XoopsPersistableObjectHandler extends XoopsObjectHandler
      * @param  object $criteria {@link CriteriaElement} with conditions to meet
      * @return bool
      */
-    function deleteAll($criteria = null)
+    public function deleteAll($criteria = null)
     {
         if (isset($criteria) && is_subclass_of($criteria, 'criteriaelement')) {
             $sql = 'DELETE FROM ' . $this->table;
@@ -734,13 +767,12 @@ class Oledrion_XoopsPersistableObjectHandler extends XoopsObjectHandler
      * @param  XoopsObject $new_object The new object
      * @return array       differences    key = fieldname, value = array('old_value', 'new_value')
      */
-    function compareObjects($old_object, $new_object)
+    public function compareObjects($old_object, $new_object)
     {
-        $ret = array();
+        $ret       = array();
         $vars_name = array_keys($old_object->getVars());
         foreach ($vars_name as $one_var) {
             if ($old_object->getVar($one_var, 'f') == $new_object->getVar($one_var, 'f')) {
-
             } else {
                 $ret[$one_var] = array($old_object->getVar($one_var), $new_object->getVar($one_var));
             }
@@ -757,11 +789,11 @@ class Oledrion_XoopsPersistableObjectHandler extends XoopsObjectHandler
      * @param  string $format   Format in wich we want the datas
      * @return array  containing the distinct values
      */
-    function getDistincts($field, $criteria = null, $format = 's')
+    public function getDistincts($field, $criteria = null, $format = 's')
     {
-        //require_once 'lite.php';
+        //require_once __DIR__ . '/lite.php';
         $limit = $start = 0;
-        $sql = 'SELECT ' . $this->keyName . ', ' . $field . ' FROM ' . $this->table;
+        $sql   = 'SELECT ' . $this->keyName . ', ' . $field . ' FROM ' . $this->table;
         if (isset($criteria) && is_subclass_of($criteria, 'criteriaelement')) {
             $sql .= ' ' . $criteria->renderWhere();
             $limit = $criteria->getLimit();
@@ -774,12 +806,13 @@ class Oledrion_XoopsPersistableObjectHandler extends XoopsObjectHandler
         //$cacheData = $Cache_Lite->get($id);
         //if ($cacheData === false) {
         $result = $this->db->query($sql, $limit, $start);
-        $ret = array();
-        $obj = new $this->className();
+        $ret    = array();
+        $obj    = new $this->className();
         while ($myrow = $this->db->fetchArray($result)) {
             $obj->setVar($field, $myrow[$field]);
             $ret[$myrow[$this->keyName]] = $obj->getVar($field, $format);
         }
+
         //$Cache_Lite->save($ret);
         return $ret;
         //} else {
@@ -799,7 +832,7 @@ class Oledrion_XoopsPersistableObjectHandler extends XoopsObjectHandler
      * @param  boolean $idAsKey Do we have to return an array whoses keys are the record's ID ?
      * @return array   Array of current objects
      */
-    function getItems($start = 0, $limit = 0, $sort = '', $order = 'ASC', $idAsKey = true)
+    public function getItems($start = 0, $limit = 0, $sort = '', $order = 'ASC', $idAsKey = true)
     {
         if (trim($order) == '') {
             if (isset($this->identifierName) && trim($this->identifierName) != '') {
@@ -808,7 +841,7 @@ class Oledrion_XoopsPersistableObjectHandler extends XoopsObjectHandler
                 $order = $this->keyName;
             }
         }
-        $items = array();
+        $items   = array();
         $critere = new Criteria($this->keyName, 0, '<>');
         $critere->setLimit($limit);
         $critere->setStart($start);
@@ -822,9 +855,9 @@ class Oledrion_XoopsPersistableObjectHandler extends XoopsObjectHandler
     /**
      * Forces the cache to be cleaned
      */
-    function forceCacheClean()
+    public function forceCacheClean()
     {
-        //require_once 'lite.php';
+        //require_once __DIR__ . '/lite.php';
         //$Cache_Lite = new oledrion_Cache_Lite($this->cacheOptions);
         //$Cache_Lite->clean();
     }

@@ -12,19 +12,18 @@
 /**
  * oledrion
  *
- * @copyright   The XOOPS Project http://sourceforge.net/projects/xoops/
- * @license     http://www.fsf.org/copyleft/gpl.html GNU public license
+ * @copyright   {@link http://xoops.org/ XOOPS Project}
+ * @license     {@link http://www.fsf.org/copyleft/gpl.html GNU public license}
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
- * @version     $Id$
  */
 
 /**
  * Script chargé d'afficher un média d'un produit
  */
 
-require 'header.php';
-$type = isset($_GET['type']) ? strtolower($_GET['type']) : 'picture';
-$product_id = isset($_GET['product_id']) ? intval($_GET['product_id']) : 0;
+require __DIR__ . '/header.php';
+$type       = isset($_GET['type']) ? strtolower($_GET['type']) : 'picture';
+$product_id = isset($_GET['product_id']) ? (int)$_GET['product_id'] : 0;
 if ($product_id > 0) {
     $product = null;
     $product = $h_oledrion_products->get($product_id);
@@ -38,7 +37,7 @@ if ($product_id > 0) {
     }
 
     // Le produit est publié ?
-    if (oledrion_utils::getModuleOption('show_unpublished') == 0 && $product->getVar('product_submitted') > time()) {
+    if (Oledrion_utils::getModuleOption('show_unpublished') == 0 && $product->getVar('product_submitted') > time()) {
         exit(_OLEDRION_ERROR3);
     }
 } else {
@@ -47,7 +46,7 @@ if ($product_id > 0) {
 
 switch ($type) {
     case 'attachment': // Un fichier attaché à un produit
-        $file_id = isset($_GET['file_id']) ? intval($_GET['file_id']) : 0;
+        $file_id = isset($_GET['file_id']) ? (int)$_GET['file_id'] : 0;
         if ($file_id == 0) {
             exit(_OLEDRION_ERROR13);
         }
@@ -56,7 +55,7 @@ switch ($type) {
         if (!is_object($attachedFile)) {
             exit(_OLEDRION_ERROR19);
         }
-        header("Content-Type: " . $attachedFile->getVar('file_mimetype'));
+        header('Content-Type: ' . $attachedFile->getVar('file_mimetype'));
         header('Content-disposition: inline; filename="' . $attachedFile->getVar('file_filename') . '"');
         readfile($attachedFile->getPath());
         break;
@@ -70,9 +69,9 @@ switch ($type) {
             echo _OLEDRION_SORRY_NOPICTURE;
         }
         ?>
-        </a></div><br/>
-        <br/>
-        <div align='center'><input value="<?php echo _CLOSE ?>" type="button" onclick="javascript:window.close();"/>
+        </a></div><br>
+        <br>
+        <div align='center'><input value="<?php echo _CLOSE ?>" type="button" onclick="window.close();"/>
         </div>
         <?php
         xoops_footer();

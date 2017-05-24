@@ -12,16 +12,25 @@
 /**
  * oledrion
  *
- * @copyright   The XOOPS Project http://sourceforge.net/projects/xoops/
- * @license     http://www.fsf.org/copyleft/gpl.html GNU public license
+ * @copyright   {@link http://xoops.org/ XOOPS Project}
+ * @license     {@link http://www.fsf.org/copyleft/gpl.html GNU public license}
  * @author      Hossein Azizabadi (azizabadi@faragostaresh.com)
- * @version     $Id: oledrion_packing.php 12290 2014-02-07 11:05:17Z beckmi $
  */
 
-require 'classheader.php';
+require __DIR__ . '/classheader.php';
 
-class oledrion_packing extends Oledrion_Object
+/**
+ * Class Oledrion_packing
+ */
+class Oledrion_packing extends Oledrion_Object
 {
+    /**
+     * constructor
+     *
+     * normally, this is called from child classes only
+     *
+     * @access public
+     */
     public function __construct()
     {
         $this->initVar('packing_id', XOBJ_DTYPE_INT, null, false);
@@ -56,7 +65,9 @@ class oledrion_packing extends Oledrion_Object
     public function pictureExists()
     {
         $return = false;
-        if (xoops_trim($this->getVar('packing_image')) != '' && file_exists(OLEDRION_PICTURES_PATH . DIRECTORY_SEPARATOR . $this->getVar('packing_image'))) {
+        if (xoops_trim($this->getVar('packing_image')) != ''
+            && file_exists(OLEDRION_PICTURES_PATH . '/' . $this->getVar('packing_image'))
+        ) {
             $return = true;
         }
 
@@ -70,7 +81,7 @@ class oledrion_packing extends Oledrion_Object
     public function deletePicture()
     {
         if ($this->pictureExists()) {
-            @unlink(OLEDRION_PICTURES_PATH . DIRECTORY_SEPARATOR . $this->getVar('packing_image'));
+            @unlink(OLEDRION_PICTURES_PATH . '/' . $this->getVar('packing_image'));
         }
         $this->setVar('packing_image', '');
     }
@@ -83,27 +94,43 @@ class oledrion_packing extends Oledrion_Object
      */
     public function toArray($format = 's')
     {
-        $oledrion_Currency = oledrion_Currency::getInstance();
-        $ret = array();
-        $ret = parent::toArray($format);
+        $oledrion_Currency               = Oledrion_Currency::getInstance();
+        $ret                             = array();
+        $ret                             = parent::toArray($format);
         $ret['packing_price_fordisplay'] = $oledrion_Currency->amountForDisplay($this->getVar('packing_price'));
-        $ret['packing_image_url'] = $this->getPictureUrl();
+        $ret['packing_image_url']        = $this->getPictureUrl();
 
         return $ret;
     }
 }
 
+/**
+ * Class OledrionOledrion_packingHandler
+ */
 class OledrionOledrion_packingHandler extends Oledrion_XoopsPersistableObjectHandler
 {
-    public function __construct($db)
-    { //							           Table					Classe				Id
+    /**
+     * OledrionOledrion_packingHandler constructor.
+     * @param XoopsDatabase|null $db
+     */
+    public function __construct(XoopsDatabase $db)
+    { //                                       Table                    Classe              Id
         parent::__construct($db, 'oledrion_packing', 'oledrion_packing', 'packing_id');
     }
 
-    public function getAllPacking(oledrion_parameters $parameters)
+    /**
+     * @param  Oledrion_parameters $parameters
+     * @return array
+     */
+    public function getAllPacking(Oledrion_parameters $parameters)
     {
-        $parameters = $parameters->extend(new oledrion_parameters(array('start' => 0, 'limit' => 0, 'sort' => 'packing_id', 'order' => 'ASC')));
-        $critere = new Criteria('packing_id', 0, '<>');
+        $parameters = $parameters->extend(new Oledrion_parameters(array(
+                                                                      'start' => 0,
+                                                                      'limit' => 0,
+                                                                      'sort'  => 'packing_id',
+                                                                      'order' => 'ASC'
+                                                                  )));
+        $critere    = new Criteria('packing_id', 0, '<>');
         $critere->setLimit($parameters['limit']);
         $critere->setStart($parameters['start']);
         $critere->setSort($parameters['sort']);
@@ -114,16 +141,19 @@ class OledrionOledrion_packingHandler extends Oledrion_XoopsPersistableObjectHan
         return $packings;
     }
 
+    /**
+     * @return array
+     */
     public function getPacking()
     {
-        $ret = array();
+        $ret     = array();
         $critere = new CriteriaCompo();
         $critere->add(new Criteria('packing_online', '1'));
         $packings = $this->getObjects($critere);
         foreach ($packings as $root) {
-                $tab = array();
-                $tab = $root->toArray();
-                $ret[] = $tab;
+            $tab   = array();
+            $tab   = $root->toArray();
+            $ret[] = $tab;
         }
 
         return $ret;

@@ -12,18 +12,17 @@
 /**
  * oledrion
  *
- * @copyright   The XOOPS Project http://sourceforge.net/projects/xoops/
- * @license     http://www.fsf.org/copyleft/gpl.html GNU public license
+ * @copyright   {@link http://xoops.org/ XOOPS Project}
+ * @license     {@link http://www.fsf.org/copyleft/gpl.html GNU public license}
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
- * @version     $Id: whoswho.php 12290 2014-02-07 11:05:17Z beckmi $
  */
 
 /**
  * Liste des fabricants
  */
-require 'header.php';
-$GLOBALS['current_category'] = -1;
-$xoopsOption['template_main'] = 'oledrion_whoswho.tpl';
+require __DIR__ . '/header.php';
+$GLOBALS['current_category']             = -1;
+$GLOBALS['xoopsOption']['template_main'] = 'oledrion_whoswho.tpl';
 require_once XOOPS_ROOT_PATH . '/header.php';
 
 $tblAll = $tblAnnuaire = array();
@@ -32,20 +31,20 @@ $xoopsTpl->assign('mod_pref', $mod_pref); // Préférences du module
 
 $manufacturers = $h_oledrion_manufacturer->getItems(0, 0, 'manu_name, manu_commercialname');
 foreach ($manufacturers as $item) {
-    $forTemplate = array();
-    $forTemplate = $item->toArray();
-    $initiale = $item->getInitial();
+    $forTemplate              = array();
+    $forTemplate              = $item->toArray();
+    $initiale                 = $item->getInitial();
     $tblAnnuaire[$initiale][] = $forTemplate;
 }
 $xoopsTpl->assign('manufacturers', $tblAnnuaire);
 
-oledrion_utils::setCSS();
-oledrion_utils::setLocalCSS($xoopsConfig['language']);
-oledrion_utils::loadLanguageFile('modinfo.php');
+Oledrion_utils::setCSS();
+Oledrion_utils::setLocalCSS($xoopsConfig['language']);
+Oledrion_utils::loadLanguageFile('modinfo.php');
 
-$xoopsTpl->assign('global_advert', oledrion_utils::getModuleOption('advertisement'));
-$xoopsTpl->assign('breadcrumb', oledrion_utils::breadcrumb(array(OLEDRION_URL . basename(__FILE__) => _MI_OLEDRION_SMNAME5)));
+$xoopsTpl->assign('global_advert', Oledrion_utils::getModuleOption('advertisement'));
+$xoopsTpl->assign('breadcrumb', Oledrion_utils::breadcrumb(array(OLEDRION_URL . basename(__FILE__) => _MI_OLEDRION_SMNAME5)));
 
-$title = _MI_OLEDRION_SMNAME5 . ' - ' . oledrion_utils::getModuleName();
-oledrion_utils::setMetas($title, $title);
+$title = _MI_OLEDRION_SMNAME5 . ' - ' . Oledrion_utils::getModuleName();
+Oledrion_utils::setMetas($title, $title);
 require_once XOOPS_ROOT_PATH . '/footer.php';

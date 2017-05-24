@@ -12,19 +12,28 @@
 /**
  * oledrion
  *
- * @copyright   The XOOPS Project http://sourceforge.net/projects/xoops/
- * @license     http://www.fsf.org/copyleft/gpl.html GNU public license
+ * @copyright   {@link http://xoops.org/ XOOPS Project}
+ * @license     {@link http://www.fsf.org/copyleft/gpl.html GNU public license}
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
- * @version     $Id: oledrion_votedata.php 12290 2014-02-07 11:05:17Z beckmi $
  */
 
 /**
  * Gestion des votes sur les produits
  */
-require 'classheader.php';
+require __DIR__ . '/classheader.php';
 
-class oledrion_votedata extends Oledrion_Object
+/**
+ * Class Oledrion_votedata
+ */
+class Oledrion_votedata extends Oledrion_Object
 {
+    /**
+     * constructor
+     *
+     * normally, this is called from child classes only
+     *
+     * @access public
+     */
     public function __construct()
     {
         $this->initVar('vote_ratingid', XOBJ_DTYPE_INT, null, false);
@@ -36,10 +45,17 @@ class oledrion_votedata extends Oledrion_Object
     }
 }
 
+/**
+ * Class OledrionOledrion_votedataHandler
+ */
 class OledrionOledrion_votedataHandler extends Oledrion_XoopsPersistableObjectHandler
 {
-    public function __construct($db)
-    { //								Table					Classe			 Id
+    /**
+     * OledrionOledrion_votedataHandler constructor.
+     * @param XoopsDatabase|null $db
+     */
+    public function __construct(XoopsDatabase $db)
+    { //                                Table                   Classe           Id
         parent::__construct($db, 'oledrion_votedata', 'oledrion_votedata', 'vote_ratingid');
     }
 
@@ -53,14 +69,14 @@ class OledrionOledrion_votedataHandler extends Oledrion_XoopsPersistableObjectHa
      */
     public function getCountRecordSumRating($product_id, &$totalVotes, &$sumRating)
     {
-        $sql = "SELECT count( * ) AS cpt, sum( vote_rating ) AS sum_rating FROM " . $this->table . " WHERE vote_product_id = " . intval($product_id);
+        $sql    = 'SELECT count( * ) AS cpt, sum( vote_rating ) AS sum_rating FROM ' . $this->table . ' WHERE vote_product_id = ' . (int)$product_id;
         $result = $this->db->query($sql);
         if (!$result) {
             return 0;
         } else {
-            $myrow = $this->db->fetchArray($result);
+            $myrow      = $this->db->fetchArray($result);
             $totalVotes = $myrow['cpt'];
-            $sumRating = $myrow['sum_rating'];
+            $sumRating  = $myrow['sum_rating'];
         }
     }
 
@@ -74,7 +90,7 @@ class OledrionOledrion_votedataHandler extends Oledrion_XoopsPersistableObjectHa
     public function getLastVotes($start = 0, $limit = 0)
     {
         $tbl_datas = array();
-        $criteria = new Criteria('vote_ratingid', 0, '<>');
+        $criteria  = new Criteria('vote_ratingid', 0, '<>');
         $criteria->setLimit($limit);
         $criteria->setStart($start);
         $criteria->setSort('vote_ratingtimestamp');
@@ -107,7 +123,7 @@ class OledrionOledrion_votedataHandler extends Oledrion_XoopsPersistableObjectHa
     public function hasUserAlreadyVoted($vote_uid, $vote_product_id)
     {
         if ($vote_uid == 0) {
-            $vote_uid = oledrion_utils::getCurrentUserID();
+            $vote_uid = Oledrion_utils::getCurrentUserID();
         }
         $criteria = new CriteriaCompo();
         $criteria->add(new Criteria('vote_product_id', $vote_product_id, '='));
@@ -130,11 +146,11 @@ class OledrionOledrion_votedataHandler extends Oledrion_XoopsPersistableObjectHa
     public function hasAnonymousAlreadyVoted($ip = '', $vote_product_id = 0)
     {
         if ($ip == '') {
-            $ip = oledrion_utils::IP();
+            $ip = Oledrion_utils::IP();
         }
         $anonwaitdays = 1;
-        $yesterday = (time() - (86400 * $anonwaitdays));
-        $criteria = new CriteriaCompo();
+        $yesterday    = (time() - (86400 * $anonwaitdays));
+        $criteria     = new CriteriaCompo();
         $criteria->add(new Criteria('vote_product_id', $vote_product_id, '='));
         $criteria->add(new Criteria('vote_uid', 0, '='));
         $criteria->add(new Criteria('vote_ratinghostname', $ip, '='));
@@ -161,7 +177,7 @@ class OledrionOledrion_votedataHandler extends Oledrion_XoopsPersistableObjectHa
         $product->setVar('vote_product_id', $vote_product_id);
         $product->setVar('vote_uid', $vote_uid);
         $product->setVar('vote_rating', $vote_rating);
-        $product->setVar('vote_ratinghostname', oledrion_utils::IP());
+        $product->setVar('vote_ratinghostname', Oledrion_utils::IP());
         $product->setVar('vote_ratingtimestamp', time());
 
         return $this->insert($product);

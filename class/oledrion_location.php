@@ -12,16 +12,25 @@
 /**
  * oledrion
  *
- * @copyright   The XOOPS Project http://sourceforge.net/projects/xoops/
- * @license     http://www.fsf.org/copyleft/gpl.html GNU public license
+ * @copyright   {@link http://xoops.org/ XOOPS Project}
+ * @license     {@link http://www.fsf.org/copyleft/gpl.html GNU public license}
  * @author      Hossein Azizabadi (azizabadi@faragostaresh.com)
- * @version     $Id: oledrion_location.php 12290 2014-02-07 11:05:17Z beckmi $
  */
 
-require 'classheader.php';
+require __DIR__ . '/classheader.php';
 
-class oledrion_location extends Oledrion_Object
+/**
+ * Class Oledrion_location
+ */
+class Oledrion_location extends Oledrion_Object
 {
+    /**
+     * constructor
+     *
+     * normally, this is called from child classes only
+     *
+     * @access public
+     */
     public function __construct()
     {
         $this->initVar('location_id', XOBJ_DTYPE_INT, null, false);
@@ -46,17 +55,33 @@ class oledrion_location extends Oledrion_Object
     }
 }
 
+/**
+ * Class OledrionOledrion_locationHandler
+ */
 class OledrionOledrion_locationHandler extends Oledrion_XoopsPersistableObjectHandler
 {
-    public function __construct($db)
-    { //							            Table					Classe				Id
+    /**
+     * OledrionOledrion_locationHandler constructor.
+     * @param XoopsDatabase|null $db
+     */
+    public function __construct(XoopsDatabase $db)
+    { //                                        Table                   Classe              Id
         parent::__construct($db, 'oledrion_location', 'oledrion_location', 'location_id');
     }
 
-    public function getAllLocation(oledrion_parameters $parameters)
+    /**
+     * @param  Oledrion_parameters $parameters
+     * @return array
+     */
+    public function getAllLocation(Oledrion_parameters $parameters)
     {
-        $parameters = $parameters->extend(new oledrion_parameters(array('start' => 0, 'limit' => 0, 'sort' => 'location_id', 'order' => 'ASC')));
-        $critere = new Criteria('location_id', 0, '<>');
+        $parameters = $parameters->extend(new Oledrion_parameters(array(
+                                                                      'start' => 0,
+                                                                      'limit' => 0,
+                                                                      'sort'  => 'location_id',
+                                                                      'order' => 'ASC'
+                                                                  )));
+        $critere    = new Criteria('location_id', 0, '<>');
         $critere->setLimit($parameters['limit']);
         $critere->setStart($parameters['start']);
         $critere->setSort($parameters['sort']);
@@ -67,10 +92,19 @@ class OledrionOledrion_locationHandler extends Oledrion_XoopsPersistableObjectHa
         return $location;
     }
 
-    public function getAllPid(oledrion_parameters $parameters)
+    /**
+     * @param  Oledrion_parameters $parameters
+     * @return array
+     */
+    public function getAllPid(Oledrion_parameters $parameters)
     {
-        $parameters = $parameters->extend(new oledrion_parameters(array('start' => 0, 'limit' => 0, 'sort' => 'location_id', 'order' => 'ASC')));
-        $critere = new CriteriaCompo();
+        $parameters = $parameters->extend(new Oledrion_parameters(array(
+                                                                      'start' => 0,
+                                                                      'limit' => 0,
+                                                                      'sort'  => 'location_id',
+                                                                      'order' => 'ASC'
+                                                                  )));
+        $critere    = new CriteriaCompo();
         $critere->add(new Criteria('location_type', 'parent'));
         $critere->setLimit($parameters['limit']);
         $critere->setStart($parameters['start']);
@@ -82,6 +116,10 @@ class OledrionOledrion_locationHandler extends Oledrion_XoopsPersistableObjectHa
         return $pid;
     }
 
+    /**
+     * @param $id
+     * @return array
+     */
     public function getLocation($id)
     {
         $critere = new CriteriaCompo();
@@ -94,6 +132,10 @@ class OledrionOledrion_locationHandler extends Oledrion_XoopsPersistableObjectHa
         return $location;
     }
 
+    /**
+     * @param $id
+     * @return int
+     */
     public function haveChild($id)
     {
         $critere = new CriteriaCompo();

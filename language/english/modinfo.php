@@ -12,10 +12,9 @@
 /**
  * oledrion
  *
- * @copyright   The XOOPS Project http://sourceforge.net/projects/xoops/
- * @license     http://www.fsf.org/copyleft/gpl.html GNU public license
+ * @copyright   {@link http://xoops.org/ XOOPS Project}
+ * @license     {@link http://www.fsf.org/copyleft/gpl.html GNU public license}
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
- * @version     $Id$
  */
 
 // The name of this module
@@ -74,7 +73,7 @@ define('_MI_OLEDRION_SMNAME11', 'All lists');
 
 // Names of admin menu items
 define('_MI_OLEDRION_ADMENU0', 'Vendors');
-define('_MI_OLEDRION_ADMENU1', 'Sales Tax');
+define('_MI_OLEDRION_ADMENU1', 'VAT');
 define('_MI_OLEDRION_ADMENU2', 'Categories');
 define('_MI_OLEDRION_ADMENU3', 'Manufacturers');
 define('_MI_OLEDRION_ADMENU4', 'Products');
@@ -82,15 +81,15 @@ define('_MI_OLEDRION_ADMENU5', 'Orders');
 define('_MI_OLEDRION_ADMENU6', 'Discounts');
 define('_MI_OLEDRION_ADMENU7', 'Newsletter');
 define('_MI_OLEDRION_ADMENU8', 'Texts');
-define('_MI_OLEDRION_ADMENU9', 'Low stocks');
+define('_MI_OLEDRION_ADMENU9', 'Inventory');
 define('_MI_OLEDRION_ADMENU10', 'Dashboard');
-define('_MI_OLEDRION_ADMENU11', 'Attached Files');
+define('_MI_OLEDRION_ADMENU11', 'Attachments');
 define('_MI_OLEDRION_ADMENU12', 'Gateways');
-define('_MI_OLEDRION_ADMENU13', 'Product Options');
+define('_MI_OLEDRION_ADMENU13', 'Prod. Options');
 define('_MI_OLEDRION_ADMENU14', 'Blocks');
 define('_MI_OLEDRION_ADMENU15', 'Lists');
 define('_MI_OLEDRION_ADMENU16', 'Maintain');
-define('_MI_OLEDRION_ADMENU17', 'Product Properties');
+define('_MI_OLEDRION_ADMENU17', 'Prod. Properties');
 define('_MI_OLEDRION_ADMENU18', 'Packing');
 define('_MI_OLEDRION_ADMENU19', 'Location');
 define('_MI_OLEDRION_ADMENU20', 'Delivery');
@@ -278,9 +277,9 @@ define('_MI_OLEDRION_CHECKOUT_LEVEL_2', 'Medium - Information, location, Deliver
 define('_MI_OLEDRION_CHECKOUT_LEVEL_3', 'Long - Information, Packing, location, Delivery, Payment, Confirm');
 
 define('_MI_OLEDRION_SMS_CHECKOUT', 'Send sms after order checkout?');
-define('_MI_OLEDRION_SMS_CHECKOUT_TEXT', 'Sms checkout text');
-define('_MI_OLEDRION_SMS_VALIDATE', 'Send sms after validate order by admin?');
-define('_MI_OLEDRION_SMS_VALIDATE_TEXT', 'Sms validate text');
+define('_MI_OLEDRION_SMS_CHECKOUT_TEXT', 'SMS checkout text');
+define('_MI_OLEDRION_SMS_VALIDATE', 'Send SMS after validate order by admin?');
+define('_MI_OLEDRION_SMS_VALIDATE_TEXT', 'SMS validate text');
 
 define('_MI_OLEDRION_ADMINGROUPS', 'Groups than have access to all admin parts');
 define('_MI_OLEDRION_ADMINGROUPS_DSC', 'Other groups just have access to seleted parts');
@@ -294,3 +293,12 @@ define('_MI_OLEDRION_BREAK_VIEW', 'View');
 define('_MI_OLEDRION_BREAK_MONEY', 'Money');
 define('_MI_OLEDRION_BREAK_META', 'Meta');
 define('_MI_OLEDRION_BREAK_SMS', 'SMS');
+
+define('_MI_OLEDRION_SMS_PACK', 'SMS Pack');
+define('_MI_OLEDRION_SMS_PACK_TEXT', 'SMS Pack Description');
+define('_MI_OLEDRION_SMS_SUBMIT', 'SMS Submit');
+define('_MI_OLEDRION_SMS_SUBMIT_TEXT', 'SMS Submit Description');
+define('_MI_OLEDRION_SMS_DELIVERY', 'SMS Delivery');
+define('_MI_OLEDRION_SMS_DELIVERY_TEXT', 'SMS Delivery Description');
+define('_MI_OLEDRION_SMS_TRACK', 'SMS Track');
+define('_MI_OLEDRION_SMS_TRACK_TEXT', 'SMS Track Description');

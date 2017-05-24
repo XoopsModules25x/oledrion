@@ -12,17 +12,12 @@
 /**
  * oledrion
  *
- * @copyright   The XOOPS Project http://sourceforge.net/projects/xoops/
- * @license     http://www.fsf.org/copyleft/gpl.html GNU public license
+ * @copyright   {@link http://xoops.org/ XOOPS Project}
+ * @license     {@link http://www.fsf.org/copyleft/gpl.html GNU public license}
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
- * @version     $Id$
  */
 
-echo "<div class='adminfooter'>\n"
-    . "  <div style='text-align: center;'>\n"
-    . "    <a href='http://www.xoops.org' rel='external'><img src='{$pathIcon32}/xoopsmicrobutton.gif' alt='XOOPS' title='XOOPS'></a>\n"
-    . "  </div>\n"
-    . "  " . _AM_MODULEADMIN_ADMIN_FOOTER . "\n"
-    . "</div>";
+echo "<div class='adminfooter'>\n" . "  <div style='text-align: center;'>\n" . "    <a href='http://xoops.org' rel='external'><img src='{$pathIcon32}/xoopsmicrobutton.gif' alt='XOOPS' title='XOOPS'></a>\n" . "  </div>\n" . '  '
+     . _AM_MODULEADMIN_ADMIN_FOOTER . "\n" . '</div>';
 
 xoops_cp_footer();

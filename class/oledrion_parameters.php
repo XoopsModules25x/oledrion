@@ -12,25 +12,23 @@
 /**
  * oledrion
  *
- * @copyright   The XOOPS Project http://sourceforge.net/projects/xoops/
- * @license     http://www.fsf.org/copyleft/gpl.html GNU public license
+ * @copyright   {@link http://xoops.org/ XOOPS Project}
+ * @license     {@link http://www.fsf.org/copyleft/gpl.html GNU public license}
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
- * @version     $Id: oledrion_parameters.php 12290 2014-02-07 11:05:17Z beckmi $
  */
 
 /**
  * Class used for parameters passing to classes methods
  *
- * @copyright       Hervé Thouzard (http://www.herve-thouzard.com/)
- * @license         http://www.fsf.org/copyleft/gpl.html GNU public license
- * @package         oledrion
+ * @copyright          Hervé Thouzard (http://www.herve-thouzard.com/)
+ * @license            http://www.fsf.org/copyleft/gpl.html GNU public license
+ * @package            oledrion
  * @author             Hervé Thouzard (http://www.herve-thouzard.com/)
- * @version 1.0
  *
  * Example :
  *
  * // Instanciate it like this
- * $param = new oledrion_parameters();
+ * $param = new Oledrion_parameters();
  *
  * // Create several parameters in one time:
  * $param->setLimit(10)->setSort('manu_name');
@@ -42,16 +40,16 @@
  * $param->order = 'DESC';
  *
  * // Display a parameter, first way:
- * echo "<br />value=".$param['sort'];    // DESC
+ * echo "<br>value=".$param['sort'];    // DESC
  *
  * // Another method to show it, as a class method:
  * echo $param->limit();    // 10
  *
  * // Set the default values
- * $newParameters = $param->extend(new oledrion_parameters(array('sort' => 'firstName', 'start' => 0, 'limit' => 15, 'showAll' => true)));
+ * $newParameters = $param->extend(new Oledrion_parameters(array('sort' => 'firstName', 'start' => 0, 'limit' => 15, 'showAll' => true)));
  *
  */
-class oledrion_parameters extends ArrayObject
+class Oledrion_parameters extends ArrayObject
 {
     /**
      * Permet de valoriser un indice de la classe comme si c'était une propriété de la classe
@@ -80,7 +78,7 @@ class oledrion_parameters extends ArrayObject
      */
     public function __call($method, $args)
     {
-        if (substr($method, 0, 3) == 'set') {
+        if (substr($method, 0, 3) === 'set') {
             parent::offsetSet(strtolower(substr($method, 3, 1)) . substr($method, 4), $args[0]);
 
             return $this;
@@ -96,7 +94,7 @@ class oledrion_parameters extends ArrayObject
      * On lui passe les valeurs par défaut que l'on attend et la méthode les compare avec les valeurs actuelles
      * Si des valeurs manquent, elles sont ajoutées
      *
-     * @param  oledrion_parameters $defaultValues
+     * @param  Oledrion_parameters $defaultValues
      * @return oledrion_parameters
      */
     public function extend(self $defaultValues)

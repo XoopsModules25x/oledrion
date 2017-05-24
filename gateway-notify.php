@@ -12,10 +12,9 @@
 /**
  * oledrion
  *
- * @copyright   The XOOPS Project http://sourceforge.net/projects/xoops/
- * @license     http://www.fsf.org/copyleft/gpl.html GNU public license
+ * @copyright   {@link http://xoops.org/ XOOPS Project}
+ * @license     {@link http://www.fsf.org/copyleft/gpl.html GNU public license}
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
- * @version     $Id: gateway-notify.php 12290 2014-02-07 11:05:17Z beckmi $
  */
 
 /**
@@ -24,12 +23,12 @@
  */
 @error_reporting(0);
 @$xoopsLogger->activated = false;
-require 'header.php';
+require __DIR__ . '/header.php';
 @error_reporting(0);
 @$xoopsLogger->activated = false;
-$gateway = oledrion_gateways::getCurrentGateway();
+$gateway          = Oledrion_gateways::getCurrentGateway();
 $temporaryGateway = null;
-$temporaryGateway = oledrion_gateways::getGatewayObject();
+$temporaryGateway = Oledrion_gateways::getGatewayObject();
 if (is_object($temporaryGateway)) {
     if (!file_exists(OLEDRION_GATEWAY_LOG_PATH)) {
         file_put_contents(OLEDRION_GATEWAY_LOG_PATH, '<?php exit(); ?>');

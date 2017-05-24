@@ -12,10 +12,9 @@
 /**
  * oledrion
  *
- * @copyright   The XOOPS Project http://sourceforge.net/projects/xoops/
- * @license     http://www.fsf.org/copyleft/gpl.html GNU public license
+ * @copyright   {@link http://xoops.org/ XOOPS Project}
+ * @license     {@link http://www.fsf.org/copyleft/gpl.html GNU public license}
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
- * @version     $Id$
  */
 
 define('_OLEDRION_SEARCHFOR', 'جستجو برای');
@@ -254,7 +253,7 @@ define('_OLEDRION_NA', 'NA'); // Like in Excel
 define('_OLEDRION_VAT_AMOUNT', 'مقدار مالیات بر ارزش افزوده');
 define('_OLEDRION_AMOUNT_WITHOUT_VAT', 'مقدار معاف از مالیات');
 define('_OLEDRION_PLEASE_FILL_FIELD', 'تکمیل این فیلد ضروری است'); // Text used in Javascript
-define('_OLEDRION_VALIDATE_ERROR1', 'شما برخی از فایل های اجباری را<br />تکمیل نکرده اید');
+define('_OLEDRION_VALIDATE_ERROR1', 'شما برخی از فایل های اجباری را<br>تکمیل نکرده اید');
 define('_OLEDRION_MANDATORY_MISSED', 'You have not filled out the field %s');
 
 define('_OLEDRION_VIEW', 'مشاهده');

@@ -6039,7 +6039,6 @@
 0	string	#\ ACE/gr\ parameter\ file	ACE/gr ascii file
 # Grace projects
 0	string	#\ Grace\ project\ file		Grace project file
->23	string	@version\  			(version
 >>32	byte	>0 				%c
 >>33	string	>\0 				\b.%.2s
 >>35	string	>\0 				\b.%.2s)

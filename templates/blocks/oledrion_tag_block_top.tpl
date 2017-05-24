@@ -1,1 +1,1 @@
-<{include file="db:tag_block_top.html"}>
+<{include file="db:tag_block_top.tpl"}>

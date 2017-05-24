@@ -12,19 +12,28 @@
 /**
  * oledrion
  *
- * @copyright   The XOOPS Project http://sourceforge.net/projects/xoops/
- * @license     http://www.fsf.org/copyleft/gpl.html GNU public license
+ * @copyright   {@link http://xoops.org/ XOOPS Project}
+ * @license     {@link http://www.fsf.org/copyleft/gpl.html GNU public license}
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
- * @version     $Id: oledrion_vat.php 12290 2014-02-07 11:05:17Z beckmi $
  */
 
 /**
  * Gestion des TVA
  */
-require 'classheader.php';
+require __DIR__ . '/classheader.php';
 
-class oledrion_vat extends Oledrion_Object
+/**
+ * Class Oledrion_vat
+ */
+class Oledrion_vat extends Oledrion_Object
 {
+    /**
+     * constructor
+     *
+     * normally, this is called from child classes only
+     *
+     * @access public
+     */
     public function __construct()
     {
         $this->initVar('vat_id', XOBJ_DTYPE_INT, null, false);
@@ -32,38 +41,56 @@ class oledrion_vat extends Oledrion_Object
         $this->initVar('vat_country', XOBJ_DTYPE_TXTBOX, null, false);
     }
 
+    /**
+     * @param  string $format
+     * @return array
+     */
     public function toArray($format = 's')
     {
-        $ret = array();
-        $ret = parent::toArray($format);
-        $oledrion_Currency = oledrion_Currency::getInstance();
-        $ret['vat_rate_formated'] = $oledrion_Currency->amountInCurrency(floatval($this->getVar('vat_rate', 'e')));
+        $ret                      = array();
+        $ret                      = parent::toArray($format);
+        $oledrion_Currency        = Oledrion_Currency::getInstance();
+        $ret['vat_rate_formated'] = $oledrion_Currency->amountInCurrency((float)$this->getVar('vat_rate', 'e'));
 
         return $ret;
     }
 }
 
+/**
+ * Class OledrionOledrion_vatHandler
+ */
 class OledrionOledrion_vatHandler extends Oledrion_XoopsPersistableObjectHandler
 {
-    public function __construct($db)
-    { //						Table			Classe		 	Id
+    /**
+     * OledrionOledrion_vatHandler constructor.
+     * @param XoopsDatabase|null $db
+     */
+    public function __construct(XoopsDatabase $db)
+    { //                        Table           Classe          Id
         parent::__construct($db, 'oledrion_vat', 'oledrion_vat', 'vat_id');
     }
 
     /**
      * Renvoie la liste de toutes les TVA du module
      *
-     * @param  integer $start   Position de départ
-     * @param  integer $limit   Nombre total d'enregistrements à renvoyer
-     * @param  string  $order   Champ sur lequel faire le tri
-     * @param  string  $order   Ordre du tri
-     * @param  boolean $idaskey Indique si le tableau renvoyé doit avoir pour clé l'identifiant unique de l'enregistrement
-     * @return array   tableau d'objets de type TVA
+     * @param  Oledrion_parameters $parameters
+     * @return array               tableau d'objets de type TVA
+     * @internal param int $start Position de départ
+     * @internal param int $limit Nombre total d'enregistrements à renvoyer
+     * @internal param string $order Champ sur lequel faire le tri
+     * @internal param string $order Ordre du tri
+     * @internal param bool $idaskey Indique si le tableau renvoyé doit avoir pour clé l'identifiant unique de l'enregistrement
      */
-    public function getAllVats(oledrion_parameters $parameters)
+    public function getAllVats(Oledrion_parameters $parameters)
     {
-        $parameters = $parameters->extend(new oledrion_parameters(array('start' => 0, 'limit' => 0, 'sort' => 'vat_id', 'order' => 'ASC', 'idaskey' => true)));
-        $critere = new Criteria('vat_id', 0, '<>');
+        $parameters = $parameters->extend(new Oledrion_parameters(array(
+                                                                      'start'   => 0,
+                                                                      'limit'   => 0,
+                                                                      'sort'    => 'vat_id',
+                                                                      'order'   => 'ASC',
+                                                                      'idaskey' => true
+                                                                  )));
+        $critere    = new Criteria('vat_id', 0, '<>');
         $critere->setLimit($parameters['limit']);
         $critere->setStart($parameters['start']);
         $critere->setSort($parameters['sort']);
@@ -77,17 +104,24 @@ class OledrionOledrion_vatHandler extends Oledrion_XoopsPersistableObjectHandler
     /**
      * Renvoie la liste de toutes les TVA du module
      *
-     * @param  integer $start   Position de départ
-     * @param  integer $limit   Nombre total d'enregistrements à renvoyer
-     * @param  string  $order   Champ sur lequel faire le tri
-     * @param  string  $order   Ordre du tri
-     * @param  boolean $idaskey Indique si le tableau renvoyé doit avoir pour clé l'identifiant unique de l'enregistrement
-     * @return array   tableau d'objets de type TVA
+     * @param $country
+     * @return array tableau d'objets de type TVA
+     * @internal param int $start Position de départ
+     * @internal param int $limit Nombre total d'enregistrements à renvoyer
+     * @internal param string $order Champ sur lequel faire le tri
+     * @internal param string $order Ordre du tri
+     * @internal param bool $idaskey Indique si le tableau renvoyé doit avoir pour clé l'identifiant unique de l'enregistrement
      */
     public function getCountryVats($country)
     {
-        $parameters = new oledrion_parameters(array('start' => 0, 'limit' => 0, 'sort' => 'vat_id', 'order' => 'ASC', 'idaskey' => true));
-        $critere = new CriteriaCompo ();
+        $parameters = new Oledrion_parameters(array(
+                                                  'start'   => 0,
+                                                  'limit'   => 0,
+                                                  'sort'    => 'vat_id',
+                                                  'order'   => 'ASC',
+                                                  'idaskey' => true
+                                              ));
+        $critere    = new CriteriaCompo();
         if (!empty($country)) {
             $critere->add(new Criteria('vat_country', $country, 'LIKE'));
         }
@@ -107,7 +141,7 @@ class OledrionOledrion_vatHandler extends Oledrion_XoopsPersistableObjectHandler
      * @param  oledrion_vat $vat
      * @return boolean      Le résultat de la suppressin
      */
-    public function deleteVat(oledrion_vat $vat)
+    public function deleteVat(Oledrion_vat $vat)
     {
         return $this->delete($vat, true);
     }

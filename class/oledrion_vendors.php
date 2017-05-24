@@ -12,19 +12,28 @@
 /**
  * oledrion
  *
- * @copyright   The XOOPS Project http://sourceforge.net/projects/xoops/
- * @license     http://www.fsf.org/copyleft/gpl.html GNU public license
+ * @copyright   {@link http://xoops.org/ XOOPS Project}
+ * @license     {@link http://www.fsf.org/copyleft/gpl.html GNU public license}
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
- * @version     $Id: oledrion_vendors.php 12290 2014-02-07 11:05:17Z beckmi $
  */
 
 /**
  * Gestion des vendeurs
  */
-require 'classheader.php';
+require __DIR__ . '/classheader.php';
 
-class oledrion_vendors extends Oledrion_Object
+/**
+ * Class Oledrion_vendors
+ */
+class Oledrion_vendors extends Oledrion_Object
 {
+    /**
+     * constructor
+     *
+     * normally, this is called from child classes only
+     *
+     * @access public
+     */
     public function __construct()
     {
         $this->initVar('vendor_id', XOBJ_DTYPE_INT, null, false);
@@ -32,27 +41,41 @@ class oledrion_vendors extends Oledrion_Object
     }
 }
 
+/**
+ * Class OledrionOledrion_vendorsHandler
+ */
 class OledrionOledrion_vendorsHandler extends Oledrion_XoopsPersistableObjectHandler
 {
-    public function __construct($db)
-    { //							Table				Classe		 	Id			Libellé
+    /**
+     * OledrionOledrion_vendorsHandler constructor.
+     * @param XoopsDatabase|null $db
+     */
+    public function __construct(XoopsDatabase $db)
+    { //                            Table               Classe          Id          Libellé
         parent::__construct($db, 'oledrion_vendors', 'oledrion_vendors', 'vendor_id', 'vendor_name');
     }
 
     /**
      * Renvoie la liste de tous les vendeurs du module
      *
-     * @param  integer $start   Position de départ
-     * @param  integer $limit   Nombre total d'enregistrements à renvoyer
-     * @param  string  $order   Champ sur lequel faire le tri
-     * @param  string  $order   Ordre du tri
-     * @param  boolean $idaskey Indique si le tableau renvoyé doit avoir pour clé l'identifiant unique de l'enregistrement
-     * @return array   tableau d'objets de type vendors
+     * @param  Oledrion_parameters $parameters
+     * @return array               tableau d'objets de type vendors
+     * @internal param int $start Position de départ
+     * @internal param int $limit Nombre total d'enregistrements à renvoyer
+     * @internal param string $order Champ sur lequel faire le tri
+     * @internal param string $order Ordre du tri
+     * @internal param bool $idaskey Indique si le tableau renvoyé doit avoir pour clé l'identifiant unique de l'enregistrement
      */
-    public function getAllVendors(oledrion_parameters $parameters)
+    public function getAllVendors(Oledrion_parameters $parameters)
     {
-        $parameters = $parameters->extend(new oledrion_parameters(array('start' => 0, 'limit' => 0, 'sort' => 'vendor_name', 'order' => 'ASC', 'idaskey' => true)));
-        $critere = new Criteria('vendor_id', 0, '<>');
+        $parameters = $parameters->extend(new Oledrion_parameters(array(
+                                                                      'start'   => 0,
+                                                                      'limit'   => 0,
+                                                                      'sort'    => 'vendor_name',
+                                                                      'order'   => 'ASC',
+                                                                      'idaskey' => true
+                                                                  )));
+        $critere    = new Criteria('vendor_id', 0, '<>');
         $critere->setLimit($parameters['limit']);
         $critere->setStart($parameters['start']);
         $critere->setSort($parameters['sort']);
@@ -82,7 +105,7 @@ class OledrionOledrion_vendorsHandler extends Oledrion_XoopsPersistableObjectHan
      * @param  oledrion_vendors $vendor
      * @return boolean          Le résultat de la suppression
      */
-    public function deleteVendor(oledrion_vendors $vendor)
+    public function deleteVendor(Oledrion_vendors $vendor)
     {
         return $this->delete($vendor, true);
     }
@@ -98,7 +121,7 @@ class OledrionOledrion_vendorsHandler extends Oledrion_XoopsPersistableObjectHan
         $ret = array();
         if (is_array($ids) && count($ids) > 0) {
             $criteria = new Criteria('vendor_id', '(' . implode(',', $ids) . ')', 'IN');
-            $ret = $this->getObjects($criteria, true, true, '*', false);
+            $ret      = $this->getObjects($criteria, true, true, '*', false);
         }
 
         return $ret;

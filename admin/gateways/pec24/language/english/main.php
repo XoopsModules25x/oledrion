@@ -12,11 +12,10 @@
 /**
  * oledrion
  *
- * @copyright   The XOOPS Project http://sourceforge.net/projects/xoops/
- * @license     http://www.fsf.org/copyleft/gpl.html GNU public license
+ * @copyright   {@link http://xoops.org/ XOOPS Project}
+ * @license     {@link http://www.fsf.org/copyleft/gpl.html GNU public license}
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
- * @version     $Id: main.php 12290 2014-02-07 11:05:17Z beckmi $
  */
-define("_OLEDRION_SAMAN_PARAMETERS", "Parameters");
-define('_OLEDRION_SAMAN_MID', "Merchant ID");
-define('_OLEDRION_SAMAN_MIDDSC', "Select Saman Merchant ID get from saman bank");
+define('_OLEDRION_SAMAN_PARAMETERS', 'Parameters');
+define('_OLEDRION_SAMAN_MID', 'Merchant ID');
+define('_OLEDRION_SAMAN_MIDDSC', 'Select Saman Merchant ID get from saman bank');

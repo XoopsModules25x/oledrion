@@ -12,16 +12,25 @@
 /**
  * oledrion
  *
- * @copyright   The XOOPS Project http://sourceforge.net/projects/xoops/
- * @license     http://www.fsf.org/copyleft/gpl.html GNU public license
+ * @copyright   {@link http://xoops.org/ XOOPS Project}
+ * @license     {@link http://www.fsf.org/copyleft/gpl.html GNU public license}
  * @author      Hossein Azizabadi (azizabadi@faragostaresh.com)
- * @version     $Id: oledrion_delivery_payment.php 12290 2014-02-07 11:05:17Z beckmi $
  */
 
-require 'classheader.php';
+require __DIR__ . '/classheader.php';
 
-class oledrion_delivery_payment extends Oledrion_Object
+/**
+ * Class Oledrion_delivery_payment
+ */
+class Oledrion_delivery_payment extends Oledrion_Object
 {
+    /**
+     * constructor
+     *
+     * normally, this is called from child classes only
+     *
+     * @access public
+     */
     public function __construct()
     {
         $this->initVar('dp_id', XOBJ_DTYPE_INT, null, false);
@@ -44,26 +53,37 @@ class oledrion_delivery_payment extends Oledrion_Object
     }
 }
 
+/**
+ * Class OledrionOledrion_delivery_paymentHandler
+ */
 class OledrionOledrion_delivery_paymentHandler extends Oledrion_XoopsPersistableObjectHandler
 {
-    public function __construct($db)
-    { //							              Table					          Classe				    Id
+    /**
+     * OledrionOledrion_delivery_paymentHandler constructor.
+     * @param XoopsDatabase|null $db
+     */
+    public function __construct(XoopsDatabase $db)
+    { //                                          Table                           Classe                    Id
         parent::__construct($db, 'oledrion_delivery_payment', 'oledrion_delivery_payment', 'dp_id');
     }
 
+    /**
+     * @param $parameters
+     * @return array
+     */
     public function getDeliveryPaymantId($parameters)
     {
         $ret = array();
         if (!$parameters['delivery']) {
             return $ret;
         }
-        $critere = new CriteriaCompo ();
+        $critere = new CriteriaCompo();
         $critere->add(new Criteria('dp_delivery', $parameters['delivery']));
         $obj = $this->getObjects($critere);
         if ($obj) {
             foreach ($obj as $root) {
-                $tab = array();
-                $tab = $root->toArray();
+                $tab                              = array();
+                $tab                              = $root->toArray();
                 $ret[$root->getVar('dp_payment')] = $tab;
             }
         }

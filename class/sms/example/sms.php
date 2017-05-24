@@ -12,23 +12,26 @@
 /**
  * oledrion
  *
- * @copyright   The XOOPS Project http://sourceforge.net/projects/xoops/
- * @license     http://www.fsf.org/copyleft/gpl.html GNU public license
+ * @copyright   {@link http://xoops.org/ XOOPS Project}
+ * @license     {@link http://www.fsf.org/copyleft/gpl.html GNU public license}
  * @author      Hossein Azizabadi (azizabadi@faragostaresh.com)
- * @version     $Id$
  */
-
 class sms
 {
+    /**
+     * @param  array $information
+     * @param  array $option
+     * @return string
+     */
     public static function sendSms($information = array(), $option = array())
     {
-        $parameters = array();
+        $parameters             = array();
         $parameters['username'] = $option['username'];
         $parameters['password'] = $option['password'];
-        $parameters['from'] = $option['number'];
-        $parameters['to'] = $information['to'];
-        $parameters['text'] =  $information['text'];
-        $parameters['isflash'] =false;
+        $parameters['from']     = $option['number'];
+        $parameters['to']       = $information['to'];
+        $parameters['text']     = $information['text'];
+        $parameters['isflash']  = false;
 
         //ini_set("soap.wsdl_cache_enabled", "0");
         //$sms_client = new SoapClient('http://sms.payamakyab.com/post/send.asmx?wsdl', array('encoding'=>'UTF-8'));

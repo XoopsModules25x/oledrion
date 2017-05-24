@@ -12,10 +12,9 @@
 /**
  * oledrion
  *
- * @copyright   The XOOPS Project http://sourceforge.net/projects/xoops/
- * @license     http://www.fsf.org/copyleft/gpl.html GNU public license
+ * @copyright   {@link http://xoops.org/ XOOPS Project}
+ * @license     {@link http://www.fsf.org/copyleft/gpl.html GNU public license}
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
- * @version     $Id: oledrion_plugins.php 12290 2014-02-07 11:05:17Z beckmi $
  */
 
 /**
@@ -41,7 +40,7 @@
  *
  * @since 2.31
  */
-class oledrion_plugins
+class Oledrion_plugins
 {
     /**
      * Dictionnaire des évènements
@@ -90,7 +89,10 @@ class oledrion_plugins
     /**
      * Nom des classes qu'il faut étendre en tant que plugin
      */
-    private $pluginsClassName = array(self::PLUGIN_ACTION => 'oledrion_action', self::PLUGIN_FILTER => 'oledrion_filter');
+    private $pluginsClassName = array(
+        self::PLUGIN_ACTION => 'oledrion_action',
+        self::PLUGIN_FILTER => 'oledrion_filter'
+    );
 
     /**
      * Nom de chacun des dossiers en fonction du type de plugin
@@ -116,17 +118,17 @@ class oledrion_plugins
      */
     public static function getInstance()
     {
-        if (!self::$instance instanceof self) {
-            self::$instance = new self;
+        static $instance;
+        if (null === $instance) {
+            $instance = new static();
         }
 
-        return self::$instance;
+        return $instance;
     }
 
     /**
      * Chargement des 2 types de plugins
      *
-     * @return void
      */
     private function __construct()
     {
@@ -159,12 +161,16 @@ class oledrion_plugins
             // TODO: Vérifier que l'évènement n'est pas déjà en mémoire
             $events = call_user_func(array($className, self::PLUGIN_DESCRIBE_METHOD));
             foreach ($events as $event) {
-                $eventName = $event[0];
-                $eventPriority = $event[1];
-                $fileToInclude = OLEDRION_PLUGINS_PATH . $this->pluginsTypesFolder[$type] . DIRECTORY_SEPARATOR . $pluginFolder . DIRECTORY_SEPARATOR . $event[2];
-                $classToCall = $event[3];
-                $methodToCall = $event[4];
-                $this->events[$type][$eventName][$eventPriority][] = array('fullPathName' => $fileToInclude, 'className' => $classToCall, 'method' => $methodToCall);
+                $eventName                                         = $event[0];
+                $eventPriority                                     = $event[1];
+                $fileToInclude                                     = OLEDRION_PLUGINS_PATH . $this->pluginsTypesFolder[$type] . '/' . $pluginFolder . '/' . $event[2];
+                $classToCall                                       = $event[3];
+                $methodToCall                                      = $event[4];
+                $this->events[$type][$eventName][$eventPriority][] = array(
+                    'fullPathName' => $fileToInclude,
+                    'className'    => $classToCall,
+                    'method'       => $methodToCall
+                );
             }
         }
     }
@@ -181,7 +187,7 @@ class oledrion_plugins
         $objects = new DirectoryIterator($path);
         foreach ($objects as $object) {
             if ($object->isDir() && !$object->isDot()) {
-                $file = $path . DIRECTORY_SEPARATOR . $object->current() . DIRECTORY_SEPARATOR . self::PLUGIN_SCRIPT_NAME;
+                $file = $path . '/' . $object->current() . '/' . self::PLUGIN_SCRIPT_NAME;
                 if (file_exists($file)) {
                     $this->loadClass($file, $type, $object->current());
                 }
@@ -192,11 +198,11 @@ class oledrion_plugins
     /**
      * Déclenchement d'une action et appel des plugins liés
      *
-     * @param  string $eventToFire L'action déclenchée
-     * @param  object $parameters  Les paramètres à passer à chaque plugin
-     * @return object L'objet lui même pour chaîner
+     * @param  string                     $eventToFire L'action déclenchée
+     * @param  object|Oledrion_parameters $parameters  Les paramètres à passer à chaque plugin
+     * @return object                     L'objet lui même pour chaîner
      */
-    public function fireAction($eventToFire, oledrion_parameters $parameters = null)
+    public function fireAction($eventToFire, Oledrion_parameters $parameters = null)
     {
         if (!isset($this->events[self::PLUGIN_ACTION][$eventToFire])) {
             trigger_error(sprintf(_OLEDRION_PLUGINS_ERROR_1, $eventToFire));
@@ -227,11 +233,11 @@ class oledrion_plugins
     /**
      * Déclenchement d'un filtre et appel des plugins liés
      *
-     * @param  string $eventToFire Le filtre appelé
-     * @param  object $parameters  Les paramètres à passer à chaque plugin
-     * @return object Le contenu de l'objet passé en paramètre
+     * @param  string                     $eventToFire Le filtre appelé
+     * @param  object|Oledrion_parameters $parameters  Les paramètres à passer à chaque plugin
+     * @return object                     Le contenu de l'objet passé en paramètre
      */
-    public function fireFilter($eventToFire, oledrion_parameters &$parameters)
+    public function fireFilter($eventToFire, Oledrion_parameters $parameters)
     {
         if (!isset($this->events[self::PLUGIN_FILTER][$eventToFire])) {
             trigger_error(sprintf(_OLEDRION_PLUGINS_ERROR_1, $eventToFire));
@@ -256,7 +262,7 @@ class oledrion_plugins
             }
         }
 
-        if (!is_null($parameters)) {
+        if (null !== $parameters) {
             return $parameters;
         }
     }
@@ -300,6 +306,6 @@ class oledrion_plugins
             $unplug = $_SESSION[self::PLUGIN_UNPLUG_SESSION_NAME];
         }
         $unplug[$eventType][$eventToFire][$fullPathName][$className][$method] = true;
-        $_SESSION[self::PLUGIN_UNPLUG_SESSION_NAME] = $unplug;
+        $_SESSION[self::PLUGIN_UNPLUG_SESSION_NAME]                           = $unplug;
     }
 }

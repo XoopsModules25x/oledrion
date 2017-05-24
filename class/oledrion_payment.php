@@ -12,16 +12,25 @@
 /**
  * oledrion
  *
- * @copyright   The XOOPS Project http://sourceforge.net/projects/xoops/
- * @license     http://www.fsf.org/copyleft/gpl.html GNU public license
+ * @copyright   {@link http://xoops.org/ XOOPS Project}
+ * @license     {@link http://www.fsf.org/copyleft/gpl.html GNU public license}
  * @author      Hossein Azizabadi (azizabadi@faragostaresh.com)
- * @version     $Id: oledrion_payment.php 12290 2014-02-07 11:05:17Z beckmi $
  */
 
-require 'classheader.php';
+require __DIR__ . '/classheader.php';
 
-class oledrion_payment extends Oledrion_Object
+/**
+ * Class Oledrion_payment
+ */
+class Oledrion_payment extends Oledrion_Object
 {
+    /**
+     * constructor
+     *
+     * normally, this is called from child classes only
+     *
+     * @access public
+     */
     public function __construct()
     {
         $this->initVar('payment_id', XOBJ_DTYPE_INT, null, false);
@@ -54,7 +63,9 @@ class oledrion_payment extends Oledrion_Object
     public function pictureExists()
     {
         $return = false;
-        if (xoops_trim($this->getVar('payment_image')) != '' && file_exists(OLEDRION_PICTURES_PATH . DIRECTORY_SEPARATOR . $this->getVar('payment_image'))) {
+        if (xoops_trim($this->getVar('payment_image')) != ''
+            && file_exists(OLEDRION_PICTURES_PATH . '/' . $this->getVar('payment_image'))
+        ) {
             $return = true;
         }
 
@@ -68,7 +79,7 @@ class oledrion_payment extends Oledrion_Object
     public function deletePicture()
     {
         if ($this->pictureExists()) {
-            @unlink(OLEDRION_PICTURES_PATH . DIRECTORY_SEPARATOR . $this->getVar('payment_image'));
+            @unlink(OLEDRION_PICTURES_PATH . '/' . $this->getVar('payment_image'));
         }
         $this->setVar('payment_image', '');
     }
@@ -81,25 +92,41 @@ class oledrion_payment extends Oledrion_Object
      */
     public function toArray($format = 's')
     {
-        $ret = array();
-        $ret = parent::toArray($format);
+        $ret                      = array();
+        $ret                      = parent::toArray($format);
         $ret['payment_image_url'] = $this->getPictureUrl();
 
         return $ret;
     }
 }
 
+/**
+ * Class OledrionOledrion_paymentHandler
+ */
 class OledrionOledrion_paymentHandler extends Oledrion_XoopsPersistableObjectHandler
 {
-    public function __construct($db)
-    { //							           Table					Classe				Id
+    /**
+     * OledrionOledrion_paymentHandler constructor.
+     * @param XoopsDatabase|null $db
+     */
+    public function __construct(XoopsDatabase $db)
+    { //                                       Table                    Classe              Id
         parent::__construct($db, 'oledrion_payment', 'oledrion_payment', 'payment_id');
     }
 
-    public function getAllPayment(oledrion_parameters $parameters)
+    /**
+     * @param  Oledrion_parameters $parameters
+     * @return array
+     */
+    public function getAllPayment(Oledrion_parameters $parameters)
     {
-        $parameters = $parameters->extend(new oledrion_parameters(array('start' => 0, 'limit' => 0, 'sort' => 'payment_id', 'order' => 'ASC')));
-        $critere = new Criteria('payment_id', 0, '<>');
+        $parameters = $parameters->extend(new Oledrion_parameters(array(
+                                                                      'start' => 0,
+                                                                      'limit' => 0,
+                                                                      'sort'  => 'payment_id',
+                                                                      'order' => 'ASC'
+                                                                  )));
+        $critere    = new Criteria('payment_id', 0, '<>');
         $critere->setLimit($parameters['limit']);
         $critere->setStart($parameters['start']);
         $critere->setSort($parameters['sort']);
@@ -110,24 +137,28 @@ class OledrionOledrion_paymentHandler extends Oledrion_XoopsPersistableObjectHan
         return $categories;
     }
 
+    /**
+     * @param $delivery_id
+     * @return array
+     */
     public function getThisDeliveryPayment($delivery_id)
     {
         global $h_oledrion_delivery_payment;
-        $ret = array();
-        $parameters = array('delivery' => $delivery_id);
+        $ret              = array();
+        $parameters       = array('delivery' => $delivery_id);
         $delivery_payment = $h_oledrion_delivery_payment->getDeliveryPaymantId($parameters);
         foreach ($delivery_payment as $payment) {
-                $id[] = $payment['dp_payment'];
+            $id[] = $payment['dp_payment'];
         }
 
-        $critere = new CriteriaCompo ();
-        $critere->add(new Criteria('payment_id', '(' . implode( ',', $id ) . ')', 'IN'));
+        $critere = new CriteriaCompo();
+        $critere->add(new Criteria('payment_id', '(' . implode(',', $id) . ')', 'IN'));
         $critere->add(new Criteria('payment_online', 1));
         $obj = $this->getObjects($critere);
         if ($obj) {
             foreach ($obj as $root) {
-                $tab = array();
-                $tab = $root->toArray();
+                $tab   = array();
+                $tab   = $root->toArray();
                 $ret[] = $tab;
             }
         }

@@ -1,28 +1,46 @@
 <?php
-defined('XOOPS_ROOT_PATH') || die('XOOPS root path not defined');
+// defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
 //require_once('nusoap.php');
 
-class oledrion_pec24 extends oledrion_gateway
+/**
+ * Class Oledrion_pec24
+ */
+class Oledrion_pec24 extends Oledrion_gateway
 {
-    function __construct()
+    /**
+     * Oledrion_pec24 constructor.
+     */
+    public function __construct()
     {
         parent::__construct();
     }
 
-    function setGatewayInformation()
+    public function setGatewayInformation()
     {
-        $gateway = array();
-        $gateway['name'] = 'Parsian';
-        $gateway['foldername'] = 'pec24';
-        $gateway['version'] = '1.0';
-        $gateway['description'] = "سيستم پرداخت الکترونيک بانک پارسیان";
-        $gateway['author'] = "Hossein Azizabadi";
-        $gateway['credits'] = "جسین عزیزآبادی";
-        $gateway['releaseDate'] = 20121020;
+        $gateway                  = array();
+        $gateway['name']          = 'Parsian';
+        $gateway['foldername']    = 'pec24';
+        $gateway['version']       = '1.0';
+        $gateway['description']   = 'سيستم پرداخت الکترونيک بانک پارسیان';
+        $gateway['author']        = 'Hossein Azizabadi';
+        $gateway['credits']       = 'جسین عزیزآبادی';
+        $gateway['releaseDate']   = 20121020;
         $this->gatewayInformation = $gateway;
     }
 
-    function getParametersForm($postUrl)
+    /**
+     * This method is called to display a form containing the gateways parameters.
+     * You must return a XoopsThemeForm and this form MUST use the post method.
+     * The module is in charge to load your defines before to call this method and
+     * it loads xoopsformloader.php
+     *
+     * If your gateway does not requires parameters, then you must return false
+     *
+     * @param $postUrl
+     * @return mixed
+     * @internal param string $posstUrl The url to use to post data to
+     */
+    public function getParametersForm($postUrl)
     {
         $sform = new XoopsThemeForm(_OLEDRION_PARSIAN_PARAMETERS . ' - ' . $this->gatewayInformation['name'], 'frmParsian', $postUrl);
         $sform->addElement(new XoopsFormHidden('gateway', $this->gatewayInformation['foldername']));
@@ -30,53 +48,73 @@ class oledrion_pec24 extends oledrion_gateway
         $pin->setDescription(_OLEDRION_PARSIAN_MIDDSC);
         $sform->addElement($pin, true);
         $button_tray = new XoopsFormElementTray('', '');
-        $submit_btn = new XoopsFormButton('', 'post', _AM_OLEDRION_GATEWAYS_UPDATE, 'submit');
+        $submit_btn  = new XoopsFormButton('', 'post', _AM_OLEDRION_GATEWAYS_UPDATE, 'submit');
         $button_tray->addElement($submit_btn);
         $sform->addElement($button_tray);
 
         return $sform;
     }
 
-    function saveParametersForm($data)
+    /**
+     * This method is called by the module to save the gateway's parameters
+     * It's up to you to verify data and eventually to complain about uncomplete or missing data
+     *
+     * @param  array $data Receives $_POST
+     * @return boolean True if you succeed to save data else false
+     */
+    public function saveParametersForm($data)
     {
         if (xoops_trim($this->languageFilename) != '' && file_exists($this->languageFilename)) {
             require $this->languageFilename;
         }
         $gatewayName = $this->gatewayInformation['foldername'];
         $this->handlers->h_oledrion_gateways_options->deleteGatewayOptions($gatewayName);
-        if (!$this->handlers->h_oledrion_gateways_options->setGatewayOptionValue($gatewayName, 'parsian_mid', $data['parsian_mid'])) return false;
+        if (!$this->handlers->h_oledrion_gateways_options->setGatewayOptionValue($gatewayName, 'parsian_mid', $data['parsian_mid'])) {
+            return false;
+        }
 
         return true;
     }
 
+    /**
+     * @param $amount
+     * @return string
+     */
     private function formatAmount($amount)
     {
         return number_format($amount, 2, '.', '');
     }
 
-    function getAuthority($cmd_total, $cmd_id)
+    /**
+     * @param $cmd_total
+     * @param $cmd_id
+     */
+    public function getAuthority($cmd_total, $cmd_id)
     {
         $url = $this->getdialogURL();
         if (extension_loaded('soap')) {
             $soapclient = new SoapClient($url);
         } else {
-            require_once('nusoap.php');
+            require_once __DIR__ . '/nusoap.php';
             $soapclient = new soapclient($url, 'wsdl');
         }
-        $params = array(
-            'pin' => $this->getParsianMid(),
-            'amount' => intval($this->formatAmount($cmd_total)),
-            'orderId' => intval($cmd_id),
-            'callbackUrl' => OLEDRION_URL . 'gateway-notify.php?cmd_id=' . intval($cmd_id) . '&cmd_total=' . intval($this->formatAmount($cmd_total)),
-            'authority' => 0,
-            'status' => 1
+        $params     = array(
+            'pin'         => $this->getParsianMid(),
+            'amount'      => (int)$this->formatAmount($cmd_total),
+            'orderId'     => (int)$cmd_id,
+            'callbackUrl' => OLEDRION_URL . 'gateway-notify.php?cmd_id=' . (int)$cmd_id . '&cmd_total=' . (int)$this->formatAmount($cmd_total),
+            'authority'   => 0,
+            'status'      => 1
         );
         $sendParams = array($params);
         //$res = $soapclient->call('PinPaymentRequest', $sendParams);
         //return $res['authority'];
     }
 
-    function getParsianMid()
+    /**
+     * @return mixed
+     */
+    public function getParsianMid()
     {
         global $xoopsConfig;
         $gatewayName = $this->gatewayInformation['foldername'];
@@ -85,51 +123,76 @@ class oledrion_pec24 extends oledrion_gateway
         return $parsian_mid;
     }
 
-    function getRedirectURL($cmd_total, $cmd_id)
+    /**
+     * Returns the URL to redirect user to (for paying)
+     * @param $cmd_total
+     * @param $cmd_id
+     * @return string
+     */
+    public function getRedirectURL($cmd_total, $cmd_id)
     {
         $authority = $this->getAuthority($cmd_total, $cmd_id);
 
-        return "https://www.pecco24.com:27635/pecpaymentgateway/?au=" . $authority;
+        return 'https://www.pecco24.com:27635/pecpaymentgateway/?au=' . $authority;
     }
 
-    function getCheckoutFormContent($order)
+    /**
+     * Returns the form to use before to redirect user to the gateway
+     *
+     * @param  object $order Objects of type oledrion_commands
+     * @return array  Key = element's name, Value = Element's value
+     */
+    public function getCheckoutFormContent($order)
     {
-        $ret = array();
-        $ret['pin'] = $this->getParsianMid();
-        $ret['amount'] = intval($this->formatAmount($order->getVar('cmd_total')));
-        $ret['orderId'] = $order->getVar('cmd_id');
-        $ret['callbackUrl'] = OLEDRION_URL . 'gateway-notify.php?cmd_id=' . $order->getVar('cmd_id') . '&cmd_total=' . intval($this->formatAmount($order->getVar('cmd_total')));
-        $ret['authority'] = 0;
-        $ret['status'] = 1;
+        $ret                = array();
+        $ret['pin']         = $this->getParsianMid();
+        $ret['amount']      = (int)$this->formatAmount($order->getVar('cmd_total'));
+        $ret['orderId']     = $order->getVar('cmd_id');
+        $ret['callbackUrl'] = OLEDRION_URL . 'gateway-notify.php?cmd_id=' . $order->getVar('cmd_id') . '&cmd_total=' . (int)$this->formatAmount($order->getVar('cmd_total'));
+        $ret['authority']   = 0;
+        $ret['status']      = 1;
 
         return $ret;
     }
 
-    function getCountriesList()
+    /**
+     * Returns the list of countries codes used by the gateways
+     *
+     */
+    public function getCountriesList()
     {
         require_once XOOPS_ROOT_PATH . '/class/xoopslists.php';
 
         return XoopsLists::getCountryList();
     }
 
+    /**
+     * @return string
+     */
     private function getdialogURL()
     {
         return 'https://www.pecco24.com:27635/pecpaymentgateway/eshopservice.asmx?wsdl';
     }
 
-    function gatewayNotify($gatewaysLogPath)
+    /**
+     * This method is in charge to dialog with the gateway to verify the payment's statuts
+     *
+     * @param  string $gatewaysLogPath The full path (and name) to the log file
+     * @return void
+     */
+    public function gatewayNotify($gatewaysLogPath)
     {
         // Get from bank
         $authority = $_GET['au'];
-        $status = $_GET['rs'];
-        $cmd_id = intval($_GET['cmd_id']);
-        $cmd_total = intval($_GET['cmd_total']);
+        $status    = $_GET['rs'];
+        $cmd_id    = (int)$_GET['cmd_id'];
+        $cmd_total = (int)$_GET['cmd_total'];
         // Set soap
         $url = $this->getdialogURL();
         if (extension_loaded('soap')) {
             $soapclient = new SoapClient($url);
         } else {
-            require_once('nusoap.php');
+            require_once __DIR__ . '/nusoap.php';
             $soapclient = new soapclient($url, 'wsdl');
         }
         // here we update our database
@@ -152,21 +215,21 @@ class oledrion_pec24 extends oledrion_gateway
                 }
             } else {
                 //$status = 1;
-                $params = array(
-                    'pin' => $this->getParsianMid(),
+                $params     = array(
+                    'pin'       => $this->getParsianMid(),
                     'authority' => $authority,
-                    'status' => $status,
+                    'status'    => $status
                 );
                 $sendParams = array($params);
-                $res = $soapclient->call('PinPaymentEnquiry', $sendParams);
-                $status = $res['status'];
+                $res        = $soapclient->call('PinPaymentEnquiry', $sendParams);
+                $status     = $res['status'];
                 if ($status == 0) {
                     // this is a succcessfull payment
                     // we update our DataBase
                     $commande = null;
                     $commande = $this->handlers->h_oledrion_commands->get($cmd_id);
                     if (is_object($commande)) {
-                        if ($cmd_total == intval($commande->getVar('cmd_total'))) {
+                        if ($cmd_total == (int)$commande->getVar('cmd_total')) {
                             $this->handlers->h_oledrion_commands->validateOrder($commande);
                             $user_log = 'پرداخت شما با موفقیت انجام شد. محصول برای شما ارسال می شود';
                         } else {
@@ -210,10 +273,10 @@ class oledrion_pec24 extends oledrion_gateway
             fwrite($fp, str_repeat('-', 120) . "\n");
             fwrite($fp, date('d/m/Y H:i:s') . "\n");
             if (isset($status)) {
-                fwrite($fp, "Transaction : " . $status . "\n");
+                fwrite($fp, 'Transaction : ' . $status . "\n");
             }
-            fwrite($fp, "Result : " . $log . "\n");
-            fwrite($fp, "Peyment note : " . $user_log . "\n");
+            fwrite($fp, 'Result : ' . $log . "\n");
+            fwrite($fp, 'Peyment note : ' . $user_log . "\n");
             fclose($fp);
         }
 

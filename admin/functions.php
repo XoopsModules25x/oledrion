@@ -12,14 +12,14 @@
 /**
  * oledrion
  *
- * @copyright   The XOOPS Project http://sourceforge.net/projects/xoops/
- * @license     http://www.fsf.org/copyleft/gpl.html GNU public license
+ * @copyright   {@link http://xoops.org/ XOOPS Project}
+ * @license     {@link http://www.fsf.org/copyleft/gpl.html GNU public license}
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
- * @version     $Id: functions.php 12290 2014-02-07 11:05:17Z beckmi $
+ * @param int    $currentoption
+ * @param string $breadcrumb
  */
 function oledrion_adminMenu($currentoption = 0, $breadcrumb = '')
 {
-
 }
 
 /**
@@ -30,44 +30,43 @@ function oledrion_get_mid()
     global $xoopsModule;
 
     return $xoopsModule->getVar('mid');
-
 }
 
 /**
  * Internal function
  */
-function oledrion_get_config_handler()
+function oledrion_get_configHandler()
 {
-    $config_handler = null;
-    $config_handler = xoops_gethandler('config');
-    if (!is_object($config_handler)) {
-        trigger_error("Error, unable to get and handler on the Config object");
+    $configHandler = null;
+    $configHandler = xoops_getHandler('config');
+    if (!is_object($configHandler)) {
+        trigger_error('Error, unable to get and handler on the Config object');
         exit;
     } else {
-        return $config_handler;
+        return $configHandler;
     }
-
 }
 
 /**
  * Returns a module option
  *
- * @param string    $option_name    The module's option
- * @return object    The requested module's option
+ * @param  string $optionName
+ * @return object The requested module's option
+ * @internal param string $option_name The module's option
  */
 function oledrion_get_module_option($optionName = '')
 {
-    $ret = null;
-    $tbl_options = array();
-    $mid = oledrion_get_mid();
-    $config_handler = oledrion_get_config_handler();
-    $critere = new CriteriaCompo();
+    $ret            = null;
+    $tbl_options    = array();
+    $mid            = oledrion_get_mid();
+    $configHandler = oledrion_get_configHandler();
+    $critere        = new CriteriaCompo();
     $critere->add(new Criteria('conf_modid', $mid, '='));
     $critere->add(new Criteria('conf_name', $optionName, '='));
-    $tbl_options = $config_handler->getConfigs($critere, false, false);
+    $tbl_options = $configHandler->getConfigs($critere, false, false);
     if (count($tbl_options) > 0) {
         $option = $tbl_options[0];
-        $ret = $option;
+        $ret    = $option;
     }
 
     return $ret;
@@ -75,13 +74,16 @@ function oledrion_get_module_option($optionName = '')
 
 /**
  * Set a module's option
+ * @param string $optionName
+ * @param string $optionValue
+ * @return
  */
 function oledrion_set_module_option($optionName = '', $optionValue = '')
 {
-    $config_handler = oledrion_get_config_handler();
-    $option = oledrion_get_module_option($optionName, true);
+    $configHandler = oledrion_get_configHandler();
+    $option         = oledrion_get_module_option($optionName, true);
     $option->setVar('conf_value', $optionValue);
-    $retval = $config_handler->insertConfig($option, true);
+    $retval = $configHandler->insertConfig($option, true);
 
     return $retval;
 }
@@ -89,9 +91,9 @@ function oledrion_set_module_option($optionName = '', $optionValue = '')
 /**
  * Affichage du pied de page de l'administration
  *
- * @return string    La chaine à afficher
+ * @return string La chaine à afficher
  */
 function show_footer()
 {
-//	echo "<br /><br /><div align='center'><a href='http://www.herve-thouzard.com/' target='_blank'><img src='../assets/images/instantzero.gif'></a></div>";
+    //  echo "<br><br><div align='center'><a href='http://www.herve-thouzard.com/' target='_blank'><img src='../assets/images/instantzero.gif'></a></div>";
 }

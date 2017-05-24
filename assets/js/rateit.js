@@ -249,7 +249,16 @@
     ;
 
     //some default votes.
-    $.fn.rateit.defaults = { min:0, max:5, step:0.5, starwidth:16, starheight:16, readonly:false, resetable:true, ispreset:false };
+    $.fn.rateit.defaults = {
+        min: 0,
+        max: 5,
+        step: 0.5,
+        starwidth: 16,
+        starheight: 16,
+        readonly: false,
+        resetable: true,
+        ispreset: false
+    };
 
     //invoke it on all div.rateit elements. This could be removed if not wanted.
     $(function () {

@@ -12,26 +12,50 @@
 /**
  * oledrion
  *
- * @copyright   The XOOPS Project http://sourceforge.net/projects/xoops/
- * @license     http://www.fsf.org/copyleft/gpl.html GNU public license
+ * @copyright   {@link http://xoops.org/ XOOPS Project}
+ * @license     {@link http://www.fsf.org/copyleft/gpl.html GNU public license}
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
- * @version     $Id: oledrion_handlers.php 12290 2014-02-07 11:05:17Z beckmi $
  */
 
 /**
  * Chargement des handlers utilisés par le module
  */
+// defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
 
-defined('XOOPS_ROOT_PATH') || die('XOOPS root path not defined');
-
-class oledrion_handler
+class OledrionHandler
 {
     /**
      * Contient la liste des handlers disponibles
      *
      * @var array
      */
-    private $handlersNames = array('oledrion_manufacturer', 'oledrion_products', 'oledrion_productsmanu', 'oledrion_caddy', 'oledrion_cat', 'oledrion_commands', 'oledrion_related', 'oledrion_vat', 'oledrion_votedata', 'oledrion_discounts', 'oledrion_vendors', 'oledrion_files', 'oledrion_persistent_cart', 'oledrion_gateways_options', 'oledrion_attributes', 'oledrion_caddy_attributes', 'oledrion_products_list', 'oledrion_lists', 'oledrion_delivery', 'oledrion_location', 'oledrion_packing', 'oledrion_payment', 'oledrion_location_delivery', 'oledrion_delivery_payment', 'oledrion_payment_log');
+    private $handlersNames = array(
+        'oledrion_manufacturer',
+        'oledrion_products',
+        'oledrion_productsmanu',
+        'oledrion_caddy',
+        'oledrion_cat',
+        'oledrion_commands',
+        'oledrion_related',
+        'oledrion_vat',
+        'oledrion_votedata',
+        'oledrion_discounts',
+        'oledrion_vendors',
+        'oledrion_files',
+        'oledrion_persistent_cart',
+        'oledrion_gateways_options',
+        'oledrion_attributes',
+        'oledrion_caddy_attributes',
+        'oledrion_products_list',
+        'oledrion_lists',
+        'oledrion_delivery',
+        'oledrion_location',
+        'oledrion_packing',
+        'oledrion_payment',
+        'oledrion_location_delivery',
+        'oledrion_delivery_payment',
+        'oledrion_payment_log'
+    );
 
     /**
      * Contient l'unique instance de l'objet
@@ -44,7 +68,7 @@ class oledrion_handler
      *
      * @var array
      */
-    public static $handlers = null;
+    public $handlers = null;
 
     /**
      * Méthode chargée de renvoyer les handlers de données en les chargeant à la volée
@@ -54,19 +78,22 @@ class oledrion_handler
      */
     public function __get($name)
     {
-        if (substr($name, 0, 2) != 'h_') {
+        if (substr($name, 0, 2) !== 'h_') {
             return null;
         }
         if (!in_array(substr($name, 2), $this->handlersNames)) {
             return null;
         }
         if (!isset($this->handlersNames[$name])) {
-            $this->handlers[$name] = xoops_getmodulehandler(substr($name, 2), OLEDRION_DIRNAME);
+            $this->handlers[$name] = xoops_getModuleHandler(substr($name, 2), OLEDRION_DIRNAME);
         }
 
         return $this->handlers[$name];
     }
 
+    /**
+     * OledrionHandler constructor.
+     */
     private function __construct()
     {
         $this->handlers = array();
@@ -79,10 +106,11 @@ class oledrion_handler
      */
     public static function getInstance()
     {
-        if (!self::$instance instanceof self) {
-            self::$instance = new self;
+        static $instance;
+        if (null === $instance) {
+            $instance = new static();
         }
 
-        return self::$instance;
+        return $instance;
     }
 }

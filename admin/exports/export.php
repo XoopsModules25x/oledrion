@@ -12,18 +12,17 @@
 /**
  * oledrion
  *
- * @copyright   The XOOPS Project http://sourceforge.net/projects/xoops/
- * @license     http://www.fsf.org/copyleft/gpl.html GNU public license
+ * @copyright   {@link http://xoops.org/ XOOPS Project}
+ * @license     {@link http://www.fsf.org/copyleft/gpl.html GNU public license}
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
- * @version     $Id: export.php 12290 2014-02-07 11:05:17Z beckmi $
  */
 
 /**
  * Every export script must extend this class
  */
-defined('XOOPS_ROOT_PATH') || die('XOOPS root path not defined');
+// defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
 
-abstract class oledrion_export
+abstract class Oledrion_export
 {
     protected $separator; // Fields separator
     protected $filename; // Filename of the exported file
@@ -35,13 +34,17 @@ abstract class oledrion_export
     protected $success = false;
     protected $handlers;
 
-    function __construct($parameters = '')
+    /**
+     * Oledrion_export constructor.
+     * @param string $parameters
+     */
+    public function __construct($parameters = '')
     {
         if (is_array($parameters)) {
             $this->separator = $parameters['separator'];
-            $this->filename = $parameters['filename'];
-            $this->folder = $parameters['folder'];
-            $this->url = $parameters['url'];
+            $this->filename  = $parameters['filename'];
+            $this->folder    = $parameters['folder'];
+            $this->url       = $parameters['url'];
             $this->orderType = $parameters['orderType'];
         }
         $this->getHandlers();
@@ -49,25 +52,37 @@ abstract class oledrion_export
 
     private function getHandlers()
     {
-        $this->handlers = oledrion_handler::getInstance();
+        $this->handlers = OledrionHandler::getInstance();
     }
 
-    function setSeparator($separator)
+    /**
+     * @param $separator
+     */
+    public function setSeparator($separator)
     {
         $this->separator = $separator;
     }
 
-    function setFilename($filename)
+    /**
+     * @param $filename
+     */
+    public function setFilename($filename)
     {
         $this->filename = $filename;
     }
 
-    function setFolder($folder)
+    /**
+     * @param $folder
+     */
+    public function setFolder($folder)
     {
         $this->folder = $folder;
     }
 
-    function setOrderType($orderType)
+    /**
+     * @param $orderType
+     */
+    public function setOrderType($orderType)
     {
         $this->orderType = $orderType;
     }
@@ -77,9 +92,9 @@ abstract class oledrion_export
      * @return true if export was successful or false
      *
      */
-    abstract function export();
+    abstract public function export();
 
-    abstract function getDownloadUrl();
+    abstract public function getDownloadUrl();
 
-    abstract function getDownloadPath();
+    abstract public function getDownloadPath();
 }
