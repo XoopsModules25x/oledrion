@@ -318,7 +318,7 @@ class Oledrion_utils
             }
         }
         if (function_exists('xoops_getMailer')) {
-            $xoopsMailer =& xoops_getMailer();
+            $xoopsMailer = xoops_getMailer();
         } else {
             $xoopsMailer =& getMailer();
         }
