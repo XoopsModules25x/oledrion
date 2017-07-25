@@ -12,7 +12,7 @@
 /**
  * oledrion
  *
- * @copyright   {@link http://xoops.org/ XOOPS Project}
+ * @copyright   {@link https://xoops.org/ XOOPS Project}
  * @license     {@link http://www.fsf.org/copyleft/gpl.html GNU public license}
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
  */
@@ -33,11 +33,14 @@ switch ($action) {
     case 'default': // Liste des listes
         // ****************************************************************************************************************
         xoops_cp_header();
+        $adminObject = \Xmf\Module\Admin::getInstance();
+        $adminObject->displayNavigation('index.php?op=lists');
+
         global $xoopsConfig;
         $items = $usersList = array();
         $class = '';
 
-        Oledrion_utils::htitle(_MI_OLEDRION_ADMENU15, 4);
+        //        OledrionUtility::htitle(_MI_OLEDRION_ADMENU15, 4);
 
         $start      = isset($_GET['start']) ? (int)$_GET['start'] : 0;
         $itemsCount = $oledrionHandlers->h_oledrion_lists->getRecentListsCount();
@@ -45,9 +48,9 @@ switch ($action) {
             $pagenav = new XoopsPageNav($itemsCount, $limit, $start, 'start', 'op=' . $operation);
         }
         $items = $oledrionHandlers->h_oledrion_lists->getRecentLists(new Oledrion_parameters(array(
-                                                                                                  'start' => $start,
-                                                                                                  'limit' => $limit
-                                                                                              )));
+                                                                                                 'start' => $start,
+                                                                                                 'limit' => $limit
+                                                                                             )));
         if (count($items) > 0) {
             $usersList = $oledrionHandlers->h_oledrion_lists->getUsersFromLists($items);
         }
@@ -55,8 +58,19 @@ switch ($action) {
         if (isset($pagenav) && is_object($pagenav)) {
             echo "<tr><td colspan='2' align='left'>" . $pagenav->renderNav() . "</td><td align='right' colspan='3'>&nbsp;</td></tr>\n";
         }
-        echo "<tr><th align='center'>" . _AM_OLEDRION_ID . "</th><th align='center'>" . _AM_OLEDRION_TITLE . "</th><th align='center'>" . _AM_OLEDRION_USER . "</th><th align='center'>" . _AM_OLEDRION_DATE . "</th><th align='center'>"
-             . _AM_OLEDRION_TYPE . "</th><th align='center'>" . _AM_OLEDRION_ACTION . '</th></tr>';
+        echo "<tr><th align='center'>"
+             . _AM_OLEDRION_ID
+             . "</th><th align='center'>"
+             . _AM_OLEDRION_TITLE
+             . "</th><th align='center'>"
+             . _AM_OLEDRION_USER
+             . "</th><th align='center'>"
+             . _AM_OLEDRION_DATE
+             . "</th><th align='center'>"
+             . _AM_OLEDRION_TYPE
+             . "</th><th align='center'>"
+             . _AM_OLEDRION_ACTION
+             . '</th></tr>';
         foreach ($items as $item) {
             $class     = ($class === 'even') ? 'odd' : 'even';
             $id        = $item->getVar('list_id');
@@ -76,7 +90,7 @@ switch ($action) {
         if (isset($pagenav) && is_object($pagenav)) {
             echo "<div align='right'>" . $pagenav->renderNav() . '</div>';
         }
-        include_once OLEDRION_ADMIN_PATH . 'admin_footer.php';
+        require_once OLEDRION_ADMIN_PATH . 'admin_footer.php';
         break;
 
     // ****************************************************************************************************************
@@ -85,18 +99,18 @@ switch ($action) {
         xoops_cp_header();
         $id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
         if (empty($id)) {
-            Oledrion_utils::redirect(_AM_OLEDRION_ERROR_1, $baseurl . '?op=' . $operation, 5);
+            OledrionUtility::redirect(_AM_OLEDRION_ERROR_1, $baseurl . '?op=' . $operation, 5);
         }
         $list = null;
         $list = $oledrionHandlers->h_oledrion_lists->get($id);
         if (!is_object($list)) {
-            Oledrion_utils::redirect(_AM_OLEDRION_NOT_FOUND, $baseurl . '?op=' . $operation, 5);
+            OledrionUtility::redirect(_AM_OLEDRION_NOT_FOUND, $baseurl . '?op=' . $operation, 5);
         }
         if ($oledrionHandlers->h_oledrion_lists->deleteList($list)) {
-            Oledrion_utils::updateCache();
-            Oledrion_utils::redirect(_AM_OLEDRION_SAVE_OK, $baseurl . '?op=' . $operation, 2);
+            OledrionUtility::updateCache();
+            OledrionUtility::redirect(_AM_OLEDRION_SAVE_OK, $baseurl . '?op=' . $operation, 2);
         } else {
-            Oledrion_utils::redirect(_AM_OLEDRION_SAVE_PB, $baseurl . '?op=' . $operation, 5);
+            OledrionUtility::redirect(_AM_OLEDRION_SAVE_PB, $baseurl . '?op=' . $operation, 5);
         }
         break;
 }

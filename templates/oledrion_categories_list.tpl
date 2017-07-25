@@ -16,10 +16,10 @@
                             <h2>
                                 <a href="<{$category.cat_url_rewrited}>" title="<{$category.cat_href_title}>">
                                     <{if $category.cat_imgurl != ''}><img src="<{$category.cat_full_imgurl}>"
-                                                                          alt="<{$category.cat_href_title}>" /><{else}>
+                                                                          alt="<{$category.cat_href_title}>"><{else}>
                                         <img
                                         src="<{$smarty.const.OLEDRION_IMAGES_URL}>icon-cat.png"
-                                        alt="<{$category.cat_href_title}>" /><{/if}>
+                                        alt="<{$category.cat_href_title}>"><{/if}>
                                     <{$category.cat_title}>
                                 </a>
                             </h2>

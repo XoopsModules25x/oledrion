@@ -12,7 +12,7 @@
 /**
  * oledrion
  *
- * @copyright   {@link http://xoops.org/ XOOPS Project}
+ * @copyright   {@link https://xoops.org/ XOOPS Project}
  * @license     {@link http://www.fsf.org/copyleft/gpl.html GNU public license}
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
  */
@@ -20,7 +20,7 @@
 /**
  * Gestion des options (attributs) produits dans les commandes
  */
-require __DIR__ . '/classheader.php';
+require_once __DIR__ . '/classheader.php';
 
 /**
  * Class Oledrion_caddy_attributes
@@ -78,17 +78,17 @@ class Oledrion_caddy_attributes extends Oledrion_Object
         $format = 'e';
         $names  = $this->getOption('ca_attribute_names', $format);
         $values = $this->getOption('ca_attribute_values', $format);
-        if (Oledrion_utils::getModuleOption('use_price')) {
+        if (OledrionUtility::getModuleOption('use_price')) {
             $prices = $this->getOption('ca_attribute_prices', $format);
         }
         $names[]  = $name;
         $values[] = $value;
-        if (Oledrion_utils::getModuleOption('use_price')) {
+        if (OledrionUtility::getModuleOption('use_price')) {
             $prices[] = $price;
         }
         $this->setVar('ca_attribute_names', implode(OLEDRION_ATTRIBUTE_SEPARATOR, $names));
         $this->setVar('ca_attribute_values', implode(OLEDRION_ATTRIBUTE_SEPARATOR, $values));
-        if (Oledrion_utils::getModuleOption('use_price')) {
+        if (OledrionUtility::getModuleOption('use_price')) {
             $this->setVar('ca_attribute_prices', implode(OLEDRION_ATTRIBUTE_SEPARATOR, $prices));
         }
 
@@ -117,11 +117,11 @@ class Oledrion_caddy_attributes extends Oledrion_Object
      * @return array
      * @since 2.3.2009.03.23
      */
-    public function renderForInvoice(Oledrion_products $product, $format = 's')
+    public function renderForInvoice(oledrion_products $product, $format = 's')
     {
         $names = $prices = $ret = array();
         $names = $this->getOption('ca_attribute_names', $format);
-        if (Oledrion_utils::getModuleOption('use_price')) {
+        if (OledrionUtility::getModuleOption('use_price')) {
             $prices = $this->getOption('ca_attribute_prices', $format);
         }
 
@@ -129,9 +129,9 @@ class Oledrion_caddy_attributes extends Oledrion_Object
         $counter           = 0;
         foreach ($names as $name) {
             $price = 0;
-            if (Oledrion_utils::getModuleOption('use_price')) {
+            if (OledrionUtility::getModuleOption('use_price')) {
                 if (isset($prices[$counter])) {
-                    $price = Oledrion_utils::getAmountWithVat((float)$prices[$counter], $product->getVar('product_vat_id'));
+                    $price = OledrionUtility::getAmountWithVat((float)$prices[$counter], $product->getVar('product_vat_id'));
                     $price = $oledrion_Currency->amountForDisplay($price);
                 }
             }
@@ -150,9 +150,9 @@ class OledrionOledrion_caddy_attributesHandler extends Oledrion_XoopsPersistable
 {
     /**
      * OledrionOledrion_caddy_attributesHandler constructor.
-     * @param XoopsDatabase|null $db
+     * @param object $db
      */
-    public function __construct(XoopsDatabase $db)
+    public function __construct($db)
     { //                                Table                   Classe                      Id
         parent::__construct($db, 'oledrion_caddy_attributes', 'oledrion_caddy_attributes', 'ca_id');
     }
@@ -177,7 +177,7 @@ class OledrionOledrion_caddy_attributesHandler extends Oledrion_XoopsPersistable
      * @return array
      * @since 2.3.2009.03.23
      */
-    public function getFormatedAttributesForCaddy($ca_caddy_id, Oledrion_products $product)
+    public function getFormatedAttributesForCaddy($ca_caddy_id, oledrion_products $product)
     {
         $handlers   = OledrionHandler::getInstance();
         $attributes = $ret = array();

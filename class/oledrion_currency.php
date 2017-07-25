@@ -12,7 +12,7 @@
 /**
  * oledrion
  *
- * @copyright   {@link http://xoops.org/ XOOPS Project}
+ * @copyright   {@link https://xoops.org/ XOOPS Project}
  * @license     {@link http://www.fsf.org/copyleft/gpl.html GNU public license}
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
  */
@@ -37,12 +37,12 @@ class Oledrion_Currency
     public function __construct()
     {
         // Get the module's preferences
-        $this->_decimalsCount = Oledrion_utils::getModuleOption('decimals_count');
-        $this->_thousandsSep  = Oledrion_utils::getModuleOption('thousands_sep');
-        $this->_decimalSep    = Oledrion_utils::getModuleOption('decimal_sep');
-        $this->_moneyFull     = Oledrion_utils::getModuleOption('money_full');
-        $this->_moneyShort    = Oledrion_utils::getModuleOption('money_short');
-        $this->_monnaiePlace  = Oledrion_utils::getModuleOption('monnaie_place');
+        $this->_decimalsCount = OledrionUtility::getModuleOption('decimals_count');
+        $this->_thousandsSep  = OledrionUtility::getModuleOption('thousands_sep');
+        $this->_decimalSep    = OledrionUtility::getModuleOption('decimal_sep');
+        $this->_moneyFull     = OledrionUtility::getModuleOption('money_full');
+        $this->_moneyShort    = OledrionUtility::getModuleOption('money_short');
+        $this->_monnaiePlace  = OledrionUtility::getModuleOption('monnaie_place');
         $this->_thousandsSep  = str_replace('[space]', ' ', $this->_thousandsSep);
         $this->_decimalSep    = str_replace('[space]', ' ', $this->_decimalSep);
     }

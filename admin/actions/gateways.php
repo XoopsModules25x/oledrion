@@ -12,7 +12,7 @@
 /**
  * oledrion
  *
- * @copyright   {@link http://xoops.org/ XOOPS Project}
+ * @copyright   {@link https://xoops.org/ XOOPS Project}
  * @license     {@link http://www.fsf.org/copyleft/gpl.html GNU public license}
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
  */
@@ -31,17 +31,31 @@ switch ($action) {
     case 'default': // Liste des passerelles de paiement installés
         // ****************************************************************************************************************
         xoops_cp_header();
+        $adminObject = \Xmf\Module\Admin::getInstance();
+        $adminObject->displayNavigation('index.php?op=gateways');
+
         global $xoopsConfig;
-        Oledrion_utils::htitle(_AM_OLEDRION_INSTALLED_GATEWAYS, 4);
+        //        OledrionUtility::htitle(_AM_OLEDRION_INSTALLED_GATEWAYS, 4);
         if (file_exists(OLEDRION_GATEWAY_LOG_PATH)) {
             echo "<a href='" . $baseurl . "?op=gateways&action=seelog'>" . _AM_OLEDRION_GATEWAYS_SEELOG . '</a><br>';
         }
         $currentGateway = Oledrion_gateways::getCurrentGateway();
         $class          = '';
-        echo "<form method='post' action='" . $baseurl . "'><input type='hidden' name='op' id='op' value='gateways' /><input type='hidden' name='action' id='action' value='setDefaultGateway' />";
+        echo "<form method='post' action='" . $baseurl . "'><input type='hidden' name='op' id='op' value='gateways'><input type='hidden' name='action' id='action' value='setDefaultGateway'>";
         echo "<table width='100%' cellspacing='1' cellpadding='3' border='0' class='outer'>\n";
-        echo "<tr><th align='center'>" . _AM_OLEDRION_GATEWAYS_NAME . "</th><th align='center'>" . _AM_OLEDRION_GATEWAYS_VERSION . "</th><th align='center'>" . _AM_OLEDRION_GATEWAYS_DESCRIPTION . "</th><th align='center'>"
-             . _AM_OLEDRION_GATEWAYS_AUTHOR . "</th><th align='center'>" . _AM_OLEDRION_GATEWAYS_DATE . "</th><th align='center'>" . _AM_OLEDRION_GATEWAYS_USED . "</th></tr>\n";
+        echo "<tr><th align='center'>"
+             . _AM_OLEDRION_GATEWAYS_NAME
+             . "</th><th align='center'>"
+             . _AM_OLEDRION_GATEWAYS_VERSION
+             . "</th><th align='center'>"
+             . _AM_OLEDRION_GATEWAYS_DESCRIPTION
+             . "</th><th align='center'>"
+             . _AM_OLEDRION_GATEWAYS_AUTHOR
+             . "</th><th align='center'>"
+             . _AM_OLEDRION_GATEWAYS_DATE
+             . "</th><th align='center'>"
+             . _AM_OLEDRION_GATEWAYS_USED
+             . "</th></tr>\n";
         $installedGateways = Oledrion_gateways::getInstalledGatewaysList();
         $gatewaysCount     = 0;
 
@@ -75,7 +89,7 @@ switch ($action) {
                             $checked          = 'checked';
                             $isCurrentGateway = true;
                         }
-                        echo "<input type='radio' name='gateway' id='gateway' $checked value='" . $installedGateway . "' />";
+                        echo "<input type='radio' name='gateway' id='gateway' $checked value='" . $installedGateway . "'>";
                         if ($isCurrentGateway) {
                             echo "<br><a href='" . $baseurl . '?op=gateways&action=parameters&gateway=' . $gatewayInformation['foldername'] . "'>" . _AM_OLEDRION_GATEWAYS_PARAMETERS . '</a>';
                         }
@@ -89,11 +103,11 @@ switch ($action) {
         if ($gatewaysCount > 0) {
             $class = ($class === 'even') ? 'odd' : 'even';
             echo "<tr class='" . $class . "'>\n";
-            echo "<td colspan='6' align='center'><br><input type='submit' name='btngot' id='btngo' value='" . _AM_OLEDRION_GATEWAYS_UPDATE . "' /><br><br></form></td></tr>\n";
+            echo "<td colspan='6' align='center'><br><input type='submit' name='btngot' id='btngo' value='" . _AM_OLEDRION_GATEWAYS_UPDATE . "'><br><br></form></td></tr>\n";
             echo "</tr>\n";
         }
         echo "</table>\n";
-        include_once OLEDRION_ADMIN_PATH . 'admin_footer.php';
+        require_once OLEDRION_ADMIN_PATH . 'admin_footer.php';
         break;
 
     // ****************************************************************************************************************
@@ -101,10 +115,10 @@ switch ($action) {
         // ****************************************************************************************************************
         xoops_cp_header();
         global $xoopsConfig;
-        Oledrion_utils::htitle(_AM_OLEDRION_INSTALLED_GATEWAYS, 4);
+        OledrionUtility::htitle(_AM_OLEDRION_INSTALLED_GATEWAYS, 4);
         $opRedirect = '?op=gateways';
         if (!file_exists(OLEDRION_GATEWAY_LOG_PATH)) {
-            Oledrion_utils::redirect(_AM_OLEDRION_NOT_FOUND, $baseurl . $opRedirect, 4);
+            OledrionUtility::redirect(_AM_OLEDRION_NOT_FOUND, $baseurl . $opRedirect, 4);
         }
         $logContent = nl2br(file_get_contents(OLEDRION_GATEWAY_LOG_PATH));
         echo '<div id="logContent" style="width: 1024px; max-width! 1024px; height: 400px; overflow: auto;">';
@@ -112,7 +126,7 @@ switch ($action) {
         echo $logContent;
         echo "</pre>\n";
         echo "</div>\n";
-        include_once OLEDRION_ADMIN_PATH . 'admin_footer.php';
+        require_once OLEDRION_ADMIN_PATH . 'admin_footer.php';
         break;
 
     // ****************************************************************************************************************
@@ -124,12 +138,12 @@ switch ($action) {
         $gateway    = isset($_POST['gateway']) ? strtolower($_POST['gateway']) : '';
         $gateway    = Oledrion_gateways::purifyGatewayName($gateway);
         if (empty($gateway)) {
-            Oledrion_utils::redirect(_AM_OLEDRION_ERROR_1, $baseurl . $opRedirect, 5);
+            OledrionUtility::redirect(_AM_OLEDRION_ERROR_1, $baseurl . $opRedirect, 5);
         }
         if (oledrion_set_module_option('used_gateway', $gateway)) {
-            Oledrion_utils::redirect(_AM_OLEDRION_SAVE_OK, $baseurl . $opRedirect, 1);
+            OledrionUtility::redirect(_AM_OLEDRION_SAVE_OK, $baseurl . $opRedirect, 1);
         } else {
-            Oledrion_utils::redirect(_AM_OLEDRION_SAVE_PB, $baseurl . $opRedirect, 4);
+            OledrionUtility::redirect(_AM_OLEDRION_SAVE_PB, $baseurl . $opRedirect, 4);
         }
         break;
 
@@ -138,35 +152,35 @@ switch ($action) {
         // ****************************************************************************************************************
         xoops_cp_header();
         oledrion_adminMenu(12);
-        Oledrion_utils::htitle(_AM_OLEDRION_INSTALLED_GATEWAYS, 4);
+        OledrionUtility::htitle(_AM_OLEDRION_INSTALLED_GATEWAYS, 4);
         $opRedirect = '?op=gateways';
         $gateway    = isset($_GET['gateway']) ? strtolower($_GET['gateway']) : '';
         $gateway    = Oledrion_gateways::purifyGatewayName($gateway);
         if (empty($gateway)) {
-            Oledrion_utils::redirect(_AM_OLEDRION_ERROR_1, $baseurl . $opRedirect, 5);
+            OledrionUtility::redirect(_AM_OLEDRION_ERROR_1, $baseurl . $opRedirect, 5);
         }
         if (Oledrion_gateways::gatewayClassFileExists($gateway)) { // Il y a une classe donc c'est bon
             $languageFilename     = '';
             $languageFileIncluded = Oledrion_gateways::loadGatewaysLanguageDefines($gateway, $languageFilename);
             if (!$languageFileIncluded) {
-                Oledrion_utils::redirect(_AM_OLEDRION_GATEWAYS_ERROR2, $baseurl . $opRedirect, 4);
+                OledrionUtility::redirect(_AM_OLEDRION_GATEWAYS_ERROR2, $baseurl . $opRedirect, 4);
             }
             Oledrion_gateways::includeGatewayClass($gateway);
             if (Oledrion_gateways::gatewayClassExists($gateway)) {
                 $gatewayClassName = Oledrion_gateways::gatewayClassName($gateway);
                 $temporaryGateway = new $gatewayClassName();
                 if (!Oledrion_gateways::asGoodAncestor($temporaryGateway)) {
-                    Oledrion_utils::redirect(_AM_OLEDRION_GATEWAYS_ERROR4, $baseurl . $opRedirect, 4);
+                    OledrionUtility::redirect(_AM_OLEDRION_GATEWAYS_ERROR4, $baseurl . $opRedirect, 4);
                 }
                 $temporaryGateway->languageFilename = $languageFilename;
                 $form                               = $temporaryGateway->getParametersForm($baseurl . $opRedirect . '&action=saveparameters');
-                $form                               =& Oledrion_utils::formMarkRequiredFields($form);
+                $form                               =& OledrionUtility::formMarkRequiredFields($form);
                 $form->display();
             } else {
-                Oledrion_utils::redirect(_AM_OLEDRION_GATEWAYS_ERROR3, $baseurl . $opRedirect, 4);
+                OledrionUtility::redirect(_AM_OLEDRION_GATEWAYS_ERROR3, $baseurl . $opRedirect, 4);
             }
         } else {
-            Oledrion_utils::redirect(_AM_OLEDRION_GATEWAYS_ERROR1, $baseurl . $opRedirect, 4);
+            OledrionUtility::redirect(_AM_OLEDRION_GATEWAYS_ERROR1, $baseurl . $opRedirect, 4);
         }
         break;
 
@@ -179,32 +193,32 @@ switch ($action) {
         $gateway    = isset($_POST['gateway']) ? strtolower($_POST['gateway']) : '';
         $gateway    = Oledrion_gateways::purifyGatewayName($gateway);
         if (empty($gateway)) {
-            Oledrion_utils::redirect(_AM_OLEDRION_ERROR_1, $baseurl . $opRedirect, 5);
+            OledrionUtility::redirect(_AM_OLEDRION_ERROR_1, $baseurl . $opRedirect, 5);
         }
         if (!Oledrion_gateways::isInstalledGatewayName($gateway)) {
-            Oledrion_utils::redirect(_AM_OLEDRION_GATEWAYS_ERROR5, $baseurl . $opRedirect, 4);
+            OledrionUtility::redirect(_AM_OLEDRION_GATEWAYS_ERROR5, $baseurl . $opRedirect, 4);
         }
         if (Oledrion_gateways::gatewayClassFileExists($gateway)) {
             if (!Oledrion_gateways::loadGatewaysLanguageDefines($gateway)) { // Le chargement des traductions a échoué
-                Oledrion_utils::redirect(_AM_OLEDRION_GATEWAYS_ERROR2, $baseurl . $opRedirect, 4);
+                OledrionUtility::redirect(_AM_OLEDRION_GATEWAYS_ERROR2, $baseurl . $opRedirect, 4);
             }
             Oledrion_gateways::includeGatewayClass($gateway);
             if (Oledrion_gateways::gatewayClassExists($gateway)) {
                 $gatewayClassName = Oledrion_gateways::gatewayClassName($gateway);
                 $temporaryGateway = new $gatewayClassName();
                 if (!Oledrion_gateways::asGoodAncestor($temporaryGateway)) {
-                    Oledrion_utils::redirect(_AM_OLEDRION_GATEWAYS_ERROR4, $baseurl . $opRedirect, 4);
+                    OledrionUtility::redirect(_AM_OLEDRION_GATEWAYS_ERROR4, $baseurl . $opRedirect, 4);
                 }
                 if ($temporaryGateway->saveParametersForm($_POST)) {
-                    Oledrion_utils::redirect(_AM_OLEDRION_SAVE_OK, $baseurl . $opRedirect, 2);
+                    OledrionUtility::redirect(_AM_OLEDRION_SAVE_OK, $baseurl . $opRedirect, 2);
                 } else {
-                    Oledrion_utils::redirect(_AM_OLEDRION_SAVE_PB, $baseurl . $opRedirect, 4);
+                    OledrionUtility::redirect(_AM_OLEDRION_SAVE_PB, $baseurl . $opRedirect, 4);
                 }
             } else {
-                Oledrion_utils::redirect(_AM_OLEDRION_GATEWAYS_ERROR3, $baseurl . $opRedirect, 4);
+                OledrionUtility::redirect(_AM_OLEDRION_GATEWAYS_ERROR3, $baseurl . $opRedirect, 4);
             }
         } else {
-            Oledrion_utils::redirect(_AM_OLEDRION_GATEWAYS_ERROR1, $baseurl . $opRedirect, 4);
+            OledrionUtility::redirect(_AM_OLEDRION_GATEWAYS_ERROR1, $baseurl . $opRedirect, 4);
         }
         break;
 }

@@ -40,7 +40,7 @@
                         href="<{$smarty.const.OLEDRION_URL}>caddy.php?op=addproduct&product_id=<{$product.product_id}>"
                         title="<{$smarty.const._OLEDRION_ADD_TO_CART}>"><img
                                 src="<{$smarty.const.OLEDRION_IMAGES_URL}>cartadd.gif"
-                                alt="<{$smarty.const._OLEDRION_ADD_TO_CART}>"/>
+                                alt="<{$smarty.const._OLEDRION_ADD_TO_CART}>">
                         </a><{else}><{$mod_pref.nostock_msg}><{/if}></td>
             </tr>
         <{/foreach}>
@@ -62,10 +62,10 @@
         <h3><{$smarty.const._OLEDRION_PDF_CATALOG}></h3>
         <form name="frmCatalog" id="frmCatalog" method="post" action="<{$smarty.const.OLEDRION_URL}>pdf/catalog.php">
             <input type="radio" name="catalogFormat" id="catalogFormat" value="0"
-                   checked="checked"/><{$smarty.const._OLEDRION_PDF_CATALOG1}>
+                   checked="checked"><{$smarty.const._OLEDRION_PDF_CATALOG1}>
             <br><input type="radio" name="catalogFormat" id="catalogFormat"
-                       value="1"/><{$smarty.const._OLEDRION_PDF_CATALOG2}>
-            <br><input type="submit" name="btnSubmit" id="btnSubmit" value="<{$smarty.const._OLEDRION_PDF_GETIT}>"/>
+                       value="1"><{$smarty.const._OLEDRION_PDF_CATALOG2}>
+            <br><input type="submit" name="btnSubmit" id="btnSubmit" value="<{$smarty.const._OLEDRION_PDF_GETIT}>">
         </form>
     <{/if}>
 

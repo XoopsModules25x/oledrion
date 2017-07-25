@@ -114,7 +114,7 @@
                             <{if $product.product_thumb_full_url != ''}>
                                 <div class="oledrion_productthumb-big">
                                     <img src="<{$product.product_image_full_url}>"
-                                         alt="<{$product.product_href_title}>"/>
+                                         alt="<{$product.product_href_title}>">
                                 </div>
                             <{/if}>
                         </td>
@@ -128,7 +128,7 @@
                             <{if $product_joined_manufacturers != ''}>
                                 <div class="oledrion_productauthor_view-product">
                                     <img src="<{$smarty.const.OLEDRION_IMAGES_URL}>author.png"
-                                         alt="<{$product_joined_manufacturers}>"/><span
+                                         alt="<{$product_joined_manufacturers}>"><span
                                             class="oledrion_productdescription-contentTitles"><{$smarty.const._OLEDRION_BY}></span> <{$product_joined_manufacturers}>
                                 </div>
                             <{/if}>
@@ -151,7 +151,7 @@
                             </span>
                                             <a href="<{$smarty.const.OLEDRION_URL}>caddy.php?op=addproduct&product_id=<{$product.product_id}>"
                                                title="<{$smarty.const._OLEDRION_ADD_TO_CART}>"><img
-                                                        src="<{$smarty.const.OLEDRION_IMAGES_URL}>cartadd.png" alt=""/></a>
+                                                        src="<{$smarty.const.OLEDRION_IMAGES_URL}>cartadd.png" alt=""></a>
                                             <{if $product.product_ecotaxe != ''}>
                                                 <div class="oledrion_view-product_price_ecotaxe"><span
                                                             class="oledrion_productdescription-contentTitles"><{$smarty.const._OLEDRION_ECOTAXE}></span>
@@ -187,13 +187,13 @@
                                                                        id="buy_button"
                                                                        alt="<{$smarty.const._OLEDRION_ADD_TO_CART}>"
                                                                        title="<{$smarty.const._OLEDRION_ADD_TO_CART}>"
-                                                                       value="<{$smarty.const._OLEDRION_ADD_TO_CART}>"/>
+                                                                       value="<{$smarty.const._OLEDRION_ADD_TO_CART}>">
                                                                 <div class="error" style="display: none;">
                                                                     <br><img
                                                                             src="<{$smarty.const.OLEDRION_IMAGES_URL}>warning.png"
                                                                             width="24" height="24"
-                                                                            style="float:left; margin: -5px 10px 0 0; "/><span></span>.<br
-                                                                            clear="all"/>
+                                                                            style="float:left; margin: -5px 10px 0 0; "><span></span>.<br
+                                                                            clear="all">
                                                                 </div>
                                                             </td>
                                                         </tr>
@@ -281,13 +281,13 @@
                                 <a href="<{$smarty.const.OLEDRION_ATTACHED_FILES_URL}>/<{$product.product_attachment}>"
                                    target="_blank"><img src="<{$smarty.const.OLEDRION_IMAGES_URL}>attach.gif"
                                                         alt="<{$smarty.const._OLEDRION_ATTACHED_FILE}>" width="9"
-                                                        height="15"/> <{$smarty.const._OLEDRION_ATTACHED_FILE}></a>
+                                                        height="15"> <{$smarty.const._OLEDRION_ATTACHED_FILE}></a>
                             <{/if}>
                             <{if $currentUserId > 0}>
                                 <br>
                                 <a href="<{$smarty.const.OLEDRION_URL}>my-lists.php?op=addProduct&product_id=<{$product.product_id}>"><img
                                             src="<{$addToWishList}>"
-                                            alt="<{$smarty.const._OLEDRION_ADD_TO_LIST}>"/></a>
+                                            alt="<{$smarty.const._OLEDRION_ADD_TO_LIST}>"></a>
                             <{/if}>
                         </td>
                     </tr>
@@ -416,7 +416,7 @@
     <{if count($product_related_products) > 0}>
         <div id="oledrion_related">
             <h2><img src="<{$smarty.const.OLEDRION_IMAGES_URL}>icon-product-person.png"
-                     alt="<{$smarty.const._OLEDRION_CART}>"/><{$smarty.const._OLEDRION_RELATED_PRODUCTS}></h2>
+                     alt="<{$smarty.const._OLEDRION_CART}>"><{$smarty.const._OLEDRION_RELATED_PRODUCTS}></h2>
             <table class='center oledrion_categorylist'>
                 <tr>
                     <{foreach item=oneitem from=$product_related_products}>
@@ -439,27 +439,27 @@
         <div id="oledrion_otherproducts">
             <{if $previous_product_id != 0 || $next_product_id != 0}>
                 <h2><img src="<{$smarty.const.OLEDRION_IMAGES_URL}>icon-product-person.png"
-                         alt="<{$smarty.const._OLEDRION_OTHER_PRODUCTS}>"/><{$smarty.const._OLEDRION_OTHER_PRODUCTS}>
+                         alt="<{$smarty.const._OLEDRION_OTHER_PRODUCTS}>"><{$smarty.const._OLEDRION_OTHER_PRODUCTS}>
                 </h2>
             <{/if}>
             <{if $previous_product_id != 0}>
                 <br>
                 <a href="<{$previous_product_url_rewrited}>" title="<{$previous_product_href_title}>"><img
                             src="<{$smarty.const.OLEDRION_IMAGES_URL}>go-previous.png"
-                            alt="<{$previous_product_title}>"/> <{$smarty.const._OLEDRION_PREVIOUS_PRODUCT}>
+                            alt="<{$previous_product_title}>"> <{$smarty.const._OLEDRION_PREVIOUS_PRODUCT}>
                     : <{$previous_product_title}></a>
             <{/if}>
             <{if $next_product_id != 0}>
                 <br>
                 <a href="<{$next_product_url_rewrited}>" title="<{$next_product_href_title}>"><img
                             src="<{$smarty.const.OLEDRION_IMAGES_URL}>go-next.png"
-                            alt="<{$next_product_title}>"/> <{$smarty.const._OLEDRION_NEXT_PRODUCT}>
+                            alt="<{$next_product_title}>"> <{$smarty.const._OLEDRION_NEXT_PRODUCT}>
                     : <{$next_product_title}></a>
             <{/if}>
 
             <{if $better_together > 0 && $bestwith}>
                 <br>
-                <img src="<{$smarty.const.OLEDRION_IMAGES_URL}>icon-star.png" alt="<{$bestwith.product_title}>"/>
+                <img src="<{$smarty.const.OLEDRION_IMAGES_URL}>icon-star.png" alt="<{$bestwith.product_title}>">
                 <{$smarty.const._OLEDRION_BEST_WITH}>
                 <a href="<{$bestwith.product_url_rewrited}>"
                    title="<{$bestwith.product_href_title}>"><{$bestwith.product_title}></a>
@@ -467,7 +467,7 @@
 
             <{if count($product_all_categs) > 0}>
                 <h2><img src="<{$smarty.const.OLEDRION_IMAGES_URL}>icon-product-person.png"
-                         alt="<{$smarty.const._OLEDRION_RECENT_CATEGS}>"/><{$smarty.const._OLEDRION_RECENT_CATEGS}></h2>
+                         alt="<{$smarty.const._OLEDRION_RECENT_CATEGS}>"><{$smarty.const._OLEDRION_RECENT_CATEGS}></h2>
                 <table class='center oledrion_lastproducts'>
                     <tr>
                         <{foreach item=oneitem from=$product_all_categs}>
@@ -485,7 +485,7 @@
 
             <{if count($product_current_categ) > 0}>
                 <h2><img src="<{$smarty.const.OLEDRION_IMAGES_URL}>icon-product-person.png"
-                         alt="<{$smarty.const._OLEDRION_RECENT_CATEG}>"/><{$smarty.const._OLEDRION_RECENT_CATEG}></h2>
+                         alt="<{$smarty.const._OLEDRION_RECENT_CATEG}>"><{$smarty.const._OLEDRION_RECENT_CATEG}></h2>
                 <table class='center oledrion_lastproducts'>
                     <tr>
                         <{foreach item=oneitem from=$product_current_categ}>
@@ -514,34 +514,34 @@
     <div id="oledrion_caddy" class="right">
         <br>
         <a href="<{$smarty.const.OLEDRION_URL}>caddy.php" title="<{$smarty.const._OLEDRION_CART}>"><img
-                    src="<{$smarty.const.OLEDRION_IMAGES_URL}>cart.png" alt="<{$smarty.const._OLEDRION_CART}>"/></a>&nbsp;
+                    src="<{$smarty.const.OLEDRION_IMAGES_URL}>cart.png" alt="<{$smarty.const._OLEDRION_CART}>"></a>&nbsp;
         <{if $mod_pref.rss}>
             <a href="<{$smarty.const.OLEDRION_URL}>rss.php" title="<{$smarty.const._OLEDRION_RSS_FEED}>"><img
                         src="<{$smarty.const.OLEDRION_IMAGES_URL}>rss.gif"
-                        alt="<{$smarty.const._OLEDRION_RSS_FEED}>"/></a>
+                        alt="<{$smarty.const._OLEDRION_RSS_FEED}>"></a>
             &nbsp;
         <{/if}>
         <a href="<{$baseurl}>&op=print" rel="nofollow" target="_blank"
            title="<{$smarty.const._OLEDRION_PRINT_VERSION}>"><img src="<{xoModuleIcons16 printer.png}>"
-                                                                  alt="<{$smarty.const._OLEDRION_PRINT_VERSION}>"/></a>&nbsp;
+                                                                  alt="<{$smarty.const._OLEDRION_PRINT_VERSION}>"></a>&nbsp;
         <a href="<{$mail_link}>" rel="nofollow" target="_blank" title="<{$smarty.const._OLEDRION_TELLAFRIEND}>"><img
                     src="<{xoModuleIcons16 mail_forward.png}>"
-                    alt="<{$smarty.const._OLEDRION_TELLAFRIEND}>"/></a>&nbsp;
+                    alt="<{$smarty.const._OLEDRION_TELLAFRIEND}>"></a>&nbsp;
         <{if $mod_pref.isAdmin}>
             <a href="<{$smarty.const.OLEDRION_URL}>admin/index.php?op=products&action=edit&id=<{$product.product_id}>"
                target="_blank" title="<{$smarty.const._EDIT}>"><img
-                        src="<{xoModuleIcons16 edit.png}>" alt="<{$smarty.const._EDIT}>"/></a>
+                        src="<{xoModuleIcons16 edit.png}>" alt="<{$smarty.const._EDIT}>"></a>
             &nbsp;
             <a href="<{$smarty.const.OLEDRION_URL}>admin/index.php?op=products&action=confdelete&id=<{$product.product_id}>"
                title="<{$smarty.const._DELETE}>"><img src="<{xoModuleIcons16 delete.png}>"
-                                                      alt="<{$smarty.const._DELETE}>"/></a>
+                                                      alt="<{$smarty.const._DELETE}>"></a>
         <{/if}>
         <{if $canChangeQuantity}><a href="<{$baseurl}>&stock=add" title="<{$ProductStockQuantity}>"><img
-                    src="<{$smarty.const.OLEDRION_IMAGES_URL}>plus.gif" alt="<{$ProductStockQuantity}>"/>
+                    src="<{$smarty.const.OLEDRION_IMAGES_URL}>plus.gif" alt="<{$ProductStockQuantity}>">
             </a> <{if $product.product_stock -1 > 0}><a href="<{$baseurl}>&stock=substract"
                                                         title="<{$ProductStockQuantity}>"><img
                     src="<{$smarty.const.OLEDRION_IMAGES_URL}>minus.gif"
-                    alt="<{$ProductStockQuantity}>"/></a><{/if}><{/if}>
+                    alt="<{$ProductStockQuantity}>"></a><{/if}><{/if}>
     </div>
     <br>
     <!--********* /CADDY ******-->

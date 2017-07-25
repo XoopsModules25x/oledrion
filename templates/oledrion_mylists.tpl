@@ -25,22 +25,20 @@
                     <td class='center'><{$list.list_formated_date}></td>
                     <td class='center'><a href="<{$baseurl}>?op=edit&list_id=<{$list.list_id}>"><img
                                     src="<{xoModuleIcons16 edit.png}>" alt="<{$smarty.const._EDIT}>"
-                                    title="<{$smarty.const._EDIT}>"/></a>
+                                    title="<{$smarty.const._EDIT}>"></a>
                         <a href="<{$baseurl}>?op=delete&list_id=<{$list.list_id}>"><img
                                     src="<{xoModuleIcons16 delete.png}>" alt="<{$smarty.const._DELETE}>"
-                                    title="<{$smarty.const._DELETE}>"/></a>
+                                    title="<{$smarty.const._DELETE}>"></a>
                     </td>
                 </tr>
             <{/foreach}>
             <tr class="<{cycle values="even,odd"}>">
                 <td colspan="4" class="center">
                     <div class="frmAddList">
-                        <form method="post" action="<{$baseurl}>" name="frmAddList" id="frmAddList"><input type="hidden"
-                                                                                                           name="op"
-                                                                                                           id="op"
-                                                                                                           value="addList"/><input
-                                    type="submit" name="btngo" id="btngo"
-                                    value="<{$smarty.const._OLEDRION_CREATE_NEW_LIST}>"/>
+                        <form method="post" action="<{$baseurl}>" name="frmAddList" id="frmAddList">
+                            <{securityToken}><{*//mb*}>
+                            <input type="hidden" name="op" id="op" value="addList">
+                            <input type="submit" name="btngo" id="btngo" value="<{$smarty.const._OLEDRION_CREATE_NEW_LIST}>">
                         </form>
                     </div>
                 </td>
@@ -58,16 +56,17 @@
             <{if $message != ''}>
                 <div class="oledrion_message"><{$message}></div><{/if}>
             <form method="post" action="<{$baseurl}>" name="frmSelectAction" id="frmSelectAction">
-                <input type="hidden" name="op" id="op" value="addProductToList"/>
-                <input type="hidden" name="product_id" id="product_id" value="<{$product_id}>"/>
+                <{securityToken}><{*//mb*}>
+                <input type="hidden" name="op" id="op" value="addProductToList">
+                <input type="hidden" name="product_id" id="product_id" value="<{$product_id}>">
                 <{foreach item=list key=listKey from=$lists}>
                     <input type="radio" name="list_id" id="list_id" <{if $listKey == 0}>checked='checked'<{/if}>
-                           value="<{$list.list_id}>" /><{$smarty.const._OLEDRION_ADD_TO}> <{$list.list_title}>
+                           value="<{$list.list_id}>"><{$smarty.const._OLEDRION_ADD_TO}> <{$list.list_title}>
                     <br>
                 <{/foreach}>
-                <input type="radio" name="list_id" id="list_id" value="0"/><{$smarty.const._OLEDRION_CREATE_NEW_LIST}>
+                <input type="radio" name="list_id" id="list_id" value="0"><{$smarty.const._OLEDRION_CREATE_NEW_LIST}>
                 <br>
-                <br><input type="submit" name="btnGo" id="btnGo" value="<{$smarty.const._GO}>"/>
+                <br><input type="submit" name="btnGo" id="btnGo" value="<{$smarty.const._GO}>">
             </form>
         <{/if}>
     <{/if}>

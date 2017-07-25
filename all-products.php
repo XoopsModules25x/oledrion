@@ -12,7 +12,7 @@
 /**
  * oledrion
  *
- * @copyright   {@link http://xoops.org/ XOOPS Project}
+ * @copyright   {@link https://xoops.org/ XOOPS Project}
  * @license     {@link http://www.fsf.org/copyleft/gpl.html GNU public license}
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
  */
@@ -20,7 +20,7 @@
 /**
  * Liste de tous les produits du catalogue (en fonction des paramètres du module)
  */
-require __DIR__ . '/header.php';
+require_once __DIR__ . '/header.php';
 $GLOBALS['current_category']             = -1;
 $GLOBALS['xoopsOption']['template_main'] = 'oledrion_allproducts.tpl';
 require_once XOOPS_ROOT_PATH . '/header.php';
@@ -34,7 +34,7 @@ $vatArray = $h_oledrion_vat->getAllVats(new Oledrion_parameters());
 $xoopsTpl->assign('mod_pref', $mod_pref);
 
 $start = isset($_GET['start']) ? (int)$_GET['start'] : 0;
-$limit = Oledrion_utils::getModuleOption('perpage');
+$limit = OledrionUtility::getModuleOption('perpage');
 
 // Lecture des produits
 $itemsCount = $oledrion_shelf->getProductsCount('recent');
@@ -52,21 +52,21 @@ if (isset($products['lastTitle'])) {
 }
 $xoopsTpl->assign('products', $products);
 
-$xoopsTpl->assign('pdf_catalog', Oledrion_utils::getModuleOption('pdf_catalog'));
+$xoopsTpl->assign('pdf_catalog', OledrionUtility::getModuleOption('pdf_catalog'));
 
-Oledrion_utils::setCSS();
-Oledrion_utils::setLocalCSS($xoopsConfig['language']);
+OledrionUtility::setCSS();
+OledrionUtility::setLocalCSS($xoopsConfig['language']);
 if (!OLEDRION_MY_THEME_USES_JQUERY) {
     $xoTheme->addScript('browse.php?Frameworks/jquery/jquery.js');
 }
-Oledrion_utils::callJavascriptFile('noconflict.js');
-Oledrion_utils::callJavascriptFile('tablesorter/jquery.tablesorter.min.js');
+OledrionUtility::callJavascriptFile('noconflict.js');
+OledrionUtility::callJavascriptFile('tablesorter/jquery.tablesorter.min.js');
 
-Oledrion_utils::loadLanguageFile('modinfo.php');
+OledrionUtility::loadLanguageFile('modinfo.php');
 
-$xoopsTpl->assign('global_advert', Oledrion_utils::getModuleOption('advertisement'));
-$xoopsTpl->assign('breadcrumb', Oledrion_utils::breadcrumb(array(OLEDRION_URL . basename(__FILE__) => _MI_OLEDRION_SMNAME6)));
+$xoopsTpl->assign('global_advert', OledrionUtility::getModuleOption('advertisement'));
+$xoopsTpl->assign('breadcrumb', OledrionUtility::breadcrumb(array(OLEDRION_URL . basename(__FILE__) => _MI_OLEDRION_SMNAME6)));
 
-$title = _MI_OLEDRION_SMNAME6 . ' - ' . Oledrion_utils::getModuleName();
-Oledrion_utils::setMetas($title, $title);
+$title = _MI_OLEDRION_SMNAME6 . ' - ' . OledrionUtility::getModuleName();
+OledrionUtility::setMetas($title, $title);
 require_once XOOPS_ROOT_PATH . '/footer.php';

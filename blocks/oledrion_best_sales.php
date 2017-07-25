@@ -12,7 +12,7 @@
 /**
  * oledrion
  *
- * @copyright   {@link http://xoops.org/ XOOPS Project}
+ * @copyright   {@link https://xoops.org/ XOOPS Project}
  * @license     {@link http://www.fsf.org/copyleft/gpl.html GNU public license}
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
  */
@@ -37,7 +37,7 @@ function b_oledrion_bestsales_show($options)
     }
     if (count($products) > 0) {
         $block                   = array();
-        $block['nostock_msg']    = Oledrion_utils::getModuleOption('nostock_msg');
+        $block['nostock_msg']    = OledrionUtility::getModuleOption('nostock_msg');
         $block['block_products'] = $products;
         $xoTheme->addStylesheet(OLEDRION_URL . 'assets/css/oledrion.css');
 
@@ -63,9 +63,16 @@ function b_oledrion_bestsales_edit($options)
     $form                  = '';
     $checkeds              = array('', '');
     $checkeds[$options[1]] = 'checked';
-    $form .= "<table border='0'>";
-    $form .= '<tr><td>' . _MB_OLEDRION_PRODUCTS_CNT . "</td><td><input type='text' name='options[]' id='options' value='" . $options[0] . "' /></td></tr>";
-    $select = $mytree->makeSelBox('options[]', 'cat_title', '-', $options[1], _MB_OLEDRION_ALL_CATEGORIES);
+    $form                  .= "<table border='0'>";
+    $form                  .= '<tr><td>' . _MB_OLEDRION_PRODUCTS_CNT . "</td><td><input type='text' name='options[]' id='options' value='" . $options[0] . "'></td></tr>";
+
+    if (OledrionUtility::checkVerXoops($module, '2.5.9')) {
+        $select0 = $mytree->makeSelectElement('options[]', 'cat_title', '-', $options[1], true, 0, '', _MB_OLEDRION_CATEGORY);
+        $select  = $select0->render();
+    } else {
+        $select = $mytree->makeSelBox('options[]', 'cat_title', '-', $options[1], _MB_OLEDRION_ALL_CATEGORIES);
+    }
+
     $form .= '<tr><td>' . _MB_OLEDRION_CATEGORY . '</td><td>' . $select . '</td></tr>';
     $form .= '</table>';
 

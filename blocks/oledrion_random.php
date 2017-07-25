@@ -12,7 +12,7 @@
 /**
  * oledrion
  *
- * @copyright   {@link http://xoops.org/ XOOPS Project}
+ * @copyright   {@link https://xoops.org/ XOOPS Project}
  * @license     {@link http://www.fsf.org/copyleft/gpl.html GNU public license}
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
  */
@@ -40,7 +40,7 @@ function b_oledrion_random_show($options)
         unset($products['lastTitle']);
     }
     if (count($products) > 0) {
-        $block['nostock_msg']    = Oledrion_utils::getModuleOption('nostock_msg');
+        $block['nostock_msg']    = OledrionUtility::getModuleOption('nostock_msg');
         $block['block_products'] = $products;
         $xoTheme->addStylesheet(OLEDRION_URL . 'assets/css/oledrion.css');
 
@@ -60,23 +60,22 @@ function b_oledrion_random_edit($options)
     // '10|0|0';    // Voir 10 produits, pour toutes les catégories, pour ce mois-ci ou pour toute la période
     global $xoopsConfig;
     include XOOPS_ROOT_PATH . '/modules/oledrion/include/common.php';
-    include_once OLEDRION_PATH . 'class/tree.php';
+    require_once OLEDRION_PATH . 'class/tree.php';
     $tblCategories         = array();
     $tblCategories         = $h_oledrion_cat->getAllCategories(new Oledrion_parameters());
     $mytree                = new Oledrion_XoopsObjectTree($tblCategories, 'cat_cid', 'cat_pid');
     $form                  = '';
     $checkeds              = array('', '');
     $checkeds[$options[1]] = 'checked';
-    $form .= "<table border='0'>";
-    $form .= '<tr><td>' . _MB_OLEDRION_PRODUCTS_CNT . "</td><td><input type='text' name='options[]' id='options' value='" . $options[0] . "' /></td></tr>";
-    $select = $mytree->makeSelBox('options[]', 'cat_title', '-', $options[1], _MB_OLEDRION_ALL_CATEGORIES);
-    $form .= '<tr><td>' . _MB_OLEDRION_CATEGORY . '</td><td>' . $select . '</td></tr>';
+    $form                  .= "<table border='0'>";
+    $form                  .= '<tr><td>' . _MB_OLEDRION_PRODUCTS_CNT . "</td><td><input type='text' name='options[]' id='options' value='" . $options[0] . "'></td></tr>";
+    $select                = $mytree->makeSelBox('options[]', 'cat_title', '-', $options[1], _MB_OLEDRION_ALL_CATEGORIES);
+    $form                  .= '<tr><td>' . _MB_OLEDRION_CATEGORY . '</td><td>' . $select . '</td></tr>';
 
     $checked              = array('', '');
     $checked[$options[2]] = 'checked';
-    $form .= '<tr><td>' . _MB_OLEDRION_THIS_MONTH . "</td><td><input type='radio' name='options[]' id='options' value='1'" . $checked[1] . ' />' . _YES . " <input type='radio' name='options[]' id='options' value='0'" . $checked[0] . ' />' . _NO
-             . '</td></tr>';
-    $form .= '</table>';
+    $form                 .= '<tr><td>' . _MB_OLEDRION_THIS_MONTH . "</td><td><input type='radio' name='options[]' id='options' value='1'" . $checked[1] . '>' . _YES . " <input type='radio' name='options[]' id='options' value='0'" . $checked[0] . '>' . _NO . '</td></tr>';
+    $form                 .= '</table>';
 
     return $form;
 }

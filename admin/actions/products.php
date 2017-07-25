@@ -12,7 +12,7 @@
 /**
  * oledrion
  *
- * @copyright   {@link http://xoops.org/ XOOPS Project}
+ * @copyright   {@link https://xoops.org/ XOOPS Project}
  * @license     {@link http://www.fsf.org/copyleft/gpl.html GNU public license}
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
  */
@@ -29,6 +29,9 @@ switch ($action) {
     case 'default': // Gestion des produits
         // ****************************************************************************************************************
         xoops_cp_header();
+        $adminObject = \Xmf\Module\Admin::getInstance();
+        $adminObject->displayNavigation('index.php?op=products');
+
         $products = $categories = array();
 
         // Récupération des données uniques
@@ -40,12 +43,19 @@ switch ($action) {
                                                                                     'idaskey' => true
                                                                                 )));
 
-        $form = "<form method='post' action='$baseurl' name='frmadddproduct' id='frmadddproduct'><input type='hidden' name='op' id='op' value='products' /><input type='hidden' name='action' id='action' value='add' /><input type='submit' name='btngo' id='btngo' value='"
-                . _AM_OLEDRION_ADD_ITEM . "' /></form>";
+        $form = "<form method='post' action='$baseurl' name='frmadddproduct' id='frmadddproduct'><input type='hidden' name='op' id='op' value='products'><input type='hidden' name='action' id='action' value='add'><input type='submit' name='btngo' id='btngo' value='"
+                . _AM_OLEDRION_ADD_ITEM
+                . "'></form>";
         echo $form;
-        echo "<br><form method='get' action='$baseurl' name='frmaddeditproduct' id='frmaddeditproduct'>" . _OLEDRION_PRODUCT_ID
-             . " <input type='text' name='id' id='id' value='' size='4'/> <input type='hidden' name='op' id='op' value='products' /><input type='radio' name='action' id='action' value='edit' />" . _OLEDRION_EDIT
-             . " <input type='radio' name='action' id='action' value='confdelete' />" . _OLEDRION_DELETE . " <input type='submit' name='btngo' id='btngo' value='" . _GO . "' /></form>";
+        echo "<br><form method='get' action='$baseurl' name='frmaddeditproduct' id='frmaddeditproduct'>"
+             . _OLEDRION_PRODUCT_ID
+             . " <input type='text' name='id' id='id' value='' size='4'> <input type='hidden' name='op' id='op' value='products'><input type='radio' name='action' id='action' value='edit'>"
+             . _OLEDRION_EDIT
+             . " <input type='radio' name='action' id='action' value='confdelete'>"
+             . _OLEDRION_DELETE
+             . " <input type='submit' name='btngo' id='btngo' value='"
+             . _GO
+             . "'></form>";
 
         $vats = array();
         $vats = $h_oledrion_vat->getAllVats(new Oledrion_parameters());
@@ -106,8 +116,7 @@ switch ($action) {
             && $filter_product_price == 0
             && $filter_product_online == 0
             && $filter_product_title == ''
-            && $filter_product_sku == ''
-        ) {
+            && $filter_product_sku == '') {
             $newFilter = true;
         }
 
@@ -132,15 +141,23 @@ switch ($action) {
         $_SESSION['filter_product_price']       = $filter_product_price;
 
         $itemsCount = $h_oledrion_products->getCount($criteria); // Recherche du nombre total de produits répondants aux critères
-        Oledrion_utils::htitle(_MI_OLEDRION_ADMENU4 . ' (' . $itemsCount . ')', 4);
+        OledrionUtility::htitle(_MI_OLEDRION_ADMENU4 . ' (' . $itemsCount . ')', 4);
+
         if ($itemsCount > $limit) {
             require_once XOOPS_ROOT_PATH . '/class/pagenav.php';
             $pagenav = new XoopsPageNav($itemsCount, $limit, $start, 'start', 'op=products');
         }
-        $mytree            = new XoopsObjectTree($categories, 'cat_cid', 'cat_pid');
-        $selectCateg       = $mytree->makeSelBox('filter_product_cid', 'cat_title', '-', $filter_product_cid, '---', 0, "style='width: 170px; max-width: 170px;'");
-        $onlineSelect      = Oledrion_utils::htmlSelect('filter_product_online', array(2 => _YES, 1 => _NO), $filter_product_online);
-        $recommendedSelect = Oledrion_utils::htmlSelect('filter_product_recommended', array(1 => _YES, 2 => _NO), $filter_product_recommended);
+        $mytree = new XoopsObjectTree($categories, 'cat_cid', 'cat_pid');
+
+        if (OledrionUtility::checkVerXoops($module, '2.5.9')) {
+            $selectCateg0 = $mytree->makeSelectElement('filter_product_cid', 'cat_title', '-', $filter_product_cid, true, 0, '', '');
+            $selectCateg  = $selectCateg0->render();
+        } else {
+            $selectCateg = $mytree->makeSelBox('filter_product_cid', 'cat_title', '-', $filter_product_cid, '---', 0, "style='width: 170px; max-width: 170px;'");
+        }
+
+        $onlineSelect      = OledrionUtility::htmlSelect('filter_product_online', array(2 => _YES, 1 => _NO), $filter_product_online);
+        $recommendedSelect = OledrionUtility::htmlSelect('filter_product_recommended', array(1 => _YES, 2 => _NO), $filter_product_recommended);
 
         $criteria->setLimit($limit);
         $criteria->setStart($start);
@@ -153,33 +170,46 @@ switch ($action) {
             echo "<div align='left'>" . $pagenav->renderNav() . '</div>';
         }
         echo "<table width='100%' cellspacing='1' cellpadding='3' border='0' class='outer'>";
-        echo "<tr><th align='center'>" . _AM_OLEDRION_ID . "</th><th align='center'>" . _OLEDRION_TITLE . "</th><th align='center'>" . _OLEDRION_CATEGORY . "</th><th align='center'>" . _OLEDRION_NUMBER . '<br>' . _OLEDRION_EXTRA_ID
-             . "</th><th align='center'>" . _OLEDRION_ONLINE . "</th><th align='center'>" . _AM_OLEDRION_RECOMMENDED . "</th><th align='center'>" . _OLEDRION_DATE . '</th>';
-        if (Oledrion_utils::getModuleOption('use_price')) {
+        echo "<tr><th align='center'>"
+             . _AM_OLEDRION_ID
+             . "</th><th align='center'>"
+             . _OLEDRION_TITLE
+             . "</th><th align='center'>"
+             . _OLEDRION_CATEGORY
+             . "</th><th align='center'>"
+             . _OLEDRION_NUMBER
+             . '<br>'
+             . _OLEDRION_EXTRA_ID
+             . "</th><th align='center'>"
+             . _OLEDRION_ONLINE
+             . "</th><th align='center'>"
+             . _AM_OLEDRION_RECOMMENDED
+             . "</th><th align='center'>"
+             . _OLEDRION_DATE
+             . '</th>';
+        if (OledrionUtility::getModuleOption('use_price')) {
             echo "<th align='center'>" . _OLEDRION_PRICE . '</th>';
             $span = 9;
         }
         echo "<th align='center'>" . _AM_OLEDRION_ACTION . '</th></tr>';
 
-        echo "<tr><form method='post' action='$baseurl'><th align='center'><input type='text' size='3' name='filter_product_id' id='filter_product_id' value='$filter_product_id' /></th>\n";
-        echo "<th align='center'><input type='text' size='25' name='filter_product_title' id='filter_product_title' value='$filter_product_title' /></th>\n";
+        echo "<tr><form method='post' action='$baseurl'><th align='center'><input type='text' size='3' name='filter_product_id' id='filter_product_id' value='$filter_product_id'></th>\n";
+        echo "<th align='center'><input type='text' size='25' name='filter_product_title' id='filter_product_title' value='$filter_product_title'></th>\n";
         echo "<th align='center'>" . $selectCateg . "</th>\n";
-        echo "<th align='center'><input type='text' size='25' name='filter_product_sku' id='filter_product_sku' value='$filter_product_sku' /></th>\n";
+        echo "<th align='center'><input type='text' size='25' name='filter_product_sku' id='filter_product_sku' value='$filter_product_sku'></th>\n";
         echo "<th align='center'>" . $onlineSelect . "</th>\n";
         echo "<th align='center'>" . $recommendedSelect . "</th>\n";
         echo "<th align='center'>&nbsp;</th>\n";
-        echo "<th align='center'><input type='text' size='5' name='filter_product_price' id='filter_product_price' value='$filter_product_price' /></th>\n";
-        echo "<th align='center'><input type='hidden' name='op' id='op' value='products' /><input type='submit' name='btngo' id='btngo' value='" . _GO . "' /></th></form></tr>\n";
+        echo "<th align='center'><input type='text' size='5' name='filter_product_price' id='filter_product_price' value='$filter_product_price'></th>\n";
+        echo "<th align='center'><input type='hidden' name='op' id='op' value='products'><input type='submit' name='btngo' id='btngo' value='" . _GO . "'></th></form></tr>\n";
         foreach ($products as $item) {
             $class       = ($class === 'even') ? 'odd' : 'even';
             $id          = $item->getVar('product_id');
             $recommended = '';
             if ($item->isRecommended()) { // Si le produit est recommandé, on affiche le lien qui permet d'arrêter de le recommander
-                $recommended = "<a href='" . $baseurl . '?op=products&action=unrecommend&product_id=' . $id . "' title='" . _AM_OLEDRION_DONOTRECOMMEND_IT . "'><img alt='" . _AM_OLEDRION_DONOTRECOMMEND_IT . "' src='" . OLEDRION_IMAGES_URL
-                               . "heart_delete.png' alt='' /></a>";
+                $recommended = "<a href='" . $baseurl . '?op=products&action=unrecommend&product_id=' . $id . "' title='" . _AM_OLEDRION_DONOTRECOMMEND_IT . "'><img alt='" . _AM_OLEDRION_DONOTRECOMMEND_IT . "' src='" . OLEDRION_IMAGES_URL . "heart_delete.png' alt=''></a>";
             } else { // Sinon on affiche le lien qui permet de le recommander
-                $recommended = "<a href='" . $baseurl . '?op=products&action=recommend&product_id=' . $id . "' title='" . _AM_OLEDRION_RECOMMEND_IT . "'><img alt='" . _AM_OLEDRION_RECOMMEND_IT . "' src='" . OLEDRION_IMAGES_URL
-                               . "heart_add.png' alt='' /></a>";
+                $recommended = "<a href='" . $baseurl . '?op=products&action=recommend&product_id=' . $id . "' title='" . _AM_OLEDRION_RECOMMEND_IT . "'><img alt='" . _AM_OLEDRION_RECOMMEND_IT . "' src='" . OLEDRION_IMAGES_URL . "heart_add.png' alt=''></a>";
             }
 
             $actions = array();
@@ -205,9 +235,26 @@ switch ($action) {
                 $priceLine = $oledrion_Currency->amountForDisplay($item->getVar('product_price'));
             }
 
-            echo "<td align='center'>" . $id . "</td><td align ='left'>" . $productLink . "</td><td align='left'><a href='" . $categoryUrl . "' target='blank'>" . $productCategory . "</a></td><td align='center'>" . $item->getVar('product_sku')
-                 . ' / ' . $item->getVar('product_extraid') . "</td><td align='center'>" . $online . "</td><td align='center'>" . $recommended . "</td><td align='center'>" . $item->getVar('product_date') . '</td>';
-            if (Oledrion_utils::getModuleOption('use_price')) {
+            echo "<td align='center'>"
+                 . $id
+                 . "</td><td align ='left'>"
+                 . $productLink
+                 . "</td><td align='left'><a href='"
+                 . $categoryUrl
+                 . "' target='blank'>"
+                 . $productCategory
+                 . "</a></td><td align='center'>"
+                 . $item->getVar('product_sku')
+                 . ' / '
+                 . $item->getVar('product_extraid')
+                 . "</td><td align='center'>"
+                 . $online
+                 . "</td><td align='center'>"
+                 . $recommended
+                 . "</td><td align='center'>"
+                 . $item->getVar('product_date')
+                 . '</td>';
+            if (OledrionUtility::getModuleOption('use_price')) {
                 echo "<td align='right'>" . $priceLine . '</td>';
             }
             echo "<td align='center'>" . implode(' ', $actions) . "</td>\n";
@@ -221,7 +268,7 @@ switch ($action) {
         if (isset($pagenav) && is_object($pagenav)) {
             echo "<div align='right'>" . $pagenav->renderNav() . '</div>';
         }
-        //include_once OLEDRION_ADMIN_PATH . 'admin_footer.php';
+        //require_once OLEDRION_ADMIN_PATH . 'admin_footer.php';
         break;
 
     // ****************************************************************************************************************
@@ -235,15 +282,15 @@ switch ($action) {
             if (is_object($product)) {
                 $product->unsetRecommended();
                 if ($h_oledrion_products->insert($product, true)) {
-                    Oledrion_utils::redirect(_AM_OLEDRION_SAVE_OK, $baseurl . $opRedirect, 1);
+                    OledrionUtility::redirect(_AM_OLEDRION_SAVE_OK, $baseurl . $opRedirect, 1);
                 } else {
-                    Oledrion_utils::redirect(_AM_OLEDRION_SAVE_PB, $baseurl . $opRedirect, 4);
+                    OledrionUtility::redirect(_AM_OLEDRION_SAVE_PB, $baseurl . $opRedirect, 4);
                 }
             } else {
-                Oledrion_utils::redirect(_AM_OLEDRION_NOT_FOUND, $baseurl . $opRedirect, 4);
+                OledrionUtility::redirect(_AM_OLEDRION_NOT_FOUND, $baseurl . $opRedirect, 4);
             }
         } else {
-            Oledrion_utils::redirect(_AM_OLEDRION_ERROR_1, $baseurl . $opRedirect, 4);
+            OledrionUtility::redirect(_AM_OLEDRION_ERROR_1, $baseurl . $opRedirect, 4);
         }
         break;
 
@@ -258,15 +305,15 @@ switch ($action) {
             if (is_object($product)) {
                 $product->setRecommended();
                 if ($h_oledrion_products->insert($product, true)) {
-                    Oledrion_utils::redirect(_AM_OLEDRION_SAVE_OK, $baseurl . $opRedirect, 1);
+                    OledrionUtility::redirect(_AM_OLEDRION_SAVE_OK, $baseurl . $opRedirect, 1);
                 } else {
-                    Oledrion_utils::redirect(_AM_OLEDRION_SAVE_PB, $baseurl . $opRedirect, 4);
+                    OledrionUtility::redirect(_AM_OLEDRION_SAVE_PB, $baseurl . $opRedirect, 4);
                 }
             } else {
-                Oledrion_utils::redirect(_AM_OLEDRION_NOT_FOUND, $baseurl . $opRedirect, 4);
+                OledrionUtility::redirect(_AM_OLEDRION_NOT_FOUND, $baseurl . $opRedirect, 4);
             }
         } else {
-            Oledrion_utils::redirect(_AM_OLEDRION_ERROR_1, $baseurl . $opRedirect, 4);
+            OledrionUtility::redirect(_AM_OLEDRION_ERROR_1, $baseurl . $opRedirect, 4);
         }
         break;
 
@@ -281,13 +328,13 @@ switch ($action) {
             $title = _AM_OLEDRION_EDIT_PRODUCT;
             $id    = isset($_GET['id']) ? (int)$_GET['id'] : 0;
             if (empty($id)) {
-                Oledrion_utils::redirect(_AM_OLEDRION_ERROR_1, $baseurl, 5);
+                OledrionUtility::redirect(_AM_OLEDRION_ERROR_1, $baseurl, 5);
             }
             // Item exits ?
             $item = null;
             $item = $h_oledrion_products->get($id);
             if (!is_object($item)) {
-                Oledrion_utils::redirect(_AM_OLEDRION_NOT_FOUND, $baseurl, 5);
+                OledrionUtility::redirect(_AM_OLEDRION_NOT_FOUND, $baseurl, 5);
             }
             $edit         = true;
             $label_submit = _AM_OLEDRION_MODIFY;
@@ -304,20 +351,19 @@ switch ($action) {
 
         $categories = $h_oledrion_cat->getAllCategories(new Oledrion_parameters());
         if (count($categories) == 0) {
-            Oledrion_utils::redirect(_AM_OLEDRION_ERROR_8, $baseurl, 5);
+            OledrionUtility::redirect(_AM_OLEDRION_ERROR_8, $baseurl, 5);
         }
         // TVA
         $vats = $vatsForDisplay = array();
         $vats = $h_oledrion_vat->getAllVats(new Oledrion_parameters());
-        if (count($vats) == 0 && Oledrion_utils::getModuleOption('use_price')) {
-            Oledrion_utils::redirect(_AM_OLEDRION_ERROR_9, $baseurl, 5);
+        if (count($vats) == 0 && OledrionUtility::getModuleOption('use_price')) {
+            OledrionUtility::redirect(_AM_OLEDRION_ERROR_9, $baseurl, 5);
         }
         foreach ($vats as $onevat) {
             $vatsForDisplay[$onevat->getVar('vat_id')] = $onevat->getVar('vat_rate');
         }
 
-        $mytree       = new XoopsObjectTree($categories, 'cat_cid', 'cat_pid');
-        $select_categ = $mytree->makeSelBox('product_cid', 'cat_title', '-', $item->getVar('product_cid'));
+        $mytree = new XoopsObjectTree($categories, 'cat_cid', 'cat_pid');
 
         $sform = new XoopsThemeForm($title, 'frmproduct', $baseurl);
         $sform->setExtra('enctype="multipart/form-data"');
@@ -338,7 +384,13 @@ switch ($action) {
         $vendorsSelect->addOptionArray($vendorsForDisplay);
         $sform->addElement($vendorsSelect, true);
 
-        $sform->addElement(new XoopsFormLabel(_AM_OLEDRION_CATEG_HLP, $select_categ), true);
+        if (OledrionUtility::checkVerXoops($module, '2.5.9')) {
+            $select_categ = $mytree->makeSelectElement('product_cid', 'cat_title', '-', $item->getVar('product_cid'), true, 0, '', _AM_OLEDRION_CATEG_HLP);
+            $form->addElement($select_categ);
+        } else {
+            $select_categ = $mytree->makeSelBox('product_cid', 'cat_title', '-', $item->getVar('product_cid'));
+            $sform->addElement(new XoopsFormLabel(_AM_OLEDRION_CATEG_HLP, $select_categ), true);
+        }
 
         $deliveryTime = new XoopsFormText(_OLEDRION_DELIVERY_TIME, 'product_delivery_time', 5, 5, $item->getVar('product_delivery_time', 'e'));
         $deliveryTime->setDescription(_OLEDRION_IN_DAYS);
@@ -364,26 +416,26 @@ switch ($action) {
         // Images *************************************************************
         if ($action === 'edit' && $item->pictureExists()) {
             $pictureTray = new XoopsFormElementTray(_AM_OLEDRION_IMAGE1_HELP, '<br>');
-            $pictureTray->addElement(new XoopsFormLabel('', "<img src='" . $item->getPictureUrl() . "' alt='' border='0' />"));
+            $pictureTray->addElement(new XoopsFormLabel('', "<img src='" . $item->getPictureUrl() . "' alt='' border='0'>"));
             $deleteCheckbox = new XoopsFormCheckBox('', 'delpicture1');
             $deleteCheckbox->addOption(1, _DELETE);
             $pictureTray->addElement($deleteCheckbox);
             $sform->addElement($pictureTray);
             unset($pictureTray, $deleteCheckbox);
         }
-        $sform->addElement(new XoopsFormFile(_AM_OLEDRION_IMAGE1_CHANGE, 'attachedfile1', Oledrion_utils::getModuleOption('maxuploadsize')), false);
+        $sform->addElement(new XoopsFormFile(_AM_OLEDRION_IMAGE1_CHANGE, 'attachedfile1', OledrionUtility::getModuleOption('maxuploadsize')), false);
 
-        if (!Oledrion_utils::getModuleOption('create_thumbs')) { // L'utilisateur se charge de créer la vignette lui même
+        if (!OledrionUtility::getModuleOption('create_thumbs')) { // L'utilisateur se charge de créer la vignette lui même
             if ($action === 'edit' && $item->thumbExists()) {
                 $pictureTray = new XoopsFormElementTray(_AM_OLEDRION_IMAGE2_HELP, '<br>');
-                $pictureTray->addElement(new XoopsFormLabel('', "<img src='" . $item->getThumbUrl() . "' alt='' border='0' />"));
+                $pictureTray->addElement(new XoopsFormLabel('', "<img src='" . $item->getThumbUrl() . "' alt='' border='0'>"));
                 $deleteCheckbox = new XoopsFormCheckBox('', 'delpicture2');
                 $deleteCheckbox->addOption(1, _DELETE);
                 $pictureTray->addElement($deleteCheckbox);
                 $sform->addElement($pictureTray);
                 unset($pictureTray, $deleteCheckbox);
             }
-            $sform->addElement(new XoopsFormFile(_AM_OLEDRION_IMAGE2_CHANGE, 'attachedfile2', Oledrion_utils::getModuleOption('maxuploadsize')), false);
+            $sform->addElement(new XoopsFormFile(_AM_OLEDRION_IMAGE2_CHANGE, 'attachedfile2', OledrionUtility::getModuleOption('maxuploadsize')), false);
         }
 
         // En ligne ? *********************************************************
@@ -455,7 +507,7 @@ switch ($action) {
         $sform->addElement($productsSelect);
         // ********************************************************************
 
-        if (Oledrion_utils::getModuleOption('use_price')) {
+        if (OledrionUtility::getModuleOption('use_price')) {
             // TVA ****************************************************************
             $vatSelect = new XoopsFormSelect(_OLEDRION_VAT, 'product_vat_id', $item->getVar('product_vat_id'));
             $vatSelect->addOptionArray($vatsForDisplay);
@@ -473,18 +525,18 @@ switch ($action) {
         $alertStock->setDescription(_AM_OLEDRION_STOCK_HLP);
         $sform->addElement($alertStock, false);
 
-        $editor2 = Oledrion_utils::getWysiwygForm(_OLEDRION_SUMMARY, 'product_summary', $item->getVar('product_summary', 'e'), 15, 60, 'summary_hidden');
+        $editor2 = OledrionUtility::getWysiwygForm(_OLEDRION_SUMMARY, 'product_summary', $item->getVar('product_summary', 'e'), 15, 60, 'summary_hidden');
         if ($editor2) {
             $sform->addElement($editor2, false);
         }
 
-        $editor = Oledrion_utils::getWysiwygForm(_OLEDRION_DESCRIPTION, 'product_description', $item->getVar('product_description', 'e'), 15, 60, 'description_hidden');
+        $editor = OledrionUtility::getWysiwygForm(_OLEDRION_DESCRIPTION, 'product_description', $item->getVar('product_description', 'e'), 15, 60, 'description_hidden');
         if ($editor) {
             $sform->addElement($editor, false);
         }
 
         // Tags
-        if (Oledrion_utils::getModuleOption('use_tags')) {
+        if (OledrionUtility::getModuleOption('use_tags')) {
             require_once XOOPS_ROOT_PATH . '/modules/tag/include/formtag.php';
             $sform->addElement(new TagFormTag('item_tag', 60, 255, $item->getVar('product_id'), 0));
         }
@@ -497,8 +549,7 @@ switch ($action) {
         }
         // Fichier attaché
         if ($action === 'edit' && trim($item->getVar('product_attachment')) != ''
-            && file_exists(XOOPS_UPLOAD_PATH . '/' . trim($item->getVar('product_attachment')))
-        ) {
+            && file_exists(XOOPS_UPLOAD_PATH . '/' . trim($item->getVar('product_attachment')))) {
             $pictureTray = new XoopsFormElementTray(_OLEDRION_ATTACHED_FILE, '<br>');
             $pictureTray->addElement(new XoopsFormLabel('', "<a href='" . XOOPS_UPLOAD_URL . '/' . $item->getVar('product_attachment') . "' target='_blank'>" . XOOPS_UPLOAD_URL . '/' . $item->getVar('product_attachment') . '</a>'));
             $deleteCheckbox = new XoopsFormCheckBox('', 'delpicture3');
@@ -507,94 +558,94 @@ switch ($action) {
             $sform->addElement($pictureTray);
             unset($pictureTray, $deleteCheckbox);
         }
-        $downloadFile = new XoopsFormFile(_OLEDRION_ATTACHED_FILE, 'attachedfile3', Oledrion_utils::getModuleOption('maxuploadsize'));
+        $downloadFile = new XoopsFormFile(_OLEDRION_ATTACHED_FILE, 'attachedfile3', OledrionUtility::getModuleOption('maxuploadsize'));
         $downloadFile->setDescription(_AM_OLEDRION_ATTACHED_HLP);
         $sform->addElement($downloadFile, false);
 
-        if (Oledrion_utils::getModuleOption('product_property1')) {
-            $property1select = new XoopsFormSelect(Oledrion_utils::getModuleOption('product_property1_title'), 'product_property1', $item->getVar('product_property1'));
-            $property1Array  = explode('|', Oledrion_utils::getModuleOption('product_property1'));
+        if (OledrionUtility::getModuleOption('product_property1')) {
+            $property1select = new XoopsFormSelect(OledrionUtility::getModuleOption('product_property1_title'), 'product_property1', $item->getVar('product_property1'));
+            $property1Array  = explode('|', OledrionUtility::getModuleOption('product_property1'));
             foreach ($property1Array as $property1) {
                 $property1select->addOption($property1);
             }
             $sform->addElement($property1select, false);
         }
 
-        if (Oledrion_utils::getModuleOption('product_property2')) {
-            $property2select = new XoopsFormSelect(Oledrion_utils::getModuleOption('product_property2_title'), 'product_property2', $item->getVar('product_property2'));
-            $property2Array  = explode('|', Oledrion_utils::getModuleOption('product_property2'));
+        if (OledrionUtility::getModuleOption('product_property2')) {
+            $property2select = new XoopsFormSelect(OledrionUtility::getModuleOption('product_property2_title'), 'product_property2', $item->getVar('product_property2'));
+            $property2Array  = explode('|', OledrionUtility::getModuleOption('product_property2'));
             foreach ($property2Array as $property2) {
                 $property2select->addOption($property2);
             }
             $sform->addElement($property2select, false);
         }
 
-        if (Oledrion_utils::getModuleOption('product_property3')) {
-            $property3select = new XoopsFormSelect(Oledrion_utils::getModuleOption('product_property3_title'), 'product_property3', $item->getVar('product_property3'));
-            $property3Array  = explode('|', Oledrion_utils::getModuleOption('product_property3'));
+        if (OledrionUtility::getModuleOption('product_property3')) {
+            $property3select = new XoopsFormSelect(OledrionUtility::getModuleOption('product_property3_title'), 'product_property3', $item->getVar('product_property3'));
+            $property3Array  = explode('|', OledrionUtility::getModuleOption('product_property3'));
             foreach ($property3Array as $property3) {
                 $property3select->addOption($property3);
             }
             $sform->addElement($property3select, false);
         }
 
-        if (Oledrion_utils::getModuleOption('product_property4')) {
-            $property4select = new XoopsFormSelect(Oledrion_utils::getModuleOption('product_property4_title'), 'product_property4', $item->getVar('product_property4'));
-            $property4Array  = explode('|', Oledrion_utils::getModuleOption('product_property4'));
+        if (OledrionUtility::getModuleOption('product_property4')) {
+            $property4select = new XoopsFormSelect(OledrionUtility::getModuleOption('product_property4_title'), 'product_property4', $item->getVar('product_property4'));
+            $property4Array  = explode('|', OledrionUtility::getModuleOption('product_property4'));
             foreach ($property4Array as $property4) {
                 $property4select->addOption($property4);
             }
             $sform->addElement($property4select, false);
         }
 
-        if (Oledrion_utils::getModuleOption('product_property5')) {
-            $property5select = new XoopsFormSelect(Oledrion_utils::getModuleOption('product_property5_title'), 'product_property5', $item->getVar('product_property5'));
-            $property5Array  = explode('|', Oledrion_utils::getModuleOption('product_property5'));
+        if (OledrionUtility::getModuleOption('product_property5')) {
+            $property5select = new XoopsFormSelect(OledrionUtility::getModuleOption('product_property5_title'), 'product_property5', $item->getVar('product_property5'));
+            $property5Array  = explode('|', OledrionUtility::getModuleOption('product_property5'));
             foreach ($property5Array as $property5) {
                 $property5select->addOption($property5);
             }
             $sform->addElement($property5select, false);
         }
 
-        if (Oledrion_utils::getModuleOption('product_property6')) {
-            $property6select = new XoopsFormSelect(Oledrion_utils::getModuleOption('product_property6_title'), 'product_property6', $item->getVar('product_property6'));
-            $property6Array  = explode('|', Oledrion_utils::getModuleOption('product_property6'));
+        if (OledrionUtility::getModuleOption('product_property6')) {
+            $property6select = new XoopsFormSelect(OledrionUtility::getModuleOption('product_property6_title'), 'product_property6', $item->getVar('product_property6'));
+            $property6Array  = explode('|', OledrionUtility::getModuleOption('product_property6'));
             foreach ($property6Array as $property6) {
                 $property6select->addOption($property6);
             }
             $sform->addElement($property6select, false);
         }
 
-        if (Oledrion_utils::getModuleOption('product_property7')) {
-            $property7select = new XoopsFormSelect(Oledrion_utils::getModuleOption('product_property7_title'), 'product_property7', $item->getVar('product_property7'));
-            $property7Array  = explode('|', Oledrion_utils::getModuleOption('product_property7'));
+        if (OledrionUtility::getModuleOption('product_property7')) {
+            $property7select = new XoopsFormSelect(OledrionUtility::getModuleOption('product_property7_title'), 'product_property7', $item->getVar('product_property7'));
+            $property7Array  = explode('|', OledrionUtility::getModuleOption('product_property7'));
             foreach ($property7Array as $property7) {
                 $property7select->addOption($property7);
             }
             $sform->addElement($property7select, false);
         }
 
-        if (Oledrion_utils::getModuleOption('product_property8')) {
-            $property8select = new XoopsFormSelect(Oledrion_utils::getModuleOption('product_property8_title'), 'product_property8', $item->getVar('product_property8'));
-            $property8Array  = explode('|', Oledrion_utils::getModuleOption('product_property8'));
+        if (OledrionUtility::getModuleOption('product_property8')) {
+            $property8select = new XoopsFormSelect(OledrionUtility::getModuleOption('product_property8_title'), 'product_property8', $item->getVar('product_property8'));
+            $property8Array  = explode('|', OledrionUtility::getModuleOption('product_property8'));
             foreach ($property8Array as $property8) {
                 $property8select->addOption($property8);
             }
             $sform->addElement($property8select, false);
         }
 
-        if (Oledrion_utils::getModuleOption('product_property9')) {
-            $property9select = new XoopsFormSelect(Oledrion_utils::getModuleOption('product_property9_title'), 'product_property9', $item->getVar('product_property9'));
-            $property9Array  = explode('|', Oledrion_utils::getModuleOption('product_property9'));
+        if (OledrionUtility::getModuleOption('product_property9')) {
+            $property9select = new XoopsFormSelect(OledrionUtility::getModuleOption('product_property9_title'), 'product_property9', $item->getVar('product_property9'));
+            $property9Array  = explode('|', OledrionUtility::getModuleOption('product_property9'));
             foreach ($property9Array as $property9) {
                 $property9select->addOption($property95);
             }
             $sform->addElement($property9select, false);
         }
 
-        if (Oledrion_utils::getModuleOption('product_property10')) {
-            $property10select = new XoopsFormSelect(Oledrion_utils::getModuleOption('product_property10_title'), 'product_property10', $item->getVar('product_property10'));
-            $property10Array  = explode('|', Oledrion_utils::getModuleOption('product_property10'));
+        if (OledrionUtility::getModuleOption('product_property10')) {
+            $property10select = new XoopsFormSelect(OledrionUtility::getModuleOption('product_property10_title'), 'product_property10', $item->getVar('product_property10'));
+            $property10Array  = explode('|', OledrionUtility::getModuleOption('product_property10'));
             foreach ($property10Array as $property10) {
                 $property10select->addOption($property10);
             }
@@ -606,9 +657,9 @@ switch ($action) {
         $button_tray->addElement($submit_btn);
         $sform->addElement($button_tray);
 
-        $sform =& Oledrion_utils::formMarkRequiredFields($sform);
+        $sform =& OledrionUtility::formMarkRequiredFields($sform);
         $sform->display();
-        include_once OLEDRION_ADMIN_PATH . 'admin_footer.php';
+        require_once OLEDRION_ADMIN_PATH . 'admin_footer.php';
         break;
 
     // ****************************************************************************************************************
@@ -620,7 +671,7 @@ switch ($action) {
             $edit = true;
             $item = $h_oledrion_products->get($id);
             if (!is_object($item)) {
-                Oledrion_utils::redirect(_AM_OLEDRION_NOT_FOUND, $baseurl, 5);
+                OledrionUtility::redirect(_AM_OLEDRION_NOT_FOUND, $baseurl, 5);
             }
             $item->unsetNew();
             $add = false;
@@ -649,11 +700,11 @@ switch ($action) {
         // Upload de la grande image
         $destname    = '';
         $mainPicture = '';
-        $res1        = Oledrion_utils::uploadFile(0, OLEDRION_PICTURES_PATH);
+        $res1        = OledrionUtility::uploadFile(0, OLEDRION_PICTURES_PATH);
         if ($res1 === true) {
             $mainPicture = $destname;
-            if (Oledrion_utils::getModuleOption('resize_main')) { // On redimensionne l'image principale
-                Oledrion_utils::resizePicture(OLEDRION_PICTURES_PATH . '/' . $destname, OLEDRION_PICTURES_PATH . '/' . $destname, Oledrion_utils::getModuleOption('images_width'), Oledrion_utils::getModuleOption('images_height'), true);
+            if (OledrionUtility::getModuleOption('resize_main')) { // On redimensionne l'image principale
+                OledrionUtility::resizePicture(OLEDRION_PICTURES_PATH . '/' . $destname, OLEDRION_PICTURES_PATH . '/' . $destname, OledrionUtility::getModuleOption('images_width'), OledrionUtility::getModuleOption('images_height'), true);
             }
             $item->setVar('product_image_url', basename($destname));
         } else {
@@ -664,9 +715,9 @@ switch ($action) {
 
         $indiceAttached = 2;
         // Upload de la vignette
-        if (!Oledrion_utils::getModuleOption('create_thumbs')) { // L'utilisateur se charge de créer la vignette lui-même
+        if (!OledrionUtility::getModuleOption('create_thumbs')) { // L'utilisateur se charge de créer la vignette lui-même
             $destname = '';
-            $res2     = Oledrion_utils::uploadFile(1, OLEDRION_PICTURES_PATH);
+            $res2     = OledrionUtility::uploadFile(1, OLEDRION_PICTURES_PATH);
             if ($res2 === true) {
                 $item->setVar('product_thumb_url', basename($destname));
             } else {
@@ -678,14 +729,14 @@ switch ($action) {
             $indiceAttached = 1;
             if (xoops_trim($mainPicture) != '') {
                 $thumbName = OLEDRION_THUMBS_PREFIX . $mainPicture;
-                Oledrion_utils::resizePicture(OLEDRION_PICTURES_PATH . '/' . $mainPicture, OLEDRION_PICTURES_PATH . '/' . $thumbName, Oledrion_utils::getModuleOption('thumbs_width'), Oledrion_utils::getModuleOption('thumbs_height'), true);
+                OledrionUtility::resizePicture(OLEDRION_PICTURES_PATH . '/' . $mainPicture, OLEDRION_PICTURES_PATH . '/' . $thumbName, OledrionUtility::getModuleOption('thumbs_width'), OledrionUtility::getModuleOption('thumbs_height'), true);
                 $item->setVar('product_thumb_url', $thumbName);
             }
         }
 
         // Téléchargement du fichier attaché
         $destname = '';
-        $res3     = Oledrion_utils::uploadFile($indiceAttached, OLEDRION_ATTACHED_FILES_PATH);
+        $res3     = OledrionUtility::uploadFile($indiceAttached, OLEDRION_ATTACHED_FILES_PATH);
         if ($res3 === true) {
             $item->setVar('product_attachment', basename($destname));
         } else {
@@ -696,14 +747,14 @@ switch ($action) {
 
         $res = $h_oledrion_products->insert($item);
         if ($res) {
-            if (Oledrion_utils::getModuleOption('use_tags')) {
+            if (OledrionUtility::getModuleOption('use_tags')) {
                 $tagHandler = xoops_getModuleHandler('tag', 'tag');
                 $tagHandler->updateByItem($_POST['item_tag'], $item->getVar('product_id'), $xoopsModule->getVar('dirname'), 0);
             }
 
             $id = $item->getVar('product_id');
             // Notifications ******************************************************
-            if (true === $add) {
+            if ($add === true) {
                 //$plugins = Oledrion_plugins::getInstance();
                 //$plugins->fireAction(Oledrion_plugins::EVENT_ON_PRODUCT_CREATE, new Oledrion_parameters(array('product' => $item)));
             }
@@ -740,10 +791,10 @@ switch ($action) {
                     $res = $h_oledrion_related->insert($item2);
                 }
             }
-            Oledrion_utils::updateCache();
-            Oledrion_utils::redirect(_AM_OLEDRION_SAVE_OK, $baseurl . '?op=' . $opRedirect, 2);
+            OledrionUtility::updateCache();
+            OledrionUtility::redirect(_AM_OLEDRION_SAVE_OK, $baseurl . '?op=' . $opRedirect, 2);
         } else {
-            Oledrion_utils::redirect(_AM_OLEDRION_SAVE_PB, $baseurl . '?op=' . $opRedirect, 5);
+            OledrionUtility::redirect(_AM_OLEDRION_SAVE_PB, $baseurl . '?op=' . $opRedirect, 5);
         }
         break;
 
@@ -753,7 +804,7 @@ switch ($action) {
         xoops_cp_header();
         $id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
         if (empty($id)) {
-            Oledrion_utils::redirect(_AM_OLEDRION_ERROR_1, $baseurl, 5);
+            OledrionUtility::redirect(_AM_OLEDRION_ERROR_1, $baseurl, 5);
         }
         $opRedirect = 'products';
         $product    = null;
@@ -762,9 +813,9 @@ switch ($action) {
             $newProduct   = $h_oledrion_products->cloneProduct($product);
             $newProductId = $newProduct->product_id;
             if ($newProduct !== false) {
-                Oledrion_utils::redirect(_AM_OLEDRION_SAVE_OK, $baseurl . '?op=' . $opRedirect . '&action=edit&id=' . $newProductId, 2);
+                OledrionUtility::redirect(_AM_OLEDRION_SAVE_OK, $baseurl . '?op=' . $opRedirect . '&action=edit&id=' . $newProductId, 2);
             } else {
-                Oledrion_utils::redirect(_AM_OLEDRION_SAVE_PB, $baseurl . '?op=' . $opRedirect, 5);
+                OledrionUtility::redirect(_AM_OLEDRION_SAVE_PB, $baseurl . '?op=' . $opRedirect, 5);
             }
         }
         break;
@@ -776,11 +827,11 @@ switch ($action) {
 
         $id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
         if ($id == 0) {
-            Oledrion_utils::redirect(_AM_OLEDRION_ERROR_1, $baseurl, 5);
+            OledrionUtility::redirect(_AM_OLEDRION_ERROR_1, $baseurl, 5);
         }
         $item = $h_oledrion_products->get($id);
         if (!is_object($item)) {
-            Oledrion_utils::redirect(_AM_OLEDRION_NOT_FOUND, $baseurl, 5);
+            OledrionUtility::redirect(_AM_OLEDRION_NOT_FOUND, $baseurl, 5);
         }
         xoops_confirm(array('op' => 'products', 'action' => 'delete', 'id' => $id), 'index.php', _AM_OLEDRION_CONF_DELITEM . '<br>' . $item->getVar('product_title'));
         break;
@@ -791,7 +842,7 @@ switch ($action) {
         xoops_cp_header();
         $id = isset($_POST['id']) ? (int)$_POST['id'] : 0;
         if ($id == 0) {
-            Oledrion_utils::redirect(_AM_OLEDRION_ERROR_1, $baseurl, 5);
+            OledrionUtility::redirect(_AM_OLEDRION_ERROR_1, $baseurl, 5);
         }
         $opRedirect = 'products';
         $tblTmp     = array();
@@ -802,17 +853,17 @@ switch ($action) {
             if (is_object($item)) {
                 $res = $oledrion_shelf->deleteProduct($item, true);
                 if ($res) {
-                    Oledrion_utils::updateCache();
+                    OledrionUtility::updateCache();
                     xoops_notification_deletebyitem($xoopsModule->getVar('mid'), 'new_product', $id);
-                    Oledrion_utils::redirect(_AM_OLEDRION_SAVE_OK, $baseurl . '?op=' . $opRedirect, 2);
+                    OledrionUtility::redirect(_AM_OLEDRION_SAVE_OK, $baseurl . '?op=' . $opRedirect, 2);
                 } else {
-                    Oledrion_utils::redirect(_AM_OLEDRION_SAVE_PB, $baseurl . '?op=' . $opRedirect, 5);
+                    OledrionUtility::redirect(_AM_OLEDRION_SAVE_PB, $baseurl . '?op=' . $opRedirect, 5);
                 }
             } else {
-                Oledrion_utils::redirect(_AM_OLEDRION_NOT_FOUND, $baseurl . '?op=' . $opRedirect, 5);
+                OledrionUtility::redirect(_AM_OLEDRION_NOT_FOUND, $baseurl . '?op=' . $opRedirect, 5);
             }
         } else {
-            Oledrion_utils::htitle(_AM_OLEDRION_SORRY_NOREMOVE, 4);
+            OledrionUtility::htitle(_AM_OLEDRION_SORRY_NOREMOVE, 4);
             $tblTmp2 = array();
             $tblTmp2 = $h_oledrion_commands->getObjects(new Criteria('cmd_id', '(' . implode(',', $tblTmp) . ')', 'IN'), true);
             echo "<table width='100%' cellspacing='1' cellpadding='3' border='0' class='outer'>";
@@ -822,12 +873,27 @@ switch ($action) {
                 $class = ($class === 'even') ? 'odd' : 'even';
                 $date  = formatTimestamp(strtotime($item->getVar('cmd_date')), 's');
                 echo "<tr class='" . $class . "'>\n";
-                echo "<td align='right'>" . $item->getVar('cmd_id') . "</td><td align='center'>" . $date . "</td><td align='center'>" . $item->getVar('cmd_lastname') . ' ' . $item->getVar('cmd_firstname') . "</td><td align='center'>"
-                     . $item->getVar('cmd_total') . ' ' . Oledrion_utils::getModuleOption('money_short') . ' / ' . $item->getVar('cmd_shipping') . ' ' . Oledrion_utils::getModuleOption('money_short') . "</td>\n";
+                echo "<td align='right'>"
+                     . $item->getVar('cmd_id')
+                     . "</td><td align='center'>"
+                     . $date
+                     . "</td><td align='center'>"
+                     . $item->getVar('cmd_lastname')
+                     . ' '
+                     . $item->getVar('cmd_firstname')
+                     . "</td><td align='center'>"
+                     . $item->getVar('cmd_total')
+                     . ' '
+                     . OledrionUtility::getModuleOption('money_short')
+                     . ' / '
+                     . $item->getVar('cmd_shipping')
+                     . ' '
+                     . OledrionUtility::getModuleOption('money_short')
+                     . "</td>\n";
                 echo "<tr>\n";
             }
             echo '</table>';
-            include_once OLEDRION_ADMIN_PATH . 'admin_footer.php';
+            require_once OLEDRION_ADMIN_PATH . 'admin_footer.php';
         }
         break;
 
@@ -839,13 +905,13 @@ switch ($action) {
 
         $id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
         if (empty($id)) {
-            Oledrion_utils::redirect(_AM_OLEDRION_ERROR_1, $baseurl, 5);
+            OledrionUtility::redirect(_AM_OLEDRION_ERROR_1, $baseurl, 5);
         }
         // Item exits ?
         $item = null;
         $item = $h_oledrion_products->get($id);
         if (!is_object($item)) {
-            Oledrion_utils::redirect(_AM_OLEDRION_NOT_FOUND, $baseurl, 5);
+            OledrionUtility::redirect(_AM_OLEDRION_NOT_FOUND, $baseurl, 5);
         }
 
         $criteria = new Criteria(/*'product_id', $item->getVar('product_id'), '<>'*/);
@@ -878,10 +944,10 @@ switch ($action) {
         $submit_btn  = new XoopsFormButton('', 'post', _SUBMIT, 'submit');
         $button_tray->addElement($submit_btn);
         $sform->addElement($button_tray);
-        $sform =& Oledrion_utils::formMarkRequiredFields($sform);
+        $sform =& OledrionUtility::formMarkRequiredFields($sform);
         $sform->display();
 
-        include_once OLEDRION_ADMIN_PATH . 'admin_footer.php';
+        require_once OLEDRION_ADMIN_PATH . 'admin_footer.php';
         break;
 
     // **********************************************************************************************
@@ -891,7 +957,7 @@ switch ($action) {
         $id   = isset($_POST['product_id']) ? (int)$_POST['product_id'] : 0;
         $item = $h_oledrion_products->get($id);
         if (!is_object($item)) {
-            Oledrion_utils::redirect(_AM_OLEDRION_NOT_FOUND, $baseurl, 5);
+            OledrionUtility::redirect(_AM_OLEDRION_NOT_FOUND, $baseurl, 5);
         }
 
         foreach ($_POST as $related => $percent) {
@@ -901,6 +967,6 @@ switch ($action) {
         }
 
         $opRedirect = 'products';
-        Oledrion_utils::redirect(_AM_OLEDRION_SAVE_OK, $baseurl . '?op=' . $opRedirect, 5);
+        OledrionUtility::redirect(_AM_OLEDRION_SAVE_OK, $baseurl . '?op=' . $opRedirect, 5);
         break;
 }

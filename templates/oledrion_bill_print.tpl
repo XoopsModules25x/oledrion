@@ -4,18 +4,18 @@
 <head>
     <title><{if $xoops_pagetitle !=''}><{$xoops_pagetitle}> : <{/if}><{$xoops_sitename}></title>
 
-    <meta http-equiv="content-type" content="text/html; charset=<{$xoops_charset}>"/>
-    <meta name="keywords" content="<{$meta_keywords}>"/>
-    <meta name="description" content="<{$meta_description}>"/>
-    <meta name="author" content="voltan"/>
-    <meta name="copyright" content="<{$meta_copyright}>"/>
-    <meta name="generator" content="Bluefish 2.2.4"/>
-    <meta name="robots" content="noindex,nofollow"/>
+    <meta http-equiv="content-type" content="text/html; charset=<{$xoops_charset}>">
+    <meta name="keywords" content="<{$meta_keywords}>">
+    <meta name="description" content="<{$meta_description}>">
+    <meta name="author" content="voltan">
+    <meta name="copyright" content="<{$meta_copyright}>">
+    <meta name="generator" content="Bluefish 2.2.4">
+    <meta name="robots" content="noindex,nofollow">
 
-    <link rel="shortcut icon" type="image/ico" href="<{$xoops_url}>/favicon.ico"/>
-    <link rel="stylesheet" type="text/css" media="all" href="<{$xoops_url}>/xoops.css"/>
-    <link rel="stylesheet" type="text/css" media="all" href="<{$xoops_url}>/modules/oledrion/assets/css/print.css"/>
-    <link rel="stylesheet" type="text/css" media="all" href="<{$xoops_url}>/language/persian/style.css"/>
+    <link rel="shortcut icon" type="image/ico" href="<{$xoops_url}>/favicon.ico">
+    <link rel="stylesheet" type="text/css" media="all" href="<{$xoops_url}>/xoops.css">
+    <link rel="stylesheet" type="text/css" media="all" href="<{$xoops_url}>/modules/oledrion/assets/css/print.css">
+    <link rel="stylesheet" type="text/css" media="all" href="<{$xoops_url}>/language/persian/style.css">
 
 </head>
 <body onload="window.print()">

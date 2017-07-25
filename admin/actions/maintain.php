@@ -12,7 +12,7 @@
 /**
  * oledrion
  *
- * @copyright   {@link http://xoops.org/ XOOPS Project}
+ * @copyright   {@link https://xoops.org/ XOOPS Project}
  * @license     {@link http://www.fsf.org/copyleft/gpl.html GNU public license}
  * @author      Hossein Azizabadi (azizabadi@faragostaresh.com)
  */
@@ -25,12 +25,12 @@ if (!defined('OLEDRION_ADMIN')) {
 }
 
 switch ($action) {
-    case 'default' :
+    case 'default':
         xoops_cp_header();
         xoops_confirm(array('op' => 'maintain', 'action' => 'confirm'), 'index.php', _AM_OLEDRION_CONF_MAINTAIN);
         break;
 
-    case 'confirm' :
+    case 'confirm':
         xoops_cp_header();
         require OLEDRION_PATH . 'xoops_version.php';
         $tables = array();
@@ -43,22 +43,22 @@ switch ($action) {
             $xoopsDB->queryF('ANALYZE TABLE ' . $list);
             $xoopsDB->queryF('OPTIMIZE TABLE ' . $list);
         }
-        Oledrion_utils::updateCache();
+        OledrionUtility::updateCache();
         $h_oledrion_products->forceCacheClean();
-        Oledrion_utils::redirect(_AM_OLEDRION_SAVE_OK, $baseurl, 2);
+        OledrionUtility::redirect(_AM_OLEDRION_SAVE_OK, $baseurl, 2);
         break;
 
-    case 'import' :
+    case 'import':
         xoops_cp_header();
         $categories = $h_oledrion_cat->getCategoriesCount();
         if ($categories == 0) {
             xoops_confirm(array('op' => 'maintain', 'action' => 'doimport'), 'index.php', _AM_OLEDRION_IMPORT_CONF);
         } else {
-            Oledrion_utils::redirect(_AM_OLEDRION_SAVE_OK, $baseurl, 2);
+            OledrionUtility::redirect(_AM_OLEDRION_SAVE_OK, $baseurl, 2);
         }
         break;
 
-    case 'doimport' :
+    case 'doimport':
         xoops_cp_header();
         $categories = $h_oledrion_cat->getCategoriesCount();
         if ($categories == 0) {
@@ -104,6 +104,6 @@ switch ($action) {
             $vendor->setVars($vendor_array);
             $res = $h_oledrion_vendors->insert($vendor);
         }
-        Oledrion_utils::redirect(_AM_OLEDRION_SAVE_OK, $baseurl, 2);
+        OledrionUtility::redirect(_AM_OLEDRION_SAVE_OK, $baseurl, 2);
         break;
 }

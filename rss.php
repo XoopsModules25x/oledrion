@@ -12,7 +12,7 @@
 /**
  * oledrion
  *
- * @copyright   {@link http://xoops.org/ XOOPS Project}
+ * @copyright   {@link https://xoops.org/ XOOPS Project}
  * @license     {@link http://www.fsf.org/copyleft/gpl.html GNU public license}
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
  */
@@ -20,10 +20,10 @@
 /**
  * Flux RSS pour suivre les derniers produits
  */
-require __DIR__ . '/header.php';
+require_once __DIR__ . '/header.php';
 require_once XOOPS_ROOT_PATH . '/class/template.php';
 
-if (Oledrion_utils::getModuleOption('use_rss') == 0) {
+if (OledrionUtility::getModuleOption('use_rss') == 0) {
     exit;
 }
 // Paramètre, soit rien auquel cas on prend tous les produits récents soit cat_cid
@@ -50,7 +50,7 @@ if (!$tpl->is_cached('db:oledrion_rss.tpl', $cat_cid)) {
     $sitename = htmlspecialchars($xoopsConfig['sitename'], ENT_QUOTES);
     $email    = checkEmail($xoopsConfig['adminmail'], true);
     $slogan   = htmlspecialchars($xoopsConfig['slogan'], ENT_QUOTES);
-    $limit    = Oledrion_utils::getModuleOption('perpage');
+    $limit    = OledrionUtility::getModuleOption('perpage');
 
     $tpl->assign('charset', $charset);
     $tpl->assign('channel_title', xoops_utf8_encode($sitename));
@@ -60,7 +60,7 @@ if (!$tpl->is_cached('db:oledrion_rss.tpl', $cat_cid)) {
     $tpl->assign('channel_webmaster', xoops_utf8_encode($email));
     $tpl->assign('channel_editor', xoops_utf8_encode($email));
     $tpl->assign('channel_category', xoops_utf8_encode($categoryTitle));
-    $tpl->assign('channel_generator', xoops_utf8_encode(Oledrion_utils::getModuleName()));
+    $tpl->assign('channel_generator', xoops_utf8_encode(OledrionUtility::getModuleName()));
     $tpl->assign('channel_language', _LANGCODE);
     $tpl->assign('image_url', XOOPS_URL . '/images/logo.png');
     $dimention = getimagesize(XOOPS_ROOT_PATH . '/images/logo.png');

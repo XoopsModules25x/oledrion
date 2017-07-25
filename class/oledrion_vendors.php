@@ -12,7 +12,7 @@
 /**
  * oledrion
  *
- * @copyright   {@link http://xoops.org/ XOOPS Project}
+ * @copyright   {@link https://xoops.org/ XOOPS Project}
  * @license     {@link http://www.fsf.org/copyleft/gpl.html GNU public license}
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
  */
@@ -20,7 +20,7 @@
 /**
  * Gestion des vendeurs
  */
-require __DIR__ . '/classheader.php';
+require_once __DIR__ . '/classheader.php';
 
 /**
  * Class Oledrion_vendors
@@ -48,9 +48,9 @@ class OledrionOledrion_vendorsHandler extends Oledrion_XoopsPersistableObjectHan
 {
     /**
      * OledrionOledrion_vendorsHandler constructor.
-     * @param XoopsDatabase|null $db
+     * @param object $db
      */
-    public function __construct(XoopsDatabase $db)
+    public function __construct($db)
     { //                            Table               Classe          Id          Libellé
         parent::__construct($db, 'oledrion_vendors', 'oledrion_vendors', 'vendor_id', 'vendor_name');
     }
@@ -105,7 +105,7 @@ class OledrionOledrion_vendorsHandler extends Oledrion_XoopsPersistableObjectHan
      * @param  oledrion_vendors $vendor
      * @return boolean          Le résultat de la suppression
      */
-    public function deleteVendor(Oledrion_vendors $vendor)
+    public function deleteVendor(oledrion_vendors $vendor)
     {
         return $this->delete($vendor, true);
     }

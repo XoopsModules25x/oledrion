@@ -12,7 +12,7 @@
 /**
  * oledrion
  *
- * @copyright   {@link http://xoops.org/ XOOPS Project}
+ * @copyright   {@link https://xoops.org/ XOOPS Project}
  * @license     {@link http://www.fsf.org/copyleft/gpl.html GNU public license}
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
  */
@@ -82,21 +82,21 @@ define('_MI_OLEDRION_ADMENU6', 'Discounts');
 define('_MI_OLEDRION_ADMENU7', 'Newsletter');
 define('_MI_OLEDRION_ADMENU8', 'Texts');
 define('_MI_OLEDRION_ADMENU9', 'Inventory');
-define('_MI_OLEDRION_ADMENU10', 'Dashboard');
+define('_MI_OLEDRION_ADMENU10', 'Home');
 define('_MI_OLEDRION_ADMENU11', 'Attachments');
 define('_MI_OLEDRION_ADMENU12', 'Gateways');
-define('_MI_OLEDRION_ADMENU13', 'Prod. Options');
+define('_MI_OLEDRION_ADMENU13', 'Prod-Options');
 define('_MI_OLEDRION_ADMENU14', 'Blocks');
 define('_MI_OLEDRION_ADMENU15', 'Lists');
 define('_MI_OLEDRION_ADMENU16', 'Maintain');
-define('_MI_OLEDRION_ADMENU17', 'Prod. Properties');
+define('_MI_OLEDRION_ADMENU17', 'Prod-Properties');
 define('_MI_OLEDRION_ADMENU18', 'Packing');
 define('_MI_OLEDRION_ADMENU19', 'Location');
 define('_MI_OLEDRION_ADMENU20', 'Delivery');
 define('_MI_OLEDRION_ADMENU21', 'Payment');
 
 // Settings
-define('_MI_OLEDRION_SETTING_1', 'euro(s)');
+define('_MI_OLEDRION_SETTING_1', 'USD');
 define('_MI_OLEDRION_SETTING_2', '$');
 define('_MI_OLEDRION_SETTING_3', '2');
 define('_MI_OLEDRION_SETTING_4', '1');
@@ -210,11 +210,11 @@ define('_MI_OLEDRION_RESIZE_MAIN_DSC', '');
 define('_MI_OLEDRION_CREATE_THUMBS', 'Do you want the module to automatically create the product thumbnail?');
 define('_MI_OLEDRION_CREATE_THUMBS_DSC', 'If you dont use this option then you will have to upload products thumbnails yourself');
 
-define('_MI_OLEDRION_IMAGES_WIDTH', 'Images width');
-define('_MI_OLEDRION_IMAGES_HEIGHT', 'Images height');
+define('_MI_OLEDRION_IMAGES_WIDTH', 'Max Images width');
+define('_MI_OLEDRION_IMAGES_HEIGHT', 'Max Images height');
 
-define('_MI_OLEDRION_THUMBS_WIDTH', 'Thumbnail width');
-define('_MI_OLEDRION_THUMBS_HEIGHT', 'Thumbnail height');
+define('_MI_OLEDRION_THUMBS_WIDTH', 'Max Thumbnail width');
+define('_MI_OLEDRION_THUMBS_HEIGHT', 'Max Thumbnail height');
 
 define('_MI_OLEDRION_RESIZE_CATEGORIES', 'Do you also want to resize categories pictures and manufacturers pictures to the above dimensions?');
 define('_MI_OLEDRION_SHIPPING_QUANTITY', 'Multiply the product shipping amount by the product quantity?');
@@ -302,3 +302,17 @@ define('_MI_OLEDRION_SMS_DELIVERY', 'SMS Delivery');
 define('_MI_OLEDRION_SMS_DELIVERY_TEXT', 'SMS Delivery Description');
 define('_MI_OLEDRION_SMS_TRACK', 'SMS Track');
 define('_MI_OLEDRION_SMS_TRACK_TEXT', 'SMS Track Description');
+
+//2.34
+//Help
+define('_MI_OLEDRION_DIRNAME', basename(dirname(dirname(__DIR__))));
+define('_MI_OLEDRION_HELP_HEADER', __DIR__ . '/help/helpheader.html');
+define('_MI_OLEDRION_BACK_2_ADMIN', 'Back to Administration of ');
+define('_MI_OLEDRION_OVERVIEW', 'Overview');
+
+//define('_MI_OLEDRION_HELP_DIR', __DIR__);
+
+//help multi-page
+define('_MI_OLEDRION_DISCLAIMER', 'Disclaimer');
+define('_MI_OLEDRION_LICENSE', 'License');
+define('_MI_OLEDRION_SUPPORT', 'Support');

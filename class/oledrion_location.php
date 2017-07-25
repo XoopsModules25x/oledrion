@@ -12,12 +12,12 @@
 /**
  * oledrion
  *
- * @copyright   {@link http://xoops.org/ XOOPS Project}
+ * @copyright   {@link https://xoops.org/ XOOPS Project}
  * @license     {@link http://www.fsf.org/copyleft/gpl.html GNU public license}
  * @author      Hossein Azizabadi (azizabadi@faragostaresh.com)
  */
 
-require __DIR__ . '/classheader.php';
+require_once __DIR__ . '/classheader.php';
 
 /**
  * Class Oledrion_location
@@ -62,9 +62,9 @@ class OledrionOledrion_locationHandler extends Oledrion_XoopsPersistableObjectHa
 {
     /**
      * OledrionOledrion_locationHandler constructor.
-     * @param XoopsDatabase|null $db
+     * @param object $db
      */
-    public function __construct(XoopsDatabase $db)
+    public function __construct($db)
     { //                                        Table                   Classe              Id
         parent::__construct($db, 'oledrion_location', 'oledrion_location', 'location_id');
     }

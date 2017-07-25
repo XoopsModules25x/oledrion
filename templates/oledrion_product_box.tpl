@@ -3,7 +3,7 @@
         <{if $product.product_thumb_url}><a href="<{$product.product_url_rewrited}>"
                                             title="<{$product.product_href_title}>"><img
                     src="<{$product.product_thumb_full_url}>"
-                    alt="<{$product.product_href_title}>"/></a><{/if}>
+                    alt="<{$product.product_href_title}>"></a><{/if}>
     </div>
     <div class="oledrion_productssummary floatright">
         <div class="oledrion_producttitle">
@@ -14,7 +14,7 @@
         <{if $product.product_joined_manufacturers != ''}>
             <div class="oledrion_productauthor">
                 <img src="<{$smarty.const.OLEDRION_IMAGES_URL}>author.png"
-                     alt="<{$smarty.const._OLEDRION_BY}>"/><{$smarty.const._OLEDRION_BY}> <{$product.product_joined_manufacturers}>
+                     alt="<{$smarty.const._OLEDRION_BY}>"><{$smarty.const._OLEDRION_BY}> <{$product.product_joined_manufacturers}>
             </div>
         <{/if}>
         <{if $mod_pref.use_price}>
@@ -25,7 +25,7 @@
                     <s><{$product.product_price_ttc}></s>
                     <{$product.product_discount_price_ttc}><{else}><{$product.product_price_ttc}><{/if}>
                     <img src="<{$smarty.const.OLEDRION_IMAGES_URL}>cartadd.png"
-                         alt="<{$smarty.const._OLEDRION_ADD_TO_CART}>"/>
+                         alt="<{$smarty.const._OLEDRION_ADD_TO_CART}>">
                     </a><{else}><{$mod_pref.nostock_msg}><{/if}>
             </div>
         <{/if}>

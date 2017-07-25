@@ -12,7 +12,7 @@
 /**
  * oledrion
  *
- * @copyright   {@link http://xoops.org/ XOOPS Project}
+ * @copyright   {@link https://xoops.org/ XOOPS Project}
  * @license     {@link http://www.fsf.org/copyleft/gpl.html GNU public license}
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
  */
@@ -29,38 +29,38 @@ $download_id = isset($_GET['download_id']) ? $_GET['download_id'] : '';
 // TODO: Permettre au webmaster de réactiver un téléchargement
 
 if (xoops_trim($download_id) == '') {
-    Oledrion_utils::redirect(_OLEDRION_ERROR13, OLEDRION_URL, 5);
+    OledrionUtility::redirect(_OLEDRION_ERROR13, OLEDRION_URL, 5);
 }
 
 // Recherche dans les caddy du produit associé
 $caddy = null;
 $caddy = $h_oledrion_caddy->getCaddyFromPassword($download_id);
 if (!is_object($caddy)) {
-    Oledrion_utils::redirect(_OLEDRION_ERROR14, OLEDRION_URL, 5);
+    OledrionUtility::redirect(_OLEDRION_ERROR14, OLEDRION_URL, 5);
 }
 
 // Recherche du produit associé
 $product = null;
 $product = $h_oledrion_products->get($caddy->getVar('caddy_product_id'));
-if (null === $product) {
-    Oledrion_utils::redirect(_OLEDRION_ERROR15, OLEDRION_URL, 5);
+if ($product == null) {
+    OledrionUtility::redirect(_OLEDRION_ERROR15, OLEDRION_URL, 5);
 }
 
 // On vérifie que la commande associée est payée
 $order = null;
 $order = $h_oledrion_commands->get($caddy->getVar('caddy_cmd_id'));
-if (null === $order) {
-    Oledrion_utils::redirect(_OLEDRION_ERROR16, OLEDRION_URL, 5);
+if ($order == null) {
+    OledrionUtility::redirect(_OLEDRION_ERROR16, OLEDRION_URL, 5);
 }
 
 // Tout est bon, on peut envoyer le fichier au navigateur, s'il y a un fichier à télécharger, et s'il existe
 $file = '';
 $file = $product->getVar('product_download_url');
 if (xoops_trim($file) == '') {
-    Oledrion_utils::redirect(_OLEDRION_ERROR17, OLEDRION_URL, 5);
+    OledrionUtility::redirect(_OLEDRION_ERROR17, OLEDRION_URL, 5);
 }
 if (!file_exists($file)) {
-    Oledrion_utils::redirect(_OLEDRION_ERROR18, OLEDRION_URL, 5);
+    OledrionUtility::redirect(_OLEDRION_ERROR18, OLEDRION_URL, 5);
 }
 
 // Mise à jour, le fichier n'est plus disponible au téléchargement
@@ -81,6 +81,6 @@ if (trim($parameters['fileContent']) != '') {
 }
 // *********************************************************
 // Et affichage du fichier avec le type mime qui va bien
-header('Content-Type: ' . Oledrion_utils::getMimeType($file));
+header('Content-Type: ' . OledrionUtility::getMimeType($file));
 header('Content-disposition: inline; filename="' . basename($file) . '"');
 echo $fileContent;

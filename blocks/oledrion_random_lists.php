@@ -12,7 +12,7 @@
 /**
  * oledrion
  *
- * @copyright   {@link http://xoops.org/ XOOPS Project}
+ * @copyright   {@link https://xoops.org/ XOOPS Project}
  * @license     {@link http://www.fsf.org/copyleft/gpl.html GNU public license}
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
  */
@@ -26,7 +26,7 @@
 function b_oledrion_random_lists_show($options)
 {
     require XOOPS_ROOT_PATH . '/modules/oledrion/include/common.php';
-    Oledrion_utils::loadLanguageFile('main.php');
+    OledrionUtility::loadLanguageFile('main.php');
     $start    = 0;
     $limit    = (int)$options[0];
     $listType = (int)$options[1];
@@ -60,13 +60,13 @@ function b_oledrion_random_lists_show($options)
 function b_oledrion_random_lists_edit($options)
 {
     include XOOPS_ROOT_PATH . '/modules/oledrion/include/common.php';
-    $form = '';
-    $form .= "<table border='0'>";
-    $form .= '<tr><td>' . _MB_OLEDRION_LISTS_COUNT . "</td><td><input type='text' name='options[]' id='options' value='" . (int)$options[0] . "' /></td></tr>";
-    $listTypes      = Oledrion_lists::getTypesArray();
-    $listTypeSelect = Oledrion_utils::htmlSelect('options[]', $listTypes, (int)$options[1], false);
-    $form .= '<tr><td>' . _MB_OLEDRION_LISTS_TYPE . '</td><td>' . $listTypeSelect . '</td></tr>';
-    $form .= '</table>';
+    $form           = '';
+    $form           .= "<table border='0'>";
+    $form           .= '<tr><td>' . _MB_OLEDRION_LISTS_COUNT . "</td><td><input type='text' name='options[]' id='options' value='" . (int)$options[0] . "'></td></tr>";
+    $listTypes      = oledrion_lists::getTypesArray();
+    $listTypeSelect = OledrionUtility::htmlSelect('options[]', $listTypes, (int)$options[1], false);
+    $form           .= '<tr><td>' . _MB_OLEDRION_LISTS_TYPE . '</td><td>' . $listTypeSelect . '</td></tr>';
+    $form           .= '</table>';
 
     return $form;
 }

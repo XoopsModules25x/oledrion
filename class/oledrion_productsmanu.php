@@ -12,7 +12,7 @@
 /**
  * oledrion
  *
- * @copyright   {@link http://xoops.org/ XOOPS Project}
+ * @copyright   {@link https://xoops.org/ XOOPS Project}
  * @license     {@link http://www.fsf.org/copyleft/gpl.html GNU public license}
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
  */
@@ -20,7 +20,7 @@
 /**
  * Classe chargée de faire la liaison entre les produits et les fabricants
  */
-require __DIR__ . '/classheader.php';
+require_once __DIR__ . '/classheader.php';
 
 /**
  * Class Oledrion_productsmanu
@@ -51,9 +51,9 @@ class OledrionOledrion_productsmanuHandler extends Oledrion_XoopsPersistableObje
 {
     /**
      * OledrionOledrion_productsmanuHandler constructor.
-     * @param XoopsDatabase|null $db
+     * @param object $db
      */
-    public function __construct(XoopsDatabase $db)
+    public function __construct($db)
     { //                            Table                   Classe              Id
         parent::__construct($db, 'oledrion_productsmanu', 'oledrion_productsmanu', 'pm_id');
     }

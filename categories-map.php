@@ -12,7 +12,7 @@
 /**
  * oledrion
  *
- * @copyright   {@link http://xoops.org/ XOOPS Project}
+ * @copyright   {@link https://xoops.org/ XOOPS Project}
  * @license     {@link http://www.fsf.org/copyleft/gpl.html GNU public license}
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
  */
@@ -20,7 +20,7 @@
 /**
  * Plan des catégories
  */
-require __DIR__ . '/header.php';
+require_once __DIR__ . '/header.php';
 $GLOBALS['current_category']             = -1;
 $GLOBALS['xoopsOption']['template_main'] = 'oledrion_map.tpl';
 require_once XOOPS_ROOT_PATH . '/header.php';
@@ -42,13 +42,13 @@ foreach ($tree as $key => $value) {
     }
 }
 
-Oledrion_utils::setCSS();
-Oledrion_utils::setLocalCSS($xoopsConfig['language']);
-Oledrion_utils::loadLanguageFile('modinfo.php');
+OledrionUtility::setCSS();
+OledrionUtility::setLocalCSS($xoopsConfig['language']);
+OledrionUtility::loadLanguageFile('modinfo.php');
 
-$xoopsTpl->assign('global_advert', Oledrion_utils::getModuleOption('advertisement'));
-$xoopsTpl->assign('breadcrumb', Oledrion_utils::breadcrumb(array(OLEDRION_URL . basename(__FILE__) => _MI_OLEDRION_SMNAME4)));
+$xoopsTpl->assign('global_advert', OledrionUtility::getModuleOption('advertisement'));
+$xoopsTpl->assign('breadcrumb', OledrionUtility::breadcrumb(array(OLEDRION_URL . basename(__FILE__) => _MI_OLEDRION_SMNAME4)));
 
-$title = _MI_OLEDRION_SMNAME4 . ' - ' . Oledrion_utils::getModuleName();
-Oledrion_utils::setMetas($title, $title);
+$title = _MI_OLEDRION_SMNAME4 . ' - ' . OledrionUtility::getModuleName();
+OledrionUtility::setMetas($title, $title);
 require_once XOOPS_ROOT_PATH . '/footer.php';

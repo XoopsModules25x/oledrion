@@ -1,13 +1,13 @@
 <!-- Created by Hervé Thouzard (http://www.herve-thouzard.com/) -->
 <html>
 <head>
-    <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
-    <meta http-equiv="content-type" content="text/html; charset=<{$smarty.const._CHARSET}>"/>
-    <meta name="author" content="voltan"/>
-    <meta http-equiv="content-language" content="<{$xoops_langcode}>"/>
-    <meta name="generator" content="Bluefish 2.2.3"/>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta http-equiv="content-type" content="text/html; charset=<{$smarty.const._CHARSET}>">
+    <meta name="author" content="voltan">
+    <meta http-equiv="content-language" content="<{$xoops_langcode}>">
+    <meta name="generator" content="Bluefish 2.2.3">
     <title><{$smarty.const._AM_OLEDRION_SEARCH}></title>
-    <link rel="stylesheet" type="text/css" href="<{$theme_set}>"/>
+    <link rel="stylesheet" type="text/css" href="<{$theme_set}>">
     <style>
         .selectLists {
             width: 170px;
@@ -17,11 +17,12 @@
 </head>
 <body>
 <form name="productsSelector" id="productsSelector" method="post" action="<{$baseurl}>">
+    <{securityToken}><{*//mb*}>
     <fieldset>
         <legend><{$smarty.const._AM_OLEDRION_SEARCH}></legend>
-        <input type="hidden" name="op" id="op" value="search"/>
-        <input type="hidden" name="mutipleSelect" id="mutipleSelect" value="<{$mutipleSelect}>"/>
-        <input type="hidden" name="callerName" id="callerName" value="<{$callerName}>"/>
+        <input type="hidden" name="op" id="op" value="search">
+        <input type="hidden" name="mutipleSelect" id="mutipleSelect" value="<{$mutipleSelect}>">
+        <input type="hidden" name="callerName" id="callerName" value="<{$callerName}>">
         <table width='100%' cellspacing='1' cellpadding='3' border='0' class='outer'>
             <tr class="<{cycle values='even,odd'}>">
                 <td><select name='searchField' id='searchField'
@@ -31,7 +32,7 @@
                             class="selectLists"><{html_options selected=$searchCriteriaSelected options=$searchCriteria}></select>
                 </td>
                 <td><input type='text' name='searchText' id='searchText' size='45' maxlength='255'
-                           value="<{$searchTextValue}>"/></td>
+                           value="<{$searchTextValue}>"></td>
             </tr>
             <tr class="<{cycle values='even,odd'}>">
                 <td><{$smarty.const._AM_OLEDRION_DISCOUNT_VENDOR}><br><select name='searchVendor' id='searchVendor'
@@ -39,10 +40,10 @@
                 </td>
                 <td><{$smarty.const._OLEDRION_CATEGORY}><br><{$searchCategory}></td>
                 <td>&nbsp;<input type='submit' name='btnSearch' id='btnSearch'
-                                 value="<{$smarty.const._AM_OLEDRION_SEARCH}>"/> <input type="button" name="btnClose"
+                                 value="<{$smarty.const._AM_OLEDRION_SEARCH}>"> <input type="button" name="btnClose"
                                                                                         id="btnClose"
                                                                                         onClick="window.close();"
-                                                                                        value="<{$smarty.const._AM_OLEDRION_CLOSE_WINDOW}>"/><br>
+                                                                                        value="<{$smarty.const._AM_OLEDRION_CLOSE_WINDOW}>"><br>
                     <{if isset($productsCount)}>
                         <div style="float: right; font-size: 10px;"><{$productsCount}> <{$smarty.const._MI_OLEDRION_ADMENU4}></div>
                     <{/if}>

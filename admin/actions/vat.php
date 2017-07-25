@@ -12,7 +12,7 @@
 /**
  * oledrion
  *
- * @copyright   {@link http://xoops.org/ XOOPS Project}
+ * @copyright   {@link https://xoops.org/ XOOPS Project}
  * @license     {@link http://www.fsf.org/copyleft/gpl.html GNU public license}
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
  */
@@ -28,12 +28,16 @@ switch ($action) {
     case 'default': // Gestion des TVA
         // ****************************************************************************************************************
         xoops_cp_header();
+        $adminObject = \Xmf\Module\Admin::getInstance();
+        $adminObject->displayNavigation('index.php?op=vat');
+
         $start = isset($_GET['start']) ? (int)$_GET['start'] : 0;
         $vats  = array();
-        $form  = "<form method='post' action='$baseurl' name='frmaddvat' id='frmaddvat'><input type='hidden' name='op' id='op' value='vat' /><input type='hidden' name='action' id='action' value='add' /><input type='hidden' name='action' id='action' value='add' /><input type='submit' name='btngo' id='btngo' value='"
-                 . _AM_OLEDRION_ADD_ITEM . "' /></form>";
+        $form  = "<form method='post' action='$baseurl' name='frmaddvat' id='frmaddvat'><input type='hidden' name='op' id='op' value='vat'><input type='hidden' name='action' id='action' value='add'><input type='hidden' name='action' id='action' value='add'><input type='submit' name='btngo' id='btngo' value='"
+                 . _AM_OLEDRION_ADD_ITEM
+                 . "'></form>";
         echo $form;
-        Oledrion_utils::htitle(_MI_OLEDRION_ADMENU1, 4);
+        //        OledrionUtility::htitle(_MI_OLEDRION_ADMENU1, 4);
         $vats  = $h_oledrion_vat->getAllVats(new Oledrion_parameters(array('start' => $start, 'limit' => $limit)));
         $class = '';
         echo "<table width='100%' cellspacing='1' cellpadding='3' border='0' class='outer'>";
@@ -45,8 +49,7 @@ switch ($action) {
             $actions[] = "<a href='$baseurl?op=vat&action=edit&id=" . $id . "' title='" . _OLEDRION_EDIT . "'>" . $icones['edit'] . '</a>';
             $actions[] = "<a href='$baseurl?op=vat&action=delete&id=" . $id . "' title='" . _OLEDRION_DELETE . "'" . $conf_msg . '>' . $icones['delete'] . '</a>';
             echo "<tr class='" . $class . "'>\n";
-            echo "<td align='center'>" . $id . "</td><td align='center'>" . $oledrion_Currency->amountInCurrency($item->getVar('vat_rate')) . "</td><td align='center'>" . ucfirst($item->getVar('vat_country')) . "</td><td align='center'>"
-                 . implode(' ', $actions) . "</td>\n";
+            echo "<td align='center'>" . $id . "</td><td align='center'>" . $oledrion_Currency->amountInCurrency($item->getVar('vat_rate')) . "</td><td align='center'>" . ucfirst($item->getVar('vat_country')) . "</td><td align='center'>" . implode(' ', $actions) . "</td>\n";
             echo "<tr>\n";
         }
         $class = ($class === 'even') ? 'odd' : 'even';
@@ -54,7 +57,7 @@ switch ($action) {
         echo "<td colspan='4' align='center'>" . $form . "</td>\n";
         echo "</tr>\n";
         echo '</table>';
-        include_once OLEDRION_ADMIN_PATH . 'admin_footer.php';
+        require_once OLEDRION_ADMIN_PATH . 'admin_footer.php';
         break;
 
     // ****************************************************************************************************************
@@ -67,13 +70,13 @@ switch ($action) {
             $title = _AM_OLEDRION_EDIT_VAT;
             $id    = isset($_GET['id']) ? (int)$_GET['id'] : 0;
             if (empty($id)) {
-                Oledrion_utils::redirect(_AM_OLEDRION_ERROR_1, $baseurl, 5);
+                OledrionUtility::redirect(_AM_OLEDRION_ERROR_1, $baseurl, 5);
             }
             // Item exits ?
             $item = null;
             $item = $h_oledrion_vat->get($id);
             if (!is_object($item)) {
-                Oledrion_utils::redirect(_AM_OLEDRION_NOT_FOUND, $baseurl, 5);
+                OledrionUtility::redirect(_AM_OLEDRION_NOT_FOUND, $baseurl, 5);
             }
             $edit         = true;
             $label_submit = _AM_OLEDRION_MODIFY;
@@ -94,9 +97,9 @@ switch ($action) {
         $submit_btn  = new XoopsFormButton('', 'post', $label_submit, 'submit');
         $button_tray->addElement($submit_btn);
         $sform->addElement($button_tray);
-        $sform =& Oledrion_utils::formMarkRequiredFields($sform);
+        $sform =& OledrionUtility::formMarkRequiredFields($sform);
         $sform->display();
-        include_once __DIR__ . '/admin_footer.php';
+        require_once __DIR__ . '/admin_footer.php';
         break;
 
     // ****************************************************************************************************************
@@ -108,7 +111,7 @@ switch ($action) {
             $edit = true;
             $item = $h_oledrion_vat->get($id);
             if (!is_object($item)) {
-                Oledrion_utils::redirect(_AM_OLEDRION_NOT_FOUND, $baseurl, 5);
+                OledrionUtility::redirect(_AM_OLEDRION_NOT_FOUND, $baseurl, 5);
             }
             $item->unsetNew();
         } else {
@@ -118,10 +121,10 @@ switch ($action) {
         $item->setVars($_POST);
         $res = $h_oledrion_vat->insert($item);
         if ($res) {
-            Oledrion_utils::updateCache();
-            Oledrion_utils::redirect(_AM_OLEDRION_SAVE_OK, $baseurl . '?op=' . $opRedirect, 2);
+            OledrionUtility::updateCache();
+            OledrionUtility::redirect(_AM_OLEDRION_SAVE_OK, $baseurl . '?op=' . $opRedirect, 2);
         } else {
-            Oledrion_utils::redirect(_AM_OLEDRION_SAVE_PB, $baseurl . '?op=' . $opRedirect, 5);
+            OledrionUtility::redirect(_AM_OLEDRION_SAVE_PB, $baseurl . '?op=' . $opRedirect, 5);
         }
         break;
 
@@ -131,7 +134,7 @@ switch ($action) {
         xoops_cp_header();
         $id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
         if (empty($id)) {
-            Oledrion_utils::redirect(_AM_OLEDRION_ERROR_1, $baseurl, 5);
+            OledrionUtility::redirect(_AM_OLEDRION_ERROR_1, $baseurl, 5);
         }
         $opRedirect = 'vat';
         // On vérifie que cette TVA n'est pas utilisée par des produits
@@ -142,16 +145,16 @@ switch ($action) {
             if (is_object($item)) {
                 $res = $h_oledrion_vat->deleteVat($item);
                 if ($res) {
-                    Oledrion_utils::updateCache();
-                    Oledrion_utils::redirect(_AM_OLEDRION_SAVE_OK, $baseurl . '?op=' . $opRedirect, 2);
+                    OledrionUtility::updateCache();
+                    OledrionUtility::redirect(_AM_OLEDRION_SAVE_OK, $baseurl . '?op=' . $opRedirect, 2);
                 } else {
-                    Oledrion_utils::redirect(_AM_OLEDRION_SAVE_PB, $baseurl . '?op=' . $opRedirect, 5);
+                    OledrionUtility::redirect(_AM_OLEDRION_SAVE_PB, $baseurl . '?op=' . $opRedirect, 5);
                 }
             } else {
-                Oledrion_utils::redirect(_AM_OLEDRION_NOT_FOUND, $baseurl . '?op=' . $opRedirect, 5);
+                OledrionUtility::redirect(_AM_OLEDRION_NOT_FOUND, $baseurl . '?op=' . $opRedirect, 5);
             }
         } else {
-            Oledrion_utils::redirect(_AM_OLEDRION_ERROR_2, $baseurl . '?op=' . $opRedirect, 5);
+            OledrionUtility::redirect(_AM_OLEDRION_ERROR_2, $baseurl . '?op=' . $opRedirect, 5);
         }
         break;
 }

@@ -1,6 +1,32 @@
----------------------------------------
-2.34  Beta 5               NOT RELEASED
----------------------------------------
+<h5>2.34  Beta 5                      [NOT RELEASED]</h5>
+<hr>
+- moved all images, CSS, and JS files to /assets (mamba)
+- renamed .html Smarty templates to .tpl (mamba)
+- code PSR-2 cosmetics (mamba)
+- updated Help with links to GitBook tutorial (mamba)
+- Converted to XOOPS 2.5.8 Admin GUI (Mamba)
+- removed @version (mamba)
+- PSR-2 code cosmetics (mamba)
+- addNavigation(basename(__FILE__))  (mamba)
+- dirname(__FILE__) to __DIR__ (mamba)
+- XOOPS 2.5.9, PHP 7 (mamba)
+- replaced < b /> with < b > (mamba)
+- Unnecessary double quotes (mamba)
+- reference mismatch (mamba)
+- Hardening to type safe (mamba)
+- update Help (mamba)
+- changed _handler to Handler (mamba)
+- changed to ->renderButton('left') (mamba)
+- removed '/' from void HTML elements (&lt;br&gt;, &lt;img&gt;, etc) (mamba)
+- HTML 5: removed 'selected' and 'checked' (mamba)
+- short array syntax (mamba)
+- added install checks for PHP 5.5 and XOOPS 2.5.8 (mamba)
+- added auto-creation of upload folders (mamba)
+- moved functions to Utility class (mamba)
+
+
+<h5>2.34  Beta 4                      [NOT RELEASED]</h5>
+<hr>
 - Add Ajax search system and block (voltan)
 - Add Ajax rate (voltan)
 - Add json output for products and categoresy (voltan)
@@ -32,28 +58,13 @@
 - Fix bug on attach file (voltan)
 - Remove Cache Lite Support(voltan)
 - Remove class/lite.php class/PEAR.php class/PEAR5.php admin/main.php files (voltan)
-- moved all images, CSS, and JS files to /assets (mamba)
-- renamed .html Smarty templates to .tpl (mamba)
-- code PSR-2 cosmetics (mamba)
-- updated Help with links to GitBook tutorial
-- removed @version (mamba)
-- PSR-2 code cosmetics (mamba)
-- addNavigation(basename(__FILE__))  (mamba)
-- dirname(__FILE__) to __DIR__ (mamba)
-- XOOPS 2.5.8, PHP 7 (mamba)
-- replaced < b /> with < b > (mamba)
-- Unnecessary double quotes (mamba)
-- reference mismatch (mamba)
-- Hardening to type safe (mamba)
-- update Help (mamba)
-- changed _handler to Handler (mamba)
 
 TODO:
 - Rebuild admin files and add template
 
----------------------------------------
-2.33 Beta 1 2012-07-23
----------------------------------------
+
+<h5>2.33 Beta 1 [2012-07-23]</h5>
+<hr>
 
 - Converted to XOOPS 2.5.5 Admin GUI (Mamba)
 - fix: removed private lists form blocks other than "My lists" (Mamba)
@@ -70,9 +81,9 @@ TODO:
 - make sure that discounts are calculated properly
 
 
----------------------------------------
-2.31 Final 2009-11-08 (Hervet)
----------------------------------------
+
+<h5>2.31 Final [2009-11-08] (Hervet)</h5>
+<hr>
 - Changelog.txt was renamed to changelog.php
 - Code refactoring
 - The block used to show categories can now show all categories unfolded (useful if you need to create a scrolling menu)
@@ -117,9 +128,9 @@ TODO:
     - There is a new file (in your language folder) called messages.js to translate, take care, this file is a Javascript file
     - There's also a picture to "translate", in your language folder, addtocart.png (this picture is used when products have attributes) and addtowishlist.png
 
----------------------------------------*
-2.2 Final (Hervet)
----------------------------------------*
+
+<h5>2.2 Final (Hervet)</h5>
+<hr>
 - Code refactoring
 - Bugs corrections in the checkout page
 - New option in config.php : OLEDRION_DONT_RESIZE_IF_SMALLER, when this option is on "true", if pictures are smaller than defined dimensions, then they are not resized
@@ -136,9 +147,9 @@ TODO:
 - There were 2 minor changes in the translations, see lang.diff
 
 
----------------------------------------*
-2.1 Final (Hervet)
----------------------------------------*
+
+<h5>2.1 Final (Hervet)</h5>
+<hr>
 - You can now use the Xoops TAG module
 - In the file config.php, you can select where to place the "duplicated" word (at the beginning or at the end of the product's title and in the reductions)
 - In config.php, addition of an option to select the visible tabs in the module's administration (see config.php for some explanations)
@@ -157,9 +168,9 @@ TODO:
 - The cache Lite class was updated
 - New translations (see lang.diff)
 
----------------------------------------
-2.00 Final 2008-12-24 (Hervet)
----------------------------------------
+
+<h5>2.00 Final [2008-12-24] (Hervet)</h5>
+<hr>
 - It was not possible to see a product if you did not defined a VAT - philou
 - When you duplicate a product you are now redirected to the product - philou
 - It was not possible to see the list of all products when you were not using the price field - philou
@@ -181,9 +192,9 @@ I have added {COMMENT}
 - The file config.php was changed
 - The module was deeply modified to be able to use other payment gateways (that's why the module's version was changed to a major one)
 
----------------------------------------
-1.64 Final 2008-9-15 (Hervet)
----------------------------------------
+
+<h5>1.64 Final [2008-9-15 (Hervet)]</h5>
+<hr>
 - Correction of a bug in the csv export
 - TCPDF was updated
 - Correction of a bug in the products prices in the PDF catalog
@@ -194,9 +205,9 @@ I have added {COMMENT}
 New translation in modinfo.php :
 _MI_OLEDRION_SHIPPING_QUANTITY
 
----------------------------------------
-1.63 Final 2008-8-29 (Hervet)
----------------------------------------
+
+<h5>1.63 Final [2008-8-29 (Hervet)]</h5>
+<hr>
 - Bug correction in the PDF catalog
 - Bug correction in the shipping's calculation (quantites was not used for shipping calculation)
 - Bug correction in the cart/order tables (as a consequence, there was some bugs in the invoice and dashboard)
@@ -204,16 +215,16 @@ _MI_OLEDRION_SHIPPING_QUANTITY
 - You have a plugin for RssFit & Sitemap
 - No changes in the translations
 
----------------------------------------
-1.62 (Hervet)
----------------------------------------
+
+<h5>1.62 [(Hervet)]</h5>
+<hr>
 - Correction of a bug in download.php (thank you Trabis)
 - TCPDF was updated
 - Correction of a bug when the product's quantity as changed in the cart (thank you Trabis)
 
----------------------------------------
-1.61 (Hervet)
----------------------------------------
+
+<h5>1.61 [(Hervet)]</h5>
+<hr>
 - Rajout d'une option permettant de désactiver la zone prix (des produits)
 - Dans la fiche d'un produit, la liste des produits récents ne contient plus le produit en cours
 - Ajout d'une zone cat_footer dans les catégories (pour pouvoir mettre un pied de page par catégorie)
@@ -236,10 +247,10 @@ _MI_OLEDRION_SHIPPING_QUANTITY
 - Ajout d'une nouvelle classe pour passer les paramètres à la façade
 - Changement de tous les entêtes Php afin d'être plus explicite sur la licence (à cause des voleurs de chez impress)
 
----------------------------------------
-1.6 (Hervet)
----------------------------------------
-- Refactorisation du code pour utiliser la classe oledrion_utils au lieu des fonctions contenues dans include/functions.php
+
+<h5>1.6 [(Hervet)]</h5>
+<hr>
+- Refactorisation du code pour utiliser la classe OledrionUtility au lieu des fonctions contenues dans include/functions.php
 - Mise à jour de TCPDF
 - Remplacement des tous les book et livre par product et produit
 - Mise à jour du PersistableObjectHandler
@@ -254,18 +265,18 @@ _MI_OLEDRION_SHIPPING_QUANTITY
 - L'adresse email Paypal sert aussi d'indicateur pour activer ou désactiver le paiement en ligne
 - Toutes les pages contiennent breadcrumb et publicité globale (ou de la catégorie)
 
----------------------------------------
-1.4 2007-12-06 (Hervet)
----------------------------------------
+
+<h5>1.4 [2007-12-06 (Hervet)]</h5>
+<hr>
 - Correction d'un bug lors de l'envoi du mail au client, le lien vers la facture n'était pas affiché
 - Page d'accueil du module, il n'était pas possible d'afficher 0 produits
 - Il manquait un espace dans la liste des revendeurs
 - Même lorsque l'option "afficher les liens vers les produits précédents et suivants" était décochée, le titre du bloc était quand même visible
 - La description courte et complète ne s'affichent plus si elles ne contiennent rien (le titre des blocs)
 
----------------------------------------
-1.3 2007-11-17 (Hervet)
----------------------------------------
+
+<h5>1.3 [2007-11-17 (Hervet)]</h5>
+<hr>
 - Ajout d'une gestion de cache avec Cache_Lite (de Pear)
 - Possibilité de supprimer images et fichiers attachés dans les catégories, fabricants et produits
 - Modification de toutes les classes pour fonctionner avec Php5
@@ -275,22 +286,22 @@ _MI_OLEDRION_SHIPPING_QUANTITY
 - Le type mime dans le script permettant de télécharger un fichier est enfin correctement détecté (avec finfo) et l'affichage
   des fichiers envoyés est correct
 
----------------------------------------
-1.2 2007-08-03 (Hervet)
----------------------------------------
+
+<h5>1.2 [2007-08-03 (Hervet)]</h5>
+<hr>
 - Correction d'un bug dans l'administration du module, il était possible d'uploader n'importe quel type de fichier
 - Dans l'administration, les noms des produits sont maintenant cliquables
 - Mise à jour de tcpdf
 
 
----------------------------------------
-1.1 2007-07-26 (Hervet)
----------------------------------------
+
+<h5>1.1 [2007-07-26 (Hervet)]</h5>
+<hr>
 - Ajout de nouvelles préférences afin de mieux gérer la monnaie (sa position par exemple)
 - Modification de tout le module pour tenir compte de la gestion de la monnaie
 - Ajout de la classe oledrion_currency.php
 
----------------------------------------
-1.00 Final  (Hervet)
----------------------------------------
+
+<h5>1.00 Final  [(Hervet)]</h5>
+<hr>
 - Original release

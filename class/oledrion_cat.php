@@ -12,7 +12,7 @@
 /**
  * oledrion
  *
- * @copyright   {@link http://xoops.org/ XOOPS Project}
+ * @copyright   {@link https://xoops.org/ XOOPS Project}
  * @license     {@link http://www.fsf.org/copyleft/gpl.html GNU public license}
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
  */
@@ -21,7 +21,7 @@
  * Gestion des catégories de produits
  */
 
-require __DIR__ . '/classheader.php';
+require_once __DIR__ . '/classheader.php';
 
 /**
  * Class Oledrion_cat
@@ -78,8 +78,7 @@ class Oledrion_cat extends Oledrion_Object
     {
         $return = false;
         if (xoops_trim($this->getVar('cat_imgurl')) != ''
-            && file_exists(OLEDRION_PICTURES_PATH . '/' . $this->getVar('cat_imgurl'))
-        ) {
+            && file_exists(OLEDRION_PICTURES_PATH . '/' . $this->getVar('cat_imgurl'))) {
             $return = true;
         }
 
@@ -105,10 +104,10 @@ class Oledrion_cat extends Oledrion_Object
      */
     public function getLink()
     {
-        include_once XOOPS_ROOT_PATH . '/modules/oledrion/include/common.php';
+        require_once XOOPS_ROOT_PATH . '/modules/oledrion/include/common.php';
         $url = '';
-        if (Oledrion_utils::getModuleOption('urlrewriting') == 1) { // On utilise l'url rewriting
-            $url = OLEDRION_URL . 'category-' . $this->getVar('cat_cid') . Oledrion_utils::makeSeoUrl($this->getVar('cat_title', 'n')) . '.html';
+        if (OledrionUtility::getModuleOption('urlrewriting') == 1) { // On utilise l'url rewriting
+            $url = OLEDRION_URL . 'category-' . $this->getVar('cat_cid') . OledrionUtility::makeSeoUrl($this->getVar('cat_title', 'n')) . '.html';
         } else { // Pas d'utilisation de l'url rewriting
             $url = OLEDRION_URL . 'category.php?cat_cid=' . $this->getVar('cat_cid');
         }
@@ -123,7 +122,7 @@ class Oledrion_cat extends Oledrion_Object
      */
     public function getHrefTitle()
     {
-        return Oledrion_utils::makeHrefTitle($this->getVar('cat_title'));
+        return OledrionUtility::makeHrefTitle($this->getVar('cat_title'));
     }
 
     /**
@@ -151,9 +150,9 @@ class OledrionOledrion_catHandler extends Oledrion_XoopsPersistableObjectHandler
 {
     /**
      * OledrionOledrion_catHandler constructor.
-     * @param XoopsDatabase|null $db
+     * @param object $db
      */
-    public function __construct(XoopsDatabase $db)
+    public function __construct($db)
     { //                        Table               Classe       Id       Libellé
         parent::__construct($db, 'oledrion_cat', 'oledrion_cat', 'cat_cid', 'cat_title');
     }
@@ -190,7 +189,7 @@ class OledrionOledrion_catHandler extends Oledrion_XoopsPersistableObjectHandler
     }
 
     /**
-     * Fonction interne pour faire une vue développée des catégories
+     * Internal function to make an expanded view of categories via <li>
      *
      * @param  string $fieldName
      * @param  string $key
@@ -223,7 +222,7 @@ class OledrionOledrion_catHandler extends Oledrion_XoopsPersistableObjectHandler
      */
     public function getUlMenu($fieldName, $key = 0)
     {
-        include_once XOOPS_ROOT_PATH . '/class/tree.php';
+        require_once XOOPS_ROOT_PATH . '/class/tree.php';
         $items      = $this->getAllCategories(new Oledrion_parameters());
         $treeObject = new XoopsObjectTree($items, 'cat_cid', 'cat_pid');
         $tree       =& $treeObject->getTree();
@@ -240,10 +239,10 @@ class OledrionOledrion_catHandler extends Oledrion_XoopsPersistableObjectHandler
     /**
      * Supprime une catégorie (et tout ce qui lui est relatif)
      *
-     * @param  Oledrion_cat $category
+     * @param  oledrion_cat $category
      * @return boolean      Le résultat de la suppression
      */
-    public function deleteCategory(Oledrion_cat $category)
+    public function deleteCategory(oledrion_cat $category)
     {
         global $xoopsModule;
         $category->deletePicture();
@@ -267,7 +266,7 @@ class OledrionOledrion_catHandler extends Oledrion_XoopsPersistableObjectHandler
 
         if ($withNested) { // Recherche des sous catégories de cette catégorie
             $items = $childs = array();
-            include_once XOOPS_ROOT_PATH . '/class/tree.php';
+            require_once XOOPS_ROOT_PATH . '/class/tree.php';
             $items  = $this->getAllCategories(new Oledrion_parameters());
             $mytree = new XoopsObjectTree($items, 'cat_cid', 'cat_pid');
             $childs = $mytree->getAllChild($cat_cid);
@@ -285,7 +284,7 @@ class OledrionOledrion_catHandler extends Oledrion_XoopsPersistableObjectHandler
      * Retourne des catégories selon leur ID
      *
      * @param  array $ids Les ID des catégories à retrouver
-     * @return array Objets de type Oledrion_cat
+     * @return array Objets de type oledrion_cat
      */
     public function getCategoriesFromIds($ids)
     {
@@ -301,7 +300,7 @@ class OledrionOledrion_catHandler extends Oledrion_XoopsPersistableObjectHandler
     /**
      * Retourne la liste des catégories mères (sous forme d'un tableau d'objets)
      *
-     * @return array Objets de type Oledrion_cat
+     * @return array Objets de type oledrion_cat
      */
     public function getMotherCategories()
     {

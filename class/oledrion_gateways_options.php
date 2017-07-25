@@ -12,7 +12,7 @@
 /**
  * oledrion
  *
- * @copyright   {@link http://xoops.org/ XOOPS Project}
+ * @copyright   {@link https://xoops.org/ XOOPS Project}
  * @license     {@link http://www.fsf.org/copyleft/gpl.html GNU public license}
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
  */
@@ -20,7 +20,7 @@
 /**
  * Gestion des options des passerelles de paiement
  */
-require __DIR__ . '/classheader.php';
+require_once __DIR__ . '/classheader.php';
 
 /**
  * Class Oledrion_gateways_options
@@ -50,9 +50,9 @@ class OledrionOledrion_gateways_optionsHandler extends Oledrion_XoopsPersistable
 {
     /**
      * OledrionOledrion_gateways_optionsHandler constructor.
-     * @param XoopsDatabase|null $db
+     * @param object $db
      */
-    public function __construct(XoopsDatabase $db)
+    public function __construct($db)
     { //                                Table                       Classe                      Id
         parent::__construct($db, 'oledrion_gateways_options', 'oledrion_gateways_options', 'option_id');
     }

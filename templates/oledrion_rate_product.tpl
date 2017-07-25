@@ -24,7 +24,8 @@
         <tr>
             <td class="center">
                 <form method="post" action="<{$smarty.const.OLEDRION_URL}>rate-product.php">
-                    <input type="hidden" name="product_id" id="product_id" value="<{$product.product_id}>"/>
+                    <{securityToken}><{*//mb*}>
+                    <input type="hidden" name="product_id" id="product_id" value="<{$product.product_id}>">
                     <select name="rating" id="rating">
                         <option value="--">--</option>
                         <option value='10'>10</option>
@@ -38,9 +39,9 @@
                         <option value='2'>2</option>
                         <option value='1'>1</option>
                     </select>&nbsp;&nbsp;
-                    <input type="submit" name="btnsubmit" id="btnsubmit" value="<{$smarty.const._OLEDRION_RATEIT}>"/>
+                    <input type="submit" name="btnsubmit" id="btnsubmit" value="<{$smarty.const._OLEDRION_RATEIT}>">
                     <input type='button' value="<{$smarty.const._CANCEL}>"
-                           onclick="location='<{$smarty.const.OLEDRION_URL}>product.php?product_id=<{$product.product_id}>'"/>
+                           onclick="location='<{$smarty.const.OLEDRION_URL}>product.php?product_id=<{$product.product_id}>'">
                 </form>
             </td>
         </tr>

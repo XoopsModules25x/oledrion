@@ -12,7 +12,7 @@
 /**
  * oledrion
  *
- * @copyright   {@link http://xoops.org/ XOOPS Project}
+ * @copyright   {@link https://xoops.org/ XOOPS Project}
  * @license     {@link http://www.fsf.org/copyleft/gpl.html GNU public license}
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
  */
@@ -77,7 +77,7 @@ class Oledrion_XoopsPersistableObjectHandler extends XoopsObjectHandler
      *
      * @var string
      */
-    public    $table;
+    public $table;
     protected $keyName;
     protected $className;
     protected $identifierName;
@@ -87,18 +87,18 @@ class Oledrion_XoopsPersistableObjectHandler extends XoopsObjectHandler
 
     /**
      * Constructor - called from child classes
-     * @param object $db           {@link XoopsDatabase} object
-     * @param string $tablename    Name of database table
-     * @param string $classname    Name of Class, this handler is managing
-     * @param string $keyname      Name of the property, holding the key
-     * @param string $idenfierName Name of the property, holding the label
-     * @param array  $cacheOptions Optional, options for the cache
-     *
+     * @param object|XoopsDatabase $db           {@link XoopsDatabase}
+     *                                           object
+     * @param string               $tablename    Name of database table
+     * @param string               $classname    Name of Class, this handler is managing
+     * @param string               $keyname      Name of the property, holding the key
+     * @param string               $idenfierName Name of the property, holding the label
+     * @param array                $cacheOptions Optional, options for the cache
      */
-    public function __construct($db, $tablename, $classname, $keyname, $idenfierName = '', $cacheOptions = null)
+    public function __construct(XoopsDatabase $db, $tablename, $classname, $keyname, $idenfierName = '', $cacheOptions = null)
     {
-        //include_once dirname(__DIR__) . '/include/common.php';
-        include_once XOOPS_ROOT_PATH . '/modules/oledrion/include/common.php';
+        //require_once __DIR__ . '/../include/common.php';
+        require_once XOOPS_ROOT_PATH . '/modules/oledrion/include/common.php';
         //        $this->XoopsObjectHandler($db);
         parent::__construct($db);
         $this->table     = $db->prefix($tablename);
@@ -271,7 +271,7 @@ class Oledrion_XoopsPersistableObjectHandler extends XoopsObjectHandler
                 }
             } else {
                 if ($as_object) {
-                    if ($fields === '*') {
+                    if ($fields == '*') {
                         $ret[$myrow[$this->keyName]] = $obj;
                     } else {
                         $ret[] = $obj;
@@ -446,7 +446,7 @@ class Oledrion_XoopsPersistableObjectHandler extends XoopsObjectHandler
 
             return $ret;
         }
-        if (false === $groupby) {
+        if ($groupby === false) {
             list($count) = $this->db->fetchRow($result);
 
             //$Cache_Lite->save($count);
@@ -527,7 +527,7 @@ class Oledrion_XoopsPersistableObjectHandler extends XoopsObjectHandler
             $whereclause = $this->keyName . ' = ' . $obj->getVar($this->keyName);
         }
         $sql = 'DELETE FROM ' . $this->table . ' WHERE ' . $whereclause;
-        if (false !== $force) {
+        if (false != $force) {
             $result = $this->db->queryF($sql);
         } else {
             $result = $this->db->query($sql);
@@ -573,7 +573,7 @@ class Oledrion_XoopsPersistableObjectHandler extends XoopsObjectHandler
 
     public function insert(XoopsObject $obj, $force = false, $checkObject = true)
     {
-        if (false !== $checkObject) {
+        if ($checkObject !== false) {
             if (!is_object($obj)) {
                 trigger_error('Error, not object');
 
@@ -624,14 +624,13 @@ class Oledrion_XoopsPersistableObjectHandler extends XoopsObjectHandler
             foreach ($cleanvars as $key => $value) {
                 if ((!is_array($this->keyName) && $key == $this->keyName)
                     || (is_array($this->keyName)
-                        && in_array($key, $this->keyName))
-                ) {
+                        && in_array($key, $this->keyName))) {
                     continue;
                 }
                 if (isset($notfirst)) {
                     $sql .= ',';
                 }
-                $sql .= ' ' . $key . ' = ' . $value;
+                $sql      .= ' ' . $key . ' = ' . $value;
                 $notfirst = true;
             }
             if (is_array($this->keyName)) {
@@ -649,7 +648,7 @@ class Oledrion_XoopsPersistableObjectHandler extends XoopsObjectHandler
             $sql .= ' WHERE ' . $whereclause;
         }
 
-        if (false !== $force) {
+        if (false != $force) {
             $result = $this->db->queryF($sql);
         } else {
             $result = $this->db->query($sql);
@@ -709,6 +708,7 @@ class Oledrion_XoopsPersistableObjectHandler extends XoopsObjectHandler
     }
 
     //  check if target object is attempting to use duplicated info
+
     /**
      * @param         $obj
      * @param  string $field
@@ -795,7 +795,7 @@ class Oledrion_XoopsPersistableObjectHandler extends XoopsObjectHandler
         $limit = $start = 0;
         $sql   = 'SELECT ' . $this->keyName . ', ' . $field . ' FROM ' . $this->table;
         if (isset($criteria) && is_subclass_of($criteria, 'criteriaelement')) {
-            $sql .= ' ' . $criteria->renderWhere();
+            $sql   .= ' ' . $criteria->renderWhere();
             $limit = $criteria->getLimit();
             $start = $criteria->getStart();
         }

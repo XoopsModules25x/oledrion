@@ -12,75 +12,88 @@
 /**
  * oledrion
  *
- * @copyright   {@link http://xoops.org/ XOOPS Project}
+ * @copyright   {@link https://xoops.org/ XOOPS Project}
  * @license     {@link http://www.fsf.org/copyleft/gpl.html GNU public license}
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
  */
 
 // defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
 
-$modversion['name']        = _MI_OLEDRION_NAME;
-$modversion['version']     = 2.34;
-$modversion['description'] = _MI_OLEDRION_DESC;
-$modversion['author']      = 'Hervé Thouzard (http://www.herve-thouzard.com/)';
-$modversion['credits']     = 'Don Curioso, Voltan, Bezoops, Mariane Antoun, Defkon1, Feichtl, Carlos Pérez, JardaR, Wishcraft, Mamba, and all the other';
-$modversion['help']        = 'page=help';
-$modversion['license']     = 'GNU GPL 2.0';
-$modversion['license_url'] = 'www.gnu.org/licenses/gpl-2.0.html/';
-$modversion['official']    = 0; //1 indicates supported by XOOPS Dev Team, 0 means 3rd party supported
-$modversion['image']       = 'assets/images/logoModule.png';
-$modversion['dirname']     = basename(__DIR__);
+$moduleDirName = basename(__DIR__);
+
+$modversion['version']       = 2.34;
+$modversion['module_status'] = 'Beta 5';
+$modversion['release_date']  = '2015/01/15';
+$modversion['name']          = _MI_OLEDRION_NAME;
+$modversion['description']   = _MI_OLEDRION_DESC;
+$modversion['author']        = 'Hervé Thouzard (http://www.herve-thouzard.com/)';
+$modversion['credits']       = 'Don Curioso, Voltan, Bezoops, Mariane Antoun, Defkon1, Feichtl, Carlos Pérez, JardaR, Wishcraft, Mamba, and all the other';
+$modversion['help']          = 'page=help';
+$modversion['license']       = 'GNU GPL 2.0';
+$modversion['license_url']   = 'www.gnu.org/licenses/gpl-2.0.html/';
+$modversion['official']      = 0; //1 indicates supported by XOOPS Dev Team, 0 means 3rd party supported
+$modversion['image']         = 'assets/images/logoModule.png';
+$modversion['dirname']       = basename(__DIR__);
 // Modules scripts
 $modversion['onInstall'] = 'include/functions_install.php';
 $modversion['onUpdate']  = 'include/functions_update.php';
 //icons
-$modversion['dirmoduleadmin'] = '/Frameworks/moduleclasses/moduleadmin';
-$modversion['icons16']        = '../../Frameworks/moduleclasses/icons/16';
-$modversion['icons32']        = '../../Frameworks/moduleclasses/icons/32';
-//about
-$modversion['release_date']        = '2015/01/15';
+//$modversion['dirmoduleadmin']      = '/Frameworks/moduleclasses/moduleadmin';
+//$modversion['icons16']             = '../../Frameworks/moduleclasses/icons/16';
+//$modversion['icons32']             = '../../Frameworks/moduleclasses/icons/32';
+$modversion['modicons16']          = 'assets/images/icons/16';
+$modversion['modicons32']          = 'assets/images/icons/32';
 $modversion['module_website_url']  = 'www.xoops.org';
 $modversion['module_website_name'] = 'XOOPS';
-$modversion['module_status']       = 'Beta 5';
 $modversion['min_php']             = '5.5';
-$modversion['min_xoops']           = '2.5.8';
+$modversion['min_xoops']           = '2.5.9';
 $modversion['min_admin']           = '1.2';
-$modversion['min_db']              = array(
-    'mysql'  => '5.0.7',
-    'mysqli' => '5.0.7'
-);
+$modversion['min_db']              = array('mysql' => '5.5');
 
+// ------------------- Mysql ------------------- //
 $modversion['sqlfile']['mysql'] = 'sql/mysql.sql';
-$modversion['tables'][0]        = 'oledrion_manufacturer';
-$modversion['tables'][1]        = 'oledrion_products';
-$modversion['tables'][2]        = 'oledrion_productsmanu';
-$modversion['tables'][3]        = 'oledrion_caddy';
-$modversion['tables'][4]        = 'oledrion_cat';
-$modversion['tables'][5]        = 'oledrion_commands';
-$modversion['tables'][6]        = 'oledrion_related';
-$modversion['tables'][7]        = 'oledrion_vat';
-$modversion['tables'][8]        = 'oledrion_votedata';
-$modversion['tables'][9]        = 'oledrion_discounts';
-$modversion['tables'][10]       = 'oledrion_vendors';
-$modversion['tables'][11]       = 'oledrion_files';
-$modversion['tables'][12]       = 'oledrion_persistent_cart';
-$modversion['tables'][13]       = 'oledrion_gateways_options';
-$modversion['tables'][14]       = 'oledrion_lists';
-$modversion['tables'][15]       = 'oledrion_products_list';
-$modversion['tables'][16]       = 'oledrion_attributes';
-$modversion['tables'][17]       = 'oledrion_caddy_attributes';
-$modversion['tables'][18]       = 'oledrion_packing';
-$modversion['tables'][19]       = 'oledrion_location';
-$modversion['tables'][20]       = 'oledrion_delivery';
-$modversion['tables'][21]       = 'oledrion_payment';
-$modversion['tables'][22]       = 'oledrion_location_delivery';
-$modversion['tables'][23]       = 'oledrion_delivery_payment';
-$modversion['tables'][24]       = 'oledrion_payment_log';
+
+// Tables created by sql file (without prefix!)
+$modversion['tables'] = array(
+    $moduleDirName . '_' . 'manufacturer',
+    $moduleDirName . '_' . 'products',
+    $moduleDirName . '_' . 'productsmanu',
+    $moduleDirName . '_' . 'caddy',
+    $moduleDirName . '_' . 'cat',
+    $moduleDirName . '_' . 'commands',
+    $moduleDirName . '_' . 'related',
+    $moduleDirName . '_' . 'vat',
+    $moduleDirName . '_' . 'votedata',
+    $moduleDirName . '_' . 'discounts',
+    $moduleDirName . '_' . 'vendors',
+    $moduleDirName . '_' . 'files',
+    $moduleDirName . '_' . 'persistent_cart',
+    $moduleDirName . '_' . 'gateways_options',
+    $moduleDirName . '_' . 'lists',
+    $moduleDirName . '_' . 'products_list',
+    $moduleDirName . '_' . 'attributes',
+    $moduleDirName . '_' . 'caddy_attributes',
+    $moduleDirName . '_' . 'packing',
+    $moduleDirName . '_' . 'location',
+    $moduleDirName . '_' . 'delivery',
+    $moduleDirName . '_' . 'payment',
+    $moduleDirName . '_' . 'location_delivery',
+    $moduleDirName . '_' . 'delivery_payment',
+    $moduleDirName . '_' . 'payment_log',
+);
 
 $modversion['hasAdmin']    = 1;
 $modversion['system_menu'] = 1;
 $modversion['adminindex']  = 'admin/index.php';
 $modversion['adminmenu']   = 'admin/menu.php';
+
+// ------------------- Help files ------------------- //
+$modversion['helpsection'] = array(
+    ['name' => _MI_OLEDRION_OVERVIEW, 'link' => 'page=help'],
+    ['name' => _MI_OLEDRION_DISCLAIMER, 'link' => 'page=disclaimer'],
+    ['name' => _MI_OLEDRION_LICENSE, 'link' => 'page=license'],
+    ['name' => _MI_OLEDRION_SUPPORT, 'link' => 'page=support'],
+);
 
 // Blocks
 $cptb = 0;
@@ -313,8 +326,8 @@ $modversion['blocks'][] = array(
 // Menu
 $modversion['hasMain'] = 1;
 $cptm                  = 0;
-require_once __DIR__ . '/class/oledrion_utils.php';
-if (Oledrion_utils::getModuleOption('use_price')) {
+require_once __DIR__ . '/class/utility.php';
+if (OledrionUtility::getModuleOption('use_price')) {
     ++$cptm;
     $modversion['sub'][$cptm]['name'] = _MI_OLEDRION_SMNAME1;
     $modversion['sub'][$cptm]['url']  = 'caddy.php';
@@ -351,8 +364,7 @@ $modversion['sub'][$cptm]['url']  = 'all-lists.php';
 // Ajout des catégories mères en sous menu ********************************************************
 global $xoopsModule;
 if (is_object($xoopsModule) && $xoopsModule->getVar('dirname') == $modversion['dirname']
-    && $xoopsModule->getVar('isactive')
-) {
+    && $xoopsModule->getVar('isactive')) {
     if (!isset($h_oledrion_cat)) {
         $h_oledrion_cat = xoops_getModuleHandler('oledrion_cat', 'oledrion');
     }
@@ -711,7 +723,7 @@ $modversion['config'][$cpto]['default']     = 1;
 // Get Admin groups
 $criteria = new CriteriaCompo();
 $criteria->add(new Criteria('group_type', 'Admin'));
-$memberHandler    = xoops_getHandler('member');
+$memberHandler     = xoops_getHandler('member');
 $admin_xoopsgroups = $memberHandler->getGroupList($criteria);
 foreach ($admin_xoopsgroups as $key => $admin_group) {
     $admin_groups[$admin_group] = $key;

@@ -4,18 +4,18 @@
 <head>
     <title><{if $xoops_pagetitle !=''}><{$xoops_pagetitle}> : <{/if}><{$xoops_sitename}></title>
 
-    <meta http-equiv="content-type" content="text/html; charset=<{$xoops_charset}>"/>
-    <meta name="keywords" content="<{$meta_keywords}>"/>
-    <meta name="description" content="<{$meta_description}>"/>
-    <meta name="author" content="<{$xoops_meta_author}>"/>
-    <meta name="copyright" content="<{$meta_copyright}>"/>
-    <meta name="generator" content="XOOPS"/>
-    <meta name="robots" content="noindex,nofollow"/>
+    <meta http-equiv="content-type" content="text/html; charset=<{$xoops_charset}>">
+    <meta name="keywords" content="<{$meta_keywords}>">
+    <meta name="description" content="<{$meta_description}>">
+    <meta name="author" content="<{$xoops_meta_author}>">
+    <meta name="copyright" content="<{$meta_copyright}>">
+    <meta name="generator" content="XOOPS">
+    <meta name="robots" content="noindex,nofollow">
 
-    <link rel="shortcut icon" type="image/ico" href="<{$xoops_url}>/favicon.ico"/>
-    <link rel="stylesheet" type="text/css" media="all" href="<{$xoops_url}>/xoops.css"/>
-    <link rel="stylesheet" type="text/css" media="all" href="<{$smarty.const.OLEDRION_URL}>/assets/css/print.css"/>
-    <link rel="stylesheet" type="text/css" media="all" href="<{$localstyle}>"/>
+    <link rel="shortcut icon" type="image/ico" href="<{$xoops_url}>/favicon.ico">
+    <link rel="stylesheet" type="text/css" media="all" href="<{$xoops_url}>/xoops.css">
+    <link rel="stylesheet" type="text/css" media="all" href="<{$smarty.const.OLEDRION_URL}>/assets/css/print.css">
+    <link rel="stylesheet" type="text/css" media="all" href="<{$localstyle}>">
 
 </head>
 <!--  onload="window.print()" -->
@@ -26,7 +26,7 @@
             <div class="itemTitle spacer"><{$product.product_title}></div>
             <div class="itemBody">
                 <{if $product.product_thumb_full_url != ''}>
-                    <img class="left" src="<{$product.product_image_full_url}>" alt="<{$product.product_href_title}>"/>
+                    <img class="left" src="<{$product.product_image_full_url}>" alt="<{$product.product_href_title}>">
                 <{/if}>
                 <{if $product.product_summary != ''}>
                     <div class="itemText spacer txtjustify"><{$product.product_summary}></div><{/if}>

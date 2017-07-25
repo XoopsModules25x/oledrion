@@ -25,7 +25,7 @@
  *
  * @since 2.3.2009.03.10
  */
-require __DIR__ . '/classheader.php';
+require_once __DIR__ . '/classheader.php';
 
 // Les types d'option
 define('OLEDRION_ATTRIBUTE_RADIO', 1);
@@ -146,26 +146,26 @@ class Oledrion_attributes extends Oledrion_Object
         $format = 'e';
         $names  = $this->getOption('attribute_names', $format);
         $values = $this->getOption('attribute_values', $format);
-        if (Oledrion_utils::getModuleOption('use_price')) {
+        if (OledrionUtility::getModuleOption('use_price')) {
             $prices = $this->getOption('attribute_prices', $format);
         }
-        if (Oledrion_utils::getModuleOption('attributes_stocks')) {
+        if (OledrionUtility::getModuleOption('attributes_stocks')) {
             $stocks = $this->getOption('attribute_stocks', $format);
         }
         $names[]  = $name;
         $values[] = $value;
-        if (Oledrion_utils::getModuleOption('use_price')) {
+        if (OledrionUtility::getModuleOption('use_price')) {
             $prices[] = $price;
         }
-        if (Oledrion_utils::getModuleOption('attributes_stocks')) {
+        if (OledrionUtility::getModuleOption('attributes_stocks')) {
             $stocks[] = $stock;
         }
         $this->setVar('attribute_names', implode(OLEDRION_ATTRIBUTE_SEPARATOR, $names));
         $this->setVar('attribute_values', implode(OLEDRION_ATTRIBUTE_SEPARATOR, $values));
-        if (Oledrion_utils::getModuleOption('use_price')) {
+        if (OledrionUtility::getModuleOption('use_price')) {
             $this->setVar('attribute_prices', implode(OLEDRION_ATTRIBUTE_SEPARATOR, $prices));
         }
-        if (Oledrion_utils::getModuleOption('attributes_stocks')) {
+        if (OledrionUtility::getModuleOption('attributes_stocks')) {
             $this->setVar('attribute_stocks', implode(OLEDRION_ATTRIBUTE_SEPARATOR, $stocks));
         }
 
@@ -208,10 +208,10 @@ class Oledrion_attributes extends Oledrion_Object
     {
         $this->setVar('attribute_names', OLEDRION_EMPTY_OPTION);
         $this->setVar('attribute_values', OLEDRION_EMPTY_OPTION);
-        if (Oledrion_utils::getModuleOption('use_price')) {
+        if (OledrionUtility::getModuleOption('use_price')) {
             $this->setVar('attribute_prices', OLEDRION_EMPTY_OPTION);
         }
-        if (Oledrion_utils::getModuleOption('attributes_stocks')) {
+        if (OledrionUtility::getModuleOption('attributes_stocks')) {
             $this->setVar('attribute_stocks', OLEDRION_EMPTY_OPTION);
         }
 
@@ -239,10 +239,10 @@ class Oledrion_attributes extends Oledrion_Object
         $format = 'e';
         $names  = $this->getOption('attribute_names', $format);
         $values = $this->getOption('attribute_values', $format);
-        if (Oledrion_utils::getModuleOption('use_price')) {
+        if (OledrionUtility::getModuleOption('use_price')) {
             $prices = $this->getOption('attribute_prices', $format);
         }
-        if (Oledrion_utils::getModuleOption('attributes_stocks')) {
+        if (OledrionUtility::getModuleOption('attributes_stocks')) {
             $stocks = $this->getOption('attribute_stocks', $format);
         }
         if (isset($names[$optionNumber])) {
@@ -251,22 +251,22 @@ class Oledrion_attributes extends Oledrion_Object
         if (isset($values[$optionNumber])) {
             $values[$optionNumber] = $value;
         }
-        if (Oledrion_utils::getModuleOption('use_price')) {
+        if (OledrionUtility::getModuleOption('use_price')) {
             if (isset($prices[$optionNumber])) {
                 $prices[$optionNumber] = $price;
             }
         }
-        if (Oledrion_utils::getModuleOption('attributes_stocks')) {
+        if (OledrionUtility::getModuleOption('attributes_stocks')) {
             if (isset($stocks[$optionNumber])) {
                 $stocks[$optionNumber] = $stock;
             }
         }
         $this->setVar('attribute_names', implode(OLEDRION_ATTRIBUTE_SEPARATOR, $names));
         $this->setVar('attribute_values', implode(OLEDRION_ATTRIBUTE_SEPARATOR, $values));
-        if (Oledrion_utils::getModuleOption('use_price')) {
+        if (OledrionUtility::getModuleOption('use_price')) {
             $this->setVar('attribute_prices', implode(OLEDRION_ATTRIBUTE_SEPARATOR, $prices));
         }
-        if (Oledrion_utils::getModuleOption('attributes_stocks')) {
+        if (OledrionUtility::getModuleOption('attributes_stocks')) {
             $this->setVar('attribute_stocks', implode(OLEDRION_ATTRIBUTE_SEPARATOR, $stocks));
         }
 
@@ -311,10 +311,10 @@ class Oledrion_attributes extends Oledrion_Object
         $format = 'e';
         $names  = $this->getOption('attribute_names', $format);
         $values = $this->getOption('attribute_values', $format);
-        if (Oledrion_utils::getModuleOption('use_price')) {
+        if (OledrionUtility::getModuleOption('use_price')) {
             $prices = $this->getOption('attribute_prices', $format);
         }
-        if (Oledrion_utils::getModuleOption('attributes_stocks')) {
+        if (OledrionUtility::getModuleOption('attributes_stocks')) {
             $stocks = $this->getOption('attribute_stocks', $format);
         }
         if (isset($names[$optionNumber])) {
@@ -323,22 +323,22 @@ class Oledrion_attributes extends Oledrion_Object
         if (isset($values[$optionNumber])) {
             $this->swapValues($values, $optionNumber, $newPosition);
         }
-        if (Oledrion_utils::getModuleOption('use_price')) {
+        if (OledrionUtility::getModuleOption('use_price')) {
             if (isset($prices[$optionNumber])) {
                 $this->swapValues($prices, $optionNumber, $newPosition);
             }
         }
-        if (Oledrion_utils::getModuleOption('attributes_stocks')) {
+        if (OledrionUtility::getModuleOption('attributes_stocks')) {
             if (isset($stocks[$optionNumber])) {
                 $this->swapValues($stocks, $optionNumber, $newPosition);
             }
         }
         $this->setVar('attribute_names', implode(OLEDRION_ATTRIBUTE_SEPARATOR, $names));
         $this->setVar('attribute_values', implode(OLEDRION_ATTRIBUTE_SEPARATOR, $values));
-        if (Oledrion_utils::getModuleOption('use_price')) {
+        if (OledrionUtility::getModuleOption('use_price')) {
             $this->setVar('attribute_prices', implode(OLEDRION_ATTRIBUTE_SEPARATOR, $prices));
         }
-        if (Oledrion_utils::getModuleOption('attributes_stocks')) {
+        if (OledrionUtility::getModuleOption('attributes_stocks')) {
             $this->setVar('attribute_stocks', implode(OLEDRION_ATTRIBUTE_SEPARATOR, $stocks));
         }
 
@@ -385,10 +385,10 @@ class Oledrion_attributes extends Oledrion_Object
         $format = 'e';
         $names  = $this->getOption('attribute_names', $format);
         $values = $this->getOption('attribute_values', $format);
-        if (Oledrion_utils::getModuleOption('use_price')) {
+        if (OledrionUtility::getModuleOption('use_price')) {
             $prices = $this->getOption('attribute_prices', $format);
         }
-        if (Oledrion_utils::getModuleOption('attributes_stocks')) {
+        if (OledrionUtility::getModuleOption('attributes_stocks')) {
             $stocks = $this->getOption('attribute_stocks', $format);
         }
         if (isset($names[$optionNumber])) {
@@ -397,22 +397,22 @@ class Oledrion_attributes extends Oledrion_Object
         if (isset($values[$optionNumber])) {
             unset($values[$optionNumber]);
         }
-        if (Oledrion_utils::getModuleOption('use_price')) {
+        if (OledrionUtility::getModuleOption('use_price')) {
             if (isset($prices[$optionNumber])) {
                 unset($prices[$optionNumber]);
             }
         }
-        if (Oledrion_utils::getModuleOption('attributes_stocks')) {
+        if (OledrionUtility::getModuleOption('attributes_stocks')) {
             if (isset($stocks[$optionNumber])) {
                 unset($stocks[$optionNumber]);
             }
         }
         $this->setVar('attribute_names', implode(OLEDRION_ATTRIBUTE_SEPARATOR, $names));
         $this->setVar('attribute_values', implode(OLEDRION_ATTRIBUTE_SEPARATOR, $values));
-        if (Oledrion_utils::getModuleOption('use_price')) {
+        if (OledrionUtility::getModuleOption('use_price')) {
             $this->setVar('attribute_prices', implode(OLEDRION_ATTRIBUTE_SEPARATOR, $prices));
         }
-        if (Oledrion_utils::getModuleOption('attributes_stocks')) {
+        if (OledrionUtility::getModuleOption('attributes_stocks')) {
             $this->setVar('attribute_stocks', implode(OLEDRION_ATTRIBUTE_SEPARATOR, $stocks));
         }
 
@@ -471,7 +471,7 @@ class Oledrion_attributes extends Oledrion_Object
      * @return array
      * @since 2.3.2009.03.11
      */
-    public function getAttributeOptions($format = 's', $withFormatedPrices = false, Oledrion_products $product = null)
+    public function getAttributeOptions($format = 's', $withFormatedPrices = false, oledrion_products $product = null)
     {
         $ret     = array();
         $counter = 0;
@@ -480,10 +480,10 @@ class Oledrion_attributes extends Oledrion_Object
         }
         $names  = $this->getOption('attribute_names', $format);
         $values = $this->getOption('attribute_values', $format);
-        if (Oledrion_utils::getModuleOption('use_price')) {
+        if (OledrionUtility::getModuleOption('use_price')) {
             $prices = $this->getOption('attribute_prices', $format);
         }
-        if (Oledrion_utils::getModuleOption('attributes_stocks')) {
+        if (OledrionUtility::getModuleOption('attributes_stocks')) {
             $stocks = $this->getOption('attribute_stocks', $format);
         }
 
@@ -493,17 +493,17 @@ class Oledrion_attributes extends Oledrion_Object
         if (count($names) > 0) {
             foreach ($names as $key => $name) {
                 $price = $stock = 0;
-                if (Oledrion_utils::getModuleOption('use_price')) {
+                if (OledrionUtility::getModuleOption('use_price')) {
                     $price = $prices[$key];
                     if ($withFormatedPrices) {
                         $priceFormated    = $oledrion_Currency->amountForDisplay($price);
-                        $priceTtc         = Oledrion_utils::getAmountWithVat($price, $vat_id);
+                        $priceTtc         = OledrionUtility::getAmountWithVat($price, $vat_id);
                         $priceTtcFormated = $oledrion_Currency->amountForDisplay($priceTtc);
                         $vat              = $priceTtc - $price;
                         $vatFormated      = $oledrion_Currency->amountForDisplay($vat);
                     }
                 }
-                if (Oledrion_utils::getModuleOption('attributes_stocks')) {
+                if (OledrionUtility::getModuleOption('attributes_stocks')) {
                     $stock = $stocks[$key];
                 }
                 if (!$withFormatedPrices) {
@@ -625,9 +625,9 @@ class Oledrion_attributes extends Oledrion_Object
      * @return string                   Le contenu html
      * @since 2.3.2009.03.16
      */
-    public function render(Oledrion_products $product)
+    public function render(oledrion_products $product)
     {
-        include_once XOOPS_ROOT_PATH . '/class/template.php';
+        require_once XOOPS_ROOT_PATH . '/class/template.php';
         $template = new XoopsTpl();
 
         $options      = array();
@@ -657,7 +657,7 @@ class Oledrion_attributes extends Oledrion_Object
             }
             $newDefaultValue = array();
             foreach ($defaultValue as $oneValue) {
-                $newDefaultValue[] = Oledrion_utils::getName($oneValue);
+                $newDefaultValue[] = OledrionUtility::getName($oneValue);
             }
             $defaultValue = $newDefaultValue;
         }
@@ -721,9 +721,9 @@ class OledrionOledrion_attributesHandler extends Oledrion_XoopsPersistableObject
 {
     /**
      * OledrionOledrion_attributesHandler constructor.
-     * @param XoopsDatabase|null  $db
+     * @param object $db
      */
-    public function __construct(XoopsDatabase $db)
+    public function __construct($db)
     {    //                             Table               Classe                  Id
         parent::__construct($db, 'oledrion_attributes', 'oledrion_attributes', 'attribute_id');
     }
@@ -787,7 +787,7 @@ class OledrionOledrion_attributesHandler extends Oledrion_XoopsPersistableObject
      * @return array                    Les options construites en html
      * @since 2.3.2009.03.16
      */
-    public function constructHtmlProductAttributes(Oledrion_products $product, &$mandatoryFieldsCount = 0)
+    public function constructHtmlProductAttributes(oledrion_products $product, &$mandatoryFieldsCount = 0)
     {
         $attributes = $ret = array();
         $attributes = $this->getProductsAttributesList($product->getVar('product_id'));
@@ -810,7 +810,7 @@ class OledrionOledrion_attributesHandler extends Oledrion_XoopsPersistableObject
      * @param  oledrion_products $product
      * @return float
      */
-    public function getInitialOptionsPrice(Oledrion_products $product)
+    public function getInitialOptionsPrice(oledrion_products $product)
     {
         $ret        = 0;
         $attributes = array();
@@ -830,7 +830,7 @@ class OledrionOledrion_attributesHandler extends Oledrion_XoopsPersistableObject
      * @internal param Oledrion_attributes $attribute L'attribute à cloner
      * @since    2.3.2009.03.16
      */
-    public function cloneAttribute(Oledrion_attributes $originalAttribute)
+    public function cloneAttribute(oledrion_attributes $originalAttribute)
     {
         $newAttribute =& $originalAttribute->xoopsClone();
         if (OLEDRION_DUPLICATED_PLACE === 'right') {
@@ -873,7 +873,7 @@ class OledrionOledrion_attributesHandler extends Oledrion_XoopsPersistableObject
      * @return boolean
      * @since 2.3.2009.03.17
      */
-    public function deleteAttribute(Oledrion_attributes $attribute)
+    public function deleteAttribute(oledrion_attributes $attribute)
     {
         return $this->delete($attribute, true);
         // TODO: Supprimer dans les attributs paniers
@@ -886,7 +886,7 @@ class OledrionOledrion_attributesHandler extends Oledrion_XoopsPersistableObject
      * @return integer
      * @since 2.3.2009.03.20
      */
-    public function getProductMandatoryAttributesCount(Oledrion_products $product)
+    public function getProductMandatoryAttributesCount(oledrion_products $product)
     {
         $criteria = new CriteriaCompo();
         $criteria->add(new Criteria('attribute_product_id', $product->getVar('attribute_product_id'), '='));
@@ -901,7 +901,7 @@ class OledrionOledrion_attributesHandler extends Oledrion_XoopsPersistableObject
      * @param  oledrion_products $product
      * @return array             objets des type oledrion_attributes
      */
-    public function getProductMandatoryFieldsList(Oledrion_products $product)
+    public function getProductMandatoryFieldsList(oledrion_products $product)
     {
         $criteria = new CriteriaCompo();
         $criteria->add(new Criteria('attribute_product_id', $product->getVar('attribute_product_id'), '='));
@@ -951,10 +951,10 @@ class OledrionOledrion_attributesHandler extends Oledrion_XoopsPersistableObject
                 $optionDescription   = '';
                 if (is_array($userAttributeValues) && count($userAttributeValues) > 0) {
                     foreach ($userAttributeValues as $option) {
-                        $optionName            = Oledrion_utils::getName($option);
+                        $optionName            = OledrionUtility::getName($option);
                         $price                 = $attribute->getOptionPriceFromValue($optionName);
                         $optionDescription     = $attribute->getOptionNameFromValue($optionName);
-                        $vatAmount             = Oledrion_utils::getVAT($price, $vat_rate);
+                        $vatAmount             = OledrionUtility::getVAT($price, $vat_rate);
                         $ttc                   = $price + $vatAmount;
                         $vatAmountFormated     = $oledrion_Currency->amountForDisplay($vatAmount);
                         $htFormated            = $oledrion_Currency->amountForDisplay($price);
@@ -969,13 +969,13 @@ class OledrionOledrion_attributesHandler extends Oledrion_XoopsPersistableObject
                             'option_vat_formated'      => $vatAmountFormated,
                             'option_ttc_formated'      => $ttcFormated
                         );
-                        $ret += $price;    // Total de toutes les options
+                        $ret                   += $price;    // Total de toutes les options
                     }
                 } else {
-                    $optionName            = Oledrion_utils::getName($userAttributeValues);
+                    $optionName            = OledrionUtility::getName($userAttributeValues);
                     $price                 = $attribute->getOptionPriceFromValue($optionName);
                     $optionDescription     = $attribute->getOptionNameFromValue($optionName);
-                    $vatAmount             = Oledrion_utils::getVAT($price, $vat_rate);
+                    $vatAmount             = OledrionUtility::getVAT($price, $vat_rate);
                     $ttc                   = $price + $vatAmount;
                     $vatAmountFormated     = $oledrion_Currency->amountForDisplay($vatAmount);
                     $htFormated            = $oledrion_Currency->amountForDisplay($price);
@@ -990,7 +990,7 @@ class OledrionOledrion_attributesHandler extends Oledrion_XoopsPersistableObject
                         'option_vat_formated'      => $vatAmountFormated,
                         'option_ttc_formated'      => $ttcFormated
                     );
-                    $ret += $price;    // Total de toutes les options
+                    $ret                   += $price;    // Total de toutes les options
                 }
                 if (is_array($descriptions)) {
                     $descriptions[$attribute->getVar('attribute_id')] = array(

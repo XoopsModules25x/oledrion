@@ -12,7 +12,7 @@
 /**
  * oledrion
  *
- * @copyright   {@link http://xoops.org/ XOOPS Project}
+ * @copyright   {@link https://xoops.org/ XOOPS Project}
  * @license     {@link http://www.fsf.org/copyleft/gpl.html GNU public license}
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
  */
@@ -20,7 +20,7 @@
 /**
  * Page appelée par la passerelle de paiement dans le cas de l'annulation d'une commande
  */
-require __DIR__ . '/header.php';
+require_once __DIR__ . '/header.php';
 $GLOBALS['current_category']             = -1;
 $GLOBALS['xoopsOption']['template_main'] = 'oledrion_cancelpurchase.tpl';
 require_once XOOPS_ROOT_PATH . '/header.php';
@@ -43,10 +43,10 @@ if (is_object($gateway) && method_exists($gateway, 'cancelOrder')) {
 }
 $h_oledrion_caddy->emptyCart();
 $xoopsTpl->assign('mod_pref', $mod_pref);
-$xoopsTpl->assign('breadcrumb', Oledrion_utils::breadcrumb(array(OLEDRION_URL . basename(__FILE__) => _OLEDRION_ORDER_CANCELED)));
+$xoopsTpl->assign('breadcrumb', OledrionUtility::breadcrumb(array(OLEDRION_URL . basename(__FILE__) => _OLEDRION_ORDER_CANCELED)));
 
-$title = _OLEDRION_ORDER_CANCELED . ' - ' . Oledrion_utils::getModuleName();
-Oledrion_utils::setMetas($title, $title);
-Oledrion_utils::setCSS();
-Oledrion_utils::setLocalCSS($xoopsConfig['language']);
+$title = _OLEDRION_ORDER_CANCELED . ' - ' . OledrionUtility::getModuleName();
+OledrionUtility::setMetas($title, $title);
+OledrionUtility::setCSS();
+OledrionUtility::setLocalCSS($xoopsConfig['language']);
 require_once XOOPS_ROOT_PATH . '/footer.php';

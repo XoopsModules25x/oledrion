@@ -12,7 +12,7 @@
 /**
  * oledrion
  *
- * @copyright   {@link http://xoops.org/ XOOPS Project}
+ * @copyright   {@link https://xoops.org/ XOOPS Project}
  * @license     {@link http://www.fsf.org/copyleft/gpl.html GNU public license}
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
  */
@@ -21,7 +21,7 @@
  * Gestion des fichies attachés aux produits
  */
 
-require __DIR__ . '/classheader.php';
+require_once __DIR__ . '/classheader.php';
 
 /**
  * Class Oledrion_files
@@ -124,9 +124,9 @@ class OledrionOledrion_filesHandler extends Oledrion_XoopsPersistableObjectHandl
 {
     /**
      * OledrionOledrion_filesHandler constructor.
-     * @param XoopsDatabase|null $db
+     * @param object $db
      */
-    public function __construct(XoopsDatabase $db)
+    public function __construct($db)
     { //                            Table           Classe          Id          Libellé
         parent::__construct($db, 'oledrion_files', 'oledrion_files', 'file_id', 'file_filename');
     }
@@ -137,7 +137,7 @@ class OledrionOledrion_filesHandler extends Oledrion_XoopsPersistableObjectHandl
      * @param  oledrion_files $file
      * @return boolean        Le résultat de la suppression
      */
-    public function deleteAttachedFile(Oledrion_files $file)
+    public function deleteAttachedFile(oledrion_files $file)
     {
         if ($file->fileExists()) {
             $file->deleteAttachedFile();

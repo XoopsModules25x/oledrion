@@ -12,30 +12,25 @@
 /**
  * oledrion
  *
- * @copyright   {@link http://xoops.org/ XOOPS Project}
+ * @copyright   {@link https://xoops.org/ XOOPS Project}
  * @license     {@link http://www.fsf.org/copyleft/gpl.html GNU public license}
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
  */
-// defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
 
-$path = dirname(dirname(dirname(__DIR__)));
-include_once $path . '/mainfile.php';
+$moduleDirName = basename(dirname(__DIR__));
 
-$dirname         = basename(dirname(__DIR__));
-/** @var XoopsModuleHandler $moduleHandler */
-$moduleHandler = xoops_getHandler('module');
-$module          = $moduleHandler->getByDirname($dirname);
-$pathIcon32      = $module->getInfo('icons32');
-$pathModuleAdmin = $module->getInfo('dirmoduleadmin');
-$pathLanguage    = $path . $pathModuleAdmin;
-
-if (!file_exists($fileinc = $pathLanguage . '/language/' . $GLOBALS['xoopsConfig']['language'] . '/' . 'main.php')) {
-    $fileinc = $pathLanguage . '/language/english/main.php';
+if (false !== ($moduleHelper = Xmf\Module\Helper::getHelper($moduleDirName))) {
+} else {
+    $moduleHelper = Xmf\Module\Helper::getHelper('system');
 }
+$adminObject = \Xmf\Module\Admin::getInstance();
 
-include_once $fileinc;
+$pathIcon32    = \Xmf\Module\Admin::menuIconPath('');
+$pathModIcon32 = $moduleHelper->getModule()->getInfo('modicons32');
 
-$adminmenu              = array();
+$moduleHelper->loadLanguage('modinfo');
+
+$adminObject            = array();
 $i                      = 0;
 $adminmenu[$i]['title'] = _MI_OLEDRION_ADMENU10;
 $adminmenu[$i]['link']  = 'admin/index.php?op=dashboard';
@@ -47,7 +42,7 @@ $adminmenu[$i]['icon']  = $pathIcon32 . '/user-icon.png';
 ++$i;
 $adminmenu[$i]['title'] = _MI_OLEDRION_ADMENU1;
 $adminmenu[$i]['link']  = 'admin/index.php?op=vat';
-$adminmenu[$i]['icon']  = '/assets/images/icons/32/money_delete.png';
+$adminmenu[$i]['icon']  = $pathModIcon32 . '/money_delete.png';
 ++$i;
 $adminmenu[$i]['title'] = _MI_OLEDRION_ADMENU2;
 $adminmenu[$i]['link']  = 'admin/index.php?op=categories';
@@ -55,7 +50,7 @@ $adminmenu[$i]['icon']  = $pathIcon32 . '/category.png';
 ++$i;
 $adminmenu[$i]['title'] = _MI_OLEDRION_ADMENU3;
 $adminmenu[$i]['link']  = 'admin/index.php?op=manufacturers';
-$adminmenu[$i]['icon']  = '/assets/images/icons/32/factory.png';
+$adminmenu[$i]['icon']  = $pathModIcon32 . '/factory.png';
 ++$i;
 $adminmenu[$i]['title'] = _MI_OLEDRION_ADMENU4;
 $adminmenu[$i]['link']  = 'admin/index.php?op=products';
@@ -103,7 +98,7 @@ $adminmenu[$i]['icon']  = $pathIcon32 . '/index.png';
 ++$i;
 $adminmenu[$i]['title'] = _MI_OLEDRION_ADMENU18;
 $adminmenu[$i]['link']  = 'admin/index.php?op=packing';
-$adminmenu[$i]['icon']  = '/assets/images/icons/32/package.png';
+$adminmenu[$i]['icon']  = $pathModIcon32 . '/package.png';
 ++$i;
 $adminmenu[$i]['title'] = _MI_OLEDRION_ADMENU19;
 $adminmenu[$i]['link']  = 'admin/index.php?op=location';

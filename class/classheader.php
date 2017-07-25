@@ -12,7 +12,7 @@
 /**
  * oledrion
  *
- * @copyright   {@link http://xoops.org/ XOOPS Project}
+ * @copyright   {@link https://xoops.org/ XOOPS Project}
  * @license     {@link http://www.fsf.org/copyleft/gpl.html GNU public license}
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
  */
@@ -22,7 +22,7 @@
  */
 // defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
 
-include_once XOOPS_ROOT_PATH . '/kernel/object.php';
+require_once XOOPS_ROOT_PATH . '/kernel/object.php';
 if (!class_exists('Oledrion_XoopsPersistableObjectHandler')) {
-    include_once XOOPS_ROOT_PATH . '/modules/oledrion/class/PersistableObjectHandler.php';
+    require_once XOOPS_ROOT_PATH . '/modules/oledrion/class/PersistableObjectHandler.php';
 }

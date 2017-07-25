@@ -12,7 +12,7 @@
 /**
  * oledrion
  *
- * @copyright   {@link http://xoops.org/ XOOPS Project}
+ * @copyright   {@link https://xoops.org/ XOOPS Project}
  * @license     {@link http://www.fsf.org/copyleft/gpl.html GNU public license}
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
  */
@@ -26,7 +26,6 @@ abstract class Oledrion_action
 {
     /**
      * Retourne la liste des évènements traités par le plugin
-     * Returns list of events processed by the plugin
      * @return array
      */
     abstract public static function registerEvents();

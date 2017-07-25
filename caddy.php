@@ -12,7 +12,7 @@
 /**
  * oledrion
  *
- * @copyright   {@link http://xoops.org/ XOOPS Project}
+ * @copyright   {@link https://xoops.org/ XOOPS Project}
  * @license     {@link http://www.fsf.org/copyleft/gpl.html GNU public license}
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
  */
@@ -20,7 +20,7 @@
 /**
  * Affichage et gestion du caddy
  */
-require __DIR__ . '/header.php';
+require_once __DIR__ . '/header.php';
 $GLOBALS['current_category']             = -1;
 $GLOBALS['xoopsOption']['template_main'] = 'oledrion_caddy.tpl';
 require_once XOOPS_ROOT_PATH . '/header.php';
@@ -28,7 +28,7 @@ require_once OLEDRION_PATH . 'class/registryfile.php';
 
 $xoopsTpl->assign('mod_pref', $mod_pref); // Préférences du module
 
-if (Oledrion_utils::getModuleOption('restrict_orders', false)) {
+if (OledrionUtility::getModuleOption('restrict_orders', false)) {
     $registry = new oledrion_registryfile();
     $text     = $registry->getfile(OLEDRION_TEXTFILE5);
     $xoopsTpl->assign('restrict_orders_text', xoops_trim($text));
@@ -51,10 +51,10 @@ if (isset($_POST['product_id'])) {
 }
 
 $xoopsTpl->assign('op', $op);
-$xoopsTpl->assign('confEmpty', Oledrion_utils::javascriptLinkConfirm(_OLEDRION_EMPTY_CART_SURE, true));
-$xoopsTpl->assign('confirm_delete_item', Oledrion_utils::javascriptLinkConfirm(_OLEDRION_EMPTY_ITEM_SURE, false));
+$xoopsTpl->assign('confEmpty', OledrionUtility::javascriptLinkConfirm(_OLEDRION_EMPTY_CART_SURE, true));
+$xoopsTpl->assign('confirm_delete_item', OledrionUtility::javascriptLinkConfirm(_OLEDRION_EMPTY_ITEM_SURE, false));
 
-$uid = Oledrion_utils::getCurrentUserID();
+$uid = OledrionUtility::getCurrentUserID();
 if ($uid > 0) {
     $xoopsTpl->assign('isCartExists', $h_oledrion_persistent_cart->isCartExists());
 } else {
@@ -88,7 +88,7 @@ function listCart()
     $xoopsTpl->assign('discountsDescription', $discountsDescription);                    // Liste des réductions accordées
     $showOrderButton   = true;
     $showRegistredOnly = false;
-    if (Oledrion_utils::getModuleOption('restrict_orders', false) && $uid == 0) {
+    if (OledrionUtility::getModuleOption('restrict_orders', false) && $uid == 0) {
         $showRegistredOnly = true;
         $showOrderButton   = false;
     }
@@ -126,15 +126,15 @@ switch ($op) {
     case 'addproduct': // Ajout d'un produit
         // ****************************************************************************************************************
         if ($productId == 0) {
-            Oledrion_utils::redirect(_OLEDRION_ERROR9, 'index.php', 4);
+            OledrionUtility::redirect(_OLEDRION_ERROR9, 'index.php', 4);
         }
         $product = null;
         $product = $h_oledrion_products->get($productId);
         if (!is_object($product)) {
-            Oledrion_utils::redirect(_OLEDRION_ERROR9, 'index.php', 4);
+            OledrionUtility::redirect(_OLEDRION_ERROR9, 'index.php', 4);
         }
         if ($product->getVar('product_online') == 0) {
-            Oledrion_utils::redirect(_OLEDRION_ERROR2, 'index.php', 4);
+            OledrionUtility::redirect(_OLEDRION_ERROR2, 'index.php', 4);
         }
 
         if ($product->getVar('product_stock') - 1 >= 0) {
@@ -153,7 +153,7 @@ switch ($op) {
                             $mandatoryFieldKey  = $mandatoryField->getAttributeNameInForm();
                             $mandatoryFieldText = $mandatoryField->getVar('attribute_title');
                             if (!isset($_POST[$mandatoryFieldKey]) && !$mandatoryField->hasDefaultValue()) {
-                                Oledrion_utils::redirect(sprintf(_OLEDRION_MANDATORY_MISSED, $mandatoryFieldText), $productUrl, 4);
+                                OledrionUtility::redirect(sprintf(_OLEDRION_MANDATORY_MISSED, $mandatoryFieldText), $productUrl, 4);
                             }
                         }
                     }
@@ -180,7 +180,7 @@ switch ($op) {
                 listCart();
             }
         } else {
-            Oledrion_utils::redirect(_OLEDRION_PROBLEM_QTY, 'index.php', 5); // Plus de stock !
+            OledrionUtility::redirect(_OLEDRION_PROBLEM_QTY, 'index.php', 5); // Plus de stock !
         }
         listCart();
         break;
@@ -213,12 +213,12 @@ $xoopsTpl->assign('step1', $step1);
 $xoopsTpl->assign('step2', $step2);
 $xoopsTpl->assign('step3', $step3);
 
-Oledrion_utils::setCSS();
-Oledrion_utils::setLocalCSS($xoopsConfig['language']);
-Oledrion_utils::loadLanguageFile('modinfo.php');
+OledrionUtility::setCSS();
+OledrionUtility::setLocalCSS($xoopsConfig['language']);
+OledrionUtility::loadLanguageFile('modinfo.php');
 
-$xoopsTpl->assign('breadcrumb', Oledrion_utils::breadcrumb(array(OLEDRION_URL . basename(__FILE__) => _MI_OLEDRION_SMNAME1)));
+$xoopsTpl->assign('breadcrumb', OledrionUtility::breadcrumb(array(OLEDRION_URL . basename(__FILE__) => _MI_OLEDRION_SMNAME1)));
 
-$title = _MI_OLEDRION_SMNAME1 . ' - ' . Oledrion_utils::getModuleName();
-Oledrion_utils::setMetas($title, $title);
+$title = _MI_OLEDRION_SMNAME1 . ' - ' . OledrionUtility::getModuleName();
+OledrionUtility::setMetas($title, $title);
 require_once XOOPS_ROOT_PATH . '/footer.php';

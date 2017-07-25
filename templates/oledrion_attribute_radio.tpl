@@ -4,7 +4,7 @@
         <input type='radio' name='<{$name}>_<{$attribute_id}>' id='<{$name}>_<{$attribute_id}>'
                value='<{$option.value}>_<{$option.counter}>'
                <{if in_array($option.value, $defaultValue)}>checked='checked'<{/if}>
-               class="oledrion_attribute <{if $attribute_mandatory}>required<{/if}>"/>
+               class="oledrion_attribute <{if $attribute_mandatory}>required<{/if}>">
         <{$option.name}> (<{$option.priceTTCFormated}>)<{$delimiter}>
     <{/foreach}>
     </select>

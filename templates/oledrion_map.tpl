@@ -8,7 +8,7 @@
     <div class='center'>
         <h2><img src="<{$smarty.const.OLEDRION_IMAGES_URL}>folder_orange_open.png"
                  alt="<{$smarty.const._MI_OLEDRION_SMNAME4}>" width="32"
-                 height="32"/><{$smarty.const._MI_OLEDRION_SMNAME4}></h2>
+                 height="32"><{$smarty.const._MI_OLEDRION_SMNAME4}></h2>
     </div>
 
     <table width="100%" cellspacing="0">

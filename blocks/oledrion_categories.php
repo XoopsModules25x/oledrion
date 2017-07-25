@@ -12,7 +12,7 @@
 /**
  * oledrion
  *
- * @copyright   {@link http://xoops.org/ XOOPS Project}
+ * @copyright   {@link https://xoops.org/ XOOPS Project}
  * @license     {@link http://www.fsf.org/copyleft/gpl.html GNU public license}
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
  */
@@ -29,7 +29,7 @@ function b_oledrion_category_show($options)
     include XOOPS_ROOT_PATH . '/modules/oledrion/include/common.php';
     $xoTheme->addStylesheet(OLEDRION_URL . 'assets/css/oledrion.css');
 
-    $block['nostock_msg'] = Oledrion_utils::getModuleOption('nostock_msg');
+    $block['nostock_msg'] = OledrionUtility::getModuleOption('nostock_msg');
 
     if ((int)$options[0] == 0) { // Catégories selon la page en cours
         $block['block_option'] = 0;
@@ -40,14 +40,14 @@ function b_oledrion_category_show($options)
         include XOOPS_ROOT_PATH . '/modules/oledrion/include/common.php';
 
         if ($cat_cid > 0) {
-            include_once XOOPS_ROOT_PATH . '/class/tree.php';
+            require_once XOOPS_ROOT_PATH . '/class/tree.php';
             $tbl_categories = $tblChilds = $tbl_tmp = array();
             $tbl_categories = $h_oledrion_cat->getAllCategories(new Oledrion_parameters());
             $mytree         = new XoopsObjectTree($tbl_categories, 'cat_cid', 'cat_pid');
             $tblChilds      = $mytree->getAllChild($cat_cid);
             //$tblChilds = array_reverse($tblChilds);
             foreach ($tblChilds as $item) {
-                $tbl_tmp[] = "<a href='" . $item->getLink() . "' title='" . Oledrion_utils::makeHrefTitle($item->getVar('cat_title')) . "'>" . $item->getVar('cat_title') . '</a>';
+                $tbl_tmp[] = "<a href='" . $item->getLink() . "' title='" . OledrionUtility::makeHrefTitle($item->getVar('cat_title')) . "'>" . $item->getVar('cat_title') . '</a>';
             }
             $block['block_categories'] = $tbl_tmp;
 
@@ -64,14 +64,14 @@ function b_oledrion_category_show($options)
             $criteria->setSort('cat_title');
             $tbl_categories = $h_oledrion_cat->getObjects($criteria, true);
             foreach ($tbl_categories as $item) {
-                $tbl_tmp[] = "<a href='" . $item->getLink() . "' title='" . Oledrion_utils::makeHrefTitle($item->getVar('cat_title')) . "'>" . $item->getVar('cat_title') . '</a>';
+                $tbl_tmp[] = "<a href='" . $item->getLink() . "' title='" . OledrionUtility::makeHrefTitle($item->getVar('cat_title')) . "'>" . $item->getVar('cat_title') . '</a>';
             }
             $block['block_categories'] = $tbl_tmp;
         }
     } elseif ((int)$options[0] == 1) { // Affichage classique
         $block['block_option'] = 1;
         include XOOPS_ROOT_PATH . '/modules/oledrion/include/common.php';
-        include_once OLEDRION_PATH . 'class/tree.php';
+        require_once OLEDRION_PATH . 'class/tree.php';
         $tbl_categories = $h_oledrion_cat->getAllCategories(new Oledrion_parameters());
         $mytree         = new Oledrion_XoopsObjectTree($tbl_categories, 'cat_cid', 'cat_pid');
         $jump           = OLEDRION_URL . 'category.php?cat_cid=';
@@ -103,8 +103,21 @@ function b_oledrion_category_edit($options)
     $checkeds              = array('', '', '');
     $checkeds[$options[0]] = 'checked';
     $form                  = '';
-    $form .= '<b>' . _MB_OLEDRION_TYPE_BLOCK . "</b><br><input type='radio' name='options[]' id='options[]' value='0' " . $checkeds[0] . ' />' . _MB_OLEDRION_TYPE_BLOCK2 . "<br><input type='radio' name='options[]' id='options[]' value='1' "
-             . $checkeds[1] . ' />' . _MB_OLEDRION_TYPE_BLOCK1 . "<br><input type='radio' name='options[]' id='options[]' value='2' " . $checkeds[2] . ' />' . _MB_OLEDRION_TYPE_BLOCK3 . '</td></tr>';
+    $form                  .= '<b>'
+                              . _MB_OLEDRION_TYPE_BLOCK
+                              . "</b><br><input type='radio' name='options[]' id='options[]' value='0' "
+                              . $checkeds[0]
+                              . '>'
+                              . _MB_OLEDRION_TYPE_BLOCK2
+                              . "<br><input type='radio' name='options[]' id='options[]' value='1' "
+                              . $checkeds[1]
+                              . '>'
+                              . _MB_OLEDRION_TYPE_BLOCK1
+                              . "<br><input type='radio' name='options[]' id='options[]' value='2' "
+                              . $checkeds[2]
+                              . '>'
+                              . _MB_OLEDRION_TYPE_BLOCK3
+                              . '</td></tr>';
 
     return $form;
 }

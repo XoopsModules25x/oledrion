@@ -12,7 +12,7 @@
 /**
  * oledrion
  *
- * @copyright   {@link http://xoops.org/ XOOPS Project}
+ * @copyright   {@link https://xoops.org/ XOOPS Project}
  * @license     {@link http://www.fsf.org/copyleft/gpl.html GNU public license}
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
  */
@@ -28,7 +28,7 @@ require_once OLEDRION_PLUGINS_PATH . 'models/oledrion_action.php'; // modèle
 require_once OLEDRION_PLUGINS_PATH . 'models/oledrion_filter.php'; // modèle
 
 // Les classes métier ou utilitaires (non ORM)
-require_once OLEDRION_CLASS_PATH . 'oledrion_utils.php';
+require_once OLEDRION_CLASS_PATH . 'utility.php';
 require_once OLEDRION_CLASS_PATH . 'oledrion_handlers.php';
 require_once OLEDRION_CLASS_PATH . 'oledrion_parameters.php';
 require_once OLEDRION_CLASS_PATH . 'oledrion_currency.php';
@@ -86,37 +86,37 @@ if (!defined('_OLEDRION_EDIT')) {
 }
 
 global $xoopsModule;
-$dirname       = basename(dirname(__DIR__));
+$dirname = basename(dirname(__DIR__));
 /** @var XoopsModuleHandler $moduleHandler */
 $moduleHandler = xoops_getHandler('module');
 $module        = $moduleHandler->getByDirname($dirname);
-$pathIcon16    = '../' . $module->getInfo('icons16');
+$pathIcon16    = \Xmf\Module\Admin::iconUrl('', 16);
 
 $icones = array(
-    'edit'     => "<img src='" . $pathIcon16 . "/edit.png'  alt=" . _OLEDRION_EDIT . "' align='middle' />",
-    'delete'   => "<img src='" . $pathIcon16 . "/delete.png' alt='" . _OLEDRION_DELETE . "' align='middle' />",
-    'online'   => "<img src='" . OLEDRION_IMAGES_URL . "online.gif' alt='" . _OLEDRION_ONLINE . "' align='middle' />",
-    'offline'  => "<img src='" . OLEDRION_IMAGES_URL . "offline.gif' alt='" . _OLEDRION_OFFLINE . "' align='middle' />",
-    'ok'       => "<img src='" . OLEDRION_IMAGES_URL . "ok.png' alt='" . _OLEDRION_VALIDATE_COMMAND . "' align='middle' />",
-    'copy'     => "<img src='" . $pathIcon16 . "/editcopy.png' alt='" . _OLEDRION_DUPLICATE_PRODUCT . "' align='middle' />",
-    'details'  => "<img src='" . OLEDRION_IMAGES_URL . "details.png' alt='" . _OLEDRION_DETAILS . "' align='middle' />",
-    'print'    => "<img src='" . OLEDRION_IMAGES_URL . "print.png' alt='" . _OLEDRION_PRINT_VERSION . "' align='middle' />",
-    'delivery' => "<img src='" . OLEDRION_IMAGES_URL . "delivery.png' alt='" . _OLEDRION_DELIVERY . "' align='middle' />",
-    'package'  => "<img src='" . OLEDRION_IMAGES_URL . "package.png' alt='" . _OLEDRION_PACK . "' align='middle' />",
-    'submit'   => "<img src='" . OLEDRION_IMAGES_URL . "submit.png' alt='" . _OLEDRION_SUBMIT . "' align='middle' />",
-    'track'    => "<img src='" . OLEDRION_IMAGES_URL . "track.png' alt='" . _OLEDRION_TRACK . "' align='middle' />"
+    'edit'     => "<img src='" . $pathIcon16 . "/edit.png'  alt=" . _OLEDRION_EDIT . "' align='middle'>",
+    'delete'   => "<img src='" . $pathIcon16 . "/delete.png' alt='" . _OLEDRION_DELETE . "' align='middle'>",
+    'online'   => "<img src='" . OLEDRION_IMAGES_URL . "online.gif' alt='" . _OLEDRION_ONLINE . "' align='middle'>",
+    'offline'  => "<img src='" . OLEDRION_IMAGES_URL . "offline.gif' alt='" . _OLEDRION_OFFLINE . "' align='middle'>",
+    'ok'       => "<img src='" . OLEDRION_IMAGES_URL . "ok.png' alt='" . _OLEDRION_VALIDATE_COMMAND . "' align='middle'>",
+    'copy'     => "<img src='" . $pathIcon16 . "/editcopy.png' alt='" . _OLEDRION_DUPLICATE_PRODUCT . "' align='middle'>",
+    'details'  => "<img src='" . OLEDRION_IMAGES_URL . "details.png' alt='" . _OLEDRION_DETAILS . "' align='middle'>",
+    'print'    => "<img src='" . OLEDRION_IMAGES_URL . "print.png' alt='" . _OLEDRION_PRINT_VERSION . "' align='middle'>",
+    'delivery' => "<img src='" . OLEDRION_IMAGES_URL . "delivery.png' alt='" . _OLEDRION_DELIVERY . "' align='middle'>",
+    'package'  => "<img src='" . OLEDRION_IMAGES_URL . "package.png' alt='" . _OLEDRION_PACK . "' align='middle'>",
+    'submit'   => "<img src='" . OLEDRION_IMAGES_URL . "submit.png' alt='" . _OLEDRION_SUBMIT . "' align='middle'>",
+    'track'    => "<img src='" . OLEDRION_IMAGES_URL . "track.png' alt='" . _OLEDRION_TRACK . "' align='middle'>"
 );
 
 // Chargement de quelques préférences
 $mod_pref = array(
-    'money_short'     => Oledrion_utils::getModuleOption('money_short'),
-    'money_full'      => Oledrion_utils::getModuleOption('money_full'),
-    'url_rewriting'   => Oledrion_utils::getModuleOption('urlrewriting'),
-    'tooltip'         => Oledrion_utils::getModuleOption('infotips'),
-    'advertisement'   => Oledrion_utils::getModuleOption('advertisement'),
-    'rss'             => Oledrion_utils::getModuleOption('use_rss'),
-    'nostock_msg'     => Oledrion_utils::getModuleOption('nostock_msg'),
-    'use_price'       => Oledrion_utils::getModuleOption('use_price'),
-    'restrict_orders' => Oledrion_utils::getModuleOption('restrict_orders'),
-    'isAdmin'         => Oledrion_utils::isAdmin()
+    'money_short'     => OledrionUtility::getModuleOption('money_short'),
+    'money_full'      => OledrionUtility::getModuleOption('money_full'),
+    'url_rewriting'   => OledrionUtility::getModuleOption('urlrewriting'),
+    'tooltip'         => OledrionUtility::getModuleOption('infotips'),
+    'advertisement'   => OledrionUtility::getModuleOption('advertisement'),
+    'rss'             => OledrionUtility::getModuleOption('use_rss'),
+    'nostock_msg'     => OledrionUtility::getModuleOption('nostock_msg'),
+    'use_price'       => OledrionUtility::getModuleOption('use_price'),
+    'restrict_orders' => OledrionUtility::getModuleOption('restrict_orders'),
+    'isAdmin'         => OledrionUtility::isAdmin()
 );

@@ -12,7 +12,7 @@
 /**
  * oledrion
  *
- * @copyright   {@link http://xoops.org/ XOOPS Project}
+ * @copyright   {@link https://xoops.org/ XOOPS Project}
  * @license     {@link http://www.fsf.org/copyleft/gpl.html GNU public license}
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
  */
@@ -26,10 +26,10 @@
 function b_oledrion_my_lists_show($options)
 {
     require XOOPS_ROOT_PATH . '/modules/oledrion/include/common.php';
-    Oledrion_utils::loadLanguageFile('modinfo.php');
+    OledrionUtility::loadLanguageFile('modinfo.php');
     $start = 0;
     $limit = (int)$options[0];
-    $uid   = Oledrion_utils::getCurrentUserID();
+    $uid   = OledrionUtility::getCurrentUserID();
     if ($uid == 0) {
         return null;
     }
@@ -66,7 +66,7 @@ function b_oledrion_my_lists_edit($options)
     include XOOPS_ROOT_PATH . '/modules/oledrion/include/common.php';
     $form = '';
     $form .= "<table border='0'>";
-    $form .= '<tr><td>' . _MB_OLEDRION_LISTS_COUNT . "</td><td><input type='text' name='options[]' id='options' value='" . (int)$options[0] . "' /></td></tr>";
+    $form .= '<tr><td>' . _MB_OLEDRION_LISTS_COUNT . "</td><td><input type='text' name='options[]' id='options' value='" . (int)$options[0] . "'></td></tr>";
     $form .= '</table>';
 
     return $form;

@@ -12,7 +12,7 @@
 /**
  * oledrion
  *
- * @copyright   {@link http://xoops.org/ XOOPS Project}
+ * @copyright   {@link https://xoops.org/ XOOPS Project}
  * @license     {@link http://www.fsf.org/copyleft/gpl.html GNU public license}
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
  */
@@ -178,7 +178,7 @@ class Oledrion_paypal extends Oledrion_gateway
         $ret['image_url']        = XOOPS_URL . '/images/logo.gif';
         $ret['cpp_header_image'] = XOOPS_URL . '/images/logo.gif';
         $ret['invoice']          = $order->getVar('cmd_id');
-        $ret['item_name']        = _OLEDRION_COMMAND . $order->getVar('cmd_id') . ' - ' . Oledrion_utils::makeHrefTitle($xoopsConfig['sitename']);
+        $ret['item_name']        = _OLEDRION_COMMAND . $order->getVar('cmd_id') . ' - ' . OledrionUtility::makeHrefTitle($xoopsConfig['sitename']);
         $ret['item_number']      = $order->getVar('cmd_id');
         $ret['tax']              = 0; // ajout 25/03/2008
         $ret['amount']           = $this->formatAmount((float)$order->getVar('cmd_total', 'n'));
@@ -240,10 +240,10 @@ class Oledrion_paypal extends Oledrion_gateway
         $slashes = get_magic_quotes_gpc();
         foreach ($_POST as $key => $value) {
             if ($slashes) {
-                $log .= "$key=" . stripslashes($value) . "\n";
+                $log   .= "$key=" . stripslashes($value) . "\n";
                 $value = urlencode(stripslashes($value));
             } else {
-                $log .= "$key=" . $value . "\n";
+                $log   .= "$key=" . $value . "\n";
                 $value = urlencode($value);
             }
             $req .= "&$key=$value";
@@ -253,18 +253,18 @@ class Oledrion_paypal extends Oledrion_gateway
         $paypal_email = $this->handlers->h_oledrion_gateways_options->getGatewayOptionValue($gatewayName, 'paypal_email');
         $paypal_money = $this->handlers->h_oledrion_gateways_options->getGatewayOptionValue($gatewayName, 'paypal_money');
         $header       = '';
-        $header .= "POST /cgi-bin/webscr HTTP/1.0\r\n";
-        $header .= "Content-Type: application/x-www-form-urlencoded\r\n";
-        $header .= 'Content-Length: ' . strlen($req) . "\r\n\r\n";
-        $errno  = 0;
-        $errstr = '';
-        $fp     = fsockopen($url, 80, $errno, $errstr, 30);
+        $header       .= "POST /cgi-bin/webscr HTTP/1.0\r\n";
+        $header       .= "Content-Type: application/x-www-form-urlencoded\r\n";
+        $header       .= 'Content-Length: ' . strlen($req) . "\r\n\r\n";
+        $errno        = 0;
+        $errstr       = '';
+        $fp           = fsockopen($url, 80, $errno, $errstr, 30);
         if ($fp) {
             fwrite($fp, "$header$req");
             while (!feof($fp)) {
                 $res = fgets($fp, 1024);
                 if (strcmp($res, 'VERIFIED') == 0) {
-                    $log .= "VERIFIED\t";
+                    $log      .= "VERIFIED\t";
                     $paypalok = true;
                     if (strtoupper($_POST['payment_status']) !== 'COMPLETED') {
                         $paypalok = false;

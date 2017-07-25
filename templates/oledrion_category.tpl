@@ -13,7 +13,7 @@
     <!-- HEADER -->
     <div id="oledrion-logo">
         <{if $category.cat_imgurl != ''}>
-            <img src="<{$category.cat_full_imgurl}>" alt="<{$category.cat_title}>"/>
+            <img src="<{$category.cat_full_imgurl}>" alt="<{$category.cat_title}>">
         <{/if}>
     </div>
 
@@ -93,11 +93,11 @@
     <!-- CADDY & RSS -->
     <div id="oledrion_caddy" class="right">
         <a href="<{$smarty.const.OLEDRION_URL}>caddy.php" title="<{$smarty.const._OLEDRION_CART}>"><img
-                    src="<{$smarty.const.OLEDRION_IMAGES_URL}>cart.png" alt="<{$smarty.const._OLEDRION_CART}>"/></a>&nbsp;
+                    src="<{$smarty.const.OLEDRION_IMAGES_URL}>cart.png" alt="<{$smarty.const._OLEDRION_CART}>"></a>&nbsp;
         <{if $mod_pref.rss}>
             <a href="<{$smarty.const.OLEDRION_URL}>rss.php<{if $category.cat_cid > 0}>?cat_cid=<{$category.cat_cid}><{/if}>"
                title="<{$smarty.const._OLEDRION_RSS_FEED}>"><img
-                        src="<{$smarty.const.OLEDRION_IMAGES_URL}>rss.gif" alt="<{$smarty.const._OLEDRION_RSS_FEED}>"/></a>
+                        src="<{$smarty.const.OLEDRION_IMAGES_URL}>rss.gif" alt="<{$smarty.const._OLEDRION_RSS_FEED}>"></a>
         <{/if}>
     </div>
     <!-- /CADDY & RSS -->

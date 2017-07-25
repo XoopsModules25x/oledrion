@@ -12,7 +12,7 @@
 /**
  * oledrion
  *
- * @copyright   {@link http://xoops.org/ XOOPS Project}
+ * @copyright   {@link https://xoops.org/ XOOPS Project}
  * @license     {@link http://www.fsf.org/copyleft/gpl.html GNU public license}
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
  */
@@ -20,23 +20,23 @@
 /**
  * Sélecteur de produits
  */
-require_once dirname(dirname(dirname(__DIR__))) . '/include/cp_header.php';
-require_once dirname(__DIR__) . '/include/common.php';
+require_once __DIR__ . '/../../../include/cp_header.php';
+require_once __DIR__ . '/../include/common.php';
 require_once XOOPS_ROOT_PATH . '/class/template.php';
-include_once OLEDRION_PATH . 'class/tree.php';
+require_once OLEDRION_PATH . 'class/tree.php';
 
 if (!isset($xoopsUser) || !is_object($xoopsUser)) {
     exit;
 }
-if (!Oledrion_utils::isAdmin()) {
+if (!OledrionUtility::isAdmin()) {
     exit;
 }
 $xoopsTpl = new XoopsTpl();
 $ts       = MyTextSanitizer::getInstance();
-$limit    = Oledrion_utils::getModuleOption('items_count'); // Nombre maximum d'éléments à afficher dans l'admin
+$limit    = OledrionUtility::getModuleOption('items_count'); // Nombre maximum d'éléments à afficher dans l'admin
 
 $oledrionHandlers = OledrionHandler::getInstance();
-$searchFields      = array(
+$searchFields     = array(
     'product_title'       => _OLEDRION_TITLE,
     'product_summary'     => _OLEDRION_SUMMARY,
     'product_description' => _OLEDRION_DESCRIPTION,
@@ -44,7 +44,7 @@ $searchFields      = array(
     'product_sku'         => _OLEDRION_NUMBER,
     'product_extraid'     => _OLEDRION_EXTRA_ID
 );
-$searchCriterias   = array(
+$searchCriterias  = array(
     XOOPS_MATCH_START   => _STARTSWITH,
     XOOPS_MATCH_END     => _ENDSWITH,
     XOOPS_MATCH_EQUAL   => _MATCHES,
@@ -137,10 +137,16 @@ if (isset($_REQUEST['op']) && $_REQUEST['op'] === 'search') {
     }
 }
 
-Oledrion_utils::loadLanguageFile('modinfo.php');
-Oledrion_utils::loadLanguageFile('main.php');
+OledrionUtility::loadLanguageFile('modinfo.php');
+OledrionUtility::loadLanguageFile('main.php');
 
-$categoriesSelect = $mytree->makeSelBox('product_cid', 'cat_title', '-', $selectedCategory, '---', 0, "class='selectLists'");
+if (OledrionUtility::checkVerXoops($module, '2.5.9')) {
+    $categoriesSelect = $mytree->makeSelectElement('product_cid', 'cat_title', '-', $selectedCategory, true, 0, '', '');
+    $xoopsTpl->assign('searchCategory', $categoriesSelect->render());
+} else {
+    $categoriesSelect = $mytree->makeSelBox('product_cid', 'cat_title', '-', $selectedCategory, '---', 0, "class='selectLists'");
+    $xoopsTpl->assign('searchCategory', $categoriesSelect);
+}
 $xoopsTpl->assign('callerName', $callerName);
 $xoopsTpl->assign('sart', $start);
 $xoopsTpl->assign('theme_set', xoops_getcss($xoopsConfig['theme_set']));
@@ -151,7 +157,6 @@ $xoopsTpl->assign('baseurl', OLEDRION_URL . 'admin/' . basename(__FILE__)); // U
 $xoopsTpl->assign('searchVendor', $vendors);
 $xoopsTpl->assign('searchCriteria', $searchCriterias);
 $xoopsTpl->assign('searchField', $searchFields);
-$xoopsTpl->assign('searchCategory', $categoriesSelect);
 $xoopsTpl->assign('searchFieldSelected', $selectedSearchField);
 
 echo $xoopsTpl->fetch('db:oledrion_productsselector.tpl');

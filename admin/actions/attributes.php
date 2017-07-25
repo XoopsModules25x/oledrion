@@ -12,7 +12,7 @@
 /**
  * oledrion
  *
- * @copyright   {@link http://xoops.org/ XOOPS Project}
+ * @copyright   {@link https://xoops.org/ XOOPS Project}
  * @license     {@link http://www.fsf.org/copyleft/gpl.html GNU public license}
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
  */
@@ -45,16 +45,20 @@ switch ($action) {
         // ****************************************************************************************************************
         xoops_cp_header();
 
+        $adminObject = \Xmf\Module\Admin::getInstance();
+        $adminObject->displayNavigation('index.php?op=attributes');
+
         global $xoopsConfig;
         $productsIds = $products = $productsIdsForList = $productsForList = array();
         $class       = '';
         removeAttributInSession();
 
-        $form = "<form method='post' action='$baseurl' name='frmadd$operation' id='frmadd$operation'><input type='hidden' name='op' id='op' value='$operation' /><input type='hidden' name='action' id='action' value='add' /><input type='submit' name='btngo' id='btngo' value='"
-                . _AM_OLEDRION_ADD_ITEM . "' /></form>";
+        $form = "<form method='post' action='$baseurl' name='frmadd$operation' id='frmadd$operation'><input type='hidden' name='op' id='op' value='$operation'><input type='hidden' name='action' id='action' value='add'><input type='submit' name='btngo' id='btngo' value='"
+                . _AM_OLEDRION_ADD_ITEM
+                . "'></form>";
         echo $form;
 
-        Oledrion_utils::htitle(_AM_OLEDRION_ATTRIBUTES_LIST, 4);
+        //        OledrionUtility::htitle(_AM_OLEDRION_ATTRIBUTES_LIST, 4);
 
         $start    = isset($_GET['start']) ? (int)$_GET['start'] : 0;
         $criteria = new CriteriaCompo();
@@ -94,8 +98,7 @@ switch ($action) {
         }
 
         if ($filter_attribute_id == 0 && $filter_attribute_title == '' && $filter_attribute_weight == 0
-            && $filter_attribute_type == 0
-        ) {
+            && $filter_attribute_type == 0) {
             $newFilter = true;
         }
 
@@ -134,7 +137,7 @@ switch ($action) {
                 $products = $oledrionHandlers->h_oledrion_products->getProductsFromIDs($productsIds, true);
             }
         }
-        $typeSelect = Oledrion_utils::htmlSelect('filter_attribute_type', array(
+        $typeSelect = OledrionUtility::htmlSelect('filter_attribute_type', array(
             OLEDRION_ATTRIBUTE_RADIO    => _AM_OLEDRION_TYPE_RADIO,
             OLEDRION_ATTRIBUTE_CHECKBOX => _AM_OLEDRION_TYPE_CHECKBOX,
             OLEDRION_ATTRIBUTE_SELECT   => _AM_OLEDRION_TYPE_LIST
@@ -144,22 +147,33 @@ switch ($action) {
         if (count($productsIdsForList) > 0) {
             $productsForList = $oledrionHandlers->h_oledrion_products->getList(new Criteria('product_id', '(' . implode(',', $productsIdsForList) . ')', 'IN'));
         }
-        $selectProduct = Oledrion_utils::htmlSelect('filter_attribute_product_id', $productsForList, $filter_attribute_product_id);
+        $selectProduct = OledrionUtility::htmlSelect('filter_attribute_product_id', $productsForList, $filter_attribute_product_id);
 
         echo "<table width='100%' cellspacing='1' cellpadding='3' border='0' class='outer'>";
         if (isset($pagenav) && is_object($pagenav)) {
             echo "<tr><td colspan='2' align='left'>" . $pagenav->renderNav() . "</td><td align='right' colspan='3'>&nbsp;</td></tr>\n";
         }
-        echo "<tr><th align='center'>" . _AM_OLEDRION_ID . "</th><th align='center'>" . _AM_OLEDRION_TITLE . "</th><th align='center'>" . _AM_OLEDRION_DISCOUNT_PRODUCT . "</th><th align='center'>" . _AM_OLEDRION_WEIGHT . "</th><th align='center'>"
-             . _AM_OLEDRION_TYPE . "</th><th align='center'>" . _AM_OLEDRION_ACTION . '</th></tr>';
+        echo "<tr><th align='center'>"
+             . _AM_OLEDRION_ID
+             . "</th><th align='center'>"
+             . _AM_OLEDRION_TITLE
+             . "</th><th align='center'>"
+             . _AM_OLEDRION_DISCOUNT_PRODUCT
+             . "</th><th align='center'>"
+             . _AM_OLEDRION_WEIGHT
+             . "</th><th align='center'>"
+             . _AM_OLEDRION_TYPE
+             . "</th><th align='center'>"
+             . _AM_OLEDRION_ACTION
+             . '</th></tr>';
 
         // Les filtres
-        echo "<tr><form method='post' action='$baseurl'><th align='center'><input type='text' size='3' name='filter_attribute_id' id='filter_attribute_id' value='$filter_attribute_id' /></th>\n";
-        echo "<th align='center'><input type='text' size='25' name='filter_attribute_title' id='filter_attribute_title' value='$filter_attribute_title' /></th>\n";
+        echo "<tr><form method='post' action='$baseurl'><th align='center'><input type='text' size='3' name='filter_attribute_id' id='filter_attribute_id' value='$filter_attribute_id'></th>\n";
+        echo "<th align='center'><input type='text' size='25' name='filter_attribute_title' id='filter_attribute_title' value='$filter_attribute_title'></th>\n";
         echo "<th align='center'>" . $selectProduct . "</th>\n";
-        echo "<th align='center'><input type='text' size='5' name='filter_attribute_weight' id='filter_attribute_weight' value='$filter_attribute_weight' /></th>\n";
+        echo "<th align='center'><input type='text' size='5' name='filter_attribute_weight' id='filter_attribute_weight' value='$filter_attribute_weight'></th>\n";
         echo "<th align='center'>" . $typeSelect . "</th>\n";
-        echo "<th align='center'><input type='hidden' name='op' id='op' value='attributes' /><input type='submit' name='btngo' id='btngo' value='" . _GO . "' /></th></form></tr>\n";
+        echo "<th align='center'><input type='hidden' name='op' id='op' value='attributes'><input type='submit' name='btngo' id='btngo' value='" . _GO . "'></th></form></tr>\n";
 
         foreach ($items as $item) {
             $class        = ($class === 'even') ? 'odd' : 'even';
@@ -175,7 +189,7 @@ switch ($action) {
             echo "<td align='left'><a target='_blank' href='" . $productLink . "'>" . $item->attribute_title . '</a></td>';
             $urlProductEdit = $baseurl . '?op=products&action=edit&id=' . $item->getVar('attribute_product_id');
 
-            echo "<td align='center'><a  title='" . _EDIT . "' href='" . $urlProductEdit . "'><img src='" . OLEDRION_IMAGES_URL . "smalledit.png' /> " . $productTitle . '</a></td>';
+            echo "<td align='center'><a  title='" . _EDIT . "' href='" . $urlProductEdit . "'><img src='" . OLEDRION_IMAGES_URL . "smalledit.png'> " . $productTitle . '</a></td>';
             echo "<td align='center'>" . $item->attribute_weight . "</td>\n";
             echo "<td align='center'>" . $item->getTypeName() . "</td>\n";
             echo "<td align='center'>" . implode(' ', $actions) . "</td>\n";
@@ -189,7 +203,7 @@ switch ($action) {
         if (isset($pagenav) && is_object($pagenav)) {
             echo "<div align='right'>" . $pagenav->renderNav() . '</div>';
         }
-        include_once OLEDRION_ADMIN_PATH . 'admin_footer.php';
+        require_once OLEDRION_ADMIN_PATH . 'admin_footer.php';
         break;
 
     // ****************************************************************************************************************
@@ -198,7 +212,7 @@ switch ($action) {
         xoops_cp_header();
         $id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
         if (empty($id)) {
-            Oledrion_utils::redirect(_AM_OLEDRION_ERROR_1, $baseurl, 5);
+            OledrionUtility::redirect(_AM_OLEDRION_ERROR_1, $baseurl, 5);
         }
         $attribute = null;
         $attribute = $oledrionHandlers->h_oledrion_attributes->get($id);
@@ -206,9 +220,9 @@ switch ($action) {
             $newAttribute   = $oledrionHandlers->h_oledrion_attributes->cloneAttribute($attribute);
             $newAttributeId = $newAttribute->attribute_id;
             if ($newAttribute !== false) {
-                Oledrion_utils::redirect(_AM_OLEDRION_SAVE_OK, $baseurl . '?op=' . $operation . '&action=edit&id=' . $newAttributeId, 2);
+                OledrionUtility::redirect(_AM_OLEDRION_SAVE_OK, $baseurl . '?op=' . $operation . '&action=edit&id=' . $newAttributeId, 2);
             } else {
-                Oledrion_utils::redirect(_AM_OLEDRION_SAVE_PB, $baseurl . '?op=' . $operation, 5);
+                OledrionUtility::redirect(_AM_OLEDRION_SAVE_PB, $baseurl . '?op=' . $operation, 5);
             }
         }
         break;
@@ -219,23 +233,23 @@ switch ($action) {
         xoops_cp_header();
         $id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
         if (empty($id)) {
-            Oledrion_utils::redirect(_AM_OLEDRION_ERROR_1, $baseurl, 5);
+            OledrionUtility::redirect(_AM_OLEDRION_ERROR_1, $baseurl, 5);
         }
         $attribute = null;
         $attribute = $oledrionHandlers->h_oledrion_attributes->get($id);
         if (!is_object($attribute)) {
-            Oledrion_utils::redirect(_AM_OLEDRION_NOT_FOUND, $baseurl . '?op=' . $operation, 5);
+            OledrionUtility::redirect(_AM_OLEDRION_NOT_FOUND, $baseurl . '?op=' . $operation, 5);
         }
         $attributesCountInCaddy = $oledrionHandlers->h_oledrion_caddy_attributes->getCaddyCountFromAttributeId($id);
         if ($attributesCountInCaddy == 0) {
             $res = $oledrionHandlers->h_oledrion_attributes->deleteAttribute($attribute);
             if ($res) {
-                Oledrion_utils::redirect(_AM_OLEDRION_SAVE_OK, $baseurl . '?op=' . $operation, 2);
+                OledrionUtility::redirect(_AM_OLEDRION_SAVE_OK, $baseurl . '?op=' . $operation, 2);
             } else {
-                Oledrion_utils::redirect(_AM_OLEDRION_SAVE_PB, $baseurl . '?op=' . $operation, 5);
+                OledrionUtility::redirect(_AM_OLEDRION_SAVE_PB, $baseurl . '?op=' . $operation, 5);
             }
         } else {
-            Oledrion_utils::htitle(_AM_OLEDRION_SORRY_NOREMOVE2, 4);
+            OledrionUtility::htitle(_AM_OLEDRION_SORRY_NOREMOVE2, 4);
             $tblTmp  = $oledrionHandlers->h_oledrion_caddy_attributes->getCommandIdFromAttribute($id);
             $tblTmp2 = $h_oledrion_commands->getObjects(new Criteria('cmd_id', '(' . implode(',', $tblTmp) . ')', 'IN'), true);
             echo "<table width='100%' cellspacing='1' cellpadding='3' border='0' class='outer'>";
@@ -245,12 +259,27 @@ switch ($action) {
                 $class = ($class === 'even') ? 'odd' : 'even';
                 $date  = formatTimestamp(strtotime($item->getVar('cmd_date')), 's');
                 echo "<tr class='" . $class . "'>\n";
-                echo "<td align='right'>" . $item->getVar('cmd_id') . "</td><td align='center'>" . $date . "</td><td align='center'>" . $item->getVar('cmd_lastname') . ' ' . $item->getVar('cmd_firstname') . "</td><td align='center'>"
-                     . $item->getVar('cmd_total') . ' ' . Oledrion_utils::getModuleOption('money_short') . ' / ' . $item->getVar('cmd_shipping') . ' ' . Oledrion_utils::getModuleOption('money_short') . "</td>\n";
+                echo "<td align='right'>"
+                     . $item->getVar('cmd_id')
+                     . "</td><td align='center'>"
+                     . $date
+                     . "</td><td align='center'>"
+                     . $item->getVar('cmd_lastname')
+                     . ' '
+                     . $item->getVar('cmd_firstname')
+                     . "</td><td align='center'>"
+                     . $item->getVar('cmd_total')
+                     . ' '
+                     . OledrionUtility::getModuleOption('money_short')
+                     . ' / '
+                     . $item->getVar('cmd_shipping')
+                     . ' '
+                     . OledrionUtility::getModuleOption('money_short')
+                     . "</td>\n";
                 echo "<tr>\n";
             }
             echo '</table>';
-            include_once OLEDRION_ADMIN_PATH . 'admin_footer.php';
+            require_once OLEDRION_ADMIN_PATH . 'admin_footer.php';
         }
         break;
 
@@ -265,13 +294,13 @@ switch ($action) {
             $title = _AM_OLEDRION_EDIT_ATTRIBUTE;
             $id    = isset($_GET['id']) ? (int)$_GET['id'] : 0;
             if (empty($id)) {
-                Oledrion_utils::redirect(_AM_OLEDRION_ERROR_1, $baseurl, 5);
+                OledrionUtility::redirect(_AM_OLEDRION_ERROR_1, $baseurl, 5);
             }
             // Item exits ?
             $item = null;
             $item = $oledrionHandlers->h_oledrion_attributes->get($id);
             if (!is_object($item)) {
-                Oledrion_utils::redirect(_AM_OLEDRION_NOT_FOUND, $baseurl, 5);
+                OledrionUtility::redirect(_AM_OLEDRION_NOT_FOUND, $baseurl, 5);
             }
             $edit         = true;
             $label_submit = _AM_OLEDRION_MODIFY;
@@ -284,9 +313,9 @@ switch ($action) {
         }
         // Appel à jQuery
         $xoTheme->addScript('browse.php?Frameworks/jquery/jquery.js');
-        Oledrion_utils::callJavascriptFile('noconflict.js', false, true);
+        OledrionUtility::callJavascriptFile('noconflict.js', false, true);
         // Appel du fichier langue
-        Oledrion_utils::callJavascriptFile('messages.js', true, true);
+        OledrionUtility::callJavascriptFile('messages.js', true, true);
 
         $sform = new XoopsThemeForm($title, 'frm' . $operation, $baseurl);
         $sform->addElement(new XoopsFormHidden('op', $operation));
@@ -298,17 +327,17 @@ switch ($action) {
         $products       = array();
         $products       = $oledrionHandlers->h_oledrion_products->getList();
         $productsSelect = $oledrionHandlers->h_oledrion_products->productSelector(new Oledrion_parameters(array(
-                                                                                                               'caption'  => _AM_OLEDRION_ATTRIBUTE_PRODUCT,
-                                                                                                               'name'     => 'attribute_product_id',
-                                                                                                               'value'    => $item->getVar('attribute_product_id', 'e'),
-                                                                                                               'size'     => 1,
-                                                                                                               'multiple' => false,
-                                                                                                               'values'   => null,
-                                                                                                               'showAll'  => true,
-                                                                                                               'sort'     => 'product_title',
-                                                                                                               'order'    => 'ASC',
-                                                                                                               'formName' => 'frm' . $operation
-                                                                                                           )));
+                                                                                                              'caption'  => _AM_OLEDRION_ATTRIBUTE_PRODUCT,
+                                                                                                              'name'     => 'attribute_product_id',
+                                                                                                              'value'    => $item->getVar('attribute_product_id', 'e'),
+                                                                                                              'size'     => 1,
+                                                                                                              'multiple' => false,
+                                                                                                              'values'   => null,
+                                                                                                              'showAll'  => true,
+                                                                                                              'sort'     => 'product_title',
+                                                                                                              'order'    => 'ASC',
+                                                                                                              'formName' => 'frm' . $operation
+                                                                                                          )));
         $sform->addElement($productsSelect);
 
         $sform->addElement(new XoopsFormText(_AM_OLEDRION_WEIGHT, 'attribute_weight', 10, 10, $item->getVar('attribute_weight', 'e')), true);
@@ -323,8 +352,7 @@ switch ($action) {
         $defaultValue        = OLEDRION_ATTRIBUTE_CHECKBOX_WHITE_SPACE;
         if ($edit) {
             if ($item->getVar('attribute_type') == OLEDRION_ATTRIBUTE_RADIO
-                || $item->getVar('attribute_type') == OLEDRION_ATTRIBUTE_CHECKBOX
-            ) {
+                || $item->getVar('attribute_type') == OLEDRION_ATTRIBUTE_CHECKBOX) {
                 $defaultValue = $item->getVar('attribute_option1', 'e');
             }
         }
@@ -332,15 +360,15 @@ switch ($action) {
             OLEDRION_ATTRIBUTE_CHECKBOX_WHITE_SPACE => _AM_OLEDRION_ATTRIBUTE_DELIMITER1,
             OLEDRION_ATTRIBUTE_CHECKBOX_NEW_LINE    => _AM_OLEDRION_ATTRIBUTE_DELIMITER2
         );
-        $parameterButtonOption = _AM_OLEDRION_ATTRIBUTE_DELIMITER . ' ' . Oledrion_utils::htmlSelect('option1', $options, $defaultValue, false);
-        $attributeParameters .= "<div name='attributeParametersCheckbox' id='attributeParametersCheckbox'>\n";
-        $attributeParameters .= $parameterButtonOption . "\n";
-        $attributeParameters .= "</div>\n";
+        $parameterButtonOption = _AM_OLEDRION_ATTRIBUTE_DELIMITER . ' ' . OledrionUtility::htmlSelect('option1', $options, $defaultValue, false);
+        $attributeParameters   .= "<div name='attributeParametersCheckbox' id='attributeParametersCheckbox'>\n";
+        $attributeParameters   .= $parameterButtonOption . "\n";
+        $attributeParameters   .= "</div>\n";
 
         // Les listes déroulantes
         $attributeParameters .= "<div name='attributeParametersSelect' id='attributeParametersSelect'>\n";
-        $defaultValue1 = OLEDRION_ATTRIBUTE_SELECT_VISIBLE_OPTIONS;
-        $defaultValue2 = OLEDRION_ATTRIBUTE_SELECT_MULTIPLE;
+        $defaultValue1       = OLEDRION_ATTRIBUTE_SELECT_VISIBLE_OPTIONS;
+        $defaultValue2       = OLEDRION_ATTRIBUTE_SELECT_MULTIPLE;
         if ($edit) {
             if ($item->getVar('attribute_type') == OLEDRION_ATTRIBUTE_SELECT) {
                 $defaultValue1 = $item->getVar('attribute_option1', 'e');
@@ -353,8 +381,8 @@ switch ($action) {
         } else {
             $checked2 = 'checked';
         }
-        $attributeParameters .= _AM_OLEDRION_ATTRIBUTE_VISIBLE_OPTIONS . " <input type='text' name='option2' id='option2' size='3' maxlength='3' value='$defaultValue1' />";
-        $attributeParameters .= '<br>' . _AM_OLEDRION_ATTRIBUTE_MULTI_OPTIONS . " <input type='radio' name='option3' id='option3' value='1' $checked1 />" . _YES . " <input type='radio' name='option3' id='option3' value='0' $checked2 />" . _NO;
+        $attributeParameters .= _AM_OLEDRION_ATTRIBUTE_VISIBLE_OPTIONS . " <input type='text' name='option2' id='option2' size='3' maxlength='3' value='$defaultValue1'>";
+        $attributeParameters .= '<br>' . _AM_OLEDRION_ATTRIBUTE_MULTI_OPTIONS . " <input type='radio' name='option3' id='option3' value='1' $checked1>" . _YES . " <input type='radio' name='option3' id='option3' value='0' $checked2>" . _NO;
         $attributeParameters .= "</div>\n";
         // ****
         $attributeParameters .= '</div>';
@@ -373,10 +401,10 @@ switch ($action) {
         $submit_btn  = new XoopsFormButton('', 'post', $label_submit, 'submit');
         $button_tray->addElement($submit_btn);
         $sform->addElement($button_tray);
-        Oledrion_utils::callJavascriptFile('attributes.js', false, true);
-        $sform =& Oledrion_utils::formMarkRequiredFields($sform);
+        OledrionUtility::callJavascriptFile('attributes.js', false, true);
+        $sform =& OledrionUtility::formMarkRequiredFields($sform);
         $sform->display();
-        include_once __DIR__ . '/admin_footer.php';
+        require_once __DIR__ . '/admin_footer.php';
         break;
 
     // ****************************************************************************************************************
@@ -388,7 +416,7 @@ switch ($action) {
             $edit = true;
             $item = $oledrionHandlers->h_oledrion_attributes->get($id);
             if (!is_object($item)) {
-                Oledrion_utils::redirect(_AM_OLEDRION_NOT_FOUND, $baseurl, 5);
+                OledrionUtility::redirect(_AM_OLEDRION_NOT_FOUND, $baseurl, 5);
             }
             $item->unsetNew();
         } else {
@@ -421,10 +449,10 @@ switch ($action) {
 
         $res = $oledrionHandlers->h_oledrion_attributes->insert($item);
         if ($res) {
-            Oledrion_utils::updateCache();
-            Oledrion_utils::redirect(_AM_OLEDRION_SAVE_OK, $baseurl . '?op=' . $operation, 2);
+            OledrionUtility::updateCache();
+            OledrionUtility::redirect(_AM_OLEDRION_SAVE_OK, $baseurl . '?op=' . $operation, 2);
         } else {
-            Oledrion_utils::redirect(_AM_OLEDRION_SAVE_PB, $baseurl . '?op=' . $operation, 5);
+            OledrionUtility::redirect(_AM_OLEDRION_SAVE_PB, $baseurl . '?op=' . $operation, 5);
         }
         break;
 
@@ -434,7 +462,7 @@ switch ($action) {
         if (!isset($xoopsUser) || !is_object($xoopsUser)) {
             exit;
         }
-        if (!Oledrion_utils::isAdmin()) {
+        if (!OledrionUtility::isAdmin()) {
             exit;
         }
         error_reporting(0);
@@ -515,11 +543,11 @@ switch ($action) {
         $content .= "<table border='0'>\n";
         $content .= "<tr>\n";
         $content .= "<th align='center'>" . _AM_OLEDRION_ATTRIBUTE_DEFAULT_VALUE . "</th><th align='center'>" . _AM_OLEDRION_ATTRIBUTE_TITLE . "</th><th align='center'>" . _AM_OLEDRION_ATTRIBUTE_VALUE . '</th>';
-        if (Oledrion_utils::getModuleOption('use_price')) {
+        if (OledrionUtility::getModuleOption('use_price')) {
             $content .= "<th align='center'>" . _AM_OLEDRION_ATTRIBUTE_PRICE . '</th>';
             ++$span;
         }
-        if (Oledrion_utils::getModuleOption('attributes_stocks')) {
+        if (OledrionUtility::getModuleOption('attributes_stocks')) {
             $content .= "<th align='center'>" . _AM_OLEDRION_ATTRIBUTE_STOCK . '</th>';
             ++$span;
         }
@@ -535,47 +563,47 @@ switch ($action) {
 
         if ($optionsCount > 0) {
             foreach ($options as $option) {
-                $class = ($class === 'even') ? 'odd' : 'even';
+                $class   = ($class === 'even') ? 'odd' : 'even';
                 $content .= "<tr class='" . $class . "'>\n";
                 $checked = '';
                 if ($option['value'] == $defaultValue) {
                     $checked = "checked = 'checked' ";
                 }
-                $content .= "<td align='center'><input type='radio' name='default' id='default' value='$counter' $checked/></td>\n";
-                $content .= "<td align='center'><input type='text' name='name$counter' id='names$counter' size='15' maxlength='255' value='" . $option['name'] . "' /></td>\n";
-                $content .= "<td align='center'><input type='text' name='value$counter' id='value$counter' size='15' maxlength='255' value='" . $option['value'] . "' /></td>\n";
-                if (Oledrion_utils::getModuleOption('use_price')) {
-                    $content .= "<td align='center'><input type='text' name='price$counter' id='price$counter' size='15' maxlength='10' value='" . $option['price'] . "' /></td>\n";
+                $content .= "<td align='center'><input type='radio' name='default' id='default' value='$counter' $checked></td>\n";
+                $content .= "<td align='center'><input type='text' name='name$counter' id='names$counter' size='15' maxlength='255' value='" . $option['name'] . "'></td>\n";
+                $content .= "<td align='center'><input type='text' name='value$counter' id='value$counter' size='15' maxlength='255' value='" . $option['value'] . "'></td>\n";
+                if (OledrionUtility::getModuleOption('use_price')) {
+                    $content .= "<td align='center'><input type='text' name='price$counter' id='price$counter' size='15' maxlength='10' value='" . $option['price'] . "'></td>\n";
                 }
-                if (Oledrion_utils::getModuleOption('attributes_stocks')) {
-                    $content .= "<td align='center'><input type='text' name='stock$counter' id='stock$counter' size='15' maxlength='10' value='" . $option['stock'] . "' /></td>\n";
+                if (OledrionUtility::getModuleOption('attributes_stocks')) {
+                    $content .= "<td align='center'><input type='text' name='stock$counter' id='stock$counter' size='15' maxlength='10' value='" . $option['stock'] . "'></td>\n";
                 }
                 // Les actions
                 $content .= "<td align='center'>";
                 // Suppression
-                $content .= "<img class='btnremove' alt='$delete' title='$delete' style='border: 0; cursor:pointer;' name='btnremove-$counter' id='btnremove-$counter' src='" . OLEDRION_IMAGES_URL . "smalldelete.png' />";
+                $content .= "<img class='btnremove' alt='$delete' title='$delete' style='border: 0; cursor:pointer;' name='btnremove-$counter' id='btnremove-$counter' src='" . OLEDRION_IMAGES_URL . "smalldelete.png'>";
                 if ($counter > 0) { // Up
-                    $content .= "<img class='btnUp' alt='$up' title='$up' style='border: 0; cursor:pointer;' name='btnUp-$counter' id='btnUp-$counter' src='" . OLEDRION_IMAGES_URL . "smallup.png' />";
+                    $content .= "<img class='btnUp' alt='$up' title='$up' style='border: 0; cursor:pointer;' name='btnUp-$counter' id='btnUp-$counter' src='" . OLEDRION_IMAGES_URL . "smallup.png'>";
                 } else {
-                    $content .= "<img src='" . OLEDRION_IMAGES_URL . "blankholder.png' />";
+                    $content .= "<img src='" . OLEDRION_IMAGES_URL . "blankholder.png'>";
                 }
                 if ($counter < $optionsCount - 1) { // Down
-                    $content .= "<img class='btnDown' alt='$down' title='$down' style='border: 0; cursor:pointer;' name='btnDown-$counter' id='btnDown-$counter' src='" . OLEDRION_IMAGES_URL . "smalldown.png' />";
+                    $content .= "<img class='btnDown' alt='$down' title='$down' style='border: 0; cursor:pointer;' name='btnDown-$counter' id='btnDown-$counter' src='" . OLEDRION_IMAGES_URL . "smalldown.png'>";
                 } else {
-                    $content .= "<img src='" . OLEDRION_IMAGES_URL . "blankholder.png' />";
+                    $content .= "<img src='" . OLEDRION_IMAGES_URL . "blankholder.png'>";
                 }
                 $content .= "</td>\n";
                 $content .= "</tr>\n";
                 ++$counter;
             }
         }
-        $class = ($class === 'even') ? 'odd' : 'even';
+        $class   = ($class === 'even') ? 'odd' : 'even';
         $content .= "<tr class='" . $class . "'>\n";
-        $content .= "<td colspan='$span' align='center'><input type='button'' name='bntAdd'' id='bntAdd' value='" . _AM_OLEDRION_ATTRIBUTE_ADD_OPTION . "' /></td>\n";
+        $content .= "<td colspan='$span' align='center'><input type='button'' name='bntAdd'' id='bntAdd' value='" . _AM_OLEDRION_ATTRIBUTE_ADD_OPTION . "'></td>\n";
         $content .= "</tr>\n";
 
         $content .= "</table>\n";
-        $content .= "<input type='hidden' name='optionsCount' id='optionsCount' value='$counter' />\n";
+        $content .= "<input type='hidden' name='optionsCount' id='optionsCount' value='$counter'>\n";
         echo $content;
         exit;
         break;

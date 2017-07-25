@@ -12,7 +12,7 @@
 /**
  * oledrion
  *
- * @copyright   {@link http://xoops.org/ XOOPS Project}
+ * @copyright   {@link https://xoops.org/ XOOPS Project}
  * @license     {@link http://www.fsf.org/copyleft/gpl.html GNU public license}
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
  */
@@ -65,7 +65,7 @@ class RssfitOledrion
                                                                                  )));
         $i     = 0;
 
-        if (false !== $items && count($items) > 0) {
+        if (false != $items && count($items) > 0) {
             foreach ($items as $item) {
                 $ret[$i]['link']      = $ret[$i]['guid'] = $item->getLink();
                 $ret[$i]['title']     = $item->getVar('product_title', 'n');

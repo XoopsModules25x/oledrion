@@ -12,7 +12,7 @@
 /**
  * oledrion
  *
- * @copyright   {@link http://xoops.org/ XOOPS Project}
+ * @copyright   {@link https://xoops.org/ XOOPS Project}
  * @license     {@link http://www.fsf.org/copyleft/gpl.html GNU public license}
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
  */
@@ -20,7 +20,7 @@
 /**
  * Gestion des fabricants
  */
-require __DIR__ . '/classheader.php';
+require_once __DIR__ . '/classheader.php';
 
 /**
  * Class Oledrion_manufacturer
@@ -95,8 +95,7 @@ class Oledrion_manufacturer extends Oledrion_Object
         $return        = false;
         if ($pictureNumber > 0 && $pictureNumber < 6) {
             if (xoops_trim($this->getVar('manu_photo' . $pictureNumber)) != ''
-                && file_exists(OLEDRION_PICTURES_PATH . '/' . $this->getVar('manu_photo' . $pictureNumber))
-            ) {
+                && file_exists(OLEDRION_PICTURES_PATH . '/' . $this->getVar('manu_photo' . $pictureNumber))) {
                 $return = true;
             }
         }
@@ -140,8 +139,8 @@ class Oledrion_manufacturer extends Oledrion_Object
     public function getLink()
     {
         $url = '';
-        if (Oledrion_utils::getModuleOption('urlrewriting') == 1) { // On utilise l'url rewriting
-            $url = OLEDRION_URL . 'manufacturer-' . $this->getVar('manu_id') . Oledrion_utils::makeSeoUrl($this->getVar('manu_commercialname', 'n') . ' ' . $this->getVar('manu_name')) . '.html';
+        if (OledrionUtility::getModuleOption('urlrewriting') == 1) { // On utilise l'url rewriting
+            $url = OLEDRION_URL . 'manufacturer-' . $this->getVar('manu_id') . OledrionUtility::makeSeoUrl($this->getVar('manu_commercialname', 'n') . ' ' . $this->getVar('manu_name')) . '.html';
         } else { // Pas d'utilisation de l'url rewriting
             $url = OLEDRION_URL . 'manufacturer.php?manu_id=' . $this->getVar('manu_id');
         }
@@ -156,7 +155,7 @@ class Oledrion_manufacturer extends Oledrion_Object
      */
     public function getHrefTitle()
     {
-        return Oledrion_utils::makeHrefTitle($this->getVar('manu_commercialname') . ' ' . $this->getVar('manu_name'));
+        return OledrionUtility::makeHrefTitle($this->getVar('manu_commercialname') . ' ' . $this->getVar('manu_name'));
     }
 
     /**
@@ -196,9 +195,9 @@ class OledrionOledrion_manufacturerHandler extends Oledrion_XoopsPersistableObje
 {
     /**
      * OledrionOledrion_manufacturerHandler constructor.
-     * @param XoopsDatabase|null $db
+     * @param object $db
      */
-    public function __construct(XoopsDatabase $db)
+    public function __construct($db)
     { //                            Table                   Classe               Id            Identifiant
         parent::__construct($db, 'oledrion_manufacturer', 'oledrion_manufacturer', 'manu_id', 'manu_commercialname');
     }
@@ -212,7 +211,7 @@ class OledrionOledrion_manufacturerHandler extends Oledrion_XoopsPersistableObje
     {
         global $myts;
         $ret    = array();
-        $sql    = 'SELECT DISTINCT (UPPER(SUBSTRING(manu_name, 1, 1))) as oneletter FROM ' . $this->table;
+        $sql    = 'SELECT DISTINCT (UPPER(SUBSTRING(manu_name, 1, 1))) AS oneletter FROM ' . $this->table;
         $result = $this->db->query($sql);
         if (!$result) {
             return $ret;
@@ -230,7 +229,7 @@ class OledrionOledrion_manufacturerHandler extends Oledrion_XoopsPersistableObje
      * @param  oledrion_manufacturer $manufacturer
      * @return boolean               Le résultat de la suppression
      */
-    public function deleteManufacturer(Oledrion_manufacturer $manufacturer)
+    public function deleteManufacturer(oledrion_manufacturer $manufacturer)
     {
         $manufacturer->deletePictures();
 

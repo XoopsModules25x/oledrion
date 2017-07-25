@@ -12,7 +12,7 @@
 /**
  * oledrion
  *
- * @copyright   {@link http://xoops.org/ XOOPS Project}
+ * @copyright   {@link https://xoops.org/ XOOPS Project}
  * @license     {@link http://www.fsf.org/copyleft/gpl.html GNU public license}
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
  */
@@ -36,7 +36,7 @@ function b_oledrion_recentlysold_show($options)
     }
     if (count($products) > 0) {
         $block                   = array();
-        $block['nostock_msg']    = Oledrion_utils::getModuleOption('nostock_msg');
+        $block['nostock_msg']    = OledrionUtility::getModuleOption('nostock_msg');
         $block['block_products'] = $products;
         $xoTheme->addStylesheet(OLEDRION_URL . 'assets/css/oledrion.css');
 
@@ -57,7 +57,7 @@ function b_oledrion_recentlysold_edit($options)
     require XOOPS_ROOT_PATH . '/modules/oledrion/include/common.php';
     $form = '';
     $form .= "<table border='0'>";
-    $form .= '<tr><td>' . _MB_OLEDRION_PRODUCTS_CNT . "</td><td><input type='text' name='options[]' id='options' value='" . $options[0] . "' /></td></tr>";
+    $form .= '<tr><td>' . _MB_OLEDRION_PRODUCTS_CNT . "</td><td><input type='text' name='options[]' id='options' value='" . $options[0] . "'></td></tr>";
     $form .= '</table>';
 
     return $form;

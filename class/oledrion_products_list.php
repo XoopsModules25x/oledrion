@@ -12,7 +12,7 @@
 /**
  * oledrion
  *
- * @copyright   {@link http://xoops.org/ XOOPS Project}
+ * @copyright   {@link https://xoops.org/ XOOPS Project}
  * @license     {@link http://www.fsf.org/copyleft/gpl.html GNU public license}
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
  */
@@ -22,7 +22,7 @@
  *
  * @since 2.3.2009.06.13
  */
-require __DIR__ . '/classheader.php';
+require_once __DIR__ . '/classheader.php';
 
 /**
  * Class Oledrion_products_list
@@ -52,9 +52,9 @@ class OledrionOledrion_products_listHandler extends Oledrion_XoopsPersistableObj
 {
     /**
      * OledrionOledrion_products_listHandler constructor.
-     * @param XoopsDatabase|null $db
+     * @param object $db
      */
-    public function __construct(XoopsDatabase $db)
+    public function __construct($db)
     { //                            Table                       Classe                  Id
         parent::__construct($db, 'oledrion_products_list', 'oledrion_products_list', 'productlist_id');
     }
@@ -65,7 +65,7 @@ class OledrionOledrion_products_listHandler extends Oledrion_XoopsPersistableObj
      * @param  oledrion_lists $list
      * @return boolean
      */
-    public function deleteListProducts(Oledrion_lists $list)
+    public function deleteListProducts(oledrion_lists $list)
     {
         return $this->deleteAll(new Criteria('productlist_list_id', $list->list_id, '='));
     }
@@ -87,7 +87,7 @@ class OledrionOledrion_products_listHandler extends Oledrion_XoopsPersistableObj
      * @param  oledrion_lists $list
      * @return array
      */
-    public function getProductsFromList(Oledrion_lists $list)
+    public function getProductsFromList(oledrion_lists $list)
     {
         return $this->getObjects(new criteria('productlist_list_id', $list->getVar('list_id'), '='));
     }
@@ -121,7 +121,7 @@ class OledrionOledrion_products_listHandler extends Oledrion_XoopsPersistableObj
         $product_list = $this->create(true);
         $product_list->setVar('productlist_list_id', (int)$productlist_list_id);
         $product_list->setVar('productlist_product_id', (int)$productlist_product_id);
-        $product_list->setVar('productlist_date', Oledrion_utils::getCurrentSQLDate());
+        $product_list->setVar('productlist_date', OledrionUtility::getCurrentSQLDate());
 
         return $this->insert($product_list, true);
     }

@@ -12,7 +12,7 @@
 /**
  * oledrion
  *
- * @copyright   {@link http://xoops.org/ XOOPS Project}
+ * @copyright   {@link https://xoops.org/ XOOPS Project}
  * @license     {@link http://www.fsf.org/copyleft/gpl.html GNU public license}
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
  */
@@ -318,9 +318,17 @@ define('_AM_OLEDRION_PERMSET', 'The permission has been set');
 define('_AM_OLEDRION_PERMNOTSET', 'The permission can not be set');
 
 define('_OLEDRION_CMD_STATE7', 'Option 7');
-define('_OLEDRION_CMD_STATE8', 'Option 8');
-define('_OLEDRION_CMD_STATE9', 'Option 9');
+define('_OLEDRION_CMD_STATE8', 'Option 7');
+define('_OLEDRION_CMD_STATE9', 'Option 7');
 define('_AM_OLEDRION_CONF_PACK', 'Confirmation pack');
 define('_AM_OLEDRION_CONF_SUBMIT', 'Confirmation Submit');
 define('_AM_OLEDRION_CONF_DELIVERY', 'Delivery');
+
 //2.34
+define('_AM_OLEDRION_UPGRADEFAILED0', "Update failed - couldn't rename field '%s'");
+define('_AM_OLEDRION_UPGRADEFAILED1', "Update failed - couldn't add new fields");
+define('_AM_OLEDRION_UPGRADEFAILED2', "Update failed - couldn't rename table '%s'");
+define('_AM_OLEDRION_ERROR_COLUMN', 'Could not create column in database : %s');
+define('_AM_OLEDRION_ERROR_BAD_XOOPS', 'This module requires XOOPS %s+ (%s installed)');
+define('_AM_OLEDRION_ERROR_BAD_PHP', 'This module requires PHP version %s+ (%s installed)');
+define('_AM_OLEDRION_ERROR_TAG_REMOVAL', 'Could not remove tags from Tag Module');

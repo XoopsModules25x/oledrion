@@ -12,7 +12,7 @@
 /**
  * oledrion
  *
- * @copyright   {@link http://xoops.org/ XOOPS Project}
+ * @copyright   {@link https://xoops.org/ XOOPS Project}
  * @license     {@link http://www.fsf.org/copyleft/gpl.html GNU public license}
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
  */
@@ -43,7 +43,7 @@ class Oledrion_gateways
         if ($gateway) {
             $return = $gateway;
         } else {
-            $return = xoops_trim(Oledrion_utils::getModuleOption('used_gateway'));
+            $return = xoops_trim(OledrionUtility::getModuleOption('used_gateway'));
         }
 
         if ($return == '') {
@@ -60,7 +60,7 @@ class Oledrion_gateways
      */
     public static function getDefaultGateway()
     {
-        $return = xoops_trim(Oledrion_utils::getModuleOption('used_gateway'));
+        $return = xoops_trim(OledrionUtility::getModuleOption('used_gateway'));
         if ($return == '') {
             $return = 'paypal'; // Valeur par défaut
         }
@@ -104,7 +104,7 @@ class Oledrion_gateways
      * Retourne le chemin complet vers le fichier de langue de la passerelle
      *
      * @param  unknown_type $gatewayName
-     * @return unknown
+     * @return mixed
      */
     public static function getGatewayLanguageFilename($gatewayName)
     {

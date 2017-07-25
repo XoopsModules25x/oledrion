@@ -12,7 +12,7 @@
 /**
  * oledrion
  *
- * @copyright   {@link http://xoops.org/ XOOPS Project}
+ * @copyright   {@link https://xoops.org/ XOOPS Project}
  * @license     {@link http://www.fsf.org/copyleft/gpl.html GNU public license}
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
  */
@@ -65,7 +65,7 @@ class Oledrion_shelf
      * Supprime un produit (et tout ce qui lui est relatif)
      * @param oledrion_products $product
      */
-    public function deleteProduct(Oledrion_products $product)
+    public function deleteProduct(oledrion_products $product)
     {
         global $xoopsModule;
         $id = $product->getVar('product_id');
@@ -146,7 +146,7 @@ class Oledrion_shelf
      * @param  oledrion_shelf_parameters $parameters Les paramètres de filtrage
      * @return array                     Tableau prêt à être utilisé dans les templates
      */
-    public function getProducts(Oledrion_shelf_parameters $parameters)
+    public function getProducts(oledrion_shelf_parameters $parameters)
     {
         global $vatArray;
         $parametersValues    = $parameters->getParameters();
@@ -269,7 +269,7 @@ class Oledrion_shelf
         }
         // On récupère la liste des personnes qui ont soumis les produits
         if ($withXoopsUser) {
-            $users = Oledrion_utils::getUsersFromIds($xoopsUsersIDs);
+            $users = OledrionUtility::getUsersFromIds($xoopsUsersIDs);
         }
 
         // Il faut récupérer la liste des produits relatifs

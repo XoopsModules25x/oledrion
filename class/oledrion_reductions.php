@@ -156,11 +156,11 @@ class Oledrion_reductions
      * @param oledrion_products $product
      * @param integer           $quantity
      */
-    public function computePerCategories(Oledrion_products $product, $quantity)
+    public function computePerCategories(oledrion_products $product, $quantity)
     {
         // Nombre de produits par catégories
         if (isset($this->categoriesProductsCount[$product->product_cid])) {
-            ++$this->categoriesProductsCount[$product->product_cid];
+            $this->categoriesProductsCount[$product->product_cid] += 1;
         } else {
             $this->categoriesProductsCount[$product->product_cid] = 1;
         }
@@ -180,7 +180,7 @@ class Oledrion_reductions
      *
      * @param oledrion_products $product
      */
-    private function addAssociatedManufacturers(Oledrion_products $product)
+    private function addAssociatedManufacturers(oledrion_products $product)
     {
         if (!isset($this->associatedManufacturers[$product->product_id])) {
             $this->associatedManufacturers[$product->product_id] = $product->product_id;
@@ -194,7 +194,7 @@ class Oledrion_reductions
      * @param attray            $attributes
      * @since 2.3
      */
-    private function addAssociatedAttributes(Oledrion_products $product, $attributes)
+    private function addAssociatedAttributes(oledrion_products $product, $attributes)
     {
         if (!isset($this->associatedAttributesPerProduct[$product->product_id])) {
             $this->associatedAttributesPerProduct[$product->product_id] = $product->getProductsAttributesList($attributes);
@@ -206,7 +206,7 @@ class Oledrion_reductions
      *
      * @param oledrion_products $product
      */
-    private function addAssociatedVendors(Oledrion_products $product)
+    private function addAssociatedVendors(oledrion_products $product)
     {
         if (!isset($this->associatedVendors[$product->product_vendor_id])) {
             $this->associatedVendors[$product->product_vendor_id] = $product->product_vendor_id;
@@ -218,7 +218,7 @@ class Oledrion_reductions
      *
      * @param oledrion_products $product
      */
-    private function addAssociatedCategories(Oledrion_products $product)
+    private function addAssociatedCategories(oledrion_products $product)
     {
         if (!isset($this->associatedCategories[$product->product_cid])) {
             $this->associatedCategories[$product->product_cid] = $product->product_cid;
@@ -441,7 +441,7 @@ class Oledrion_reductions
             $discountedPrice = $ht;
             $quantity        = (int)$cartProduct['qty'];
 
-            if (Oledrion_utils::getModuleOption('shipping_quantity')) {
+            if (OledrionUtility::getModuleOption('shipping_quantity')) {
                 $discountedShipping = (float)($cartProduct['product']->getVar('product_shipping_price', 'n') * $quantity);
             } else {
                 $discountedShipping = (float)$cartProduct['product']->getVar('product_shipping_price', 'n');
@@ -462,67 +462,63 @@ class Oledrion_reductions
             // Boucle sur les règles
             foreach ($this->allActiveRules as $rule) {
                 $applyRule = false;
-                if (($rule->disc_group != 0 && Oledrion_utils::isMemberOfGroup($rule->disc_group))
-                    || $rule->disc_group == 0
-                ) {
+                if (($rule->disc_group != 0 && OledrionUtility::isMemberOfGroup($rule->disc_group))
+                    || $rule->disc_group == 0) {
                     if (($rule->disc_cat_cid != 0
                          && $cartProduct['product']->getVar('product_cid') == $rule->disc_cat_cid)
-                        || $rule->disc_cat_cid == 0
-                    ) {
+                        || $rule->disc_cat_cid == 0) {
                         if (($rule->disc_vendor_id != 0
                              && $cartProduct['product']->getVar('disc_vendor_id') == $rule->disc_vendor_id)
-                            || $rule->disc_vendor_id == 0
-                        ) {
+                            || $rule->disc_vendor_id == 0) {
                             if (($rule->disc_product_id != 0
                                  && $cartProduct['product']->getVar('product_id') == $rule->disc_product_id)
-                                || $rule->disc_product_id == 0
-                            ) {
+                                || $rule->disc_product_id == 0) {
                                 // Dans quel cas appliquer la réduction ?
                                 switch ($rule->disc_price_case) {
-                                    case OLEDRION_DISCOUNT_PRICE_CASE_ALL :
+                                    case OLEDRION_DISCOUNT_PRICE_CASE_ALL:
                                         // Dans tous les cas
                                         $applyRule = true;
                                         break;
-                                    case OLEDRION_DISCOUNT_PRICE_CASE_FIRST_BUY :
+                                    case OLEDRION_DISCOUNT_PRICE_CASE_FIRST_BUY:
                                         // Si c'est le premier achat de l'utilisateur sur le site
                                         if ($this->handlers->h_oledrion_commands->isFirstCommand()) {
                                             $applyRule = true;
                                         }
                                         break;
-                                    case OLEDRION_DISCOUNT_PRICE_CASE_PRODUCT_NEVER :
+                                    case OLEDRION_DISCOUNT_PRICE_CASE_PRODUCT_NEVER:
                                         // Si le produit n'a jamais été acheté par le client
                                         if (!$this->handlers->h_oledrion_commands->productAlreadyBought(0, $cartProduct['product']->getVar('product_id'))) {
                                             $applyRule = true;
                                         }
                                         break;
-                                    case OLEDRION_DISCOUNT_PRICE_CASE_QTY_IS :
+                                    case OLEDRION_DISCOUNT_PRICE_CASE_QTY_IS:
                                         // Si la quantité de produit est ... à ...
                                         switch ($rule->disc_price_case_qty_cond) {
-                                            case OLEDRION_DISCOUNT_PRICE_QTY_COND1 :
+                                            case OLEDRION_DISCOUNT_PRICE_QTY_COND1:
                                                 // >
                                                 if ($cartProduct['qty'] > $rule->disc_price_case_qty_value) {
                                                     $applyRule = true;
                                                 }
                                                 break;
-                                            case OLEDRION_DISCOUNT_PRICE_QTY_COND2 :
+                                            case OLEDRION_DISCOUNT_PRICE_QTY_COND2:
                                                 // >=
                                                 if ($cartProduct['qty'] >= $rule->disc_price_case_qty_value) {
                                                     $applyRule = true;
                                                 }
                                                 break;
-                                            case OLEDRION_DISCOUNT_PRICE_QTY_COND3 :
+                                            case OLEDRION_DISCOUNT_PRICE_QTY_COND3:
                                                 // <
                                                 if ($cartProduct['qty'] < $rule->disc_price_case_qty_value) {
                                                     $applyRule = true;
                                                 }
                                                 break;
-                                            case OLEDRION_DISCOUNT_PRICE_QTY_COND4 :
+                                            case OLEDRION_DISCOUNT_PRICE_QTY_COND4:
                                                 // <=
                                                 if ($cartProduct['qty'] <= $rule->disc_price_case_qty_value) {
                                                     $applyRule = true;
                                                 }
                                                 break;
-                                            case OLEDRION_DISCOUNT_PRICE_QTY_COND5 :
+                                            case OLEDRION_DISCOUNT_PRICE_QTY_COND5:
                                                 // ==
                                                 if ($cartProduct['qty'] == $rule->disc_price_case_qty_value) {
                                                     $applyRule = true;
@@ -538,38 +534,33 @@ class Oledrion_reductions
                     // Il faut appliquer la règle
                     // On calcule le nouveau prix ht du produit
                     switch ($rule->disc_price_type) {
-                        case OLEDRION_DISCOUNT_PRICE_TYPE1 :
+                        case OLEDRION_DISCOUNT_PRICE_TYPE1:
                             // Montant dégressif selon les quantités
                             if ($quantity >= $rule->disc_price_degress_l1qty1
-                                && $quantity <= $rule->disc_price_degress_l1qty2
-                            ) {
+                                && $quantity <= $rule->disc_price_degress_l1qty2) {
                                 $discountedPrice = (float)$rule->getVar('disc_price_degress_l1total', 'n');
                             }
                             if ($quantity >= $rule->disc_price_degress_l2qty1
-                                && $quantity <= $rule->disc_price_degress_l2qty2
-                            ) {
+                                && $quantity <= $rule->disc_price_degress_l2qty2) {
                                 $discountedPrice = (float)$rule->getVar('disc_price_degress_l2total', 'n');
                             }
                             if ($quantity >= $rule->disc_price_degress_l3qty1
-                                && $quantity <= $rule->disc_price_degress_l3qty2
-                            ) {
+                                && $quantity <= $rule->disc_price_degress_l3qty2) {
                                 $discountedPrice = (float)$rule->getVar('disc_price_degress_l3total', 'n');
                             }
                             if ($quantity >= $rule->disc_price_degress_l4qty1
-                                && $quantity <= $rule->disc_price_degress_l4qty2
-                            ) {
+                                && $quantity <= $rule->disc_price_degress_l4qty2) {
                                 $discountedPrice = (float)$rule->getVar('disc_price_degress_l4total', 'n');
                             }
                             if ($quantity >= $rule->disc_price_degress_l5qty1
-                                && $quantity <= $rule->disc_price_degress_l5qty2
-                            ) {
+                                && $quantity <= $rule->disc_price_degress_l5qty2) {
                                 $discountedPrice = (float)$rule->getVar('disc_price_degress_l5total', 'n');
                             }
                             $reduction = $rule->disc_description;
                             ++$discountsCount;
                             break;
 
-                        case OLEDRION_DISCOUNT_PRICE_TYPE2 :
+                        case OLEDRION_DISCOUNT_PRICE_TYPE2:
                             // D'un montant ou d'un pourcentage
                             if ($rule->disc_price_amount_on == OLEDRION_DISCOUNT_PRICE_AMOUNT_ON_PRODUCT) {
                                 // Réduction sur le produit
@@ -582,7 +573,7 @@ class Oledrion_reductions
                                 }
 
                                 // Pas de montants négatifs
-                                Oledrion_utils::doNotAcceptNegativeAmounts($discountedPrice);
+                                OledrionUtility::doNotAcceptNegativeAmounts($discountedPrice);
                                 $reduction = $rule->disc_description;
                                 ++$discountsCount;
                             } elseif ($rule->disc_price_amount_on == OLEDRION_DISCOUNT_PRICE_AMOUNT_ON_CART) {
@@ -596,48 +587,43 @@ class Oledrion_reductions
 
                     // On passe au montant des frais de port
                     switch ($rule->disc_shipping_type) {
-                        case OLEDRION_DISCOUNT_SHIPPING_TYPE1 :
+                        case OLEDRION_DISCOUNT_SHIPPING_TYPE1:
                             // A payer dans leur intégralité, rien à faire
                             break;
-                        case OLEDRION_DISCOUNT_SHIPPING_TYPE2 :
+                        case OLEDRION_DISCOUNT_SHIPPING_TYPE2:
                             // Totalement gratuits si le client commande plus de X euros d'achat
                             if ($this->totalAmountBeforeDiscounts > $rule->disc_shipping_free_morethan) {
                                 $discountedShipping = 0.0;
                             }
                             break;
-                        case OLEDRION_DISCOUNT_SHIPPING_TYPE3 :
+                        case OLEDRION_DISCOUNT_SHIPPING_TYPE3:
                             // Frais de port réduits de X euros si la commande est > x
                             if ($this->totalAmountBeforeDiscounts > $rule->disc_shipping_reduce_cartamount) {
                                 $discountedShipping -= (float)$rule->getVar('disc_shipping_reduce_amount', 'n');
                             }
                             // Pas de montants négatifs
-                            Oledrion_utils::doNotAcceptNegativeAmounts($discountedShipping);
+                            OledrionUtility::doNotAcceptNegativeAmounts($discountedShipping);
                             break;
-                        case OLEDRION_DISCOUNT_SHIPPING_TYPE4 :
+                        case OLEDRION_DISCOUNT_SHIPPING_TYPE4:
                             // Frais de port dégressifs
                             if ($quantity >= $rule->disc_shipping_degress_l1qty1
-                                && $quantity <= $rule->disc_shipping_degress_l1qty2
-                            ) {
+                                && $quantity <= $rule->disc_shipping_degress_l1qty2) {
                                 $discountedShipping = (float)$rule->getVar('disc_shipping_degress_l1total', 'n');
                             }
                             if ($quantity >= $rule->disc_shipping_degress_l2qty1
-                                && $quantity <= $rule->disc_shipping_degress_l2qty2
-                            ) {
+                                && $quantity <= $rule->disc_shipping_degress_l2qty2) {
                                 $discountedShipping = (float)$rule->getVar('disc_shipping_degress_l2total', 'n');
                             }
                             if ($quantity >= $rule->disc_shipping_degress_l3qty1
-                                && $quantity <= $rule->disc_shipping_degress_l3qty2
-                            ) {
+                                && $quantity <= $rule->disc_shipping_degress_l3qty2) {
                                 $discountedShipping = (float)$rule->getVar('disc_shipping_degress_l3total', 'n');
                             }
                             if ($quantity >= $rule->disc_shipping_degress_l4qty1
-                                && $quantity <= $rule->disc_shipping_degress_l4qty2
-                            ) {
+                                && $quantity <= $rule->disc_shipping_degress_l4qty2) {
                                 $discountedShipping = (float)$rule->getVar('disc_shipping_degress_l4total', 'n');
                             }
                             if ($quantity >= $rule->disc_shipping_degress_l5qty1
-                                && $quantity <= $rule->disc_shipping_degress_l5qty2
-                            ) {
+                                && $quantity <= $rule->disc_shipping_degress_l5qty2) {
                                 $discountedShipping = (float)$rule->getVar('disc_shipping_degress_l5total', 'n');
                             }
                             break;
@@ -649,7 +635,7 @@ class Oledrion_reductions
             $vatId = $cartProduct['product']->getVar('product_vat_id');
             if (is_array($vats) && isset($vats[$vatId])) {
                 $vatRate   = (float)$vats[$vatId]->getVar('vat_rate', 'n');
-                $vatAmount = Oledrion_utils::getVAT($discountedPrice * $quantity, $vatRate);
+                $vatAmount = OledrionUtility::getVAT($discountedPrice * $quantity, $vatRate);
             } else {
                 $vatRate   = 0.0;
                 $vatAmount = 0.0;
@@ -659,8 +645,8 @@ class Oledrion_reductions
             $totalPrice = (float)(($discountedPrice * $quantity) + $vatAmount + $discountedShipping);
 
             // Les totaux généraux
-            $totalHT += ($discountedPrice * $quantity);
-            $totalVAT += $vatAmount;
+            $totalHT       += ($discountedPrice * $quantity);
+            $totalVAT      += $vatAmount;
             $totalShipping += $discountedShipping;
 
             // Recherche des éléments associés au produit
@@ -739,7 +725,7 @@ class Oledrion_reductions
             // $discountsDescription
             foreach ($this->rulesForTheWhole as $rule) {
                 switch ($rule->disc_price_type) {
-                    case OLEDRION_DISCOUNT_PRICE_TYPE2 :
+                    case OLEDRION_DISCOUNT_PRICE_TYPE2:
                         // D'un montant ou d'un pourcentage
                         if ($rule->disc_price_amount_on == OLEDRION_DISCOUNT_PRICE_AMOUNT_ON_CART) {
                             // Règle à appliquer sur le panier
@@ -749,13 +735,13 @@ class Oledrion_reductions
                                 $totalVAT = $this->getDiscountedPrice($totalVAT, $rule->getVar('disc_price_amount_amount'));
                             } elseif ($rule->disc_price_amount_type == OLEDRION_DISCOUNT_PRICE_REDUCE_MONEY) {
                                 // Réduction d'un montant en euros
-                                $totalHT -= (float)$rule->getVar('disc_price_amount_amount');
+                                $totalHT  -= (float)$rule->getVar('disc_price_amount_amount');
                                 $totalVAT -= (float)$rule->getVar('disc_price_amount_amount');
                             }
 
                             // Pas de montants négatifs
-                            Oledrion_utils::doNotAcceptNegativeAmounts($totalHT);
-                            Oledrion_utils::doNotAcceptNegativeAmounts($totalVAT);
+                            OledrionUtility::doNotAcceptNegativeAmounts($totalHT);
+                            OledrionUtility::doNotAcceptNegativeAmounts($totalVAT);
                             $discountsDescription[] = $rule->disc_description;
                             ++$discountsCount;
                         }// Règle à appliquer sur le panier

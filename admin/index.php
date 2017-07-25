@@ -12,13 +12,13 @@
 /**
  * oledrion
  *
- * @copyright   {@link http://xoops.org/ XOOPS Project}
+ * @copyright   {@link https://xoops.org/ XOOPS Project}
  * @license     {@link http://www.fsf.org/copyleft/gpl.html GNU public license}
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
  */
 
-require_once dirname(dirname(dirname(__DIR__))) . '/include/cp_header.php';
-require_once dirname(__DIR__) . '/include/common.php';
+require_once __DIR__ . '/../../../include/cp_header.php';
+require_once __DIR__ . '/../include/common.php';
 require_once __DIR__ . '/admin_header.php';
 
 require_once OLEDRION_PATH . 'admin/functions.php';
@@ -30,22 +30,22 @@ require_once XOOPS_ROOT_PATH . '/class/xoopslists.php';
 require_once OLEDRION_PATH . 'class/tree.php';
 
 // Lecture de certains param�tres de l'application ********************************************************************
-$limit             = Oledrion_utils::getModuleOption('items_count'); // Nombre maximum d'�l�ments � afficher dans l'admin
+$limit             = OledrionUtility::getModuleOption('items_count'); // Nombre maximum d'�l�ments � afficher dans l'admin
 $baseurl           = OLEDRION_URL . 'admin/' . basename(__FILE__); // URL de ce script
-$conf_msg          = Oledrion_utils::javascriptLinkConfirm(_AM_OLEDRION_CONF_DELITEM);
+$conf_msg          = OledrionUtility::javascriptLinkConfirm(_AM_OLEDRION_CONF_DELITEM);
 $oledrion_Currency = Oledrion_Currency::getInstance();
-$manual_meta       = Oledrion_utils::getModuleOption('manual_meta');
+$manual_meta       = OledrionUtility::getModuleOption('manual_meta');
 
-Oledrion_utils::loadLanguageFile('modinfo.php');
-Oledrion_utils::loadLanguageFile('main.php');
+OledrionUtility::loadLanguageFile('modinfo.php');
+OledrionUtility::loadLanguageFile('main.php');
 
 // V�rification de l'existance du r�pertoire de cache
-Oledrion_utils::prepareFolder(OLEDRION_UPLOAD_PATH);
-Oledrion_utils::prepareFolder(OLEDRION_ATTACHED_FILES_PATH);
-Oledrion_utils::prepareFolder(OLEDRION_PICTURES_PATH);
-Oledrion_utils::prepareFolder(OLEDRION_CSV_PATH);
-Oledrion_utils::prepareFolder(OLEDRION_CACHE_PATH);
-Oledrion_utils::prepareFolder(OLEDRION_TEXT_PATH);
+OledrionUtility::prepareFolder(OLEDRION_UPLOAD_PATH);
+OledrionUtility::prepareFolder(OLEDRION_ATTACHED_FILES_PATH);
+OledrionUtility::prepareFolder(OLEDRION_PICTURES_PATH);
+OledrionUtility::prepareFolder(OLEDRION_CSV_PATH);
+OledrionUtility::prepareFolder(OLEDRION_CACHE_PATH);
+OledrionUtility::prepareFolder(OLEDRION_TEXT_PATH);
 
 // Est-ce que le r�pertoire du cache est ouvert en �criture ?
 if (!is_writable(OLEDRION_CACHE_PATH)) {
@@ -71,11 +71,11 @@ if (isset($_POST['action'])) {
 }
 
 // Check admin have access to this page
-$part = Oledrion_utils::getModuleOption('admin_groups_part');
+$part = OledrionUtility::getModuleOption('admin_groups_part');
 $part = explode('|', $part);
 if (!in_array($op, $part)) {
     $group  = $xoopsUser->getGroups();
-    $groups = Oledrion_utils::getModuleOption('admin_groups');
+    $groups = OledrionUtility::getModuleOption('admin_groups');
     if (count(array_intersect($group, $groups)) <= 0) {
         redirect_header('index.php', 3, _NOPERM);
     }
@@ -88,4 +88,4 @@ if (file_exists($controler)) {
 }
 
 //xoops_cp_footer();
-include_once __DIR__ . '/admin_footer.php';
+require_once __DIR__ . '/admin_footer.php';

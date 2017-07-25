@@ -12,7 +12,7 @@
 /**
  * oledrion
  *
- * @copyright   {@link http://xoops.org/ XOOPS Project}
+ * @copyright   {@link https://xoops.org/ XOOPS Project}
  * @license     {@link http://www.fsf.org/copyleft/gpl.html GNU public license}
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
  */
@@ -38,12 +38,12 @@ function b_oledrion_cart_show($options)
     // Calcul du montant total du caddy
     $reductions = new oledrion_reductions();
     $reductions->computeCart($cartForTemplate, $emptyCart, $shippingAmount, $commandAmount, $vatAmount, $goOn, $commandAmountTTC, $discountsDescription, $discountsCount);
-    $dec = Oledrion_utils::getModuleOption('decimals_count');
+    $dec = OledrionUtility::getModuleOption('decimals_count');
     if ($emptyCart) {
         return '';
     }
-    $block['block_money_full']           = Oledrion_utils::getModuleOption('money_full');
-    $block['block_money_short']          = Oledrion_utils::getModuleOption('money_short');
+    $block['block_money_full']           = OledrionUtility::getModuleOption('money_full');
+    $block['block_money_short']          = OledrionUtility::getModuleOption('money_short');
     $block['block_shippingAmount']       = sprintf('%0.' . $dec . 'f', $shippingAmount); // Montant des frais de port
     $block['block_commandAmount']        = sprintf('%0.' . $dec . 'f', $commandAmount); // Montant HT de la commande
     $block['block_vatAmount']            = sprintf('%0.' . $dec . 'f', $vatAmount); // Montant de la TVA
@@ -67,7 +67,7 @@ function b_oledrion_cart_edit($options)
     include XOOPS_ROOT_PATH . '/modules/oledrion/include/common.php';
     $form = '';
     $form .= "<table border='0'>";
-    $form .= '<tr><td>' . _MB_OLEDRION_MAX_ITEMS . "</td><td><input type='text' name='options[]' id='options' value='" . $options[0] . "' /></td></tr>";
+    $form .= '<tr><td>' . _MB_OLEDRION_MAX_ITEMS . "</td><td><input type='text' name='options[]' id='options' value='" . $options[0] . "'></td></tr>";
     $form .= '</table>';
 
     return $form;

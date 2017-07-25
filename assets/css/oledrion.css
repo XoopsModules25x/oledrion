@@ -248,6 +248,7 @@ html > body div.widget_tableDiv {
 
 /* page curl */
 .page-curl_01 {
+    background-color: #fcfcfc;
     background-repeat: no-repeat;
     background-position: right top;
     background-image: url(../images/page-curl/page-curl_01-1.gif);

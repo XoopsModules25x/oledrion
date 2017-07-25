@@ -12,7 +12,7 @@
 /**
  * oledrion
  *
- * @copyright   {@link http://xoops.org/ XOOPS Project}
+ * @copyright   {@link https://xoops.org/ XOOPS Project}
  * @license     {@link http://www.fsf.org/copyleft/gpl.html GNU public license}
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
  */
@@ -28,7 +28,10 @@ switch ($action) {
     case 'default': // Stock bas
         // ****************************************************************************************************************
         xoops_cp_header();
-        Oledrion_utils::htitle(_MI_OLEDRION_ADMENU9, 4);
+        $adminObject = \Xmf\Module\Admin::getInstance();
+        $adminObject->displayNavigation('index.php?op=lowstock');
+
+        //        OledrionUtility::htitle(_MI_OLEDRION_ADMENU9, 4);
         $start    = isset($_GET['start']) ? (int)$_GET['start'] : 0;
         $criteria = new CriteriaCompo();
         // Recherche des produits dont la quantité en stock est inférieure ou égale à la quantité d'alerte et ou la quantité d'alerte est supérieure à 0
@@ -39,7 +42,7 @@ switch ($action) {
         $products = $h_oledrion_products->getLowStocks($start, $limit);
         $class    = $name = '';
         $names    = array();
-        echo "<form name='frmupdatequant' id='frmupdatequant' method='post' action='$baseurl'><input type='hidden' name='op' id='op' value='lowstock' /><input type='hidden' name='action' id='action' value='updatequantities' />";
+        echo "<form name='frmupdatequant' id='frmupdatequant' method='post' action='$baseurl'><input type='hidden' name='op' id='op' value='lowstock'><input type='hidden' name='action' id='action' value='updatequantities'>";
         echo "<table width='100%' cellspacing='1' cellpadding='3' border='0' class='outer'>";
         echo "<tr><th align='center'>" . _OLEDRION_TITLE . "</th><th align='center'>" . _OLEDRION_STOCK_QUANTITY . "</th><th align='center'>" . _OLEDRION_STOCK_ALERT . "</th><th align='center'>" . _AM_OLEDRION_NEW_QUANTITY . '</th></tr>';
         foreach ($products as $item) {
@@ -49,20 +52,18 @@ switch ($action) {
             echo "<tr class='" . $class . "'>\n";
             $name    = 'qty_' . $id;
             $names[] = $id;
-            echo '<td>' . $link . "</td><td align='center'>" . $item->getVar('product_stock') . "</td><td align='center'>" . $item->getVar('product_alert_stock')
-                 . "</td><td align='center'><input type='text' name='$name' id='$name' size='3' maxlength='5' value='' /></td>\n";
+            echo '<td>' . $link . "</td><td align='center'>" . $item->getVar('product_stock') . "</td><td align='center'>" . $item->getVar('product_alert_stock') . "</td><td align='center'><input type='text' name='$name' id='$name' size='3' maxlength='5' value=''></td>\n";
             echo "<tr>\n";
         }
         $class = ($class === 'even') ? 'odd' : 'even';
         if (count($names) > 0) {
-            echo "<tr class='$class'><td colspan='3' align='center'>&nbsp;</td><td align='center'><input type='hidden' name='names' id='names' value='" . implode('|', $names) . "' /><input type='submit' name='btngo' id='btngo' value='"
-                 . _AM_OLEDRION_UPDATE_QUANTITIES . "' /></td></tr>";
+            echo "<tr class='$class'><td colspan='3' align='center'>&nbsp;</td><td align='center'><input type='hidden' name='names' id='names' value='" . implode('|', $names) . "'><input type='submit' name='btngo' id='btngo' value='" . _AM_OLEDRION_UPDATE_QUANTITIES . "'></td></tr>";
         }
         echo '</table></form>';
         if (isset($pagenav) && is_object($pagenav)) {
             echo "<div align='right'>" . $pagenav->renderNav() . '</div>';
         }
-        include_once OLEDRION_ADMIN_PATH . 'admin_footer.php';
+        require_once OLEDRION_ADMIN_PATH . 'admin_footer.php';
         break;
 
     // ****************************************************************************************************************
@@ -84,7 +85,7 @@ switch ($action) {
                 }
             }
         }
-        Oledrion_utils::redirect(_AM_OLEDRION_SAVE_OK, $baseurl . '?op=lowstock', 2);
+        OledrionUtility::redirect(_AM_OLEDRION_SAVE_OK, $baseurl . '?op=lowstock', 2);
         break;
 
 }

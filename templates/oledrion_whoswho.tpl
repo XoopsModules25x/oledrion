@@ -7,7 +7,7 @@
     <!-- /Breadcrumb -->
 
     <h2><img src="<{$smarty.const.OLEDRION_IMAGES_URL}>icon-product-person.png"
-             alt="<{$smarty.const._MI_OLEDRION_SMNAME5}>"/><{$smarty.const._MI_OLEDRION_SMNAME5}></h2>
+             alt="<{$smarty.const._MI_OLEDRION_SMNAME5}>"><{$smarty.const._MI_OLEDRION_SMNAME5}></h2>
     <div class="oledrion_alphabet"><{foreach item=letter from=$alphabet}><a
             href="#<{$letter}>"><{$letter}></a> <{/foreach}></div>
 
@@ -41,7 +41,7 @@
                                                 <div class="donnees"><img
                                                             src="<{$smarty.const.OLEDRION_IMAGES_URL}>arrow-black2.png"
                                                             alt="<{$manufacturer.manu_href_title}>" width="13"
-                                                            height="7"/><a
+                                                            height="7"><a
                                                             href="<{$manufacturer.manu_url_rewrited}>"
                                                             title="<{$manufacturer.manu_href_title}>"><{$manufacturer.manu_name}>
                                                         , <{$manufacturer.manu_commercialname}></a></div>

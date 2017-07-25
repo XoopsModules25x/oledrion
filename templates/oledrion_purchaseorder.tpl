@@ -7,7 +7,7 @@
 <!--******************-->
 <!--******************-->
 <!--*** PURCHASE ORDER -->
-<img src="<{$smarty.const.OLEDRION_IMAGES_URL}>pdf/purchase_order_header.jpg" alt="header"/>
+<img src="<{$smarty.const.OLEDRION_IMAGES_URL}>pdf/purchase_order_header.jpg" alt="header">
 
 <table border="0">
     <tr>
@@ -27,5 +27,5 @@
     <{/foreach}>
 </table>
 
-<img src="<{$smarty.const.OLEDRION_IMAGES_URL}>pdf/purchase_order_footer.jpg" alt="footer"/>
+<img src="<{$smarty.const.OLEDRION_IMAGES_URL}>pdf/purchase_order_footer.jpg" alt="footer">
 <!--** /PURCHASE ORDER -->

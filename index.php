@@ -12,7 +12,7 @@
 /**
  * oledrion
  *
- * @copyright   {@link http://xoops.org/ XOOPS Project}
+ * @copyright   {@link https://xoops.org/ XOOPS Project}
  * @license     {@link http://www.fsf.org/copyleft/gpl.html GNU public license}
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
  */
@@ -20,7 +20,7 @@
 /**
  * Page d'index, liste des derniers produits
  */
-require __DIR__ . '/header.php';
+require_once __DIR__ . '/header.php';
 $GLOBALS['current_category']             = -1;
 $GLOBALS['xoopsOption']['template_main'] = 'oledrion_index.tpl';
 require_once XOOPS_ROOT_PATH . '/header.php';
@@ -28,16 +28,16 @@ require_once OLEDRION_PATH . 'class/registryfile.php';
 
 // Initialisations
 $start     = isset($_GET['start']) ? (int)$_GET['start'] : 0;
-$limit     = Oledrion_utils::getModuleOption('newproducts'); // Nombre maximum d'éléments à afficher
+$limit     = OledrionUtility::getModuleOption('newproducts'); // Nombre maximum d'éléments à afficher
 $baseurl   = OLEDRION_URL . basename(__FILE__); // URL de ce script (sans son nom)
 $registry  = new oledrion_registryfile();
 $lastTitle = '';
 
 // Quelques options pour le template
-$xoopsTpl->assign('nostock_msg', Oledrion_utils::getModuleOption('nostock_msg'));
+$xoopsTpl->assign('nostock_msg', OledrionUtility::getModuleOption('nostock_msg'));
 $xoopsTpl->assign('mod_pref', $mod_pref); // Préférences du module
 $xoopsTpl->assign('welcome_msg', nl2br($registry->getfile(OLEDRION_TEXTFILE1)));
-$xoopsTpl->assign('columnsCount', Oledrion_utils::getModuleOption('index_colums'));
+$xoopsTpl->assign('columnsCount', OledrionUtility::getModuleOption('index_colums'));
 
 // Lecture des TVA ********************************************************************************
 $vatArray = $h_oledrion_vat->getAllVats(new Oledrion_parameters());
@@ -73,7 +73,7 @@ foreach ($categories as $category) {
     ++$count;
 }
 
-Oledrion_utils::setCSS();
-Oledrion_utils::setLocalCSS($xoopsConfig['language']);
-Oledrion_utils::setMetas($lastTitle . ' - ' . Oledrion_utils::getModuleName(), Oledrion_utils::getModuleName());
+OledrionUtility::setCSS();
+OledrionUtility::setLocalCSS($xoopsConfig['language']);
+OledrionUtility::setMetas($lastTitle . ' - ' . OledrionUtility::getModuleName(), OledrionUtility::getModuleName());
 require_once XOOPS_ROOT_PATH . '/footer.php';

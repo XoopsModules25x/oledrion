@@ -12,7 +12,7 @@
 /**
  * oledrion
  *
- * @copyright   {@link http://xoops.org/ XOOPS Project}
+ * @copyright   {@link https://xoops.org/ XOOPS Project}
  * @license     {@link http://www.fsf.org/copyleft/gpl.html GNU public license}
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
  */
@@ -22,7 +22,7 @@
  *
  * @param integer $start Position de départ dans les listes
  */
-require __DIR__ . '/header.php';
+require_once __DIR__ . '/header.php';
 $GLOBALS['current_category']             = -1;
 $GLOBALS['xoopsOption']['template_main'] = 'oledrion_all_lists.tpl';
 require_once XOOPS_ROOT_PATH . '/header.php';
@@ -30,7 +30,7 @@ require_once XOOPS_ROOT_PATH . '/class/pagenav.php';
 
 $xoopsTpl->assign('mod_pref', $mod_pref); // Préférences du module
 $start = isset($_GET['start']) ? (int)$_GET['start'] : 0;
-$limit = Oledrion_utils::getModuleOption('perpage');
+$limit = OledrionUtility::getModuleOption('perpage');
 
 if ($limit > 0) {
     $handlers   = OledrionHandler::getInstance();
@@ -55,12 +55,12 @@ if ($limit > 0) {
     }
 }
 
-Oledrion_utils::setCSS();
-Oledrion_utils::setLocalCSS($xoopsConfig['language']);
-Oledrion_utils::loadLanguageFile('modinfo.php');
+OledrionUtility::setCSS();
+OledrionUtility::setLocalCSS($xoopsConfig['language']);
+OledrionUtility::loadLanguageFile('modinfo.php');
 
-$xoopsTpl->assign('breadcrumb', Oledrion_utils::breadcrumb(array(OLEDRION_URL . basename(__FILE__) => _MI_OLEDRION_SMNAME11)));
+$xoopsTpl->assign('breadcrumb', OledrionUtility::breadcrumb(array(OLEDRION_URL . basename(__FILE__) => _MI_OLEDRION_SMNAME11)));
 
-$title = _MI_OLEDRION_SMNAME11 . ' - ' . Oledrion_utils::getModuleName();
-Oledrion_utils::setMetas($title, $title);
+$title = _MI_OLEDRION_SMNAME11 . ' - ' . OledrionUtility::getModuleName();
+OledrionUtility::setMetas($title, $title);
 require_once XOOPS_ROOT_PATH . '/footer.php';

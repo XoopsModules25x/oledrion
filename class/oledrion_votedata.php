@@ -12,7 +12,7 @@
 /**
  * oledrion
  *
- * @copyright   {@link http://xoops.org/ XOOPS Project}
+ * @copyright   {@link https://xoops.org/ XOOPS Project}
  * @license     {@link http://www.fsf.org/copyleft/gpl.html GNU public license}
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
  */
@@ -20,7 +20,7 @@
 /**
  * Gestion des votes sur les produits
  */
-require __DIR__ . '/classheader.php';
+require_once __DIR__ . '/classheader.php';
 
 /**
  * Class Oledrion_votedata
@@ -52,9 +52,9 @@ class OledrionOledrion_votedataHandler extends Oledrion_XoopsPersistableObjectHa
 {
     /**
      * OledrionOledrion_votedataHandler constructor.
-     * @param XoopsDatabase|null $db
+     * @param object $db
      */
-    public function __construct(XoopsDatabase $db)
+    public function __construct($db)
     { //                                Table                   Classe           Id
         parent::__construct($db, 'oledrion_votedata', 'oledrion_votedata', 'vote_ratingid');
     }
@@ -123,7 +123,7 @@ class OledrionOledrion_votedataHandler extends Oledrion_XoopsPersistableObjectHa
     public function hasUserAlreadyVoted($vote_uid, $vote_product_id)
     {
         if ($vote_uid == 0) {
-            $vote_uid = Oledrion_utils::getCurrentUserID();
+            $vote_uid = OledrionUtility::getCurrentUserID();
         }
         $criteria = new CriteriaCompo();
         $criteria->add(new Criteria('vote_product_id', $vote_product_id, '='));
@@ -146,7 +146,7 @@ class OledrionOledrion_votedataHandler extends Oledrion_XoopsPersistableObjectHa
     public function hasAnonymousAlreadyVoted($ip = '', $vote_product_id = 0)
     {
         if ($ip == '') {
-            $ip = Oledrion_utils::IP();
+            $ip = OledrionUtility::IP();
         }
         $anonwaitdays = 1;
         $yesterday    = (time() - (86400 * $anonwaitdays));
@@ -177,7 +177,7 @@ class OledrionOledrion_votedataHandler extends Oledrion_XoopsPersistableObjectHa
         $product->setVar('vote_product_id', $vote_product_id);
         $product->setVar('vote_uid', $vote_uid);
         $product->setVar('vote_rating', $vote_rating);
-        $product->setVar('vote_ratinghostname', Oledrion_utils::IP());
+        $product->setVar('vote_ratinghostname', OledrionUtility::IP());
         $product->setVar('vote_ratingtimestamp', time());
 
         return $this->insert($product);

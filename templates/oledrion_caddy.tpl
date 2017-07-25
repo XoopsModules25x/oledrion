@@ -5,7 +5,7 @@
     <div class="breadcrumb"><{$breadcrumb}></div>
 
     <div class="center"><h2><img src="<{$smarty.const.OLEDRION_IMAGES_URL}>add-to-basket.png"
-                                 alt="<{$smarty.const._MI_OLEDRION_SMNAME1}>"/><{$smarty.const._MI_OLEDRION_SMNAME1}>
+                                 alt="<{$smarty.const._MI_OLEDRION_SMNAME1}>"><{$smarty.const._MI_OLEDRION_SMNAME1}>
         </h2></div>
 
     <{if $emptyCart}>
@@ -18,6 +18,7 @@
     <{else}>
         <form method="post" name="frmUpdate" id="frmUpdate" action="<{$smarty.const.OLEDRION_URL}>caddy.php"
               style="margin:0; padding:0; border: 0; display: inline;">
+            <{securityToken}><{*//mb*}>
             <table cellspacing="0" id="oledrion_caddy">
                 <tr>
                     <th><span class="oledrion_caddy-titles"><{$smarty.const._OLEDRION_ITEMS}></span></th>
@@ -48,7 +49,7 @@
                         </td>
                         <td class="center"><input type="text" name="qty_<{$product.number}>"
                                                   id="qty_<{$product.number}>" value="<{$product.product_qty}>"
-                                                  size="3"/></td>
+                                                  size="3"></td>
                         <td>
                             <div class="oledrion_productprice right"><{$product.discountedPriceWithQuantityFormated}></div>
                         </td>
@@ -63,7 +64,7 @@
                             <a href="<{$smarty.const.OLEDRION_URL}>caddy.php?op=delete&product_id=<{$product.number}>" <{$confirm_delete_item}>
                                title="<{$smarty.const._OLEDRION_REMOVE_ITEM}>"><img
                                         src="<{$smarty.const.OLEDRION_IMAGES_URL}>cartdelete.png"
-                                        alt="<{$smarty.const._OLEDRION_REMOVE_ITEM}>"/></td>
+                                        alt="<{$smarty.const._OLEDRION_REMOVE_ITEM}>"></td>
                     </tr>
                     <{if count($product.attributes) > 0}>
                         <tr>
@@ -94,19 +95,20 @@
                 <tr>
                     <td colspan="8">
                         <{$smarty.const._OLEDRION_QTE_MODIFIED}>
-                        <input type="hidden" name="op" id="op" value="update"/>
+                        <input type="hidden" name="op" id="op" value="update">
                         <input type="submit" name="btnUpdate" id="btnUpdate"
-                               value="<{$smarty.const._OLEDRION_UPDATE}>"/>
+                               value="<{$smarty.const._OLEDRION_UPDATE}>">
         </form>
         <form method="post" name="frmEmpty" id="frmEmpty"
               action="<{$smarty.const.OLEDRION_URL}>caddy.php" <{$confEmpty}>
               style="margin:0; padding:0; border: 0; display: inline;">
-            <input type="hidden" name="op" id="op" value="empty"/>
-            <input type="submit" name="btnEmpty" id="btnEmpty" value="<{$smarty.const._OLEDRION_EMPTY_CART}>"/>
+            <{securityToken}><{*//mb*}>
+            <input type="hidden" name="op" id="op" value="empty">
+            <input type="submit" name="btnEmpty" id="btnEmpty" value="<{$smarty.const._OLEDRION_EMPTY_CART}>">
         </form>
         <form method="post" name="frmGoOn" id="frmGoOn" action="<{$goOn}>"
               style="margin:0; padding:0; border: 0; display: inline;">
-            <input type="submit" name="btnGoOn" id="btnGoOn" value="<{$smarty.const._OLEDRION_GO_ON}>"/>
+            <input type="submit" name="btnGoOn" id="btnGoOn" value="<{$smarty.const._OLEDRION_GO_ON}>">
         </form>
         </td>
         <td colspan="2" class="center">
@@ -115,7 +117,7 @@
                       action="<{$smarty.const.OLEDRION_URL}>checkout.php"
                       style="margin:0; padding:0; border: 0; display: inline;">
                     <input type="submit" name="btnCheckout" id="btnCheckout"
-                           value="<{$smarty.const._OLEDRION_CHECKOUT}>"/>
+                           value="<{$smarty.const._OLEDRION_CHECKOUT}>">
                 </form>
             <{/if}>
         </td>
@@ -156,13 +158,13 @@
                 <span class="oledrion_step_text"><{$smarty.const._OLEDRION_STEP_1}></span>
             </td>
             <td class="oledrion_step_img">
-                <img src="<{$step2}>" alt=""/>
+                <img src="<{$step2}>" alt="">
             </td>
             <td class="oledrion_step">
                 <span class="oledrion_step_text"><{$smarty.const._OLEDRION_STEP_2}></span>
             </td>
             <td class="oledrion_step_img">
-                <img src="<{$step1}>" alt=""/>
+                <img src="<{$step1}>" alt="">
             </td>
             <td class="oledrion_step">
                 <span class="oledrion_step_text"><{$smarty.const._OLEDRION_STEP_3}></span>

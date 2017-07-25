@@ -8,7 +8,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * @copyright    XOOPS Project (http://xoops.org)
+ * @copyright    XOOPS Project (https://xoops.org)
  * @license      http://www.fsf.org/copyleft/gpl.html GNU public license
  * @package      Oledrion
  * @since        2.5.0
@@ -56,9 +56,7 @@ h3, h4, h5, h6 {
 }
 
 h1, h2, h3, h4, h5, h6 {
-    -webkit-column-break-after: page-avoid;
-       page-break-after: page-avoid;
-            break-after: page-avoid;
+    page-break-after: avoid !important;
 }
 
 img {
@@ -80,9 +78,7 @@ blockquote, q {
 }
 
 pre, code, table {
-    -webkit-column-break-inside: page-avoid;
-       page-break-inside: page-avoid;
-            break-inside: page-avoid;
+    page-break-inside: avoid !important;
 }
 
 pre {

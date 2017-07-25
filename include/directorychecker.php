@@ -11,7 +11,7 @@
 /**
  * WF-Downloads module
  *
- * @copyright       XOOPS Project (http://xoops.org)
+ * @copyright       XOOPS Project (https://xoops.org)
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
  * @package         wfdownload
  * @since           3.23
@@ -20,7 +20,7 @@
 
 //// defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
 
-require_once dirname(dirname(dirname(__DIR__))) . '/include/cp_header.php';
+require_once __DIR__ . '/../../../include/cp_header.php';
 
 /**
  * Class DirectoryChecker
@@ -50,19 +50,25 @@ class directorychecker
             return false;
         }
         if (!@is_dir($path)) {
-            $path_status = "<img src='" . $pathIcon16 . "/0.png'   >" . $path . ' ( ' . $languageConstants[1] . ' ) ' . '<a href=' . $_SERVER['PHP_SELF']
-                           . "?op=dashboard&dircheck=createdir&amp;path=$path&amp;redirect=$redirectFile&amp;languageConstants=$myWords1>" . $languageConstants[2] . '</a>';
+            $path_status = "<img src='" . $pathIcon16 . "/0.png'   >" . $path . ' ( ' . $languageConstants[1] . ' ) ' . '<a href=' . $_SERVER['PHP_SELF'] . "?op=dashboard&dircheck=createdir&amp;path=$path&amp;redirect=$redirectFile&amp;languageConstants=$myWords1>" . $languageConstants[2] . '</a>';
         } elseif (@is_writable($path)) {
             $path_status = "<img src='" . $pathIcon16 . "/1.png'   >" . $path . ' ( ' . $languageConstants[0] . ' ) ';
             $currentMode = substr(decoct(fileperms($path)), 2);
             if ($currentMode != decoct($mode)) {
-                $path_status = "<img src='" . $pathIcon16 . "/0.png'   >" . $path . sprintf($languageConstants[3], decoct($mode), $currentMode) . '<a href=' . $_SERVER['PHP_SELF']
-                               . "?op=dashboard&dircheck=setperm&amp;mode=$mode&amp;path=$path&amp;redirect=$redirectFile&amp;languageConstants=$myWords2> " . $languageConstants[4] . '</a>';
+                $path_status = "<img src='"
+                               . $pathIcon16
+                               . "/0.png'   >"
+                               . $path
+                               . sprintf($languageConstants[3], decoct($mode), $currentMode)
+                               . '<a href='
+                               . $_SERVER['PHP_SELF']
+                               . "?op=dashboard&dircheck=setperm&amp;mode=$mode&amp;path=$path&amp;redirect=$redirectFile&amp;languageConstants=$myWords2> "
+                               . $languageConstants[4]
+                               . '</a>';
             }
         } else {
             $currentMode = substr(decoct(fileperms($path)), 2);
-            $path_status = "<img src='" . $pathIcon16 . "/0.png'   >" . $path . sprintf($languageConstants[3], decoct($mode), $currentMode) . '<a href=' . $_SERVER['PHP_SELF']
-                           . "?mode&amp;path=$path&amp;redirect=$redirectFile&amp;languageConstants=$myWords2> " . $languageConstants[4] . '</a>';
+            $path_status = "<img src='" . $pathIcon16 . "/0.png'   >" . $path . sprintf($languageConstants[3], decoct($mode), $currentMode) . '<a href=' . $_SERVER['PHP_SELF'] . "?mode&amp;path=$path&amp;redirect=$redirectFile&amp;languageConstants=$myWords2> " . $languageConstants[4] . '</a>';
         }
 
         return $path_status;
@@ -125,7 +131,7 @@ switch ($dircheck) {
         if (isset($_GET['languageConstants'])) {
             $languageConstants = json_decode($_GET['languageConstants']);
         }
-        $result = directorychecker::createDirectory($path);
+        $result = DirectoryChecker::createDirectory($path);
         $msg    = $result ? $languageConstants[0] : $languageConstants[1];
         redirect_header($redirect, 2, $msg . ': ' . $path);
 
@@ -144,7 +150,7 @@ switch ($dircheck) {
         if (isset($_GET['languageConstants'])) {
             $languageConstants = json_decode($_GET['languageConstants']);
         }
-        $result = directorychecker::setDirectoryPermissions($path, $mode);
+        $result = DirectoryChecker::setDirectoryPermissions($path, $mode);
         $msg    = $result ? $languageConstants[0] : $languageConstants[1];
         redirect_header($redirect, 2, $msg . ': ' . $path);
 

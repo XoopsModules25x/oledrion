@@ -6,7 +6,7 @@
 <{* h1, h2, h3, h4, h5, h6, b, u, i, a, img, p, br, strong, em, font, blockquote, li, ul, ol, hr, td, th, tr, table, sup, sub, small *}>
 <!--******************-->
 <!--******************-->
-<img src="<{$smarty.const.OLEDRION_IMAGES_URL}>pdf/header_first_page.jpg" alt=""/>
+<img src="<{$smarty.const.OLEDRION_IMAGES_URL}>pdf/header_first_page.jpg" alt="">
 
 
 <!--**** LIST PRODUCTS **-->

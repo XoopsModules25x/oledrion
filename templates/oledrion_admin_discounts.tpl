@@ -2,9 +2,9 @@
 
 <{elseif $action == 'edit'}>
     <form method="post" action="<{$baseurl}>" name="frmdiscount" id="frmdiscount">
-        <input type='hidden' name='op' id='op' value='discounts'/>
-        <input type='hidden' name='action' id='action' value='saveedit'/>
-        <input type='hidden' name='disc_id' id='disc_id' value='<{$discount.disc_id}>'/>
+        <input type='hidden' name='op' id='op' value='discounts'>
+        <input type='hidden' name='action' id='action' value='saveedit'>
+        <input type='hidden' name='disc_id' id='disc_id' value='<{$discount.disc_id}>'>
         <div align="center"><h3><{$formTitle}></h3>
             <table width='100%' class='outer' cellspacing='1'>
                 <tr>
@@ -14,7 +14,7 @@
                 <tr>
                     <td class='head'><label for="disc_title"><{$smarty.const._AM_OLEDRION_DISCOUNT_TITLE}></label></td>
                     <td class='even'><input type="text" name="disc_title" id="disc_title"
-                                            value="<{$discount.disc_title}>" size="50" maxlength="255"/></td>
+                                            value="<{$discount.disc_title}>" size="50" maxlength="255"></td>
                 </tr>
                 <tr>
                     <td class='head top'><label
@@ -25,7 +25,7 @@
                     <td class='head'><label for="disc_pediod"><{$smarty.const._AM_OLEDRION_DISCOUNT_PERIOD}></label>
                     </td>
                     <td class='even'><input type="checkbox" name="disc_pediod" id="disc_pediod"
-                                            value="1" <{$discount.disc_pediod_checked}> /> <{$smarty.const._AM_OLEDRION_DISCOUNT_PERFROM}> <{$discount.disc_date_from}> <{$smarty.const._AM_OLEDRION_DISCOUNT_PERTO}> <{$discount.disc_date_to}>
+                                            value="1" <{$discount.disc_pediod_checked}>> <{$smarty.const._AM_OLEDRION_DISCOUNT_PERFROM}> <{$discount.disc_date_from}> <{$smarty.const._AM_OLEDRION_DISCOUNT_PERTO}> <{$discount.disc_date_to}>
                     </td>
                 </tr>
 
@@ -78,7 +78,7 @@
                             <tr>
                                 <td>
                                     <input type="radio" name="disc_price_type" id="disc_price_type"
-                                           value="1" <{$discount.disc_price_type_checked1}> /> <{$smarty.const._AM_OLEDRION_DISCOUNT_DEGRESSIV}>
+                                           value="1" <{$discount.disc_price_type_checked1}>> <{$smarty.const._AM_OLEDRION_DISCOUNT_DEGRESSIV}>
                                     <table border="0">
                                         <tr>
                                             <td width="5%">&nbsp;</td>
@@ -87,17 +87,17 @@
                                                                                                              id="disc_price_degress_l1qty1"
                                                                                                              value="<{$discount.disc_price_degress_l1qty1}>"
                                                                                                              size="3"
-                                                                                                             maxlength="5"/> <{$smarty.const._AM_OLEDRION_DISCOUNT_QUANTITY_TO}>
+                                                                                                             maxlength="5"> <{$smarty.const._AM_OLEDRION_DISCOUNT_QUANTITY_TO}>
                                                 <input type="text"
                                                        name="disc_price_degress_l1qty2"
                                                        id="disc_price_degress_l1qty2"
                                                        value="<{$discount.disc_price_degress_l1qty2}>"
                                                        size="3"
-                                                       maxlength="5"/> <{$smarty.const._AM_OLEDRION_DISCOUNT_QUANTITY_INCLUDED}>
+                                                       maxlength="5"> <{$smarty.const._AM_OLEDRION_DISCOUNT_QUANTITY_INCLUDED}>
                                                 <input type="text" name="disc_price_degress_l1total"
                                                        id="disc_price_degress_l1total"
                                                        value="<{$discount.disc_price_degress_l1total}>" size="5"
-                                                       maxlength="10"/> <{$currencyName}></td>
+                                                       maxlength="10"> <{$currencyName}></td>
                                         </tr>
                                         <tr>
                                             <td width="5%">&nbsp;</td>
@@ -106,17 +106,17 @@
                                                                                                              id="disc_price_degress_l2qty1"
                                                                                                              value="<{$discount.disc_price_degress_l2qty1}>"
                                                                                                              size="3"
-                                                                                                             maxlength="5"/> <{$smarty.const._AM_OLEDRION_DISCOUNT_QUANTITY_TO}>
+                                                                                                             maxlength="5"> <{$smarty.const._AM_OLEDRION_DISCOUNT_QUANTITY_TO}>
                                                 <input type="text"
                                                        name="disc_price_degress_l2qty2"
                                                        id="disc_price_degress_l2qty2"
                                                        value="<{$discount.disc_price_degress_l2qty2}>"
                                                        size="3"
-                                                       maxlength="5"/> <{$smarty.const._AM_OLEDRION_DISCOUNT_QUANTITY_INCLUDED}>
+                                                       maxlength="5"> <{$smarty.const._AM_OLEDRION_DISCOUNT_QUANTITY_INCLUDED}>
                                                 <input type="text" name="disc_price_degress_l2total"
                                                        id="disc_price_degress_l2total"
                                                        value="<{$discount.disc_price_degress_l2total}>" size="5"
-                                                       maxlength="10"/> <{$currencyName}></td>
+                                                       maxlength="10"> <{$currencyName}></td>
                                         </tr>
                                         <tr>
                                             <td width="5%">&nbsp;</td>
@@ -125,17 +125,17 @@
                                                                                                              id="disc_price_degress_l3qty1"
                                                                                                              value="<{$discount.disc_price_degress_l3qty1}>"
                                                                                                              size="3"
-                                                                                                             maxlength="5"/> <{$smarty.const._AM_OLEDRION_DISCOUNT_QUANTITY_TO}>
+                                                                                                             maxlength="5"> <{$smarty.const._AM_OLEDRION_DISCOUNT_QUANTITY_TO}>
                                                 <input type="text"
                                                        name="disc_price_degress_l3qty2"
                                                        id="disc_price_degress_l3qty2"
                                                        value="<{$discount.disc_price_degress_l3qty2}>"
                                                        size="3"
-                                                       maxlength="5"/> <{$smarty.const._AM_OLEDRION_DISCOUNT_QUANTITY_INCLUDED}>
+                                                       maxlength="5"> <{$smarty.const._AM_OLEDRION_DISCOUNT_QUANTITY_INCLUDED}>
                                                 <input type="text" name="disc_price_degress_l3total"
                                                        id="disc_price_degress_l3total"
                                                        value="<{$discount.disc_price_degress_l3total}>" size="5"
-                                                       maxlength="10"/> <{$currencyName}></td>
+                                                       maxlength="10"> <{$currencyName}></td>
                                         </tr>
                                         <tr>
                                             <td width="5%">&nbsp;</td>
@@ -144,17 +144,17 @@
                                                                                                              id="disc_price_degress_l4qty1"
                                                                                                              value="<{$discount.disc_price_degress_l4qty1}>"
                                                                                                              size="3"
-                                                                                                             maxlength="5"/> <{$smarty.const._AM_OLEDRION_DISCOUNT_QUANTITY_TO}>
+                                                                                                             maxlength="5"> <{$smarty.const._AM_OLEDRION_DISCOUNT_QUANTITY_TO}>
                                                 <input type="text"
                                                        name="disc_price_degress_l4qty2"
                                                        id="disc_price_degress_l4qty2"
                                                        value="<{$discount.disc_price_degress_l4qty2}>"
                                                        size="3"
-                                                       maxlength="5"/> <{$smarty.const._AM_OLEDRION_DISCOUNT_QUANTITY_INCLUDED}>
+                                                       maxlength="5"> <{$smarty.const._AM_OLEDRION_DISCOUNT_QUANTITY_INCLUDED}>
                                                 <input type="text" name="disc_price_degress_l4total"
                                                        id="disc_price_degress_l4total"
                                                        value="<{$discount.disc_price_degress_l4total}>" size="5"
-                                                       maxlength="10"/> <{$currencyName}></td>
+                                                       maxlength="10"> <{$currencyName}></td>
                                         </tr>
                                         <tr>
                                             <td width="5%">&nbsp;</td>
@@ -163,17 +163,17 @@
                                                                                                              id="disc_price_degress_l5qty1"
                                                                                                              value="<{$discount.disc_price_degress_l5qty1}>"
                                                                                                              size="3"
-                                                                                                             maxlength="5"/> <{$smarty.const._AM_OLEDRION_DISCOUNT_QUANTITY_TO}>
+                                                                                                             maxlength="5"> <{$smarty.const._AM_OLEDRION_DISCOUNT_QUANTITY_TO}>
                                                 <input type="text"
                                                        name="disc_price_degress_l5qty2"
                                                        id="disc_price_degress_l5qty2"
                                                        value="<{$discount.disc_price_degress_l5qty2}>"
                                                        size="3"
-                                                       maxlength="5"/> <{$smarty.const._AM_OLEDRION_DISCOUNT_QUANTITY_INCLUDED}>
+                                                       maxlength="5"> <{$smarty.const._AM_OLEDRION_DISCOUNT_QUANTITY_INCLUDED}>
                                                 <input type="text" name="disc_price_degress_l5total"
                                                        id="disc_price_degress_l5total"
                                                        value="<{$discount.disc_price_degress_l5total}>" size="5"
-                                                       maxlength="10"/> <{$currencyName}></td>
+                                                       maxlength="10"> <{$currencyName}></td>
                                         </tr>
                                     </table>
                                 </td>
@@ -181,21 +181,21 @@
                             <tr>
                                 <td>
                                     <input type="radio" name="disc_price_type" id="disc_price_type"
-                                           value="2" <{$discount.disc_price_type_checked2}> /> <{$smarty.const._AM_OLEDRION_DISCOUNT_AMOUNT_PERCENT}>
+                                           value="2" <{$discount.disc_price_type_checked2}>> <{$smarty.const._AM_OLEDRION_DISCOUNT_AMOUNT_PERCENT}>
                                     <table border="0">
                                         <tr>
                                             <td width="5%">&nbsp;</td>
                                             <td><input type="text" name="disc_price_amount_amount"
                                                        id="disc_price_amount_amount"
                                                        value="<{$discount.disc_price_amount_amount}>" size="5"
-                                                       maxlength="10"/> <input type="radio"
+                                                       maxlength="10"> <input type="radio"
                                                                                name="disc_price_amount_type"
                                                                                id="disc_price_amount_type"
-                                                                               value="1" <{$discount.disc_price_amount_type_checked1}> /> <{$smarty.const._AM_OLEDRION_DISCOUNT_PERCENT}>
+                                                                               value="1" <{$discount.disc_price_amount_type_checked1}>> <{$smarty.const._AM_OLEDRION_DISCOUNT_PERCENT}>
                                                 <input
                                                         type="radio" name="disc_price_amount_type"
                                                         id="disc_price_amount_type"
-                                                        value="2" <{$discount.disc_price_amount_type_checked2}> /> <{$currencyName}>
+                                                        value="2" <{$discount.disc_price_amount_type_checked2}>> <{$currencyName}>
                                             </td>
                                         </tr>
                                         <tr>
@@ -204,10 +204,10 @@
                                                 <{$smarty.const._AM_OLEDRION_DISCOUNT_ON}> <input type="radio"
                                                                                                   name="disc_price_amount_on"
                                                                                                   id="disc_price_amount_on"
-                                                                                                  value="1" <{$discount.disc_price_amount_on_checked1}> /> <{$smarty.const._AM_OLEDRION_DISCOUNT_THE_PRODUCT}>
+                                                                                                  value="1" <{$discount.disc_price_amount_on_checked1}>> <{$smarty.const._AM_OLEDRION_DISCOUNT_THE_PRODUCT}>
                                                 <input type="radio" name="disc_price_amount_on"
                                                        id="disc_price_amount_on"
-                                                       value="2" <{$discount.disc_price_amount_on_checked2}> /> <{$smarty.const._AM_OLEDRION_DISCOUNT_THE_CART}>
+                                                       value="2" <{$discount.disc_price_amount_on_checked2}>> <{$smarty.const._AM_OLEDRION_DISCOUNT_THE_CART}>
                                             </td>
                                         </tr>
                                     </table>
@@ -220,16 +220,16 @@
                     <td class='head top'><{$smarty.const._AM_OLEDRION_DISCOUNT_IN_WHICH_CASE}></td>
                     <td class='even'>
                         <input type="radio" name="disc_price_case" id="disc_price_case"
-                               value="1" <{$discount.disc_price_case_checked1}> /> <{$smarty.const._AM_OLEDRION_DISCOUNT_ALL_CASES}>
+                               value="1" <{$discount.disc_price_case_checked1}>> <{$smarty.const._AM_OLEDRION_DISCOUNT_ALL_CASES}>
                         <br>
                         <input type="radio" name="disc_price_case" id="disc_price_case"
-                               value="2" <{$discount.disc_price_case_checked2}> /> <{$smarty.const._AM_OLEDRION_DISCOUNT_FIRST_PURCHASE}>
+                               value="2" <{$discount.disc_price_case_checked2}>> <{$smarty.const._AM_OLEDRION_DISCOUNT_FIRST_PURCHASE}>
                         <br>
                         <input type="radio" name="disc_price_case" id="disc_price_case"
-                               value="3" <{$discount.disc_price_case_checked3}> /> <{$smarty.const._AM_OLEDRION_DISCOUNT_NEVER_BOUGHT}>
+                               value="3" <{$discount.disc_price_case_checked3}>> <{$smarty.const._AM_OLEDRION_DISCOUNT_NEVER_BOUGHT}>
                         <br>
                         <input type="radio" name="disc_price_case" id="disc_price_case"
-                               value="4" <{$discount.disc_price_case_checked4}> /> <{$smarty.const._AM_OLEDRION_DISCOUNT_QUANTITY_IS}>
+                               value="4" <{$discount.disc_price_case_checked4}>> <{$smarty.const._AM_OLEDRION_DISCOUNT_QUANTITY_IS}>
                         <select
                                 name="disc_price_case_qty_cond"
                                 id="disc_price_case_qty_cond"><{html_options options=$disc_price_case_qty_cond_options selected=$disc_price_case_qty_cond_selected}></select>
@@ -238,7 +238,7 @@
                                id="disc_price_case_qty_value"
                                value="<{$discount.disc_price_case_qty_value}>"
                                size="3"
-                               maxlength="5"/>
+                               maxlength="5">
                     </td>
                 </tr>
                 <tr>
@@ -251,13 +251,13 @@
                         <table border="0">
                             <tr>
                                 <td><input type="radio" name="disc_shipping_type" id="disc_shipping_type"
-                                           value="1" <{$discount.disc_shipping_type_checked1}> /> <{$smarty.const._AM_OLEDRION_DISCOUNT_FULL_PAY}>
+                                           value="1" <{$discount.disc_shipping_type_checked1}>> <{$smarty.const._AM_OLEDRION_DISCOUNT_FULL_PAY}>
                                 </td>
                             </tr>
                             <tr>
                                 <td>
                                     <input type="radio" name="disc_shipping_type" id="disc_shipping_type"
-                                           value="2" <{$discount.disc_shipping_type_checked2}> /> <{$smarty.const._AM_OLEDRION_DISCOUNT_SHIPPING_FREE}>
+                                           value="2" <{$discount.disc_shipping_type_checked2}>> <{$smarty.const._AM_OLEDRION_DISCOUNT_SHIPPING_FREE}>
                                     <table border="0">
                                         <tr>
                                             <td width="5%">&nbsp;</td>
@@ -266,7 +266,7 @@
                                                                                                           id="disc_shipping_free_morethan"
                                                                                                           value="<{$discount.disc_shipping_free_morethan}>"
                                                                                                           size="5"
-                                                                                                          maxlength="10"/> <{$currencyName}>
+                                                                                                          maxlength="10"> <{$currencyName}>
                                             </td>
                                         </tr>
                                     </table>
@@ -275,18 +275,18 @@
                             <tr>
                                 <td>
                                     <input type="radio" name="disc_shipping_type" id="disc_shipping_type"
-                                           value="3" <{$discount.disc_shipping_type_checked3}> /> <{$smarty.const._AM_OLEDRION_DISCOUNT_REDUCED_FOR}>
+                                           value="3" <{$discount.disc_shipping_type_checked3}>> <{$smarty.const._AM_OLEDRION_DISCOUNT_REDUCED_FOR}>
                                     <table border="0">
                                         <tr>
                                             <td width="5%">&nbsp;</td>
                                             <td><input type="text" name="disc_shipping_reduce_amount"
                                                        id="disc_shipping_reduce_amount"
                                                        value="<{$discount.disc_shipping_reduce_amount}>" size="5"
-                                                       maxlength="10"/> <{$currencyName}> <{$smarty.const._AM_OLEDRION_DISCOUNT_REDUCED_IF}>
+                                                       maxlength="10"> <{$currencyName}> <{$smarty.const._AM_OLEDRION_DISCOUNT_REDUCED_IF}>
                                                 <input type="text" name="disc_shipping_reduce_cartamount"
                                                        id="disc_shipping_reduce_cartamount"
                                                        value="<{$discount.disc_shipping_reduce_cartamount}>"
-                                                       size="5" maxlength="10"/> <{$currencyName}></td>
+                                                       size="5" maxlength="10"> <{$currencyName}></td>
                                         </tr>
                                     </table>
                                 </td>
@@ -294,7 +294,7 @@
                             <tr>
                                 <td>
                                     <input type="radio" name="disc_shipping_type" id="disc_shipping_type"
-                                           value="4" <{$discount.disc_shipping_type_checked4}> /> <{$smarty.const._AM_OLEDRION_DISCOUNT_DEGRESSIV}>
+                                           value="4" <{$discount.disc_shipping_type_checked4}>> <{$smarty.const._AM_OLEDRION_DISCOUNT_DEGRESSIV}>
                                     <table border="0">
                                         <tr>
                                             <td width="5%">&nbsp;</td>
@@ -303,17 +303,17 @@
                                                                                                              id="disc_shipping_degress_l1qty1"
                                                                                                              value="<{$discount.disc_shipping_degress_l1qty1}>"
                                                                                                              size="3"
-                                                                                                             maxlength="5"/> <{$smarty.const._AM_OLEDRION_DISCOUNT_QUANTITY_TO}>
+                                                                                                             maxlength="5"> <{$smarty.const._AM_OLEDRION_DISCOUNT_QUANTITY_TO}>
                                                 <input type="text"
                                                        name="disc_shipping_degress_l1qty2"
                                                        id="disc_shipping_degress_l1qty2"
                                                        value="<{$discount.disc_shipping_degress_l1qty2}>"
                                                        size="3"
-                                                       maxlength="5"/> <{$smarty.const._AM_OLEDRION_DISCOUNT_QUANTITY_INCLUDED}>
+                                                       maxlength="5"> <{$smarty.const._AM_OLEDRION_DISCOUNT_QUANTITY_INCLUDED}>
                                                 <input type="text" name="disc_shipping_degress_l1total"
                                                        id="disc_shipping_degress_l1total"
                                                        value="<{$discount.disc_shipping_degress_l1total}>" size="5"
-                                                       maxlength="10"/> <{$currencyName}></td>
+                                                       maxlength="10"> <{$currencyName}></td>
                                         </tr>
                                         <tr>
                                             <td width="5%">&nbsp;</td>
@@ -322,17 +322,17 @@
                                                                                                              id="disc_shipping_degress_l2qty1"
                                                                                                              value="<{$discount.disc_shipping_degress_l2qty1}>"
                                                                                                              size="3"
-                                                                                                             maxlength="5"/> <{$smarty.const._AM_OLEDRION_DISCOUNT_QUANTITY_TO}>
+                                                                                                             maxlength="5"> <{$smarty.const._AM_OLEDRION_DISCOUNT_QUANTITY_TO}>
                                                 <input type="text"
                                                        name="disc_shipping_degress_l2qty2"
                                                        id="disc_shipping_degress_l2qty2"
                                                        value="<{$discount.disc_shipping_degress_l2qty2}>"
                                                        size="3"
-                                                       maxlength="5"/> <{$smarty.const._AM_OLEDRION_DISCOUNT_QUANTITY_INCLUDED}>
+                                                       maxlength="5"> <{$smarty.const._AM_OLEDRION_DISCOUNT_QUANTITY_INCLUDED}>
                                                 <input type="text" name="disc_shipping_degress_l2total"
                                                        id="disc_shipping_degress_l2total"
                                                        value="<{$discount.disc_shipping_degress_l2total}>" size="5"
-                                                       maxlength="10"/> <{$currencyName}></td>
+                                                       maxlength="10"> <{$currencyName}></td>
                                         </tr>
                                         <tr>
                                             <td width="5%">&nbsp;</td>
@@ -341,17 +341,17 @@
                                                                                                              id="disc_shipping_degress_l3qty1"
                                                                                                              value="<{$discount.disc_shipping_degress_l3qty1}>"
                                                                                                              size="3"
-                                                                                                             maxlength="5"/> <{$smarty.const._AM_OLEDRION_DISCOUNT_QUANTITY_TO}>
+                                                                                                             maxlength="5"> <{$smarty.const._AM_OLEDRION_DISCOUNT_QUANTITY_TO}>
                                                 <input type="text"
                                                        name="disc_shipping_degress_l3qty2"
                                                        id="disc_shipping_degress_l3qty2"
                                                        value="<{$discount.disc_shipping_degress_l3qty2}>"
                                                        size="3"
-                                                       maxlength="5"/> <{$smarty.const._AM_OLEDRION_DISCOUNT_QUANTITY_INCLUDED}>
+                                                       maxlength="5"> <{$smarty.const._AM_OLEDRION_DISCOUNT_QUANTITY_INCLUDED}>
                                                 <input type="text" name="disc_shipping_degress_l3total"
                                                        id="disc_shipping_degress_l3total"
                                                        value="<{$discount.disc_shipping_degress_l3total}>" size="5"
-                                                       maxlength="10"/> <{$currencyName}></td>
+                                                       maxlength="10"> <{$currencyName}></td>
                                         </tr>
                                         <tr>
                                             <td width="5%">&nbsp;</td>
@@ -360,17 +360,17 @@
                                                                                                              id="disc_shipping_degress_l4qty1"
                                                                                                              value="<{$discount.disc_shipping_degress_l4qty1}>"
                                                                                                              size="3"
-                                                                                                             maxlength="5"/> <{$smarty.const._AM_OLEDRION_DISCOUNT_QUANTITY_TO}>
+                                                                                                             maxlength="5"> <{$smarty.const._AM_OLEDRION_DISCOUNT_QUANTITY_TO}>
                                                 <input type="text"
                                                        name="disc_shipping_degress_l4qty2"
                                                        id="disc_shipping_degress_l4qty2"
                                                        value="<{$discount.disc_shipping_degress_l4qty2}>"
                                                        size="3"
-                                                       maxlength="5"/> <{$smarty.const._AM_OLEDRION_DISCOUNT_QUANTITY_INCLUDED}>
+                                                       maxlength="5"> <{$smarty.const._AM_OLEDRION_DISCOUNT_QUANTITY_INCLUDED}>
                                                 <input type="text" name="disc_shipping_degress_l4total"
                                                        id="disc_shipping_degress_l4total"
                                                        value="<{$discount.disc_shipping_degress_l4total}>" size="5"
-                                                       maxlength="10"/> <{$currencyName}></td>
+                                                       maxlength="10"> <{$currencyName}></td>
                                         </tr>
                                         <tr>
                                             <td width="5%">&nbsp;</td>
@@ -379,17 +379,17 @@
                                                                                                              id="disc_shipping_degress_l5qty1"
                                                                                                              value="<{$discount.disc_shipping_degress_l5qty1}>"
                                                                                                              size="3"
-                                                                                                             maxlength="5"/> <{$smarty.const._AM_OLEDRION_DISCOUNT_QUANTITY_TO}>
+                                                                                                             maxlength="5"> <{$smarty.const._AM_OLEDRION_DISCOUNT_QUANTITY_TO}>
                                                 <input type="text"
                                                        name="disc_shipping_degress_l5qty2"
                                                        id="disc_shipping_degress_l5qty2"
                                                        value="<{$discount.disc_shipping_degress_l5qty2}>"
                                                        size="3"
-                                                       maxlength="5"/> <{$smarty.const._AM_OLEDRION_DISCOUNT_QUANTITY_INCLUDED}>
+                                                       maxlength="5"> <{$smarty.const._AM_OLEDRION_DISCOUNT_QUANTITY_INCLUDED}>
                                                 <input type="text" name="disc_shipping_degress_l5total"
                                                        id="disc_shipping_degress_l5total"
                                                        value="<{$discount.disc_shipping_degress_l5total}>" size="5"
-                                                       maxlength="10"/> <{$currencyName}></td>
+                                                       maxlength="10"> <{$currencyName}></td>
                                         </tr>
                                     </table>
                                 </td>
@@ -399,7 +399,7 @@
                 </tr>
                 <tr>
                     <td class='head'>&nbsp;</td>
-                    <td class='even'><input type="submit" name="btngo" id="btngo" value="<{$label_submit}>"/></td>
+                    <td class='even'><input type="submit" name="btngo" id="btngo" value="<{$label_submit}>"></td>
                 </tr>
             </table>
     </form>

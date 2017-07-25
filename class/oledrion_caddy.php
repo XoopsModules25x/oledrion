@@ -12,7 +12,7 @@
 /**
  * oledrion
  *
- * @copyright   {@link http://xoops.org/ XOOPS Project}
+ * @copyright   {@link https://xoops.org/ XOOPS Project}
  * @license     {@link http://www.fsf.org/copyleft/gpl.html GNU public license}
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
  */
@@ -20,7 +20,7 @@
 /**
  * Gestion des caddy
  */
-require __DIR__ . '/classheader.php';
+require_once __DIR__ . '/classheader.php';
 
 /**
  * Class Oledrion_caddy
@@ -72,9 +72,9 @@ class OledrionOledrion_caddyHandler extends Oledrion_XoopsPersistableObjectHandl
 
     /**
      * OledrionOledrion_caddyHandler constructor.
-     * @param XoopsDatabase|null $db
+     * @param object $db
      */
-    public function __construct(XoopsDatabase $db)
+    public function __construct($db)
     { //                          Table             Classe          Id
         parent::__construct($db, 'oledrion_caddy', 'oledrion_caddy', 'caddy_id');
     }
@@ -87,8 +87,7 @@ class OledrionOledrion_caddyHandler extends Oledrion_XoopsPersistableObjectHandl
      */
     public function getBestWith($caddy_product_id)
     {
-        $sql    = 'SELECT caddy_product_id, sum(caddy_qte) mv FROM ' . $this->table . ' WHERE caddy_cmd_id IN (SELECT caddy_cmd_id FROM ' . $this->table . ' WHERE caddy_product_id=' . (int)$caddy_product_id
-                  . ') GROUP BY caddy_product_id ORDER BY mv DESC';
+        $sql    = 'SELECT caddy_product_id, sum(caddy_qte) mv FROM ' . $this->table . ' WHERE caddy_cmd_id IN (SELECT caddy_cmd_id FROM ' . $this->table . ' WHERE caddy_product_id=' . (int)$caddy_product_id . ') GROUP BY caddy_product_id ORDER BY mv DESC';
         $result = $this->db->query($sql, 1);
         if (!$result) {
             return 0;
@@ -116,13 +115,11 @@ class OledrionOledrion_caddyHandler extends Oledrion_XoopsPersistableObjectHandl
         //require_once __DIR__ . '/lite.php';
         $ret = array();
         if (is_array($product_cid) && count($product_cid) > 0) {
-            $sql = 'SELECT c.caddy_product_id, sum( c.caddy_qte ) AS mv FROM ' . $this->table . ' c, ' . $this->db->prefix('oledrion_products') . ' b WHERE (c.caddy_product_id = b.product_id) AND b.product_cid IN (' . implode(',', $product_cid)
-                   . ') GROUP BY c.caddy_product_id ORDER BY mv DESC';
+            $sql = 'SELECT c.caddy_product_id, sum( c.caddy_qte ) AS mv FROM ' . $this->table . ' c, ' . $this->db->prefix('oledrion_products') . ' b WHERE (c.caddy_product_id = b.product_id) AND b.product_cid IN (' . implode(',', $product_cid) . ') GROUP BY c.caddy_product_id ORDER BY mv DESC';
         } elseif ($product_cid > 0) {
-            $sql = 'SELECT c.caddy_product_id, sum( c.caddy_qte ) AS mv FROM ' . $this->table . ' c, ' . $this->db->prefix('oledrion_products') . ' b WHERE (c.caddy_product_id = b.product_id) AND b.product_cid = ' . (int)$product_cid
-                   . ' GROUP BY c.caddy_product_id ORDER BY mv DESC';
+            $sql = 'SELECT c.caddy_product_id, sum( c.caddy_qte ) AS mv FROM ' . $this->table . ' c, ' . $this->db->prefix('oledrion_products') . ' b WHERE (c.caddy_product_id = b.product_id) AND b.product_cid = ' . (int)$product_cid . ' GROUP BY c.caddy_product_id ORDER BY mv DESC';
         } else {
-            $sql = 'SELECT caddy_product_id, sum( caddy_qte ) as mv FROM ' . $this->table . ' GROUP BY caddy_product_id ORDER BY mv DESC';
+            $sql = 'SELECT caddy_product_id, sum( caddy_qte ) AS mv FROM ' . $this->table . ' GROUP BY caddy_product_id ORDER BY mv DESC';
         }
         //$Cache_Lite = new oledrion_Cache_Lite($this->cacheOptions);
         $id = $this->_getIdForCache($sql, $start, $limit);
@@ -213,7 +210,7 @@ class OledrionOledrion_caddyHandler extends Oledrion_XoopsPersistableObjectHandl
     public function reloadPersistentCart()
     {
         global $xoopsUser, $h_oledrion_persistent_cart;
-        if (Oledrion_utils::getModuleOption('persistent_cart') == 0) {
+        if (OledrionUtility::getModuleOption('persistent_cart') == 0) {
             return false;
         }
         if (is_object($xoopsUser)) {
@@ -258,8 +255,8 @@ class OledrionOledrion_caddyHandler extends Oledrion_XoopsPersistableObjectHandl
         $exists = false;
         foreach ($tbl_caddie as $produit) {
             if ($produit['id'] == $product_id) {
-                $exists = true;
-                $produit['qty'] += $quantity;
+                $exists                = true;
+                $produit['qty']        += $quantity;
                 $produit['attributes'] = $attributes;
                 $newQuantity           = $produit['qty'];
             }
@@ -510,7 +507,7 @@ class OledrionOledrion_caddyHandler extends Oledrion_XoopsPersistableObjectHandl
      * @param  oledrion_caddy $caddy
      * @return boolean        Le résultat de la mise à jour
      */
-    public function markCaddyAsNotDownloadableAnyMore(Oledrion_caddy $caddy)
+    public function markCaddyAsNotDownloadableAnyMore(oledrion_caddy $caddy)
     {
         $caddy->setVar('caddy_pass', '');
 

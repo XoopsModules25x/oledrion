@@ -12,7 +12,7 @@
 /**
  * oledrion
  *
- * @copyright   {@link http://xoops.org/ XOOPS Project}
+ * @copyright   {@link https://xoops.org/ XOOPS Project}
  * @license     {@link http://www.fsf.org/copyleft/gpl.html GNU public license}
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
  * @param $items
@@ -53,16 +53,29 @@ function oledrion_tag_synchronization($mid)
     $itemHandler_keyName = 'product_id';
     $itemHandler_table   = $xoopsDB->prefix('oledrion_products');
     $linkHandler         = xoops_getModuleHandler('link', 'tag');
-    $where                = '1=1';
-    $where1               = '1=1';
+    $where               = '1=1';
+    $where1              = '1=1';
 
     /* clear tag-item links */
     if ($linkHandler->mysql_major_version() >= 4):
-        $sql = "    DELETE FROM {$linkHandler->table}" . '   WHERE ' . "       tag_modid = {$mid}" . '       AND ' . '       ( tag_itemid NOT IN ' . "           ( SELECT DISTINCT {$itemHandler_keyName} "
-               . "               FROM {$itemHandler_table} " . "               WHERE $where" . '           ) ' . '       )';
-    else:
-        $sql = "    DELETE {$linkHandler->table} FROM {$linkHandler->table}" . "   LEFT JOIN {$itemHandler_table} AS aa ON {$linkHandler->table}.tag_itemid = aa.{$itemHandler_keyName} " . '   WHERE ' . "       tag_modid = {$mid}" . '       AND '
-               . "       ( aa.{$itemHandler_keyName} IS NULL" . "           OR $where1" . '       )';
+        $sql = "    DELETE FROM {$linkHandler->table}"
+               . '   WHERE '
+               . "       tag_modid = {$mid}"
+               . '       AND '
+               . '       ( tag_itemid NOT IN '
+               . "           ( SELECT DISTINCT {$itemHandler_keyName} "
+               . "               FROM {$itemHandler_table} "
+               . "               WHERE $where"
+               . '           ) '
+               . '       )'; else:
+        $sql = "    DELETE {$linkHandler->table} FROM {$linkHandler->table}"
+               . "   LEFT JOIN {$itemHandler_table} AS aa ON {$linkHandler->table}.tag_itemid = aa.{$itemHandler_keyName} "
+               . '   WHERE '
+               . "       tag_modid = {$mid}"
+               . '       AND '
+               . "       ( aa.{$itemHandler_keyName} IS NULL"
+               . "           OR $where1"
+               . '       )';
     endif;
     if (!$linkHandler->db->queryF($sql)) {
         trigger_error($linkHandler->db->error());

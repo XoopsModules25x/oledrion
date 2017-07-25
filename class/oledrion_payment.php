@@ -12,12 +12,12 @@
 /**
  * oledrion
  *
- * @copyright   {@link http://xoops.org/ XOOPS Project}
+ * @copyright   {@link https://xoops.org/ XOOPS Project}
  * @license     {@link http://www.fsf.org/copyleft/gpl.html GNU public license}
  * @author      Hossein Azizabadi (azizabadi@faragostaresh.com)
  */
 
-require __DIR__ . '/classheader.php';
+require_once __DIR__ . '/classheader.php';
 
 /**
  * Class Oledrion_payment
@@ -64,8 +64,7 @@ class Oledrion_payment extends Oledrion_Object
     {
         $return = false;
         if (xoops_trim($this->getVar('payment_image')) != ''
-            && file_exists(OLEDRION_PICTURES_PATH . '/' . $this->getVar('payment_image'))
-        ) {
+            && file_exists(OLEDRION_PICTURES_PATH . '/' . $this->getVar('payment_image'))) {
             $return = true;
         }
 
@@ -107,9 +106,9 @@ class OledrionOledrion_paymentHandler extends Oledrion_XoopsPersistableObjectHan
 {
     /**
      * OledrionOledrion_paymentHandler constructor.
-     * @param XoopsDatabase|null $db
+     * @param object $db
      */
-    public function __construct(XoopsDatabase $db)
+    public function __construct($db)
     { //                                       Table                    Classe              Id
         parent::__construct($db, 'oledrion_payment', 'oledrion_payment', 'payment_id');
     }

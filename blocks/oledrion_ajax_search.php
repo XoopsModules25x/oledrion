@@ -12,7 +12,7 @@
 /**
  * oledrion
  *
- * @copyright   {@link http://xoops.org/ XOOPS Project}
+ * @copyright   {@link https://xoops.org/ XOOPS Project}
  * @license     {@link http://www.fsf.org/copyleft/gpl.html GNU public license}
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
  */
@@ -50,10 +50,9 @@ function b_oledrion__ajax_search_edit($options)
     $form                  = '';
     $checkeds              = array('', '');
     $checkeds[$options[0]] = 'checked';
-    $form .= "<table border='0'>";
-    $form .= '<tr><td>' . _MB_OLEDRION_USE_STYLE_JS . "</td><td><input type='radio' name='options[]' id='options[]' value='0' " . $checkeds[0] . ' />' . _NO . " <input type='radio' name='options[]' id='options[]' value='1' " . $checkeds[1] . ' />'
-             . _YES . '</td></tr>';
-    $form .= '</table>';
+    $form                  .= "<table border='0'>";
+    $form                  .= '<tr><td>' . _MB_OLEDRION_USE_STYLE_JS . "</td><td><input type='radio' name='options[]' id='options[]' value='0' " . $checkeds[0] . '>' . _NO . " <input type='radio' name='options[]' id='options[]' value='1' " . $checkeds[1] . '>' . _YES . '</td></tr>';
+    $form                  .= '</table>';
 
     return $form;
 }

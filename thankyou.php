@@ -12,7 +12,7 @@
 /**
  * oledrion
  *
- * @copyright   {@link http://xoops.org/ XOOPS Project}
+ * @copyright   {@link https://xoops.org/ XOOPS Project}
  * @license     {@link http://www.fsf.org/copyleft/gpl.html GNU public license}
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
  */
@@ -20,7 +20,7 @@
 /**
  * Page appelée par la passerelle après le paiement en ligne
  */
-require __DIR__ . '/header.php';
+require_once __DIR__ . '/header.php';
 $GLOBALS['current_category'] = -1;
 $success                     = true;
 
@@ -39,11 +39,11 @@ if (is_object($gateway) && method_exists($gateway, 'thankYou')) {
     unset($gateway);
 }
 $xoopsTpl->assign('success', $success);
-$xoopsTpl->assign('global_advert', Oledrion_utils::getModuleOption('advertisement'));
-$xoopsTpl->assign('breadcrumb', Oledrion_utils::breadcrumb(array(OLEDRION_URL . basename(__FILE__) => _OLEDRION_PURCHASE_FINSISHED)));
+$xoopsTpl->assign('global_advert', OledrionUtility::getModuleOption('advertisement'));
+$xoopsTpl->assign('breadcrumb', OledrionUtility::breadcrumb(array(OLEDRION_URL . basename(__FILE__) => _OLEDRION_PURCHASE_FINSISHED)));
 
-$title = _OLEDRION_PURCHASE_FINSISHED . ' - ' . Oledrion_utils::getModuleName();
-Oledrion_utils::setMetas($title, $title);
-Oledrion_utils::setCSS();
-Oledrion_utils::setLocalCSS($xoopsConfig['language']);
+$title = _OLEDRION_PURCHASE_FINSISHED . ' - ' . OledrionUtility::getModuleName();
+OledrionUtility::setMetas($title, $title);
+OledrionUtility::setCSS();
+OledrionUtility::setLocalCSS($xoopsConfig['language']);
 require_once XOOPS_ROOT_PATH . '/footer.php';

@@ -12,7 +12,7 @@
 /**
  * oledrion
  *
- * @copyright   {@link http://xoops.org/ XOOPS Project}
+ * @copyright   {@link https://xoops.org/ XOOPS Project}
  * @license     {@link http://www.fsf.org/copyleft/gpl.html GNU public license}
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
  */
@@ -20,7 +20,7 @@
 /**
  * Page d'informations sur un fabricant
  */
-require __DIR__ . '/header.php';
+require_once __DIR__ . '/header.php';
 $GLOBALS['current_category']             = -1;
 $GLOBALS['xoopsOption']['template_main'] = 'oledrion_manufacturer.tpl';
 require_once XOOPS_ROOT_PATH . '/header.php';
@@ -30,7 +30,7 @@ require_once XOOPS_ROOT_PATH . '/class/pagenav.php';
 if (isset($_GET['manu_id'])) {
     $manu_id = (int)$_GET['manu_id'];
 } else {
-    Oledrion_utils::redirect(_OLEDRION_ERROR7, 'index.php', 5);
+    OledrionUtility::redirect(_OLEDRION_ERROR7, 'index.php', 5);
 }
 $start = isset($_GET['start']) ? (int)$_GET['start'] : 0;
 
@@ -38,13 +38,13 @@ $start = isset($_GET['start']) ? (int)$_GET['start'] : 0;
 $manufacturer = null;
 $manufacturer = $h_oledrion_manufacturer->get($manu_id);
 if (!is_object($manufacturer)) {
-    Oledrion_utils::redirect(_OLEDRION_ERROR7, 'index.php', 5);
+    OledrionUtility::redirect(_OLEDRION_ERROR7, 'index.php', 5);
 }
 
 $xoopsTpl->assign('mod_pref', $mod_pref); // Préférences du module
-$xoopsTpl->assign('columnsCount', Oledrion_utils::getModuleOption('catagory_colums'));
+$xoopsTpl->assign('columnsCount', OledrionUtility::getModuleOption('catagory_colums'));
 $xoopsTpl->assign('manufacturer', $manufacturer->toArray());
-$limit = Oledrion_utils::getModuleOption('perpage');
+$limit = OledrionUtility::getModuleOption('perpage');
 
 // Lecture des TVA ********************************************************************************
 $vatArray = array();
@@ -84,19 +84,19 @@ if (count($products) > 0) {
     }
 }
 
-Oledrion_utils::setCSS();
-Oledrion_utils::setLocalCSS($xoopsConfig['language']);
-Oledrion_utils::loadLanguageFile('modinfo.php');
+OledrionUtility::setCSS();
+OledrionUtility::setLocalCSS($xoopsConfig['language']);
+OledrionUtility::loadLanguageFile('modinfo.php');
 
-$xoopsTpl->assign('global_advert', Oledrion_utils::getModuleOption('advertisement'));
+$xoopsTpl->assign('global_advert', OledrionUtility::getModuleOption('advertisement'));
 // By voltan
 $breadcrumb = array( /*OLEDRION_URL.'whoswho.php' => _OLEDRION_MANUFACTURERS,*/
                      OLEDRION_URL . basename(__FILE__) => $manufacturer->getVar('manu_name') . ' ' . $manufacturer->getVar('manu_commercialname')
 );
-$xoopsTpl->assign('breadcrumb', Oledrion_utils::breadcrumb($breadcrumb));
+$xoopsTpl->assign('breadcrumb', OledrionUtility::breadcrumb($breadcrumb));
 
-//$title = $manufacturer->getVar('manu_name') . ' ' . $manufacturer->getVar('manu_commercialname') . ' - ' . Oledrion_utils::getModuleName();
+//$title = $manufacturer->getVar('manu_name') . ' ' . $manufacturer->getVar('manu_commercialname') . ' - ' . OledrionUtility::getModuleName();
 
 $title = $manufacturer->getVar('manu_name') . ' ' . $manufacturer->getVar('manu_commercialname');
-Oledrion_utils::setMetas($title, $title, Oledrion_utils::createMetaKeywords($manufacturer->getVar('manu_name') . ' ' . $manufacturer->getVar('manu_commercialname') . ' ' . $manufacturer->getVar('manu_bio')));
+OledrionUtility::setMetas($title, $title, OledrionUtility::createMetaKeywords($manufacturer->getVar('manu_name') . ' ' . $manufacturer->getVar('manu_commercialname') . ' ' . $manufacturer->getVar('manu_bio')));
 require_once XOOPS_ROOT_PATH . '/footer.php';

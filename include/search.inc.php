@@ -12,7 +12,7 @@
 /**
  * oledrion
  *
- * @copyright   {@link http://xoops.org/ XOOPS Project}
+ * @copyright   {@link https://xoops.org/ XOOPS Project}
  * @license     {@link http://www.fsf.org/copyleft/gpl.html GNU public license}
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
  * @param $queryarray
@@ -31,10 +31,10 @@ function oledrion_search($queryarray, $andor, $limit, $offset, $userid)
 
     // Recherche dans les produits
     $sql = 'SELECT product_id, product_title, product_submitted, product_submitter FROM ' . $xoopsDB->prefix('oledrion_products') . ' WHERE (product_online = 1';
-    if (Oledrion_utils::getModuleOption('show_unpublished') == 0) { // Ne pas afficher les produits qui ne sont pas publiés
+    if (OledrionUtility::getModuleOption('show_unpublished') == 0) { // Ne pas afficher les produits qui ne sont pas publiés
         $sql .= ' AND product_submitted <= ' . time();
     }
-    if (Oledrion_utils::getModuleOption('nostock_display') == 0) { // Se limiter aux seuls produits encore en stock
+    if (OledrionUtility::getModuleOption('nostock_display') == 0) { // Se limiter aux seuls produits encore en stock
         $sql .= ' AND product_stock > 0';
     }
     if ($userid != 0) {
@@ -60,20 +60,20 @@ function oledrion_search($queryarray, $andor, $limit, $offset, $userid)
     $count = count($queryarray);
     $more  = '';
     if (is_array($queryarray) && $count > 0) {
-        $cnt = 0;
-        $sql .= ' AND (';
+        $cnt  = 0;
+        $sql  .= ' AND (';
         $more = ')';
         foreach ($queryarray as $oneQuery) {
-            $sql .= '(';
+            $sql  .= '(';
             $cond = " LIKE '%" . $oneQuery . "%' ";
-            $sql .= implode($cond, $tblFields) . $cond . ')';
+            $sql  .= implode($cond, $tblFields) . $cond . ')';
             ++$cnt;
             if ($cnt != $count) {
                 $sql .= ' ' . $andor . ' ';
             }
         }
     }
-    $sql .= $more . ' ORDER BY product_submitted DESC';
+    $sql    .= $more . ' ORDER BY product_submitted DESC';
     $i      = 0;
     $ret    = array();
     $myts   = MyTextSanitizer::getInstance();

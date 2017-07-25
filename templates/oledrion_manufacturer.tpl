@@ -9,19 +9,19 @@
     <div class='center'>
         <{if $manufacturer.manu_email != '' }>
             <h2><img src="<{$smarty.const.OLEDRION_IMAGES_URL}>author_32x32.png"
-                     alt="<{$manufacturer.manu_name}> <{$manufacturer.manu_commercialname}>" width="32" height="32"/> <a
+                     alt="<{$manufacturer.manu_name}> <{$manufacturer.manu_commercialname}>" width="32" height="32"> <a
                         href="mailto:<{$manufacturer.manu_email}>"><{$manufacturer.manu_name}> <{$manufacturer.manu_commercialname}></a>
             </h2>
         <{else}>
             <h2><img src="<{$smarty.const.OLEDRION_IMAGES_URL}>author_32x32.png"
                      alt="<{$manufacturer.manu_name}> <{$manufacturer.manu_commercialname}>" width="32"
-                     height="32"/> <{$manufacturer.manu_name}> <{$manufacturer.manu_commercialname}></h2>
+                     height="32"> <{$manufacturer.manu_name}> <{$manufacturer.manu_commercialname}></h2>
         <{/if}>
 
         <{if $manufacturer.manu_url != '' }>
             <div class="oledrion_authorurl">
                 <img src="<{$smarty.const.OLEDRION_IMAGES_URL}>url.png" alt="<{$manufacturer.manu_url}>" width="16"
-                     height="16"/> <{$smarty.const._OLEDRION_SITEURL}> : <a
+                     height="16"> <{$smarty.const._OLEDRION_SITEURL}> : <a
                         href="<{$manufacturer.manu_url}>" title="<{$manufacturer.manu_url}>"
                         target="_blank"><{$manufacturer.manu_url}></a>
             </div>
@@ -36,19 +36,19 @@
                     <{$manufacturer.manu_bio}>
                     <div class="oledrion_authorphotos">
                         <{if $manufacturer.manu_photo1 != '' }>
-                            <div class="oledrion_authorphotos_img"><img src="<{$manufacturer.manu_photo1_url}>" alt=""/>
+                            <div class="oledrion_authorphotos_img"><img src="<{$manufacturer.manu_photo1_url}>" alt="">
                             </div><{/if}>
                         <{if $manufacturer.manu_photo2 != '' }>
-                            <div class="oledrion_authorphotos_img"><img src="<{$manufacturer.manu_photo2_url}>" alt=""/>
+                            <div class="oledrion_authorphotos_img"><img src="<{$manufacturer.manu_photo2_url}>" alt="">
                             </div><{/if}>
                         <{if $manufacturer.manu_photo3 != '' }>
-                            <div class="oledrion_authorphotos_img"><img src="<{$manufacturer.manu_photo3_url}>" alt=""/>
+                            <div class="oledrion_authorphotos_img"><img src="<{$manufacturer.manu_photo3_url}>" alt="">
                             </div><{/if}>
                         <{if $manufacturer.manu_photo4 != '' }>
-                            <div class="oledrion_authorphotos_img"><img src="<{$manufacturer.manu_photo4_url}>" alt=""/>
+                            <div class="oledrion_authorphotos_img"><img src="<{$manufacturer.manu_photo4_url}>" alt="">
                             </div><{/if}>
                         <{if $manufacturer.manu_photo5 != '' }>
-                            <div class="oledrion_authorphotos_img"><img src="<{$manufacturer.manu_photo5_url}>" alt=""/>
+                            <div class="oledrion_authorphotos_img"><img src="<{$manufacturer.manu_photo5_url}>" alt="">
                             </div><{/if}>
                     </div>
                 </td>
@@ -59,7 +59,7 @@
     <{if count($products) > 0}>
         <div id="oledrion_related">
             <h3><img src="<{$smarty.const.OLEDRION_IMAGES_URL}>icon-product-person.png"
-                     alt="<{$smarty.const._MI_PRODUCTSBYTHISMANUFACTURER}>"/><{$smarty.const._MI_PRODUCTSBYTHISMANUFACTURER}>
+                     alt="<{$smarty.const._MI_PRODUCTSBYTHISMANUFACTURER}>"><{$smarty.const._MI_PRODUCTSBYTHISMANUFACTURER}>
             </h3>
             <table class="oledrion_productindex">
                 <tr>

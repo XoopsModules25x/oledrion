@@ -12,12 +12,12 @@
 /**
  * oledrion
  *
- * @copyright   {@link http://xoops.org/ XOOPS Project}
+ * @copyright   {@link https://xoops.org/ XOOPS Project}
  * @license     {@link http://www.fsf.org/copyleft/gpl.html GNU public license}
  * @author      Hossein Azizabadi (azizabadi@faragostaresh.com)
  */
 
-require __DIR__ . '/classheader.php';
+require_once __DIR__ . '/classheader.php';
 
 /**
  * Class Oledrion_delivery
@@ -64,8 +64,7 @@ class Oledrion_delivery extends Oledrion_Object
     {
         $return = false;
         if (xoops_trim($this->getVar('delivery_image')) != ''
-            && file_exists(OLEDRION_PICTURES_PATH . '/' . $this->getVar('delivery_image'))
-        ) {
+            && file_exists(OLEDRION_PICTURES_PATH . '/' . $this->getVar('delivery_image'))) {
             $return = true;
         }
 
@@ -108,9 +107,9 @@ class OledrionOledrion_deliveryHandler extends Oledrion_XoopsPersistableObjectHa
 {
     /**
      * OledrionOledrion_deliveryHandler constructor.
-     * @param XoopsDatabase|null $db
+     * @param object $db
      */
-    public function __construct(XoopsDatabase $db)
+    public function __construct($db)
     { //                                        Table                   Classe              Id
         parent::__construct($db, 'oledrion_delivery', 'oledrion_delivery', 'delivery_id');
     }
@@ -166,8 +165,7 @@ class OledrionOledrion_deliveryHandler extends Oledrion_XoopsPersistableObjectHa
                 $tab = array();
                 $tab = $root->toArray();
                 if (isset($location_delivery[$root->getVar('delivery_id')]['ld_delivery'])
-                    && $location_delivery[$root->getVar('delivery_id')]['ld_delivery'] == $root->getVar('delivery_id')
-                ) {
+                    && $location_delivery[$root->getVar('delivery_id')]['ld_delivery'] == $root->getVar('delivery_id')) {
                     $tab['ld_id']['delivery_select']  = 1;
                     $tab['ld_id']['ld_id']            = $location_delivery[$root->getVar('delivery_id')]['ld_id'];
                     $tab['ld_id']['ld_location']      = $location_delivery[$root->getVar('delivery_id')]['ld_location'];

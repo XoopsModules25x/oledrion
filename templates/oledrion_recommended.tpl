@@ -33,7 +33,7 @@
 
 <{if count($products) > 0 }>
     <div class="featured-blocks-titles"><h2><img src="<{$smarty.const.OLEDRION_IMAGES_URL}>icon-product-person.png"
-                                                 alt="<{$smarty.const._OLEDRION_RECOMMENDED}>"/><{$smarty.const._OLEDRION_RECOMMENDED}>
+                                                 alt="<{$smarty.const._OLEDRION_RECOMMENDED}>"><{$smarty.const._OLEDRION_RECOMMENDED}>
         </h2></div>
     <table class="oledrion_productindex">
         <tr>

@@ -11,11 +11,11 @@
     <!--  CADDY & RSS  -->
     <div id="oledrion_caddy" class="right">
         <a href="<{$smarty.const.OLEDRION_URL}>caddy.php" title="<{$smarty.const._OLEDRION_CART}>"><img
-                    src="<{$smarty.const.OLEDRION_IMAGES_URL}>cart.png" alt="<{$smarty.const._OLEDRION_CART}>"/></a>&nbsp;
+                    src="<{$smarty.const.OLEDRION_IMAGES_URL}>cart.png" alt="<{$smarty.const._OLEDRION_CART}>"></a>&nbsp;
         <{if $mod_pref.rss}>
             <a href="<{$smarty.const.OLEDRION_URL}>rss.php" title="<{$smarty.const._OLEDRION_RSS_FEED}>"><img
                         src="<{$smarty.const.OLEDRION_IMAGES_URL}>rss.gif"
-                        alt="<{$smarty.const._OLEDRION_RSS_FEED}>"/></a>
+                        alt="<{$smarty.const._OLEDRION_RSS_FEED}>"></a>
         <{/if}>
     </div>
     <!--  /CADDY & RSS  -->
@@ -24,7 +24,7 @@
     <{if count($products) > 0}>
         <div class="featured-blocks-titles">
             <h2><img src="<{$smarty.const.OLEDRION_IMAGES_URL}>icon-product-person.png"
-                     alt="<{$smarty.const._OLEDRION_CART}>"/><{$smarty.const._OLEDRION_MOST_RECENT}></h2>
+                     alt="<{$smarty.const._OLEDRION_CART}>"><{$smarty.const._OLEDRION_MOST_RECENT}></h2>
         </div>
         <table class="oledrion_productindex">
             <tr>

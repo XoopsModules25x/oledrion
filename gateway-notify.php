@@ -12,7 +12,7 @@
 /**
  * oledrion
  *
- * @copyright   {@link http://xoops.org/ XOOPS Project}
+ * @copyright   {@link https://xoops.org/ XOOPS Project}
  * @license     {@link http://www.fsf.org/copyleft/gpl.html GNU public license}
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
  */
@@ -23,7 +23,7 @@
  */
 @error_reporting(0);
 @$xoopsLogger->activated = false;
-require __DIR__ . '/header.php';
+require_once __DIR__ . '/header.php';
 @error_reporting(0);
 @$xoopsLogger->activated = false;
 $gateway          = Oledrion_gateways::getCurrentGateway();

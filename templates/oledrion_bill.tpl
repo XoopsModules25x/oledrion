@@ -86,6 +86,6 @@
     <div id="oledrion_caddy" class="right">
         <a href="<{$printurl}>" rel="nofollow" target="_blank" title="<{$smarty.const._OLEDRION_PRINT_VERSION}>"><img
                     src="<{xoModuleIcons16 printer.png}>"
-                    alt="<{$smarty.const._OLEDRION_PRINT_VERSION}>"/></a>&nbsp;
+                    alt="<{$smarty.const._OLEDRION_PRINT_VERSION}>"></a>&nbsp;
     </div>
 </div>

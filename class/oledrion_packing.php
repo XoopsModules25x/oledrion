@@ -12,12 +12,12 @@
 /**
  * oledrion
  *
- * @copyright   {@link http://xoops.org/ XOOPS Project}
+ * @copyright   {@link https://xoops.org/ XOOPS Project}
  * @license     {@link http://www.fsf.org/copyleft/gpl.html GNU public license}
  * @author      Hossein Azizabadi (azizabadi@faragostaresh.com)
  */
 
-require __DIR__ . '/classheader.php';
+require_once __DIR__ . '/classheader.php';
 
 /**
  * Class Oledrion_packing
@@ -66,8 +66,7 @@ class Oledrion_packing extends Oledrion_Object
     {
         $return = false;
         if (xoops_trim($this->getVar('packing_image')) != ''
-            && file_exists(OLEDRION_PICTURES_PATH . '/' . $this->getVar('packing_image'))
-        ) {
+            && file_exists(OLEDRION_PICTURES_PATH . '/' . $this->getVar('packing_image'))) {
             $return = true;
         }
 
@@ -111,9 +110,9 @@ class OledrionOledrion_packingHandler extends Oledrion_XoopsPersistableObjectHan
 {
     /**
      * OledrionOledrion_packingHandler constructor.
-     * @param XoopsDatabase|null $db
+     * @param object $db
      */
-    public function __construct(XoopsDatabase $db)
+    public function __construct($db)
     { //                                       Table                    Classe              Id
         parent::__construct($db, 'oledrion_packing', 'oledrion_packing', 'packing_id');
     }

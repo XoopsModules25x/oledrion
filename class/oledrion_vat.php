@@ -12,7 +12,7 @@
 /**
  * oledrion
  *
- * @copyright   {@link http://xoops.org/ XOOPS Project}
+ * @copyright   {@link https://xoops.org/ XOOPS Project}
  * @license     {@link http://www.fsf.org/copyleft/gpl.html GNU public license}
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
  */
@@ -20,7 +20,7 @@
 /**
  * Gestion des TVA
  */
-require __DIR__ . '/classheader.php';
+require_once __DIR__ . '/classheader.php';
 
 /**
  * Class Oledrion_vat
@@ -63,9 +63,9 @@ class OledrionOledrion_vatHandler extends Oledrion_XoopsPersistableObjectHandler
 {
     /**
      * OledrionOledrion_vatHandler constructor.
-     * @param XoopsDatabase|null $db
+     * @param object $db
      */
-    public function __construct(XoopsDatabase $db)
+    public function __construct($db)
     { //                        Table           Classe          Id
         parent::__construct($db, 'oledrion_vat', 'oledrion_vat', 'vat_id');
     }
@@ -141,7 +141,7 @@ class OledrionOledrion_vatHandler extends Oledrion_XoopsPersistableObjectHandler
      * @param  oledrion_vat $vat
      * @return boolean      Le résultat de la suppressin
      */
-    public function deleteVat(Oledrion_vat $vat)
+    public function deleteVat(oledrion_vat $vat)
     {
         return $this->delete($vat, true);
     }

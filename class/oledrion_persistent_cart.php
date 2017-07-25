@@ -12,7 +12,7 @@
 /**
  * oledrion
  *
- * @copyright   {@link http://xoops.org/ XOOPS Project}
+ * @copyright   {@link https://xoops.org/ XOOPS Project}
  * @license     {@link http://www.fsf.org/copyleft/gpl.html GNU public license}
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
  */
@@ -24,7 +24,7 @@
  * enregistré en base de données (à condition que l'utilisateur soit connecté).
  * Si l'utilisateur quitte le site et revient plus tard, cela permet de recharger son panier.
  */
-require __DIR__ . '/classheader.php';
+require_once __DIR__ . '/classheader.php';
 
 /**
  * Class Oledrion_persistent_cart
@@ -55,9 +55,9 @@ class OledrionOledrion_persistent_cartHandler extends Oledrion_XoopsPersistableO
 {
     /**
      * OledrionOledrion_persistent_cartHandler constructor.
-     * @param XoopsDatabase|null $db
+     * @param object $db
      */
-    public function __construct(XoopsDatabase $db)
+    public function __construct($db)
     { //                          Table                     Classe                        Id
         parent::__construct($db, 'oledrion_persistent_cart', 'oledrion_persistent_cart', 'persistent_id');
     }
@@ -70,7 +70,7 @@ class OledrionOledrion_persistent_cartHandler extends Oledrion_XoopsPersistableO
      */
     public function deleteProductForAllCarts($persistent_product_id)
     {
-        if (Oledrion_utils::getModuleOption('persistent_cart') == 0) {
+        if (OledrionUtility::getModuleOption('persistent_cart') == 0) {
             return true;
         }
         if (is_array($persistent_product_id)) {
@@ -90,10 +90,10 @@ class OledrionOledrion_persistent_cartHandler extends Oledrion_XoopsPersistableO
      */
     public function deleteAllUserProducts($persistent_uid = 0)
     {
-        if (Oledrion_utils::getModuleOption('persistent_cart') == 0) {
+        if (OledrionUtility::getModuleOption('persistent_cart') == 0) {
             return true;
         }
-        $persistent_uid = $persistent_uid == 0 ? Oledrion_utils::getCurrentUserID() : $persistent_uid;
+        $persistent_uid = $persistent_uid == 0 ? OledrionUtility::getCurrentUserID() : $persistent_uid;
 
         $criteria = new Criteria('persistent_uid', $persistent_uid, '=');
 
@@ -109,10 +109,10 @@ class OledrionOledrion_persistent_cartHandler extends Oledrion_XoopsPersistableO
      */
     public function deleteUserProduct($persistent_product_id, $persistent_uid = 0)
     {
-        if (Oledrion_utils::getModuleOption('persistent_cart') == 0) {
+        if (OledrionUtility::getModuleOption('persistent_cart') == 0) {
             return true;
         }
-        $persistent_uid = $persistent_uid == 0 ? Oledrion_utils::getCurrentUserID() : $persistent_uid;
+        $persistent_uid = $persistent_uid == 0 ? OledrionUtility::getCurrentUserID() : $persistent_uid;
         $criteria       = new CriteriaCompo();
         $criteria->add(new Criteria('persistent_uid', $persistent_uid, '='));
         $criteria->add(new Criteria('persistent_product_id', $persistent_product_id, '='));
@@ -130,10 +130,10 @@ class OledrionOledrion_persistent_cartHandler extends Oledrion_XoopsPersistableO
      */
     public function addUserProduct($persistent_product_id, $persistent_qty, $persistent_uid = 0)
     {
-        if (Oledrion_utils::getModuleOption('persistent_cart') == 0) {
+        if (OledrionUtility::getModuleOption('persistent_cart') == 0) {
             return true;
         }
-        $persistent_uid  = $persistent_uid == 0 ? Oledrion_utils::getCurrentUserID() : $persistent_uid;
+        $persistent_uid  = $persistent_uid == 0 ? OledrionUtility::getCurrentUserID() : $persistent_uid;
         $persistent_cart = $this->create(true);
         $persistent_cart->setVar('persistent_product_id', $persistent_product_id);
         $persistent_cart->setVar('persistent_uid', $persistent_uid);
@@ -153,10 +153,10 @@ class OledrionOledrion_persistent_cartHandler extends Oledrion_XoopsPersistableO
      */
     public function updateUserProductQuantity($persistent_product_id, $persistent_qty, $persistent_uid = 0)
     {
-        if (Oledrion_utils::getModuleOption('persistent_cart') == 0) {
+        if (OledrionUtility::getModuleOption('persistent_cart') == 0) {
             return true;
         }
-        $persistent_uid = $persistent_uid == 0 ? Oledrion_utils::getCurrentUserID() : $persistent_uid;
+        $persistent_uid = $persistent_uid == 0 ? OledrionUtility::getCurrentUserID() : $persistent_uid;
         $criteria       = new CriteriaCompo();
         $criteria->add(new Criteria('persistent_uid', $persistent_uid, '='));
         $criteria->add(new Criteria('persistent_product_id', $persistent_product_id, '='));
@@ -172,10 +172,10 @@ class OledrionOledrion_persistent_cartHandler extends Oledrion_XoopsPersistableO
      */
     public function isCartExists($persistent_uid = 0)
     {
-        if (Oledrion_utils::getModuleOption('persistent_cart') == 0) {
+        if (OledrionUtility::getModuleOption('persistent_cart') == 0) {
             return false;
         }
-        $persistent_uid = $persistent_uid == 0 ? Oledrion_utils::getCurrentUserID() : $persistent_uid;
+        $persistent_uid = $persistent_uid == 0 ? OledrionUtility::getCurrentUserID() : $persistent_uid;
         $criteria       = new Criteria('persistent_uid', $persistent_uid, '=');
 
         return (bool)$this->getCount($criteria);
@@ -189,10 +189,10 @@ class OledrionOledrion_persistent_cartHandler extends Oledrion_XoopsPersistableO
      */
     public function getUserProducts($persistent_uid = 0)
     {
-        if (Oledrion_utils::getModuleOption('persistent_cart') == 0) {
+        if (OledrionUtility::getModuleOption('persistent_cart') == 0) {
             return false;
         }
-        $persistent_uid = $persistent_uid == 0 ? Oledrion_utils::getCurrentUserID() : $persistent_uid;
+        $persistent_uid = $persistent_uid == 0 ? OledrionUtility::getCurrentUserID() : $persistent_uid;
         $criteria       = new Criteria('persistent_uid', $persistent_uid, '=');
 
         return $this->getObjects($criteria);

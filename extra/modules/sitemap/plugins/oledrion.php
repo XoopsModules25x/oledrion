@@ -12,14 +12,14 @@
 /**
  * oledrion
  *
- * @copyright   {@link http://xoops.org/ XOOPS Project}
+ * @copyright   {@link https://xoops.org/ XOOPS Project}
  * @license     {@link http://www.fsf.org/copyleft/gpl.html GNU public license}
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
  */
 
 function b_sitemap_oledrion()
 {
-    require __DIR__ . '/../../oledrion/header.php';
+    require_once __DIR__ . '/../oledrion/header.php';
     global $sitemap_configs;
     $xoopsDB    = XoopsDatabaseFactory::getDatabaseConnection();
     $table      = $xoopsDB->prefix('oledrion_cat');
@@ -29,7 +29,7 @@ function b_sitemap_oledrion()
     $url        = 'category.php?cat_cid=';
     $order      = 'cat_title';
 
-    include_once XOOPS_ROOT_PATH . '/class/xoopstree.php';
+    require_once XOOPS_ROOT_PATH . '/class/xoopstree.php';
     $mytree  = new XoopsTree($table, $id_name, $pid_name);
     $xoopsDB = XoopsDatabaseFactory::getDatabaseConnection();
 
@@ -45,8 +45,8 @@ function b_sitemap_oledrion()
     while (list($catid, $name) = $xoopsDB->fetchRow($result)) {
         $sitemap['parent'][$i]['id']    = $catid;
         $sitemap['parent'][$i]['title'] = $myts->htmlSpecialChars($name);
-        if (Oledrion_utils::getModuleOption('urlrewriting') == 1) { // On utilise l'url rewriting
-            $url = 'category' . '-' . (int)$catid . Oledrion_utils::makeSeoUrl($name) . '.html';
+        if (OledrionUtility::getModuleOption('urlrewriting') == 1) { // On utilise l'url rewriting
+            $url = 'category' . '-' . (int)$catid . OledrionUtility::makeSeoUrl($name) . '.html';
         } else { // Pas d'utilisation de l'url rewriting
             $url = 'category.php?cat_cid=' . (int)$catid;
         }
@@ -60,8 +60,8 @@ function b_sitemap_oledrion()
                 $sitemap['parent'][$i]['child'][$j]['id']    = $child[$id_name];
                 $sitemap['parent'][$i]['child'][$j]['title'] = $myts->htmlSpecialChars($child[$title_name]);
                 $sitemap['parent'][$i]['child'][$j]['image'] = (($count > 3) ? 4 : $count);
-                if (Oledrion_utils::getModuleOption('urlrewriting') == 1) { // On utilise l'url rewriting
-                    $url = 'category' . '-' . (int)$child[$id_name] . Oledrion_utils::makeSeoUrl($child[$title_name]) . '.html';
+                if (OledrionUtility::getModuleOption('urlrewriting') == 1) { // On utilise l'url rewriting
+                    $url = 'category' . '-' . (int)$child[$id_name] . OledrionUtility::makeSeoUrl($child[$title_name]) . '.html';
                 } else { // Pas d'utilisation de l'url rewriting
                     $url = 'category.php?cat_cid=' . (int)$child[$id_name];
                 }

@@ -12,7 +12,7 @@
 /**
  * oledrion
  *
- * @copyright   {@link http://xoops.org/ XOOPS Project}
+ * @copyright   {@link https://xoops.org/ XOOPS Project}
  * @license     {@link http://www.fsf.org/copyleft/gpl.html GNU public license}
  * @author      Hossein Azizabadi (azizabadi@faragostaresh.com)
  */
@@ -27,20 +27,23 @@ if (!defined('OLEDRION_ADMIN')) {
 switch ($action) {
     case 'default':
         xoops_cp_header();
+        $adminObject = \Xmf\Module\Admin::getInstance();
+        $adminObject->displayNavigation('index.php?op=location');
+
         $start    = isset($_GET['start']) ? (int)$_GET['start'] : 0;
         $location = array();
-        $form     = "<form method='post' action='$baseurl' name='frmaddlocation' id='frmaddlocation'><input type='hidden' name='op' id='op' value='location' /><input type='hidden' name='action' id='action' value='add' /><input type='submit' name='btngo' id='btngo' value='"
-                    . _AM_OLEDRION_ADD_ITEM . "' /></form>";
+        $form     = "<form method='post' action='$baseurl' name='frmaddlocation' id='frmaddlocation'><input type='hidden' name='op' id='op' value='location'><input type='hidden' name='action' id='action' value='add'><input type='submit' name='btngo' id='btngo' value='"
+                    . _AM_OLEDRION_ADD_ITEM
+                    . "'></form>";
         echo $form;
-        Oledrion_utils::htitle(_MI_OLEDRION_ADMENU19, 4);
+        //        OledrionUtility::htitle(_MI_OLEDRION_ADMENU19, 4);
         $location = $h_oledrion_location->getAllLocation(new Oledrion_parameters(array(
                                                                                      'start' => $start,
                                                                                      'limit' => $limit
                                                                                  )));
         $class    = '';
         echo "<table width='100%' cellspacing='1' cellpadding='3' border='0' class='outer'>";
-        echo "<tr><th align='center'>" . _AM_OLEDRION_ID . "</th><th align='center'>" . _AM_OLEDRION_LOCATION_TITLE . "</th><th align='center'>" . _AM_OLEDRION_LOCATION_TYPE . "</th><th align='center'>" . _OLEDRION_ONLINE . "</th><th align='center'>"
-             . _AM_OLEDRION_ACTION . '</th></tr>';
+        echo "<tr><th align='center'>" . _AM_OLEDRION_ID . "</th><th align='center'>" . _AM_OLEDRION_LOCATION_TITLE . "</th><th align='center'>" . _AM_OLEDRION_LOCATION_TYPE . "</th><th align='center'>" . _OLEDRION_ONLINE . "</th><th align='center'>" . _AM_OLEDRION_ACTION . '</th></tr>';
         foreach ($location as $item) {
             $id        = $item->getVar('location_id');
             $class     = ($class === 'even') ? 'odd' : 'even';
@@ -54,8 +57,7 @@ switch ($action) {
                 $location_type = _AM_OLEDRION_LOCATION_LOCATION;
             }
             echo "<tr class='" . $class . "'>\n";
-            echo "<td align='center'>" . $id . "</td><td align='center'>" . $item->getVar('location_title') . "</td><td align='center'>" . $location_type . "</td><td align='center'>" . $online . "</td><td align='center'>" . implode(' ', $actions)
-                 . "</td>\n";
+            echo "<td align='center'>" . $id . "</td><td align='center'>" . $item->getVar('location_title') . "</td><td align='center'>" . $location_type . "</td><td align='center'>" . $online . "</td><td align='center'>" . implode(' ', $actions) . "</td>\n";
             echo "<tr>\n";
         }
         $class = ($class === 'even') ? 'odd' : 'even';
@@ -63,7 +65,7 @@ switch ($action) {
         echo "<td colspan='5' align='center'>" . $form . "</td>\n";
         echo "</tr>\n";
         echo '</table>';
-        include_once OLEDRION_ADMIN_PATH . 'admin_footer.php';
+        require_once OLEDRION_ADMIN_PATH . 'admin_footer.php';
         break;
 
     case 'add':
@@ -73,13 +75,13 @@ switch ($action) {
         if ($action === 'edit') {
             $title = _AM_OLEDRION_LOCATION_EDIT;
             if (empty($id)) {
-                Oledrion_utils::redirect(_AM_OLEDRION_ERROR_1, $baseurl, 5);
+                OledrionUtility::redirect(_AM_OLEDRION_ERROR_1, $baseurl, 5);
             }
             // Item exits ?
             $item = null;
             $item = $h_oledrion_location->get($id);
             if (!is_object($item)) {
-                Oledrion_utils::redirect(_AM_OLEDRION_NOT_FOUND, $baseurl, 5);
+                OledrionUtility::redirect(_AM_OLEDRION_NOT_FOUND, $baseurl, 5);
             }
             $edit         = true;
             $label_submit = _AM_OLEDRION_MODIFY;
@@ -95,7 +97,7 @@ switch ($action) {
                                                                                            'location' => $id
                                                                                        )));
         if (empty($deliveres)) {
-            Oledrion_utils::redirect(_AM_OLEDRION_LOCATION_DELIVERYADD, $baseurl, 5);
+            OledrionUtility::redirect(_AM_OLEDRION_LOCATION_DELIVERYADD, $baseurl, 5);
         }
 
         $sform = new XoopsThemeForm($title, 'frmaddlocation', $baseurl);
@@ -105,8 +107,14 @@ switch ($action) {
         $sform->addElement(new XoopsFormText(_AM_OLEDRION_LOCATION_TITLE, 'location_title', 50, 150, $item->getVar('location_title', 'e')), true);
         $location_pid = $h_oledrion_location->getAllPid(new Oledrion_parameters());
         $mytree       = new XoopsObjectTree($location_pid, 'location_id', 'location_pid');
-        $select_pid   = $mytree->makeSelBox('location_pid', 'location_title', '-', $item->getVar('location_pid'), true);
-        $sform->addElement(new XoopsFormLabel(_AM_OLEDRION_LOCATION_PID, $select_pid), false);
+
+        if (OledrionUtility::checkVerXoops($module, '2.5.9')) {
+            $select_pid = $mytree->makeSelectElement('location_pid', 'location_title', '--', $item->getVar('location_pid'), true, 0, '', _AM_OLEDRION_LOCATION_PID);
+            $form->addElement($select_pid);
+        } else {
+            $select_pid = $mytree->makeSelBox('location_pid', 'location_title', '-', $item->getVar('location_pid'), true);
+            $sform->addElement(new XoopsFormLabel(_AM_OLEDRION_LOCATION_PID, $select_pid), false);
+        }
         $product_type = new XoopsFormSelect(_AM_OLEDRION_LOCATION_TYPE, 'location_type', $item->getVar('location_type'));
         $product_type->addOption('location', _AM_OLEDRION_LOCATION_LOCATION);
         $product_type->addOption('parent', _AM_OLEDRION_LOCATION_PARENT);
@@ -136,9 +144,9 @@ switch ($action) {
         $submit_btn  = new XoopsFormButton('', 'post', $label_submit, 'submit');
         $button_tray->addElement($submit_btn);
         $sform->addElement($button_tray);
-        $sform =& Oledrion_utils::formMarkRequiredFields($sform);
+        $sform =& OledrionUtility::formMarkRequiredFields($sform);
         $sform->display();
-        include_once OLEDRION_ADMIN_PATH . 'admin_footer.php';
+        require_once OLEDRION_ADMIN_PATH . 'admin_footer.php';
         break;
 
     case 'save':
@@ -148,7 +156,7 @@ switch ($action) {
             $edit = true;
             $item = $h_oledrion_location->get($id);
             if (!is_object($item)) {
-                Oledrion_utils::redirect(_AM_OLEDRION_NOT_FOUND, $baseurl, 5);
+                OledrionUtility::redirect(_AM_OLEDRION_NOT_FOUND, $baseurl, 5);
             }
             $item->unsetNew();
         } else {
@@ -198,25 +206,25 @@ switch ($action) {
         }
 
         if ($res) {
-            Oledrion_utils::updateCache();
-            Oledrion_utils::redirect(_AM_OLEDRION_SAVE_OK, $baseurl . '?op=' . $opRedirect, 2);
+            OledrionUtility::updateCache();
+            OledrionUtility::redirect(_AM_OLEDRION_SAVE_OK, $baseurl . '?op=' . $opRedirect, 2);
         } else {
-            Oledrion_utils::redirect(_AM_OLEDRION_SAVE_PB, $baseurl . '?op=' . $opRedirect, 5);
+            OledrionUtility::redirect(_AM_OLEDRION_SAVE_PB, $baseurl . '?op=' . $opRedirect, 5);
         }
 
-        include_once OLEDRION_ADMIN_PATH . 'admin_footer.php';
+        require_once OLEDRION_ADMIN_PATH . 'admin_footer.php';
         break;
 
     case 'delete':
         xoops_cp_header();
         $id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
         if ($id == 0) {
-            Oledrion_utils::redirect(_AM_OLEDRION_ERROR_1, $baseurl, 5);
+            OledrionUtility::redirect(_AM_OLEDRION_ERROR_1, $baseurl, 5);
         }
         $location = null;
         $location = $h_oledrion_location->get($id);
         if (!is_object($location)) {
-            Oledrion_utils::redirect(_AM_OLEDRION_ERROR_10, $baseurl, 5);
+            OledrionUtility::redirect(_AM_OLEDRION_ERROR_10, $baseurl, 5);
         }
         $msg = sprintf(_AM_OLEDRION_CONF_DEL_ITEM, $location->getVar('location_title'));
         xoops_confirm(array('op' => 'location', 'action' => 'confdelete', 'id' => $id), 'index.php', $msg);
@@ -227,7 +235,7 @@ switch ($action) {
         xoops_cp_header();
         $id = isset($_POST['id']) ? (int)$_POST['id'] : 0;
         if (empty($id)) {
-            Oledrion_utils::redirect(_AM_OLEDRION_ERROR_1, $baseurl, 5);
+            OledrionUtility::redirect(_AM_OLEDRION_ERROR_1, $baseurl, 5);
         }
         $opRedirect = 'location';
 
@@ -241,13 +249,13 @@ switch ($action) {
             // Delete delivery
             $res = $h_oledrion_location->delete($item);
             if ($res) {
-                Oledrion_utils::updateCache();
-                Oledrion_utils::redirect(_AM_OLEDRION_SAVE_OK, $baseurl . '?op=' . $opRedirect, 2);
+                OledrionUtility::updateCache();
+                OledrionUtility::redirect(_AM_OLEDRION_SAVE_OK, $baseurl . '?op=' . $opRedirect, 2);
             } else {
-                Oledrion_utils::redirect(_AM_OLEDRION_SAVE_PB, $baseurl . '?op=' . $opRedirect, 5);
+                OledrionUtility::redirect(_AM_OLEDRION_SAVE_PB, $baseurl . '?op=' . $opRedirect, 5);
             }
         } else {
-            Oledrion_utils::redirect(_AM_OLEDRION_NOT_FOUND, $baseurl . '?op=' . $opRedirect, 5);
+            OledrionUtility::redirect(_AM_OLEDRION_NOT_FOUND, $baseurl . '?op=' . $opRedirect, 5);
         }
         break;
 }
