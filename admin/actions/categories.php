@@ -40,10 +40,10 @@ switch ($action) {
         $mytree     = new XoopsObjectTree($categories, 'cat_cid', 'cat_pid');
 
         if (OledrionUtility::checkVerXoops($module, '2.5.9')) {
-            $categoriesSelect0 = $topic_tree->makeSelectElement('id', 'cat_title', '--', '', true, 0, '', '');
+            $categoriesSelect0 = $mytree->makeSelectElement('id', 'cat_title', '--', '', true, 0, '', '');
             $categoriesSelect  = $categoriesSelect0->render();
         } else {
-            $categoriesSelect = $topic_tree->makeSelBox('id', 'cat_title', '-- ', '', true);
+            $categoriesSelect = $mytree->makeSelBox('id', 'cat_title', '-- ', '', true);
         }
 
         echo "<div class='even'><form method='post' name='quickaccess' id='quickaccess' action='$baseurl' >"
