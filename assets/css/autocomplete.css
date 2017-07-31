@@ -6,7 +6,7 @@
     border: 1px solid #BFBFBF;
     border-bottom: 0;
     font-size: 12px;
-    font-family: arial,sans-serif;
+    font-family: arial, sans-serif;
     padding: 0;
     display: none;
 }
@@ -67,8 +67,8 @@
 }
 
 /*
-	The following zoom:1 rule is specifically for IE6 + IE7.
-	Move to separate stylesheet if invalid CSS is a problem.
+    The following zoom:1 rule is specifically for IE6 + IE7.
+    Move to separate stylesheet if invalid CSS is a problem.
 */
 
 .clearfix {

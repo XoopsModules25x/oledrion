@@ -1,0 +1,20 @@
+---
+# oledrion_location
+-
+  location_id: 1
+  location_pid: 0
+  location_title: "New York"
+  location_online: 1
+  location_type: "location"
+-
+  location_id: 2
+  location_pid: 0
+  location_title: "San Francisco"
+  location_online: 1
+  location_type: "location"
+-
+  location_id: 3
+  location_pid: 0
+  location_title: "Cincinnati"
+  location_online: 1
+  location_type: "location"

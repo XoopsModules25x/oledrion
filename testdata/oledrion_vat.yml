@@ -1,0 +1,14 @@
+---
+# oledrion_vat
+-
+  vat_id: 1
+  vat_rate: 5.00
+  vat_country: "US"
+-
+  vat_id: 1
+  vat_rate: 10.00
+  vat_country: "DE"
+-
+  vat_id: 1
+  vat_rate: 8.00
+  vat_country: "CA"

@@ -3,10 +3,10 @@
 ---------------------------------------
 Needed options :
 1- Make a calculation of Shipping costs based on the weight of the package.
-2- Add PDF 
+2- Add PDF
 3- Final and printable Sales Invoice for user at finish of ordring (finish)
 4- User order / invoice history
-5- AJAX checkout levels 
+5- AJAX checkout levels
 
 Bugs :
 1- Print page didnt work (finish)

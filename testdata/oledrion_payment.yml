@@ -1,0 +1,26 @@
+---
+# oledrion_payment
+-
+  payment_id: 1
+  payment_title: "PayPal"
+  payment_description: "<p><span style=\"color: #828282; font-family: Arial, Helvetica, sans-serif; font-size: 12.6px; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: 20px; orphans: auto; text-align: justify; text-indent: 0px; text-transform: none; white-space: normal; widows: 1; word-spacing: 0px; -webkit-text-stroke-width: 0px; display: inline !important; float: none; background-color: #ffffff;\">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse mattis, nulla id pretium malesuada, dui est laoreet risus, ac rhoncus eros diam id odio.</span></p>"
+  payment_online: 1
+  payment_type: "online"
+  payment_gateway: "paypal"
+  payment_image: ""
+-
+  payment_id: 2
+  payment_title: "PayPal2"
+  payment_description: "<p><span style=\"color: #828282; font-family: Arial, Helvetica, sans-serif; font-size: 12.6px; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: 20px; orphans: auto; text-align: justify; text-indent: 0px; text-transform: none; white-space: normal; widows: 1; word-spacing: 0px; -webkit-text-stroke-width: 0px; display: inline !important; float: none; background-color: #ffffff;\">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse mattis, nulla id pretium malesuada, dui est laoreet risus, ac rhoncus eros diam id odio.</span></p>"
+  payment_online: 1
+  payment_type: "online"
+  payment_gateway: "paypal"
+  payment_image: ""
+-
+  payment_id: 3
+  payment_title: "PayPal3"
+  payment_description: "<p><span style=\"color: #828282; font-family: Arial, Helvetica, sans-serif; font-size: 12.6px; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: 20px; orphans: auto; text-align: justify; text-indent: 0px; text-transform: none; white-space: normal; widows: 1; word-spacing: 0px; -webkit-text-stroke-width: 0px; display: inline !important; float: none; background-color: #ffffff;\">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse mattis, nulla id pretium malesuada, dui est laoreet risus, ac rhoncus eros diam id odio.</span></p>"
+  payment_online: 1
+  payment_type: "online"
+  payment_gateway: "paypal"
+  payment_image: ""

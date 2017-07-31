@@ -1,0 +1,26 @@
+---
+# oledrion_caddy
+-
+  caddy_id: 1
+  caddy_product_id: 2
+  caddy_qte: 1
+  caddy_price: 134.95
+  caddy_cmd_id: 1
+  caddy_shipping: 10.00
+  caddy_pass: "30ff450819afca0a6584032236dabb6e"
+-
+  caddy_id: 2
+  caddy_product_id: 2
+  caddy_qte: 1
+  caddy_price: 134.95
+  caddy_cmd_id: 1
+  caddy_shipping: 10.00
+  caddy_pass: "30ff450819afca0a6584032236dabb6e"
+-
+  caddy_id: 3
+  caddy_product_id: 2
+  caddy_qte: 1
+  caddy_price: 134.95
+  caddy_cmd_id: 1
+  caddy_shipping: 10.00
+  caddy_pass: "30ff450819afca0a6584032236dabb6e"

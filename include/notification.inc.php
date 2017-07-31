@@ -28,9 +28,9 @@ function oledrion_notify_iteminfo($category, $item_id)
     if (empty($xoopsModule) || $xoopsModule->getVar('dirname') !== 'oledrion') {
         /** @var XoopsModuleHandler $moduleHandler */
         $moduleHandler = xoops_getHandler('module');
-        $module         = $moduleHandler->getByDirname('oledrion');
+        $module        = $moduleHandler->getByDirname('oledrion');
         $configHandler = xoops_getHandler('config');
-        $config         = $configHandler->getConfigsByCat(0, $module->getVar('mid'));
+        $config        = $configHandler->getConfigsByCat(0, $module->getVar('mid'));
     } else {
         $module = $xoopsModule;
         // TODO: Jamais utilisé !!!

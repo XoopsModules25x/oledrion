@@ -1,0 +1,26 @@
+---
+# oledrion_persistent_cart
+-
+  persistent_id: 1
+  persistent_product_id: 5
+  persistent_uid: 1
+  persistent_date: 1480554631
+  persistent_qty: 1
+-
+  persistent_id: 2
+  persistent_product_id: 2
+  persistent_uid: 1
+  persistent_date: 1480556007
+  persistent_qty: 1
+-
+  persistent_id: 3
+  persistent_product_id: 5
+  persistent_uid: 1
+  persistent_date: 1480554631
+  persistent_qty: 1
+-
+  persistent_id: 4
+  persistent_product_id: 3
+  persistent_uid: 1
+  persistent_date: 1480556007
+  persistent_qty: 1

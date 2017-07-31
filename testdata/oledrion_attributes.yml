@@ -1,0 +1,47 @@
+---
+# oledrion_attributes
+-
+  attribute_id: 1
+  attribute_weight: 5
+  attribute_title: "Camera Lens"
+  attribute_name: "Camera Lens 210mm"
+  attribute_type: 1
+  attribute_mandatory: 0
+  attribute_values: ""
+  attribute_names: ""
+  attribute_prices: ""
+  attribute_stocks: ""
+  attribute_product_id: 5
+  attribute_default_value: ""
+  attribute_option1: 1
+  attribute_option2: 0
+-
+  attribute_id: 2
+  attribute_weight: 5
+  attribute_title: "Camera Lens"
+  attribute_name: "Camera Lens 210mm"
+  attribute_type: 1
+  attribute_mandatory: 0
+  attribute_values: ""
+  attribute_names: ""
+  attribute_prices: ""
+  attribute_stocks: ""
+  attribute_product_id: 5
+  attribute_default_value: ""
+  attribute_option1: 1
+  attribute_option2: 0
+-
+  attribute_id: 3
+  attribute_weight: 5
+  attribute_title: "Camera Lens"
+  attribute_name: "Camera Lens 210mm"
+  attribute_type: 1
+  attribute_mandatory: 0
+  attribute_values: ""
+  attribute_names: ""
+  attribute_prices: ""
+  attribute_stocks: ""
+  attribute_product_id: 5
+  attribute_default_value: ""
+  attribute_option1: 1
+  attribute_option2: 0
