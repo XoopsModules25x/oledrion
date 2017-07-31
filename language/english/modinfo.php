@@ -306,7 +306,7 @@ define('_MI_OLEDRION_SMS_TRACK_TEXT', 'SMS Track Description');
 //2.34
 //Help
 define('_MI_OLEDRION_DIRNAME', basename(dirname(dirname(__DIR__))));
-define('_MI_OLEDRION_HELP_HEADER', __DIR__ . '/help/helpheader.html');
+define('_MI_OLEDRION_HELP_HEADER', __DIR__ . '/help/helpheader.tpl');
 define('_MI_OLEDRION_BACK_2_ADMIN', 'Back to Administration of ');
 define('_MI_OLEDRION_OVERVIEW', 'Overview');
 
