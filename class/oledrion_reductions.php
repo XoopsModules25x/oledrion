@@ -343,7 +343,7 @@ class Oledrion_reductions
      */
     private function getDiscountedPrice($price, $discount)
     {
-        return (float)($price - ($price * ($discount / 100)));
+        return ($price - ($price * ($discount / 100)));
     }
 
     /**

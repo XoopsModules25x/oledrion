@@ -131,7 +131,7 @@ switch ($action) {
 
         $sform->addElement(new XoopsFormText(_AM_OLEDRION_DESCRIPTION, 'file_description', 50, 255, $item->getVar('file_description', 'e')), true);
 
-        if ($action === 'edit' && trim($item->getVar('file_filename')) != '' && $item->fileExists()) {
+        if ($action === 'edit' && trim($item->getVar('file_filename')) !== '' && $item->fileExists()) {
             $pictureTray = new XoopsFormElementTray(_AM_OLEDRION_CURRENT_FILE, '<br>');
             $pictureTray->addElement(new XoopsFormLabel('', "<a href='" . $item->getURL() . "' target='_blank'>" . $item->getVar('file_filename') . '</a>'));
             $sform->addElement($pictureTray);
@@ -143,7 +143,7 @@ switch ($action) {
         $submit_btn  = new XoopsFormButton('', 'post', $label_submit, 'submit');
         $button_tray->addElement($submit_btn);
         $sform->addElement($button_tray);
-        $sform =& OledrionUtility::formMarkRequiredFields($sform);
+        $sform = OledrionUtility::formMarkRequiredFields($sform);
         $sform->display();
         require_once OLEDRION_ADMIN_PATH . 'admin_footer.php';
         break;

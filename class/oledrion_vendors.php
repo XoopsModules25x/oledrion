@@ -48,9 +48,9 @@ class OledrionOledrion_vendorsHandler extends Oledrion_XoopsPersistableObjectHan
 {
     /**
      * OledrionOledrion_vendorsHandler constructor.
-     * @param object $db
+     * @param XoopsDatabase $db
      */
-    public function __construct($db)
+    public function __construct(XoopsDatabase $db)
     { //                            Table               Classe          Id          Libellé
         parent::__construct($db, 'oledrion_vendors', 'oledrion_vendors', 'vendor_id', 'vendor_name');
     }

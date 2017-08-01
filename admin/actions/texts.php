@@ -73,7 +73,7 @@ switch ($action) {
         $submit_btn  = new XoopsFormButton('', 'post', _AM_OLEDRION_MODIFY, 'submit');
         $button_tray->addElement($submit_btn);
         $sform->addElement($button_tray);
-        $sform =& OledrionUtility::formMarkRequiredFields($sform);
+        $sform = OledrionUtility::formMarkRequiredFields($sform);
         $sform->display();
         break;
 

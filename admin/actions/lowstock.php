@@ -74,7 +74,7 @@ switch ($action) {
             $names = explode('|', $_POST['names']);
             foreach ($names as $item) {
                 $name = 'qty_' . $item;
-                if (isset($_POST[$name]) && xoops_trim($_POST[$name]) != '') {
+                if (isset($_POST[$name]) && xoops_trim($_POST[$name]) !== '') {
                     $quantity   = (int)$_POST[$name];
                     $product_id = (int)$item;
                     $product    = null;

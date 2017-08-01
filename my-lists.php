@@ -48,7 +48,7 @@ $breadcrumb = '';
 /**
  * @param                        $op
  * @param  int                   $product_id
- * @return object|XoopsThemeForm
+ * @return XoopsThemeForm
  */
 function listForm($op, $product_id = 0)
 {
@@ -118,7 +118,7 @@ function listForm($op, $product_id = 0)
     $button_tray->addElement($submit_btn);
     $sform->addElement($button_tray);
 
-    $sform =& OledrionUtility::formMarkRequiredFields($sform);
+    $sform = OledrionUtility::formMarkRequiredFields($sform);
 
     return $sform;
 }
@@ -312,7 +312,7 @@ switch ($op) {
             $edit = false;
         }
         // Contrôle sur le titre
-        if (!isset($_POST['list_title']) || (isset($_POST['list_title']) && xoops_trim($_POST['list_title']) == '')) {
+        if (!isset($_POST['list_title']) || (isset($_POST['list_title']) && xoops_trim($_POST['list_title']) === '')) {
             OledrionUtility::redirect(_OLEDRION_ERROR24, $baseurl, 5);
         }
         $item->setVars($_POST);

@@ -101,7 +101,7 @@ class Oledrion_plugins
 
     /**
      * Contient l'unique instance de l'objet
-     * @var object
+     * @var Oledrion_plugins
      */
     private static $instance = false;
 
@@ -114,7 +114,7 @@ class Oledrion_plugins
     /**
      * Retourne l'instance unique de la classe
      *
-     * @return object
+     * @return Oledrion_plugins
      */
     public static function getInstance()
     {
@@ -199,8 +199,8 @@ class Oledrion_plugins
      * Déclenchement d'une action et appel des plugins liés
      *
      * @param  string                     $eventToFire L'action déclenchée
-     * @param  object|Oledrion_parameters $parameters  Les paramètres à passer à chaque plugin
-     * @return object                     L'objet lui même pour chaîner
+     * @param  Oledrion_parameters $parameters  Les paramètres à passer à chaque plugin
+     * @return Oledrion_plugins                     L'objet lui même pour chaîner
      */
     public function fireAction($eventToFire, Oledrion_parameters $parameters = null)
     {
@@ -234,8 +234,8 @@ class Oledrion_plugins
      * Déclenchement d'un filtre et appel des plugins liés
      *
      * @param  string                     $eventToFire Le filtre appelé
-     * @param  object|Oledrion_parameters $parameters  Les paramètres à passer à chaque plugin
-     * @return object                     Le contenu de l'objet passé en paramètre
+     * @param  Oledrion_parameters $parameters  Les paramètres à passer à chaque plugin
+     * @return Oledrion_parameters|Oledrion_plugins                     Le contenu de l'objet passé en paramètre
      */
     public function fireFilter($eventToFire, Oledrion_parameters $parameters)
     {

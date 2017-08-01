@@ -50,7 +50,7 @@ if (OledrionUtility::getModuleOption('show_unpublished') == 0 && $product->getVa
 
 // Faut il afficher les produit même lorsqu'ils ne sont plus en stock ?
 if (OledrionUtility::getModuleOption('nostock_display') == 0 && $product->getVar('product_stock') == 0) {
-    if (xoops_trim(OledrionUtility::getModuleOption('nostock_display')) != '') {
+    if (xoops_trim(OledrionUtility::getModuleOption('nostock_display')) !== '') {
         OledrionUtility::redirect(OledrionUtility::getModuleOption('nostock_display'), 'main.php', 5);
     }
 }
@@ -276,7 +276,7 @@ switch ($op) {
 
         $tbl_tmp['product_category'] = $product_category->toArray();
         $tbl_tmp['product_vendor']   = $product_vendor->toArray();
-        if (xoops_trim($product_user->getVar('name')) != '') {
+        if (xoops_trim($product_user->getVar('name')) !== '') {
             $name = $product_user->getVar('name');
         } else {
             $name = $product_user->getVar('uname');
@@ -554,9 +554,9 @@ switch ($op) {
         OledrionUtility::setCSS();
         OledrionUtility::setLocalCSS($xoopsConfig['language']);
         if (OledrionUtility::getModuleOption('manual_meta')) {
-            $pageTitle       = xoops_trim($product->getVar('product_metatitle')) == '' ? $title : $product->getVar('product_metatitle');
-            $metaDescription = xoops_trim($product->getVar('product_metadescription')) != '' ? $product->getVar('product_metadescription') : $title;
-            $metaKeywords    = xoops_trim($product->getVar('product_metakeywords')) != '' ? $product->getVar('product_metakeywords') : OledrionUtility::createMetaKeywords($product->getVar('product_title') . ' ' . $product->getVar('product_summary') . ' ' . $product->getVar('product_description'));
+            $pageTitle       = xoops_trim($product->getVar('product_metatitle')) === '' ? $title : $product->getVar('product_metatitle');
+            $metaDescription = xoops_trim($product->getVar('product_metadescription')) !== '' ? $product->getVar('product_metadescription') : $title;
+            $metaKeywords    = xoops_trim($product->getVar('product_metakeywords')) !== '' ? $product->getVar('product_metakeywords') : OledrionUtility::createMetaKeywords($product->getVar('product_title') . ' ' . $product->getVar('product_summary') . ' ' . $product->getVar('product_description'));
             OledrionUtility::setMetas($pageTitle, $metaDescription, $metaKeywords);
         } else {
             OledrionUtility::setMetas($title, $title, OledrionUtility::createMetaKeywords($product->getVar('product_title') . ' ' . $product->getVar('product_summary') . ' ' . $product->getVar('product_description')));

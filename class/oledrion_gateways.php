@@ -46,7 +46,7 @@ class Oledrion_gateways
             $return = xoops_trim(OledrionUtility::getModuleOption('used_gateway'));
         }
 
-        if ($return == '') {
+        if ($return === '') {
             $return = 'paypal'; // Valeur par défaut
         }
 
@@ -61,7 +61,7 @@ class Oledrion_gateways
     public static function getDefaultGateway()
     {
         $return = xoops_trim(OledrionUtility::getModuleOption('used_gateway'));
-        if ($return == '') {
+        if ($return === '') {
             $return = 'paypal'; // Valeur par défaut
         }
 
@@ -215,7 +215,7 @@ class Oledrion_gateways
     /**
      * Indique si un objet de type gateway étend bien la classe abstraite
      *
-     * @param  object $gateway L'objet à vérifier
+     * @param  Oledrion_gateways $gateway L'objet à vérifier
      * @return boolean
      */
     public static function asGoodAncestor($gateway)

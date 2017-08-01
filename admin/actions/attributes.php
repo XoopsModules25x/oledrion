@@ -76,7 +76,7 @@ switch ($action) {
             $filter_attribute_id = (int)$_POST['filter_attribute_id'];
             $newFilter           = true;
         }
-        if (isset($_POST['filter_attribute_title']) && xoops_trim($_POST['filter_attribute_title']) != '') {
+        if (isset($_POST['filter_attribute_title']) && xoops_trim($_POST['filter_attribute_title']) !== '') {
             $criteria->add(new Criteria('attribute_title', '%' . $_POST['filter_attribute_title'] . '%', 'LIKE'));
             $filter_attribute_title = $_POST['filter_attribute_title'];
             $newFilter              = true;
@@ -97,7 +97,7 @@ switch ($action) {
             $newFilter             = true;
         }
 
-        if ($filter_attribute_id == 0 && $filter_attribute_title == '' && $filter_attribute_weight == 0
+        if ($filter_attribute_id == 0 && $filter_attribute_title === '' && $filter_attribute_weight == 0
             && $filter_attribute_type == 0) {
             $newFilter = true;
         }
@@ -402,7 +402,7 @@ switch ($action) {
         $button_tray->addElement($submit_btn);
         $sform->addElement($button_tray);
         OledrionUtility::callJavascriptFile('attributes.js', false, true);
-        $sform =& OledrionUtility::formMarkRequiredFields($sform);
+        $sform = OledrionUtility::formMarkRequiredFields($sform);
         $sform->display();
         require_once __DIR__ . '/admin_footer.php';
         break;

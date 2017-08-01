@@ -90,12 +90,12 @@ switch ($action) {
             $filter_product_recommended = (int)$_POST['filter_product_recommended'];
             $newFilter                  = true;
         }
-        if (isset($_POST['filter_product_title']) && xoops_trim($_POST['filter_product_title']) != '') {
+        if (isset($_POST['filter_product_title']) && xoops_trim($_POST['filter_product_title']) !== '') {
             $criteria->add(new Criteria('product_title', '%' . $_POST['filter_product_title'] . '%', 'LIKE'));
             $filter_product_title = $_POST['filter_product_title'];
             $newFilter            = true;
         }
-        if (isset($_POST['filter_product_sku']) && xoops_trim($_POST['filter_product_sku']) != '') {
+        if (isset($_POST['filter_product_sku']) && xoops_trim($_POST['filter_product_sku']) !== '') {
             $criteria->add(new Criteria('product_sku', '%' . $_POST['filter_product_sku'] . '%', 'LIKE'));
             $filter_product_sku = $_POST['filter_product_sku'];
             $newFilter          = true;
@@ -115,8 +115,8 @@ switch ($action) {
             && $filter_product_recommended == 0
             && $filter_product_price == 0
             && $filter_product_online == 0
-            && $filter_product_title == ''
-            && $filter_product_sku == '') {
+            && $filter_product_title === ''
+            && $filter_product_sku === '') {
             $newFilter = true;
         }
 
@@ -548,7 +548,7 @@ switch ($action) {
             $sform->addElement(new XoopsFormText(_AM_OLEDRION_META_PAGETITLE, 'product_metatitle', 50, 255, $item->getVar('product_metatitle', 'e')), false);
         }
         // Fichier attaché
-        if ($action === 'edit' && trim($item->getVar('product_attachment')) != ''
+        if ($action === 'edit' && trim($item->getVar('product_attachment')) !== ''
             && file_exists(XOOPS_UPLOAD_PATH . '/' . trim($item->getVar('product_attachment')))) {
             $pictureTray = new XoopsFormElementTray(_OLEDRION_ATTACHED_FILE, '<br>');
             $pictureTray->addElement(new XoopsFormLabel('', "<a href='" . XOOPS_UPLOAD_URL . '/' . $item->getVar('product_attachment') . "' target='_blank'>" . XOOPS_UPLOAD_URL . '/' . $item->getVar('product_attachment') . '</a>'));
@@ -657,7 +657,7 @@ switch ($action) {
         $button_tray->addElement($submit_btn);
         $sform->addElement($button_tray);
 
-        $sform =& OledrionUtility::formMarkRequiredFields($sform);
+        $sform = OledrionUtility::formMarkRequiredFields($sform);
         $sform->display();
         require_once OLEDRION_ADMIN_PATH . 'admin_footer.php';
         break;
@@ -727,7 +727,7 @@ switch ($action) {
             }
         } else { // Il faut créer la vignette pour l'utilisateur
             $indiceAttached = 1;
-            if (xoops_trim($mainPicture) != '') {
+            if (xoops_trim($mainPicture) !== '') {
                 $thumbName = OLEDRION_THUMBS_PREFIX . $mainPicture;
                 OledrionUtility::resizePicture(OLEDRION_PICTURES_PATH . '/' . $mainPicture, OLEDRION_PICTURES_PATH . '/' . $thumbName, OledrionUtility::getModuleOption('thumbs_width'), OledrionUtility::getModuleOption('thumbs_height'), true);
                 $item->setVar('product_thumb_url', $thumbName);
@@ -944,7 +944,7 @@ switch ($action) {
         $submit_btn  = new XoopsFormButton('', 'post', _SUBMIT, 'submit');
         $button_tray->addElement($submit_btn);
         $sform->addElement($button_tray);
-        $sform =& OledrionUtility::formMarkRequiredFields($sform);
+        $sform = OledrionUtility::formMarkRequiredFields($sform);
         $sform->display();
 
         require_once OLEDRION_ADMIN_PATH . 'admin_footer.php';

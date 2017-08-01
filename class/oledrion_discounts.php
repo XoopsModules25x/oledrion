@@ -132,9 +132,9 @@ class OledrionOledrion_discountsHandler extends Oledrion_XoopsPersistableObjectH
 {
     /**
      * OledrionOledrion_discountsHandler constructor.
-     * @param object $db
+     * @param XoopsDatabase $db
      */
-    public function __construct($db)
+    public function __construct(XoopsDatabase $db)
     { //                        Table                   Classe              Id        Libellé
         parent::__construct($db, 'oledrion_discounts', 'oledrion_discounts', 'disc_id', 'disc_title');
     }

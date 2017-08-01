@@ -124,9 +124,9 @@ class OledrionOledrion_filesHandler extends Oledrion_XoopsPersistableObjectHandl
 {
     /**
      * OledrionOledrion_filesHandler constructor.
-     * @param object $db
+     * @param XoopsDatabase $db
      */
-    public function __construct($db)
+    public function __construct(XoopsDatabase $db)
     { //                            Table           Classe          Id          Libellé
         parent::__construct($db, 'oledrion_files', 'oledrion_files', 'file_id', 'file_filename');
     }

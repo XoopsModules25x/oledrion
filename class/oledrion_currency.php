@@ -50,10 +50,7 @@ class Oledrion_Currency
     /**
      * Access the only instance of this class
      *
-     * @return object
-     *
-     * @static
-     * @staticvar   object
+     * @return Oledrion_Currency
      */
 
     public static function getInstance()

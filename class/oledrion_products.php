@@ -126,7 +126,7 @@ class Oledrion_products extends Oledrion_Object
      */
     public function getPictureUrl()
     {
-        if (xoops_trim($this->getVar('product_image_url')) != '') {
+        if (xoops_trim($this->getVar('product_image_url')) !== '') {
             return OLEDRION_PICTURES_URL . '/' . $this->getVar('product_image_url');
         } else {
             return '';
@@ -140,7 +140,7 @@ class Oledrion_products extends Oledrion_Object
      */
     public function getPicturePath()
     {
-        if (xoops_trim($this->getVar('product_image_url')) != '') {
+        if (xoops_trim($this->getVar('product_image_url')) !== '') {
             return OLEDRION_PICTURES_PATH . '/' . $this->getVar('product_image_url');
         } else {
             return '';
@@ -154,7 +154,7 @@ class Oledrion_products extends Oledrion_Object
      */
     public function getThumbUrl()
     {
-        if (xoops_trim($this->getVar('product_thumb_url')) != '') {
+        if (xoops_trim($this->getVar('product_thumb_url')) !== '') {
             return OLEDRION_PICTURES_URL . '/' . $this->getVar('product_thumb_url');
         } else {
             return '';
@@ -168,7 +168,7 @@ class Oledrion_products extends Oledrion_Object
      */
     public function getThumbPath()
     {
-        if (xoops_trim($this->getVar('product_thumb_url')) != '') {
+        if (xoops_trim($this->getVar('product_thumb_url')) !== '') {
             return OLEDRION_PICTURES_PATH . '/' . $this->getVar('product_thumb_url');
         } else {
             return '';
@@ -183,7 +183,7 @@ class Oledrion_products extends Oledrion_Object
     public function pictureExists()
     {
         $return = false;
-        if (xoops_trim($this->getVar('product_image_url')) != ''
+        if (xoops_trim($this->getVar('product_image_url')) !== ''
             && file_exists(OLEDRION_PICTURES_PATH . '/' . $this->getVar('product_image_url'))) {
             $return = true;
         }
@@ -199,7 +199,7 @@ class Oledrion_products extends Oledrion_Object
     public function thumbExists()
     {
         $return = false;
-        if (xoops_trim($this->getVar('product_thumb_url')) != ''
+        if (xoops_trim($this->getVar('product_thumb_url')) !== ''
             && file_exists(OLEDRION_PICTURES_PATH . '/' . $this->getVar('product_thumb_url'))) {
             $return = true;
         }
@@ -228,7 +228,7 @@ class Oledrion_products extends Oledrion_Object
     public function attachmentExists()
     {
         $return = false;
-        if (xoops_trim($this->getVar('product_attachment')) != ''
+        if (xoops_trim($this->getVar('product_attachment')) !== ''
             && file_exists(OLEDRION_ATTACHED_FILES_PATH . '/' . $this->getVar('product_attachment'))) {
             $return = true;
         }
@@ -336,9 +336,9 @@ class Oledrion_products extends Oledrion_Object
     public function recommendedPicture()
     {
         if ($this->isRecommended()) {
-            return "<img src=\"" . OLEDRION_IMAGES_URL . "heart.png\" alt=\"" . _OLEDRION_IS_RECOMMENDED . "\">&nbsp;";
+            return '<img src="' . OLEDRION_IMAGES_URL . 'heart.png" alt="' . _OLEDRION_IS_RECOMMENDED . '">&nbsp;';
         } else {
-            return "<img src=\"" . OLEDRION_IMAGES_URL . "blank.gif\" alt=\"\">";
+            return '<img src="' . OLEDRION_IMAGES_URL . 'blank.gif" alt="">';
         }
     }
 
@@ -353,7 +353,7 @@ class Oledrion_products extends Oledrion_Object
     public function getLink($product_id = 0, $product_title = '', $shortVersion = false)
     {
         $url = '';
-        if ($product_id == 0 && $product_title == '') {
+        if ($product_id == 0 && $product_title === '') {
             $product_id    = $this->getVar('product_id');
             $product_title = $this->getVar('product_title', 'n');
         }
@@ -525,9 +525,9 @@ class OledrionOledrion_productsHandler extends Oledrion_XoopsPersistableObjectHa
 {
     /**
      * OledrionOledrion_productsHandler constructor.
-     * @param object $db
+     * @param XoopsDatabase $db
      */
-    public function __construct($db)
+    public function __construct(XoopsDatabase $db)
     { //                            Table               Classe              Id          Libellé
         parent::__construct($db, 'oledrion_products', 'oledrion_products', 'product_id', 'product_title');
     }
@@ -730,7 +730,7 @@ class OledrionOledrion_productsHandler extends Oledrion_XoopsPersistableObjectHa
         $criteria->setLimit($parameters['limit']);
         $criteria->setStart($parameters['start']);
         $criteria->setSort($parameters['sort']);
-        if (xoops_trim($parameters['order']) != '') {
+        if (xoops_trim($parameters['order']) !== '') {
             $criteria->setOrder($parameters['order']);
         }
         $data = $this->getObjects($criteria, true);
@@ -837,7 +837,7 @@ class OledrionOledrion_productsHandler extends Oledrion_XoopsPersistableObjectHa
     /**
      * Récupération de l'ID et du titre d'une série de produits répondants à un critère
      *
-     * @param  object $criteria critère de sélection
+     * @param  CriteriaElement $criteria critère de sélection
      * @return array  Tableau dont la clé = ID produit et la valeur le titre du produit
      */
     public function getIdTitle($criteria)
@@ -847,7 +847,7 @@ class OledrionOledrion_productsHandler extends Oledrion_XoopsPersistableObjectHa
         $sql = 'SELECT product_id, product_title FROM ' . $this->table;
         if (isset($criteria) && is_subclass_of($criteria, 'criteriaelement')) {
             $sql .= ' ' . $criteria->renderWhere();
-            if ($criteria->getSort() != '') {
+            if ($criteria->getSort() !== '') {
                 $sql .= ' ORDER BY ' . $criteria->getSort() . ' ' . $criteria->getOrder();
             }
             $limit = $criteria->getLimit();
@@ -1055,8 +1055,8 @@ class OledrionOledrion_productsHandler extends Oledrion_XoopsPersistableObjectHa
     /**
      * Augmente les quantités en stock d'un produit
      *
-     * @param  object $product  Objet produit
-     * @param         $quantity $quantity Quantité à rajouter
+     * @param  Oledrion_products $product  Objet produit
+     * @param  int       $quantity $quantity Quantité à rajouter
      * @return bool
      */
     public function increaseStock($product, $quantity = 1)
@@ -1070,8 +1070,8 @@ class OledrionOledrion_productsHandler extends Oledrion_XoopsPersistableObjectHa
     /**
      * Diminue les quantités en stock d'un produit
      *
-     * @param  object $product  Objet produit
-     * @param         $quantity $quantity Quantité à soustraire
+     * @param  Oledrion_products $product  Objet produit
+     * @param  int       $quantity $quantity Quantité à soustraire
      * @return bool
      */
     public function decreaseStock(&$product, $quantity = 1)
@@ -1105,7 +1105,7 @@ class OledrionOledrion_productsHandler extends Oledrion_XoopsPersistableObjectHa
     /**
      * Méthode chargée de vérifier si le stock d'alerte est atteint et si c'est le cas, d'envoyer une alerte
      *
-     * @param  object $product Produit dont il faut faire la vérification
+     * @param  Oledrion_products $product Produit dont il faut faire la vérification
      * @return boolean vrai si l'alerte à du être générée sinon faux
      */
     public function verifyLowStock(&$product)
@@ -1219,7 +1219,7 @@ class OledrionOledrion_productsHandler extends Oledrion_XoopsPersistableObjectHa
     /**
      * Clone d'un produit
      *
-     * @param  object|Oledrion_products $originalProduct Le produit à cloner
+     * @param  Oledrion_products $originalProduct Le produit à cloner
      * @return mixed                    Soit l'objet représentant le nouveau produit soit false
      */
     public function cloneProduct(oledrion_products $originalProduct)
@@ -1235,13 +1235,13 @@ class OledrionOledrion_productsHandler extends Oledrion_XoopsPersistableObjectHa
         $newProduct->setNew();
 
         // Copie des 2 images
-        if (xoops_trim($originalProduct->getVar('product_image_url')) != '') {
+        if (xoops_trim($originalProduct->getVar('product_image_url')) !== '') {
             $resCopy = OledrionUtility::duplicateFile(OLEDRION_PICTURES_PATH, $originalProduct->getVar('product_image_url'));
             if ($resCopy !== false) {
                 $newProduct->setVar('product_image_url', $resCopy);
             }
         }
-        if (xoops_trim($originalProduct->getVar('product_thumb_url')) != '') {
+        if (xoops_trim($originalProduct->getVar('product_thumb_url')) !== '') {
             $resCopy = OledrionUtility::duplicateFile(OLEDRION_PICTURES_PATH, $originalProduct->getVar('product_thumb_url'));
             if ($resCopy !== false) {
                 $newProduct->setVar('product_thumb_url', $resCopy);
@@ -1249,7 +1249,7 @@ class OledrionOledrion_productsHandler extends Oledrion_XoopsPersistableObjectHa
         }
 
         // Copie du fichier attaché
-        if (xoops_trim($originalProduct->getVar('product_attachment')) != '') {
+        if (xoops_trim($originalProduct->getVar('product_attachment')) !== '') {
             $resCopy = OledrionUtility::duplicateFile(OLEDRION_ATTACHED_FILES_PATH, $originalProduct->getVar('product_attachment'));
             if ($resCopy !== false) {
                 $newProduct->setVar('product_attachment', $resCopy);
@@ -1325,7 +1325,7 @@ class OledrionOledrion_productsHandler extends Oledrion_XoopsPersistableObjectHa
      *
      * @todo     : Remplacer les paramètres par un objet paramètre et/ou un tableau
      * @param  Oledrion_parameters $parameters
-     * @return object              Retourne soit un objet de type tray <a href='psi_element://XoopsFormElementTray'>XoopsFormElementTray</a> soit un select <a href='psi_element://XoopsFormSelect'>XoopsFormSelect</a>
+     * @return XoopsFormElementTray Retourne soit un objet de type tray <a href='psi_element://XoopsFormElementTray'>XoopsFormElementTray</a> soit un select <a href='psi_element://XoopsFormSelect'>XoopsFormSelect</a>
      * @internal param string $caption Le titre du sélecteur
      * @internal param string $name Le nom du champ qui receuille les produits
      * @internal param mixed $value La valeur sélectionnées
@@ -1400,7 +1400,7 @@ class OledrionOledrion_productsHandler extends Oledrion_XoopsPersistableObjectHa
                             . OLEDRION_MAX_PRODUCTS_POPUP_WIDTH
                             . ', '
                             . OLEDRION_MAX_PRODUCTS_POPUP_HEIGHT
-                            . ");\">"
+                            . ');">'
                             . _AM_OLEDRION_SELECT_OTHER_P
                             . '</a>';
                 } else {
@@ -1412,7 +1412,7 @@ class OledrionOledrion_productsHandler extends Oledrion_XoopsPersistableObjectHa
                             . OLEDRION_MAX_PRODUCTS_POPUP_WIDTH
                             . ', '
                             . OLEDRION_MAX_PRODUCTS_POPUP_HEIGHT
-                            . ");\">"
+                            . ');">'
                             . _AM_OLEDRION_SELECT_OTHER_P
                             . '</a>';
                 }
@@ -1420,7 +1420,7 @@ class OledrionOledrion_productsHandler extends Oledrion_XoopsPersistableObjectHa
                 $productTray->addElement($linkLabel);
                 echo "<script type=\"text/javascript\">\n";
                 echo "jQuery().ready(function($) {\n";
-                echo "$(\"#" . $parameters['formName'] . "\").submit( function() {\n";
+                echo '$("#' . $parameters['formName'] . "\").submit( function() {\n";
                 echo "  selectAll('" . $parameters['name'] . "', true);\n";
                 echo "} );\n";
                 echo "});\n";
@@ -1446,7 +1446,7 @@ class OledrionOledrion_productsHandler extends Oledrion_XoopsPersistableObjectHa
                              . OLEDRION_MAX_PRODUCTS_POPUP_WIDTH
                              . ', '
                              . OLEDRION_MAX_PRODUCTS_POPUP_HEIGHT
-                             . ");\">"
+                             . ');">'
                              . _AM_OLEDRION_SELECT_PRODUCT
                              . '</a>';
                 $linkLabel = new xoopsFormLabel('', '<br>' . $link);
@@ -1458,7 +1458,7 @@ class OledrionOledrion_productsHandler extends Oledrion_XoopsPersistableObjectHa
             $productTray->addOptionArray($products);
         }
 
-        if (trim($parameters['description']) != '') {
+        if (trim($parameters['description']) !== '') {
             $productTray->setDescription($parameters['description']);
         }
 

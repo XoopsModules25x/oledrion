@@ -38,7 +38,7 @@ function b_sitemap_oledrion()
 
     $i   = 0;
     $sql = "SELECT `$id_name`,`$title_name` FROM `$table` WHERE `$pid_name`=0";
-    if ($order != '') {
+    if ($order !== '') {
         $sql .= " ORDER BY `$order`";
     }
     $result = $xoopsDB->query($sql);

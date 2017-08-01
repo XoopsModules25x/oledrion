@@ -44,7 +44,7 @@ class Oledrion_shelf_parameters
     /**
      * Réinitialisation des valeurs
      *
-     * @return object
+     * @return Oledrion_shelf_parameters
      */
     public function resetDefaultValues()
     {
@@ -77,7 +77,7 @@ class Oledrion_shelf_parameters
      * Positione la valeur de début
      *
      * @param  integer $value
-     * @return object
+     * @return Oledrion_shelf_parameters
      */
     public function setStart($value)
     {
@@ -90,7 +90,7 @@ class Oledrion_shelf_parameters
      * Fixe le nombre maximum d'enregistrements à retourner
      *
      * @param  integer $value
-     * @return object
+     * @return Oledrion_shelf_parameters
      */
     public function setLimit($value)
     {
@@ -103,7 +103,7 @@ class Oledrion_shelf_parameters
      * Fixe la catégorie à utiliser
      *
      * @param  integer $value
-     * @return object
+     * @return Oledrion_shelf_parameters
      */
     public function setCategory($value)
     {
@@ -116,7 +116,7 @@ class Oledrion_shelf_parameters
      * Fixe la zone qui sert de tri
      *
      * @param  string $value
-     * @return object
+     * @return Oledrion_shelf_parameters
      */
     public function setSort($value)
     {
@@ -155,7 +155,7 @@ class Oledrion_shelf_parameters
      * Indique s'il faut retourner les utilisateurs Xoops
      *
      * @param  boolean $value
-     * @return object
+     * @return Oledrion_shelf_parameters
      */
     public function setWithXoopsUser($value)
     {
@@ -168,7 +168,7 @@ class Oledrion_shelf_parameters
      * Indique s'il faut retourner les produits relatifs
      *
      * @param  boolean $value
-     * @return object
+     * @return Oledrion_shelf_parameters
      */
     public function setWithRelatedProducts($value)
     {
@@ -181,7 +181,7 @@ class Oledrion_shelf_parameters
      * Indique s'il faut retourner les quantités
      *
      * @param  boolean $value
-     * @return object
+     * @return Oledrion_shelf_parameters
      */
     public function setWithQuantity($value)
     {
@@ -194,7 +194,7 @@ class Oledrion_shelf_parameters
      * Fixe le type de produits à retourner
      *
      * @param  string $value
-     * @return object
+     * @return Oledrion_shelf_parameters
      */
     public function setProductsType($value)
     {
@@ -207,7 +207,7 @@ class Oledrion_shelf_parameters
      * Indique s'il faut retourner seulement les mois
      *
      * @param  boolean $value
-     * @return object
+     * @return Oledrion_shelf_parameters
      */
     public function setThisMonthOnly($value)
     {

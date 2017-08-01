@@ -32,6 +32,9 @@
 
 use WideImage\WideImage;
 
+/**
+ * Class OledrionUtility
+ */
 class OledrionUtility
 {
     const MODULE_NAME = 'oledrion';
@@ -39,10 +42,7 @@ class OledrionUtility
     /**
      * Access the only instance of this class
      *
-     * @return object
-     *
-     * @static
-     * @staticvar   object
+     * @return OledrionUtility
      */
     public function getInstance()
     {
@@ -135,7 +135,7 @@ class OledrionUtility
      * @param  string $width   Editor's width
      * @param  string $height  Editor's height
      * @param  string $supplemental
-     * @return object The editor to use
+     * @return \XoopsEditor The editor to use
      */
     public static function getWysiwygForm(
         $caption,
@@ -306,7 +306,7 @@ class OledrionUtility
         global $xoopsConfig;
         require_once XOOPS_ROOT_PATH . '/class/xoopsmailer.php';
         if (!is_array($recipients)) {
-            if (trim($recipients) == '') {
+            if (trim($recipients) === '') {
                 return false;
             }
         } else {
@@ -409,7 +409,7 @@ class OledrionUtility
     /**
      * Internal function used to get the handler of the current module
      *
-     * @return object The module
+     * @return \XoopsModule The module
      */
     protected function _getModule()
     {
@@ -535,7 +535,7 @@ class OledrionUtility
      */
     public function SQLDateToHuman($date, $format = 'l')
     {
-        if ($date != '0000-00-00' && xoops_trim($date) != '') {
+        if ($date != '0000-00-00' && xoops_trim($date) !== '') {
             return formatTimestamp(strtotime($date), $format);
         } else {
             return '';
@@ -599,8 +599,8 @@ class OledrionUtility
     /**
      * Mark the mandatory fields of a form with a star
      *
-     * @param  object $sform The form to modify
-     * @return object The modified form
+     * @param  \XoopsForm $sform The form to modify
+     * @return \XoopsForm The modified form
      * @internal param string $caracter The character to use to mark fields
      */
     public static function &formMarkRequiredFields(&$sform)
@@ -646,7 +646,7 @@ class OledrionUtility
     public function createUploadName($folder, $fileName, $trimName = false)
     {
         $workingfolder = $folder;
-        if (xoops_substr($workingfolder, strlen($workingfolder) - 1, 1) != '/') {
+        if (xoops_substr($workingfolder, strlen($workingfolder) - 1, 1) !== '/') {
             $workingfolder .= '/';
         }
         $ext  = basename($fileName);
@@ -1093,7 +1093,7 @@ class OledrionUtility
                 break;
         }
         // Remove black listed words
-        if (xoops_trim(self::getModuleOption('metagen_blacklist')) != '') {
+        if (xoops_trim(self::getModuleOption('metagen_blacklist')) !== '') {
             $metagen_blacklist = str_replace("\r", '', self::getModuleOption('metagen_blacklist'));
             $metablack         = explode("\n", $metagen_blacklist);
             array_walk($metablack, 'trim');
@@ -1147,7 +1147,7 @@ class OledrionUtility
             $fldname = '';
             $fldname = $_FILES[$_POST['xoops_upload_file'][$indice]];
             $fldname = get_magic_quotes_gpc() ? stripslashes($fldname['name']) : $fldname['name'];
-            if (xoops_trim($fldname != '')) {
+            if (xoops_trim($fldname !== '')) {
                 $destname = self::createUploadName($dstpath, $fldname, true);
                 if ($mimeTypes === null) {
                     $permittedtypes = explode("\n", str_replace("\r", '', self::getModuleOption('mimetypes')));
@@ -1376,7 +1376,7 @@ class OledrionUtility
     public static function setCSS($url = '')
     {
         global $xoopsTpl, $xoTheme;
-        if ($url == '') {
+        if ($url === '') {
             $url = OLEDRION_URL . 'assets/css/oledrion.css';
         }
 
@@ -1514,7 +1514,7 @@ class OledrionUtility
     /**
      * Retourne un criteria compo qui permet de filtrer les produits sur le mois courant
      *
-     * @return object
+     * @return CriteriaCompo
      */
     public function getThisMonthCriteria()
     {
@@ -1738,7 +1738,7 @@ class OledrionUtility
             if ($index == $default) {
                 $selected = " selected = 'selected'";
             }
-            $ret[] = "<option value=\"" . $index . "\"" . $selected . '>' . $label . '</option>';
+            $ret[] = '<option value="' . $index . '"' . $selected . '>' . $label . '</option>';
         }
 
         return implode("\n", $ret);

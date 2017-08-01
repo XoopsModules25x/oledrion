@@ -27,10 +27,7 @@ class Oledrion_registryfile
     /**
      * Access the only instance of this class
      *
-     * @return object
-     *
-     * @static
-     * @staticvar   object
+     * @return Oledrion_registryfile
      */
     public function getInstance()
     {

@@ -57,7 +57,7 @@ class Oledrion_csv_export extends Oledrion_export
         // Création de l'entête du fichier
         $list = $entete1 = $entete2 = array();
         $s    = $this->separator;
-        $cmd  = new oledrion_commands();
+        $cmd  = new Oledrion_commands();
         foreach ($cmd->getVars() as $fieldName => $properties) {
             $entete1[] = $fieldName;
         }

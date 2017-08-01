@@ -339,7 +339,7 @@ class Oledrion_shelf
             // L'utilisateur Xoops (éventuellement)
             if ($withXoopsUser && isset($users[$product->getVar('product_submitter')])) {
                 $thisUser = $users[$product->getVar('product_submitter')];
-                if (xoops_trim($thisUser->getVar('name')) != '') {
+                if (xoops_trim($thisUser->getVar('name')) !== '') {
                     $name = $thisUser->getVar('name');
                 } else {
                     $name = $thisUser->getVar('uname');

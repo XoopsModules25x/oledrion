@@ -174,7 +174,7 @@ if ((isset($_POST['op']) && $_POST['op'] === 'go') || isset($_GET['start'])) { /
         }
 
         // Recherche sur du texte
-        if (isset($_POST['product_text']) && xoops_trim($_POST['product_text']) != '') {
+        if (isset($_POST['product_text']) && xoops_trim($_POST['product_text']) !== '') {
             $temp_queries = $queries = array();
             $temp_queries = preg_split('/[\s,]+/', $_POST['product_text']);
 
@@ -292,7 +292,7 @@ if ((isset($_POST['op']) && $_POST['op'] === 'go') || isset($_GET['start'])) { /
 }
 
 require_once OLEDRION_PATH . 'include/product_search_form.php';
-$sform =& OledrionUtility::formMarkRequiredFields($sform);
+$sform = OledrionUtility::formMarkRequiredFields($sform);
 $xoopsTpl->assign('search_form', $sform->render());
 
 OledrionUtility::setCSS();

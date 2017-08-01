@@ -62,9 +62,9 @@ class OledrionOledrion_location_deliveryHandler extends Oledrion_XoopsPersistabl
 {
     /**
      * OledrionOledrion_location_deliveryHandler constructor.
-     * @param object $db
+     * @param XoopsDatabase $db
      */
-    public function __construct($db)
+    public function __construct(XoopsDatabase $db)
     { //                                          Table                            Classe                      Id
         parent::__construct($db, 'oledrion_location_delivery', 'oledrion_location_delivery', 'ld_id');
     }

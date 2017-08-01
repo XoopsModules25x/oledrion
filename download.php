@@ -28,7 +28,7 @@ $download_id = isset($_GET['download_id']) ? $_GET['download_id'] : '';
 
 // TODO: Permettre au webmaster de réactiver un téléchargement
 
-if (xoops_trim($download_id) == '') {
+if (xoops_trim($download_id) === '') {
     OledrionUtility::redirect(_OLEDRION_ERROR13, OLEDRION_URL, 5);
 }
 
@@ -56,7 +56,7 @@ if ($order == null) {
 // Tout est bon, on peut envoyer le fichier au navigateur, s'il y a un fichier à télécharger, et s'il existe
 $file = '';
 $file = $product->getVar('product_download_url');
-if (xoops_trim($file) == '') {
+if (xoops_trim($file) === '') {
     OledrionUtility::redirect(_OLEDRION_ERROR17, OLEDRION_URL, 5);
 }
 if (!file_exists($file)) {
@@ -76,7 +76,7 @@ $parameters = new Oledrion_parameters(array(
                                           'fullFilename' => $file
                                       ));
 $parameters = $plugins->fireFilter(Oledrion_plugins::EVENT_ON_PRODUCT_DOWNLOAD, $parameters);
-if (trim($parameters['fileContent']) != '') {
+if (trim($parameters['fileContent']) !== '') {
     $fileContent = $parameters['fileContent'];
 }
 // *********************************************************

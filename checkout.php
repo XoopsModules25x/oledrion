@@ -386,7 +386,7 @@ switch ($op) {
         }
         $sform->addElement($packingSelect, true);
         $sform->addElement(new XoopsFormButton('', 'post', _OLEDRION_SAVE_NEXT, 'submit'));
-        $sform =& OledrionUtility::formMarkRequiredFields($sform);
+        $sform = OledrionUtility::formMarkRequiredFields($sform);
         $xoopsTpl->assign('form', $sform->render());
 
         // texte à afficher
@@ -420,7 +420,7 @@ switch ($op) {
                 }
                 $sform->addElement($location_pid, true);
                 $sform->addElement(new XoopsFormButton('', 'post', _OLEDRION_SAVE_NEXT, 'submit'));
-                $sform =& OledrionUtility::formMarkRequiredFields($sform);
+                $sform = OledrionUtility::formMarkRequiredFields($sform);
                 $xoopsTpl->assign('form', $sform->render());
                 break;
 
@@ -437,7 +437,7 @@ switch ($op) {
                 }
                 $sform->addElement($location_select, true);
                 $sform->addElement(new XoopsFormButton('', 'post', _OLEDRION_SAVE_NEXT, 'submit'));
-                $sform =& OledrionUtility::formMarkRequiredFields($sform);
+                $sform = OledrionUtility::formMarkRequiredFields($sform);
                 $xoopsTpl->assign('form', $sform->render());
                 break;
         }
@@ -474,7 +474,7 @@ switch ($op) {
         }
         $sform->addElement($delivery_options, true);
         $sform->addElement(new XoopsFormButton('', 'post', _OLEDRION_SAVE_NEXT, 'submit'));
-        $sform =& OledrionUtility::formMarkRequiredFields($sform);
+        $sform = OledrionUtility::formMarkRequiredFields($sform);
         $xoopsTpl->assign('form', $sform->render());
 
         // texte à afficher
@@ -509,7 +509,7 @@ switch ($op) {
         }
         $sform->addElement($payment_options, true);
         $sform->addElement(new XoopsFormButton('', 'post', _OLEDRION_SAVE_CONFIRM, 'submit'));
-        $sform =& OledrionUtility::formMarkRequiredFields($sform);
+        $sform = OledrionUtility::formMarkRequiredFields($sform);
         $xoopsTpl->assign('form', $sform->render());
 
         // texte à afficher

@@ -84,11 +84,11 @@ class Oledrion_XoopsObjectTree extends XoopsObjectTree
         }
 
         $ret = "<select id='" . $name . "' name='" . $name . "'";
-        if ($additional != '') {
+        if ($additional !== '') {
             $ret .= $additional;
         }
         $ret .= '>';
-        if ($addEmptyOption != '') {
+        if ($addEmptyOption !== '') {
             $tmpSelected = '';
             if ($selected == 0) {
                 $tmpSelected = ' selected';

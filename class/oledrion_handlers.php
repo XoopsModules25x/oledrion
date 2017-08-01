@@ -59,7 +59,7 @@ class OledrionHandler
 
     /**
      * Contient l'unique instance de l'objet
-     * @var object
+     * @var OledrionHandler
      */
     private static $instance = false;
 
@@ -102,7 +102,7 @@ class OledrionHandler
     /**
      * Retourne l'instance unique de la classe
      *
-     * @return object
+     * @return OledrionHandler
      */
     public static function getInstance()
     {

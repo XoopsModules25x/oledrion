@@ -52,9 +52,9 @@ class OledrionOledrion_votedataHandler extends Oledrion_XoopsPersistableObjectHa
 {
     /**
      * OledrionOledrion_votedataHandler constructor.
-     * @param object $db
+     * @param XoopsDatabase $db
      */
-    public function __construct($db)
+    public function __construct(XoopsDatabase $db)
     { //                                Table                   Classe           Id
         parent::__construct($db, 'oledrion_votedata', 'oledrion_votedata', 'vote_ratingid');
     }
@@ -145,7 +145,7 @@ class OledrionOledrion_votedataHandler extends Oledrion_XoopsPersistableObjectHa
      */
     public function hasAnonymousAlreadyVoted($ip = '', $vote_product_id = 0)
     {
-        if ($ip == '') {
+        if ($ip === '') {
             $ip = OledrionUtility::IP();
         }
         $anonwaitdays = 1;

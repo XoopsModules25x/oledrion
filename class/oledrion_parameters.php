@@ -58,7 +58,7 @@ class Oledrion_parameters extends ArrayObject
      *
      * @param  string $key   Le nom du champ à traiter
      * @param  mixed  $value La valeur à lui attribuer
-     * @return object
+     * @return OledrionHandler
      */
     public function __set($key, $value)
     {
@@ -74,7 +74,7 @@ class Oledrion_parameters extends ArrayObject
      *
      * @param  string $method
      * @param  mixed  $args
-     * @return object
+     * @return Oledrion_parameters|ArrayObject
      */
     public function __call($method, $args)
     {

@@ -54,7 +54,7 @@ class Oledrion_paypal extends Oledrion_gateway
      * Retourne le formulaire utilisé pour paramétrer la passerelle de paiement
      *
      * @param $postUrl
-     * @return object de type XoopsThemeForm
+     * @return XoopsThemeForm
      */
     public function getParametersForm($postUrl)
     {
@@ -185,7 +185,7 @@ class Oledrion_paypal extends Oledrion_gateway
         $ret['custom']           = $order->getVar('cmd_id');
         //$ret['rm'] = 2;   // Renvoyer les données par POST (normalement)
         $ret['email'] = $order->getVar('cmd_email');
-        if (xoops_trim($order->getVar('cmd_cancel')) != '') { // URL à laquelle le navigateur du client est ramené si le paiement est annulé
+        if (xoops_trim($order->getVar('cmd_cancel')) !== '') { // URL à laquelle le navigateur du client est ramené si le paiement est annulé
             $ret['cancel_return'] = OLEDRION_URL . 'cancel-payment.php?id=' . $order->getVar('cmd_cancel');
         }
         if ($use_ipn == 1) {

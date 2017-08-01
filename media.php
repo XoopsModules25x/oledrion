@@ -62,7 +62,7 @@ switch ($type) {
 
     case 'picture': // L'image principale d'un produit
         xoops_header(true);
-        echo "<div align='center' style='font-weight: bold;'><a href=\"javascript:self.close();\" title=\"" . _CLOSE . "\">";
+        echo "<div align='center' style='font-weight: bold;'><a href=\"javascript:self.close();\" title=\"" . _CLOSE . '">';
         if ($product->pictureExists()) {
             echo "<img src='" . $product->getPictureUrl() . "' alt=''>";
         } else {

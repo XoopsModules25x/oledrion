@@ -101,7 +101,7 @@ There is a new file to translate here : /xoops/modules/admin/gateways/paypal/lan
 - Bug correction in the cart when a product was removed but still present in a user's cart - philou
 - Some templates were modified so you need to update them
 - Addition of a new table in the database to manage gateways options
-- Addition of a new field (cmd_comment) in the "oledrion_commands" table
+- Addition of a new field (cmd_comment) in the "Oledrion_commands" table
 - In the module's administration, and in the part used to manage the products, the products list was changed,
 you can now filter products
 - The templates used to send emails were changed (command_shop.tpl, command_shop_verified.tpl, command_shop_fraud.tpl, command_shop_pending.tpl, command_shop_failed.tpl, command_shop_cancel.tpl)

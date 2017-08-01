@@ -63,9 +63,9 @@ class OledrionOledrion_vatHandler extends Oledrion_XoopsPersistableObjectHandler
 {
     /**
      * OledrionOledrion_vatHandler constructor.
-     * @param object $db
+     * @param XoopsDatabase $db
      */
-    public function __construct($db)
+    public function __construct(XoopsDatabase $db)
     { //                        Table           Classe          Id
         parent::__construct($db, 'oledrion_vat', 'oledrion_vat', 'vat_id');
     }

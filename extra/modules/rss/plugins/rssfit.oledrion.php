@@ -70,7 +70,7 @@ class RssfitOledrion
                 $ret[$i]['link']      = $ret[$i]['guid'] = $item->getLink();
                 $ret[$i]['title']     = $item->getVar('product_title', 'n');
                 $ret[$i]['timestamp'] = $item->getVar('product_submitted');
-                if (xoops_trim($item->getVar('product_summary')) != '') {
+                if (xoops_trim($item->getVar('product_summary')) !== '') {
                     $description = $item->getVar('product_summary');
                 } else {
                     $description = $item->getVar('product_description');

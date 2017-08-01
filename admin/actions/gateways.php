@@ -77,7 +77,7 @@ switch ($action) {
                         echo "<td align='center'>" . $gatewayInformation['version'] . "</td>\n";
                         echo '<td>' . $gatewayInformation['description'] . "</td>\n";
                         echo '<td>' . $gatewayInformation['author'];
-                        if (xoops_trim($gatewayInformation['credits']) != '') {
+                        if (xoops_trim($gatewayInformation['credits']) !== '') {
                             echo '<br>' . _AM_OLEDRION_GATEWAYS_CREDITS . $gatewayInformation['credits'];
                         }
                         echo "</td>\n";
@@ -174,7 +174,7 @@ switch ($action) {
                 }
                 $temporaryGateway->languageFilename = $languageFilename;
                 $form                               = $temporaryGateway->getParametersForm($baseurl . $opRedirect . '&action=saveparameters');
-                $form                               =& OledrionUtility::formMarkRequiredFields($form);
+                $form                               = OledrionUtility::formMarkRequiredFields($form);
                 $form->display();
             } else {
                 OledrionUtility::redirect(_AM_OLEDRION_GATEWAYS_ERROR3, $baseurl . $opRedirect, 4);

@@ -50,9 +50,9 @@ class OledrionOledrion_relatedHandler extends Oledrion_XoopsPersistableObjectHan
 {
     /**
      * OledrionOledrion_relatedHandler constructor.
-     * @param object $db
+     * @param XoopsDatabase $db
      */
-    public function __construct($db)
+    public function __construct(XoopsDatabase $db)
     { //                            Table               Classe                   Id
         parent::__construct($db, 'oledrion_related', 'oledrion_related', 'related_id');
     }

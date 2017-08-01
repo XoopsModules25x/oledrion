@@ -72,9 +72,9 @@ class OledrionOledrion_caddyHandler extends Oledrion_XoopsPersistableObjectHandl
 
     /**
      * OledrionOledrion_caddyHandler constructor.
-     * @param object $db
+     * @param XoopsDatabase $db
      */
-    public function __construct($db)
+    public function __construct(XoopsDatabase $db)
     { //                          Table             Classe          Id
         parent::__construct($db, 'oledrion_caddy', 'oledrion_caddy', 'caddy_id');
     }

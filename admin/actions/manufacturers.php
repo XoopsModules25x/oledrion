@@ -138,7 +138,7 @@ switch ($action) {
         $button_tray->addElement($submit_btn);
         $sform->addElement($button_tray);
 
-        $sform =& OledrionUtility::formMarkRequiredFields($sform);
+        $sform = OledrionUtility::formMarkRequiredFields($sform);
         $sform->display();
         require_once OLEDRION_ADMIN_PATH . 'admin_footer.php';
         break;

@@ -48,7 +48,7 @@ class Oledrion_delivery extends Oledrion_Object
      */
     public function getPictureUrl()
     {
-        if (xoops_trim($this->getVar('product_image_url')) != '') {
+        if (xoops_trim($this->getVar('product_image_url')) !== '') {
             return OLEDRION_PICTURES_URL . '/' . $this->getVar('delivery_image');
         } else {
             return '';
@@ -63,7 +63,7 @@ class Oledrion_delivery extends Oledrion_Object
     public function pictureExists()
     {
         $return = false;
-        if (xoops_trim($this->getVar('delivery_image')) != ''
+        if (xoops_trim($this->getVar('delivery_image')) !== ''
             && file_exists(OLEDRION_PICTURES_PATH . '/' . $this->getVar('delivery_image'))) {
             $return = true;
         }
@@ -107,9 +107,9 @@ class OledrionOledrion_deliveryHandler extends Oledrion_XoopsPersistableObjectHa
 {
     /**
      * OledrionOledrion_deliveryHandler constructor.
-     * @param object $db
+     * @param \XoopsDatabase $db
      */
-    public function __construct($db)
+    public function __construct(XoopsDatabase $db)
     { //                                        Table                   Classe              Id
         parent::__construct($db, 'oledrion_delivery', 'oledrion_delivery', 'delivery_id');
     }

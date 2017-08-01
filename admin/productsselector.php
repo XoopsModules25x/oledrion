@@ -87,7 +87,7 @@ if (isset($_REQUEST['op']) && $_REQUEST['op'] === 'search') {
     $additionnalParameters['product_cid']    = $product_cid;
 
     $criteria = new CriteriaCompo();
-    if ($searchText != '') {
+    if ($searchText !== '') {
         $xoopsTpl->assign('searchTextValue', $ts->htmlSpecialChars($searchText));
         if (array_key_exists($searchField, $searchFields)) {
             switch ($searchCriteria) {

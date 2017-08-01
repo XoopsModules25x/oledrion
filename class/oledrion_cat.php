@@ -77,7 +77,7 @@ class Oledrion_cat extends Oledrion_Object
     public function pictureExists()
     {
         $return = false;
-        if (xoops_trim($this->getVar('cat_imgurl')) != ''
+        if (xoops_trim($this->getVar('cat_imgurl')) !== ''
             && file_exists(OLEDRION_PICTURES_PATH . '/' . $this->getVar('cat_imgurl'))) {
             $return = true;
         }
@@ -150,9 +150,9 @@ class OledrionOledrion_catHandler extends Oledrion_XoopsPersistableObjectHandler
 {
     /**
      * OledrionOledrion_catHandler constructor.
-     * @param object $db
+     * @param XoopsDatabase $db
      */
-    public function __construct($db)
+    public function __construct(XoopsDatabase $db)
     { //                        Table               Classe       Id       Libellé
         parent::__construct($db, 'oledrion_cat', 'oledrion_cat', 'cat_cid', 'cat_title');
     }
@@ -194,7 +194,7 @@ class OledrionOledrion_catHandler extends Oledrion_XoopsPersistableObjectHandler
      * @param  string $fieldName
      * @param  string $key
      * @param  string $ret
-     * @param  object $tree
+     * @param  XoopsObjectTree $tree
      * @return string
      */
     private function _makeLi($fieldName, $key, &$ret, $tree)
@@ -229,7 +229,7 @@ class OledrionOledrion_catHandler extends Oledrion_XoopsPersistableObjectHandler
 
         $ret = '';
         $this->_makeLi($fieldName, $key, $ret, $tree);
-        if (xoops_trim($ret) != '') {
+        if (xoops_trim($ret) !== '') {
             $ret = substr($ret, 0, -6);
         }
 

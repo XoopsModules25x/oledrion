@@ -75,8 +75,8 @@ if ((is_object($category) && $category->getVar('cat_pid') == 0) || $cat_cid == 0
         if (!OledrionUtility::getModuleOption('manual_meta')) {
             OledrionUtility::setMetas($title, $title);
         } else {
-            $pageTitle       = xoops_trim($category->getVar('cat_metatitle')) == '' ? $title : $category->getVar('cat_metatitle');
-            $metaDescription = xoops_trim($category->getVar('cat_metadescription')) != '' ? $category->getVar('cat_metadescription') : $title;
+            $pageTitle       = xoops_trim($category->getVar('cat_metatitle')) === '' ? $title : $category->getVar('cat_metatitle');
+            $metaDescription = xoops_trim($category->getVar('cat_metadescription')) !== '' ? $category->getVar('cat_metadescription') : $title;
             $metaKeywords    = xoops_trim($category->getVar('cat_metakeywords'));
             OledrionUtility::setMetas($pageTitle, $metaDescription, $metaKeywords);
         }
@@ -219,8 +219,8 @@ if (is_object($category)
     if (!OledrionUtility::getModuleOption('manual_meta')) {
         OledrionUtility::setMetas($title, $title, str_replace('&raquo;', ',', $title));
     } else {
-        $pageTitle       = xoops_trim($category->getVar('cat_metatitle')) == '' ? $title : $category->getVar('cat_metatitle');
-        $metaDescription = xoops_trim($category->getVar('cat_metadescription')) != '' ? $category->getVar('cat_metadescription') : $title;
+        $pageTitle       = xoops_trim($category->getVar('cat_metatitle')) === '' ? $title : $category->getVar('cat_metatitle');
+        $metaDescription = xoops_trim($category->getVar('cat_metadescription')) !== '' ? $category->getVar('cat_metadescription') : $title;
         $metaKeywords    = xoops_trim($category->getVar('cat_metakeywords'));
         OledrionUtility::setMetas($pageTitle, $metaDescription, $metaKeywords);
     }

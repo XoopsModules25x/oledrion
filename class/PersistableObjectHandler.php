@@ -87,7 +87,7 @@ class Oledrion_XoopsPersistableObjectHandler extends XoopsObjectHandler
 
     /**
      * Constructor - called from child classes
-     * @param object|XoopsDatabase $db           {@link XoopsDatabase}
+     * @param null|XoopsDatabase $db           {@link XoopsDatabase}
      *                                           object
      * @param string               $tablename    Name of database table
      * @param string               $classname    Name of Class, this handler is managing
@@ -104,7 +104,7 @@ class Oledrion_XoopsPersistableObjectHandler extends XoopsObjectHandler
         $this->table     = $db->prefix($tablename);
         $this->keyName   = $keyname;
         $this->className = $classname;
-        if (trim($idenfierName) != '') {
+        if (trim($idenfierName) !== '') {
             $this->identifierName = $idenfierName;
         }
         // To diable cache, add this line after the first one : 'caching' => false,
@@ -148,7 +148,7 @@ class Oledrion_XoopsPersistableObjectHandler extends XoopsObjectHandler
      *
      * @param bool $isNew Flag the new objects as "new"?
      *
-     * @return object
+     * @return Oledrion_XoopsPersistableObjectHandler
      */
     public function create($isNew = true)
     {
@@ -192,7 +192,7 @@ class Oledrion_XoopsPersistableObjectHandler extends XoopsObjectHandler
     /**
      * retrieve objects from the database
      *
-     * @param object  $criteria  {@link CriteriaElement} conditions to be met
+     * @param CriteriaElement  $criteria  {@link CriteriaElement} conditions to be met
      * @param bool    $id_as_key use the ID as key for the array?
      * @param bool    $as_object return an array of objects?
      *
@@ -213,12 +213,12 @@ class Oledrion_XoopsPersistableObjectHandler extends XoopsObjectHandler
         $sql   = 'SELECT ' . $fields . ' FROM ' . $this->table;
         if (isset($criteria) && is_subclass_of($criteria, 'criteriaelement')) {
             $sql .= ' ' . $criteria->renderWhere();
-            if ($criteria->groupby != '') {
+            if ($criteria->groupby !== '') {
                 $sql .= $criteria->getGroupby();
             }
-            if ($criteria->getSort() != '') {
+            if ($criteria->getSort() !== '') {
                 $sql .= ' ORDER BY ' . $criteria->getSort() . ' ' . $criteria->getOrder();
-            } elseif ($this->identifierName != '' && $autoSort) {
+            } elseif ($this->identifierName !== '' && $autoSort) {
                 $sql .= ' ORDER BY ' . $this->identifierName;
             }
             $limit = $criteria->getLimit();
@@ -244,7 +244,7 @@ class Oledrion_XoopsPersistableObjectHandler extends XoopsObjectHandler
     /**
      * Convert a database resultset to a returnable array
      *
-     * @param object  $result    database resultset
+     * @param mysqli_result  $result    database resultset
      * @param boolean $id_as_key - should NOT be used with joint keys
      * @param boolean $as_object
      * @param string  $fields    Requested fields from the query
@@ -271,7 +271,7 @@ class Oledrion_XoopsPersistableObjectHandler extends XoopsObjectHandler
                 }
             } else {
                 if ($as_object) {
-                    if ($fields == '*') {
+                    if ($fields === '*') {
                         $ret[$myrow[$this->keyName]] = $obj;
                     } else {
                         $ret[] = $obj;
@@ -295,7 +295,7 @@ class Oledrion_XoopsPersistableObjectHandler extends XoopsObjectHandler
     /**
      * get IDs of objects matching a condition
      *
-     * @param  object $criteria {@link CriteriaElement} to match
+     * @param  CriteriaElement $criteria {@link CriteriaElement} to match
      * @return array  of object IDs
      */
     public function getIds($criteria = null)
@@ -307,12 +307,12 @@ class Oledrion_XoopsPersistableObjectHandler extends XoopsObjectHandler
         $sql = 'SELECT ' . $this->keyName . ' FROM ' . $this->table;
         if (isset($criteria) && is_subclass_of($criteria, 'criteriaelement')) {
             $sql .= ' ' . $criteria->renderWhere();
-            if ($criteria->groupby != '') {
+            if ($criteria->groupby !== '') {
                 $sql .= $criteria->getGroupby();
             }
-            if ($criteria->getSort() != '') {
+            if ($criteria->getSort() !== '') {
                 $sql .= ' ORDER BY ' . $criteria->getSort() . ' ' . $criteria->getOrder();
-            } elseif ($this->identifierName != '') {
+            } elseif ($this->identifierName !== '') {
                 $sql .= ' ORDER BY ' . $this->identifierName;
             }
             $limit = $criteria->getLimit();
@@ -338,7 +338,7 @@ class Oledrion_XoopsPersistableObjectHandler extends XoopsObjectHandler
     /**
      * Retrieve a list of objects as arrays - DON'T USE WITH JOINT KEYS
      *
-     * @param  object $criteria {@link CriteriaElement} conditions to be met
+     * @param  CriteriaElement $criteria {@link CriteriaElement} conditions to be met
      * @return array
      */
     public function getList($criteria = null)
@@ -356,12 +356,12 @@ class Oledrion_XoopsPersistableObjectHandler extends XoopsObjectHandler
         $sql .= ' FROM ' . $this->table;
         if (isset($criteria) && is_subclass_of($criteria, 'criteriaelement')) {
             $sql .= ' ' . $criteria->renderWhere();
-            if ($criteria->groupby != '') {
+            if ($criteria->groupby !== '') {
                 $sql .= $criteria->getGroupby();
             }
-            if ($criteria->getSort() != '') {
+            if ($criteria->getSort() !== '') {
                 $sql .= ' ORDER BY ' . $criteria->getSort() . ' ' . $criteria->getOrder();
-            } elseif ($this->identifierName != '') {
+            } elseif ($this->identifierName !== '') {
                 $sql .= ' ORDER BY ' . $this->identifierName;
             }
             $limit = $criteria->getLimit();
@@ -410,7 +410,7 @@ class Oledrion_XoopsPersistableObjectHandler extends XoopsObjectHandler
     /**
      * count objects matching a condition
      *
-     * @param  object $criteria {@link CriteriaElement} to match
+     * @param  CriteriaElement $criteria {@link CriteriaElement} to match
      * @return int    count of objects
      */
     public function getCount($criteria = null)
@@ -421,7 +421,7 @@ class Oledrion_XoopsPersistableObjectHandler extends XoopsObjectHandler
         //require_once __DIR__ . '/lite.php';
 
         if (isset($criteria) && is_subclass_of($criteria, 'criteriaelement')) {
-            if ($criteria->groupby != '') {
+            if ($criteria->groupby !== '') {
                 $groupby = true;
                 $field   = $criteria->groupby . ', '; //Not entirely secure unless you KNOW that no criteria's groupby clause is going to be mis-used
             }
@@ -429,7 +429,7 @@ class Oledrion_XoopsPersistableObjectHandler extends XoopsObjectHandler
         $sql = 'SELECT ' . $field . 'COUNT(*) FROM ' . $this->table;
         if (isset($criteria) && is_subclass_of($criteria, 'criteriaelement')) {
             $sql .= ' ' . $criteria->renderWhere();
-            if ($criteria->groupby != '') {
+            if ($criteria->groupby !== '') {
                 $sql .= $criteria->getGroupby();
             }
             $limit = $criteria->getLimit();
@@ -469,7 +469,7 @@ class Oledrion_XoopsPersistableObjectHandler extends XoopsObjectHandler
      * Retourne le total d'un champ
      *
      * @param  string $field    Le champ dont on veut calculer le total
-     * @param  object $criteria {@link CriteriaElement} to match
+     * @param  CriteriaElement $criteria {@link CriteriaElement} to match
      * @return integer le total
      */
     public function getSum($field, $criteria = null)
@@ -480,7 +480,7 @@ class Oledrion_XoopsPersistableObjectHandler extends XoopsObjectHandler
         $sql = 'SELECT Sum(' . $field . ') as cpt FROM ' . $this->table;
         if (isset($criteria) && is_subclass_of($criteria, 'criteriaelement')) {
             $sql .= ' ' . $criteria->renderWhere();
-            if ($criteria->groupby != '') {
+            if ($criteria->groupby !== '') {
                 $sql .= $criteria->getGroupby();
             }
             $limit = $criteria->getLimit();
@@ -672,7 +672,7 @@ class Oledrion_XoopsPersistableObjectHandler extends XoopsObjectHandler
      *
      * @param string $fieldname  Name of the field
      * @param string $fieldvalue Value to write
-     * @param object $criteria   {@link CriteriaElement}
+     * @param CriteriaElement $criteria   {@link CriteriaElement}
      *
      * @param  bool  $force
      * @return bool
@@ -738,7 +738,7 @@ class Oledrion_XoopsPersistableObjectHandler extends XoopsObjectHandler
     /**
      * delete all objects meeting the conditions
      *
-     * @param  object $criteria {@link CriteriaElement} with conditions to meet
+     * @param  CriteriaElement $criteria {@link CriteriaElement} with conditions to meet
      * @return bool
      */
     public function deleteAll($criteria = null)
@@ -785,7 +785,7 @@ class Oledrion_XoopsPersistableObjectHandler extends XoopsObjectHandler
      * Get distincted values of a field in the table
      *
      * @param  string $field    Field's name
-     * @param  object $criteria {@link CriteriaElement} conditions to be met
+     * @param  CriteriaElement $criteria {@link CriteriaElement} conditions to be met
      * @param  string $format   Format in wich we want the datas
      * @return array  containing the distinct values
      */
@@ -834,8 +834,8 @@ class Oledrion_XoopsPersistableObjectHandler extends XoopsObjectHandler
      */
     public function getItems($start = 0, $limit = 0, $sort = '', $order = 'ASC', $idAsKey = true)
     {
-        if (trim($order) == '') {
-            if (isset($this->identifierName) && trim($this->identifierName) != '') {
+        if (trim($order) === '') {
+            if (isset($this->identifierName) && trim($this->identifierName) !== '') {
                 $order = $this->identifierName;
             } else {
                 $order = $this->keyName;

@@ -27,7 +27,7 @@ error_reporting(0);
 @$xoopsLogger->activated = false;
 
 $op = isset($_POST['op']) ? $_POST['op'] : '';
-if ($op == '') {
+if ($op === '') {
     $op = isset($_GET['op']) ? $_GET['op'] : '';
 }
 $return  = '';
@@ -117,7 +117,7 @@ switch ($op) {
     // ajax search
     case 'search': // ajax search
         $key = $_GET['part'];
-        if (isset($key) && $key != '') {
+        if (isset($key) && $key !== '') {
             // Set captul
             $i = 1;
             // Query 1
@@ -184,7 +184,7 @@ switch ($op) {
     case 'product':
         $start = (int)$_GET['start'];
         $limit = (int)$_GET['limit'];
-        if (isset($start) && $start != '') {
+        if (isset($start) && $start !== '') {
             $ret      = array();
             $criteria = new CriteriaCompo();
             $criteria->add(new Criteria('product_id', $start, '>='));
@@ -218,7 +218,7 @@ switch ($op) {
     // Product output as json
     case 'category':
         $start = (int)$_GET['start'];
-        if (isset($start) && $start != '') {
+        if (isset($start) && $start !== '') {
             $ret      = array();
             $criteria = new CriteriaCompo();
             $criteria->add(new Criteria('cat_cid', $start, '>='));

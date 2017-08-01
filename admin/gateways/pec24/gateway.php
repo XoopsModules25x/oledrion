@@ -2,6 +2,9 @@
 // defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
 //require_once('nusoap.php');
 
+/**
+ * Class Oledrion_pec24
+ */
 class Oledrion_pec24 extends Oledrion_gateway
 {
     /**
@@ -61,7 +64,7 @@ class Oledrion_pec24 extends Oledrion_gateway
      */
     public function saveParametersForm($data)
     {
-        if (xoops_trim($this->languageFilename) != '' && file_exists($this->languageFilename)) {
+        if (xoops_trim($this->languageFilename) !== '' && file_exists($this->languageFilename)) {
             require $this->languageFilename;
         }
         $gatewayName = $this->gatewayInformation['foldername'];
@@ -108,6 +111,9 @@ class Oledrion_pec24 extends Oledrion_gateway
         //return $res['authority'];
     }
 
+    /**
+     * @return mixed
+     */
     public function getParsianMid()
     {
         global $xoopsConfig;
@@ -133,7 +139,7 @@ class Oledrion_pec24 extends Oledrion_gateway
     /**
      * Returns the form to use before to redirect user to the gateway
      *
-     * @param  object $order Objects of type oledrion_commands
+     * @param  Oledrion_commands $order Objects of type Oledrion_commands
      * @return array  Key = element's name, Value = Element's value
      */
     public function getCheckoutFormContent($order)

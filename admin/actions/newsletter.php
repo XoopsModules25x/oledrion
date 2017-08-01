@@ -64,7 +64,7 @@ switch ($action) {
         $submit_btn  = new XoopsFormButton('', 'post', _SUBMIT, 'submit');
         $button_tray->addElement($submit_btn);
         $sform->addElement($button_tray);
-        $sform =& OledrionUtility::formMarkRequiredFields($sform);
+        $sform = OledrionUtility::formMarkRequiredFields($sform);
         $sform->display();
         require_once OLEDRION_ADMIN_PATH . 'admin_footer.php';
         break;
@@ -112,7 +112,7 @@ switch ($action) {
         if (!$fp) {
             OledrionUtility::redirect(_AM_OLEDRION_ERROR_7, $baseurl . '?op=newsletter', 5);
         }
-        if (xoops_trim($header) != '') {
+        if (xoops_trim($header) !== '') {
             fwrite($fp, $header);
         }
         foreach ($products as $item) {
@@ -185,7 +185,7 @@ switch ($action) {
             }
             fwrite($fp, $content);
         }
-        if (xoops_trim($footer) != '') {
+        if (xoops_trim($footer) !== '') {
             fwrite($fp, $footer);
         }
         fclose($fp);

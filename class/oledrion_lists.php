@@ -176,9 +176,9 @@ class OledrionOledrion_listsHandler extends Oledrion_XoopsPersistableObjectHandl
 {
     /**
      * OledrionOledrion_listsHandler constructor.
-     * @param object $db
+     * @param XoopsDatabase $db
      */
-    public function __construct($db)
+    public function __construct(XoopsDatabase $db)
     { //                            Table               Classe           Id       Identifiant
         parent::__construct($db, 'oledrion_lists', 'oledrion_lists', 'list_id', 'list_title');
     }

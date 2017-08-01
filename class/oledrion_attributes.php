@@ -82,7 +82,7 @@ class Oledrion_attributes extends Oledrion_Object
      */
     public function hasDefaultValue()
     {
-        if (xoops_trim($this->getVar('attribute_default_value')) != '') {
+        if (xoops_trim($this->getVar('attribute_default_value')) !== '') {
             return true;
         }
 
@@ -110,7 +110,7 @@ class Oledrion_attributes extends Oledrion_Object
     public function getOption($valueToGet, $format = 'e')
     {
         $names = array();
-        if (xoops_trim($this->getVar($valueToGet, $format)) != '') {
+        if (xoops_trim($this->getVar($valueToGet, $format)) !== '') {
             $names = explode(OLEDRION_ATTRIBUTE_SEPARATOR, $this->getVar($valueToGet, $format));
         }
 
@@ -429,7 +429,7 @@ class Oledrion_attributes extends Oledrion_Object
     public function getDefaultAttributePrice($format = 'e')
     {
         $defaultValue = xoops_trim($this->getVar('attribute_default_value', 'e'));
-        if ($defaultValue != '') {    // Il y a une option par défaut donc un prix
+        if ($defaultValue !== '') {    // Il y a une option par défaut donc un prix
             $values  = $this->getOption('attribute_values', $format);
             $prices  = $this->getOption('attribute_prices', $format);
             $counter = 0;
@@ -467,11 +467,11 @@ class Oledrion_attributes extends Oledrion_Object
      *
      * @param  string                   $format             Format dans lequel renvoyer les données
      * @param  boolean                  $withFormatedPrices Faut il retourner les prix formatés ?
-     * @param  object|oledrion_products $product            Le produit de travail
+     * @param  Oledrion_products $product            Le produit de travail
      * @return array
      * @since 2.3.2009.03.11
      */
-    public function getAttributeOptions($format = 's', $withFormatedPrices = false, oledrion_products $product = null)
+    public function getAttributeOptions($format = 's', $withFormatedPrices = false, Oledrion_products $product = null)
     {
         $ret     = array();
         $counter = 0;
@@ -621,7 +621,7 @@ class Oledrion_attributes extends Oledrion_Object
      *      oledrion_attribute_radio.html
      *      oledrion_attribute_select.html
      *
-     * @param  object|oledrion_products $product Le produit de "travail"
+     * @param  Oledrion_products $product Le produit de "travail"
      * @return string                   Le contenu html
      * @since 2.3.2009.03.16
      */
@@ -706,7 +706,7 @@ class Oledrion_attributes extends Oledrion_Object
                 $template->assign('delimiter', $delimiter);
                 break;
         }
-        if ($templateName != '') {
+        if ($templateName !== '') {
             $ret = $template->fetch('db:' . $templateName);
         }
 
@@ -721,9 +721,9 @@ class OledrionOledrion_attributesHandler extends Oledrion_XoopsPersistableObject
 {
     /**
      * OledrionOledrion_attributesHandler constructor.
-     * @param object $db
+     * @param \XoopsDatabase $db
      */
-    public function __construct($db)
+    public function __construct(XoopsDatabase $db)
     {    //                             Table               Classe                  Id
         parent::__construct($db, 'oledrion_attributes', 'oledrion_attributes', 'attribute_id');
     }
@@ -782,12 +782,12 @@ class OledrionOledrion_attributesHandler extends Oledrion_XoopsPersistableObject
     /**
      * Construction de la liste des attributs d'un produit
      *
-     * @param  object|oledrion_products $product              Le produit concerné
+     * @param  Oledrion_products $product              Le produit concerné
      * @param  integer                  $mandatoryFieldsCount Retourne le nombre d'options requises
      * @return array                    Les options construites en html
      * @since 2.3.2009.03.16
      */
-    public function constructHtmlProductAttributes(oledrion_products $product, &$mandatoryFieldsCount = 0)
+    public function constructHtmlProductAttributes(Oledrion_products $product, &$mandatoryFieldsCount = 0)
     {
         $attributes = $ret = array();
         $attributes = $this->getProductsAttributesList($product->getVar('product_id'));

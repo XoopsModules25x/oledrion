@@ -134,7 +134,7 @@ abstract class Oledrion_gateway
     /**
      * Returns the form to use before to redirect user to the gateway
      *
-     * @param  object $order Objects of type oledrion_commands
+     * @param  Oledrion_commands $order Objects of type Oledrion_commands
      * @return array  Key = element's name, Value = Element's value
      */
     abstract public function getCheckoutFormContent($order);

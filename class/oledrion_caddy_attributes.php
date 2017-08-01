@@ -56,7 +56,7 @@ class Oledrion_caddy_attributes extends Oledrion_Object
     public function getOption($valueToGet, $format = 'e')
     {
         $names = array();
-        if (xoops_trim($this->getVar($valueToGet, $format)) != '') {
+        if (xoops_trim($this->getVar($valueToGet, $format)) !== '') {
             $names = explode(OLEDRION_ATTRIBUTE_SEPARATOR, $this->getVar($valueToGet, $format));
         }
 
@@ -150,9 +150,9 @@ class OledrionOledrion_caddy_attributesHandler extends Oledrion_XoopsPersistable
 {
     /**
      * OledrionOledrion_caddy_attributesHandler constructor.
-     * @param object $db
+     * @param XoopsDatabase $db
      */
-    public function __construct($db)
+    public function __construct(XoopsDatabase $db)
     { //                                Table                   Classe                      Id
         parent::__construct($db, 'oledrion_caddy_attributes', 'oledrion_caddy_attributes', 'ca_id');
     }
@@ -173,7 +173,7 @@ class OledrionOledrion_caddy_attributesHandler extends Oledrion_XoopsPersistable
      * Retourne la liste formatée des attributs liés à un caddy
      *
      * @param  integer                  $ca_caddy_id L'identifiant de caddy
-     * @param  object|oledrion_products $product     Le produit concerné par le caddy
+     * @param  Oledrion_products $product     Le produit concerné par le caddy
      * @return array
      * @since 2.3.2009.03.23
      */

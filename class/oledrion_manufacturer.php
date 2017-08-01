@@ -94,7 +94,7 @@ class Oledrion_manufacturer extends Oledrion_Object
         $pictureNumber = (int)$pictureNumber;
         $return        = false;
         if ($pictureNumber > 0 && $pictureNumber < 6) {
-            if (xoops_trim($this->getVar('manu_photo' . $pictureNumber)) != ''
+            if (xoops_trim($this->getVar('manu_photo' . $pictureNumber)) !== ''
                 && file_exists(OLEDRION_PICTURES_PATH . '/' . $this->getVar('manu_photo' . $pictureNumber))) {
                 $return = true;
             }
@@ -195,9 +195,9 @@ class OledrionOledrion_manufacturerHandler extends Oledrion_XoopsPersistableObje
 {
     /**
      * OledrionOledrion_manufacturerHandler constructor.
-     * @param object $db
+     * @param \XoopsDatabase $db
      */
-    public function __construct($db)
+    public function __construct(XoopsDatabase $db)
     { //                            Table                   Classe               Id            Identifiant
         parent::__construct($db, 'oledrion_manufacturer', 'oledrion_manufacturer', 'manu_id', 'manu_commercialname');
     }

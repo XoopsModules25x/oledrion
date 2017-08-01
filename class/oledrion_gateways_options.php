@@ -50,9 +50,9 @@ class OledrionOledrion_gateways_optionsHandler extends Oledrion_XoopsPersistable
 {
     /**
      * OledrionOledrion_gateways_optionsHandler constructor.
-     * @param object $db
+     * @param XoopsDatabase $db
      */
-    public function __construct($db)
+    public function __construct(XoopsDatabase $db)
     { //                                Table                       Classe                      Id
         parent::__construct($db, 'oledrion_gateways_options', 'oledrion_gateways_options', 'option_id');
     }
@@ -88,7 +88,7 @@ class OledrionOledrion_gateways_optionsHandler extends Oledrion_XoopsPersistable
      *
      * @param  string $option_gateway Le nom de la passerelle de paiement
      * @param  string $option_name    L'option que l'on souhaite récupérer
-     * @return object Objet de type oledrion_gateways_options
+     * @return Oledrion_gateways_options Objet de type oledrion_gateways_options
      */
     public function getGatewayOption($option_gateway, $option_name)
     {
