@@ -26,7 +26,7 @@ abstract class Oledrion_gateway
 {
     protected $handlers;
     protected $gatewayInformation;
-    public $languageFilename;
+    public    $languageFilename;
 
     /**
      * Oledrion_gateway constructor.

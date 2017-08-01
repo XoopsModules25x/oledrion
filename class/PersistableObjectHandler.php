@@ -77,7 +77,7 @@ class Oledrion_XoopsPersistableObjectHandler extends XoopsObjectHandler
      *
      * @var string
      */
-    public $table;
+    public    $table;
     protected $keyName;
     protected $className;
     protected $identifierName;
@@ -87,13 +87,13 @@ class Oledrion_XoopsPersistableObjectHandler extends XoopsObjectHandler
 
     /**
      * Constructor - called from child classes
-     * @param null|XoopsDatabase $db           {@link XoopsDatabase}
+     * @param null|XoopsDatabase $db             {@link XoopsDatabase}
      *                                           object
-     * @param string               $tablename    Name of database table
-     * @param string               $classname    Name of Class, this handler is managing
-     * @param string               $keyname      Name of the property, holding the key
-     * @param string               $idenfierName Name of the property, holding the label
-     * @param array                $cacheOptions Optional, options for the cache
+     * @param string             $tablename      Name of database table
+     * @param string             $classname      Name of Class, this handler is managing
+     * @param string             $keyname        Name of the property, holding the key
+     * @param string             $idenfierName   Name of the property, holding the label
+     * @param array              $cacheOptions   Optional, options for the cache
      */
     public function __construct(XoopsDatabase $db, $tablename, $classname, $keyname, $idenfierName = '', $cacheOptions = null)
     {
@@ -192,12 +192,12 @@ class Oledrion_XoopsPersistableObjectHandler extends XoopsObjectHandler
     /**
      * retrieve objects from the database
      *
-     * @param CriteriaElement  $criteria  {@link CriteriaElement} conditions to be met
-     * @param bool    $id_as_key use the ID as key for the array?
-     * @param bool    $as_object return an array of objects?
+     * @param CriteriaElement $criteria  {@link CriteriaElement} conditions to be met
+     * @param bool            $id_as_key use the ID as key for the array?
+     * @param bool            $as_object return an array of objects?
      *
-     * @param  string $fields
-     * @param  bool   $autoSort
+     * @param  string         $fields
+     * @param  bool           $autoSort
      * @return array
      */
     public function getObjects(
@@ -244,10 +244,10 @@ class Oledrion_XoopsPersistableObjectHandler extends XoopsObjectHandler
     /**
      * Convert a database resultset to a returnable array
      *
-     * @param mysqli_result  $result    database resultset
-     * @param boolean $id_as_key - should NOT be used with joint keys
-     * @param boolean $as_object
-     * @param string  $fields    Requested fields from the query
+     * @param mysqli_result $result    database resultset
+     * @param boolean       $id_as_key - should NOT be used with joint keys
+     * @param boolean       $as_object
+     * @param string        $fields    Requested fields from the query
      *
      * @return array
      */
@@ -468,7 +468,7 @@ class Oledrion_XoopsPersistableObjectHandler extends XoopsObjectHandler
     /**
      * Retourne le total d'un champ
      *
-     * @param  string $field    Le champ dont on veut calculer le total
+     * @param  string          $field    Le champ dont on veut calculer le total
      * @param  CriteriaElement $criteria {@link CriteriaElement} to match
      * @return integer le total
      */
@@ -670,11 +670,11 @@ class Oledrion_XoopsPersistableObjectHandler extends XoopsObjectHandler
     /**
      * Change a value for objects with a certain criteria
      *
-     * @param string $fieldname  Name of the field
-     * @param string $fieldvalue Value to write
+     * @param string          $fieldname  Name of the field
+     * @param string          $fieldvalue Value to write
      * @param CriteriaElement $criteria   {@link CriteriaElement}
      *
-     * @param  bool  $force
+     * @param  bool           $force
      * @return bool
      */
     public function updateAll($fieldname, $fieldvalue, $criteria = null, $force = false)
@@ -784,9 +784,9 @@ class Oledrion_XoopsPersistableObjectHandler extends XoopsObjectHandler
     /**
      * Get distincted values of a field in the table
      *
-     * @param  string $field    Field's name
+     * @param  string          $field    Field's name
      * @param  CriteriaElement $criteria {@link CriteriaElement} conditions to be met
-     * @param  string $format   Format in wich we want the datas
+     * @param  string          $format   Format in wich we want the datas
      * @return array  containing the distinct values
      */
     public function getDistincts($field, $criteria = null, $format = 's')

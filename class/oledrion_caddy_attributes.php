@@ -172,7 +172,7 @@ class OledrionOledrion_caddy_attributesHandler extends Oledrion_XoopsPersistable
     /**
      * Retourne la liste formatée des attributs liés à un caddy
      *
-     * @param  integer                  $ca_caddy_id L'identifiant de caddy
+     * @param  integer           $ca_caddy_id L'identifiant de caddy
      * @param  Oledrion_products $product     Le produit concerné par le caddy
      * @return array
      * @since 2.3.2009.03.23

@@ -465,8 +465,8 @@ class Oledrion_attributes extends Oledrion_Object
     /**
      * Retourne une liste combinée des options de l'attribut
      *
-     * @param  string                   $format             Format dans lequel renvoyer les données
-     * @param  boolean                  $withFormatedPrices Faut il retourner les prix formatés ?
+     * @param  string            $format             Format dans lequel renvoyer les données
+     * @param  boolean           $withFormatedPrices Faut il retourner les prix formatés ?
      * @param  Oledrion_products $product            Le produit de travail
      * @return array
      * @since 2.3.2009.03.11
@@ -783,7 +783,7 @@ class OledrionOledrion_attributesHandler extends Oledrion_XoopsPersistableObject
      * Construction de la liste des attributs d'un produit
      *
      * @param  Oledrion_products $product              Le produit concerné
-     * @param  integer                  $mandatoryFieldsCount Retourne le nombre d'options requises
+     * @param  integer           $mandatoryFieldsCount Retourne le nombre d'options requises
      * @return array                    Les options construites en html
      * @since 2.3.2009.03.16
      */

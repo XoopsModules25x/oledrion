@@ -1056,7 +1056,7 @@ class OledrionOledrion_productsHandler extends Oledrion_XoopsPersistableObjectHa
      * Augmente les quantités en stock d'un produit
      *
      * @param  Oledrion_products $product  Objet produit
-     * @param  int       $quantity $quantity Quantité à rajouter
+     * @param  int               $quantity $quantity Quantité à rajouter
      * @return bool
      */
     public function increaseStock($product, $quantity = 1)
@@ -1071,7 +1071,7 @@ class OledrionOledrion_productsHandler extends Oledrion_XoopsPersistableObjectHa
      * Diminue les quantités en stock d'un produit
      *
      * @param  Oledrion_products $product  Objet produit
-     * @param  int       $quantity $quantity Quantité à soustraire
+     * @param  int               $quantity $quantity Quantité à soustraire
      * @return bool
      */
     public function decreaseStock(&$product, $quantity = 1)

@@ -242,7 +242,7 @@ class OledrionOledrion_commandsHandler extends Oledrion_XoopsPersistableObjectHa
      * Envoi du mail chargé de prévenir le client et le magasin qu'une commande est validée
      *
      * @param Oledrion_commands $order   La commande en question
-     * @param string                   $comment Optionel, un commentaire pour le webmaster
+     * @param string            $comment Optionel, un commentaire pour le webmaster
      */
     public function notifyOrderValidated(Oledrion_commands $order, $comment = '')
     {
@@ -264,7 +264,7 @@ class OledrionOledrion_commandsHandler extends Oledrion_XoopsPersistableObjectHa
      * Validation d'une commande et mise à jour des stocks
      *
      * @param  Oledrion_commands $order   La commande à traiter
-     * @param  string                   $comment Optionel, un commentaire pour le mail envoyé au webmaster
+     * @param  string            $comment Optionel, un commentaire pour le mail envoyé au webmaster
      * @return bool                     Indique si la validation de la commande s'est bien faite ou pas
      */
     public function validateOrder(Oledrion_commands $order, $comment = '')
@@ -285,7 +285,7 @@ class OledrionOledrion_commandsHandler extends Oledrion_XoopsPersistableObjectHa
      * pack d'une commande et mise à jour des stocks
      *
      * @param  Oledrion_commands $order   La commande à traiter
-     * @param  string                   $comment Optionel, un commentaire pour le mail envoyé au webmaster
+     * @param  string            $comment Optionel, un commentaire pour le mail envoyé au webmaster
      * @return bool                     Indique si la validation de la commande s'est bien faite ou pas
      */
     public function packOrder(Oledrion_commands $order, $comment = '')
@@ -302,7 +302,7 @@ class OledrionOledrion_commandsHandler extends Oledrion_XoopsPersistableObjectHa
      * submit d'une commande et mise à jour des stocks
      *
      * @param  Oledrion_commands $order   La commande à traiter
-     * @param  string                   $comment Optionel, un commentaire pour le mail envoyé au webmaster
+     * @param  string            $comment Optionel, un commentaire pour le mail envoyé au webmaster
      * @return bool                     Indique si la validation de la commande s'est bien faite ou pas
      */
     public function submitOrder(Oledrion_commands $order, $comment = '')
@@ -319,7 +319,7 @@ class OledrionOledrion_commandsHandler extends Oledrion_XoopsPersistableObjectHa
      * delivery d'une commande et mise à jour des stocks
      *
      * @param  Oledrion_commands $order   La commande à traiter
-     * @param  string                   $comment Optionel, un commentaire pour le mail envoyé au webmaster
+     * @param  string            $comment Optionel, un commentaire pour le mail envoyé au webmaster
      * @return bool                     Indique si la validation de la commande s'est bien faite ou pas
      */
     public function deliveryOrder(Oledrion_commands $order, $comment = '')
@@ -336,7 +336,7 @@ class OledrionOledrion_commandsHandler extends Oledrion_XoopsPersistableObjectHa
      * Informe le propriétaire du site qu'une commande est frauduleuse
      *
      * @param Oledrion_commands $order   La commande en question
-     * @param string                   $comment Optionel, un commentaire pour le mail envoyé au webmaster
+     * @param string            $comment Optionel, un commentaire pour le mail envoyé au webmaster
      */
     public function notifyOrderFraudulent(Oledrion_commands $order, $comment = '')
     {
@@ -364,7 +364,7 @@ class OledrionOledrion_commandsHandler extends Oledrion_XoopsPersistableObjectHa
      * Informe le propriétaire du site qu'une commande est en attente
      *
      * @param Oledrion_commands $order   La commande en question
-     * @param string                   $comment Optionel, un commentaire pour le mail envoyé au webmaster
+     * @param string            $comment Optionel, un commentaire pour le mail envoyé au webmaster
      */
     public function notifyOrderPending(Oledrion_commands $order, $comment = '')
     {
@@ -378,7 +378,7 @@ class OledrionOledrion_commandsHandler extends Oledrion_XoopsPersistableObjectHa
      * Applique le statut de commande en attente à une commande
      *
      * @param Oledrion_commands $order   La commande à traiter
-     * @param string                   $comment Optionel, un commentaire pour le mail envoyé au webmaster
+     * @param string            $comment Optionel, un commentaire pour le mail envoyé au webmaster
      */
     public function setOrderPending(Oledrion_commands $order, $comment = '')
     {
@@ -392,7 +392,7 @@ class OledrionOledrion_commandsHandler extends Oledrion_XoopsPersistableObjectHa
      * Informe le propriétaire du site qu'une commande à échoué (le paiement)
      *
      * @param Oledrion_commands $order   La commande en question
-     * @param string                   $comment Optionel, un commentaire pour le mail envoyé au webmaster
+     * @param string            $comment Optionel, un commentaire pour le mail envoyé au webmaster
      */
     public function notifyOrderFailed(Oledrion_commands $order, $comment = '')
     {
@@ -406,7 +406,7 @@ class OledrionOledrion_commandsHandler extends Oledrion_XoopsPersistableObjectHa
      * Applique le statut de commande échouée à une commande
      *
      * @param Oledrion_commands $order   La commande à traiter
-     * @param string                   $comment Optionel, un commentaire pour le mail envoyé au webmaster
+     * @param string            $comment Optionel, un commentaire pour le mail envoyé au webmaster
      */
     public function setOrderFailed(Oledrion_commands $order, $comment = '')
     {
@@ -420,7 +420,7 @@ class OledrionOledrion_commandsHandler extends Oledrion_XoopsPersistableObjectHa
      * Informe le propriétaire du site qu'une commande à échoué (le paiement)
      *
      * @param Oledrion_commands $order   La commande en question
-     * @param string                   $comment Optionel, un commentaire pour le mail envoyé au webmaster
+     * @param string            $comment Optionel, un commentaire pour le mail envoyé au webmaster
      */
     public function notifyOrderCanceled(Oledrion_commands $order, $comment = '')
     {
@@ -435,7 +435,7 @@ class OledrionOledrion_commandsHandler extends Oledrion_XoopsPersistableObjectHa
      * Applique le statut de commande annulée à une commande
      *
      * @param Oledrion_commands $order   La commande à traiter
-     * @param string                   $comment Optionel, un commentaire pour le mail envoyé au webmaster
+     * @param string            $comment Optionel, un commentaire pour le mail envoyé au webmaster
      */
     public function setOrderCanceled(Oledrion_commands $order, $comment = '')
     {

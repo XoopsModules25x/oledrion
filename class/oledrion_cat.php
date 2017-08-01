@@ -191,9 +191,9 @@ class OledrionOledrion_catHandler extends Oledrion_XoopsPersistableObjectHandler
     /**
      * Internal function to make an expanded view of categories via <li>
      *
-     * @param  string $fieldName
-     * @param  string $key
-     * @param  string $ret
+     * @param  string          $fieldName
+     * @param  string          $key
+     * @param  string          $ret
      * @param  XoopsObjectTree $tree
      * @return string
      */

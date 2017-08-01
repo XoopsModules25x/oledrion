@@ -198,7 +198,7 @@ class Oledrion_plugins
     /**
      * Déclenchement d'une action et appel des plugins liés
      *
-     * @param  string                     $eventToFire L'action déclenchée
+     * @param  string              $eventToFire L'action déclenchée
      * @param  Oledrion_parameters $parameters  Les paramètres à passer à chaque plugin
      * @return Oledrion_plugins                     L'objet lui même pour chaîner
      */
@@ -233,7 +233,7 @@ class Oledrion_plugins
     /**
      * Déclenchement d'un filtre et appel des plugins liés
      *
-     * @param  string                     $eventToFire Le filtre appelé
+     * @param  string              $eventToFire Le filtre appelé
      * @param  Oledrion_parameters $parameters  Les paramètres à passer à chaque plugin
      * @return Oledrion_parameters|Oledrion_plugins                     Le contenu de l'objet passé en paramètre
      */
