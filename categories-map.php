@@ -27,18 +27,18 @@ require_once XOOPS_ROOT_PATH . '/header.php';
 require_once OLEDRION_PATH . 'class/tree.php';
 
 $xoopsTpl->assign('mod_pref', $mod_pref); // Préférences du module
-$categories = array();
+$categories = [];
 $categories = $h_oledrion_cat->getAllCategories(new Oledrion_parameters());
 $mytree     = new Oledrion_XoopsObjectTree($categories, 'cat_cid', 'cat_pid');
 $tree       = $mytree->makeTreeAsArray('cat_title', '-');
 foreach ($tree as $key => $value) {
     if (isset($categories[$key])) {
         $category = $categories[$key];
-        $xoopsTpl->append('categories', array(
+        $xoopsTpl->append('categories', [
             'cat_url_rewrited' => $category->getLink(),
             'cat_href_title'   => $category->getHrefTitle(),
             'cat_title'        => $value
-        ));
+        ]);
     }
 }
 
@@ -47,7 +47,7 @@ OledrionUtility::setLocalCSS($xoopsConfig['language']);
 OledrionUtility::loadLanguageFile('modinfo.php');
 
 $xoopsTpl->assign('global_advert', OledrionUtility::getModuleOption('advertisement'));
-$xoopsTpl->assign('breadcrumb', OledrionUtility::breadcrumb(array(OLEDRION_URL . basename(__FILE__) => _MI_OLEDRION_SMNAME4)));
+$xoopsTpl->assign('breadcrumb', OledrionUtility::breadcrumb([OLEDRION_URL . basename(__FILE__) => _MI_OLEDRION_SMNAME4]));
 
 $title = _MI_OLEDRION_SMNAME4 . ' - ' . OledrionUtility::getModuleName();
 OledrionUtility::setMetas($title, $title);

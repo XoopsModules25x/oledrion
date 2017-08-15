@@ -94,7 +94,7 @@ class Oledrion_packing extends Oledrion_Object
     public function toArray($format = 's')
     {
         $oledrion_Currency               = Oledrion_Currency::getInstance();
-        $ret                             = array();
+        $ret                             = [];
         $ret                             = parent::toArray($format);
         $ret['packing_price_fordisplay'] = $oledrion_Currency->amountForDisplay($this->getVar('packing_price'));
         $ret['packing_image_url']        = $this->getPictureUrl();
@@ -123,18 +123,18 @@ class OledrionOledrion_packingHandler extends Oledrion_XoopsPersistableObjectHan
      */
     public function getAllPacking(Oledrion_parameters $parameters)
     {
-        $parameters = $parameters->extend(new Oledrion_parameters(array(
+        $parameters = $parameters->extend(new Oledrion_parameters([
                                                                       'start' => 0,
                                                                       'limit' => 0,
                                                                       'sort'  => 'packing_id',
                                                                       'order' => 'ASC'
-                                                                  )));
+                                                                  ]));
         $critere    = new Criteria('packing_id', 0, '<>');
         $critere->setLimit($parameters['limit']);
         $critere->setStart($parameters['start']);
         $critere->setSort($parameters['sort']);
         $critere->setOrder($parameters['order']);
-        $packings = array();
+        $packings = [];
         $packings = $this->getObjects($critere);
 
         return $packings;
@@ -145,12 +145,12 @@ class OledrionOledrion_packingHandler extends Oledrion_XoopsPersistableObjectHan
      */
     public function getPacking()
     {
-        $ret     = array();
+        $ret     = [];
         $critere = new CriteriaCompo();
         $critere->add(new Criteria('packing_online', '1'));
         $packings = $this->getObjects($critere);
         foreach ($packings as $root) {
-            $tab   = array();
+            $tab   = [];
             $tab   = $root->toArray();
             $ret[] = $tab;
         }

@@ -76,7 +76,7 @@ class OledrionOledrion_relatedHandler extends Oledrion_XoopsPersistableObjectHan
      */
     public function getRelatedProductsFromProductsIds($ids)
     {
-        $ret = array();
+        $ret = [];
         if (is_array($ids)) {
             $criteria = new Criteria('related_product_id', '(' . implode(',', $ids) . ')', 'IN');
             $ret      = $this->getObjects($criteria, true, true, '*', false);

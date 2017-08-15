@@ -14,13 +14,13 @@ Usage:
 // ##########################################################
 //  Define your mapping here
 // ##########################################################
-$patterns = array(
+$patterns = [
     // first one must be module directory name
     'oledrion' => 'bouquins',
     'OLEDRION' => 'BOUQUINS',
     'Oledrion' => 'Bouquins',
     'Oledrion' => 'Bouquins'
-);
+];
 
 $patKeys   = array_keys($patterns);
 $patValues = array_values($patterns);

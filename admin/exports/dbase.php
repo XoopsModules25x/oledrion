@@ -19,7 +19,7 @@
 /**
  * Export au format Dbase 3
  */
-// defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
+// defined('XOOPS_ROOT_PATH') || exit('Restricted access.');
 
 class Oledrion_dbase_export extends Oledrion_export
 {
@@ -44,35 +44,35 @@ class Oledrion_dbase_export extends Oledrion_export
      */
     public function export()
     {
-        $def = array(
-            array('o_id', 'N', 10, 0),
-            array('o_uid', 'N', 10, 0),
-            array('o_date', 'D'),
-            array('o_state', 'N', 1, 0),
-            array('o_ip', 'C', 32),
-            array('o_lastname', 'C', 155),
-            array('o_firstnam', 'C', 155),
-            array('o_adress', 'C', 155),
-            array('o_zip', 'C', 30),
-            array('o_town', 'C', 155),
-            array('o_country', 'C', 3),
-            array('o_telephon', 'C', 30),
-            array('o_email', 'C', 155),
-            array('o_articles', 'N', 10, 0),
-            array('o_total', 'N', 10, 2),
-            array('o_shipping', 'N', 10, 2),
-            array('o_bill', 'L'),
-            array('o_password', 'C', 155),
-            array('o_text', 'C', 155),
-            array('o_cancel', 'C', 155),
-            array('c_id', 'N', 10, 0),
-            array('c_prod_id', 'N', 10, 0),
-            array('c_qte', 'N', 10, 0),
-            array('c_price', 'N', 10, 2),
-            array('c_o_id', 'N', 10, 0),
-            array('c_shipping', 'N', 10, 2),
-            array('c_pass', 'C', 155)
-        );
+        $def = [
+            ['o_id', 'N', 10, 0],
+            ['o_uid', 'N', 10, 0],
+            ['o_date', 'D'],
+            ['o_state', 'N', 1, 0],
+            ['o_ip', 'C', 32],
+            ['o_lastname', 'C', 155],
+            ['o_firstnam', 'C', 155],
+            ['o_adress', 'C', 155],
+            ['o_zip', 'C', 30],
+            ['o_town', 'C', 155],
+            ['o_country', 'C', 3],
+            ['o_telephon', 'C', 30],
+            ['o_email', 'C', 155],
+            ['o_articles', 'N', 10, 0],
+            ['o_total', 'N', 10, 2],
+            ['o_shipping', 'N', 10, 2],
+            ['o_bill', 'L'],
+            ['o_password', 'C', 155],
+            ['o_text', 'C', 155],
+            ['o_cancel', 'C', 155],
+            ['c_id', 'N', 10, 0],
+            ['c_prod_id', 'N', 10, 0],
+            ['c_qte', 'N', 10, 0],
+            ['c_price', 'N', 10, 2],
+            ['c_o_id', 'N', 10, 0],
+            ['c_shipping', 'N', 10, 2],
+            ['c_pass', 'C', 155]
+        ];
         /*
            * Correspondances
            * cmd_id                o_id
@@ -122,10 +122,10 @@ class Oledrion_dbase_export extends Oledrion_export
         $criteria->setOrder('DESC');
         $orders = $this->handlers->h_oledrion_commands->getObjects($criteria);
         foreach ($orders as $order) {
-            $carts = array();
+            $carts = [];
             $carts = $this->handlers->h_oledrion_caddy->getObjects(new Criteria('caddy_cmd_id', $order->getVar('cmd_id'), '='));
             foreach ($carts as $cart) {
-                dbase_add_record($dbf, array(
+                dbase_add_record($dbf, [
                     $order->getVar('cmd_id'),
                     $order->getVar('cmd_uid'),
                     date('Ymd', strtotime($order->getVar('cmd_date'))),
@@ -153,7 +153,7 @@ class Oledrion_dbase_export extends Oledrion_export
                     $cart->getVar('caddy_cmd_id'),
                     $cart->getVar('caddy_shipping'),
                     $cart->getVar('caddy_pass')
-                ));
+                ]);
             }
         }
         dbase_close($dbf);

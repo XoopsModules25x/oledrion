@@ -46,7 +46,7 @@ switch ($action) {
         $categories = $h_oledrion_cat->getAllCategories(new Oledrion_parameters());
         $mytree     = new Oledrion_XoopsObjectTree($categories, 'cat_cid', 'cat_pid');
 
-        if (OledrionUtility::checkVerXoops($module, '2.5.9')) {
+        if (OledrionUtility::checkVerXoops($GLOBALS['xoopsModule'], '2.5.9')) {
             $htmlSelect = $mytree->makeSelectElement('cat_cid', 'cat_title', '-', 0, true, 0, _AM_OLEDRION_ALL, _AM_OLEDRION_IN_CATEGORY);
             $form->addElement($htmlSelect);
         } else {
@@ -92,20 +92,20 @@ switch ($action) {
         $date1      = strtotime($_POST['date1']);
         $date2      = strtotime($_POST['date2']);
         $cat_id     = (int)$_POST['cat_cid'];
-        $products   = $categories = array();
-        $products   = $h_oledrion_products->getProductsForNewsletter(new Oledrion_parameters(array(
+        $products   = $categories = [];
+        $products   = $h_oledrion_products->getProductsForNewsletter(new Oledrion_parameters([
                                                                                                  'startingDate' => $date1,
                                                                                                  'endingDate'   => $date2,
                                                                                                  'category'     => $cat_id
-                                                                                             )));
+                                                                                             ]));
         $newsfile   = OLEDRION_NEWSLETTER_PATH;
-        $categories = $h_oledrion_cat->getAllCategories(new Oledrion_parameters(array(
+        $categories = $h_oledrion_cat->getAllCategories(new Oledrion_parameters([
                                                                                     'start'   => 0,
                                                                                     'limit'   => 0,
                                                                                     'sort'    => 'cat_title',
                                                                                     'order'   => 'ASC',
                                                                                     'idaskey' => true
-                                                                                )));
+                                                                                ]));
         $vats       = $h_oledrion_vat->getAllVats(new Oledrion_parameters());
 
         $fp = fopen($newsfile, 'w');
@@ -117,7 +117,7 @@ switch ($action) {
         }
         foreach ($products as $item) {
             $content  = $newsletterTemplate;
-            $tblTmp   = $tblTmp2 = array();
+            $tblTmp   = $tblTmp2 = [];
             $criteria = new CriteriaCompo();
             $criteria->add(new Criteria('pm_product_id', $item->getVar('product_id'), '='));
             $tblTmp = $h_oledrion_productsmanu->getObjects($criteria);
@@ -125,12 +125,12 @@ switch ($action) {
                 $tblTmp2[] = $productManufacturer->getVar('pm_manu_id');
             }
             $manufacturers = $h_oledrion_manufacturer->getObjects(new Criteria('manu_id', '(' . implode(',', $tblTmp2) . ')', 'IN'), true);
-            $tblTmp        = array();
+            $tblTmp        = [];
             foreach ($manufacturers as $manufacturer) {
                 $tblTmp[] = $manufacturer->getVar('manu_commercialname') . ' ' . $manufacturer->getVar('manu_name');
             }
 
-            $search  = array(
+            $search  = [
                 '%title%',
                 '%category%',
                 '%author%',
@@ -152,8 +152,8 @@ switch ($action) {
                 '%product_unitmeasure2%',
                 '%product_download_url%',
                 '%product_length%'
-            );
-            $replace = array(
+            ];
+            $replace = [
                 $item->getVar('product_title'),
                 $categories[$item->getVar('product_cid')]->getVar('cat_title'),
                 implode(', ', $tblTmp),
@@ -175,7 +175,7 @@ switch ($action) {
                 $item->getVar('product_unitmeasure2'),
                 $item->getVar('product_download_url'),
                 $item->getVar('product_length')
-            );
+            ];
             $content = str_replace($search, $replace, $content);
             if ($removeBr) {
                 $content = str_replace('<br>', "\r\n", $content);

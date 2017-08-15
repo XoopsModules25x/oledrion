@@ -36,22 +36,22 @@ $ts       = MyTextSanitizer::getInstance();
 $limit    = OledrionUtility::getModuleOption('items_count'); // Nombre maximum d'éléments à afficher dans l'admin
 
 $oledrionHandlers = OledrionHandler::getInstance();
-$searchFields     = array(
+$searchFields     = [
     'product_title'       => _OLEDRION_TITLE,
     'product_summary'     => _OLEDRION_SUMMARY,
     'product_description' => _OLEDRION_DESCRIPTION,
     'product_id'          => _AM_OLEDRION_ID,
     'product_sku'         => _OLEDRION_NUMBER,
     'product_extraid'     => _OLEDRION_EXTRA_ID
-);
-$searchCriterias  = array(
+];
+$searchCriterias  = [
     XOOPS_MATCH_START   => _STARTSWITH,
     XOOPS_MATCH_END     => _ENDSWITH,
     XOOPS_MATCH_EQUAL   => _MATCHES,
     XOOPS_MATCH_CONTAIN => _CONTAINS
-);
+];
 
-$vendors    = array();
+$vendors    = [];
 $vendors    = $oledrionHandlers->h_oledrion_vendors->getList();
 $vendors[0] = '---';
 sort($vendors);
@@ -74,7 +74,7 @@ if (isset($_REQUEST['op']) && $_REQUEST['op'] === 'search') {
     $xoopsTpl->assign('searchCriteriaSelected', $searchCriteria);
     $searchVendorSelected  = $searchVendor;
     $selectedCategory      = $product_cid;
-    $additionnalParameters = array();
+    $additionnalParameters = [];
 
     $additionnalParameters['op']             = 'search';
     $additionnalParameters['mutipleSelect']  = $mutipleSelect;
@@ -122,10 +122,10 @@ if (isset($_REQUEST['op']) && $_REQUEST['op'] === 'search') {
     }
     $criteria->setStart($start);
     $criteria->setLimit($limit);
-    $products          = array();
+    $products          = [];
     $products          = $oledrionHandlers->h_oledrion_products->getObjects($criteria);
-    $javascriptSearch  = array("'", '"');
-    $javascriptReplace = array(' ', ' ');
+    $javascriptSearch  = ["'", '"'];
+    $javascriptReplace = [' ', ' '];
 
     if (count($products) > 0) {
         foreach ($products as $product) {
@@ -140,7 +140,7 @@ if (isset($_REQUEST['op']) && $_REQUEST['op'] === 'search') {
 OledrionUtility::loadLanguageFile('modinfo.php');
 OledrionUtility::loadLanguageFile('main.php');
 
-if (OledrionUtility::checkVerXoops($module, '2.5.9')) {
+if (OledrionUtility::checkVerXoops($GLOBALS['xoopsModule'], '2.5.9')) {
     $categoriesSelect = $mytree->makeSelectElement('product_cid', 'cat_title', '-', $selectedCategory, true, 0, '', '');
     $xoopsTpl->assign('searchCategory', $categoriesSelect->render());
 } else {

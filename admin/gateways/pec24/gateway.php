@@ -1,5 +1,5 @@
 <?php
-// defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
+// defined('XOOPS_ROOT_PATH') || exit('Restricted access.');
 //require_once('nusoap.php');
 
 /**
@@ -17,7 +17,7 @@ class Oledrion_pec24 extends Oledrion_gateway
 
     public function setGatewayInformation()
     {
-        $gateway                  = array();
+        $gateway                  = [];
         $gateway['name']          = 'Parsian';
         $gateway['foldername']    = 'pec24';
         $gateway['version']       = '1.0';
@@ -98,15 +98,15 @@ class Oledrion_pec24 extends Oledrion_gateway
             require_once __DIR__ . '/nusoap.php';
             $soapclient = new soapclient($url, 'wsdl');
         }
-        $params     = array(
+        $params     = [
             'pin'         => $this->getParsianMid(),
             'amount'      => (int)$this->formatAmount($cmd_total),
             'orderId'     => (int)$cmd_id,
             'callbackUrl' => OLEDRION_URL . 'gateway-notify.php?cmd_id=' . (int)$cmd_id . '&cmd_total=' . (int)$this->formatAmount($cmd_total),
             'authority'   => 0,
             'status'      => 1
-        );
-        $sendParams = array($params);
+        ];
+        $sendParams = [$params];
         //$res = $soapclient->call('PinPaymentRequest', $sendParams);
         //return $res['authority'];
     }
@@ -144,7 +144,7 @@ class Oledrion_pec24 extends Oledrion_gateway
      */
     public function getCheckoutFormContent($order)
     {
-        $ret                = array();
+        $ret                = [];
         $ret['pin']         = $this->getParsianMid();
         $ret['amount']      = (int)$this->formatAmount($order->getVar('cmd_total'));
         $ret['orderId']     = $order->getVar('cmd_id');
@@ -215,12 +215,12 @@ class Oledrion_pec24 extends Oledrion_gateway
                 }
             } else {
                 //$status = 1;
-                $params     = array(
+                $params     = [
                     'pin'       => $this->getParsianMid(),
                     'authority' => $authority,
                     'status'    => $status
-                );
-                $sendParams = array($params);
+                ];
+                $sendParams = [$params];
                 $res        = $soapclient->call('PinPaymentEnquiry', $sendParams);
                 $status     = $res['status'];
                 if ($status == 0) {

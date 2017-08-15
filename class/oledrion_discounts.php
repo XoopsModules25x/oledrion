@@ -156,7 +156,7 @@ class OledrionOledrion_discountsHandler extends Oledrion_XoopsPersistableObjectH
      */
     public function getRulesForThisPeriod()
     {
-        static $buffer = array();
+        static $buffer = [];
         if (is_array($buffer) && count($buffer) > 0) {
             return $buffer;
         } else {
@@ -187,7 +187,7 @@ class OledrionOledrion_discountsHandler extends Oledrion_XoopsPersistableObjectH
      */
     public function getRulesOnEachProduct()
     {
-        static $buffer = array();
+        static $buffer = [];
         if (is_array($buffer) && count($buffer) > 0) {
         } else {
             $groups  = OledrionUtility::getCurrentMemberGroups();
@@ -209,7 +209,7 @@ class OledrionOledrion_discountsHandler extends Oledrion_XoopsPersistableObjectH
      */
     public function getRulesOnAllProducts()
     {
-        static $buffer = array();
+        static $buffer = [];
         if (is_array($buffer) && count($buffer) > 0) {
         } else {
             $critere = new CriteriaCompo();
@@ -229,7 +229,7 @@ class OledrionOledrion_discountsHandler extends Oledrion_XoopsPersistableObjectH
      */
     public function getRulesOnShipping()
     {
-        static $buffer = array();
+        static $buffer = [];
         if (is_array($buffer) && count($buffer) > 0) {
         } else {
             $critere = new CriteriaCompo();
@@ -249,7 +249,7 @@ class OledrionOledrion_discountsHandler extends Oledrion_XoopsPersistableObjectH
      */
     public function getRulesOnShipping2()
     {
-        static $buffer = array();
+        static $buffer = [];
         if (is_array($buffer) && count($buffer) > 0) {
         } else {
             $critere = new CriteriaCompo();
@@ -270,7 +270,7 @@ class OledrionOledrion_discountsHandler extends Oledrion_XoopsPersistableObjectH
      */
     public function getRulesOnCommand()
     {
-        static $buffer = array();
+        static $buffer = [];
         if (is_array($buffer) && count($buffer) > 0) {
         } else {
             $critere = new CriteriaCompo();
@@ -292,7 +292,7 @@ class OledrionOledrion_discountsHandler extends Oledrion_XoopsPersistableObjectH
      */
     public function applyDiscountOnShipping2(&$montantShipping, $commandAmount, &$discountsDescription)
     {
-        $tblRules = array();
+        $tblRules = [];
         $tblRules = $this->getRulesOnShipping2(); // Renvoie des objets Discounts
         if (count($tblRules) > 0) {
             foreach ($tblRules as $rule) {
@@ -313,7 +313,7 @@ class OledrionOledrion_discountsHandler extends Oledrion_XoopsPersistableObjectH
     public function applyDiscountOnCommand(&$montantHT, &$discountsDescription)
     {
         global $h_oledrion_commands;
-        $tblRules = array();
+        $tblRules = [];
         $tblRules = $this->getRulesOnCommand(); // Renvoie des objets Discounts
         if (count($tblRules) > 0) {
             $uid = OledrionUtility::getCurrentUserID();
@@ -365,7 +365,7 @@ class OledrionOledrion_discountsHandler extends Oledrion_XoopsPersistableObjectH
     public function applyDiscountOnShipping(&$montantHT, &$discountsDescription, $productQty)
     {
         global $h_oledrion_commands;
-        $tblRules = array();
+        $tblRules = [];
         $tblRules = $this->getRulesOnShipping(); // Renvoie des objets Discounts
         if (count($tblRules) > 0) {
             $uid = OledrionUtility::getCurrentUserID();
@@ -467,7 +467,7 @@ class OledrionOledrion_discountsHandler extends Oledrion_XoopsPersistableObjectH
     public function applyDiscountOnAllProducts(&$montantHT, &$discountsDescription, $productQty)
     {
         global $h_oledrion_commands;
-        $tblRules = array();
+        $tblRules = [];
         $tblRules = $this->getRulesOnAllProducts(); // Renvoie des objets Discounts
         if (count($tblRules) > 0) {
             $uid = OledrionUtility::getCurrentUserID();
@@ -570,7 +570,7 @@ class OledrionOledrion_discountsHandler extends Oledrion_XoopsPersistableObjectH
     public function applyDiscountOnEachProduct($productId, &$prixHT, &$discountsDescription, $productQty)
     {
         global $h_oledrion_commands;
-        $rules = array();
+        $rules = [];
         $rules = $this->getRulesOnEachProduct(); // Renvoie des objets Discounts
         if (count($rules) > 0) {
             $uid = OledrionUtility::getCurrentUserID();

@@ -37,7 +37,7 @@ if ($cat_cid > 0) {
 // On peut afficher les blocs *********************************************************************
 $GLOBALS['xoopsOption']['template_main'] = 'oledrion_category.tpl';
 require_once XOOPS_ROOT_PATH . '/header.php';
-$vatArray = $tbl_categories = array();
+$vatArray = $tbl_categories = [];
 $limit    = OledrionUtility::getModuleOption('perpage');
 
 // Lecture des TVA ********************************************************************************
@@ -51,14 +51,14 @@ $xoopsTpl->assign('mod_pref', $mod_pref); // Préférences du module
 $xoopsTpl->assign('columnsCount', OledrionUtility::getModuleOption('catagory_colums'));
 
 require_once OLEDRION_PATH . 'class/tree.php';
-$tbl_tmp               = array();
+$tbl_tmp               = [];
 $mytree                = new Oledrion_XoopsObjectTree($categories, 'cat_cid', 'cat_pid');
 $subCategoriesSearched = false;
 // Si on est sur une catégorie mère ou si on n'a pas spécifié de catégorie
 if ((is_object($category) && $category->getVar('cat_pid') == 0) || $cat_cid == 0) { // On affiche les 4 blocs
     $xoopsTpl->assign('case', 1);
 
-    $tblChildsO = $tblChilds = array();
+    $tblChildsO = $tblChilds = [];
     if ($cat_cid != 0) {
         $tblChilds[] = $cat_cid;
     }
@@ -80,15 +80,15 @@ if ((is_object($category) && $category->getVar('cat_pid') == 0) || $cat_cid == 0
             $metaKeywords    = xoops_trim($category->getVar('cat_metakeywords'));
             OledrionUtility::setMetas($pageTitle, $metaDescription, $metaKeywords);
         }
-        $xoopsTpl->assign('breadcrumb', OledrionUtility::breadcrumb(array(
+        $xoopsTpl->assign('breadcrumb', OledrionUtility::breadcrumb([
                                                                         OLEDRION_URL . basename(__FILE__) => $category->getVar('cat_title')
-                                                                    )));
+                                                                    ]));
         if (OLEDRION_SHOW_SUB_CATEGORIES) {
             $count       = 1;
-            $firstChilds = array();
+            $firstChilds = [];
             $firstChilds = $mytree->getFirstChild($category->getVar('cat_cid'));
             foreach ($firstChilds as $children) {
-                $tmpCategory          = array();
+                $tmpCategory          = [];
                 $tmpCategory          = $children->toArray();
                 $tmpCategory['count'] = $count;
                 $xoopsTpl->append('subCategories', $tmpCategory);
@@ -99,12 +99,12 @@ if ((is_object($category) && $category->getVar('cat_pid') == 0) || $cat_cid == 0
     } else { // page d'accueil des catégories
         $title = _OLEDRION_CATEGORIES . ' - ' . OledrionUtility::getModuleName();
         OledrionUtility::setMetas($title, $title);
-        $xoopsTpl->assign('breadcrumb', OledrionUtility::breadcrumb(array(OLEDRION_URL . basename(__FILE__) => _OLEDRION_CATEGORIES)));
+        $xoopsTpl->assign('breadcrumb', OledrionUtility::breadcrumb([OLEDRION_URL . basename(__FILE__) => _OLEDRION_CATEGORIES]));
         if (OLEDRION_SHOW_MAIN_CATEGORIES) {
             $count            = 1;
             $motherCategories = $h_oledrion_cat->getMotherCategories();
             foreach ($motherCategories as $mothercategory) {
-                $tmpCategory          = array();
+                $tmpCategory          = [];
                 $tmpCategory          = $mothercategory->toArray();
                 $tmpCategory['count'] = $count;
                 $xoopsTpl->append('motherCategories', $tmpCategory);
@@ -120,7 +120,7 @@ if ((is_object($category) && $category->getVar('cat_pid') == 0) || $cat_cid == 0
     $chunk4 = OledrionUtility::getModuleOption('chunk4'); // Produits les mieux notés
 
     if ($chunk1 > 0) { // Produits les plus récents (dans cette catégorie ou dans toutes les catégories)
-        $products = array();
+        $products = [];
         $oledrion_shelf_parameters->resetDefaultValues()->setProductsType('recent')->setCategory($tblChilds)->setStart($start)->setLimit($limit)->setSort('product_id DESC, product_title');
         $products = $oledrion_shelf->getProducts($oledrion_shelf_parameters);
         if (count($products) > 0) {
@@ -133,7 +133,7 @@ if ((is_object($category) && $category->getVar('cat_pid') == 0) || $cat_cid == 0
     }
 
     if ($chunk2 > 0) { // Produits les plus achetés (dans cette catégorie ou dans toutes les catégories)
-        $products = array();
+        $products = [];
         $oledrion_shelf_parameters->resetDefaultValues()->setProductsType('mostsold')->setStart($start)->setLimit($limit)->setSort('product_id DESC, product_title')->setCategory($tblChilds);
         $products = $oledrion_shelf->getProducts($oledrion_shelf_parameters);
         if (count($products) > 0) {
@@ -146,7 +146,7 @@ if ((is_object($category) && $category->getVar('cat_pid') == 0) || $cat_cid == 0
     }
 
     if ($chunk3 > 0) { // Produits les plus vus
-        $products = array();
+        $products = [];
         $oledrion_shelf_parameters->resetDefaultValues()->setProductsType('mostviewed')->setStart($start)->setLimit($limit)->setSort('product_hits')->setOrder('DESC')->setCategory($tblChilds);
         $products = $oledrion_shelf->getProducts($oledrion_shelf_parameters);
         if (count($products) > 0) {
@@ -159,7 +159,7 @@ if ((is_object($category) && $category->getVar('cat_pid') == 0) || $cat_cid == 0
     }
 
     if ($chunk4 > 0) { // Produits les mieux notés
-        $products = array();
+        $products = [];
         $oledrion_shelf_parameters->resetDefaultValues()->setProductsType('bestrated')->setStart($start)->setLimit($limit)->setSort('product_rating')->setOrder('DESC')->setCategory($tblChilds);
         $products = $oledrion_shelf->getProducts($oledrion_shelf_parameters);
         if (count($products) > 0) {
@@ -178,10 +178,10 @@ if (is_object($category)
     $xoopsTpl->assign('category', $category->toArray());
     if (OLEDRION_SHOW_SUB_CATEGORIES && !$subCategoriesSearched) {
         $count       = 1;
-        $firstChilds = array();
+        $firstChilds = [];
         $firstChilds = $mytree->getFirstChild($category->getVar('cat_cid'));
         foreach ($firstChilds as $children) {
-            $tmpCategory          = array();
+            $tmpCategory          = [];
             $tmpCategory          = $children->toArray();
             $tmpCategory['count'] = $count;
             $xoopsTpl->append('subCategories', $tmpCategory);
@@ -226,7 +226,7 @@ if (is_object($category)
     }
 
     // Données des Produits *************************************************************************
-    $products = array();
+    $products = [];
     $oledrion_shelf_parameters->resetDefaultValues()->setProductsType('recent')->setCategory($cat_cid)->setStart($start)->setLimit($limit)->setSort('product_id DESC, product_title');
     $products = $oledrion_shelf->getProducts($oledrion_shelf_parameters);
 

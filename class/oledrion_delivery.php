@@ -92,7 +92,7 @@ class Oledrion_delivery extends Oledrion_Object
     public function toArray($format = 's')
     {
         global $h_oledrion_location_delivery;
-        $ret                       = array();
+        $ret                       = [];
         $ret                       = parent::toArray($format);
         $ret['delivery_image_url'] = $this->getPictureUrl();
 
@@ -120,18 +120,18 @@ class OledrionOledrion_deliveryHandler extends Oledrion_XoopsPersistableObjectHa
      */
     public function getAllDelivery(Oledrion_parameters $parameters)
     {
-        $parameters = $parameters->extend(new Oledrion_parameters(array(
+        $parameters = $parameters->extend(new Oledrion_parameters([
                                                                       'start' => 0,
                                                                       'limit' => 0,
                                                                       'sort'  => 'delivery_id',
                                                                       'order' => 'ASC'
-                                                                  )));
+                                                                  ]));
         $critere    = new Criteria('delivery_id', 0, '<>');
         $critere->setLimit($parameters['limit']);
         $critere->setStart($parameters['start']);
         $critere->setSort($parameters['sort']);
         $critere->setOrder($parameters['order']);
-        $categories = array();
+        $categories = [];
         $categories = $this->getObjects($critere);
 
         return $categories;
@@ -144,14 +144,14 @@ class OledrionOledrion_deliveryHandler extends Oledrion_XoopsPersistableObjectHa
     public function getLocationDelivery(Oledrion_parameters $parameters)
     {
         global $h_oledrion_location_delivery;
-        $ret               = array();
-        $parameters        = $parameters->extend(new Oledrion_parameters(array(
+        $ret               = [];
+        $parameters        = $parameters->extend(new Oledrion_parameters([
                                                                              'start'    => 0,
                                                                              'limit'    => 0,
                                                                              'sort'     => 'delivery_id',
                                                                              'order'    => 'ASC',
                                                                              'location' => ''
-                                                                         )));
+                                                                         ]));
         $location_delivery = $h_oledrion_location_delivery->getLocationDeliveryId($parameters);
 
         $critere = new CriteriaCompo();
@@ -162,7 +162,7 @@ class OledrionOledrion_deliveryHandler extends Oledrion_XoopsPersistableObjectHa
         $obj = $this->getObjects($critere);
         if ($obj) {
             foreach ($obj as $root) {
-                $tab = array();
+                $tab = [];
                 $tab = $root->toArray();
                 if (isset($location_delivery[$root->getVar('delivery_id')]['ld_delivery'])
                     && $location_delivery[$root->getVar('delivery_id')]['ld_delivery'] == $root->getVar('delivery_id')) {
@@ -188,8 +188,8 @@ class OledrionOledrion_deliveryHandler extends Oledrion_XoopsPersistableObjectHa
     {
         global $h_oledrion_location_delivery;
         $oledrion_Currency = Oledrion_Currency::getInstance();
-        $ret               = array();
-        $parameters        = array('location' => $location_id);
+        $ret               = [];
+        $parameters        = ['location' => $location_id];
         $location_delivery = $h_oledrion_location_delivery->getLocationDeliveryId($parameters);
         foreach ($location_delivery as $location) {
             $id[] = $location['ld_delivery'];
@@ -201,7 +201,7 @@ class OledrionOledrion_deliveryHandler extends Oledrion_XoopsPersistableObjectHa
         $obj = $this->getObjects($critere);
         if ($obj) {
             foreach ($obj as $root) {
-                $tab                              = array();
+                $tab                              = [];
                 $tab                              = $root->toArray();
                 $tab['delivery_price']            = $location_delivery[$root->getVar('delivery_id')]['ld_price'];
                 $tab['delivery_price_fordisplay'] = $oledrion_Currency->amountForDisplay($tab['delivery_price']);
@@ -222,7 +222,7 @@ class OledrionOledrion_deliveryHandler extends Oledrion_XoopsPersistableObjectHa
     {
         global $h_oledrion_location_delivery;
         $location_delivery     = $h_oledrion_location_delivery->getDelivery($location_id, $delivery_id);
-        $ret                   = array();
+        $ret                   = [];
         $obj                   = $this->get($location_id);
         $ret                   = $obj->toArray();
         $ret['delivery_price'] = $location_delivery['ld_price'];

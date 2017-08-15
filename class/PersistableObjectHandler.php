@@ -16,7 +16,7 @@
  * @license     {@link http://www.fsf.org/copyleft/gpl.html GNU public license}
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
  */
-// defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
+// defined('XOOPS_ROOT_PATH') || exit('Restricted access.');
 
 class Oledrion_Object extends XoopsObject
 {
@@ -26,7 +26,7 @@ class Oledrion_Object extends XoopsObject
      */
     public function toArray($format = 's')
     {
-        $ret = array();
+        $ret = [];
         foreach ($this->vars as $k => $v) {
             $ret[$k] = $this->getVar($k, $format);
         }
@@ -81,7 +81,7 @@ class Oledrion_XoopsPersistableObjectHandler extends XoopsObjectHandler
     protected $keyName;
     protected $className;
     protected $identifierName;
-    protected $cacheOptions = array();
+    protected $cacheOptions = [];
 
     /**#@-*/
 
@@ -109,12 +109,12 @@ class Oledrion_XoopsPersistableObjectHandler extends XoopsObjectHandler
         }
         // To diable cache, add this line after the first one : 'caching' => false,
         if (null === $cacheOptions) {
-            $this->setCachingOptions(array(
+            $this->setCachingOptions([
                                          'cacheDir'               => OLEDRION_CACHE_PATH,
                                          'lifeTime'               => null,
                                          'automaticSerialization' => true,
                                          'fileNameProtection'     => false
-                                     ));
+                                     ]);
         } else {
             $this->setCachingOptions($cacheOptions);
         }
@@ -208,7 +208,7 @@ class Oledrion_XoopsPersistableObjectHandler extends XoopsObjectHandler
         $autoSort = true
     ) {
         //require_once __DIR__ . '/lite.php';
-        $ret   = array();
+        $ret   = [];
         $limit = $start = 0;
         $sql   = 'SELECT ' . $fields . ' FROM ' . $this->table;
         if (isset($criteria) && is_subclass_of($criteria, 'criteriaelement')) {
@@ -253,7 +253,7 @@ class Oledrion_XoopsPersistableObjectHandler extends XoopsObjectHandler
      */
     protected function convertResultSet($result, $id_as_key = false, $as_object = true, $fields = '*')
     {
-        $ret = array();
+        $ret = [];
         while ($myrow = $this->db->fetchArray($result)) {
             $obj = $this->create(false);
             $obj->assignVars($myrow);
@@ -261,7 +261,7 @@ class Oledrion_XoopsPersistableObjectHandler extends XoopsObjectHandler
                 if ($as_object) {
                     $ret[] = $obj;
                 } else {
-                    $row     = array();
+                    $row     = [];
                     $vars    = $obj->getVars();
                     $tbl_tmp = array_keys($vars);
                     foreach ($tbl_tmp as $i) {
@@ -277,7 +277,7 @@ class Oledrion_XoopsPersistableObjectHandler extends XoopsObjectHandler
                         $ret[] = $obj;
                     }
                 } else {
-                    $row     = array();
+                    $row     = [];
                     $vars    = $obj->getVars();
                     $tbl_tmp = array_keys($vars);
                     foreach ($tbl_tmp as $i) {
@@ -323,7 +323,7 @@ class Oledrion_XoopsPersistableObjectHandler extends XoopsObjectHandler
         //$cacheData = $Cache_Lite->get($id);
         //if ($cacheData === false) {
         $result = $this->db->query($sql, $limit, $start);
-        $ret    = array();
+        $ret    = [];
         while ($myrow = $this->db->fetchArray($result)) {
             $ret[] = $myrow[$this->keyName];
         }
@@ -347,7 +347,7 @@ class Oledrion_XoopsPersistableObjectHandler extends XoopsObjectHandler
         $limit = $start = 0;
         //$Cache_Lite = new oledrion_Cache_Lite($this->cacheOptions);
 
-        $ret = array();
+        $ret = [];
 
         $sql = 'SELECT ' . $this->keyName;
         if (!empty($this->identifierName)) {
@@ -398,7 +398,7 @@ class Oledrion_XoopsPersistableObjectHandler extends XoopsObjectHandler
      */
     public function getItemsFromIds($ids)
     {
-        $ret = array();
+        $ret = [];
         if (is_array($ids) && count($ids) > 0) {
             $criteria = new Criteria($this->keyName, '(' . implode(',', $ids) . ')', 'IN');
             $ret      = $this->getObjects($criteria, true);
@@ -452,7 +452,7 @@ class Oledrion_XoopsPersistableObjectHandler extends XoopsObjectHandler
             //$Cache_Lite->save($count);
             return $count;
         } else {
-            $ret = array();
+            $ret = [];
             while (list($id, $count) = $this->db->fetchRow($result)) {
                 $ret[$id] = $count;
             }
@@ -517,7 +517,7 @@ class Oledrion_XoopsPersistableObjectHandler extends XoopsObjectHandler
     public function delete(XoopsObject $obj, $force = false)
     {
         if (is_array($this->keyName)) {
-            $clause = array();
+            $clause = [];
             $vnb    = count($this->keyName);
             for ($i = 0; $i < $vnb; ++$i) {
                 $clause[] = $this->keyName[$i] . ' = ' . $obj->getVar($this->keyName[$i]);
@@ -769,12 +769,12 @@ class Oledrion_XoopsPersistableObjectHandler extends XoopsObjectHandler
      */
     public function compareObjects($old_object, $new_object)
     {
-        $ret       = array();
+        $ret       = [];
         $vars_name = array_keys($old_object->getVars());
         foreach ($vars_name as $one_var) {
             if ($old_object->getVar($one_var, 'f') == $new_object->getVar($one_var, 'f')) {
             } else {
-                $ret[$one_var] = array($old_object->getVar($one_var), $new_object->getVar($one_var));
+                $ret[$one_var] = [$old_object->getVar($one_var), $new_object->getVar($one_var)];
             }
         }
 
@@ -806,7 +806,7 @@ class Oledrion_XoopsPersistableObjectHandler extends XoopsObjectHandler
         //$cacheData = $Cache_Lite->get($id);
         //if ($cacheData === false) {
         $result = $this->db->query($sql, $limit, $start);
-        $ret    = array();
+        $ret    = [];
         $obj    = new $this->className();
         while ($myrow = $this->db->fetchArray($result)) {
             $obj->setVar($field, $myrow[$field]);
@@ -841,7 +841,7 @@ class Oledrion_XoopsPersistableObjectHandler extends XoopsObjectHandler
                 $order = $this->keyName;
             }
         }
-        $items   = array();
+        $items   = [];
         $critere = new Criteria($this->keyName, 0, '<>');
         $critere->setLimit($limit);
         $critere->setStart($start);

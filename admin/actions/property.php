@@ -117,14 +117,14 @@ switch ($action) {
                 $criteria->add(new Criteria('conf_name', 'product_property1'));
                 $config      = $configHandler->getConfigs($criteria);
                 $config      = $config[0];
-                $configValue = array(
+                $configValue = [
                     'conf_modid'     => $xoopsModule->getVar('mid'),
                     'conf_catid'     => 0,
                     'conf_name'      => 'product_property1',
                     'conf_value'     => $_POST['product_property1'],
                     'conf_formtype'  => 'hidden',
                     'conf_valuetype' => 'text'
-                );
+                ];
                 $config->setVars($configValue);
                 $configHandler->insertConfig($config);
             }
@@ -137,14 +137,14 @@ switch ($action) {
                 $criteria->add(new Criteria('conf_name', 'product_property1_title'));
                 $config      = $configHandler->getConfigs($criteria);
                 $config      = $config[0];
-                $configValue = array(
+                $configValue = [
                     'conf_modid'     => $xoopsModule->getVar('mid'),
                     'conf_catid'     => 0,
                     'conf_name'      => 'product_property1_title',
                     'conf_value'     => $_POST['product_property1_title'],
                     'conf_formtype'  => 'hidden',
                     'conf_valuetype' => 'text'
-                );
+                ];
                 $config->setVars($configValue);
                 $configHandler->insertConfig($config);
             }
@@ -157,14 +157,14 @@ switch ($action) {
                 $criteria->add(new Criteria('conf_name', 'product_property2'));
                 $config      = $configHandler->getConfigs($criteria);
                 $config      = $config[0];
-                $configValue = array(
+                $configValue = [
                     'conf_modid'     => $xoopsModule->getVar('mid'),
                     'conf_catid'     => 0,
                     'conf_name'      => 'product_property2',
                     'conf_value'     => $_POST['product_property2'],
                     'conf_formtype'  => 'hidden',
                     'conf_valuetype' => 'text'
-                );
+                ];
                 $config->setVars($configValue);
                 $configHandler->insertConfig($config);
             }
@@ -177,14 +177,14 @@ switch ($action) {
                 $criteria->add(new Criteria('conf_name', 'product_property2_title'));
                 $config      = $configHandler->getConfigs($criteria);
                 $config      = $config[0];
-                $configValue = array(
+                $configValue = [
                     'conf_modid'     => $xoopsModule->getVar('mid'),
                     'conf_catid'     => 0,
                     'conf_name'      => 'product_property2_title',
                     'conf_value'     => $_POST['product_property2_title'],
                     'conf_formtype'  => 'hidden',
                     'conf_valuetype' => 'text'
-                );
+                ];
                 $config->setVars($configValue);
                 $configHandler->insertConfig($config);
             }
@@ -197,14 +197,14 @@ switch ($action) {
                 $criteria->add(new Criteria('conf_name', 'product_property3'));
                 $config      = $configHandler->getConfigs($criteria);
                 $config      = $config[0];
-                $configValue = array(
+                $configValue = [
                     'conf_modid'     => $xoopsModule->getVar('mid'),
                     'conf_catid'     => 0,
                     'conf_name'      => 'product_property3',
                     'conf_value'     => $_POST['product_property3'],
                     'conf_formtype'  => 'hidden',
                     'conf_valuetype' => 'text'
-                );
+                ];
                 $config->setVars($configValue);
                 $configHandler->insertConfig($config);
             }
@@ -217,14 +217,14 @@ switch ($action) {
                 $criteria->add(new Criteria('conf_name', 'product_property3_title'));
                 $config      = $configHandler->getConfigs($criteria);
                 $config      = $config[0];
-                $configValue = array(
+                $configValue = [
                     'conf_modid'     => $xoopsModule->getVar('mid'),
                     'conf_catid'     => 0,
                     'conf_name'      => 'product_property3_title',
                     'conf_value'     => $_POST['product_property3_title'],
                     'conf_formtype'  => 'hidden',
                     'conf_valuetype' => 'text'
-                );
+                ];
                 $config->setVars($configValue);
                 $configHandler->insertConfig($config);
             }
@@ -237,14 +237,14 @@ switch ($action) {
                 $criteria->add(new Criteria('conf_name', 'product_property4'));
                 $config      = $configHandler->getConfigs($criteria);
                 $config      = $config[0];
-                $configValue = array(
+                $configValue = [
                     'conf_modid'     => $xoopsModule->getVar('mid'),
                     'conf_catid'     => 0,
                     'conf_name'      => 'product_property4',
                     'conf_value'     => $_POST['product_property4'],
                     'conf_formtype'  => 'hidden',
                     'conf_valuetype' => 'text'
-                );
+                ];
                 $config->setVars($configValue);
                 $configHandler->insertConfig($config);
             }
@@ -257,14 +257,14 @@ switch ($action) {
                 $criteria->add(new Criteria('conf_name', 'product_property4_title'));
                 $config      = $configHandler->getConfigs($criteria);
                 $config      = $config[0];
-                $configValue = array(
+                $configValue = [
                     'conf_modid'     => $xoopsModule->getVar('mid'),
                     'conf_catid'     => 0,
                     'conf_name'      => 'product_property4_title',
                     'conf_value'     => $_POST['product_property4_title'],
                     'conf_formtype'  => 'hidden',
                     'conf_valuetype' => 'text'
-                );
+                ];
                 $config->setVars($configValue);
                 $configHandler->insertConfig($config);
             }
@@ -277,14 +277,14 @@ switch ($action) {
                 $criteria->add(new Criteria('conf_name', 'product_property5'));
                 $config      = $configHandler->getConfigs($criteria);
                 $config      = $config[0];
-                $configValue = array(
+                $configValue = [
                     'conf_modid'     => $xoopsModule->getVar('mid'),
                     'conf_catid'     => 0,
                     'conf_name'      => 'product_property5',
                     'conf_value'     => $_POST['product_property5'],
                     'conf_formtype'  => 'hidden',
                     'conf_valuetype' => 'text'
-                );
+                ];
                 $config->setVars($configValue);
                 $configHandler->insertConfig($config);
             }
@@ -297,14 +297,14 @@ switch ($action) {
                 $criteria->add(new Criteria('conf_name', 'product_property5_title'));
                 $config      = $configHandler->getConfigs($criteria);
                 $config      = $config[0];
-                $configValue = array(
+                $configValue = [
                     'conf_modid'     => $xoopsModule->getVar('mid'),
                     'conf_catid'     => 0,
                     'conf_name'      => 'product_property5_title',
                     'conf_value'     => $_POST['product_property5_title'],
                     'conf_formtype'  => 'hidden',
                     'conf_valuetype' => 'text'
-                );
+                ];
                 $config->setVars($configValue);
                 $configHandler->insertConfig($config);
             }
@@ -317,14 +317,14 @@ switch ($action) {
                 $criteria->add(new Criteria('conf_name', 'product_property6'));
                 $config      = $configHandler->getConfigs($criteria);
                 $config      = $config[0];
-                $configValue = array(
+                $configValue = [
                     'conf_modid'     => $xoopsModule->getVar('mid'),
                     'conf_catid'     => 0,
                     'conf_name'      => 'product_property6',
                     'conf_value'     => $_POST['product_property6'],
                     'conf_formtype'  => 'hidden',
                     'conf_valuetype' => 'text'
-                );
+                ];
                 $config->setVars($configValue);
                 $configHandler->insertConfig($config);
             }
@@ -337,14 +337,14 @@ switch ($action) {
                 $criteria->add(new Criteria('conf_name', 'product_property6_title'));
                 $config      = $configHandler->getConfigs($criteria);
                 $config      = $config[0];
-                $configValue = array(
+                $configValue = [
                     'conf_modid'     => $xoopsModule->getVar('mid'),
                     'conf_catid'     => 0,
                     'conf_name'      => 'product_property6_title',
                     'conf_value'     => $_POST['product_property6_title'],
                     'conf_formtype'  => 'hidden',
                     'conf_valuetype' => 'text'
-                );
+                ];
                 $config->setVars($configValue);
                 $configHandler->insertConfig($config);
             }
@@ -357,14 +357,14 @@ switch ($action) {
                 $criteria->add(new Criteria('conf_name', 'product_property7'));
                 $config      = $configHandler->getConfigs($criteria);
                 $config      = $config[0];
-                $configValue = array(
+                $configValue = [
                     'conf_modid'     => $xoopsModule->getVar('mid'),
                     'conf_catid'     => 0,
                     'conf_name'      => 'product_property7',
                     'conf_value'     => $_POST['product_property7'],
                     'conf_formtype'  => 'hidden',
                     'conf_valuetype' => 'text'
-                );
+                ];
                 $config->setVars($configValue);
                 $configHandler->insertConfig($config);
             }
@@ -377,14 +377,14 @@ switch ($action) {
                 $criteria->add(new Criteria('conf_name', 'product_property7_title'));
                 $config      = $configHandler->getConfigs($criteria);
                 $config      = $config[0];
-                $configValue = array(
+                $configValue = [
                     'conf_modid'     => $xoopsModule->getVar('mid'),
                     'conf_catid'     => 0,
                     'conf_name'      => 'product_property7_title',
                     'conf_value'     => $_POST['product_property7_title'],
                     'conf_formtype'  => 'hidden',
                     'conf_valuetype' => 'text'
-                );
+                ];
                 $config->setVars($configValue);
                 $configHandler->insertConfig($config);
             }
@@ -397,14 +397,14 @@ switch ($action) {
                 $criteria->add(new Criteria('conf_name', 'product_property8'));
                 $config      = $configHandler->getConfigs($criteria);
                 $config      = $config[0];
-                $configValue = array(
+                $configValue = [
                     'conf_modid'     => $xoopsModule->getVar('mid'),
                     'conf_catid'     => 0,
                     'conf_name'      => 'product_property8',
                     'conf_value'     => $_POST['product_property8'],
                     'conf_formtype'  => 'hidden',
                     'conf_valuetype' => 'text'
-                );
+                ];
                 $config->setVars($configValue);
                 $configHandler->insertConfig($config);
             }
@@ -417,14 +417,14 @@ switch ($action) {
                 $criteria->add(new Criteria('conf_name', 'product_property8_title'));
                 $config      = $configHandler->getConfigs($criteria);
                 $config      = $config[0];
-                $configValue = array(
+                $configValue = [
                     'conf_modid'     => $xoopsModule->getVar('mid'),
                     'conf_catid'     => 0,
                     'conf_name'      => 'product_property8_title',
                     'conf_value'     => $_POST['product_property8_title'],
                     'conf_formtype'  => 'hidden',
                     'conf_valuetype' => 'text'
-                );
+                ];
                 $config->setVars($configValue);
                 $configHandler->insertConfig($config);
             }
@@ -437,14 +437,14 @@ switch ($action) {
                 $criteria->add(new Criteria('conf_name', 'product_property9'));
                 $config      = $configHandler->getConfigs($criteria);
                 $config      = $config[0];
-                $configValue = array(
+                $configValue = [
                     'conf_modid'     => $xoopsModule->getVar('mid'),
                     'conf_catid'     => 0,
                     'conf_name'      => 'product_property9',
                     'conf_value'     => $_POST['product_property9'],
                     'conf_formtype'  => 'hidden',
                     'conf_valuetype' => 'text'
-                );
+                ];
                 $config->setVars($configValue);
                 $configHandler->insertConfig($config);
             }
@@ -457,14 +457,14 @@ switch ($action) {
                 $criteria->add(new Criteria('conf_name', 'product_property9_title'));
                 $config      = $configHandler->getConfigs($criteria);
                 $config      = $config[0];
-                $configValue = array(
+                $configValue = [
                     'conf_modid'     => $xoopsModule->getVar('mid'),
                     'conf_catid'     => 0,
                     'conf_name'      => 'product_property9_title',
                     'conf_value'     => $_POST['product_property9_title'],
                     'conf_formtype'  => 'hidden',
                     'conf_valuetype' => 'text'
-                );
+                ];
                 $config->setVars($configValue);
                 $configHandler->insertConfig($config);
             }
@@ -477,14 +477,14 @@ switch ($action) {
                 $criteria->add(new Criteria('conf_name', 'product_property10'));
                 $config      = $configHandler->getConfigs($criteria);
                 $config      = $config[0];
-                $configValue = array(
+                $configValue = [
                     'conf_modid'     => $xoopsModule->getVar('mid'),
                     'conf_catid'     => 0,
                     'conf_name'      => 'product_property10',
                     'conf_value'     => $_POST['product_property10'],
                     'conf_formtype'  => 'hidden',
                     'conf_valuetype' => 'text'
-                );
+                ];
                 $config->setVars($configValue);
                 $configHandler->insertConfig($config);
             }
@@ -497,14 +497,14 @@ switch ($action) {
                 $criteria->add(new Criteria('conf_name', 'product_property10_title'));
                 $config      = $configHandler->getConfigs($criteria);
                 $config      = $config[0];
-                $configValue = array(
+                $configValue = [
                     'conf_modid'     => $xoopsModule->getVar('mid'),
                     'conf_catid'     => 0,
                     'conf_name'      => 'product_property10_title',
                     'conf_value'     => $_POST['product_property10_title'],
                     'conf_formtype'  => 'hidden',
                     'conf_valuetype' => 'text'
-                );
+                ];
                 $config->setVars($configValue);
                 $configHandler->insertConfig($config);
             }

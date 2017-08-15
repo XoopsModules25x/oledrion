@@ -69,12 +69,12 @@ $h_oledrion_caddy->markCaddyAsNotDownloadableAnyMore($caddy);
 $fileContent = file_get_contents($file);
 // Plugins ************************************************
 $plugins    = Oledrion_plugins::getInstance();
-$parameters = new Oledrion_parameters(array(
+$parameters = new Oledrion_parameters([
                                           'fileContent'  => $fileContent,
                                           'product'      => $product,
                                           'order'        => $order,
                                           'fullFilename' => $file
-                                      ));
+                                      ]);
 $parameters = $plugins->fireFilter(Oledrion_plugins::EVENT_ON_PRODUCT_DOWNLOAD, $parameters);
 if (trim($parameters['fileContent']) !== '') {
     $fileContent = $parameters['fileContent'];

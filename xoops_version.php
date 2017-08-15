@@ -17,7 +17,7 @@
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
  */
 
-// defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
+// defined('XOOPS_ROOT_PATH') || exit('Restricted access.');
 
 $moduleDirName = basename(__DIR__);
 
@@ -48,13 +48,13 @@ $modversion['module_website_name'] = 'XOOPS';
 $modversion['min_php']             = '5.5';
 $modversion['min_xoops']           = '2.5.9';
 $modversion['min_admin']           = '1.2';
-$modversion['min_db']              = array('mysql' => '5.5');
+$modversion['min_db']              = ['mysql' => '5.5'];
 
 // ------------------- Mysql ------------------- //
 $modversion['sqlfile']['mysql'] = 'sql/mysql.sql';
 
 // Tables created by sql file (without prefix!)
-$modversion['tables'] = array(
+$modversion['tables'] = [
     $moduleDirName . '_' . 'manufacturer',
     $moduleDirName . '_' . 'products',
     $moduleDirName . '_' . 'productsmanu',
@@ -80,7 +80,7 @@ $modversion['tables'] = array(
     $moduleDirName . '_' . 'location_delivery',
     $moduleDirName . '_' . 'delivery_payment',
     $moduleDirName . '_' . 'payment_log',
-);
+];
 
 $modversion['hasAdmin']    = 1;
 $modversion['system_menu'] = 1;
@@ -88,12 +88,12 @@ $modversion['adminindex']  = 'admin/index.php';
 $modversion['adminmenu']   = 'admin/menu.php';
 
 // ------------------- Help files ------------------- //
-$modversion['helpsection'] = array(
+$modversion['helpsection'] = [
     ['name' => _MI_OLEDRION_OVERVIEW, 'link' => 'page=help'],
     ['name' => _MI_OLEDRION_DISCLAIMER, 'link' => 'page=disclaimer'],
     ['name' => _MI_OLEDRION_LICENSE, 'link' => 'page=license'],
     ['name' => _MI_OLEDRION_SUPPORT, 'link' => 'page=support'],
-);
+];
 
 // Blocks
 
@@ -1439,7 +1439,7 @@ $modversion['config'][] = [
 ];
 
 /**
- * Do you want to enable your visitors to rate products ?
+ * Make Sample button visible?
  */
 $modversion['config'][] = [
     'name'        => 'showsamplebutton',
@@ -1679,13 +1679,13 @@ $modversion['notification']['lookup_func'] = 'oledrion_notify_iteminfo';
 $modversion['notification']['category'][1]['name']           = 'global';
 $modversion['notification']['category'][1]['title']          = _MI_OLEDRION_GLOBAL_NOTIFY;
 $modversion['notification']['category'][1]['description']    = _MI_OLEDRION_GLOBAL_NOTIFYDSC;
-$modversion['notification']['category'][1]['subscribe_from'] = array(
+$modversion['notification']['category'][1]['subscribe_from'] = [
     'main.php',
     'category.php',
     'product.php',
     'categories-map.php',
     'all-products.php'
-);
+];
 
 $modversion['notification']['event'][1]['name']          = 'new_category';
 $modversion['notification']['event'][1]['category']      = 'global';

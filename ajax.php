@@ -40,7 +40,7 @@ switch ($op) {
         // ****************************************************************************************************************
         $product_id = isset($_POST['product_id']) ? (int)$_POST['product_id'] : 0;
         if (isset($_POST['formcontent']) && $product_id > 0) {
-            $data     = $data = $attributesIds = $attributes = $templateProduct = array();
+            $data     = $data = $attributesIds = $attributes = $templateProduct = [];
             $handlers = OledrionHandler::getInstance();
             $product  = null;
             $product  = $handlers->h_oledrion_products->get($product_id);
@@ -152,7 +152,7 @@ switch ($op) {
                 ++$i;
             }
             // Set array
-            $results = array();
+            $results = [];
             // search colors
             foreach ($items as $item) {
                 // if it starts with 'part' add to results
@@ -185,7 +185,7 @@ switch ($op) {
         $start = (int)$_GET['start'];
         $limit = (int)$_GET['limit'];
         if (isset($start) && $start !== '') {
-            $ret      = array();
+            $ret      = [];
             $criteria = new CriteriaCompo();
             $criteria->add(new Criteria('product_id', $start, '>='));
             $criteria->add(new Criteria('product_online', 1));
@@ -195,7 +195,7 @@ switch ($op) {
             $obj = $h_oledrion_products->getObjects($criteria, false);
             if ($obj) {
                 foreach ($obj as $root) {
-                    $tab                         = array();
+                    $tab                         = [];
                     $tab                         = $root->toArray();
                     $json['product_id']          = $tab['product_id'];
                     $json['product_cid']         = $tab['product_cid'];
@@ -219,7 +219,7 @@ switch ($op) {
     case 'category':
         $start = (int)$_GET['start'];
         if (isset($start) && $start !== '') {
-            $ret      = array();
+            $ret      = [];
             $criteria = new CriteriaCompo();
             $criteria->add(new Criteria('cat_cid', $start, '>='));
             $criteria->setSort('cat_cid');
@@ -227,7 +227,7 @@ switch ($op) {
             $obj = $h_oledrion_cat->getObjects($criteria, false);
             if ($obj) {
                 foreach ($obj as $root) {
-                    $tab                = array();
+                    $tab                = [];
                     $tab                = $root->toArray();
                     $json['cat_cid']    = $tab['cat_cid'];
                     $json['cat_pid']    = $tab['cat_pid'];
@@ -256,21 +256,21 @@ switch ($op) {
                         $product_price = $root->getVar('attribute_default_value');
                     }
                 }
-                $ret = array(
+                $ret = [
                     'product_id'    => $product->getVar('product_id'),
                     'product_price' => $product_price
-                );
+                ];
             } else {
-                $ret = array(
+                $ret = [
                     'product_id'    => $product->getVar('product_id'),
                     'product_price' => 0
-                );
+                ];
             }
         } else {
-            $ret = array(
+            $ret = [
                 'product_id'    => 0,
                 'product_price' => 0
-            );
+            ];
         }
         $return = json_encode($ret);
         break;
@@ -332,7 +332,7 @@ switch ($op) {
         break;
 
     case 'order':
-        $ret            = array();
+        $ret            = [];
         $ret['status']  = 0;
         $ret['message'] = 'error';
         if (isset($_POST['product_id']) && is_numeric($_POST['product_id'])) {

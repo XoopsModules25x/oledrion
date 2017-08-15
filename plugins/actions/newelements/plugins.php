@@ -18,59 +18,60 @@
  */
 
 /**
- * Plugin chargé de notifier les utilisateurs de la création d'un nouveau produit et d'une nouvelle catégorie
+ * Plugin to notify users of the creation of a new product and a new category
  *
  * @since 2.31
  */
 class NewelementsAction extends Oledrion_action
 {
     /**
-     * Retourne la liste des évènements traités par le plugin
+     * Returns the list of events processed by the plugin
      * @return array
      */
     public static function registerEvents()
     {
         /**
-         * La liste des évènements traités par le plugin se présente sous la forme d'un tableau compposé comme ceci :
+         * The list of events processed by the plugin is presented in the form of an array as follows:
          *
-         * Indice    Signification
+         *  Index     Meaning
          * ----------------------
-         *    0        Evènement sur lequel se raccrocher (voir class/oledrion_plugins.php::EVENT_ON_PRODUCT_CREATE
-         *    1        Priorité du plugin (de 1 à 5)
-         *    2        Script Php à inclure
-         *    3        Classe à instancier
-         *    4        Méthode à appeler
+         *    0        Event to hang up (see class/oledrion_plugins.php::EVENT_ON_PRODUCT_CREATE
+         *    1        Plugin priority  (between 1 and 5)
+         *    2        PHP Script to include
+         *    3        Class to instantiate
+         *    4        Method to call
          */
-        $events   = array();
-        $events[] = array(
+        $events   = [];
+        $events[] = [
             Oledrion_plugins::EVENT_ON_PRODUCT_CREATE,
             Oledrion_plugins::EVENT_PRIORITY_1,
             basename(__FILE__),
             __CLASS__,
             'fireNewProduct'
-        );
-        $events[] = array(
+        ];
+        $events[] = [
             Oledrion_plugins::EVENT_ON_CATEGORY_CREATE,
             Oledrion_plugins::EVENT_PRIORITY_1,
             basename(__FILE__),
             __CLASS__,
             'fireNewCategory'
-        );
+        ];
 
         return $events;
     }
 
     /**
-     * Méthode appelée pour indiquer qu'un nouveau produit a été crée
-     *
+     * Method called to indicate that a new product has been created
+     *      
      * @param $parameters
-     * @internal param object $product Le produit qui vient d'être crée
+     * @param XoopsObject $product The product that has just been created
      */
     public function fireNewProduct($parameters)
     {
         $product = $parameters['product'];
         if ((int)$product->getVar('product_online') == 1) {
-            $tags                    = array();
+            $tags                    = [];
+            /** @var \XoopsNotificationHandler $notificationHandler */
             $notificationHandler     = xoops_getHandler('notification');
             $tags['PRODUCT_NAME']    = $product->getVar('product_title');
             $tags['PRODUCT_SUMMARY'] = strip_tags($product->getVar('product_summary'));
@@ -80,16 +81,17 @@ class NewelementsAction extends Oledrion_action
     }
 
     /**
-     * Méthode appelée pour indiquer qu'une nouvelle catégorie a été crée
+     * A method called to indicate that a new category has been created
      *
-     * @param $parameters
-     * @internal param object $category
+     * @param array $parameters
+     * @param XoopsObject $category
      */
     public function fireNewCategory($parameters)
     {
         $category              = $parameters['category'];
+        /** @var \XoopsNotificationHandler $notificationHandler */
         $notificationHandler   = xoops_getHandler('notification');
-        $tags                  = array();
+        $tags                  = [];
         $tags['CATEGORY_NAME'] = $category->getVar('cat_title');
         $tags['CATEGORY_URL']  = $category->getLink(); // OLEDRION_URL.'category.php?cat_cid=' . $category->getVar('cat_cid');
         $tags['X_MODULE_URL']  = OLEDRION_URL;

@@ -35,7 +35,7 @@ function b_oledrion_ajax_search_show($options)
         $xoTheme->addStylesheet(OLEDRION_URL . 'assets/css/oledrion.css');
     }
 
-    $block           = array();
+    $block           = [];
     $block['custom'] = $options[0];
 
     return $block;
@@ -48,7 +48,7 @@ function b_oledrion_ajax_search_show($options)
 function b_oledrion__ajax_search_edit($options)
 {
     $form                  = '';
-    $checkeds              = array('', '');
+    $checkeds              = ['', ''];
     $checkeds[$options[0]] = 'checked';
     $form                  .= "<table border='0'>";
     $form                  .= '<tr><td>' . _MB_OLEDRION_USE_STYLE_JS . "</td><td><input type='radio' name='options[]' id='options[]' value='0' " . $checkeds[0] . '>' . _NO . " <input type='radio' name='options[]' id='options[]' value='1' " . $checkeds[1] . '>' . _YES . '</td></tr>';

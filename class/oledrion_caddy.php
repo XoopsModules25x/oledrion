@@ -53,7 +53,7 @@ class Oledrion_caddy extends Oledrion_Object
      */
     public function toArray($format = 's')
     {
-        $ret                              = array();
+        $ret                              = [];
         $ret                              = parent::toArray($format);
         $oledrion_Currency                = Oledrion_Currency::getInstance();
         $ret['caddy_price_fordisplay']    = $oledrion_Currency->amountForDisplay($this->getVar('caddy_price'));
@@ -113,7 +113,7 @@ class OledrionOledrion_caddyHandler extends Oledrion_XoopsPersistableObjectHandl
     public function getMostSoldProducts($start = 0, $limit = 0, $product_cid = 0, $withQuantity = false)
     {
         //require_once __DIR__ . '/lite.php';
-        $ret = array();
+        $ret = [];
         if (is_array($product_cid) && count($product_cid) > 0) {
             $sql = 'SELECT c.caddy_product_id, sum( c.caddy_qte ) AS mv FROM ' . $this->table . ' c, ' . $this->db->prefix('oledrion_products') . ' b WHERE (c.caddy_product_id = b.product_id) AND b.product_cid IN (' . implode(',', $product_cid) . ') GROUP BY c.caddy_product_id ORDER BY mv DESC';
         } elseif ($product_cid > 0) {
@@ -154,7 +154,7 @@ class OledrionOledrion_caddyHandler extends Oledrion_XoopsPersistableObjectHandl
     public function getRecentlySoldProducts($start = 0, $limit = 0)
     {
         //require_once __DIR__ . '/lite.php';
-        $ret = array();
+        $ret = [];
         $sql = 'SELECT c.caddy_product_id FROM ' . $this->table . ' c, ' . $this->db->prefix('oledrion_commands') . ' o WHERE (c.caddy_cmd_id = o.cmd_id) AND (o.cmd_state = ' . OLEDRION_STATE_VALIDATED . ') ORDER BY cmd_date DESC';
         //$Cache_Lite = new oledrion_Cache_Lite($this->cacheOptions);
         $id = $this->_getIdForCache($sql, $start, $limit);
@@ -214,7 +214,7 @@ class OledrionOledrion_caddyHandler extends Oledrion_XoopsPersistableObjectHandl
             return false;
         }
         if (is_object($xoopsUser)) {
-            $persistent_carts = array();
+            $persistent_carts = [];
             $persistent_carts = $h_oledrion_persistent_cart->getUserProducts();
             if (count($persistent_carts) > 0) {
                 foreach ($persistent_carts as $persistent_cart) {
@@ -248,7 +248,7 @@ class OledrionOledrion_caddyHandler extends Oledrion_XoopsPersistableObjectHandl
     public function addProduct($product_id, $quantity, $attributes = null)
     {
         global $xoopsUser, $h_oledrion_persistent_cart;
-        $tbl_caddie = $tbl_caddie2 = array();
+        $tbl_caddie = $tbl_caddie2 = [];
         if (isset($_SESSION[self::CADDY_NAME])) {
             $tbl_caddie = $_SESSION[self::CADDY_NAME];
         }
@@ -266,7 +266,7 @@ class OledrionOledrion_caddyHandler extends Oledrion_XoopsPersistableObjectHandl
             if (is_object($xoopsUser)) {
                 $h_oledrion_persistent_cart->addUserProduct($product_id, $quantity);
             }
-            $datas                      = array();
+            $datas                      = [];
             $datas['number']            = count($tbl_caddie) + 1;
             $datas['id']                = $product_id;
             $datas['qty']               = $quantity;
@@ -290,7 +290,7 @@ class OledrionOledrion_caddyHandler extends Oledrion_XoopsPersistableObjectHandl
      */
     public function isInCart($caddy_product_id)
     {
-        $cart = array();
+        $cart = [];
         if (isset($_SESSION[self::CADDY_NAME])) {
             $cart = $_SESSION[self::CADDY_NAME];
         } else {
@@ -316,7 +316,7 @@ class OledrionOledrion_caddyHandler extends Oledrion_XoopsPersistableObjectHandl
      */
     public function getProductAttributesFromCart($caddy_product_id)
     {
-        $cart = array();
+        $cart = [];
         if (isset($_SESSION[self::CADDY_NAME])) {
             $cart = $_SESSION[self::CADDY_NAME];
         } else {
@@ -339,10 +339,10 @@ class OledrionOledrion_caddyHandler extends Oledrion_XoopsPersistableObjectHandl
      */
     private function renumberCart($caddy)
     {
-        $newCaddy = array();
+        $newCaddy = [];
         $counter  = 1;
         foreach ($caddy as $values) {
-            $temporary               = array();
+            $temporary               = [];
             $temporary['number']     = $counter;
             $temporary['id']         = $values['id'];
             $temporary['qty']        = $values['qty'];
@@ -362,12 +362,12 @@ class OledrionOledrion_caddyHandler extends Oledrion_XoopsPersistableObjectHandl
     public function deleteProduct($indice)
     {
         global $xoopsUser, $h_oledrion_persistent_cart;
-        $tbl_caddie = array();
+        $tbl_caddie = [];
         if (isset($_SESSION[self::CADDY_NAME])) {
             $tbl_caddie = $_SESSION[self::CADDY_NAME];
             if (isset($tbl_caddie[$indice])) {
                 if (is_object($xoopsUser)) {
-                    $datas = array();
+                    $datas = [];
                     $datas = $tbl_caddie[$indice];
                     $h_oledrion_persistent_cart->deleteUserProduct($datas['id']);
                 }
@@ -388,7 +388,7 @@ class OledrionOledrion_caddyHandler extends Oledrion_XoopsPersistableObjectHandl
     public function updateQuantites()
     {
         global $h_oledrion_products, $xoopsUser, $h_oledrion_persistent_cart;
-        $tbl_caddie = $tbl_caddie2 = array();
+        $tbl_caddie = $tbl_caddie2 = [];
         if (isset($_SESSION[self::CADDY_NAME])) {
             $tbl_caddie = $_SESSION[self::CADDY_NAME];
             foreach ($tbl_caddie as $produit) {
@@ -433,7 +433,7 @@ class OledrionOledrion_caddyHandler extends Oledrion_XoopsPersistableObjectHandl
      */
     public function getCaddyFromCommand($caddy_cmd_id)
     {
-        $ret     = array();
+        $ret     = [];
         $critere = new Criteria('caddy_cmd_id', $caddy_cmd_id, '=');
         $ret     = $this->getObjects($critere);
 
@@ -449,7 +449,7 @@ class OledrionOledrion_caddyHandler extends Oledrion_XoopsPersistableObjectHandl
      */
     public function getProductsFromCaddy($carts)
     {
-        $ret = $productsIds = array();
+        $ret = $productsIds = [];
         foreach ($carts as $cart) {
             $productsIds[] = $cart->getVar('caddy_product_id');
         }
@@ -469,7 +469,7 @@ class OledrionOledrion_caddyHandler extends Oledrion_XoopsPersistableObjectHandl
      */
     public function getCommandIdFromProduct($product_id)
     {
-        $ret    = array();
+        $ret    = [];
         $sql    = 'SELECT caddy_cmd_id FROM ' . $this->table . ' WHERE caddy_product_id=' . (int)$product_id;
         $result = $this->db->query($sql);
         if (!$result) {
@@ -491,7 +491,7 @@ class OledrionOledrion_caddyHandler extends Oledrion_XoopsPersistableObjectHandl
     public function getCaddyFromPassword($caddy_pass)
     {
         $ret     = null;
-        $caddies = array();
+        $caddies = [];
         $critere = new Criteria('caddy_pass', $caddy_pass, '=');
         $caddies = $this->getObjects($critere);
         if (count($caddies) > 0) {
@@ -507,7 +507,7 @@ class OledrionOledrion_caddyHandler extends Oledrion_XoopsPersistableObjectHandl
      * @param  oledrion_caddy $caddy
      * @return boolean        Le résultat de la mise à jour
      */
-    public function markCaddyAsNotDownloadableAnyMore(oledrion_caddy $caddy)
+    public function markCaddyAsNotDownloadableAnyMore(Oledrion_caddy $caddy)
     {
         $caddy->setVar('caddy_pass', '');
 

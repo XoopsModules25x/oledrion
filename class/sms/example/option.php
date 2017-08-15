@@ -17,7 +17,7 @@
  * @author      Hossein Azizabadi (azizabadi@faragostaresh.com)
  */
 
-$option             = array();
+$option             = [];
 $option['username'] = '';
 $option['password'] = '';
 $option['number']   = '';

@@ -40,7 +40,7 @@ if (is_object($gateway) && method_exists($gateway, 'thankYou')) {
 }
 $xoopsTpl->assign('success', $success);
 $xoopsTpl->assign('global_advert', OledrionUtility::getModuleOption('advertisement'));
-$xoopsTpl->assign('breadcrumb', OledrionUtility::breadcrumb(array(OLEDRION_URL . basename(__FILE__) => _OLEDRION_PURCHASE_FINSISHED)));
+$xoopsTpl->assign('breadcrumb', OledrionUtility::breadcrumb([OLEDRION_URL . basename(__FILE__) => _OLEDRION_PURCHASE_FINSISHED]));
 
 $title = _OLEDRION_PURCHASE_FINSISHED . ' - ' . OledrionUtility::getModuleName();
 OledrionUtility::setMetas($title, $title);

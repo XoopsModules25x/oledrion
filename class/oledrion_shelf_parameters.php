@@ -19,7 +19,7 @@
 /**
  * Classe interne dont le but est de passer des paramètres à la classe oeldrion_shelf
  */
-// defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
+// defined('XOOPS_ROOT_PATH') || exit('Restricted access.');
 
 /**
  * Utilisé comme paramètre dans la façcade oledrion_shelf
@@ -31,7 +31,7 @@ class Oledrion_shelf_parameters
      *
      * @var array
      */
-    private $parameters = array();
+    private $parameters = [];
 
     /**
      * Oledrion_shelf_parameters constructor.

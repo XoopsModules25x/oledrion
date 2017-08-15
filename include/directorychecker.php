@@ -18,7 +18,7 @@
  * @author          Xoops Development Team
  */
 
-//// defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
+//// defined('XOOPS_ROOT_PATH') || exit('Restricted access.');
 
 require_once __DIR__ . '/../../../include/cp_header.php';
 
@@ -36,12 +36,12 @@ class directorychecker
      *
      * @return bool|string
      */
-    public static function getDirectoryStatus($path, $mode = 0777, $languageConstants = array(), $redirectFile)
+    public static function getDirectoryStatus($path, $mode = 0777, $languageConstants = [], $redirectFile)
     {
         global $pathIcon16;
 
-        $languageConstants1 = array($languageConstants[5], $languageConstants[6]);
-        $languageConstants2 = array($languageConstants[7], $languageConstants[8]);
+        $languageConstants1 = [$languageConstants[5], $languageConstants[6]];
+        $languageConstants2 = [$languageConstants[7], $languageConstants[8]];
 
         $myWords1 = urlencode(json_encode($languageConstants1));
         $myWords2 = urlencode(json_encode($languageConstants2));
@@ -121,7 +121,7 @@ $dircheck = isset($_GET['dircheck']) ? filter_input(INPUT_GET, 'dircheck', FILTE
 
 switch ($dircheck) {
     case 'createdir':
-        $languageConstants = array();
+        $languageConstants = [];
         if (isset($_GET['path'])) {
             $path = filter_input(INPUT_GET, 'path', FILTER_SANITIZE_STRING);
         }
@@ -131,13 +131,13 @@ switch ($dircheck) {
         if (isset($_GET['languageConstants'])) {
             $languageConstants = json_decode($_GET['languageConstants']);
         }
-        $result = DirectoryChecker::createDirectory($path);
+        $result = directorychecker::createDirectory($path);
         $msg    = $result ? $languageConstants[0] : $languageConstants[1];
         redirect_header($redirect, 2, $msg . ': ' . $path);
 
         break;
     case 'setperm':
-        $languageConstants = array();
+        $languageConstants = [];
         if (isset($_GET['path'])) {
             $path = filter_input(INPUT_GET, 'path', FILTER_SANITIZE_STRING);
         }
@@ -150,7 +150,7 @@ switch ($dircheck) {
         if (isset($_GET['languageConstants'])) {
             $languageConstants = json_decode($_GET['languageConstants']);
         }
-        $result = DirectoryChecker::setDirectoryPermissions($path, $mode);
+        $result = directorychecker::setDirectoryPermissions($path, $mode);
         $msg    = $result ? $languageConstants[0] : $languageConstants[1];
         redirect_header($redirect, 2, $msg . ': ' . $path);
 

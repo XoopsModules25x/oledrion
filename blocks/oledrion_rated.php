@@ -27,7 +27,7 @@ function b_oledrion_rated_show($options)
     // '10|0';  // Voir 10 produits, pour toutes les catégories ou une catégorie particulière
     global $xoopsConfig, $xoTheme;
     include XOOPS_ROOT_PATH . '/modules/oledrion/include/common.php';
-    $products   = $block = array();
+    $products   = $block = [];
     $start      = 0;
     $limit      = $options[0];
     $categoryId = $options[1];
@@ -60,11 +60,11 @@ function b_oledrion_rated_edit($options)
     global $xoopsConfig;
     include XOOPS_ROOT_PATH . '/modules/oledrion/include/common.php';
     require_once OLEDRION_PATH . 'class/tree.php';
-    $tblCategories         = array();
+    $tblCategories         = [];
     $tblCategories         = $h_oledrion_cat->getAllCategories(new Oledrion_parameters());
     $mytree                = new Oledrion_XoopsObjectTree($tblCategories, 'cat_cid', 'cat_pid');
     $form                  = '';
-    $checkeds              = array('', '');
+    $checkeds              = ['', ''];
     $checkeds[$options[1]] = 'checked';
     $form                  .= "<table border='0'>";
     $form                  .= '<tr><td>' . _MB_OLEDRION_PRODUCTS_CNT . "</td><td><input type='text' name='options[]' id='options' value='" . $options[0] . "'></td></tr>";

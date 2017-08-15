@@ -41,7 +41,7 @@ switch ($action) {
         }
         $products = $h_oledrion_products->getLowStocks($start, $limit);
         $class    = $name = '';
-        $names    = array();
+        $names    = [];
         echo "<form name='frmupdatequant' id='frmupdatequant' method='post' action='$baseurl'><input type='hidden' name='op' id='op' value='lowstock'><input type='hidden' name='action' id='action' value='updatequantities'>";
         echo "<table width='100%' cellspacing='1' cellpadding='3' border='0' class='outer'>";
         echo "<tr><th align='center'>" . _OLEDRION_TITLE . "</th><th align='center'>" . _OLEDRION_STOCK_QUANTITY . "</th><th align='center'>" . _OLEDRION_STOCK_ALERT . "</th><th align='center'>" . _AM_OLEDRION_NEW_QUANTITY . '</th></tr>';
@@ -69,7 +69,7 @@ switch ($action) {
     // ****************************************************************************************************************
     case 'updatequantities': // Mise à jour des quantités des produits
         // ****************************************************************************************************************
-        $names = array();
+        $names = [];
         if (isset($_POST['names'])) {
             $names = explode('|', $_POST['names']);
             foreach ($names as $item) {

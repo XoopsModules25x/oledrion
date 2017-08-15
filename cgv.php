@@ -32,7 +32,7 @@ $xoopsTpl->assign('nostock_msg', OledrionUtility::getModuleOption('nostock_msg')
 $xoopsTpl->assign('mod_pref', $mod_pref); // Préférences du module
 $xoopsTpl->assign('cgv_msg', $registry->getfile(OLEDRION_TEXTFILE2));
 
-$xoopsTpl->assign('breadcrumb', OledrionUtility::breadcrumb(array(OLEDRION_URL . basename(__FILE__) => _OLEDRION_CGV)));
+$xoopsTpl->assign('breadcrumb', OledrionUtility::breadcrumb([OLEDRION_URL . basename(__FILE__) => _OLEDRION_CGV]));
 
 OledrionUtility::setCSS();
 OledrionUtility::setLocalCSS($xoopsConfig['language']);

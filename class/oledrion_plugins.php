@@ -84,20 +84,20 @@ class Oledrion_plugins
     /**
      * Utilisé pour construire le nom de la classe
      */
-    private $pluginsTypeLabel = array(self::PLUGIN_ACTION => 'Action', self::PLUGIN_FILTER => 'Filter');
+    private $pluginsTypeLabel = [self::PLUGIN_ACTION => 'Action', self::PLUGIN_FILTER => 'Filter'];
 
     /**
      * Nom des classes qu'il faut étendre en tant que plugin
      */
-    private $pluginsClassName = array(
+    private $pluginsClassName = [
         self::PLUGIN_ACTION => 'oledrion_action',
         self::PLUGIN_FILTER => 'oledrion_filter'
-    );
+    ];
 
     /**
      * Nom de chacun des dossiers en fonction du type de plugin
      */
-    private $pluginsTypesFolder = array(self::PLUGIN_ACTION => 'actions', self::PLUGIN_FILTER => 'filters');
+    private $pluginsTypesFolder = [self::PLUGIN_ACTION => 'actions', self::PLUGIN_FILTER => 'filters'];
 
     /**
      * Contient l'unique instance de l'objet
@@ -109,7 +109,7 @@ class Oledrion_plugins
      * Liste des évènements
      * @var array
      */
-    private static $events = array();
+    private static $events = [];
 
     /**
      * Retourne l'instance unique de la classe
@@ -132,7 +132,7 @@ class Oledrion_plugins
      */
     private function __construct()
     {
-        $this->events = array();
+        $this->events = [];
         $this->loadPlugins();
     }
 
@@ -159,18 +159,18 @@ class Oledrion_plugins
         $className = strtolower($pluginFolder) . $this->pluginsTypeLabel[$type];
         if (class_exists($className) && get_parent_class($className) == $this->pluginsClassName[$type]) {
             // TODO: Vérifier que l'évènement n'est pas déjà en mémoire
-            $events = call_user_func(array($className, self::PLUGIN_DESCRIBE_METHOD));
+            $events = call_user_func([$className, self::PLUGIN_DESCRIBE_METHOD]);
             foreach ($events as $event) {
                 $eventName                                         = $event[0];
                 $eventPriority                                     = $event[1];
                 $fileToInclude                                     = OLEDRION_PLUGINS_PATH . $this->pluginsTypesFolder[$type] . '/' . $pluginFolder . '/' . $event[2];
                 $classToCall                                       = $event[3];
                 $methodToCall                                      = $event[4];
-                $this->events[$type][$eventName][$eventPriority][] = array(
+                $this->events[$type][$eventName][$eventPriority][] = [
                     'fullPathName' => $fileToInclude,
                     'className'    => $classToCall,
                     'method'       => $methodToCall
-                );
+                ];
             }
         }
     }
@@ -222,7 +222,7 @@ class Oledrion_plugins
                 if (!method_exists($event['className'], $event['method'])) {
                     continue;
                 }
-                call_user_func(array($event['className'], $event['method']), $parameters);
+                call_user_func([$event['className'], $event['method']], $parameters);
                 unset($class);
             }
         }
@@ -257,7 +257,7 @@ class Oledrion_plugins
                 if (!method_exists($event['className'], $event['method'])) {
                     continue;
                 }
-                call_user_func(array($event['className'], $event['method']), $parameters);
+                call_user_func([$event['className'], $event['method']], $parameters);
                 unset($class);
             }
         }
@@ -279,7 +279,7 @@ class Oledrion_plugins
      */
     public function isUnplug($eventType, $eventToFire, $fullPathName, $className, $method)
     {
-        $unplug = array();
+        $unplug = [];
         if (isset($_SESSION[self::PLUGIN_UNPLUG_SESSION_NAME])) {
             $unplug = $_SESSION[self::PLUGIN_UNPLUG_SESSION_NAME];
         } else {
@@ -301,7 +301,7 @@ class Oledrion_plugins
      */
     public function unplugFromEvent($eventType, $eventToFire, $fullPathName, $className, $method)
     {
-        $unplug = array();
+        $unplug = [];
         if (isset($_SESSION[self::PLUGIN_UNPLUG_SESSION_NAME])) {
             $unplug = $_SESSION[self::PLUGIN_UNPLUG_SESSION_NAME];
         }

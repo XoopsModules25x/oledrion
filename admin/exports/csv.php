@@ -20,7 +20,7 @@
 /**
  * Export au format CSV
  */
-// defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
+// defined('XOOPS_ROOT_PATH') || exit('Restricted access.');
 
 class Oledrion_csv_export extends Oledrion_export
 {
@@ -55,7 +55,7 @@ class Oledrion_csv_export extends Oledrion_export
         }
 
         // Création de l'entête du fichier
-        $list = $entete1 = $entete2 = array();
+        $list = $entete1 = $entete2 = [];
         $s    = $this->separator;
         $cmd  = new Oledrion_commands();
         foreach ($cmd->getVars() as $fieldName => $properties) {
@@ -75,11 +75,11 @@ class Oledrion_csv_export extends Oledrion_export
         $criteria->setOrder('DESC');
         $orders = $this->handlers->h_oledrion_commands->getObjects($criteria);
         foreach ($orders as $order) {
-            $carts = array();
+            $carts = [];
             $carts = $this->handlers->h_oledrion_caddy->getObjects(new Criteria('caddy_cmd_id', $order->getVar('cmd_id'), '='));
-            $ligne = array();
+            $ligne = [];
             foreach ($carts as $cart) {
-                $ligne = array();
+                $ligne = [];
                 foreach ($entete1 as $commandField) {
                     $ligne[] = $order->getVar($commandField);
                 }

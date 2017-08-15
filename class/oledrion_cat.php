@@ -133,7 +133,7 @@ class Oledrion_cat extends Oledrion_Object
      */
     public function toArray($format = 's')
     {
-        $ret                     = array();
+        $ret                     = [];
         $ret                     = parent::toArray($format);
         $ret['cat_full_imgurl']  = $this->getPictureUrl();
         $ret['cat_href_title']   = $this->getHrefTitle();
@@ -170,19 +170,19 @@ class OledrionOledrion_catHandler extends Oledrion_XoopsPersistableObjectHandler
      */
     public function getAllCategories(Oledrion_parameters $parameters)
     {
-        $parameters = $parameters->extend(new Oledrion_parameters(array(
+        $parameters = $parameters->extend(new Oledrion_parameters([
                                                                       'start'   => 0,
                                                                       'limit'   => 0,
                                                                       'sort'    => 'cat_title',
                                                                       'order'   => 'ASC',
                                                                       'idaskey' => true
-                                                                  )));
+                                                                  ]));
         $critere    = new Criteria('cat_cid', 0, '<>');
         $critere->setLimit($parameters['limit']);
         $critere->setStart($parameters['start']);
         $critere->setSort($parameters['sort']);
         $critere->setOrder($parameters['order']);
-        $categories = array();
+        $categories = [];
         $categories = $this->getObjects($critere, $parameters['idaskey']);
 
         return $categories;
@@ -242,7 +242,7 @@ class OledrionOledrion_catHandler extends Oledrion_XoopsPersistableObjectHandler
      * @param  oledrion_cat $category
      * @return boolean      Le résultat de la suppression
      */
-    public function deleteCategory(oledrion_cat $category)
+    public function deleteCategory(Oledrion_cat $category)
     {
         global $xoopsModule;
         $category->deletePicture();
@@ -261,11 +261,11 @@ class OledrionOledrion_catHandler extends Oledrion_XoopsPersistableObjectHandler
     public function getCategoryProductsCount($cat_cid, $withNested = true)
     {
         global $h_oledrion_products;
-        $childsIDs   = array();
+        $childsIDs   = [];
         $childsIDs[] = $cat_cid;
 
         if ($withNested) { // Recherche des sous catégories de cette catégorie
-            $items = $childs = array();
+            $items = $childs = [];
             require_once XOOPS_ROOT_PATH . '/class/tree.php';
             $items  = $this->getAllCategories(new Oledrion_parameters());
             $mytree = new XoopsObjectTree($items, 'cat_cid', 'cat_pid');
@@ -288,7 +288,7 @@ class OledrionOledrion_catHandler extends Oledrion_XoopsPersistableObjectHandler
      */
     public function getCategoriesFromIds($ids)
     {
-        $ret = array();
+        $ret = [];
         if (is_array($ids) && count($ids) > 0) {
             $criteria = new Criteria('cat_cid', '(' . implode(',', $ids) . ')', 'IN');
             $ret      = $this->getObjects($criteria, true, true, '*', false);
@@ -304,7 +304,7 @@ class OledrionOledrion_catHandler extends Oledrion_XoopsPersistableObjectHandler
      */
     public function getMotherCategories()
     {
-        $ret      = array();
+        $ret      = [];
         $criteria = new Criteria('cat_pid', 0, '=');
         $criteria->setSort('cat_title');
         $ret = $this->getObjects($criteria);

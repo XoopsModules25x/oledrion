@@ -56,7 +56,7 @@ if (!OledrionUtility::isAdmin()) {
     }
 } */
 
-$caddy = $tmp = $products = $vats = $manufacturers = $tmp2 = $manufacturers = $productsManufacturers = array();
+$caddy = $tmp = $products = $vats = $manufacturers = $tmp2 = $manufacturers = $productsManufacturers = [];
 
 // Récupération des TVA
 $vats = $h_oledrion_vat->getAllVats(new Oledrion_parameters());
@@ -77,7 +77,7 @@ $products = $h_oledrion_products->getProductsFromIDs($tmp, true);
 
 // Recherche des fabricants **********************************************************************************************
 $tmp2 = $h_oledrion_productsmanu->getFromProductsIds($tmp);
-$tmp  = array();
+$tmp  = [];
 foreach ($tmp2 as $item) {
     $tmp[]                                                   = $item->getVar('pm_manu_id');
     $productsManufacturers[$item->getVar('pm_product_id')][] = $item;
@@ -95,7 +95,7 @@ switch ($op) {
 
         // Boucle sur le caddy ************************************************************************************************
         foreach ($caddy as $itemCaddy) {
-            $productForTemplate = $tblJoin = $productManufacturers = $productAttributes = array();
+            $productForTemplate = $tblJoin = $productManufacturers = $productAttributes = [];
             $product            = $products[$itemCaddy->getVar('caddy_product_id')];
             $productForTemplate = $product->toArray(); // Produit
             // Est-ce qu'il y a des attributs ?
@@ -138,7 +138,7 @@ switch ($op) {
 
         // Boucle sur le caddy ************************************************************************************************
         foreach ($caddy as $itemCaddy) {
-            $productForTemplate = $tblJoin = $productManufacturers = $productAttributes = array();
+            $productForTemplate = $tblJoin = $productManufacturers = $productAttributes = [];
             $product            = $products[$itemCaddy->getVar('caddy_product_id')];
             $productForTemplate = $product->toArray(); // Produit
             // Est-ce qu'il y a des attributs ?

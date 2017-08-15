@@ -28,7 +28,7 @@ if ($uid == 0) {
 // Load header
 $handlers = OledrionHandler::getInstance();
 // Get list of this user order
-$orders   = $list = array();
+$orders   = $list = [];
 $criteria = new CriteriaCompo();
 $criteria->add(new Criteria('cmd_uid', $uid));
 $criteria->setSort('cmd_id');

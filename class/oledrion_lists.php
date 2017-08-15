@@ -81,11 +81,11 @@ class Oledrion_lists extends Oledrion_Object
      */
     public static function getTypesArray()
     {
-        return array(
+        return [
             OLEDRION_LISTS_PRIVATE   => _OLEDRION_LIST_PRIVATE,
             OLEDRION_LISTS_WISH      => _OLEDRION_LIST_PUBLIC_WISH_LIST,
             OLEDRION_LISTS_RECOMMEND => _OLEDRION_LIST_PUBLIC_RECOMMENDED_LIST
-        );
+        ];
     }
 
     /**
@@ -156,7 +156,7 @@ class Oledrion_lists extends Oledrion_Object
      */
     public function toArray($format = 's')
     {
-        $ret                          = array();
+        $ret                          = [];
         $ret                          = parent::toArray($format);
         $ret['list_type_description'] = $this->getListTypeDescription();
         $ret['list_href_title']       = $this->getHrefTitle();
@@ -189,7 +189,7 @@ class OledrionOledrion_listsHandler extends Oledrion_XoopsPersistableObjectHandl
      * @param  oledrion_lists $list
      * @return boolean
      */
-    public function incrementListViews(oledrion_lists $list)
+    public function incrementListViews(Oledrion_lists $list)
     {
         $res = true;
         if (OledrionUtility::getCurrentUserID() != $list->getVar('list_uid')) {
@@ -207,7 +207,7 @@ class OledrionOledrion_listsHandler extends Oledrion_XoopsPersistableObjectHandl
      * @param  oledrion_lists $list
      * @return boolean
      */
-    public function incrementListProductsCount(oledrion_lists $list)
+    public function incrementListProductsCount(Oledrion_lists $list)
     {
         $res = true;
         $sql = 'UPDATE ' . $this->table . ' SET list_productscount = list_productscount + 1 WHERE list_id = ' . $list->getVar('list_id');
@@ -224,7 +224,7 @@ class OledrionOledrion_listsHandler extends Oledrion_XoopsPersistableObjectHandl
      * @param  int            $value
      * @return bool
      */
-    public function decrementListProductsCount(oledrion_lists $list, $value = 1)
+    public function decrementListProductsCount(Oledrion_lists $list, $value = 1)
     {
         $value = (int)$value;
         $res   = true;
@@ -250,7 +250,7 @@ class OledrionOledrion_listsHandler extends Oledrion_XoopsPersistableObjectHandl
      */
     public function getRecentLists(Oledrion_parameters $parameters)
     {
-        $parameters = $parameters->extend(new Oledrion_parameters(array(
+        $parameters = $parameters->extend(new Oledrion_parameters([
                                                                       'start'    => 0,
                                                                       'limit'    => 0,
                                                                       'sort'     => 'list_date',
@@ -258,7 +258,7 @@ class OledrionOledrion_listsHandler extends Oledrion_XoopsPersistableObjectHandl
                                                                       'idAsKey'  => true,
                                                                       'listType' => OLEDRION_LISTS_ALL,
                                                                       'list_uid' => 0
-                                                                  )));
+                                                                  ]));
         $criteria   = new CriteriaCompo();
         switch ($parameters['listType']) {
             case OLEDRION_LISTS_ALL:
@@ -320,14 +320,14 @@ class OledrionOledrion_listsHandler extends Oledrion_XoopsPersistableObjectHandl
      */
     public function getUsersFromLists($oledrion_lists)
     {
-        $usersList = array();
+        $usersList = [];
         foreach ($oledrion_lists as $list) {
             $usersList[] = $list->list_uid;
         }
         if (count($usersList) > 0) {
             return OledrionUtility::getUsersFromIds($usersList);
         } else {
-            return array();
+            return [];
         }
     }
 
@@ -337,7 +337,7 @@ class OledrionOledrion_listsHandler extends Oledrion_XoopsPersistableObjectHandl
      * @param  oledrion_lists $list
      * @return boolean
      */
-    public function deleteList(oledrion_lists $list)
+    public function deleteList(Oledrion_lists $list)
     {
         $handlers = OledrionHandler::getInstance();
         $handlers->h_oledrion_products_list->deleteListProducts($list);
@@ -351,9 +351,9 @@ class OledrionOledrion_listsHandler extends Oledrion_XoopsPersistableObjectHandl
      * @param  oledrion_lists $list
      * @return array          Objets de type oledrion_products
      */
-    public function getListProducts(oledrion_lists $list)
+    public function getListProducts(Oledrion_lists $list)
     {
-        $productsInList = $ret = $productsIds = array();
+        $productsInList = $ret = $productsIds = [];
         $handlers       = OledrionHandler::getInstance();
         $productsInList = $handlers->h_oledrion_products_list->getProductsFromList($list);
         if (count($productsInList) == 0) {
@@ -445,7 +445,7 @@ class OledrionOledrion_listsHandler extends Oledrion_XoopsPersistableObjectHandl
     public function listsFromCurrentCategory($categoryId, $list_type, $limit)
     {
         //require_once __DIR__ . '/lite.php';
-        $ret        = array();
+        $ret        = [];
         $start      = 0;
         $categoryId = (int)$categoryId;
         $list_type  = (int)$list_type;

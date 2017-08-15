@@ -29,10 +29,10 @@ function b_oledrion_category_lists_show($options)
     OledrionUtility::loadLanguageFile('main.php');
     $limit    = (int)$options[0];
     $listType = (int)$options[1];
-    $block    = array();
+    $block    = [];
     if (isset($GLOBALS['current_category']) && (int)$GLOBALS['current_category'] > 0) {
         $handlers = OledrionHandler::getInstance();
-        $items    = array();
+        $items    = [];
         $items    = $handlers->h_oledrion_lists->listsFromCurrentCategory($GLOBALS['current_category'], $listType, $limit);
         if (count($items) > 0) {
             foreach ($items as $item) {
@@ -56,7 +56,7 @@ function b_oledrion_category_lists_edit($options)
     $form           = '';
     $form           .= "<table border='0'>";
     $form           .= '<tr><td>' . _MB_OLEDRION_LISTS_COUNT . "</td><td><input type='text' name='options[]' id='options' value='" . (int)$options[0] . "'></td></tr>";
-    $listTypes      = oledrion_lists::getTypesArray();
+    $listTypes      = Oledrion_lists::getTypesArray();
     $listTypeSelect = OledrionUtility::htmlSelect('options[]', $listTypes, (int)$options[1], false);
     $form           .= '<tr><td>' . _MB_OLEDRION_LISTS_TYPE . '</td><td>' . $listTypeSelect . '</td></tr>';
     $form           .= '</table>';

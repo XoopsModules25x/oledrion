@@ -89,7 +89,7 @@ class OledrionOledrion_votedataHandler extends Oledrion_XoopsPersistableObjectHa
      */
     public function getLastVotes($start = 0, $limit = 0)
     {
-        $tbl_datas = array();
+        $tbl_datas = [];
         $criteria  = new Criteria('vote_ratingid', 0, '<>');
         $criteria->setLimit($limit);
         $criteria->setStart($start);

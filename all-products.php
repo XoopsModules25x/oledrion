@@ -26,7 +26,7 @@ $GLOBALS['xoopsOption']['template_main'] = 'oledrion_allproducts.tpl';
 require_once XOOPS_ROOT_PATH . '/header.php';
 require_once XOOPS_ROOT_PATH . '/class/pagenav.php';
 
-$categories = $vatArray = array();
+$categories = $vatArray = [];
 
 // Lecture des TVA
 $vatArray = $h_oledrion_vat->getAllVats(new Oledrion_parameters());
@@ -43,7 +43,7 @@ if ($itemsCount > $limit) {
     $xoopsTpl->assign('pagenav', $pagenav->renderNav());
 }
 
-$products = array();
+$products = [];
 $oledrion_shelf_parameters->resetDefaultValues()->setProductsType('recent')->setStart($start)->setLimit($limit)->setSort('product_submitted DESC, product_title');
 $products = $oledrion_shelf->getProducts($oledrion_shelf_parameters);
 if (isset($products['lastTitle'])) {
@@ -65,7 +65,7 @@ OledrionUtility::callJavascriptFile('tablesorter/jquery.tablesorter.min.js');
 OledrionUtility::loadLanguageFile('modinfo.php');
 
 $xoopsTpl->assign('global_advert', OledrionUtility::getModuleOption('advertisement'));
-$xoopsTpl->assign('breadcrumb', OledrionUtility::breadcrumb(array(OLEDRION_URL . basename(__FILE__) => _MI_OLEDRION_SMNAME6)));
+$xoopsTpl->assign('breadcrumb', OledrionUtility::breadcrumb([OLEDRION_URL . basename(__FILE__) => _MI_OLEDRION_SMNAME6]));
 
 $title = _MI_OLEDRION_SMNAME6 . ' - ' . OledrionUtility::getModuleName();
 OledrionUtility::setMetas($title, $title);

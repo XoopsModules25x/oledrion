@@ -31,16 +31,16 @@ switch ($action) {
         $adminObject->displayNavigation('index.php?op=packing');
 
         $start   = isset($_GET['start']) ? (int)$_GET['start'] : 0;
-        $packing = array();
+        $packing = [];
         $form    = "<form method='post' action='$baseurl' name='frmaddpacking' id='frmaddpacking'><input type='hidden' name='op' id='op' value='packing'><input type='hidden' name='action' id='action' value='add'><input type='submit' name='btngo' id='btngo' value='"
                    . _AM_OLEDRION_ADD_ITEM
                    . "'></form>";
         echo $form;
         //        OledrionUtility::htitle(_MI_OLEDRION_ADMENU18, 4);
-        $packing = $h_oledrion_packing->getAllPacking(new Oledrion_parameters(array(
+        $packing = $h_oledrion_packing->getAllPacking(new Oledrion_parameters([
                                                                                   'start' => $start,
                                                                                   'limit' => $limit
-                                                                              )));
+                                                                              ]));
 
         $class = '';
         echo "<table width='100%' cellspacing='1' cellpadding='3' border='0' class='outer'>";
@@ -48,7 +48,7 @@ switch ($action) {
         foreach ($packing as $item) {
             $id        = $item->getVar('packing_id');
             $class     = ($class === 'even') ? 'odd' : 'even';
-            $actions   = array();
+            $actions   = [];
             $actions[] = "<a href='$baseurl?op=packing&action=edit&id=" . $id . "' title='" . _OLEDRION_EDIT . "'>" . $icones['edit'] . '</a>';
             $actions[] = "<a href='$baseurl?op=packing&action=delete&id=" . $id . "' title='" . _OLEDRION_DELETE . "'" . $conf_msg . '>' . $icones['delete'] . '</a>';
             $online    = $item->getVar('packing_online') == 1 ? _YES : _NO;
@@ -172,7 +172,7 @@ switch ($action) {
             OledrionUtility::redirect(_AM_OLEDRION_ERROR_10, $baseurl, 5);
         }
         $msg = sprintf(_AM_OLEDRION_CONF_DEL_ITEM, $packing->getVar('packing_title'));
-        xoops_confirm(array('op' => 'packing', 'action' => 'confdelete', 'id' => $id), 'index.php', $msg);
+        xoops_confirm(['op' => 'packing', 'action' => 'confdelete', 'id' => $id], 'index.php', $msg);
 
         break;
 

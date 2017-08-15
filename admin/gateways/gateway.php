@@ -20,7 +20,7 @@
 /**
  * Every gateway script must extends this class
  */
-// defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
+// defined('XOOPS_ROOT_PATH') || exit('Restricted access.');
 
 abstract class Oledrion_gateway
 {

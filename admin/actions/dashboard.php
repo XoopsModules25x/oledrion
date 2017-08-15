@@ -58,7 +58,7 @@ switch ($action) {
         $adminObject->addConfigBoxLine('');
         $redirectFile = $_SERVER['PHP_SELF'];
 
-        $languageConstants = array(
+        $languageConstants = [
             _AM_OLEDRION_AVAILABLE,
             _AM_OLEDRION_NOTAVAILABLE,
             _AM_OLEDRION_CREATETHEDIR,
@@ -68,7 +68,7 @@ switch ($action) {
             _AM_OLEDRION_DIRNOTCREATED,
             _AM_OLEDRION_PERMSET,
             _AM_OLEDRION_PERMNOTSET
-        );
+        ];
 
         //$path =  $xoopsModuleConfig['uploaddir'] . '/';
         $adminObject->addConfigBoxLine(DirectoryChecker::getDirectoryStatus(OLEDRION_UPLOAD_PATH, 0777, $languageConstants, $redirectFile));
@@ -108,7 +108,7 @@ switch ($action) {
             echo "<tr>\n";
             // Dernières commandes ************************************************
             echo "<td valign='top' width='50%' align='center'><b>" . _AM_OLEDRION_LAST_ORDERS . '</b>';
-            $tblTmp   = array();
+            $tblTmp   = [];
             $criteria = new CriteriaCompo();
             $criteria->add(new Criteria('cmd_id', 0, '<>'));
             $criteria->setSort('cmd_date');
@@ -126,7 +126,7 @@ switch ($action) {
 
             // Stocks bas *********************************************************
             echo "</td><td valign='top' width='50%' align='center'><b>" . _MI_OLEDRION_ADMENU9 . '</b>';
-            $tblTmp = array();
+            $tblTmp = [];
             $tblTmp = $h_oledrion_products->getLowStocks(0, $itemsCount);
             echo "<table border='0' cellpadding='2' cellspacing='2' width='100%'>";
             echo "<tr><th align='center'>" . _OLEDRION_TITLE . "</th><th align='center'>" . _OLEDRION_STOCK_QUANTITY . "</th></tr>\n";
@@ -142,7 +142,7 @@ switch ($action) {
             // produits les plus vendus *********************************************
             echo "<td valign='top' width='50%' align='center'><b>" . _MI_OLEDRION_BNAME4 . '</b>';
             if ($h_oledrion_commands->getCount() > 0) {
-                $tblTmp  = $tblTmp2 = array();
+                $tblTmp  = $tblTmp2 = [];
                 $tblTmp2 = $h_oledrion_caddy->getMostSoldProducts(0, $itemsCount, 0, true);
 
                 $tblTmp = $h_oledrion_products->getObjects(new Criteria('product_id', '(' . implode(',', array_keys($tblTmp2)) . ')', 'IN'), true);
@@ -156,11 +156,11 @@ switch ($action) {
                 echo '</table>';
             }
             // produits les plus vus ************************************************
-            $tblTmp = array();
-            $tblTmp = $h_oledrion_products->getMostViewedProducts(new Oledrion_parameters(array(
+            $tblTmp = [];
+            $tblTmp = $h_oledrion_products->getMostViewedProducts(new Oledrion_parameters([
                                                                                               'start' => 0,
                                                                                               'limit' => $itemsCount
-                                                                                          )));
+                                                                                          ]));
             echo "</td><td valign='top' width='50%' align='center'><b>" . _MI_OLEDRION_BNAME2 . '</b>';
             echo "<table border='0' cellpadding='2' cellspacing='2' width='100%'>";
             echo "<tr><th align='center'>" . _OLEDRION_TITLE . "</th><th align='center'>" . _OLEDRION_HITS . "</th></tr>\n";
@@ -176,7 +176,7 @@ switch ($action) {
             // Derniers votes *****************************************************
             echo "</td><td colspan='2' valign='top' align='center'><b>" . _AM_OLEDRION_LAST_VOTES . '</b>';
             if ($h_oledrion_votedata->getCount() > 0) {
-                $tblTmp  = $tblTmp2 = $tblTmp3 = array();
+                $tblTmp  = $tblTmp2 = $tblTmp3 = [];
                 $tblTmp3 = $h_oledrion_votedata->getLastVotes(0, $itemsCount);
                 foreach ($tblTmp3 as $item) {
                     $tblTmp2[] = $item->getVar('vote_product_id');

@@ -48,7 +48,7 @@ class Oledrion_location extends Oledrion_Object
      */
     public function toArray($format = 's')
     {
-        $ret = array();
+        $ret = [];
         $ret = parent::toArray($format);
 
         return $ret;
@@ -75,18 +75,18 @@ class OledrionOledrion_locationHandler extends Oledrion_XoopsPersistableObjectHa
      */
     public function getAllLocation(Oledrion_parameters $parameters)
     {
-        $parameters = $parameters->extend(new Oledrion_parameters(array(
+        $parameters = $parameters->extend(new Oledrion_parameters([
                                                                       'start' => 0,
                                                                       'limit' => 0,
                                                                       'sort'  => 'location_id',
                                                                       'order' => 'ASC'
-                                                                  )));
+                                                                  ]));
         $critere    = new Criteria('location_id', 0, '<>');
         $critere->setLimit($parameters['limit']);
         $critere->setStart($parameters['start']);
         $critere->setSort($parameters['sort']);
         $critere->setOrder($parameters['order']);
-        $location = array();
+        $location = [];
         $location = $this->getObjects($critere);
 
         return $location;
@@ -98,19 +98,19 @@ class OledrionOledrion_locationHandler extends Oledrion_XoopsPersistableObjectHa
      */
     public function getAllPid(Oledrion_parameters $parameters)
     {
-        $parameters = $parameters->extend(new Oledrion_parameters(array(
+        $parameters = $parameters->extend(new Oledrion_parameters([
                                                                       'start' => 0,
                                                                       'limit' => 0,
                                                                       'sort'  => 'location_id',
                                                                       'order' => 'ASC'
-                                                                  )));
+                                                                  ]));
         $critere    = new CriteriaCompo();
         $critere->add(new Criteria('location_type', 'parent'));
         $critere->setLimit($parameters['limit']);
         $critere->setStart($parameters['start']);
         $critere->setSort($parameters['sort']);
         $critere->setOrder($parameters['order']);
-        $pid = array();
+        $pid = [];
         $pid = $this->getObjects($critere);
 
         return $pid;
@@ -126,7 +126,7 @@ class OledrionOledrion_locationHandler extends Oledrion_XoopsPersistableObjectHa
         $critere->add(new Criteria('location_online', 1));
         $critere->add(new Criteria('location_type', 'location'));
         $critere->add(new Criteria('location_pid', $id));
-        $location = array();
+        $location = [];
         $location = $this->getObjects($critere);
 
         return $location;

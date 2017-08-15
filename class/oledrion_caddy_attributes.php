@@ -55,7 +55,7 @@ class Oledrion_caddy_attributes extends Oledrion_Object
      */
     public function getOption($valueToGet, $format = 'e')
     {
-        $names = array();
+        $names = [];
         if (xoops_trim($this->getVar($valueToGet, $format)) !== '') {
             $names = explode(OLEDRION_ATTRIBUTE_SEPARATOR, $this->getVar($valueToGet, $format));
         }
@@ -74,7 +74,7 @@ class Oledrion_caddy_attributes extends Oledrion_Object
      */
     private function appendOption($name, $value, $price = '')
     {
-        $names  = $values = $prices = array();
+        $names  = $values = $prices = [];
         $format = 'e';
         $names  = $this->getOption('ca_attribute_names', $format);
         $values = $this->getOption('ca_attribute_values', $format);
@@ -117,9 +117,9 @@ class Oledrion_caddy_attributes extends Oledrion_Object
      * @return array
      * @since 2.3.2009.03.23
      */
-    public function renderForInvoice(oledrion_products $product, $format = 's')
+    public function renderForInvoice(Oledrion_products $product, $format = 's')
     {
-        $names = $prices = $ret = array();
+        $names = $prices = $ret = [];
         $names = $this->getOption('ca_attribute_names', $format);
         if (OledrionUtility::getModuleOption('use_price')) {
             $prices = $this->getOption('ca_attribute_prices', $format);
@@ -135,7 +135,7 @@ class Oledrion_caddy_attributes extends Oledrion_Object
                     $price = $oledrion_Currency->amountForDisplay($price);
                 }
             }
-            $ret[] = array('ca_attribute_name' => $name, 'ca_attribute_price_formated' => $price);
+            $ret[] = ['ca_attribute_name' => $name, 'ca_attribute_price_formated' => $price];
             ++$counter;
         }
 
@@ -177,16 +177,16 @@ class OledrionOledrion_caddy_attributesHandler extends Oledrion_XoopsPersistable
      * @return array
      * @since 2.3.2009.03.23
      */
-    public function getFormatedAttributesForCaddy($ca_caddy_id, oledrion_products $product)
+    public function getFormatedAttributesForCaddy($ca_caddy_id, Oledrion_products $product)
     {
         $handlers   = OledrionHandler::getInstance();
-        $attributes = $ret = array();
+        $attributes = $ret = [];
         $attributes = $this->getObjects(new Criteria('ca_caddy_id', $ca_caddy_id, '='));
         if (count($attributes) == 0) {
             return $ret;
         }
         foreach ($attributes as $caddyAttribute) {
-            $data      = array();
+            $data      = [];
             $attribute = null;
             $attribute = $handlers->h_oledrion_attributes->get($caddyAttribute->getVar('ca_attribute_id'));
             if (is_object($attribute)) {
@@ -219,7 +219,7 @@ class OledrionOledrion_caddy_attributesHandler extends Oledrion_XoopsPersistable
      */
     public function getCommandIdFromAttribute($ca_attribute_id)
     {
-        $ret       = $ordersIds = array();
+        $ret       = $ordersIds = [];
         $criteria  = new Criteria('ca_attribute_id', $ca_attribute_id, '=');
         $ordersIds = $this->getObjects($criteria, false, true, 'ca_cmd_id', false);
         foreach ($ordersIds as $order) {

@@ -25,7 +25,7 @@
 function b_oledrion_category_show($options)
 {
     global $xoTheme;
-    $block = array();
+    $block = [];
     include XOOPS_ROOT_PATH . '/modules/oledrion/include/common.php';
     $xoTheme->addStylesheet(OLEDRION_URL . 'assets/css/oledrion.css');
 
@@ -41,7 +41,7 @@ function b_oledrion_category_show($options)
 
         if ($cat_cid > 0) {
             require_once XOOPS_ROOT_PATH . '/class/tree.php';
-            $tbl_categories = $tblChilds = $tbl_tmp = array();
+            $tbl_categories = $tblChilds = $tbl_tmp = [];
             $tbl_categories = $h_oledrion_cat->getAllCategories(new Oledrion_parameters());
             $mytree         = new XoopsObjectTree($tbl_categories, 'cat_cid', 'cat_pid');
             $tblChilds      = $mytree->getAllChild($cat_cid);
@@ -59,7 +59,7 @@ function b_oledrion_category_show($options)
                 }
             }
         } else { // On est à la racine, on n'affiche donc que les catégories mères
-            $tbl_categories = array();
+            $tbl_categories = [];
             $criteria       = new Criteria('cat_pid', 0, '=');
             $criteria->setSort('cat_title');
             $tbl_categories = $h_oledrion_cat->getObjects($criteria, true);
@@ -100,7 +100,7 @@ function b_oledrion_category_edit($options)
     global $xoopsConfig;
     include XOOPS_ROOT_PATH . '/modules/oledrion/include/common.php';
 
-    $checkeds              = array('', '', '');
+    $checkeds              = ['', '', ''];
     $checkeds[$options[0]] = 'checked';
     $form                  = '';
     $form                  .= '<b>'

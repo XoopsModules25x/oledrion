@@ -27,7 +27,7 @@ $GLOBALS['xoopsOption']['template_main'] = 'oledrion_search.tpl';
 require_once XOOPS_ROOT_PATH . '/header.php';
 
 $limit      = OledrionUtility::getModuleOption('newproducts'); // Nombre maximum d'éléments à afficher
-$categories = $manufacturers = $vendors = array();
+$categories = $manufacturers = $vendors = [];
 $baseurl    = OLEDRION_URL . basename(__FILE__); // URL de ce script (sans son nom)
 
 $xoopsTpl->assign('mod_pref', $mod_pref); // Préférences du module
@@ -40,7 +40,7 @@ $manufacturers = $h_oledrion_manufacturer->getItems(0, 0, 'manu_name', 'ASC', fa
 if ((isset($_POST['op']) && $_POST['op'] === 'go') || isset($_GET['start'])) { // Recherche des résultats
     $xoopsTpl->assign('search_results', true);
     $xoopsTpl->assign('global_advert', OledrionUtility::getModuleOption('advertisement'));
-    $xoopsTpl->assign('breadcrumb', OledrionUtility::breadcrumb(array(OLEDRION_URL . basename(__FILE__) => _OLEDRION_SEARCHRESULTS)));
+    $xoopsTpl->assign('breadcrumb', OledrionUtility::breadcrumb([OLEDRION_URL . basename(__FILE__) => _OLEDRION_SEARCHRESULTS]));
     OledrionUtility::setMetas(OledrionUtility::getModuleName() . ' - ' . _OLEDRION_SEARCHRESULTS, OledrionUtility::getModuleName() . ' - ' . _OLEDRION_SEARCHRESULTS);
 
     if (!isset($_GET['start'])) {
@@ -175,7 +175,7 @@ if ((isset($_POST['op']) && $_POST['op'] === 'go') || isset($_GET['start'])) { /
 
         // Recherche sur du texte
         if (isset($_POST['product_text']) && xoops_trim($_POST['product_text']) !== '') {
-            $temp_queries = $queries = array();
+            $temp_queries = $queries = [];
             $temp_queries = preg_split('/[\s,]+/', $_POST['product_text']);
 
             foreach ($temp_queries as $q) {
@@ -185,7 +185,7 @@ if ((isset($_POST['op']) && $_POST['op'] === 'go') || isset($_GET['start'])) { /
             if (count($queries) > 0) {
                 $tmpObject = new oledrion_products();
                 $datas     =& $tmpObject->getVars();
-                $fields    = array();
+                $fields    = [];
                 $cnt       = 0;
                 foreach ($datas as $key => $value) {
                     if ($value['data_type'] == XOBJ_DTYPE_TXTBOX || $value['data_type'] == XOBJ_DTYPE_TXTAREA) {
@@ -244,11 +244,11 @@ if ((isset($_POST['op']) && $_POST['op'] === 'go') || isset($_GET['start'])) { /
 
     $sql         .= ' GROUP BY b.product_id ORDER BY product_submitted DESC';
     $result      = $xoopsDB->query($sql, $limit, $start);
-    $ret         = array();
+    $ret         = [];
     $tempProduct = $h_oledrion_products->create(true);
     $count       = 1;
     while ($myrow = $xoopsDB->fetchArray($result)) {
-        $ret                           = array();
+        $ret                           = [];
         $ret['product_url_rewrited']   = $tempProduct->getLink($myrow['product_id'], $myrow['product_title']);
         $ret['product_title']          = $myts->htmlSpecialChars($myrow['product_title']);
         $ret['product_href_title']     = OledrionUtility::makeHrefTitle($myts->htmlSpecialChars($myrow['product_title']));
@@ -287,7 +287,7 @@ if ((isset($_POST['op']) && $_POST['op'] === 'go') || isset($_GET['start'])) { /
 } else {
     $xoopsTpl->assign('search_results', false);
     $xoopsTpl->assign('global_advert', OledrionUtility::getModuleOption('advertisement'));
-    $xoopsTpl->assign('breadcrumb', OledrionUtility::breadcrumb(array(OLEDRION_URL . basename(__FILE__) => _OLEDRION_SEARCHFOR)));
+    $xoopsTpl->assign('breadcrumb', OledrionUtility::breadcrumb([OLEDRION_URL . basename(__FILE__) => _OLEDRION_SEARCHFOR]));
     OledrionUtility::setMetas(OledrionUtility::getModuleName() . ' - ' . _OLEDRION_SEARCHFOR, OledrionUtility::getModuleName() . ' - ' . _OLEDRION_SEARCHFOR);
 }
 

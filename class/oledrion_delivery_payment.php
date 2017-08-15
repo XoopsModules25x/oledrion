@@ -46,7 +46,7 @@ class Oledrion_delivery_payment extends Oledrion_Object
      */
     public function toArray($format = 's')
     {
-        $ret = array();
+        $ret = [];
         $ret = parent::toArray($format);
 
         return $ret;
@@ -73,7 +73,7 @@ class OledrionOledrion_delivery_paymentHandler extends Oledrion_XoopsPersistable
      */
     public function getDeliveryPaymantId($parameters)
     {
-        $ret = array();
+        $ret = [];
         if (!$parameters['delivery']) {
             return $ret;
         }
@@ -82,7 +82,7 @@ class OledrionOledrion_delivery_paymentHandler extends Oledrion_XoopsPersistable
         $obj = $this->getObjects($critere);
         if ($obj) {
             foreach ($obj as $root) {
-                $tab                              = array();
+                $tab                              = [];
                 $tab                              = $root->toArray();
                 $ret[$root->getVar('dp_payment')] = $tab;
             }

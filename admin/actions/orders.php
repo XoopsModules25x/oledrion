@@ -41,8 +41,8 @@ switch ($action) {
             $filter3 = 1;
         }
         $_SESSION['filter3'] = $filter3;
-        $selected            = array('', '', '', '', '', '');
-        $conditions          = array(
+        $selected            = ['', '', '', '', '', ''];
+        $conditions          = [
             OLEDRION_STATE_NOINFORMATION,
             OLEDRION_STATE_VALIDATED,
             OLEDRION_STATE_PENDING,
@@ -52,7 +52,7 @@ switch ($action) {
             OLEDRION_STATE_PACKED,
             OLEDRION_STATE_SUBMITED,
             OLEDRION_STATE_DELIVERYED
-        );
+        ];
         $selected[$filter3]  = ' selected';
 
         $criteria = new CriteriaCompo();
@@ -91,7 +91,7 @@ switch ($action) {
             echo '&nbsp;';
         }
         $exportFormats = glob(OLEDRION_PATH . 'admin/exports/*.php');
-        $formats       = array();
+        $formats       = [];
         foreach ($exportFormats as $format) {
             if (false === strpos($format, 'export.php')) {
                 $exportName = basename(str_replace('.php', '', $format));
@@ -112,7 +112,7 @@ switch ($action) {
             $id        = $item->getVar('cmd_id');
             $class     = ($class === 'even') ? 'odd' : 'even';
             $date      = formatTimestamp(strtotime($item->getVar('cmd_date')), 's');
-            $actions   = array();
+            $actions   = [];
             $actions[] = "<a target='_blank' href='" . OLEDRION_URL . 'invoice.php?id=' . $id . "' title='" . _OLEDRION_DETAILS . "'>" . $icones['details'] . '</a>';
             $actions[] = "<a target='_blank' href='$baseurl?op=orders&action=print&id=" . $id . "' title='" . _OLEDRION_PRINT_VERSION . "'>" . $icones['print'] . '</a>';
             $actions[] = "<a href='$baseurl?op=orders&action=delete&id=" . $id . "' title='" . _OLEDRION_DELETE . "'" . $conf_msg . '>' . $icones['delete'] . '</a>';
@@ -162,7 +162,7 @@ switch ($action) {
         }
         $item = $h_oledrion_commands->get($id);
         if (is_object($item)) {
-            xoops_confirm(array('op' => 'orders', 'action' => 'remove', 'id' => $id), 'index.php', _AM_OLEDRION_CONF_DELITEM);
+            xoops_confirm(['op' => 'orders', 'action' => 'remove', 'id' => $id], 'index.php', _AM_OLEDRION_CONF_DELITEM);
         } else {
             OledrionUtility::redirect(_AM_OLEDRION_NOT_FOUND, $baseurl . '?op=' . $opRedirect, 5);
         }
@@ -400,7 +400,7 @@ switch ($action) {
         }
         $order = null;
         $order = $h_oledrion_commands->get($cmdId);
-        $caddy = $tmp = $products = $vats = $manufacturers = $tmp2 = $manufacturers = $productsManufacturers = array();
+        $caddy = $tmp = $products = $vats = $manufacturers = $tmp2 = $manufacturers = $productsManufacturers = [];
 
         // Récupération des TVA
         $vats = $h_oledrion_vat->getAllVats(new Oledrion_parameters());
@@ -421,7 +421,7 @@ switch ($action) {
 
         // Recherche des fabricants **********************************************************************************************
         $tmp2 = $h_oledrion_productsmanu->getFromProductsIds($tmp);
-        $tmp  = array();
+        $tmp  = [];
         foreach ($tmp2 as $item) {
             $tmp[]                                                   = $item->getVar('pm_manu_id');
             $productsManufacturers[$item->getVar('pm_product_id')][] = $item;
@@ -431,7 +431,7 @@ switch ($action) {
         $oledrion_Currency = Oledrion_Currency::getInstance();
         // Informations sur la commande ***************************************************************************************
         foreach ($caddy as $itemCaddy) {
-            $productForTemplate = $tblJoin = $productManufacturers = $productAttributes = array();
+            $productForTemplate = $tblJoin = $productManufacturers = $productAttributes = [];
             $product            = $products[$itemCaddy->getVar('caddy_product_id')];
             $productForTemplate = $product->toArray(); // Produit
             // Get cat title

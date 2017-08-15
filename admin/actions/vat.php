@@ -32,20 +32,20 @@ switch ($action) {
         $adminObject->displayNavigation('index.php?op=vat');
 
         $start = isset($_GET['start']) ? (int)$_GET['start'] : 0;
-        $vats  = array();
+        $vats  = [];
         $form  = "<form method='post' action='$baseurl' name='frmaddvat' id='frmaddvat'><input type='hidden' name='op' id='op' value='vat'><input type='hidden' name='action' id='action' value='add'><input type='hidden' name='action' id='action' value='add'><input type='submit' name='btngo' id='btngo' value='"
                  . _AM_OLEDRION_ADD_ITEM
                  . "'></form>";
         echo $form;
         //        OledrionUtility::htitle(_MI_OLEDRION_ADMENU1, 4);
-        $vats  = $h_oledrion_vat->getAllVats(new Oledrion_parameters(array('start' => $start, 'limit' => $limit)));
+        $vats  = $h_oledrion_vat->getAllVats(new Oledrion_parameters(['start' => $start, 'limit' => $limit]));
         $class = '';
         echo "<table width='100%' cellspacing='1' cellpadding='3' border='0' class='outer'>";
         echo "<tr><th align='center'>" . _AM_OLEDRION_ID . "</th><th align='center'>" . _AM_OLEDRION_RATE . "</th><th align='center'>" . _AM_OLEDRION_COUNTRY . "</th><th align='center'>" . _AM_OLEDRION_ACTION . '</th></tr>';
         foreach ($vats as $item) {
             $id        = $item->getVar('vat_id');
             $class     = ($class === 'even') ? 'odd' : 'even';
-            $actions   = array();
+            $actions   = [];
             $actions[] = "<a href='$baseurl?op=vat&action=edit&id=" . $id . "' title='" . _OLEDRION_EDIT . "'>" . $icones['edit'] . '</a>';
             $actions[] = "<a href='$baseurl?op=vat&action=delete&id=" . $id . "' title='" . _OLEDRION_DELETE . "'" . $conf_msg . '>' . $icones['delete'] . '</a>';
             echo "<tr class='" . $class . "'>\n";

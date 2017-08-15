@@ -63,11 +63,11 @@ if (isset($_POST['commend_id'])) {
 
 $xoopsTpl->assign('op', $op);
 $xoopsTpl->assign('mod_pref', $mod_pref);
-$cartForTemplate      = array();
+$cartForTemplate      = [];
 $emptyCart            = false;
 $shippingAmount       = $commandAmount = $vatAmount = $commandAmountTTC = $discountsCount = $commandAmountVAT = 0;
 $goOn                 = '';
-$discountsDescription = array();
+$discountsDescription = [];
 
 function listCart()
 {
@@ -322,7 +322,7 @@ switch ($op) {
         }
         $sform->addElement(new XoopsFormLabel(_OLEDRION_TOTAL, $oledrion_Currency->amountForDisplay($commandAmountTTC)));
         // By voltan
-        if (in_array(OledrionUtility::getModuleOption('checkout_shipping'), array(1, 2)) && $shippingAmount > 0) {
+        if (in_array(OledrionUtility::getModuleOption('checkout_shipping'), [1, 2]) && $shippingAmount > 0) {
             $sform->addElement(new XoopsFormLabel(_OLEDRION_SHIPPING_PRICE, $oledrion_Currency->amountForDisplay($shippingAmount)));
         }
         $sform->addElement(new XoopsFormText(_OLEDRION_LASTNAME, 'cmd_lastname', 50, 255, $commande->getVar('cmd_lastname', 'e')), true);
@@ -600,7 +600,7 @@ switch ($op) {
             $msgCommande .= "\n";
         }
 
-        $msg                 = array();
+        $msg                 = [];
         $msg['COMMANDE']     = $msgCommande;
         $msg['NUM_COMMANDE'] = $commande->getVar('cmd_id');
         $msg['NOM']          = $commande->getVar('cmd_lastname');
@@ -652,7 +652,7 @@ switch ($op) {
                     $payURL = OLEDRION_URL . 'invoice.php?id=' . $commande->getVar('cmd_id') . '&pass=' . $commande->getVar('cmd_password');
                 }
                 $sform    = new XoopsThemeForm(_OLEDRION_PAY_GATEWAY, 'payform', $payURL, 'post', true);
-                $elements = array();
+                $elements = [];
                 if (is_object($gateway)) {
                     $elements = $gateway->getCheckoutFormContent($commande);
                 }
@@ -724,7 +724,7 @@ switch ($op) {
         break;
 }
 
-$xoopsTpl->assign('breadcrumb', OledrionUtility::breadcrumb(array(OLEDRION_URL . basename(__FILE__) => _OLEDRION_VALIDATE_CMD)));
+$xoopsTpl->assign('breadcrumb', OledrionUtility::breadcrumb([OLEDRION_URL . basename(__FILE__) => _OLEDRION_VALIDATE_CMD]));
 
 // Image icons
 if (file_exists(OLEDRION_PATH . 'language/' . $xoopsConfig['language'] . '/image/step1.png')) {

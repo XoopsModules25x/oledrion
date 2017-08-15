@@ -67,7 +67,7 @@ if ($uid > 0) {
 function listCart()
 {
     global $xoopsTpl, $uid;
-    $cartForTemplate = $discountsDescription = array();
+    $cartForTemplate = $discountsDescription = [];
     $emptyCart       = false;
     $shippingAmount  = $commandAmount = $vatAmount = $commandAmountTTC = $discountsCount = $ecotaxeAmount = $discountAmount = $totalSavings = 0;
     $goOn            = '';
@@ -139,13 +139,13 @@ switch ($op) {
 
         if ($product->getVar('product_stock') - 1 >= 0) {
             // Options
-            $userAttributes = array();
+            $userAttributes = [];
             if ($product->productAttributesCount() > 0) { // Si le produit a des attributs
-                $productAttributes = array();
+                $productAttributes = [];
                 // On commence par vérifier que les attributs obligatoires sont renseignés
                 // It starts by checking if mandatory attributes are filled
                 if ($product->getProductMandatoryAttributesCount()) {
-                    $mandatoryFieldsList = array();
+                    $mandatoryFieldsList = [];
                     $mandatoryFieldsList = $product->getProductMandatoryFieldsList();
                     if (count($mandatoryFieldsList) > 0) {
                         $productUrl = $product->getLink();
@@ -217,7 +217,7 @@ OledrionUtility::setCSS();
 OledrionUtility::setLocalCSS($xoopsConfig['language']);
 OledrionUtility::loadLanguageFile('modinfo.php');
 
-$xoopsTpl->assign('breadcrumb', OledrionUtility::breadcrumb(array(OLEDRION_URL . basename(__FILE__) => _MI_OLEDRION_SMNAME1)));
+$xoopsTpl->assign('breadcrumb', OledrionUtility::breadcrumb([OLEDRION_URL . basename(__FILE__) => _MI_OLEDRION_SMNAME1]));
 
 $title = _MI_OLEDRION_SMNAME1 . ' - ' . OledrionUtility::getModuleName();
 OledrionUtility::setMetas($title, $title);

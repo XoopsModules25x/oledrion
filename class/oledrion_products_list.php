@@ -65,7 +65,7 @@ class OledrionOledrion_products_listHandler extends Oledrion_XoopsPersistableObj
      * @param  oledrion_lists $list
      * @return boolean
      */
-    public function deleteListProducts(oledrion_lists $list)
+    public function deleteListProducts(Oledrion_lists $list)
     {
         return $this->deleteAll(new Criteria('productlist_list_id', $list->list_id, '='));
     }
@@ -87,7 +87,7 @@ class OledrionOledrion_products_listHandler extends Oledrion_XoopsPersistableObj
      * @param  oledrion_lists $list
      * @return array
      */
-    public function getProductsFromList(oledrion_lists $list)
+    public function getProductsFromList(Oledrion_lists $list)
     {
         return $this->getObjects(new criteria('productlist_list_id', $list->getVar('list_id'), '='));
     }

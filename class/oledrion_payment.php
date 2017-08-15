@@ -91,7 +91,7 @@ class Oledrion_payment extends Oledrion_Object
      */
     public function toArray($format = 's')
     {
-        $ret                      = array();
+        $ret                      = [];
         $ret                      = parent::toArray($format);
         $ret['payment_image_url'] = $this->getPictureUrl();
 
@@ -119,18 +119,18 @@ class OledrionOledrion_paymentHandler extends Oledrion_XoopsPersistableObjectHan
      */
     public function getAllPayment(Oledrion_parameters $parameters)
     {
-        $parameters = $parameters->extend(new Oledrion_parameters(array(
+        $parameters = $parameters->extend(new Oledrion_parameters([
                                                                       'start' => 0,
                                                                       'limit' => 0,
                                                                       'sort'  => 'payment_id',
                                                                       'order' => 'ASC'
-                                                                  )));
+                                                                  ]));
         $critere    = new Criteria('payment_id', 0, '<>');
         $critere->setLimit($parameters['limit']);
         $critere->setStart($parameters['start']);
         $critere->setSort($parameters['sort']);
         $critere->setOrder($parameters['order']);
-        $categories = array();
+        $categories = [];
         $categories = $this->getObjects($critere);
 
         return $categories;
@@ -143,8 +143,8 @@ class OledrionOledrion_paymentHandler extends Oledrion_XoopsPersistableObjectHan
     public function getThisDeliveryPayment($delivery_id)
     {
         global $h_oledrion_delivery_payment;
-        $ret              = array();
-        $parameters       = array('delivery' => $delivery_id);
+        $ret              = [];
+        $parameters       = ['delivery' => $delivery_id];
         $delivery_payment = $h_oledrion_delivery_payment->getDeliveryPaymantId($parameters);
         foreach ($delivery_payment as $payment) {
             $id[] = $payment['dp_payment'];
@@ -156,7 +156,7 @@ class OledrionOledrion_paymentHandler extends Oledrion_XoopsPersistableObjectHan
         $obj = $this->getObjects($critere);
         if ($obj) {
             foreach ($obj as $root) {
-                $tab   = array();
+                $tab   = [];
                 $tab   = $root->toArray();
                 $ret[] = $tab;
             }

@@ -64,13 +64,13 @@
 class Oledrion_reductions
 {
     // Ne contient que la liste des règles actives au moment du calcul
-    private $allActiveRules = array();
+    private $allActiveRules = [];
 
     // Nombre de produits par catégorie
-    private $categoriesProductsCount = array();
+    private $categoriesProductsCount = [];
 
     // Quantité de produits par catégorie
-    private $categoriesProductsQuantities = array();
+    private $categoriesProductsQuantities = [];
 
     /**
      * le caddy en mémoire
@@ -79,17 +79,17 @@ class Oledrion_reductions
      *  $cart['qty'] = Quantité voulue
      *  $cart['product'] = L'objet produit correspondant au panier
      */
-    private $cart = array();
+    private $cart = [];
 
     /**
      * Le caddy pour le template. Consulter les détails du caddy dans la métode ComputeCart
      */
-    private $cartForTemplate = array();
+    private $cartForTemplate = [];
 
     /**
      * Les règles à appliquer à la fin, sur l'intégralité du panier
      */
-    private $rulesForTheWhole = array();
+    private $rulesForTheWhole = [];
 
     // Le total des quantités de produits avant les réductions
     private $totalProductsQuantities = 0;
@@ -100,19 +100,19 @@ class Oledrion_reductions
     private $handlers;
 
     // Les fabricants associés aux produits du panier
-    private $associatedManufacturers = array();
+    private $associatedManufacturers = [];
 
     // Les vendeur associés aux produits du panier
-    private $associatedVendors = array();
+    private $associatedVendors = [];
 
     // Les catégories associées aux produits du panier
-    private $associatedCategories = array();
+    private $associatedCategories = [];
 
     // Fabricants associés par produit du panier
-    private $associatedManufacturersPerProduct = array();
+    private $associatedManufacturersPerProduct = [];
 
     // Attributs par produit du panier
-    private $associatedAttributesPerProduct = array();
+    private $associatedAttributesPerProduct = [];
 
     /**
      * Chargement des handlers et des règles actives
@@ -156,7 +156,7 @@ class Oledrion_reductions
      * @param oledrion_products $product
      * @param integer           $quantity
      */
-    public function computePerCategories(oledrion_products $product, $quantity)
+    public function computePerCategories(Oledrion_products $product, $quantity)
     {
         // Nombre de produits par catégories
         if (isset($this->categoriesProductsCount[$product->product_cid])) {
@@ -180,7 +180,7 @@ class Oledrion_reductions
      *
      * @param oledrion_products $product
      */
-    private function addAssociatedManufacturers(oledrion_products $product)
+    private function addAssociatedManufacturers(Oledrion_products $product)
     {
         if (!isset($this->associatedManufacturers[$product->product_id])) {
             $this->associatedManufacturers[$product->product_id] = $product->product_id;
@@ -194,7 +194,7 @@ class Oledrion_reductions
      * @param attray            $attributes
      * @since 2.3
      */
-    private function addAssociatedAttributes(oledrion_products $product, $attributes)
+    private function addAssociatedAttributes(Oledrion_products $product, $attributes)
     {
         if (!isset($this->associatedAttributesPerProduct[$product->product_id])) {
             $this->associatedAttributesPerProduct[$product->product_id] = $product->getProductsAttributesList($attributes);
@@ -206,7 +206,7 @@ class Oledrion_reductions
      *
      * @param oledrion_products $product
      */
-    private function addAssociatedVendors(oledrion_products $product)
+    private function addAssociatedVendors(Oledrion_products $product)
     {
         if (!isset($this->associatedVendors[$product->product_vendor_id])) {
             $this->associatedVendors[$product->product_vendor_id] = $product->product_vendor_id;
@@ -218,7 +218,7 @@ class Oledrion_reductions
      *
      * @param oledrion_products $product
      */
-    private function addAssociatedCategories(oledrion_products $product)
+    private function addAssociatedCategories(Oledrion_products $product)
     {
         if (!isset($this->associatedCategories[$product->product_cid])) {
             $this->associatedCategories[$product->product_cid] = $product->product_cid;
@@ -233,9 +233,9 @@ class Oledrion_reductions
         if (count($this->associatedManufacturers) > 0) {
             sort($this->associatedManufacturers);
             $productsIds                   = $this->associatedManufacturers;
-            $this->associatedManufacturers = array();
+            $this->associatedManufacturers = [];
             // au cas où cela échouerait
-            $productsManufacturers = $manufacturersIds = array();
+            $productsManufacturers = $manufacturersIds = [];
             $productsManufacturers = $this->handlers->h_oledrion_productsmanu->getFromProductsIds($productsIds);
             if (count($productsManufacturers) > 0) {
                 foreach ($productsManufacturers as $productManufacturer) {
@@ -291,9 +291,9 @@ class Oledrion_reductions
      */
     public function loadProductsAssociatedToCart()
     {
-        $newCart = array();
+        $newCart = [];
         foreach ($this->cart as $cartProduct) {
-            $data               = array();
+            $data               = [];
             $data['id']         = $cartProduct['id'];
             $data['number']     = $cartProduct['number'];
             $data['qty']        = $cartProduct['qty'];
@@ -353,13 +353,13 @@ class Oledrion_reductions
     {
         $this->totalProductsQuantities           = 0;
         $this->totalAmountBeforeDiscounts        = 0;
-        $this->rulesForTheWhole                  = array();
-        $this->cartForTemplate                   = array();
-        $this->associatedManufacturers           = array();
-        $this->associatedVendors                 = array();
-        $this->associatedCategories              = array();
-        $this->associatedManufacturersPerProduct = array();
-        $this->associatedAttributesPerProduct    = array();
+        $this->rulesForTheWhole                  = [];
+        $this->cartForTemplate                   = [];
+        $this->associatedManufacturers           = [];
+        $this->associatedVendors                 = [];
+        $this->associatedCategories              = [];
+        $this->associatedManufacturersPerProduct = [];
+        $this->associatedAttributesPerProduct    = [];
     }
 
     /**
@@ -399,10 +399,10 @@ class Oledrion_reductions
     ) {
         $emptyCart      = false;
         $goOn           = '';
-        $vats           = array();
+        $vats           = [];
         $cpt            = 0;
         $discountsCount = 0;
-        $this->cart     = isset($_SESSION[OledrionOledrion_caddyHandler::CADDY_NAME]) ? $_SESSION[OledrionOledrion_caddyHandler::CADDY_NAME] : array();
+        $this->cart     = isset($_SESSION[OledrionOledrion_caddyHandler::CADDY_NAME]) ? $_SESSION[OledrionOledrion_caddyHandler::CADDY_NAME] : [];
         $cartCount      = count($this->cart);
         if ($cartCount == 0) {
             $emptyCart = true;
@@ -433,7 +433,7 @@ class Oledrion_reductions
                 $ht = (float)$cartProduct['product']->getVar('product_price', 'n');
             }
             // S'il y a des options, on rajoute leur montant
-            $productAttributes = array();
+            $productAttributes = [];
             if (is_array($cartProduct['attributes']) && count($cartProduct['attributes']) > 0) {
                 $ht += $this->handlers->h_oledrion_attributes->getProductOptionsPrice($cartProduct['attributes'], $cartProduct['product']->getVar('product_vat_id'), $productAttributes);
             }
@@ -650,7 +650,7 @@ class Oledrion_reductions
             $totalShipping += $discountedShipping;
 
             // Recherche des éléments associés au produit
-            $associatedVendor      = $associatedCategory = $associatedManufacturers = array();
+            $associatedVendor      = $associatedCategory = $associatedManufacturers = [];
             $manufacturersJoinList = '';
             // Le vendeur
             if (isset($this->associatedVendors[$cartProduct['product']->product_vendor_id])) {
@@ -667,7 +667,7 @@ class Oledrion_reductions
             if (isset($this->associatedManufacturersPerProduct[$product_id])) {
                 // Recherche de la liste des fabricants associés à ce produit
                 $manufacturers     = $this->associatedManufacturersPerProduct[$product_id];
-                $manufacturersList = array();
+                $manufacturersList = [];
                 foreach ($manufacturers as $manufacturer_id) {
                     if (isset($this->associatedManufacturers[$manufacturer_id])) {
                         $associatedManufacturers[] = $this->associatedManufacturers[$manufacturer_id]->toArray();
@@ -676,7 +676,7 @@ class Oledrion_reductions
                 }
                 $manufacturersJoinList = implode(OLEDRION_STRING_TO_JOIN_MANUFACTURERS, $manufacturersList);
             }
-            $productTemplate                = array();
+            $productTemplate                = [];
             $productTemplate                = $cartProduct['product']->toArray();
             $productTemplate['attributes']  = $productAttributes;
             $productTemplate['number']      = $cartProduct['number'];

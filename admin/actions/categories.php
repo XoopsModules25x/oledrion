@@ -33,13 +33,13 @@ switch ($action) {
         $adminObject->displayNavigation('index.php?op=categories');
 
         // Display categories **********************************************************************
-        $categories = array();
+        $categories = [];
         //        OledrionUtility::htitle(_AM_OLEDRION_CATEGORIES, 4);
 
         $categories = $h_oledrion_cat->getAllCategories(new Oledrion_parameters());
         $mytree     = new XoopsObjectTree($categories, 'cat_cid', 'cat_pid');
 
-        if (OledrionUtility::checkVerXoops($module, '2.5.9')) {
+        if (OledrionUtility::checkVerXoops($GLOBALS['xoopsModule'], '2.5.9')) {
             $categoriesSelect0 = $mytree->makeSelectElement('id', 'cat_title', '--', '', true, 0, '', '');
             $categoriesSelect  = $categoriesSelect0->render();
         } else {
@@ -65,7 +65,7 @@ switch ($action) {
         $chunk2    = OledrionUtility::getModuleOption('chunk2');
         $chunk3    = OledrionUtility::getModuleOption('chunk3');
         $chunk4    = OledrionUtility::getModuleOption('chunk4');
-        $positions = array(0 => _AM_OLEDRION_INVISIBLE, 1 => '1', 2 => '2', 3 => '3', 4 => '4');
+        $positions = [0 => _AM_OLEDRION_INVISIBLE, 1 => '1', 2 => '2', 3 => '3', 4 => '4'];
 
         $sform = new XoopsThemeForm(_AM_OLEDRION_CATEG_CONFIG, 'frmchunk', $baseurl);
         $sform->addElement(new XoopsFormHidden('op', 'categories'));
@@ -148,7 +148,7 @@ switch ($action) {
         $sform->addElement(new XoopsFormHidden('cat_cid', $item->getVar('cat_cid')));
         $sform->addElement(new XoopsFormText(_AM_OLEDRION_CATEG_TITLE, 'cat_title', 50, 255, $item->getVar('cat_title', 'e')), true);
 
-        if (OledrionUtility::checkVerXoops($module, '2.5.9')) {
+        if (OledrionUtility::checkVerXoops($GLOBALS['xoopsModule'], '2.5.9')) {
             $select_categ = $mytree->makeSelectElement('cat_pid', 'cat_title', '--', $item->getVar('cat_pid'), true, 0, '', _AM_OLEDRION_PARENT_CATEG);
             $sform->addElement($select_categ);
         } else {
@@ -263,7 +263,7 @@ switch ($action) {
             OledrionUtility::redirect(_AM_OLEDRION_ERROR_10, $baseurl, 5);
         }
         $msg = sprintf(_AM_OLEDRION_CONF_DEL_CATEG, $category->getVar('cat_title'));
-        xoops_confirm(array('op' => 'categories', 'action' => 'confdelete', 'id' => $id), 'index.php', $msg);
+        xoops_confirm(['op' => 'categories', 'action' => 'confdelete', 'id' => $id], 'index.php', $msg);
         break;
 
     // ****************************************************************************************************************

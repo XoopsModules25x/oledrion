@@ -20,7 +20,7 @@
 /**
  * Chargement des handlers utilisés par le module
  */
-// defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
+// defined('XOOPS_ROOT_PATH') || exit('Restricted access.');
 
 class OledrionHandler
 {
@@ -29,7 +29,7 @@ class OledrionHandler
      *
      * @var array
      */
-    private $handlersNames = array(
+    private $handlersNames = [
         'oledrion_manufacturer',
         'oledrion_products',
         'oledrion_productsmanu',
@@ -55,7 +55,7 @@ class OledrionHandler
         'oledrion_location_delivery',
         'oledrion_delivery_payment',
         'oledrion_payment_log'
-    );
+    ];
 
     /**
      * Contient l'unique instance de l'objet
@@ -96,7 +96,7 @@ class OledrionHandler
      */
     private function __construct()
     {
-        $this->handlers = array();
+        $this->handlers = [];
     }
 
     /**

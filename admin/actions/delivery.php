@@ -31,16 +31,16 @@ switch ($action) {
         $adminObject->displayNavigation('index.php?op=delivery');
 
         $start    = isset($_GET['start']) ? (int)$_GET['start'] : 0;
-        $delivery = array();
+        $delivery = [];
         $form     = "<form method='post' action='$baseurl' name='frmadddelivery' id='frmadddelivery'><input type='hidden' name='op' id='op' value='delivery'><input type='hidden' name='action' id='action' value='add'><input type='submit' name='btngo' id='btngo' value='"
                     . _AM_OLEDRION_ADD_ITEM
                     . "'></form>";
         echo $form;
         //        OledrionUtility::htitle(_MI_OLEDRION_ADMENU20, 4);
-        $delivery = $h_oledrion_delivery->getAllDelivery(new Oledrion_parameters(array(
+        $delivery = $h_oledrion_delivery->getAllDelivery(new Oledrion_parameters([
                                                                                      'start' => $start,
                                                                                      'limit' => $limit
-                                                                                 )));
+                                                                                 ]));
 
         $class = '';
         echo "<table width='100%' cellspacing='1' cellpadding='3' border='0' class='outer'>";
@@ -48,7 +48,7 @@ switch ($action) {
         foreach ($delivery as $item) {
             $id        = $item->getVar('delivery_id');
             $class     = ($class === 'even') ? 'odd' : 'even';
-            $actions   = array();
+            $actions   = [];
             $actions[] = "<a href='$baseurl?op=delivery&action=edit&id=" . $id . "' title='" . _OLEDRION_EDIT . "'>" . $icones['edit'] . '</a>';
             $actions[] = "<a href='$baseurl?op=delivery&action=delete&id=" . $id . "' title='" . _OLEDRION_DELETE . "'" . $conf_msg . '>' . $icones['delete'] . '</a>';
             $online    = $item->getVar('delivery_online') == 1 ? _YES : _NO;
@@ -94,7 +94,7 @@ switch ($action) {
         $sform->addElement(new XoopsFormText(_AM_OLEDRION_DELIVERY_TITLE, 'delivery_title', 50, 150, $item->getVar('delivery_title', 'e')), true);
 
         // Add payment options ************************************************************
-        $payments = $deliveryPayments = $payments_d = $deliveryPayments_d = array();
+        $payments = $deliveryPayments = $payments_d = $deliveryPayments_d = [];
 
         $criteria = new Criteria('payment_id', 0, '<>');
         $criteria->setSort('payment_title');
@@ -214,7 +214,7 @@ switch ($action) {
             OledrionUtility::redirect(_AM_OLEDRION_ERROR_10, $baseurl, 5);
         }
         $msg = sprintf(_AM_OLEDRION_CONF_DEL_ITEM, $delivery->getVar('delivery_title'));
-        xoops_confirm(array('op' => 'delivery', 'action' => 'confdelete', 'id' => $id), 'index.php', $msg);
+        xoops_confirm(['op' => 'delivery', 'action' => 'confdelete', 'id' => $id], 'index.php', $msg);
         break;
 
     case 'confdelete':

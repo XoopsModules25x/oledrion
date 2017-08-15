@@ -20,7 +20,7 @@
 /**
  * Paypal Gateway
  */
-// defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
+// defined('XOOPS_ROOT_PATH') || exit('Restricted access.');
 
 class Oledrion_paypal extends Oledrion_gateway
 {
@@ -39,7 +39,7 @@ class Oledrion_paypal extends Oledrion_gateway
      */
     public function setGatewayInformation()
     {
-        $gateway                  = array();
+        $gateway                  = [];
         $gateway['name']          = 'Paypal';
         $gateway['foldername']    = 'paypal';
         $gateway['version']       = '1.1';
@@ -71,7 +71,7 @@ class Oledrion_paypal extends Oledrion_gateway
 
         // Libellé de la monnaie pour Paypal
         $paypal_money = new XoopsFormSelect(_OLEDRION_PAYPAL_MONEY_P, 'paypal_money', $this->handlers->h_oledrion_gateways_options->getGatewayOptionValue($this->gatewayInformation['foldername'], 'paypal_money'));
-        $paypal_money->addOptionArray(array(
+        $paypal_money->addOptionArray([
                                           'AUD' => 'Australian Dollar',
                                           'CAD' => 'Canadian Dollar',
                                           'CHF' => 'Swiss Franc',
@@ -88,7 +88,7 @@ class Oledrion_paypal extends Oledrion_gateway
                                           'SEK' => 'Swedish Krona',
                                           'SGD' => 'Singapore Dollar',
                                           'USD' => 'U.S. Dollar'
-                                      ));
+                                      ]);
         $sform->addElement($paypal_money, true);
 
         // Paypal en mode test ?
@@ -114,7 +114,7 @@ class Oledrion_paypal extends Oledrion_gateway
      */
     public function saveParametersForm($data)
     {
-        $parameters = array('paypal_email', 'paypal_money', 'paypal_test', 'use_ipn');
+        $parameters = ['paypal_email', 'paypal_money', 'paypal_test', 'use_ipn'];
         // On commence par supprimer les valeurs actuelles
         $gatewayName = $this->gatewayInformation['foldername'];
         $this->handlers->h_oledrion_gateways_options->deleteGatewayOptions($gatewayName);
@@ -169,7 +169,7 @@ class Oledrion_paypal extends Oledrion_gateway
         $paypal_email = $this->handlers->h_oledrion_gateways_options->getGatewayOptionValue($gatewayName, 'paypal_email');
         $use_ipn      = (int)$this->handlers->h_oledrion_gateways_options->getGatewayOptionValue($gatewayName, 'use_ipn');
 
-        $ret                     = array();
+        $ret                     = [];
         $ret['cmd']              = '_xclick';
         $ret['upload']           = '1';
         $ret['currency_code']    = $paypal_money;

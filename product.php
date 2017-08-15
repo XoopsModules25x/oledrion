@@ -87,7 +87,7 @@ switch ($op) {
     case 'default':
     default:
         // Lecture des TVA ********************************************************************************
-        $vatArray = array();
+        $vatArray = [];
         $vatArray = $h_oledrion_vat->getAllVats(new Oledrion_parameters());
         //
         $GLOBALS['xoopsOption']['template_main'] = 'oledrion_product.tpl';
@@ -138,7 +138,7 @@ switch ($op) {
         $xoopsTpl->assign('ProductStockQuantity', sprintf(_OLEDRION_QUANTITY_STOCK, $product->getVar('product_stock')));
 
         // Recherche de la catégorie du produit
-        $tbl_tmp          = $tbl_categories = $tbl_ancestors = array();
+        $tbl_tmp          = $tbl_categories = $tbl_ancestors = [];
         $tbl_categories   = $h_oledrion_cat->getAllCategories(new Oledrion_parameters());
         $product_category = null;
         $product_category = isset($tbl_categories[$product->getVar('product_cid')]) ? $tbl_categories[$product->getVar('product_cid')] : null;
@@ -154,7 +154,7 @@ switch ($op) {
         }
 
         // Chargement de toutes les TVA
-        $tblVat = array();
+        $tblVat = [];
         $tblVat = $h_oledrion_vat->getAllVats(new Oledrion_parameters());
 
         // Recherche de sa TVA
@@ -185,14 +185,14 @@ switch ($op) {
         $xoopsTpl->assign('addToWishList', $addToWishList);
 
         // Recherche des fabricants du produit **********************************************
-        $tbl_auteurs = $tbl_translators = $tbl_tmp = $tbl_tmp2 = $tbl_join1 = $tbl_join2 = array();
+        $tbl_auteurs = $tbl_translators = $tbl_tmp = $tbl_tmp2 = $tbl_join1 = $tbl_join2 = [];
         $criteria    = new Criteria('pm_product_id', $product->getVar('product_id'), '=');
         $tbl_tmp     = $h_oledrion_productsmanu->getObjects($criteria, true);
         foreach ($tbl_tmp as $id => $item) {
             $tbl_tmp2[] = $item->getVar('pm_manu_id');
         }
         if (count($tbl_tmp2) > 0) {
-            $tbl_product_manufacturers = array();
+            $tbl_product_manufacturers = [];
             $tbl_auteurs               = $h_oledrion_manufacturer->getObjects(new Criteria('manu_id', '(' . implode(',', $tbl_tmp2) . ')', 'IN'), true);
             foreach ($tbl_auteurs as $item) {
                 $xoopsTpl->append('product_manufacturers', $item->toArray());
@@ -208,14 +208,14 @@ switch ($op) {
 
         // Recherche des produits relatifs ******************************************************************
         $revertRelated = false;
-        $tbl_tmp       = $tbl_tmp2 = array();
+        $tbl_tmp       = $tbl_tmp2 = [];
         $criteria      = new Criteria('related_product_id', $product->getVar('product_id'), '=');
         $tbl_tmp       = $h_oledrion_related->getObjects($criteria);
 
         // S'il n'y a pas de produits relatifs et que la bonne option est activée, on recherche les produits relatfis "dans l'autre sens" (les cas où le produit courant est marqué comme produit relatif)
         if (count($tbl_tmp) == 0 && OLEDRION_RELATED_BOTH) {
             unset($criteria);
-            $tbl_tmp       = array();
+            $tbl_tmp       = [];
             $criteria      = new Criteria('related_product_related', $product->getVar('product_id'), '=');
             $tbl_tmp       = $h_oledrion_related->getObjects($criteria);
             $revertRelated = true;
@@ -233,7 +233,7 @@ switch ($op) {
             $criteria->setLimit(OledrionUtility::getModuleOption('related_limit'));
             $criteria->setOrder('DESC');
             $criteria->setSort('product_id');
-            $tbl_related_products = array();
+            $tbl_related_products = [];
             $tbl_related_products = $h_oledrion_products->getObjects($criteria, true);
             if (count($tbl_related_products) > 0) {
                 $cpt = 1;
@@ -248,7 +248,7 @@ switch ($op) {
         }
 
         // Recherche des fichiers attachés au produit *******************************************************
-        $attachedFiles      = $mp3AttachedFilesList = $attachedFilesForTemplate = array();
+        $attachedFiles      = $mp3AttachedFilesList = $attachedFilesForTemplate = [];
         $attachedFilesCount = $h_oledrion_files->getProductFilesCount($product->getVar('product_id'));
         if ($attachedFilesCount > 0) {
             $attachedFiles = $h_oledrion_files->getProductFiles($product->getVar('product_id'));
@@ -266,7 +266,7 @@ switch ($op) {
         }
 
         // Informations du produit **************************************************************************
-        $tbl_tmp = array();
+        $tbl_tmp = [];
         $tbl_tmp = $product->toArray();
         // Fichiers attachés
         $tbl_tmp['attached_mp3_count']     = count($mp3AttachedFilesList);
@@ -296,7 +296,7 @@ switch ($op) {
         }
         // Attributs
         if ($handlers->h_oledrion_attributes->getProductAttributesCount($product_id) > 0) {
-            $attributes           = array();
+            $attributes           = [];
             $mandatoryFieldsCount = 0;
             if ($handlers->h_oledrion_caddy->isInCart($product_id)) {
             }
@@ -323,7 +323,7 @@ switch ($op) {
         $xoopsTpl->assign('product', $tbl_tmp);
 
         // Breadcrumb *************************************************************************************
-        $tbl_tmp       = array();
+        $tbl_tmp       = [];
         $mytree        = new XoopsObjectTree($tbl_categories, 'cat_cid', 'cat_pid');
         $tbl_ancestors = $mytree->getAllParent($product->getVar('product_cid'));
         $tbl_ancestors = array_reverse($tbl_ancestors);
@@ -360,7 +360,7 @@ switch ($op) {
             $criteria->setOrder('DESC');
             $criteria->setSort('product_submitted');
             $criteria->setLimit(1);
-            $tbl = array();
+            $tbl = [];
             $tbl = $h_oledrion_products->getObjects($criteria);
             if (count($tbl) == 1) {
                 // Trouvé
@@ -389,7 +389,7 @@ switch ($op) {
             $criteria->setOrder('DESC');
             $criteria->setSort('product_submitted');
             $criteria->setLimit(1);
-            $tbl = array();
+            $tbl = [];
             $tbl = $h_oledrion_products->getObjects($criteria);
             if (count($tbl) == 1) {
                 // Trouvé
@@ -409,15 +409,15 @@ switch ($op) {
         $count = OledrionUtility::getModuleOption('summarylast');
         $xoopsTpl->assign('summarylast', $count);
         if ($count > 0) {
-            $tblTmp = array();
-            $tblTmp = $h_oledrion_products->getRecentProducts(new Oledrion_parameters(array(
+            $tblTmp = [];
+            $tblTmp = $h_oledrion_products->getRecentProducts(new Oledrion_parameters([
                                                                                           'start'    => 0,
                                                                                           'limit'    => $count,
                                                                                           'category' => 0,
                                                                                           'sort'     => 'product_submitted DESC, product_title',
                                                                                           'order'    => '',
                                                                                           'excluded' => $product_id
-                                                                                      )));
+                                                                                      ]));
             foreach ($tblTmp as $item) {
                 $product_price     = $item->getVar('product_price');
                 $product_price_ttc = OledrionUtility::getTTC($item->getVar('product_price'), '');
@@ -430,7 +430,7 @@ switch ($op) {
                         $product_price_ttc = OledrionUtility::getTTC($root->getVar('attribute_default_value'), '');
                     }
                 }
-                $datas = array(
+                $datas = [
                     'last_categ_product_title'        => $item->getVar('product_title'),
                     'last_categ_product_url_rewrited' => $item->getLink(),
                     'last_categ_product_href_title'   => OledrionUtility::makeHrefTitle($item->getVar('product_title')),
@@ -454,7 +454,7 @@ switch ($op) {
                     'product_stock'                   => $item->getVar('product_stock'),
                     'product_price'                   => $product_price,
                     'product_price_ttc'               => $product_price_ttc
-                );
+                ];
                 $xoopsTpl->append('product_all_categs', $datas);
             }
             unset($tblTmp);
@@ -464,15 +464,15 @@ switch ($op) {
         $count = OledrionUtility::getModuleOption('summarycategory');
         $xoopsTpl->assign('summarycategory', $count);
         if ($count > 0) {
-            $tblTmp = array();
-            $tblTmp = $h_oledrion_products->getRecentProducts(new Oledrion_parameters(array(
+            $tblTmp = [];
+            $tblTmp = $h_oledrion_products->getRecentProducts(new Oledrion_parameters([
                                                                                           'start'    => 0,
                                                                                           'limit'    => $count,
                                                                                           'category' => $product->getVar('product_cid'),
                                                                                           'sort'     => 'product_submitted DESC, product_title',
                                                                                           'order'    => '',
                                                                                           'excluded' => $product_id
-                                                                                      )));
+                                                                                      ]));
             foreach ($tblTmp as $item) {
                 $product_price     = $item->getVar('product_price');
                 $product_price_ttc = OledrionUtility::getTTC($item->getVar('product_price'), '');
@@ -485,7 +485,7 @@ switch ($op) {
                         $product_price_ttc = OledrionUtility::getTTC($root->getVar('attribute_default_value'), '');
                     }
                 }
-                $datas = array(
+                $datas = [
                     'last_categ_product_title'        => $item->getVar('product_title'),
                     'last_categ_product_url_rewrited' => $item->getLink(),
                     'last_categ_product_href_title'   => OledrionUtility::makeHrefTitle($item->getVar('product_title')),
@@ -509,7 +509,7 @@ switch ($op) {
                     'product_stock'                   => $item->getVar('product_stock'),
                     'product_price'                   => $product_price,
                     'product_price_ttc'               => $product_price_ttc
-                );
+                ];
                 $xoopsTpl->append('product_current_categ', $datas);
             }
             unset($tblTmp);
@@ -526,7 +526,7 @@ switch ($op) {
                 $tmpProduct = null;
                 $tmpProduct = $h_oledrion_products->get($productWith);
                 if (is_object($tmpProduct)) {
-                    $tmp                               = array();
+                    $tmp                               = [];
                     $tmp                               = $tmpProduct->toArray();
                     $tmp['product_price_ttc']          = OledrionUtility::getTTC($tmpProduct->getVar('product_price'), $tblVat[$tmpProduct->getVar('product_vat_id')]->getVar('vat_rate'));
                     $tmp['product_discount_price_ttc'] = OledrionUtility::getTTC($tmpProduct->getVar('product_discount_price'), $tblVat[$tmpProduct->getVar('product_vat_id')]->getVar('vat_rate'));

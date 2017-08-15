@@ -77,22 +77,22 @@ if (!$tpl->is_cached('db:oledrion_rss.tpl', $cat_cid)) {
     $tpl->assign('image_width', $width);
     $tpl->assign('image_height', $height);
 
-    $products = $h_oledrion_products->getRecentProducts(new Oledrion_parameters(array(
+    $products = $h_oledrion_products->getRecentProducts(new Oledrion_parameters([
                                                                                     'start'    => 0,
                                                                                     'limit'    => $limit,
                                                                                     'category' => $cat_cid
-                                                                                )));
+                                                                                ]));
     foreach ($products as $item) {
         $title       = htmlspecialchars($item->getVar('product_title'), ENT_QUOTES);
         $description = htmlspecialchars(strip_tags($item->getVar('product_summary')), ENT_QUOTES);
         $link        = $item->getLink();
-        $tpl->append('items', array(
+        $tpl->append('items', [
             'title'       => xoops_utf8_encode($title),
             'link'        => $link,
             'guid'        => $link,
             'pubdate'     => formatTimestamp($item->getVar('product_submitted'), 'rss'),
             'description' => xoops_utf8_encode($description)
-        ));
+        ]);
     }
 }
 $tpl->display('db:oledrion_rss.tpl', $cat_cid);

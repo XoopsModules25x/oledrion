@@ -28,7 +28,7 @@
  *
  */
 
-// defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
+// defined('XOOPS_ROOT_PATH') || exit('Restricted access.');
 
 use WideImage\WideImage;
 
@@ -147,14 +147,14 @@ class OledrionUtility extends XoopsObject
                     break;
                 }
             } else {
-                if ((int)$v > 0) { // handles things like x.x.x.0_RC2
+                if ((int)$v > 0) { // handles versions like x.x.x.0_RC2
                     $success = false;
                     break;
                 }
             }
         }
 
-        if (!$success) {
+        if (false === $success) {
             $module->setErrors(sprintf(_AM_OLEDRION_ERROR_BAD_XOOPS, $requiredVer, $currentVer));
         }
 
@@ -215,7 +215,7 @@ class OledrionUtility extends XoopsObject
     {
         global $xoopsModuleConfig, $xoopsModule;
         $repmodule = self::MODULE_NAME;
-        static $options = array();
+        static $options = [];
         if (is_array($options) && array_key_exists($option, $options) && $withCache) {
             return $options[$option];
         }
@@ -296,7 +296,7 @@ class OledrionUtility extends XoopsObject
         $supplemental = ''
     ) {
         $editor                   = false;
-        $editor_configs           = array();
+        $editor_configs           = [];
         $editor_configs['name']   = $name;
         $editor_configs['value']  = $value;
         $editor_configs['rows']   = 35;
@@ -340,13 +340,13 @@ class OledrionUtility extends XoopsObject
             case 'tinymce':
                 if (is_readable(XOOPS_ROOT_PATH . '/class/xoopseditor/tinyeditor/formtinyeditortextarea.php')) {
                     require_once XOOPS_ROOT_PATH . '/class/xoopseditor/tinyeditor/formtinyeditortextarea.php';
-                    $editor = new XoopsFormTinyeditorTextArea(array(
+                    $editor = new XoopsFormTinyeditorTextArea([
                                                                   'caption' => $caption,
                                                                   'name'    => $name,
                                                                   'value'   => $value,
                                                                   'width'   => '100%',
                                                                   'height'  => '400px'
-                                                              ));
+                                                              ]);
                 }
                 break;
 
@@ -400,7 +400,7 @@ class OledrionUtility extends XoopsObject
         } elseif (!empty($_SERVER['HTTP_COMING_FROM'])) {
             $proxy_ip = $_SERVER['HTTP_COMING_FROM'];
         }
-        $regs = array();
+        $regs = [];
         //if (!empty($proxy_ip) && $is_ip = ereg('^([0-9]{1,3}\.){3,3}[0-9]{1,3}', $proxy_ip, $regs) && count($regs) > 0) {
         if (!empty($proxy_ip) && filter_var($proxy_ip, FILTER_VALIDATE_IP) && count($regs) > 0) {
             $the_IP = $regs[0];
@@ -521,7 +521,7 @@ class OledrionUtility extends XoopsObject
     {
         global $xoopsModule;
         $folder  = $xoopsModule->getVar('dirname');
-        $tpllist = array();
+        $tpllist = [];
         require_once XOOPS_ROOT_PATH . '/class/xoopsblock.php';
         require_once XOOPS_ROOT_PATH . '/class/template.php';
         $tplfileHandler = xoops_getHandler('tplfile');
@@ -531,7 +531,7 @@ class OledrionUtility extends XoopsObject
         foreach ($tpllist as $onetemplate) { // Remove cache for each page.
             if ($onetemplate->getVar('tpl_type') === 'module') {
                 //  Note, I've been testing all the other methods (like the one of Smarty) and none of them run, that's why I have used this code
-                $files_del = array();
+                $files_del = [];
                 $files_del = glob(XOOPS_CACHE_PATH . '/*' . $onetemplate->getVar('tpl_file') . '*');
                 if (count($files_del) > 0 && is_array($files_del)) {
                     foreach ($files_del as $one_file) {
@@ -614,7 +614,7 @@ class OledrionUtility extends XoopsObject
      */
     public static function getUsersFromGroup($groupId)
     {
-        $users         = array();
+        $users         = [];
         $memberHandler = xoops_getHandler('member');
         $users         = $memberHandler->getUsersByGroup($groupId, true);
 
@@ -630,7 +630,7 @@ class OledrionUtility extends XoopsObject
      */
     public static function getEmailsFromGroup($groupId)
     {
-        $ret   = array();
+        $ret   = [];
         $users = self::getUsersFromGroup($groupId);
         foreach ($users as $user) {
             $ret[] = $user->getVar('email');
@@ -756,11 +756,11 @@ class OledrionUtility extends XoopsObject
     public static function &formMarkRequiredFields(&$sform)
     {
         if (self::needsAsterisk()) {
-            $required = array();
+            $required = [];
             foreach ($sform->getRequired() as $item) {
                 $required[] = $item->_name;
             }
-            $elements = array();
+            $elements = [];
             $elements = $sform->getElements();
             $cnt      = count($elements);
             for ($i = 0; $i < $cnt; ++$i) {
@@ -830,7 +830,7 @@ class OledrionUtility extends XoopsObject
      */
     public static function unhtml($chaine)
     {
-        $search = $replace = array();
+        $search = $replace = [];
         $chaine = html_entity_decode($chaine);
 
         for ($i = 0; $i <= 255; ++$i) {
@@ -1152,7 +1152,7 @@ class OledrionUtility extends XoopsObject
         $keywordscount = self::getModuleOption('metagen_maxwords');
         $keywordsorder = self::getModuleOption('metagen_order');
 
-        $tmp = array();
+        $tmp = [];
         // Search for the "Minimum keyword length"
         if (isset($_SESSION['oledrion_keywords_limit'])) {
             $limit = $_SESSION['oledrion_keywords_limit'];
@@ -1167,7 +1167,7 @@ class OledrionUtility extends XoopsObject
         $content         = $myts->undoHtmlSpecialChars($content);
         $content         = strip_tags($content);
         $content         = strtolower($content);
-        $search_pattern  = array(
+        $search_pattern  = [
             '&nbsp;',
             "\t",
             "\r\n",
@@ -1195,8 +1195,8 @@ class OledrionUtility extends XoopsObject
             '_',
             '\\',
             '*'
-        );
-        $replace_pattern = array(
+        ];
+        $replace_pattern = [
             ' ',
             ' ',
             ' ',
@@ -1224,7 +1224,7 @@ class OledrionUtility extends XoopsObject
             '',
             '',
             ''
-        );
+        ];
         $content         = str_replace($search_pattern, $replace_pattern, $content);
         $keywords        = explode(' ', $content);
         switch ($keywordsorder) {
@@ -1420,7 +1420,7 @@ class OledrionUtility extends XoopsObject
     public static function breadcrumb($path, $raquo = ' &raquo; ')
     {
         $breadcrumb        = '';
-        $workingBreadcrumb = array();
+        $workingBreadcrumb = [];
         if (is_array($path)) {
             $moduleName          = self::getModuleName();
             $workingBreadcrumb[] = "<a href='" . OLEDRION_URL . "' title='" . self::makeHrefTitle($moduleName) . "'>" . $moduleName . '</a>';
@@ -1451,7 +1451,7 @@ class OledrionUtility extends XoopsObject
 
             // match closed tags
             if (preg_match_all('/<\/([a-z]+)>/', $string, $end_tags)) {
-                $complete_tags = array();
+                $complete_tags = [];
                 $end_tags      = $end_tags[1];
 
                 foreach ($start_tags as $key => $val) {
@@ -1594,7 +1594,7 @@ class OledrionUtility extends XoopsObject
      */
     public static function getAmountWithVat($product_price, $vat_id)
     {
-        static $vats = array();
+        static $vats = [];
         $vat_rate = null;
         if (is_array($vats) && in_array($vat_id, $vats)) {
             $vat_rate = $vats[$vat_id];
@@ -1685,7 +1685,7 @@ class OledrionUtility extends XoopsObject
      */
     public static function getUsersFromIds($xoopsUsersIDs)
     {
-        $users = array();
+        $users = [];
         if (is_array($xoopsUsersIDs) && count($xoopsUsersIDs) > 0) {
             $xoopsUsersIDs = array_unique($xoopsUsersIDs);
             sort($xoopsUsersIDs);
@@ -1719,7 +1719,7 @@ class OledrionUtility extends XoopsObject
      */
     public static function getMemberGroups($uid = 0)
     {
-        static $buffer = array();
+        static $buffer = [];
         if ($uid == 0) {
             $uid = self::getCurrentUserID();
         }
@@ -1731,7 +1731,7 @@ class OledrionUtility extends XoopsObject
                 $memberHandler = xoops_getHandler('member');
                 $buffer[$uid]  = $memberHandler->getGroupsByUser($uid, false); // Renvoie un tableau d'ID (de groupes)
             } else {
-                $buffer[$uid] = array(XOOPS_GROUP_ANONYMOUS);
+                $buffer[$uid] = [XOOPS_GROUP_ANONYMOUS];
             }
         }
 
@@ -1747,7 +1747,7 @@ class OledrionUtility extends XoopsObject
      */
     public static function isMemberOfGroup($group = 0, $uid = 0)
     {
-        static $buffer = array();
+        static $buffer = [];
         $retval = false;
         if ($uid == 0) {
             $uid = self::getCurrentUserID();
@@ -1874,7 +1874,7 @@ class OledrionUtility extends XoopsObject
      */
     public static function htmlSelectOptions($array, $default = 0, $withNull = true)
     {
-        $ret      = array();
+        $ret      = [];
         $selected = '';
         if ($withNull) {
             if ($default === 0) {
@@ -2015,7 +2015,7 @@ class OledrionUtility extends XoopsObject
      *
      * @param  string $fieldname
      * @param  string $table
-     * @return array
+     * @return array|string
      */
     public static function getFieldDefinition($fieldname, $table)
     {
@@ -2024,7 +2024,6 @@ class OledrionUtility extends XoopsObject
         if ($result) {
             return $xoopsDB->fetchArray($result);
         }
-
         return '';
     }
 
@@ -2042,7 +2041,6 @@ class OledrionUtility extends XoopsObject
     {
         global $xoopsDB;
         $result = $xoopsDB->queryF("ALTER TABLE $table ADD $field;");
-
         return $result;
     }
 

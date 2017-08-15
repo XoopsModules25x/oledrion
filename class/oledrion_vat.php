@@ -47,7 +47,7 @@ class Oledrion_vat extends Oledrion_Object
      */
     public function toArray($format = 's')
     {
-        $ret                      = array();
+        $ret                      = [];
         $ret                      = parent::toArray($format);
         $oledrion_Currency        = Oledrion_Currency::getInstance();
         $ret['vat_rate_formated'] = $oledrion_Currency->amountInCurrency((float)$this->getVar('vat_rate', 'e'));
@@ -83,19 +83,19 @@ class OledrionOledrion_vatHandler extends Oledrion_XoopsPersistableObjectHandler
      */
     public function getAllVats(Oledrion_parameters $parameters)
     {
-        $parameters = $parameters->extend(new Oledrion_parameters(array(
+        $parameters = $parameters->extend(new Oledrion_parameters([
                                                                       'start'   => 0,
                                                                       'limit'   => 0,
                                                                       'sort'    => 'vat_id',
                                                                       'order'   => 'ASC',
                                                                       'idaskey' => true
-                                                                  )));
+                                                                  ]));
         $critere    = new Criteria('vat_id', 0, '<>');
         $critere->setLimit($parameters['limit']);
         $critere->setStart($parameters['start']);
         $critere->setSort($parameters['sort']);
         $critere->setOrder($parameters['order']);
-        $vats = array();
+        $vats = [];
         $vats = $this->getObjects($critere, $parameters['idaskey']);
 
         return $vats;
@@ -114,13 +114,13 @@ class OledrionOledrion_vatHandler extends Oledrion_XoopsPersistableObjectHandler
      */
     public function getCountryVats($country)
     {
-        $parameters = new Oledrion_parameters(array(
+        $parameters = new Oledrion_parameters([
                                                   'start'   => 0,
                                                   'limit'   => 0,
                                                   'sort'    => 'vat_id',
                                                   'order'   => 'ASC',
                                                   'idaskey' => true
-                                              ));
+                                              ]);
         $critere    = new CriteriaCompo();
         if (!empty($country)) {
             $critere->add(new Criteria('vat_country', $country, 'LIKE'));
@@ -129,7 +129,7 @@ class OledrionOledrion_vatHandler extends Oledrion_XoopsPersistableObjectHandler
         $critere->setStart($parameters['start']);
         $critere->setSort($parameters['sort']);
         $critere->setOrder($parameters['order']);
-        $vats = array();
+        $vats = [];
         $vats = $this->getObjects($critere, $parameters['idaskey']);
 
         return $vats;
@@ -141,7 +141,7 @@ class OledrionOledrion_vatHandler extends Oledrion_XoopsPersistableObjectHandler
      * @param  oledrion_vat $vat
      * @return boolean      Le résultat de la suppressin
      */
-    public function deleteVat(oledrion_vat $vat)
+    public function deleteVat(Oledrion_vat $vat)
     {
         return $this->delete($vat, true);
     }

@@ -79,7 +79,7 @@ class OledrionOledrion_productsmanuHandler extends Oledrion_XoopsPersistableObje
      */
     public function getFromProductsIds($ids)
     {
-        $ret = array();
+        $ret = [];
         if (is_array($ids)) {
             $criteria = new Criteria('pm_product_id', '(' . implode(',', $ids) . ')', 'IN');
             $ret      = $this->getObjects($criteria, true, true, '*', false);
@@ -98,7 +98,7 @@ class OledrionOledrion_productsmanuHandler extends Oledrion_XoopsPersistableObje
      */
     public function getProductsIdsFromManufacturer($pm_manu_id, $start = 0, $limit = 0)
     {
-        $ret      = array();
+        $ret      = [];
         $criteria = new Criteria('pm_manu_id', $pm_manu_id, '=');
         $criteria->setStart($start);
         $criteria->setLimit($limit);

@@ -28,7 +28,7 @@
  *
  */
 
-// defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
+// defined('XOOPS_ROOT_PATH') || exit('Restricted access.');
 
 use WideImage\WideImage;
 
@@ -44,7 +44,7 @@ class OledrionUtility
      *
      * @return OledrionUtility
      */
-    public function getInstance()
+    public static function getInstance()
     {
         static $instance;
         if (null === $instance) {
@@ -65,7 +65,7 @@ class OledrionUtility
     {
         global $xoopsModuleConfig, $xoopsModule;
         $repmodule = self::MODULE_NAME;
-        static $options = array();
+        static $options = [];
         if (is_array($options) && array_key_exists($option, $options) && $withCache) {
             return $options[$option];
         }
@@ -99,7 +99,7 @@ class OledrionUtility
      *
      * @return boolean
      */
-    public function isX23()
+    public static function isX23()
     {
         $x23 = false;
         $xv  = str_replace('XOOPS ', '', XOOPS_VERSION);
@@ -146,7 +146,7 @@ class OledrionUtility
         $supplemental = ''
     ) {
         $editor                   = false;
-        $editor_configs           = array();
+        $editor_configs           = [];
         $editor_configs['name']   = $name;
         $editor_configs['value']  = $value;
         $editor_configs['rows']   = 35;
@@ -190,13 +190,13 @@ class OledrionUtility
             case 'tinymce':
                 if (is_readable(XOOPS_ROOT_PATH . '/class/xoopseditor/tinyeditor/formtinyeditortextarea.php')) {
                     require_once XOOPS_ROOT_PATH . '/class/xoopseditor/tinyeditor/formtinyeditortextarea.php';
-                    $editor = new XoopsFormTinyeditorTextArea(array(
+                    $editor = new XoopsFormTinyeditorTextArea([
                                                                   'caption' => $caption,
                                                                   'name'    => $name,
                                                                   'value'   => $value,
                                                                   'width'   => '100%',
                                                                   'height'  => '400px'
-                                                              ));
+                                                              ]);
                 }
                 break;
 
@@ -250,7 +250,7 @@ class OledrionUtility
         } elseif (!empty($_SERVER['HTTP_COMING_FROM'])) {
             $proxy_ip = $_SERVER['HTTP_COMING_FROM'];
         }
-        $regs = array();
+        $regs = [];
         //if (!empty($proxy_ip) && $is_ip = ereg('^([0-9]{1,3}\.){3,3}[0-9]{1,3}', $proxy_ip, $regs) && count($regs) > 0) {
         if (!empty($proxy_ip) && filter_var($proxy_ip, FILTER_VALIDATE_IP) && count($regs) > 0) {
             $the_IP = $regs[0];
@@ -371,7 +371,7 @@ class OledrionUtility
     {
         global $xoopsModule;
         $folder  = $xoopsModule->getVar('dirname');
-        $tpllist = array();
+        $tpllist = [];
         require_once XOOPS_ROOT_PATH . '/class/xoopsblock.php';
         require_once XOOPS_ROOT_PATH . '/class/template.php';
         $tplfileHandler = xoops_getHandler('tplfile');
@@ -381,7 +381,7 @@ class OledrionUtility
         foreach ($tpllist as $onetemplate) { // Remove cache for each page.
             if ($onetemplate->getVar('tpl_type') === 'module') {
                 //  Note, I've been testing all the other methods (like the one of Smarty) and none of them run, that's why I have used this code
-                $files_del = array();
+                $files_del = [];
                 $files_del = glob(XOOPS_CACHE_PATH . '/*' . $onetemplate->getVar('tpl_file') . '*');
                 if (count($files_del) > 0 && is_array($files_del)) {
                     foreach ($files_del as $one_file) {
@@ -411,7 +411,7 @@ class OledrionUtility
      *
      * @return \XoopsModule The module
      */
-    protected function _getModule()
+    protected static function _getModule()
     {
         static $mymodule;
         if (!isset($mymodule)) {
@@ -462,9 +462,9 @@ class OledrionUtility
      * @param  int $groupId Searched group
      * @return array Array of XoopsUsers
      */
-    public function getUsersFromGroup($groupId)
+    public static function getUsersFromGroup($groupId)
     {
-        $users         = array();
+        $users         = [];
         $memberHandler = xoops_getHandler('member');
         $users         = $memberHandler->getUsersByGroup($groupId, true);
 
@@ -480,7 +480,7 @@ class OledrionUtility
      */
     public static function getEmailsFromGroup($groupId)
     {
-        $ret   = array();
+        $ret   = [];
         $users = self::getUsersFromGroup($groupId);
         foreach ($users as $user) {
             $ret[] = $user->getVar('email');
@@ -521,7 +521,7 @@ class OledrionUtility
     /**
      * @return bool|string
      */
-    public function getCurrentSQLDateTime()
+    public static function getCurrentSQLDateTime()
     {
         return date('Y-m-d H:i:s'); // 2007-05-02
     }
@@ -533,7 +533,7 @@ class OledrionUtility
      * @param  string $format
      * @return string The date in a human form
      */
-    public function SQLDateToHuman($date, $format = 'l')
+    public static function SQLDateToHuman($date, $format = 'l')
     {
         if ($date != '0000-00-00' && xoops_trim($date) !== '') {
             return formatTimestamp(strtotime($date), $format);
@@ -548,7 +548,7 @@ class OledrionUtility
      * @param  integer $timestamp The timestamp to use
      * @return string  The date in the Mysql format
      */
-    public function timestampToMysqlDate($timestamp)
+    public static function timestampToMysqlDate($timestamp)
     {
         return date('Y-m-d', (int)$timestamp);
     }
@@ -558,7 +558,7 @@ class OledrionUtility
      * @param $dateTime
      * @return bool|string
      */
-    public function sqlDateTimeToFrench($dateTime)
+    public static function sqlDateTimeToFrench($dateTime)
     {
         return date('d/m/Y H:i:s', strtotime($dateTime));
     }
@@ -568,7 +568,7 @@ class OledrionUtility
      * @param  integer $timestamp The timestamp to use
      * @return string  The date and time in the Mysql format
      */
-    public function timestampToMysqlDateTime($timestamp)
+    public static function timestampToMysqlDateTime($timestamp)
     {
         return date('Y-m-d H:i:s', $timestamp);
     }
@@ -578,7 +578,7 @@ class OledrionUtility
      *
      * @return boolean Yes = we need to add them, false = no
      */
-    public function needsAsterisk()
+    public static function needsAsterisk()
     {
         if (self::isX23()) {
             return false;
@@ -606,11 +606,11 @@ class OledrionUtility
     public static function &formMarkRequiredFields(&$sform)
     {
         if (self::needsAsterisk()) {
-            $required = array();
+            $required = [];
             foreach ($sform->getRequired() as $item) {
                 $required[] = $item->_name;
             }
-            $elements = array();
+            $elements = [];
             $elements = $sform->getElements();
             $cnt      = count($elements);
             for ($i = 0; $i < $cnt; ++$i) {
@@ -643,7 +643,7 @@ class OledrionUtility
      * @param  boolean $trimName Do we need to create a "short" unique name ?
      * @return string  The unique filename to use (with its extension)
      */
-    public function createUploadName($folder, $fileName, $trimName = false)
+    public static function createUploadName($folder, $fileName, $trimName = false)
     {
         $workingfolder = $folder;
         if (xoops_substr($workingfolder, strlen($workingfolder) - 1, 1) !== '/') {
@@ -678,9 +678,9 @@ class OledrionUtility
      * @param  string $chaine The string undecode
      * @return string The undecoded string
      */
-    public function unhtml($chaine)
+    public static function unhtml($chaine)
     {
-        $search = $replace = array();
+        $search = $replace = [];
         $chaine = html_entity_decode($chaine);
 
         for ($i = 0; $i <= 255; ++$i) {
@@ -1002,7 +1002,7 @@ class OledrionUtility
         $keywordscount = self::getModuleOption('metagen_maxwords');
         $keywordsorder = self::getModuleOption('metagen_order');
 
-        $tmp = array();
+        $tmp = [];
         // Search for the "Minimum keyword length"
         if (isset($_SESSION['oledrion_keywords_limit'])) {
             $limit = $_SESSION['oledrion_keywords_limit'];
@@ -1017,7 +1017,7 @@ class OledrionUtility
         $content         = $myts->undoHtmlSpecialChars($content);
         $content         = strip_tags($content);
         $content         = strtolower($content);
-        $search_pattern  = array(
+        $search_pattern  = [
             '&nbsp;',
             "\t",
             "\r\n",
@@ -1045,8 +1045,8 @@ class OledrionUtility
             '_',
             '\\',
             '*'
-        );
-        $replace_pattern = array(
+        ];
+        $replace_pattern = [
             ' ',
             ' ',
             ' ',
@@ -1074,7 +1074,7 @@ class OledrionUtility
             '',
             '',
             ''
-        );
+        ];
         $content         = str_replace($search_pattern, $replace_pattern, $content);
         $keywords        = explode(' ', $content);
         switch ($keywordsorder) {
@@ -1191,7 +1191,7 @@ class OledrionUtility
      * @param  string  $fit           Resize mode (see the wideImage library for more information)
      * @return bool
      */
-    public function resizePicture(
+    public static function resizePicture(
         $src_path,
         $dst_path,
         $param_width,
@@ -1235,7 +1235,7 @@ class OledrionUtility
      * @param unknown_type $event    L'évènement qui est déclencé
      * @param unknown_type $tags     Les variables à passer au template
      */
-    public function notify($category, $itemId, $event, $tags)
+    public static function notify($category, $itemId, $event, $tags)
     {
         $notificationHandler  = xoops_getHandler('notification');
         $tags['X_MODULE_URL'] = OLEDRION_URL;
@@ -1250,7 +1250,7 @@ class OledrionUtility
      * @return bool|string
      * @internal param int $durations Durée en jours
      */
-    public function addDaysToDate($duration = 1, $startingDate = 0)
+    public static function addDaysToDate($duration = 1, $startingDate = 0)
     {
         if ($startingDate == 0) {
             $startingDate = time();
@@ -1270,7 +1270,7 @@ class OledrionUtility
     public static function breadcrumb($path, $raquo = ' &raquo; ')
     {
         $breadcrumb        = '';
-        $workingBreadcrumb = array();
+        $workingBreadcrumb = [];
         if (is_array($path)) {
             $moduleName          = self::getModuleName();
             $workingBreadcrumb[] = "<a href='" . OLEDRION_URL . "' title='" . self::makeHrefTitle($moduleName) . "'>" . $moduleName . '</a>';
@@ -1293,7 +1293,7 @@ class OledrionUtility
      * @param $string
      * @return string
      */
-    public function close_tags($string)
+    public static function close_tags($string)
     {
         // match opened tags
         if (preg_match_all('/<([a-z\:\-]+)[^\/]>/', $string, $start_tags)) {
@@ -1301,7 +1301,7 @@ class OledrionUtility
 
             // match closed tags
             if (preg_match_all('/<\/([a-z]+)>/', $string, $end_tags)) {
-                $complete_tags = array();
+                $complete_tags = [];
                 $end_tags      = $end_tags[1];
 
                 foreach ($start_tags as $key => $val) {
@@ -1430,7 +1430,7 @@ class OledrionUtility
      * @param $vat
      * @return float
      */
-    public function getVAT($ht, $vat)
+    public static function getVAT($ht, $vat)
     {
         return (float)(($ht * $vat) / 100);
     }
@@ -1444,7 +1444,7 @@ class OledrionUtility
      */
     public static function getAmountWithVat($product_price, $vat_id)
     {
-        static $vats = array();
+        static $vats = [];
         $vat_rate = null;
         if (is_array($vats) && in_array($vat_id, $vats)) {
             $vat_rate = $vats[$vat_id];
@@ -1470,7 +1470,7 @@ class OledrionUtility
      * @param $url
      * @return string
      */
-    public function postIt($datastream, $url)
+    public static function postIt($datastream, $url)
     {
         $url     = preg_replace('@^http://@i', '', $url);
         $host    = substr($url, 0, strpos($url, '/'));
@@ -1516,7 +1516,7 @@ class OledrionUtility
      *
      * @return CriteriaCompo
      */
-    public function getThisMonthCriteria()
+    public static function getThisMonthCriteria()
     {
         $start             = mktime(0, 1, 0, date('n'), date('j'), date('Y'));
         $end               = mktime(0, 0, 0, date('n'), date('t'), date('Y'));
@@ -1535,7 +1535,7 @@ class OledrionUtility
      */
     public static function getUsersFromIds($xoopsUsersIDs)
     {
-        $users = array();
+        $users = [];
         if (is_array($xoopsUsersIDs) && count($xoopsUsersIDs) > 0) {
             $xoopsUsersIDs = array_unique($xoopsUsersIDs);
             sort($xoopsUsersIDs);
@@ -1567,9 +1567,9 @@ class OledrionUtility
      * @param  int $uid
      * @return array Les ID des groupes auquel l'utilisateur courant appartient
      */
-    public function getMemberGroups($uid = 0)
+    public static function getMemberGroups($uid = 0)
     {
-        static $buffer = array();
+        static $buffer = [];
         if ($uid == 0) {
             $uid = self::getCurrentUserID();
         }
@@ -1581,7 +1581,7 @@ class OledrionUtility
                 $memberHandler = xoops_getHandler('member');
                 $buffer[$uid]  = $memberHandler->getGroupsByUser($uid, false); // Renvoie un tableau d'ID (de groupes)
             } else {
-                $buffer[$uid] = array(XOOPS_GROUP_ANONYMOUS);
+                $buffer[$uid] = [XOOPS_GROUP_ANONYMOUS];
             }
         }
 
@@ -1597,7 +1597,7 @@ class OledrionUtility
      */
     public static function isMemberOfGroup($group = 0, $uid = 0)
     {
-        static $buffer = array();
+        static $buffer = [];
         $retval = false;
         if ($uid == 0) {
             $uid = self::getCurrentUserID();
@@ -1637,7 +1637,7 @@ class OledrionUtility
      * @return mixed  If the copy succeed, the new filename else false
      * @since 2.1
      */
-    public function duplicateFile($path, $filename)
+    public static function duplicateFile($path, $filename)
     {
         $newName = self::createUploadName($path, $filename);
         if (copy($path . '/' . $filename, $path . '/' . $newName)) {
@@ -1722,9 +1722,9 @@ class OledrionUtility
      * @return string
      * @since 2.3.2009.03.13
      */
-    public function htmlSelectOptions($array, $default = 0, $withNull = true)
+    public static function htmlSelectOptions($array, $default = 0, $withNull = true)
     {
-        $ret      = array();
+        $ret      = [];
         $selected = '';
         if ($withNull) {
             if ($default === 0) {
@@ -1772,7 +1772,7 @@ class OledrionUtility
      * @param  string $separator Le séparateur
      * @return string
      */
-    public function getId($string, $separator = '_')
+    public static function getId($string, $separator = '_')
     {
         $pos = strrpos($string, $separator);
         if ($pos === false) {
@@ -1790,7 +1790,7 @@ class OledrionUtility
      * @param  string $separator Le séparateur
      * @return string
      */
-    public function getName($string, $separator = '_')
+    public static function getName($string, $separator = '_')
     {
         $pos = strrpos($string, $separator);
         if ($pos === false) {
@@ -1820,7 +1820,7 @@ class OledrionUtility
      * @param  mixed  $defaultValue Default value to return if the parameter is not set in the request
      * @return mixed
      */
-    public function getFromRequest($valueName, $defaultValue = '')
+    public static function getFromRequest($valueName, $defaultValue = '')
     {
         return isset($_REQUEST[$valueName]) ? $_REQUEST[$valueName] : $defaultValue;
     }
@@ -1867,7 +1867,7 @@ class OledrionUtility
      * @param  string $table
      * @return array
      */
-    public function getFieldDefinition($fieldname, $table)
+    public static function getFieldDefinition($fieldname, $table)
     {
         global $xoopsDB;
         $result = $xoopsDB->queryF("SHOW COLUMNS FROM $table LIKE '$fieldname'");
@@ -1900,7 +1900,7 @@ class OledrionUtility
      * @param $info
      * @return string
      */
-    public function packingHtmlSelect($info)
+    public static function packingHtmlSelect($info)
     {
         $ret = '';
         $ret .= '<div class="oledrion_htmlform">';
@@ -1921,7 +1921,7 @@ class OledrionUtility
      * @param $info
      * @return string
      */
-    public function deliveryHtmlSelect($info)
+    public static function deliveryHtmlSelect($info)
     {
         $ret = '';
         $ret .= '<div class="oledrion_htmlform">';
@@ -1943,7 +1943,7 @@ class OledrionUtility
      * @param $info
      * @return string
      */
-    public function paymentHtmlSelect($info)
+    public static function paymentHtmlSelect($info)
     {
         $ret = '';
         $ret .= '<div class="oledrion_htmlform">';
@@ -1958,7 +1958,7 @@ class OledrionUtility
     /**
      * @return array
      */
-    public function getCountriesList()
+    public static function getCountriesList()
     {
         require_once XOOPS_ROOT_PATH . '/class/xoopslists.php';
 

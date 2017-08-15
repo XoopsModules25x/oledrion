@@ -20,7 +20,7 @@
 function oledrion_tag_iteminfo(&$items)
 {
     include XOOPS_ROOT_PATH . '/modules/oledrion/include/common.php';
-    $items_id = array();
+    $items_id = [];
     foreach (array_keys($items) as $cat_id) {
         foreach (array_keys($items[$cat_id]) as $item_id) {
             $items_id[] = (int)$item_id;
@@ -31,14 +31,14 @@ function oledrion_tag_iteminfo(&$items)
     foreach (array_keys($items) as $cat_id) {
         foreach (array_keys($items[$cat_id]) as $item_id) {
             $item_obj                 = $items_obj[$item_id];
-            $items[$cat_id][$item_id] = array(
+            $items[$cat_id][$item_id] = [
                 'title'   => $item_obj->getVar('product_title'),
                 'uid'     => $item_obj->getVar('product_submitter'),
                 'link'    => $item_obj->getLink(0, '', true),
                 'time'    => $item_obj->getVar('product_submitted'),
                 'tags'    => '', // optional
                 'content' => ''
-            );
+            ];
         }
     }
     unset($items_obj);

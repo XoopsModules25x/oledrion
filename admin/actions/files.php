@@ -41,7 +41,7 @@ switch ($action) {
         if ($itemsCount > $limit) {
             $pagenav = new XoopsPageNav($itemsCount, $limit, $start, 'start', 'op=files');
         }
-        $items = $products = $productsIds = array();
+        $items = $products = $productsIds = [];
         $items = $h_oledrion_files->getItems($start, $limit);
         foreach ($items as $item) {
             $productsIds[] = $item->getVar('file_product_id');
@@ -58,7 +58,7 @@ switch ($action) {
         foreach ($items as $item) {
             $class     = ($class === 'even') ? 'odd' : 'even';
             $id        = $item->getVar('file_id');
-            $actions   = array();
+            $actions   = [];
             $actions[] = "<a href='$baseurl?op=files&action=edit&id=" . $id . "' title='" . _OLEDRION_EDIT . "'>" . $icones['edit'] . '</a>';
             $actions[] = "<a href='$baseurl?op=files&action=delete&id=" . $id . "' title='" . _OLEDRION_DELETE . "'" . $conf_msg . '>' . $icones['delete'] . '</a>';
             echo "<tr class='" . $class . "'>\n";
@@ -103,7 +103,7 @@ switch ($action) {
             $label_submit = _AM_OLEDRION_ADD;
             $edit         = false;
         }
-        $products = array();
+        $products = [];
         $products = $h_oledrion_products->getList();
         $sform    = new XoopsThemeForm($title, 'frmaddfile', $baseurl);
         $sform->setExtra('enctype="multipart/form-data"');
@@ -115,7 +115,7 @@ switch ($action) {
                 $file_product_id_select->addOptionArray($products);
                 $sform->addElement($file_product_id_select, true);
         */
-        $productsSelect = $h_oledrion_products->productSelector(new Oledrion_parameters(array(
+        $productsSelect = $h_oledrion_products->productSelector(new Oledrion_parameters([
                                                                                             'caption'  => _OLEDRION_PRODUCT,
                                                                                             'name'     => 'file_product_id',
                                                                                             'value'    => $item->getVar('file_product_id', 'e'),
@@ -126,7 +126,7 @@ switch ($action) {
                                                                                             'sort'     => 'product_title',
                                                                                             'order'    => 'ASC',
                                                                                             'formName' => 'frmaddfile'
-                                                                                        )));
+                                                                                        ]));
         $sform->addElement($productsSelect, true);
 
         $sform->addElement(new XoopsFormText(_AM_OLEDRION_DESCRIPTION, 'file_description', 50, 255, $item->getVar('file_description', 'e')), true);

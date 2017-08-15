@@ -50,7 +50,7 @@ $xoopsTpl->assign('columnsCount', OledrionUtility::getModuleOption('catagory_col
 $xoopsTpl->assign('list', $list->toArray());
 
 // TVA
-$vatArray = array();
+$vatArray = [];
 $vatArray = $h_oledrion_vat->getAllVats(new Oledrion_parameters());
 
 // Recherche des produits de la liste
@@ -66,7 +66,7 @@ $handlers->h_oledrion_lists->incrementListViews($list);
 
 // Recherce des autres listes de cet utilisateur
 if ($handlers->h_oledrion_lists->getRecentListsCount(OLEDRION_LISTS_ALL_PUBLIC, OledrionUtility::getCurrentUserID()) > 1) {
-    $otherUserLists = $handlers->h_oledrion_lists->getRecentLists(new Oledrion_parameters(array(
+    $otherUserLists = $handlers->h_oledrion_lists->getRecentLists(new Oledrion_parameters([
                                                                                               'start'    => 0,
                                                                                               'limit'    => 0,
                                                                                               'sort'     => 'list_date',
@@ -74,7 +74,7 @@ if ($handlers->h_oledrion_lists->getRecentListsCount(OLEDRION_LISTS_ALL_PUBLIC, 
                                                                                               'idAsKey'  => true,
                                                                                               'listType' => OLEDRION_LISTS_ALL_PUBLIC,
                                                                                               'list_uid' => OledrionUtility::getCurrentUserID()
-                                                                                          )));
+                                                                                          ]));
     if (count($otherUserLists) > 0) {
         foreach ($otherUserLists as $oneOtherList) {
             $xoopsTpl->append('otherUserLists', $oneOtherList->toArray());
@@ -86,10 +86,10 @@ OledrionUtility::setCSS();
 OledrionUtility::setLocalCSS($xoopsConfig['language']);
 OledrionUtility::loadLanguageFile('modinfo.php');
 
-$breadcrumb = array(
+$breadcrumb = [
     OLEDRION_URL . 'all-lists.php'    => _MI_OLEDRION_SMNAME11,
     OLEDRION_URL . basename(__FILE__) => $list->getVar('list_title')
-);
+];
 $xoopsTpl->assign('breadcrumb', OledrionUtility::breadcrumb($breadcrumb));
 
 $title = $list->getVar('list_title') . ' - ' . OledrionUtility::getModuleName();

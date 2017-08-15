@@ -175,7 +175,7 @@ class Oledrion_manufacturer extends Oledrion_Object
      */
     public function toArray($format = 's')
     {
-        $ret = array();
+        $ret = [];
         $ret = parent::toArray($format);
         for ($i = 1; $i <= 5; ++$i) {
             $ret['manu_photo' . $i . '_url'] = $this->getPictureUrl($i);
@@ -210,7 +210,7 @@ class OledrionOledrion_manufacturerHandler extends Oledrion_XoopsPersistableObje
     public function getAlphabet()
     {
         global $myts;
-        $ret    = array();
+        $ret    = [];
         $sql    = 'SELECT DISTINCT (UPPER(SUBSTRING(manu_name, 1, 1))) AS oneletter FROM ' . $this->table;
         $result = $this->db->query($sql);
         if (!$result) {
@@ -229,7 +229,7 @@ class OledrionOledrion_manufacturerHandler extends Oledrion_XoopsPersistableObje
      * @param  oledrion_manufacturer $manufacturer
      * @return boolean               Le résultat de la suppression
      */
-    public function deleteManufacturer(oledrion_manufacturer $manufacturer)
+    public function deleteManufacturer(Oledrion_manufacturer $manufacturer)
     {
         $manufacturer->deletePictures();
 
@@ -257,7 +257,7 @@ class OledrionOledrion_manufacturerHandler extends Oledrion_XoopsPersistableObje
      */
     public function getManufacturersFromIds($ids)
     {
-        $ret = array();
+        $ret = [];
         if (is_array($ids) && count($ids) > 0) {
             $criteria = new Criteria('manu_id', '(' . implode(',', $ids) . ')', 'IN');
             $ret      = $this->getObjects($criteria, true, true, '*', false);
@@ -276,7 +276,7 @@ class OledrionOledrion_manufacturerHandler extends Oledrion_XoopsPersistableObje
      */
     public function getManufacturerProducts($manu_id, $start = 0, $limit = 0)
     {
-        $ret = $productsIds = array();
+        $ret = $productsIds = [];
         global $h_oledrion_productsmanu, $h_oledrion_products;
         // On commence par récupérer les ID des produits
         $productsIds = $h_oledrion_productsmanu->getProductsIdsFromManufacturer($manu_id, $start, $limit);

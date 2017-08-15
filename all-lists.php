@@ -39,15 +39,15 @@ if ($limit > 0) {
         $pagenav = new XoopsPageNav($itemsCount, $limit, $start, 'start');
         $xoopsTpl->assign('pagenav', $pagenav->renderNav());
     }
-    $items = array();
-    $items = $handlers->h_oledrion_lists->getRecentLists(new Oledrion_parameters(array(
+    $items = [];
+    $items = $handlers->h_oledrion_lists->getRecentLists(new Oledrion_parameters([
                                                                                      'start'    => $start,
                                                                                      'limit'    => $limit,
                                                                                      'sort'     => 'list_date',
                                                                                      'order'    => 'DESC',
                                                                                      'idAsKey'  => true,
                                                                                      'listType' => OLEDRION_LISTS_ALL_PUBLIC
-                                                                                 )));
+                                                                                 ]));
     if (count($items) > 0) {
         foreach ($items as $item) {
             $xoopsTpl->append('lists', $item->toArray());
@@ -59,7 +59,7 @@ OledrionUtility::setCSS();
 OledrionUtility::setLocalCSS($xoopsConfig['language']);
 OledrionUtility::loadLanguageFile('modinfo.php');
 
-$xoopsTpl->assign('breadcrumb', OledrionUtility::breadcrumb(array(OLEDRION_URL . basename(__FILE__) => _MI_OLEDRION_SMNAME11)));
+$xoopsTpl->assign('breadcrumb', OledrionUtility::breadcrumb([OLEDRION_URL . basename(__FILE__) => _MI_OLEDRION_SMNAME11]));
 
 $title = _MI_OLEDRION_SMNAME11 . ' - ' . OledrionUtility::getModuleName();
 OledrionUtility::setMetas($title, $title);

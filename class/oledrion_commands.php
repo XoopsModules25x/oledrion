@@ -92,10 +92,10 @@ class Oledrion_commands extends Oledrion_Object
      */
     public function toArray($format = 's')
     {
-        $ret = array();
+        $ret = [];
         $ret = parent::toArray($format);
         require_once XOOPS_ROOT_PATH . '/class/xoopslists.php';
-        $countries                           = array();
+        $countries                           = [];
         $countries                           = XoopsLists::getCountryList();
         $oledrion_Currency                   = Oledrion_Currency::getInstance();
         $ret['cmd_total_fordisplay']         = $oledrion_Currency->amountForDisplay($this->getVar('cmd_total')); // Montant TTC de la commande
@@ -184,7 +184,7 @@ class OledrionOledrion_commandsHandler extends Oledrion_XoopsPersistableObjectHa
         $orderId = $order->getVar('cmd_id');
         // Recherche de tous les produits du caddy
         $caddy  = $h_oledrion_caddy->getCaddyFromCommand($orderId);
-        $tblTmp = $tblProducts = array();
+        $tblTmp = $tblProducts = [];
         foreach ($caddy as $item) {
             $tblTmp[] = $item->getVar('caddy_product_id');
         }
@@ -213,9 +213,9 @@ class OledrionOledrion_commandsHandler extends Oledrion_XoopsPersistableObjectHa
     public function getOrderUrls(Oledrion_commands $order)
     {
         global $h_oledrion_caddy, $h_oledrion_products;
-        $retval = array();
+        $retval = [];
         // Recherche des produits du caddy associés à cette commande
-        $carts = $productsList = $products = array();
+        $carts = $productsList = $products = [];
         $carts = $h_oledrion_caddy->getObjects(new Criteria('caddy_cmd_id', $order->getVar('cmd_id'), '='));
         foreach ($carts as $item) {
             $productsList[] = $item->getVar('caddy_product_id');
@@ -247,8 +247,8 @@ class OledrionOledrion_commandsHandler extends Oledrion_XoopsPersistableObjectHa
     public function notifyOrderValidated(Oledrion_commands $order, $comment = '')
     {
         global $xoopsConfig;
-        $msg                       = array();
-        $Urls                      = array();
+        $msg                       = [];
+        $Urls                      = [];
         $Urls                      = $this->getOrderUrls($order); // On récupère les URL des fichiers à télécharger
         $msg['ADDITIONAL_CONTENT'] = '';
         $msg['NUM_COMMANDE']       = $order->getVar('cmd_id');
@@ -340,7 +340,7 @@ class OledrionOledrion_commandsHandler extends Oledrion_XoopsPersistableObjectHa
      */
     public function notifyOrderFraudulent(Oledrion_commands $order, $comment = '')
     {
-        $msg                 = array();
+        $msg                 = [];
         $msg['NUM_COMMANDE'] = $order->getVar('cmd_id');
         $msg['COMMENT']      = $comment;
         OledrionUtility::sendEmailFromTpl('command_shop_fraud.tpl', OledrionUtility::getEmailsFromGroup(OledrionUtility::getModuleOption('grp_sold')), _OLEDRION_GATEWAY_FRAUD, $msg);
@@ -368,7 +368,7 @@ class OledrionOledrion_commandsHandler extends Oledrion_XoopsPersistableObjectHa
      */
     public function notifyOrderPending(Oledrion_commands $order, $comment = '')
     {
-        $msg                 = array();
+        $msg                 = [];
         $msg['NUM_COMMANDE'] = $order->getVar('cmd_id');
         $msg['COMMENT']      = $comment;
         OledrionUtility::sendEmailFromTpl('command_shop_pending.tpl', OledrionUtility::getEmailsFromGroup(OledrionUtility::getModuleOption('grp_sold')), _OLEDRION_GATEWAY_PENDING, $msg);
@@ -396,7 +396,7 @@ class OledrionOledrion_commandsHandler extends Oledrion_XoopsPersistableObjectHa
      */
     public function notifyOrderFailed(Oledrion_commands $order, $comment = '')
     {
-        $msg                 = array();
+        $msg                 = [];
         $msg['NUM_COMMANDE'] = $order->getVar('cmd_id');
         $msg['COMMENT']      = $comment;
         OledrionUtility::sendEmailFromTpl('command_shop_failed.tpl', OledrionUtility::getEmailsFromGroup(OledrionUtility::getModuleOption('grp_sold')), _OLEDRION_GATEWAY_FAILED, $msg);
@@ -424,7 +424,7 @@ class OledrionOledrion_commandsHandler extends Oledrion_XoopsPersistableObjectHa
      */
     public function notifyOrderCanceled(Oledrion_commands $order, $comment = '')
     {
-        $msg                 = array();
+        $msg                 = [];
         $msg['NUM_COMMANDE'] = $order->getVar('cmd_id');
         $msg['COMMENT']      = $comment;
         OledrionUtility::sendEmailFromTpl('command_shop_cancel.tpl', OledrionUtility::getEmailsFromGroup(OledrionUtility::getModuleOption('grp_sold')), _OLEDRION_ORDER_CANCELED, $msg);
@@ -455,7 +455,7 @@ class OledrionOledrion_commandsHandler extends Oledrion_XoopsPersistableObjectHa
     {
         $critere = new Criteria('cmd_cancel', $cmd_cancel, '=');
         if ($this->getCount($critere) > 0) {
-            $tblCmd = array();
+            $tblCmd = [];
             $tblCmd = $this->getObjects($critere);
             if (count($tblCmd) > 0) {
                 return $tblCmd[0];
@@ -474,7 +474,7 @@ class OledrionOledrion_commandsHandler extends Oledrion_XoopsPersistableObjectHa
     public function getLastUserOrder($uid)
     {
         $order    = null;
-        $orders   = array();
+        $orders   = [];
         $criteria = new CriteriaCompo();
         $criteria->add(new Criteria('cmd_uid', $uid));
         $criteria->add(new Criteria('cmd_status', 2));

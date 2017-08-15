@@ -33,7 +33,7 @@ function b_sitemap_oledrion()
     $mytree  = new XoopsTree($table, $id_name, $pid_name);
     $xoopsDB = XoopsDatabaseFactory::getDatabaseConnection();
 
-    $sitemap = array();
+    $sitemap = [];
     $myts    = MyTextSanitizer::getInstance();
 
     $i   = 0;

@@ -20,7 +20,7 @@
 /**
  * Every export script must extend this class
  */
-// defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
+// defined('XOOPS_ROOT_PATH') || exit('Restricted access.');
 
 abstract class Oledrion_export
 {

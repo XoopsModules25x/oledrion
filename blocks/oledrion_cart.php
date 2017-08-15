@@ -29,12 +29,12 @@ function b_oledrion_cart_show($options)
     include XOOPS_ROOT_PATH . '/modules/oledrion/include/common.php';
     $productsCount = (int)$options[0];
 
-    $cartForTemplate      = $block = array();
+    $cartForTemplate      = $block = [];
     $emptyCart            = false;
     $shippingAmount       = $commandAmount = $vatAmount = $discountsCount = 0;
     $goOn                 = '';
     $commandAmountTTC     = 0;
-    $discountsDescription = array();
+    $discountsDescription = [];
     // Calcul du montant total du caddy
     $reductions = new oledrion_reductions();
     $reductions->computeCart($cartForTemplate, $emptyCart, $shippingAmount, $commandAmount, $vatAmount, $goOn, $commandAmountTTC, $discountsDescription, $discountsCount);

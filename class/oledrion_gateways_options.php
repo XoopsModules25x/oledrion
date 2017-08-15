@@ -110,7 +110,7 @@ class OledrionOledrion_gateways_optionsHandler extends Oledrion_XoopsPersistable
      */
     public function getGatewayOptionValue($option_gateway, $option_name, $format = 'N', $unserialize = false)
     {
-        $ret      = array();
+        $ret      = [];
         $criteria = new CriteriaCompo();
         $criteria->add(new Criteria('option_gateway', $option_gateway, '='));
         $criteria->add(new Criteria('option_name', $option_name, '='));
@@ -137,7 +137,7 @@ class OledrionOledrion_gateways_optionsHandler extends Oledrion_XoopsPersistable
      */
     public function setGatewayOptionValue($option_gateway, $option_name, $option_value, $serialize = false)
     {
-        $ret      = array();
+        $ret      = [];
         $criteria = new CriteriaCompo();
         $criteria->add(new Criteria('option_gateway', $option_gateway, '='));
         $criteria->add(new Criteria('option_name', $option_name, '='));

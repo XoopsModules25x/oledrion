@@ -137,7 +137,7 @@ class OledrionOledrion_filesHandler extends Oledrion_XoopsPersistableObjectHandl
      * @param  oledrion_files $file
      * @return boolean        Le résultat de la suppression
      */
-    public function deleteAttachedFile(oledrion_files $file)
+    public function deleteAttachedFile(Oledrion_files $file)
     {
         if ($file->fileExists()) {
             $file->deleteAttachedFile();
@@ -199,7 +199,7 @@ class OledrionOledrion_filesHandler extends Oledrion_XoopsPersistableObjectHandl
      */
     public function deleteProductFiles($file_product_id)
     {
-        $files    = array();
+        $files    = [];
         $criteria = new Criteria('file_product_id', $file_product_id, '=');
         $files    = $this->getObjects($criteria);
         if (count($files) > 0) {

@@ -31,16 +31,16 @@ switch ($action) {
         $adminObject->displayNavigation('index.php?op=payment');
 
         $start   = isset($_GET['start']) ? (int)$_GET['start'] : 0;
-        $payment = array();
+        $payment = [];
         $form    = "<form method='post' action='$baseurl' name='frmaddpayment' id='frmaddpayment'><input type='hidden' name='op' id='op' value='payment'><input type='hidden' name='action' id='action' value='add'><input type='submit' name='btngo' id='btngo' value='"
                    . _AM_OLEDRION_ADD_ITEM
                    . "'></form>";
         echo $form;
         //        OledrionUtility::htitle(_MI_OLEDRION_ADMENU21, 4);
-        $payment = $h_oledrion_payment->getAllPayment(new Oledrion_parameters(array(
+        $payment = $h_oledrion_payment->getAllPayment(new Oledrion_parameters([
                                                                                   'start' => $start,
                                                                                   'limit' => $limit
-                                                                              )));
+                                                                              ]));
 
         $class = '';
         echo "<table width='100%' cellspacing='1' cellpadding='3' border='0' class='outer'>";
@@ -48,7 +48,7 @@ switch ($action) {
         foreach ($payment as $item) {
             $id        = $item->getVar('payment_id');
             $class     = ($class === 'even') ? 'odd' : 'even';
-            $actions   = array();
+            $actions   = [];
             $actions[] = "<a href='$baseurl?op=payment&action=edit&id=" . $id . "' title='" . _OLEDRION_EDIT . "'>" . $icones['edit'] . '</a>';
             $actions[] = "<a href='$baseurl?op=payment&action=delete&id=" . $id . "' title='" . _OLEDRION_DELETE . "'" . $conf_msg . '>' . $icones['delete'] . '</a>';
             $online    = $item->getVar('payment_online') == 1 ? _YES : _NO;
@@ -193,7 +193,7 @@ switch ($action) {
             OledrionUtility::redirect(_AM_OLEDRION_ERROR_10, $baseurl, 5);
         }
         $msg = sprintf(_AM_OLEDRION_CONF_DEL_ITEM, $payment->getVar('payment_title'));
-        xoops_confirm(array('op' => 'payment', 'action' => 'confdelete', 'id' => $id), 'index.php', $msg);
+        xoops_confirm(['op' => 'payment', 'action' => 'confdelete', 'id' => $id], 'index.php', $msg);
 
         break;
 

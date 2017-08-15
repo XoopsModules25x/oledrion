@@ -37,7 +37,7 @@ switch ($action) {
         $adminObject->displayNavigation('index.php?op=lists');
 
         global $xoopsConfig;
-        $items = $usersList = array();
+        $items = $usersList = [];
         $class = '';
 
         //        OledrionUtility::htitle(_MI_OLEDRION_ADMENU15, 4);
@@ -47,10 +47,10 @@ switch ($action) {
         if ($itemsCount > $limit) {
             $pagenav = new XoopsPageNav($itemsCount, $limit, $start, 'start', 'op=' . $operation);
         }
-        $items = $oledrionHandlers->h_oledrion_lists->getRecentLists(new Oledrion_parameters(array(
+        $items = $oledrionHandlers->h_oledrion_lists->getRecentLists(new Oledrion_parameters([
                                                                                                  'start' => $start,
                                                                                                  'limit' => $limit
-                                                                                             )));
+                                                                                             ]));
         if (count($items) > 0) {
             $usersList = $oledrionHandlers->h_oledrion_lists->getUsersFromLists($items);
         }
@@ -74,7 +74,7 @@ switch ($action) {
         foreach ($items as $item) {
             $class     = ($class === 'even') ? 'odd' : 'even';
             $id        = $item->getVar('list_id');
-            $actions   = array();
+            $actions   = [];
             $actions[] = "<a href='$baseurl?op=$operation&action=delete&id=" . $id . "' title='" . _OLEDRION_DELETE . "'" . $conf_msg . '>' . $icones['delete'] . '</a>';
             $userName  = isset($usersList[$item->list_uid]) ? $usersList[$item->list_uid]->getVar('uname') : _AM_OLEDRION_ANONYMOUS;
             echo "<tr class='" . $class . "'>\n";

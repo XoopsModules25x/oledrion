@@ -56,7 +56,7 @@ function oledrion_get_configHandler()
 function oledrion_get_module_option($optionName = '')
 {
     $ret           = null;
-    $tbl_options   = array();
+    $tbl_options   = [];
     $mid           = oledrion_get_mid();
     $configHandler = oledrion_get_configHandler();
     $critere       = new CriteriaCompo();

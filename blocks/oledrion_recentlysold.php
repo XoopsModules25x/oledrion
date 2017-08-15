@@ -35,7 +35,7 @@ function b_oledrion_recentlysold_show($options)
         unset($products['lastTitle']);
     }
     if (count($products) > 0) {
-        $block                   = array();
+        $block                   = [];
         $block['nostock_msg']    = OledrionUtility::getModuleOption('nostock_msg');
         $block['block_products'] = $products;
         $xoTheme->addStylesheet(OLEDRION_URL . 'assets/css/oledrion.css');

@@ -47,7 +47,7 @@ $xoopsTpl->assign('manufacturer', $manufacturer->toArray());
 $limit = OledrionUtility::getModuleOption('perpage');
 
 // Lecture des TVA ********************************************************************************
-$vatArray = array();
+$vatArray = [];
 $vatArray = $h_oledrion_vat->getAllVats(new Oledrion_parameters());
 
 // Recherche des produits de ce fabricant *********************************************************
@@ -58,10 +58,10 @@ if ($itemsCount > $limit) {
     $xoopsTpl->assign('pagenav', $pagenav->renderNav());
 }
 
-$products = array();
+$products = [];
 $products = $h_oledrion_manufacturer->getManufacturerProducts($manu_id, $start, $limit);
 if (count($products) > 0) {
-    $tmp = $categories = array();
+    $tmp = $categories = [];
     foreach ($products as $product) { // Recherche des catégories
         $tmp[] = $product->getVar('product_cid');
     }
@@ -73,7 +73,7 @@ if (count($products) > 0) {
     $cpt   = 1;
     $count = 1;
     foreach ($products as $product) {
-        $productForTemplate                     = array();
+        $productForTemplate                     = [];
         $productForTemplate                     = $product->toArray();
         $productForTemplate['count']            = $cpt;
         $productForTemplate['product_category'] = isset($categories[$product->getVar('product_cid')]) ? $categories[$product->getVar('product_cid')]->toArray() : null;
@@ -90,9 +90,9 @@ OledrionUtility::loadLanguageFile('modinfo.php');
 
 $xoopsTpl->assign('global_advert', OledrionUtility::getModuleOption('advertisement'));
 // By voltan
-$breadcrumb = array( /*OLEDRION_URL.'whoswho.php' => _OLEDRION_MANUFACTURERS,*/
+$breadcrumb = [ /*OLEDRION_URL.'whoswho.php' => _OLEDRION_MANUFACTURERS,*/
                      OLEDRION_URL . basename(__FILE__) => $manufacturer->getVar('manu_name') . ' ' . $manufacturer->getVar('manu_commercialname')
-);
+];
 $xoopsTpl->assign('breadcrumb', OledrionUtility::breadcrumb($breadcrumb));
 
 //$title = $manufacturer->getVar('manu_name') . ' ' . $manufacturer->getVar('manu_commercialname') . ' - ' . OledrionUtility::getModuleName();

@@ -20,7 +20,7 @@
 /**
  * Recherche avancée dans les produits, formulaire de sélection des critères
  */
-// defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
+// defined('XOOPS_ROOT_PATH') || exit('Restricted access.');
 require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
 require_once OLEDRION_PATH . 'class/tree.php';
 
@@ -40,7 +40,7 @@ if (OledrionUtility::getModuleOption('search_category')) {
 // Sélecteur pour les fabricants *************************************************
 if (OledrionUtility::getModuleOption('search_manufacturers')) {
     $authorSelect = new XoopsFormSelect(_OLEDRION_MANUFACTURER, 'product_manufacturers', 0, 5, true);
-    $tblTmp       = array();
+    $tblTmp       = [];
     $tblTmp[0]    = _OLEDRION_ALL_MANUFACTURERS;
     foreach ($manufacturers as $item) {
         $tblTmp[$item->getVar('manu_id')] = $item->getVar('manu_commercialname') . ' ' . $item->getVar('manu_name');
@@ -52,7 +52,7 @@ if (OledrionUtility::getModuleOption('search_manufacturers')) {
 // Sélecteur pour les vendeurs *************************************************
 if (OledrionUtility::getModuleOption('search_vendors')) {
     $languageSelect = new XoopsFormSelect(_OLEDRION_VENDOR, 'product_vendors', 0, 1, false);
-    $tblTmp         = array();
+    $tblTmp         = [];
     $tblTmp[0]      = _OLEDRION_ALL_VENDORS;
     foreach ($vendors as $item) {
         $tblTmp[$item->getVar('vendor_id')] = $item->getVar('vendor_name');

@@ -17,7 +17,7 @@
  * @author      Hossein Azizabadi (azizabadi@faragostaresh.com)
  */
 
-// defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
+// defined('XOOPS_ROOT_PATH') || exit('Restricted access.');
 
 /*
 $information = array();
@@ -72,7 +72,7 @@ class Oledrion_sms
      */
     public static function getSmsGatewayOption($smsGatewayName)
     {
-        $option         = array();
+        $option         = [];
         $smsGatewayPath = self::getSmsGatewayPath($smsGatewayName);
         require_once $smsGatewayPath . '/' . 'option.php';
 
@@ -84,7 +84,7 @@ class Oledrion_sms
      * @return string
      * @internal param string $smsGatewayName
      */
-    public static function sendSms($information = array())
+    public static function sendSms($information = [])
     {
         $smsGatewayName = self::getSmsGateway();
         $option         = self::getSmsGatewayOption($smsGatewayName);

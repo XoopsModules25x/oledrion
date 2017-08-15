@@ -31,7 +31,7 @@ switch ($action) {
         $adminObject = \Xmf\Module\Admin::getInstance();
         $adminObject->displayNavigation('index.php?op=manufacturers');
 
-        $vats = array();
+        $vats = [];
         $form = "<form method='post' action='$baseurl' name='frmaddmanufacturer' id='frmaddmanufacturer'><input type='hidden' name='op' id='op' value='manufacturers'><input type='hidden' name='action' id='action' value='add'><input type='submit' name='btngo' id='btngo' value='"
                 . _AM_OLEDRION_ADD_ITEM
                 . "'></form>";
@@ -61,7 +61,7 @@ switch ($action) {
         foreach ($manufacturers as $item) {
             $class     = ($class === 'even') ? 'odd' : 'even';
             $id        = $item->getVar('manu_id');
-            $actions   = array();
+            $actions   = [];
             $actions[] = "<a href='$baseurl?op=manufacturers&action=edit&id=" . $id . "' title='" . _OLEDRION_EDIT . "'>" . $icones['edit'] . '</a>';
             $actions[] = "<a href='$baseurl?op=manufacturers&action=delete&id=" . $id . "' title='" . _OLEDRION_DELETE . "'" . $conf_msg . '>' . $icones['delete'] . '</a>';
             echo "<tr class='" . $class . "'>\n";

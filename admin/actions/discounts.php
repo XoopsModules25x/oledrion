@@ -38,7 +38,7 @@ switch ($action) {
         echo $form;
         //        OledrionUtility::htitle(_MI_OLEDRION_ADMENU6, 4);
 
-        $discounts  = array();
+        $discounts  = [];
         $itemsCount = 0;
         $class      = '';
         $start      = isset($_GET['start']) ? (int)$_GET['start'] : 0;
@@ -58,7 +58,7 @@ switch ($action) {
         foreach ($discounts as $item) {
             $class     = ($class === 'even') ? 'odd' : 'even';
             $id        = $item->getVar('disc_id');
-            $actions   = array();
+            $actions   = [];
             $actions[] = "<a href='$baseurl?op=discounts&action=edit&id=" . $id . "' title='" . _OLEDRION_EDIT . "'>" . $icones['edit'] . '</a>';
             $actions[] = "<a href='$baseurl?op=discounts&action=delete&id=" . $id . "' title='" . _OLEDRION_DELETE . "'" . $conf_msg . '>' . $icones['delete'] . '</a>';
             $actions[] = "<a href='$baseurl?op=discounts&action=copy&id=" . $id . "' title='" . _OLEDRION_DUPLICATE_DISCOUNT . "'>" . $icones['copy'] . '</a>';
@@ -180,13 +180,13 @@ switch ($action) {
         $discountForTemplate['disc_price_case_checked4'] = $disc_price_case_checked4;
 
         // ****
-        $quantityConditions = array(
+        $quantityConditions = [
             OLEDRION_DISCOUNT_PRICE_QTY_COND1 => OLEDRION_DISCOUNT_PRICE_QTY_COND1_TEXT,
             OLEDRION_DISCOUNT_PRICE_QTY_COND2 => OLEDRION_DISCOUNT_PRICE_QTY_COND2_TEXT,
             OLEDRION_DISCOUNT_PRICE_QTY_COND3 => OLEDRION_DISCOUNT_PRICE_QTY_COND3_TEXT,
             OLEDRION_DISCOUNT_PRICE_QTY_COND4 => OLEDRION_DISCOUNT_PRICE_QTY_COND4_TEXT,
             OLEDRION_DISCOUNT_PRICE_QTY_COND5 => OLEDRION_DISCOUNT_PRICE_QTY_COND5_TEXT
-        );
+        ];
         $xoopsTpl->assign('disc_price_case_qty_cond_options', $quantityConditions);
         $xoopsTpl->assign('disc_price_case_qty_cond_selected', $item->getVar('disc_price_case_qty_cond'));
 
@@ -214,7 +214,7 @@ switch ($action) {
         // Groupes
         $xoopsTpl->assign('disc_groups_selected', $item->getVar('disc_group'));
         $memberHandler = xoops_getHandler('member');
-        $groups        = array();
+        $groups        = [];
         $groups        = $memberHandler->getGroupList();
         $groups[0]     = _ALL;
         ksort($groups);
@@ -224,7 +224,7 @@ switch ($action) {
         $categories = $h_oledrion_cat->getAllCategories(new Oledrion_parameters());
         $mytree     = new Oledrion_XoopsObjectTree($categories, 'cat_cid', 'cat_pid');
 
-        if (OledrionUtility::checkVerXoops($module, '2.5.9')) {
+        if (OledrionUtility::checkVerXoops($GLOBALS['xoopsModule'], '2.5.9')) {
             $categoriesSelect0 = $topic_tree->makeSelectElement('disc_cat_cid', 'cat_title', '-', $item->getVar('disc_cat_cid'), true, 0, '', '');
             $categoriesSelect  = $categoriesSelect0->render();
         } else {
@@ -251,7 +251,7 @@ switch ($action) {
         $xoopsTpl->assign('disc_product_id_options', $products);
         $xoopsTpl->assign('disc_product_id_selected', $item->getVar('disc_product_id'));
 
-        $productsSelect = $h_oledrion_products->productSelector(new Oledrion_parameters(array(
+        $productsSelect = $h_oledrion_products->productSelector(new Oledrion_parameters([
                                                                                             'caption'     => _AM_OLEDRION_DISCOUNT_PRODUCT,
                                                                                             'name'        => 'disc_product_id',
                                                                                             'value'       => $item->getVar('disc_product_id'),
@@ -264,7 +264,7 @@ switch ($action) {
                                                                                             'formName'    => 'frmdiscount',
                                                                                             'description' => _AM_OLEDRION_DISCOUNT_HELP1,
                                                                                             'withNull'    => _ALL
-                                                                                        )));
+                                                                                        ]));
         $xoopsTpl->assign('disc_product_id', $productsSelect->render());
 
         $xoopsTpl->assign('discount', $discountForTemplate);

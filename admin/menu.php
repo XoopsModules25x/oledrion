@@ -30,7 +30,7 @@ $pathModIcon32 = $moduleHelper->getModule()->getInfo('modicons32');
 
 $moduleHelper->loadLanguage('modinfo');
 
-$adminObject            = array();
+$adminObject            = [];
 $i                      = 0;
 $adminmenu[$i]['title'] = _MI_OLEDRION_ADMENU10;
 $adminmenu[$i]['link']  = 'admin/index.php?op=dashboard';

@@ -49,7 +49,7 @@ switch ($action) {
         $adminObject->displayNavigation('index.php?op=attributes');
 
         global $xoopsConfig;
-        $productsIds = $products = $productsIdsForList = $productsForList = array();
+        $productsIds = $products = $productsIdsForList = $productsForList = [];
         $class       = '';
         removeAttributInSession();
 
@@ -137,11 +137,11 @@ switch ($action) {
                 $products = $oledrionHandlers->h_oledrion_products->getProductsFromIDs($productsIds, true);
             }
         }
-        $typeSelect = OledrionUtility::htmlSelect('filter_attribute_type', array(
+        $typeSelect = OledrionUtility::htmlSelect('filter_attribute_type', [
             OLEDRION_ATTRIBUTE_RADIO    => _AM_OLEDRION_TYPE_RADIO,
             OLEDRION_ATTRIBUTE_CHECKBOX => _AM_OLEDRION_TYPE_CHECKBOX,
             OLEDRION_ATTRIBUTE_SELECT   => _AM_OLEDRION_TYPE_LIST
-        ), $filter_attribute_type);
+        ], $filter_attribute_type);
 
         $productsIdsForList = $oledrionHandlers->h_oledrion_attributes->getDistinctsProductsIds();
         if (count($productsIdsForList) > 0) {
@@ -178,7 +178,7 @@ switch ($action) {
         foreach ($items as $item) {
             $class        = ($class === 'even') ? 'odd' : 'even';
             $id           = $item->getVar('attribute_id');
-            $actions      = array();
+            $actions      = [];
             $actions[]    = "<a href='$baseurl?op=$operation&action=edit&id=" . $id . "' title='" . _OLEDRION_EDIT . "'>" . $icones['edit'] . '</a>';
             $actions[]    = "<a href='$baseurl?op=$operation&action=copy&id=" . $id . "' title='" . _OLEDRION_DUPLICATE_ATTRIBUTE . "'>" . $icones['copy'] . '</a>';
             $actions[]    = "<a href='$baseurl?op=$operation&action=delete&id=" . $id . "' title='" . _OLEDRION_DELETE . "'" . $conf_msg . '>' . $icones['delete'] . '</a>';
@@ -324,9 +324,9 @@ switch ($action) {
         $sform->addElement(new XoopsFormText(_AM_OLEDRION_TITLE, 'attribute_title', 50, 255, $item->getVar('attribute_title', 'e')), true);
         $sform->addElement(new XoopsFormText(_AM_OLEDRION_ATTRIBUTE_NAME, 'attribute_name', 50, 255, $item->getVar('attribute_name', 'e')), true);
 
-        $products       = array();
+        $products       = [];
         $products       = $oledrionHandlers->h_oledrion_products->getList();
-        $productsSelect = $oledrionHandlers->h_oledrion_products->productSelector(new Oledrion_parameters(array(
+        $productsSelect = $oledrionHandlers->h_oledrion_products->productSelector(new Oledrion_parameters([
                                                                                                               'caption'  => _AM_OLEDRION_ATTRIBUTE_PRODUCT,
                                                                                                               'name'     => 'attribute_product_id',
                                                                                                               'value'    => $item->getVar('attribute_product_id', 'e'),
@@ -337,7 +337,7 @@ switch ($action) {
                                                                                                               'sort'     => 'product_title',
                                                                                                               'order'    => 'ASC',
                                                                                                               'formName' => 'frm' . $operation
-                                                                                                          )));
+                                                                                                          ]));
         $sform->addElement($productsSelect);
 
         $sform->addElement(new XoopsFormText(_AM_OLEDRION_WEIGHT, 'attribute_weight', 10, 10, $item->getVar('attribute_weight', 'e')), true);
@@ -356,10 +356,10 @@ switch ($action) {
                 $defaultValue = $item->getVar('attribute_option1', 'e');
             }
         }
-        $options               = array(
+        $options               = [
             OLEDRION_ATTRIBUTE_CHECKBOX_WHITE_SPACE => _AM_OLEDRION_ATTRIBUTE_DELIMITER1,
             OLEDRION_ATTRIBUTE_CHECKBOX_NEW_LINE    => _AM_OLEDRION_ATTRIBUTE_DELIMITER2
-        );
+        ];
         $parameterButtonOption = _AM_OLEDRION_ATTRIBUTE_DELIMITER . ' ' . OledrionUtility::htmlSelect('option1', $options, $defaultValue, false);
         $attributeParameters   .= "<div name='attributeParametersCheckbox' id='attributeParametersCheckbox'>\n";
         $attributeParameters   .= $parameterButtonOption . "\n";
@@ -471,7 +471,7 @@ switch ($action) {
         $content      = $class = '';
         $attribute    = null;
         $counter      = 0;
-        $options      = array();
+        $options      = [];
         $delete       = _OLEDRION_DELETE;
         $span         = 4;
         require_once OLEDRION_CLASS_PATH . 'oledrion_attributes.php';
@@ -491,7 +491,7 @@ switch ($action) {
         }
 
         if (isset($_POST['formcontent'])) { // Traitement du contenu actuel
-            $data = array();
+            $data = [];
             parse_str(urldecode($_POST['formcontent']), $data);
             $optionsCount = isset($data['optionsCount']) ? (int)$data['optionsCount'] : 0;
             for ($i = 0; $i < $optionsCount; ++$i) {

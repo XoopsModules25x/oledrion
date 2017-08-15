@@ -68,19 +68,19 @@ class OledrionOledrion_vendorsHandler extends Oledrion_XoopsPersistableObjectHan
      */
     public function getAllVendors(Oledrion_parameters $parameters)
     {
-        $parameters = $parameters->extend(new Oledrion_parameters(array(
+        $parameters = $parameters->extend(new Oledrion_parameters([
                                                                       'start'   => 0,
                                                                       'limit'   => 0,
                                                                       'sort'    => 'vendor_name',
                                                                       'order'   => 'ASC',
                                                                       'idaskey' => true
-                                                                  )));
+                                                                  ]));
         $critere    = new Criteria('vendor_id', 0, '<>');
         $critere->setLimit($parameters['limit']);
         $critere->setStart($parameters['start']);
         $critere->setSort($parameters['sort']);
         $critere->setOrder($parameters['order']);
-        $categories = array();
+        $categories = [];
         $categories = $this->getObjects($critere, $parameters['idaskey']);
 
         return $categories;
@@ -105,7 +105,7 @@ class OledrionOledrion_vendorsHandler extends Oledrion_XoopsPersistableObjectHan
      * @param  oledrion_vendors $vendor
      * @return boolean          Le résultat de la suppression
      */
-    public function deleteVendor(oledrion_vendors $vendor)
+    public function deleteVendor(Oledrion_vendors $vendor)
     {
         return $this->delete($vendor, true);
     }
@@ -118,7 +118,7 @@ class OledrionOledrion_vendorsHandler extends Oledrion_XoopsPersistableObjectHan
      */
     public function getVendorsFromIds($ids)
     {
-        $ret = array();
+        $ret = [];
         if (is_array($ids) && count($ids) > 0) {
             $criteria = new Criteria('vendor_id', '(' . implode(',', $ids) . ')', 'IN');
             $ret      = $this->getObjects($criteria, true, true, '*', false);

@@ -34,10 +34,10 @@ function b_oledrion_my_lists_show($options)
         return null;
     }
     $listType = OLEDRION_LISTS_ALL;
-    $block    = array();
+    $block    = [];
     $handlers = OledrionHandler::getInstance();
-    $items    = array();
-    $items    = $handlers->h_oledrion_lists->getRecentLists(new Oledrion_parameters(array(
+    $items    = [];
+    $items    = $handlers->h_oledrion_lists->getRecentLists(new Oledrion_parameters([
                                                                                         'start'    => $start,
                                                                                         'limit'    => $limit,
                                                                                         'sort'     => 'list_date',
@@ -45,7 +45,7 @@ function b_oledrion_my_lists_show($options)
                                                                                         'idAsKey'  => true,
                                                                                         'listType' => $listType,
                                                                                         'list_uid' => $uid
-                                                                                    )));
+                                                                                    ]));
     if (count($items) > 0) {
         foreach ($items as $item) {
             $block['my_lists'][] = $item->toArray();

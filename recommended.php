@@ -28,10 +28,10 @@ require_once OLEDRION_PATH . 'class/registryfile.php';
 require_once XOOPS_ROOT_PATH . '/class/pagenav.php';
 
 // Initialisations
-$tbl_products         = $tbl_categories = $tbl_vendors = $tbl_users = $tbl_tmp_user = $tbl_tmp_categ = $tbl_tmp_lang = $tbl_tmp_vat = $tbl_vat = array();
-$tbl_products_id      = $tbl_auteurs = $tbl_infos_auteurs = $tbl_tmp_auteurs = array();
-$tbl_tmp_related      = $tbl_related = $tbl_info_related_products = array();
-$tbl_related_products = array();
+$tbl_products         = $tbl_categories = $tbl_vendors = $tbl_users = $tbl_tmp_user = $tbl_tmp_categ = $tbl_tmp_lang = $tbl_tmp_vat = $tbl_vat = [];
+$tbl_products_id      = $tbl_auteurs = $tbl_infos_auteurs = $tbl_tmp_auteurs = [];
+$tbl_tmp_related      = $tbl_related = $tbl_info_related_products = [];
+$tbl_related_products = [];
 $start                = isset($_GET['start']) ? (int)$_GET['start'] : 0;
 $limit                = OledrionUtility::getModuleOption('perpage');
 $baseurl              = OLEDRION_URL . basename(__FILE__); // URL de ce script (sans son nom)
@@ -40,7 +40,7 @@ $oledrion_Currency    = Oledrion_Currency::getInstance();
 $registry = new oledrion_registryfile();
 
 // Lecture des TVA ********************************************************************************
-$vatArray = array();
+$vatArray = [];
 $vatArray = $h_oledrion_vat->getAllVats(new Oledrion_parameters());
 
 // Quelques options pour le template
@@ -67,7 +67,7 @@ if ($limit > 0) {
     $xoopsTpl->assign('products', $products);
 }
 $xoopsTpl->assign('global_advert', OledrionUtility::getModuleOption('advertisement'));
-$xoopsTpl->assign('breadcrumb', OledrionUtility::breadcrumb(array(OLEDRION_URL . basename(__FILE__) => _OLEDRION_RECOMMENDED)));
+$xoopsTpl->assign('breadcrumb', OledrionUtility::breadcrumb([OLEDRION_URL . basename(__FILE__) => _OLEDRION_RECOMMENDED]));
 
 OledrionUtility::setCSS();
 OledrionUtility::setLocalCSS($xoopsConfig['language']);

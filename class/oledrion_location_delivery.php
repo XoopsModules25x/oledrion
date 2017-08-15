@@ -48,7 +48,7 @@ class Oledrion_location_delivery extends Oledrion_Object
      */
     public function toArray($format = 's')
     {
-        $ret = array();
+        $ret = [];
         $ret = parent::toArray($format);
 
         return $ret;
@@ -75,7 +75,7 @@ class OledrionOledrion_location_deliveryHandler extends Oledrion_XoopsPersistabl
      */
     public function getLocationDeliveryId($parameters)
     {
-        $ret = array();
+        $ret = [];
         if (!$parameters['location']) {
             return $ret;
         }
@@ -84,7 +84,7 @@ class OledrionOledrion_location_deliveryHandler extends Oledrion_XoopsPersistabl
         $obj = $this->getObjects($critere);
         if ($obj) {
             foreach ($obj as $root) {
-                $tab                               = array();
+                $tab                               = [];
                 $tab                               = $root->toArray();
                 $ret[$root->getVar('ld_delivery')] = $tab;
             }
@@ -100,7 +100,7 @@ class OledrionOledrion_location_deliveryHandler extends Oledrion_XoopsPersistabl
      */
     public function getDelivery($ld_delivery, $ld_location)
     {
-        $ret     = array();
+        $ret     = [];
         $critere = new CriteriaCompo();
         $critere->add(new Criteria('ld_delivery', $ld_delivery));
         $critere->add(new Criteria('ld_location', $ld_location));
@@ -108,7 +108,7 @@ class OledrionOledrion_location_deliveryHandler extends Oledrion_XoopsPersistabl
         $obj = $this->getObjects($critere);
         if ($obj) {
             foreach ($obj as $root) {
-                $tab = array();
+                $tab = [];
                 $ret = $root->toArray();
             }
         }

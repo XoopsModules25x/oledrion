@@ -452,7 +452,7 @@ class Oledrion_products extends Oledrion_Object
      */
     public function toArray($format = 's')
     {
-        $ret               = array();
+        $ret               = [];
         $ret               = parent::toArray($format);
         $oledrion_Currency = Oledrion_Currency::getInstance();
         $ttc               = $finalPriceTTC = $this->getTTC();
@@ -545,14 +545,14 @@ class OledrionOledrion_productsHandler extends Oledrion_XoopsPersistableObjectHa
      */
     public function getMostViewedProducts(Oledrion_parameters $parameters)
     {
-        $parameters = $parameters->extend(new Oledrion_parameters(array(
+        $parameters = $parameters->extend(new Oledrion_parameters([
                                                                       'start'    => 0,
                                                                       'limit'    => 0,
                                                                       'category' => 0,
                                                                       'sort'     => 'product_hits',
                                                                       'order'    => 'DESC'
-                                                                  )));
-        $data       = array();
+                                                                  ]));
+        $data       = [];
         $criteria   = new CriteriaCompo();
         $criteria->add(new Criteria('product_online', 1, '='));
         if (OledrionUtility::getModuleOption('show_unpublished') == 0) { // Ne pas afficher les produits qui ne sont pas publiés
@@ -588,14 +588,14 @@ class OledrionOledrion_productsHandler extends Oledrion_XoopsPersistableObjectHa
      */
     public function getBestRatedProducts(Oledrion_parameters $parameters)
     {
-        $parameters = $parameters->extend(new Oledrion_parameters(array(
+        $parameters = $parameters->extend(new Oledrion_parameters([
                                                                       'start'    => 0,
                                                                       'limit'    => 0,
                                                                       'category' => 0,
                                                                       'sort'     => 'product_rating',
                                                                       'order'    => 'DESC'
-                                                                  )));
-        $data       = array();
+                                                                  ]));
+        $data       = [];
         $criteria   = new CriteriaCompo();
         $criteria->add(new Criteria('product_online', 1, '='));
         $criteria->add(new Criteria('product_rating', 0, '>')); // Se limiter aux seuls produits qui ont été vraiment notés
@@ -630,14 +630,14 @@ class OledrionOledrion_productsHandler extends Oledrion_XoopsPersistableObjectHa
      */
     public function getRecentRecommended(Oledrion_parameters $parameters)
     {
-        $parameters = $parameters->extend(new Oledrion_parameters(array(
+        $parameters = $parameters->extend(new Oledrion_parameters([
                                                                       'start'    => 0,
                                                                       'limit'    => 0,
                                                                       'category' => 0,
                                                                       'sort'     => 'product_recommended',
                                                                       'order'    => 'DESC'
-                                                                  )));
-        $data       = array();
+                                                                  ]));
+        $data       = [];
         $criteria   = new CriteriaCompo();
         $criteria->add(new Criteria('product_online', 1, '='));
         $criteria->add(new Criteria('product_recommended', '0000-00-00', '<>'));
@@ -696,7 +696,7 @@ class OledrionOledrion_productsHandler extends Oledrion_XoopsPersistableObjectHa
      */
     public function getRecentProducts(Oledrion_parameters $parameters)
     {
-        $parameters = $parameters->extend(new Oledrion_parameters(array(
+        $parameters = $parameters->extend(new Oledrion_parameters([
                                                                       'start'         => 0,
                                                                       'limit'         => 0,
                                                                       'category'      => 0,
@@ -704,8 +704,8 @@ class OledrionOledrion_productsHandler extends Oledrion_XoopsPersistableObjectHa
                                                                       'order'         => '',
                                                                       'excluded'      => 0,
                                                                       'thisMonthOnly' => false
-                                                                  )));
-        $data       = array();
+                                                                  ]));
+        $data       = [];
         $criteria   = new CriteriaCompo();
         $criteria->add(new Criteria('product_online', 1, '='));
         if (OledrionUtility::getModuleOption('show_unpublished') == 0) { // Ne pas afficher les produits qui ne sont pas publiés
@@ -780,14 +780,14 @@ class OledrionOledrion_productsHandler extends Oledrion_XoopsPersistableObjectHa
      */
     public function getProductsForNewsletter(Oledrion_parameters $parameters)
     {
-        $parameters = $parameters->extend(new Oledrion_parameters(array(
+        $parameters = $parameters->extend(new Oledrion_parameters([
                                                                       'startingDate' => 0,
                                                                       'endingDate'   => 0,
                                                                       'category'     => 0,
                                                                       'start'        => 0,
                                                                       'limit'        => 0
-                                                                  )));
-        $data       = array();
+                                                                  ]));
+        $data       = [];
         $criteria   = new CriteriaCompo();
         $criteria->add(new Criteria('product_online', 1, '='));
         $criteria->add(new Criteria('product_submitted', $parameters['startingDate'], '>='));
@@ -843,7 +843,7 @@ class OledrionOledrion_productsHandler extends Oledrion_XoopsPersistableObjectHa
     public function getIdTitle($criteria)
     {
         global $myts;
-        $ret = array();
+        $ret = [];
         $sql = 'SELECT product_id, product_title FROM ' . $this->table;
         if (isset($criteria) && is_subclass_of($criteria, 'criteriaelement')) {
             $sql .= ' ' . $criteria->renderWhere();
@@ -923,15 +923,15 @@ class OledrionOledrion_productsHandler extends Oledrion_XoopsPersistableObjectHa
      */
     public function getRandomProducts(Oledrion_parameters $parameters)
     {
-        $parameters = $parameters->extend(new Oledrion_parameters(array(
+        $parameters = $parameters->extend(new Oledrion_parameters([
                                                                       'start'         => 0,
                                                                       'limit'         => 0,
                                                                       'category'      => 0,
                                                                       'sort'          => 'RAND()',
                                                                       'order'         => 'ASC',
                                                                       'thisMonthOnly' => false
-                                                                  )));
-        $data       = array();
+                                                                  ]));
+        $data       = [];
         $criteria   = new CriteriaCompo();
         $criteria->add(new Criteria('product_online', 1, '='));
         if (OledrionUtility::getModuleOption('show_unpublished') == 0) { // Ne pas afficher les produits qui ne sont pas publiés
@@ -970,14 +970,14 @@ class OledrionOledrion_productsHandler extends Oledrion_XoopsPersistableObjectHa
      */
     public function getPromotionalProducts(Oledrion_parameters $parameters)
     {
-        $parameters = $parameters->extend(new Oledrion_parameters(array(
+        $parameters = $parameters->extend(new Oledrion_parameters([
                                                                       'start'    => 0,
                                                                       'limit'    => 0,
                                                                       'category' => 0,
                                                                       'sort'     => 'product_title',
                                                                       'order'    => 'DESC'
-                                                                  )));
-        $data       = array();
+                                                                  ]));
+        $data       = [];
         $criteria   = new CriteriaCompo();
         $criteria->add(new Criteria('product_online', 1, '='));
         if (OledrionUtility::getModuleOption('show_unpublished') == 0) { // Ne pas afficher les produits qui ne sont pas publiés
@@ -1010,7 +1010,7 @@ class OledrionOledrion_productsHandler extends Oledrion_XoopsPersistableObjectHa
      */
     public function getLowStocks($start = 0, $limit = 0)
     {
-        $ret = array();
+        $ret = [];
         $sql = 'SELECT * FROM ' . $this->table . ' WHERE product_online = 1';
         if (OledrionUtility::getModuleOption('show_unpublished') == 0) { // Ne pas afficher les produits qui ne sont pas publiés
             $sql .= ' AND product_submitted <= ' . time();
@@ -1035,7 +1035,7 @@ class OledrionOledrion_productsHandler extends Oledrion_XoopsPersistableObjectHa
      */
     public function getLowStocksCount()
     {
-        $ret = array();
+        $ret = [];
         $sql = 'SELECT Count(*) AS cpt FROM ' . $this->table . ' WHERE product_online = 1';
         if (OledrionUtility::getModuleOption('show_unpublished') == 0) { // Ne pas afficher les produits qui ne sont pas publiés
             $sql .= ' AND product_submitted <= ' . time();
@@ -1111,7 +1111,7 @@ class OledrionOledrion_productsHandler extends Oledrion_XoopsPersistableObjectHa
     public function verifyLowStock(&$product)
     {
         if ($this->isAlertStockReached($product)) {
-            $msg                    = array();
+            $msg                    = [];
             $msg['PRODUCT_NAME']    = $product->getVar('product_title');
             $msg['ACTUAL_QUANTITY'] = $product->getVar('product_stock');
             $msg['ALERT_QUANTITY']  = $product->getVar('product_alert_stock');
@@ -1155,7 +1155,7 @@ class OledrionOledrion_productsHandler extends Oledrion_XoopsPersistableObjectHa
      */
     public function getProductsFromIDs($ids, $showAll = false)
     {
-        $ret = array();
+        $ret = [];
         if (is_array($ids)) {
             $criteria = new CriteriaCompo();
             if (OledrionUtility::getModuleOption('show_unpublished') == 0) { // Ne pas afficher les produits qui ne sont pas publiés
@@ -1222,7 +1222,7 @@ class OledrionOledrion_productsHandler extends Oledrion_XoopsPersistableObjectHa
      * @param  Oledrion_products $originalProduct Le produit à cloner
      * @return mixed                    Soit l'objet représentant le nouveau produit soit false
      */
-    public function cloneProduct(oledrion_products $originalProduct)
+    public function cloneProduct(Oledrion_products $originalProduct)
     {
         global $h_oledrion_productsmanu, $h_oledrion_files, $h_oledrion_productsmanu, $h_oledrion_related, $oledrionHandlers;
         $newProduct =& $originalProduct->xoopsClone();
@@ -1261,7 +1261,7 @@ class OledrionOledrion_productsHandler extends Oledrion_XoopsPersistableObjectHa
             $newProductId = $newProduct->getVar('product_id');
             // Copie des fichiers liés
             if ($h_oledrion_files->getProductFilesCount($originalProduct->product_id) > 0) {
-                $attachedFiles = array();
+                $attachedFiles = [];
                 $attachedFiles = $h_oledrion_files->getProductFiles($originalProduct->product_id);
                 if (count($attachedFiles) > 0) {
                     foreach ($attachedFiles as $oneFile) {
@@ -1278,7 +1278,7 @@ class OledrionOledrion_productsHandler extends Oledrion_XoopsPersistableObjectHa
             }
 
             // Copie des fabricants
-            $tblTmp   = array();
+            $tblTmp   = [];
             $criteria = new Criteria('pm_product_id', $originalProduct->getVar('product_id'), '=');
             $tblTmp   = $h_oledrion_productsmanu->getObjects($criteria);
             foreach ($tblTmp as $productAuthor) {
@@ -1290,7 +1290,7 @@ class OledrionOledrion_productsHandler extends Oledrion_XoopsPersistableObjectHa
             }
 
             // Copie des produits relatifs
-            $tblTmp   = array();
+            $tblTmp   = [];
             $criteria = new Criteria('related_product_id', $originalProduct->getVar('product_id'), '=');
             $tblTmp   = $h_oledrion_related->getObjects($criteria);
             foreach ($tblTmp as $related) {
@@ -1341,7 +1341,7 @@ class OledrionOledrion_productsHandler extends Oledrion_XoopsPersistableObjectHa
      */
     public function productSelector(Oledrion_parameters $parameters)
     {
-        $parameters = $parameters->extend(new Oledrion_parameters(array(
+        $parameters = $parameters->extend(new Oledrion_parameters([
                                                                       'caption'     => '',
                                                                       'name'        => '',
                                                                       'value'       => null,
@@ -1354,7 +1354,7 @@ class OledrionOledrion_productsHandler extends Oledrion_XoopsPersistableObjectHa
                                                                       'formName'    => '',
                                                                       'description' => '',
                                                                       'withNull'    => null
-                                                                  )));
+                                                                  ]));
         static $jqueryIncluded = null;
         require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
         $criteria = new CriteriaCompo();

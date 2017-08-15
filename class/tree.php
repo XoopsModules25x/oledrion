@@ -16,7 +16,7 @@
  * @author              Kazumi Ono (http://www.myweb.ne.jp/, http://jp.xoops.org/)
  */
 
-defined('XOOPS_ROOT_PATH') || exit('Restricted access');
+defined('XOOPS_ROOT_PATH') || exit('Restricted access.');
 
 require_once __DIR__ . '/../../../class/tree.php';
 
@@ -35,7 +35,7 @@ class Oledrion_XoopsObjectTree extends XoopsObjectTree
     protected $parentId;
     protected $myId;
     protected $rootId;
-    protected $tree = array();
+    protected $tree = [];
     protected $objects;
 
     /**
@@ -158,7 +158,7 @@ class Oledrion_XoopsObjectTree extends XoopsObjectTree
      */
     public function makeTreeAsArray($fieldName, $prefix = '-', $key = 0, $empty = null)
     {
-        $ret = array();
+        $ret = [];
         if ($empty != null) {
             $ret[0] = $empty;
         }
