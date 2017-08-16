@@ -46,13 +46,13 @@
     </div>
     <!-- /HEADER -->
 
-    <{if count($subCategories) > 0}>
+    <{if isset($subCategories) && count($subCategories) > 0}>
         <div class="oledrion-subCategories"><{include file="db:oledrion_categories_list.tpl" categories=$subCategories}></div>
-    <{elseif count($motherCategories) > 0}>
+    <{elseif isset($motherCategories) && count($motherCategories) > 0}>
         <div class="oledrion-motherCategories"><{include file="db:oledrion_categories_list.tpl" categories=$motherCategories}></div>
     <{/if}>
 
-    <{if count($products) > 0}>
+    <{if isset($products) && count($products) > 0}>
         <{if isset($pagenav) }>
             <div class="center pagenav"><{$pagenav}></div><{/if}>
         <table class="oledrion_productindex">
@@ -74,17 +74,17 @@
         <h2><{$smarty.const._OLEDRION_SORRY_NO_PRODUCT}></h2>
     <{/if}>
 
-    <{if count($chunk1) > 0 || count($chunk2) > 0 || count($chunk3) > 0 || count($chunk4) > 0}>
-        <{if count($chunk1) > 0}>
+    <{if (isset($chunk1) && count($chunk1) > 0) || (isset($chunk2) && count($chunk2) > 0) || (isset($chunk3) && count($chunk3) > 0) || (isset($chunk4) && count($chunk4) > 0)}>
+        <{if isset($chunk1) && count($chunk1) > 0}>
             <{include file="db:oledrion_chunk.tpl" products=$chunk1 title=$chunk1Title}>
         <{/if}>
-        <{if count($chunk2) > 0}>
+        <{if isset($chunk2) && count($chunk2) > 0}>
             <{include file="db:oledrion_chunk.tpl" products=$chunk2 title=$chunk2Title}>
         <{/if}>
-        <{if count($chunk3) > 0}>
+        <{if isset($chunk3) && count($chunk3) > 0}>
             <{include file="db:oledrion_chunk.tpl" products=$chunk3 title=$chunk3Title}>
         <{/if}>
-        <{if count($chunk4) > 0}>
+        <{if isset($chunk4) && count($chunk4) > 0}>
             <{include file="db:oledrion_chunk.tpl" products=$chunk4 title=$chunk4Title}>
         <{/if}>
     <{/if}>

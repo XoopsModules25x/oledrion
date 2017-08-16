@@ -1,5 +1,5 @@
 <!-- Created by Hervé Thouzard (http://www.herve-thouzard.com/) -->
-<{if count($categories) > 0}>
+<{if isset($categories) && count($categories) > 0}>
     <table width="100%" cellspacing="0" class="tablefix">
         <tr>
             <td class="box_blue-clip_01"></td>

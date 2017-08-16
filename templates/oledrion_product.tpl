@@ -357,7 +357,7 @@
                                 </div>
                             <{/if}>
 
-                            <{if count($product.attached_files) > 0}>
+                            <{if isset($product.attached_files) && count($product.attached_files) > 0}>
                                 <div class="oledrion_otherinf">
                                     <h3><{$smarty.const._OLEDRION_ATTACHED_FILES}></h3>
                                     <{if $product.attached_mp3_count > 0}>
@@ -413,7 +413,7 @@
     <!--**** /product INFORMATIONS *****-->
 
     <!--***** RELATED PRODUCTS *****-->
-    <{if count($product_related_products) > 0}>
+    <{if isset($product_related_products) && count($product_related_products) > 0}>
         <div id="oledrion_related">
             <h2><img src="<{$smarty.const.OLEDRION_IMAGES_URL}>icon-product-person.png"
                      alt="<{$smarty.const._OLEDRION_CART}>"><{$smarty.const._OLEDRION_RELATED_PRODUCTS}></h2>
@@ -465,7 +465,7 @@
                    title="<{$bestwith.product_href_title}>"><{$bestwith.product_title}></a>
             <{/if}>
 
-            <{if count($product_all_categs) > 0}>
+            <{if isset($product_all_categs) && count($product_all_categs) > 0}>
                 <h2><img src="<{$smarty.const.OLEDRION_IMAGES_URL}>icon-product-person.png"
                          alt="<{$smarty.const._OLEDRION_RECENT_CATEGS}>"><{$smarty.const._OLEDRION_RECENT_CATEGS}></h2>
                 <table class='center oledrion_lastproducts'>
@@ -483,7 +483,7 @@
                 </table>
             <{/if}>
 
-            <{if count($product_current_categ) > 0}>
+            <{if isset($product_current_categ) && count($product_current_categ) > 0}>
                 <h2><img src="<{$smarty.const.OLEDRION_IMAGES_URL}>icon-product-person.png"
                          alt="<{$smarty.const._OLEDRION_RECENT_CATEG}>"><{$smarty.const._OLEDRION_RECENT_CATEG}></h2>
                 <table class='center oledrion_lastproducts'>

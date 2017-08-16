@@ -21,7 +21,7 @@
     <!--  /CADDY & RSS  -->
 
     <!--  RECENT PRODUCTS  -->
-    <{if count($products) > 0}>
+    <{if isset($products) && count($products) > 0}>
         <div class="featured-blocks-titles">
             <h2><img src="<{$smarty.const.OLEDRION_IMAGES_URL}>icon-product-person.png"
                      alt="<{$smarty.const._OLEDRION_CART}>"><{$smarty.const._OLEDRION_MOST_RECENT}></h2>

@@ -56,7 +56,7 @@
         </table>
     </div>
 
-    <{if count($products) > 0}>
+    <{if isset($products) && count($products) > 0}>
         <div id="oledrion_related">
             <h3><img src="<{$smarty.const.OLEDRION_IMAGES_URL}>icon-product-person.png"
                      alt="<{$smarty.const._MI_PRODUCTSBYTHISMANUFACTURER}>"><{$smarty.const._MI_PRODUCTSBYTHISMANUFACTURER}>

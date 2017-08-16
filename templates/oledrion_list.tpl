@@ -18,7 +18,7 @@
         </div>
     <{/if}>
 
-    <{if count($products) > 0 }>
+    <{if isset($products) && count($products) > 0 }>
         <div class="featured-blocks-titles">
             <h3><img src="<{$smarty.const.OLEDRION_IMAGES_URL}>icon-product-person.png"
                      alt="<{$smarty.const._OLEDRION_RECOMMENDED}>"><{$smarty.const._OLEDRION_PROD_IN_THIS_LIST}></h3>

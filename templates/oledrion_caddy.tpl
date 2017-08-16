@@ -66,7 +66,7 @@
                                         src="<{$smarty.const.OLEDRION_IMAGES_URL}>cartdelete.png"
                                         alt="<{$smarty.const._OLEDRION_REMOVE_ITEM}>"></td>
                     </tr>
-                    <{if count($product.attributes) > 0}>
+                    <{if isset($product.attributes) && count($product.attributes) > 0}>
                         <tr>
                             <td colspan="10">
                                 <ul>
@@ -142,7 +142,7 @@
                     <{/foreach}>
                 </ul>
 
-                <{if count($discountsDescription) > 0}>
+                <{if isset($discountsDescription) && count($discountsDescription) > 0}>
                     <ul>
                         <{foreach item=discount from=$discountsDescription}>
                             <li class="oledrion_discount-description"><{$discount}></li>
