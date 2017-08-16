@@ -386,7 +386,7 @@ switch ($action) {
 
         if (OledrionUtility::checkVerXoops($GLOBALS['xoopsModule'], '2.5.9')) {
             $select_categ = $mytree->makeSelectElement('product_cid', 'cat_title', '-', $item->getVar('product_cid'), true, 0, '', _AM_OLEDRION_CATEG_HLP);
-            $form->addElement($select_categ);
+            $sform->addElement($select_categ);
         } else {
             $select_categ = $mytree->makeSelBox('product_cid', 'cat_title', '-', $item->getVar('product_cid'));
             $sform->addElement(new XoopsFormLabel(_AM_OLEDRION_CATEG_HLP, $select_categ), true);
@@ -638,7 +638,7 @@ switch ($action) {
             $property9select = new XoopsFormSelect(OledrionUtility::getModuleOption('product_property9_title'), 'product_property9', $item->getVar('product_property9'));
             $property9Array  = explode('|', OledrionUtility::getModuleOption('product_property9'));
             foreach ($property9Array as $property9) {
-                $property9select->addOption($property95);
+                $property9select->addOption($property9);
             }
             $sform->addElement($property9select, false);
         }
