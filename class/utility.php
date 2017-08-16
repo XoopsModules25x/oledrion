@@ -2035,7 +2035,7 @@ class OledrionUtility extends XoopsObject
      * @copyright (c) Instant Zero
      * @param $field
      * @param $table
-     * @return
+     * @return bool|\mysqli_result
      */
     public static function addField($field, $table)
     {

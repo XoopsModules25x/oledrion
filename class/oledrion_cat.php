@@ -225,7 +225,7 @@ class OledrionOledrion_catHandler extends Oledrion_XoopsPersistableObjectHandler
         require_once XOOPS_ROOT_PATH . '/class/tree.php';
         $items      = $this->getAllCategories(new Oledrion_parameters());
         $treeObject = new XoopsObjectTree($items, 'cat_cid', 'cat_pid');
-        $tree       =& $treeObject->getTree();
+        $tree       = $treeObject->getTree();
 
         $ret = '';
         $this->_makeLi($fieldName, $key, $ret, $tree);

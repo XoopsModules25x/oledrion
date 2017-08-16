@@ -419,7 +419,7 @@ class Oledrion_reductions
             $_POST['cmd_country'] = OLEDRION_DEFAULT_COUNTRY;
         }
         $vats              = $this->handlers->h_oledrion_vat->getCountryVats($_POST['cmd_country']);
-        $oledrion_Currency = &Oledrion_Currency::getInstance();
+        $oledrion_Currency = Oledrion_Currency::getInstance();
         $caddyCount        = count($this->cart);
 
         // Initialisation des totaux généraux (ht, tva et frais de port)

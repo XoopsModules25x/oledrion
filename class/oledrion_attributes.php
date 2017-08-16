@@ -832,7 +832,7 @@ class OledrionOledrion_attributesHandler extends Oledrion_XoopsPersistableObject
      */
     public function cloneAttribute(Oledrion_attributes $originalAttribute)
     {
-        $newAttribute =& $originalAttribute->xoopsClone();
+        $newAttribute = $originalAttribute->xoopsClone();
         if (OLEDRION_DUPLICATED_PLACE === 'right') {
             $newAttribute->setVar('attribute_title', $originalAttribute->getVar('attribute_title') . ' ' . _AM_OLEDRION_DUPLICATED);
         } else {

@@ -1225,7 +1225,7 @@ class OledrionOledrion_productsHandler extends Oledrion_XoopsPersistableObjectHa
     public function cloneProduct(Oledrion_products $originalProduct)
     {
         global $h_oledrion_productsmanu, $h_oledrion_files, $h_oledrion_productsmanu, $h_oledrion_related, $oledrionHandlers;
-        $newProduct =& $originalProduct->xoopsClone();
+        $newProduct = $originalProduct->xoopsClone();
         if (OLEDRION_DUPLICATED_PLACE === 'right') {
             $newProduct->setVar('product_title', $originalProduct->getVar('product_title') . ' ' . _AM_OLEDRION_DUPLICATED);
         } else {
