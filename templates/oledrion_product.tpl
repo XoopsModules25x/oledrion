@@ -138,7 +138,7 @@
                                     <div class="oledrion_view-product_price">
                                         <{if $product.product_stock ==  0 }>
                                             <{$mod_pref.nostock_msg}>
-                                        <{elseif count($product.product_attributes) == 0 }>
+                                        <{elseif isset($product.product_attributes) && count($product.product_attributes) == 0 }>
                                             <span class="oledrion_productdescription-contentTitles"><{$smarty.const._OLEDRION_PRICE}></span>
                                             :
                                             <span class="bold">

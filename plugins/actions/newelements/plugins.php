@@ -64,7 +64,7 @@ class NewelementsAction extends Oledrion_action
      * Method called to indicate that a new product has been created
      *      
      * @param $parameters
-     * @param XoopsObject $product The product that has just been created
+     * @internal param \XoopsObject $product The product that has just been created
      */
     public function fireNewProduct($parameters)
     {
@@ -84,7 +84,7 @@ class NewelementsAction extends Oledrion_action
      * A method called to indicate that a new category has been created
      *
      * @param array $parameters
-     * @param XoopsObject $category
+     * @internal param \XoopsObject $category
      */
     public function fireNewCategory($parameters)
     {

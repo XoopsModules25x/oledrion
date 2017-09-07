@@ -48,7 +48,7 @@ if ((isset($_POST['op']) && $_POST['op'] === 'go') || isset($_GET['start'])) { /
                . $xoopsDB->prefix('oledrion_products')
                . ' b, '
                . $xoopsDB->prefix('oledrion_productsmanu')
-               . ' a WHERE (b.product_id = a.pm_product_id AND b.product_online = 1 ';
+               . ' a WHERE (b.product_id = a.pm_product_id AND b.product_online = 1) ';
         if (OledrionUtility::getModuleOption('show_unpublished') == 0) { // Ne pas afficher les produits qui ne sont pas publiés
             $sql .= ' AND b.product_submitted <= ' . time();
         }
@@ -184,7 +184,7 @@ if ((isset($_POST['op']) && $_POST['op'] === 'go') || isset($_GET['start'])) { /
             }
             if (count($queries) > 0) {
                 $tmpObject = new oledrion_products();
-                $datas     =& $tmpObject->getVars();
+                $datas     = $tmpObject->getVars();
                 $fields    = [];
                 $cnt       = 0;
                 foreach ($datas as $key => $value) {

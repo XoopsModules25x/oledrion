@@ -77,7 +77,7 @@ class Oledrion_XoopsPersistableObjectHandler extends XoopsObjectHandler
      *
      * @var string
      */
-    public    $table;
+    public $table;
     protected $keyName;
     protected $className;
     protected $identifierName;

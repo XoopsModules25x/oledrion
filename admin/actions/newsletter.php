@@ -48,7 +48,7 @@ switch ($action) {
 
         if (OledrionUtility::checkVerXoops($GLOBALS['xoopsModule'], '2.5.9')) {
             $htmlSelect = $mytree->makeSelectElement('cat_cid', 'cat_title', '-', 0, true, 0, _AM_OLEDRION_ALL, _AM_OLEDRION_IN_CATEGORY);
-            $form->addElement($htmlSelect);
+            $sform->addElement($htmlSelect);
         } else {
             $htmlSelect = $mytree->makeSelBox('cat_cid', 'cat_title', '-', 0, _AM_OLEDRION_ALL);
             $sform->addElement(new XoopsFormLabel(_AM_OLEDRION_IN_CATEGORY, $htmlSelect), true);

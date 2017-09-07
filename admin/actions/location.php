@@ -110,7 +110,7 @@ switch ($action) {
 
         if (OledrionUtility::checkVerXoops($GLOBALS['xoopsModule'], '2.5.9')) {
             $select_pid = $mytree->makeSelectElement('location_pid', 'location_title', '--', $item->getVar('location_pid'), true, 0, '', _AM_OLEDRION_LOCATION_PID);
-            $form->addElement($select_pid);
+            $sform->addElement($select_pid);
         } else {
             $select_pid = $mytree->makeSelBox('location_pid', 'location_title', '-', $item->getVar('location_pid'), true);
             $sform->addElement(new XoopsFormLabel(_AM_OLEDRION_LOCATION_PID, $select_pid), false);

@@ -67,8 +67,7 @@ function oledrion_tag_synchronization($mid)
                . "               FROM {$itemHandler_table} "
                . "               WHERE $where"
                . '           ) '
-               . '       )';
-    else:
+               . '       )'; else:
         $sql = "    DELETE {$linkHandler->table} FROM {$linkHandler->table}"
                . "   LEFT JOIN {$itemHandler_table} AS aa ON {$linkHandler->table}.tag_itemid = aa.{$itemHandler_keyName} "
                . '   WHERE '

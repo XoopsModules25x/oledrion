@@ -30,7 +30,7 @@ function oledrion_search($queryarray, $andor, $limit, $offset, $userid)
     require_once XOOPS_ROOT_PATH . '/modules/oledrion/class/oledrion_products.php';
 
     // Recherche dans les produits
-    $sql = 'SELECT product_id, product_title, product_submitted, product_submitter FROM ' . $xoopsDB->prefix('oledrion_products') . ' WHERE (product_online = 1';
+    $sql = 'SELECT product_id, product_title, product_submitted, product_submitter FROM ' . $xoopsDB->prefix('oledrion_products') . ' WHERE (product_online = 1)';
     if (OledrionUtility::getModuleOption('show_unpublished') == 0) { // Ne pas afficher les produits qui ne sont pas publiés
         $sql .= ' AND product_submitted <= ' . time();
     }

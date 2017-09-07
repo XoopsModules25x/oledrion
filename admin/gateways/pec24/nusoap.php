@@ -5085,10 +5085,14 @@ class Wsdl extends Nusoap_base
             if (isset($bindingData['operations']) && is_array($bindingData['operations'])) {
                 foreach ($bindingData['operations'] as $operation => $data) {
                     $this->debug('post-parse data gathering for ' . $operation);
-                    $this->bindings[$binding]['operations'][$operation]['input']  = isset($this->bindings[$binding]['operations'][$operation]['input']) ? array_merge($this->bindings[$binding]['operations'][$operation]['input'],
-                                                                                                                                                                      $this->portTypes[$bindingData['portType']][$operation]['input']) : $this->portTypes[$bindingData['portType']][$operation]['input'];
-                    $this->bindings[$binding]['operations'][$operation]['output'] = isset($this->bindings[$binding]['operations'][$operation]['output']) ? array_merge($this->bindings[$binding]['operations'][$operation]['output'],
-                                                                                                                                                                       $this->portTypes[$bindingData['portType']][$operation]['output']) : $this->portTypes[$bindingData['portType']][$operation]['output'];
+                    $this->bindings[$binding]['operations'][$operation]['input']  = isset($this->bindings[$binding]['operations'][$operation]['input']) ? array_merge(
+                        $this->bindings[$binding]['operations'][$operation]['input'],
+                                                                                                                                                                      $this->portTypes[$bindingData['portType']][$operation]['input']
+                    ) : $this->portTypes[$bindingData['portType']][$operation]['input'];
+                    $this->bindings[$binding]['operations'][$operation]['output'] = isset($this->bindings[$binding]['operations'][$operation]['output']) ? array_merge(
+                        $this->bindings[$binding]['operations'][$operation]['output'],
+                                                                                                                                                                       $this->portTypes[$bindingData['portType']][$operation]['output']
+                    ) : $this->portTypes[$bindingData['portType']][$operation]['output'];
                     if (isset($this->messages[$this->bindings[$binding]['operations'][$operation]['input']['message']])) {
                         $this->bindings[$binding]['operations'][$operation]['input']['parts'] = $this->messages[$this->bindings[$binding]['operations'][$operation]['input']['message']];
                     }
@@ -5651,7 +5655,7 @@ class Wsdl extends Nusoap_base
         if (isset($this->schemas[$ns])) {
             $this->debug("in getTypeDef: have schema for namespace $ns");
             for ($i = 0, $iMax = count($this->schemas[$ns]); $i < $iMax; ++$i) {
-                $xs =& $this->schemas[$ns][$i];
+                $xs = $this->schemas[$ns][$i];
                 $t  = $xs->getTypeDef($type);
                 $this->appendDebug($xs->getDebug());
                 $xs->clearDebug();

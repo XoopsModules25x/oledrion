@@ -180,8 +180,8 @@ switch ($action) {
             $id           = $item->getVar('attribute_id');
             $actions      = [];
             $actions[]    = "<a href='$baseurl?op=$operation&action=edit&id=" . $id . "' title='" . _OLEDRION_EDIT . "'>" . $icones['edit'] . '</a>';
-            $actions[]    = "<a href='$baseurl?op=$operation&action=copy&id=" . $id . "' title='" . _OLEDRION_DUPLICATE_ATTRIBUTE . "'>" . $icones['copy'] . '</a>';
             $actions[]    = "<a href='$baseurl?op=$operation&action=delete&id=" . $id . "' title='" . _OLEDRION_DELETE . "'" . $conf_msg . '>' . $icones['delete'] . '</a>';
+            $actions[]    = "<a href='$baseurl?op=$operation&action=copy&id=" . $id . "' title='" . _OLEDRION_DUPLICATE_ATTRIBUTE . "'>" . $icones['copy'] . '</a>';
             $productTitle = isset($products[$item->getVar('attribute_product_id')]) ? $products[$item->getVar('attribute_product_id')]->getVar('product_title') : '';
             $productLink  = isset($products[$item->getVar('attribute_product_id')]) ? $products[$item->getVar('attribute_product_id')]->getLink() : '';
             echo "<tr class='" . $class . "'>\n";
