@@ -4745,9 +4745,9 @@ class Nusoap_server extends Nusoap_base
         if (!is_array($out)) {
             die('You must provide an array for operation outputs');
         }
-        if (false == $namespace) {
+        if (false === $namespace) {
         }
-        if (false == $soapaction) {
+        if (false === $soapaction) {
             if (isset($_SERVER)) {
                 $SERVER_NAME = $_SERVER['SERVER_NAME'];
                 $SCRIPT_NAME = isset($_SERVER['PHP_SELF']) ? $_SERVER['PHP_SELF'] : $_SERVER['SCRIPT_NAME'];
@@ -4766,10 +4766,10 @@ class Nusoap_server extends Nusoap_base
             }
             $soapaction = "$SCHEME://$SERVER_NAME$SCRIPT_NAME/$name";
         }
-        if (false == $style) {
+        if (false === $style) {
             $style = 'rpc';
         }
-        if (false == $use) {
+        if (false === $use) {
             $use = 'encoded';
         }
         if ($use === 'encoded' && $encodingStyle === '') {
@@ -4854,11 +4854,11 @@ class Nusoap_server extends Nusoap_base
         } else {
             $SERVER_PORT = ':' . $SERVER_PORT;
         }
-        if (false == $namespace) {
+        if (false === $namespace) {
             $namespace = "http://$SERVER_NAME/soap/$serviceName";
         }
 
-        if (false == $endpoint) {
+        if (false === $endpoint) {
             if ($HTTPS == '1' || $HTTPS === 'on') {
                 $SCHEME = 'https';
             } else {
@@ -4867,7 +4867,7 @@ class Nusoap_server extends Nusoap_base
             $endpoint = "$SCHEME://$SERVER_NAME$SERVER_PORT$SCRIPT_NAME";
         }
 
-        if (false == $schemaTargetNamespace) {
+        if (false === $schemaTargetNamespace) {
             $schemaTargetNamespace = $namespace;
         }
 
