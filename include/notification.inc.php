@@ -25,7 +25,7 @@ function oledrion_notify_iteminfo($category, $item_id)
     global $xoopsModule, $xoopsModuleConfig;
     $item_id = (int)$item_id;
 
-    if (empty($xoopsModule) || $xoopsModule->getVar('dirname') !== 'oledrion') {
+    if (empty($xoopsModule) || 'oledrion' !== $xoopsModule->getVar('dirname')) {
         /** @var XoopsModuleHandler $moduleHandler */
         $moduleHandler = xoops_getHandler('module');
         $module        = $moduleHandler->getByDirname('oledrion');
@@ -37,14 +37,14 @@ function oledrion_notify_iteminfo($category, $item_id)
         $config = $xoopsModuleConfig;
     }
 
-    if ($category === 'global') {
+    if ('global' === $category) {
         $item['name'] = '';
         $item['url']  = '';
 
         return $item;
     }
 
-    if ($category === 'new_category') {
+    if ('new_category' === $category) {
         include OLEDRION_PATH . 'include/common.php';
         $category = null;
         $category = $h_oledrion_cat->get($item_id);
@@ -56,7 +56,7 @@ function oledrion_notify_iteminfo($category, $item_id)
         return $item;
     }
 
-    if ($category === 'new_product') {
+    if ('new_product' === $category) {
         include OLEDRION_PATH . 'include/common.php';
         $product = null;
         $product = $h_oledrion_products->get($item_id);

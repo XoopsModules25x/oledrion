@@ -28,7 +28,7 @@ $download_id = isset($_GET['download_id']) ? $_GET['download_id'] : '';
 
 // TODO: Permettre au webmaster de réactiver un téléchargement
 
-if (xoops_trim($download_id) === '') {
+if ('' === xoops_trim($download_id)) {
     OledrionUtility::redirect(_OLEDRION_ERROR13, OLEDRION_URL, 5);
 }
 
@@ -42,21 +42,21 @@ if (!is_object($caddy)) {
 // Recherche du produit associé
 $product = null;
 $product = $h_oledrion_products->get($caddy->getVar('caddy_product_id'));
-if ($product == null) {
+if (null == $product) {
     OledrionUtility::redirect(_OLEDRION_ERROR15, OLEDRION_URL, 5);
 }
 
 // On vérifie que la commande associée est payée
 $order = null;
 $order = $h_oledrion_commands->get($caddy->getVar('caddy_cmd_id'));
-if ($order == null) {
+if (null == $order) {
     OledrionUtility::redirect(_OLEDRION_ERROR16, OLEDRION_URL, 5);
 }
 
 // Tout est bon, on peut envoyer le fichier au navigateur, s'il y a un fichier à télécharger, et s'il existe
 $file = '';
 $file = $product->getVar('product_download_url');
-if (xoops_trim($file) === '') {
+if ('' === xoops_trim($file)) {
     OledrionUtility::redirect(_OLEDRION_ERROR17, OLEDRION_URL, 5);
 }
 if (!file_exists($file)) {
@@ -76,7 +76,7 @@ $parameters = new Oledrion_parameters([
                                           'fullFilename' => $file
                                       ]);
 $parameters = $plugins->fireFilter(Oledrion_plugins::EVENT_ON_PRODUCT_DOWNLOAD, $parameters);
-if (trim($parameters['fileContent']) !== '') {
+if ('' !== trim($parameters['fileContent'])) {
     $fileContent = $parameters['fileContent'];
 }
 // *********************************************************

@@ -64,7 +64,7 @@ class Oledrion_pec24 extends Oledrion_gateway
      */
     public function saveParametersForm($data)
     {
-        if (xoops_trim($this->languageFilename) !== '' && file_exists($this->languageFilename)) {
+        if ('' !== xoops_trim($this->languageFilename) && file_exists($this->languageFilename)) {
             require $this->languageFilename;
         }
         $gatewayName = $this->gatewayInformation['foldername'];
@@ -201,7 +201,7 @@ class Oledrion_pec24 extends Oledrion_gateway
             $save_ok = 1;
         }
         // doing
-        if (($status == 0) && $save_ok) {
+        if ((0 == $status) && $save_ok) {
             if ((!$soapclient) || ($err = $soapclient->getError())) {
                 // this is unsucccessfull connection
                 $commande = null;
@@ -223,7 +223,7 @@ class Oledrion_pec24 extends Oledrion_gateway
                 $sendParams = [$params];
                 $res        = $soapclient->call('PinPaymentEnquiry', $sendParams);
                 $status     = $res['status'];
-                if ($status == 0) {
+                if (0 == $status) {
                     // this is a succcessfull payment
                     // we update our DataBase
                     $commande = null;

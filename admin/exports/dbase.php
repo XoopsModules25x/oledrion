@@ -109,7 +109,7 @@ class Oledrion_dbase_export extends Oledrion_export
             return false;
         }
         $dbf = dbase_open($this->folder . '/' . $this->filename, 2);
-        if ($dbf === false) {
+        if (false === $dbf) {
             $this->success = false;
 
             return false;

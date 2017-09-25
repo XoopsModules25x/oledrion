@@ -31,7 +31,7 @@ function b_oledrion_category_show($options)
 
     $block['nostock_msg'] = OledrionUtility::getModuleOption('nostock_msg');
 
-    if ((int)$options[0] == 0) { // Catégories selon la page en cours
+    if (0 == (int)$options[0]) { // Catégories selon la page en cours
         $block['block_option'] = 0;
         if (!isset($GLOBALS['current_category']) || $GLOBALS['current_category'] == -1) {
             return false;
@@ -68,7 +68,7 @@ function b_oledrion_category_show($options)
             }
             $block['block_categories'] = $tbl_tmp;
         }
-    } elseif ((int)$options[0] == 1) { // Affichage classique
+    } elseif (1 == (int)$options[0]) { // Affichage classique
         $block['block_option'] = 1;
         include XOOPS_ROOT_PATH . '/modules/oledrion/include/common.php';
         require_once OLEDRION_PATH . 'class/tree.php';

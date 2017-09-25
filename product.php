@@ -39,18 +39,18 @@ if (!is_object($product)) {
 }
 
 // Le produit est en ligne ?
-if ($product->getVar('product_online') == 0) {
+if (0 == $product->getVar('product_online')) {
     OledrionUtility::redirect(_OLEDRION_ERROR2, 'index.php', 5);
 }
 
 // Le produit est publié ?
-if (OledrionUtility::getModuleOption('show_unpublished') == 0 && $product->getVar('product_submitted') > time()) {
+if (0 == OledrionUtility::getModuleOption('show_unpublished') && $product->getVar('product_submitted') > time()) {
     OledrionUtility::redirect(_OLEDRION_ERROR3, 'index.php', 5);
 }
 
 // Faut il afficher les produit même lorsqu'ils ne sont plus en stock ?
-if (OledrionUtility::getModuleOption('nostock_display') == 0 && $product->getVar('product_stock') == 0) {
-    if (xoops_trim(OledrionUtility::getModuleOption('nostock_display')) !== '') {
+if (0 == OledrionUtility::getModuleOption('nostock_display') && 0 == $product->getVar('product_stock')) {
+    if ('' !== xoops_trim(OledrionUtility::getModuleOption('nostock_display'))) {
         OledrionUtility::redirect(OledrionUtility::getModuleOption('nostock_display'), 'main.php', 5);
     }
 }
@@ -102,12 +102,12 @@ switch ($op) {
         //$xoTheme->addScript('browse.php?Frameworks/jquery/plugins/jquery.lightbox.js');
         //$xoTheme->addStylesheet(XOOPS_URL . '/modules/system/css/lightbox.css');
 
-        if (isset($_GET['stock']) && $_GET['stock'] === 'add'
+        if (isset($_GET['stock']) && 'add' === $_GET['stock']
             && OledrionUtility::isMemberOfGroup(OledrionUtility::getModuleOption('grp_qty'))) {
             $h_oledrion_products->increaseStock($product);
         }
 
-        if (isset($_GET['stock']) && $_GET['stock'] === 'substract'
+        if (isset($_GET['stock']) && 'substract' === $_GET['stock']
             && OledrionUtility::isMemberOfGroup(OledrionUtility::getModuleOption('grp_qty'))) {
             $h_oledrion_products->decreaseStock($product);
             $h_oledrion_products->verifyLowStock($product);
@@ -213,7 +213,7 @@ switch ($op) {
         $tbl_tmp       = $h_oledrion_related->getObjects($criteria);
 
         // S'il n'y a pas de produits relatifs et que la bonne option est activée, on recherche les produits relatfis "dans l'autre sens" (les cas où le produit courant est marqué comme produit relatif)
-        if (count($tbl_tmp) == 0 && OLEDRION_RELATED_BOTH) {
+        if (0 == count($tbl_tmp) && OLEDRION_RELATED_BOTH) {
             unset($criteria);
             $tbl_tmp       = [];
             $criteria      = new Criteria('related_product_related', $product->getVar('product_id'), '=');
@@ -276,7 +276,7 @@ switch ($op) {
 
         $tbl_tmp['product_category'] = $product_category->toArray();
         $tbl_tmp['product_vendor']   = $product_vendor->toArray();
-        if (xoops_trim($product_user->getVar('name')) !== '') {
+        if ('' !== xoops_trim($product_user->getVar('name'))) {
             $name = $product_user->getVar('name');
         } else {
             $name = $product_user->getVar('uname');
@@ -289,7 +289,7 @@ switch ($op) {
         }
 
         $tbl_tmp['product_rating_formated'] = number_format($product->getVar('product_rating'), 2);
-        if ($product->getVar('product_votes') == 1) {
+        if (1 == $product->getVar('product_votes')) {
             $tbl_tmp['product_votes_count'] = _OLEDRION_ONEVOTE;
         } else {
             $tbl_tmp['product_votes_count'] = sprintf(_OLEDRION_NUMVOTES, $product->getVar('product_votes'));
@@ -343,16 +343,16 @@ switch ($op) {
         }
 
         // produits précédents et suivants ******************************************************************
-        if (OledrionUtility::getModuleOption('showprevnextlink') == 1) {
+        if (1 == OledrionUtility::getModuleOption('showprevnextlink')) {
             $xoopsTpl->assign('showprevnextlink', true);
             // Recherche du produit suivant le produit en cours.
             $criteria = new CriteriaCompo();
             $criteria->add(new Criteria('product_online', 1, '='));
-            if (OledrionUtility::getModuleOption('show_unpublished') == 0) {
+            if (0 == OledrionUtility::getModuleOption('show_unpublished')) {
                 // Ne pas afficher les produits qui ne sont pas publiés
                 $criteria->add(new Criteria('product_submitted', time(), '<='));
             }
-            if (OledrionUtility::getModuleOption('nostock_display') == 0) {
+            if (0 == OledrionUtility::getModuleOption('nostock_display')) {
                 // Se limiter aux seuls produits encore en stock
                 $criteria->add(new Criteria('product_stock', 0, '>'));
             }
@@ -362,7 +362,7 @@ switch ($op) {
             $criteria->setLimit(1);
             $tbl = [];
             $tbl = $h_oledrion_products->getObjects($criteria);
-            if (count($tbl) == 1) {
+            if (1 == count($tbl)) {
                 // Trouvé
                 $tmpProduct = null;
                 $tmpProduct = $tbl[0];
@@ -377,11 +377,11 @@ switch ($op) {
             // Recherche du produit précédant le produit en cours.
             $criteria = new CriteriaCompo();
             $criteria->add(new Criteria('product_online', 1, '='));
-            if (OledrionUtility::getModuleOption('show_unpublished') == 0) {
+            if (0 == OledrionUtility::getModuleOption('show_unpublished')) {
                 // Ne pas afficher les produits qui ne sont pas publiés
                 $criteria->add(new Criteria('product_submitted', time(), '<='));
             }
-            if (OledrionUtility::getModuleOption('nostock_display') == 0) {
+            if (0 == OledrionUtility::getModuleOption('nostock_display')) {
                 // Se limiter aux seuls produits encore en stock
                 $criteria->add(new Criteria('product_stock', 0, '>'));
             }
@@ -391,7 +391,7 @@ switch ($op) {
             $criteria->setLimit(1);
             $tbl = [];
             $tbl = $h_oledrion_products->getObjects($criteria);
-            if (count($tbl) == 1) {
+            if (1 == count($tbl)) {
                 // Trouvé
                 $tmpProduct = null;
                 $tmpProduct = $tbl[0];
@@ -536,9 +536,9 @@ switch ($op) {
         }
 
         // Notation produit *********************************************************************************
-        if (OledrionUtility::getModuleOption('rateproducts') == 1) {
+        if (1 == OledrionUtility::getModuleOption('rateproducts')) {
             $canRate = true;
-            if ($currentUser != 0) {
+            if (0 != $currentUser) {
                 $canRate = !$h_oledrion_votedata->hasUserAlreadyVoted($currentUser, $product->getVar('product_id'));
             } else {
                 $canRate = !$h_oledrion_votedata->hasAnonymousAlreadyVoted('', $product->getVar('product_id'));
@@ -554,9 +554,9 @@ switch ($op) {
         OledrionUtility::setCSS();
         OledrionUtility::setLocalCSS($xoopsConfig['language']);
         if (OledrionUtility::getModuleOption('manual_meta')) {
-            $pageTitle       = xoops_trim($product->getVar('product_metatitle')) === '' ? $title : $product->getVar('product_metatitle');
-            $metaDescription = xoops_trim($product->getVar('product_metadescription')) !== '' ? $product->getVar('product_metadescription') : $title;
-            $metaKeywords    = xoops_trim($product->getVar('product_metakeywords')) !== '' ? $product->getVar('product_metakeywords') : OledrionUtility::createMetaKeywords($product->getVar('product_title') . ' ' . $product->getVar('product_summary') . ' ' . $product->getVar('product_description'));
+            $pageTitle       = '' === xoops_trim($product->getVar('product_metatitle')) ? $title : $product->getVar('product_metatitle');
+            $metaDescription = '' !== xoops_trim($product->getVar('product_metadescription')) ? $product->getVar('product_metadescription') : $title;
+            $metaKeywords    = '' !== xoops_trim($product->getVar('product_metakeywords')) ? $product->getVar('product_metakeywords') : OledrionUtility::createMetaKeywords($product->getVar('product_title') . ' ' . $product->getVar('product_summary') . ' ' . $product->getVar('product_description'));
             OledrionUtility::setMetas($pageTitle, $metaDescription, $metaKeywords);
         } else {
             OledrionUtility::setMetas($title, $title, OledrionUtility::createMetaKeywords($product->getVar('product_title') . ' ' . $product->getVar('product_summary') . ' ' . $product->getVar('product_description')));

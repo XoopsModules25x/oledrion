@@ -63,7 +63,7 @@ $start         = isset($_REQUEST['start']) ? (int)$_REQUEST['start'] : 0;
 $mutipleSelect = isset($_REQUEST['mutipleSelect']) ? (int)$_REQUEST['mutipleSelect'] : 0;
 $callerName    = isset($_REQUEST['callerName']) ? $_REQUEST['callerName'] : '';
 
-if (isset($_REQUEST['op']) && $_REQUEST['op'] === 'search') {
+if (isset($_REQUEST['op']) && 'search' === $_REQUEST['op']) {
     $searchField    = isset($_REQUEST['searchField']) ? $_REQUEST['searchField'] : '';
     $searchCriteria = isset($_REQUEST['searchCriteria']) ? (int)$_REQUEST['searchCriteria'] : '';
     $searchText     = isset($_REQUEST['searchText']) ? trim($_REQUEST['searchText']) : '';
@@ -87,7 +87,7 @@ if (isset($_REQUEST['op']) && $_REQUEST['op'] === 'search') {
     $additionnalParameters['product_cid']    = $product_cid;
 
     $criteria = new CriteriaCompo();
-    if ($searchText !== '') {
+    if ('' !== $searchText) {
         $xoopsTpl->assign('searchTextValue', $ts->htmlSpecialChars($searchText));
         if (array_key_exists($searchField, $searchFields)) {
             switch ($searchCriteria) {

@@ -55,11 +55,11 @@ $tbl_tmp               = [];
 $mytree                = new Oledrion_XoopsObjectTree($categories, 'cat_cid', 'cat_pid');
 $subCategoriesSearched = false;
 // Si on est sur une catégorie mère ou si on n'a pas spécifié de catégorie
-if ((is_object($category) && $category->getVar('cat_pid') == 0) || $cat_cid == 0) { // On affiche les 4 blocs
+if ((is_object($category) && 0 == $category->getVar('cat_pid')) || 0 == $cat_cid) { // On affiche les 4 blocs
     $xoopsTpl->assign('case', 1);
 
     $tblChildsO = $tblChilds = [];
-    if ($cat_cid != 0) {
+    if (0 != $cat_cid) {
         $tblChilds[] = $cat_cid;
     }
     if ($cat_cid > 0) {
@@ -75,8 +75,8 @@ if ((is_object($category) && $category->getVar('cat_pid') == 0) || $cat_cid == 0
         if (!OledrionUtility::getModuleOption('manual_meta')) {
             OledrionUtility::setMetas($title, $title);
         } else {
-            $pageTitle       = xoops_trim($category->getVar('cat_metatitle')) === '' ? $title : $category->getVar('cat_metatitle');
-            $metaDescription = xoops_trim($category->getVar('cat_metadescription')) !== '' ? $category->getVar('cat_metadescription') : $title;
+            $pageTitle       = '' === xoops_trim($category->getVar('cat_metatitle')) ? $title : $category->getVar('cat_metatitle');
+            $metaDescription = '' !== xoops_trim($category->getVar('cat_metadescription')) ? $category->getVar('cat_metadescription') : $title;
             $metaKeywords    = xoops_trim($category->getVar('cat_metakeywords'));
             OledrionUtility::setMetas($pageTitle, $metaDescription, $metaKeywords);
         }
@@ -219,8 +219,8 @@ if (is_object($category)
     if (!OledrionUtility::getModuleOption('manual_meta')) {
         OledrionUtility::setMetas($title, $title, str_replace('&raquo;', ',', $title));
     } else {
-        $pageTitle       = xoops_trim($category->getVar('cat_metatitle')) === '' ? $title : $category->getVar('cat_metatitle');
-        $metaDescription = xoops_trim($category->getVar('cat_metadescription')) !== '' ? $category->getVar('cat_metadescription') : $title;
+        $pageTitle       = '' === xoops_trim($category->getVar('cat_metatitle')) ? $title : $category->getVar('cat_metatitle');
+        $metaDescription = '' !== xoops_trim($category->getVar('cat_metadescription')) ? $category->getVar('cat_metadescription') : $title;
         $metaKeywords    = xoops_trim($category->getVar('cat_metakeywords'));
         OledrionUtility::setMetas($pageTitle, $metaDescription, $metaKeywords);
     }

@@ -47,12 +47,12 @@ switch ($action) {
         echo "<tr><th align='center'>" . _AM_OLEDRION_ID . "</th><th align='center'>" . _AM_OLEDRION_PAYMENT_TITLE . "</th><th align='center'>" . _AM_OLEDRION_PAYMENT_TYPE . "</th><th align='center'>" . _AM_OLEDRION_PAYMENT_ONLINE . "</th><th align='center'>" . _AM_OLEDRION_ACTION . '</th></tr>';
         foreach ($payment as $item) {
             $id        = $item->getVar('payment_id');
-            $class     = ($class === 'even') ? 'odd' : 'even';
+            $class     = ('even' === $class) ? 'odd' : 'even';
             $actions   = [];
             $actions[] = "<a href='$baseurl?op=payment&action=edit&id=" . $id . "' title='" . _OLEDRION_EDIT . "'>" . $icones['edit'] . '</a>';
             $actions[] = "<a href='$baseurl?op=payment&action=delete&id=" . $id . "' title='" . _OLEDRION_DELETE . "'" . $conf_msg . '>' . $icones['delete'] . '</a>';
-            $online    = $item->getVar('payment_online') == 1 ? _YES : _NO;
-            if ($item->getVar('payment_type') === 'online') {
+            $online    = 1 == $item->getVar('payment_online') ? _YES : _NO;
+            if ('online' === $item->getVar('payment_type')) {
                 $payment_type = _AM_OLEDRION_PAYMENT_ONLINE . '( ' . $item->getVar('payment_gateway') . ' )';
             } else {
                 $payment_type = _AM_OLEDRION_PAYMENT_OFFLINE;
@@ -61,7 +61,7 @@ switch ($action) {
             echo "<td align='center'>" . $id . "</td><td align='center'>" . $item->getVar('payment_title') . "</td><td align='center'>" . $payment_type . "</td><td align='center'>" . $online . "</td><td align='center'>" . implode(' ', $actions) . "</td>\n";
             echo "<tr>\n";
         }
-        $class = ($class === 'even') ? 'odd' : 'even';
+        $class = ('even' === $class) ? 'odd' : 'even';
         echo "<tr class='" . $class . "'>\n";
         echo "<td colspan='5' align='center'>" . $form . "</td>\n";
         echo "</tr>\n";
@@ -72,7 +72,7 @@ switch ($action) {
     case 'add':
     case 'edit':
         xoops_cp_header();
-        if ($action === 'edit') {
+        if ('edit' === $action) {
             $title = _AM_OLEDRION_PAYMENT_EDIT;
             $id    = isset($_GET['id']) ? (int)$_GET['id'] : 0;
             if (empty($id)) {
@@ -108,7 +108,7 @@ switch ($action) {
             $payment_gateway->addOption($payment_gateway_item);
         }
         $sform->addElement($payment_gateway, true);
-        if ($action === 'edit' && $item->pictureExists()) {
+        if ('edit' === $action && $item->pictureExists()) {
             $pictureTray = new XoopsFormElementTray(_AM_OLEDRION_CURRENT_PICTURE, '<br>');
             $pictureTray->addElement(new XoopsFormLabel('', "<img src='" . $item->getPictureUrl() . "' alt='' border='0'>"));
             $deleteCheckbox = new XoopsFormCheckBox('', 'delpicture');
@@ -148,16 +148,16 @@ switch ($action) {
         $opRedirect = 'payment';
         $item->setVars($_POST);
 
-        if ($_POST['payment_type'] === 'offline') {
+        if ('offline' === $_POST['payment_type']) {
             $item->setVar('payment_gateway', 'offline');
         }
 
-        if ($_POST['payment_type'] === 'online'
+        if ('online' === $_POST['payment_type']
             && !in_array($_POST['payment_gateway'], Oledrion_gateways::getInstalledGatewaysList())) {
             $item->setVar('payment_gateway', Oledrion_gateways::getDefaultGateway());
         }
 
-        if (isset($_POST['delpicture']) && (int)$_POST['delpicture'] == 1) {
+        if (isset($_POST['delpicture']) && 1 == (int)$_POST['delpicture']) {
             $item->deletePicture();
         }
         $destname = '';
@@ -168,7 +168,7 @@ switch ($action) {
             }
             $item->setVar('payment_image', basename($destname));
         } else {
-            if ($res1 !== false) {
+            if (false !== $res1) {
                 echo $res1;
             }
         }
@@ -184,7 +184,7 @@ switch ($action) {
     case 'delete':
         xoops_cp_header();
         $id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
-        if ($id == 0) {
+        if (0 == $id) {
             OledrionUtility::redirect(_AM_OLEDRION_ERROR_1, $baseurl, 5);
         }
         $payment = null;

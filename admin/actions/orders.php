@@ -110,7 +110,7 @@ switch ($action) {
         echo "<tr><th align='center'>" . _AM_OLEDRION_ID . "</th><th align='center'>" . _AM_OLEDRION_DATE . "</th><th align='center'>" . _AM_OLEDRION_CLIENT . "</th><th align='center'>" . _AM_OLEDRION_TOTAL_SHIPP . "</th><th align='center'>" . _AM_OLEDRION_ACTION . '</th></tr>';
         foreach ($orders as $item) {
             $id        = $item->getVar('cmd_id');
-            $class     = ($class === 'even') ? 'odd' : 'even';
+            $class     = ('even' === $class) ? 'odd' : 'even';
             $date      = formatTimestamp(strtotime($item->getVar('cmd_date')), 's');
             $actions   = [];
             $actions[] = "<a target='_blank' href='" . OLEDRION_URL . 'invoice.php?id=' . $id . "' title='" . _OLEDRION_DETAILS . "'>" . $icones['details'] . '</a>';
@@ -143,7 +143,7 @@ switch ($action) {
             echo "<tr>\n";
             $totalOrder += (float)$item->getVar('cmd_total', 'n');
         }
-        $class = ($class === 'even') ? 'odd' : 'even';
+        $class = ('even' === $class) ? 'odd' : 'even';
         echo "<tr class='$class'><td colspan='2' align='center'><b>" . _OLEDRION_TOTAL . "</b></td><td>&nbsp;</td><td align='right'><b>" . $oledrion_Currency->amountForDisplay($totalOrder) . '</b></td><td>&nbsp;</td></tr>';
         echo '</table>';
         if (isset($pagenav) && is_object($pagenav)) {
@@ -157,7 +157,7 @@ switch ($action) {
         // ****************************************************************************************************************
         xoops_cp_header();
         $id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
-        if ($id == 0) {
+        if (0 == $id) {
             OledrionUtility::redirect(_AM_OLEDRION_ERROR_1, $baseurl, 5);
         }
         $item = $h_oledrion_commands->get($id);
@@ -324,7 +324,7 @@ switch ($action) {
                 $export = new $className();
                 $export->setOrderType($orderType);
                 $result = $export->export();
-                if ($result === true) {
+                if (true === $result) {
                     echo "<a href='" . $export->getDownloadUrl() . "'>" . _AM_OLEDRION_EXPORT_READY . '</a>';
                 }
             }
@@ -395,7 +395,7 @@ switch ($action) {
         error_reporting(0);
         @$xoopsLogger->activated = false;
         $cmdId = isset($_GET['id']) ? (int)$_GET['id'] : 0;
-        if ($cmdId == 0) {
+        if (0 == $cmdId) {
             OledrionUtility::redirect(_AM_OLEDRION_ERROR_1, $baseurl, 5);
         }
         $order = null;
@@ -407,7 +407,7 @@ switch ($action) {
 
         // Récupération des caddy associés
         $caddy = $h_oledrion_caddy->getCaddyFromCommand($cmdId);
-        if (count($caddy) == 0) {
+        if (0 == count($caddy)) {
             OledrionUtility::redirect(_OLEDRION_ERROR11, 'index.php', 6);
         }
 

@@ -78,7 +78,7 @@ class Oledrion_parameters extends ArrayObject
      */
     public function __call($method, $args)
     {
-        if (substr($method, 0, 3) === 'set') {
+        if ('set' === substr($method, 0, 3)) {
             parent::offsetSet(strtolower(substr($method, 3, 1)) . substr($method, 4), $args[0]);
 
             return $this;

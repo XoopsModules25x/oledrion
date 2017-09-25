@@ -70,35 +70,35 @@ switch ($action) {
         $newFilter = false;
 
         if (isset($_POST['filter_attribute_id'])) {
-            if ((int)$_POST['filter_attribute_id'] != 0) {
+            if (0 != (int)$_POST['filter_attribute_id']) {
                 $criteria->add(new Criteria('attribute_id', (int)$_POST['filter_attribute_id']), '=');
             }
             $filter_attribute_id = (int)$_POST['filter_attribute_id'];
             $newFilter           = true;
         }
-        if (isset($_POST['filter_attribute_title']) && xoops_trim($_POST['filter_attribute_title']) !== '') {
+        if (isset($_POST['filter_attribute_title']) && '' !== xoops_trim($_POST['filter_attribute_title'])) {
             $criteria->add(new Criteria('attribute_title', '%' . $_POST['filter_attribute_title'] . '%', 'LIKE'));
             $filter_attribute_title = $_POST['filter_attribute_title'];
             $newFilter              = true;
         }
-        if (isset($_POST['filter_attribute_product_id']) && (int)$_POST['filter_attribute_product_id'] != 0) {
+        if (isset($_POST['filter_attribute_product_id']) && 0 != (int)$_POST['filter_attribute_product_id']) {
             $criteria->add(new Criteria('attribute_product_id', (int)$_POST['filter_attribute_product_id']), '=');
             $filter_attribute_product_id = (int)$_POST['filter_attribute_product_id'];
             $newFilter                   = true;
         }
-        if (isset($_POST['filter_attribute_weight']) && (int)$_POST['filter_attribute_weight'] != 0) {
+        if (isset($_POST['filter_attribute_weight']) && 0 != (int)$_POST['filter_attribute_weight']) {
             $criteria->add(new Criteria('attribute_weight', (int)$_POST['filter_attribute_weight']), '=');
             $filter_attribute_weight = (int)$_POST['filter_attribute_weight'];
             $newFilter               = true;
         }
-        if (isset($_POST['filter_attribute_type']) && (int)$_POST['filter_attribute_type'] != 0) {
+        if (isset($_POST['filter_attribute_type']) && 0 != (int)$_POST['filter_attribute_type']) {
             $criteria->add(new Criteria('attribute_type', (int)$_POST['filter_attribute_type']), '=');
             $filter_attribute_type = (int)$_POST['filter_attribute_type'];
             $newFilter             = true;
         }
 
-        if ($filter_attribute_id == 0 && $filter_attribute_title === '' && $filter_attribute_weight == 0
-            && $filter_attribute_type == 0) {
+        if (0 == $filter_attribute_id && '' === $filter_attribute_title && 0 == $filter_attribute_weight
+            && 0 == $filter_attribute_type) {
             $newFilter = true;
         }
 
@@ -176,7 +176,7 @@ switch ($action) {
         echo "<th align='center'><input type='hidden' name='op' id='op' value='attributes'><input type='submit' name='btngo' id='btngo' value='" . _GO . "'></th></form></tr>\n";
 
         foreach ($items as $item) {
-            $class        = ($class === 'even') ? 'odd' : 'even';
+            $class        = ('even' === $class) ? 'odd' : 'even';
             $id           = $item->getVar('attribute_id');
             $actions      = [];
             $actions[]    = "<a href='$baseurl?op=$operation&action=edit&id=" . $id . "' title='" . _OLEDRION_EDIT . "'>" . $icones['edit'] . '</a>';
@@ -195,7 +195,7 @@ switch ($action) {
             echo "<td align='center'>" . implode(' ', $actions) . "</td>\n";
             echo "<tr>\n";
         }
-        $class = ($class === 'even') ? 'odd' : 'even';
+        $class = ('even' === $class) ? 'odd' : 'even';
         echo "<tr class='" . $class . "'>\n";
         echo "<td colspan='6' align='center'>" . $form . "</td>\n";
         echo "</tr>\n";
@@ -219,7 +219,7 @@ switch ($action) {
         if (is_object($attribute)) {
             $newAttribute   = $oledrionHandlers->h_oledrion_attributes->cloneAttribute($attribute);
             $newAttributeId = $newAttribute->attribute_id;
-            if ($newAttribute !== false) {
+            if (false !== $newAttribute) {
                 OledrionUtility::redirect(_AM_OLEDRION_SAVE_OK, $baseurl . '?op=' . $operation . '&action=edit&id=' . $newAttributeId, 2);
             } else {
                 OledrionUtility::redirect(_AM_OLEDRION_SAVE_PB, $baseurl . '?op=' . $operation, 5);
@@ -241,7 +241,7 @@ switch ($action) {
             OledrionUtility::redirect(_AM_OLEDRION_NOT_FOUND, $baseurl . '?op=' . $operation, 5);
         }
         $attributesCountInCaddy = $oledrionHandlers->h_oledrion_caddy_attributes->getCaddyCountFromAttributeId($id);
-        if ($attributesCountInCaddy == 0) {
+        if (0 == $attributesCountInCaddy) {
             $res = $oledrionHandlers->h_oledrion_attributes->deleteAttribute($attribute);
             if ($res) {
                 OledrionUtility::redirect(_AM_OLEDRION_SAVE_OK, $baseurl . '?op=' . $operation, 2);
@@ -256,7 +256,7 @@ switch ($action) {
             $class = '';
             echo "<tr><th align='center'>" . _AM_OLEDRION_ID . "</th><th align='center'>" . _AM_OLEDRION_DATE . "</th><th align='center'>" . _AM_OLEDRION_CLIENT . "</th><th align='center'>" . _AM_OLEDRION_TOTAL_SHIPP . '</th></tr>';
             foreach ($tblTmp2 as $item) {
-                $class = ($class === 'even') ? 'odd' : 'even';
+                $class = ('even' === $class) ? 'odd' : 'even';
                 $date  = formatTimestamp(strtotime($item->getVar('cmd_date')), 's');
                 echo "<tr class='" . $class . "'>\n";
                 echo "<td align='right'>"
@@ -290,7 +290,7 @@ switch ($action) {
         xoops_cp_header();
         removeAttributInSession();
 
-        if ($action === 'edit') {
+        if ('edit' === $action) {
             $title = _AM_OLEDRION_EDIT_ATTRIBUTE;
             $id    = isset($_GET['id']) ? (int)$_GET['id'] : 0;
             if (empty($id)) {
@@ -351,8 +351,8 @@ switch ($action) {
         $attributeParameters = "<div name='attributeParameters' id='attributeParameters'>\n";
         $defaultValue        = OLEDRION_ATTRIBUTE_CHECKBOX_WHITE_SPACE;
         if ($edit) {
-            if ($item->getVar('attribute_type') == OLEDRION_ATTRIBUTE_RADIO
-                || $item->getVar('attribute_type') == OLEDRION_ATTRIBUTE_CHECKBOX) {
+            if (OLEDRION_ATTRIBUTE_RADIO == $item->getVar('attribute_type')
+                || OLEDRION_ATTRIBUTE_CHECKBOX == $item->getVar('attribute_type')) {
                 $defaultValue = $item->getVar('attribute_option1', 'e');
             }
         }
@@ -370,13 +370,13 @@ switch ($action) {
         $defaultValue1       = OLEDRION_ATTRIBUTE_SELECT_VISIBLE_OPTIONS;
         $defaultValue2       = OLEDRION_ATTRIBUTE_SELECT_MULTIPLE;
         if ($edit) {
-            if ($item->getVar('attribute_type') == OLEDRION_ATTRIBUTE_SELECT) {
+            if (OLEDRION_ATTRIBUTE_SELECT == $item->getVar('attribute_type')) {
                 $defaultValue1 = $item->getVar('attribute_option1', 'e');
                 $defaultValue2 = $item->getVar('attribute_option2', 'e');
             }
         }
         $checked1 = $checked2 = '';
-        if ($defaultValue2 == 1) {
+        if (1 == $defaultValue2) {
             $checked1 = 'checked';
         } else {
             $checked2 = 'checked';
@@ -425,7 +425,7 @@ switch ($action) {
 
         $item->setVars($_POST);
         $attribute_type = isset($_POST['attribute_type']) ? (int)$_POST['attribute_type'] : 0;
-        if ($attribute_type == OLEDRION_ATTRIBUTE_SELECT) { // Liste déroulante
+        if (OLEDRION_ATTRIBUTE_SELECT == $attribute_type) { // Liste déroulante
             $item->setVar('attribute_option1', (int)$_POST['option2']);
             $item->setVar('attribute_option2', (int)$_POST['option3']);
         } else { // Bouton radio ou case à cocher
@@ -477,7 +477,7 @@ switch ($action) {
         require_once OLEDRION_CLASS_PATH . 'oledrion_attributes.php';
 
         if (!isset($_SESSION['oledrion_attribute'])) {
-            if ($attribute_id == 0) { // Création, rajouter une zone
+            if (0 == $attribute_id) { // Création, rajouter une zone
                 $attribute = $oledrionHandlers->h_oledrion_attributes->create(true);
             } else {
                 $attribute = $oledrionHandlers->h_oledrion_attributes->get($attribute_id);
@@ -514,7 +514,7 @@ switch ($action) {
             switch (xoops_trim(strtolower($_POST['subaction']))) {
                 case 'delete': // Suppression d'une option de l'attribut
                     $option = isset($_POST['option']) ? (int)$_POST['option'] : false;
-                    if ($option !== false) {
+                    if (false !== $option) {
                         $attribute->deleteOption($option);
                     }
                     break;
@@ -525,14 +525,14 @@ switch ($action) {
 
                 case 'up': // Déplacement d'une option vers le haut
                     $option = isset($_POST['option']) ? (int)$_POST['option'] : false;
-                    if ($option !== false) {
+                    if (false !== $option) {
                         $attribute->moveOptionUp($option);
                     }
                     break;
 
                 case 'down': // Déplacement d'une option vers le haut
                     $option = isset($_POST['option']) ? (int)$_POST['option'] : false;
-                    if ($option !== false) {
+                    if (false !== $option) {
                         $attribute->moveOptionDown($option);
                     }
                     break;
@@ -563,7 +563,7 @@ switch ($action) {
 
         if ($optionsCount > 0) {
             foreach ($options as $option) {
-                $class   = ($class === 'even') ? 'odd' : 'even';
+                $class   = ('even' === $class) ? 'odd' : 'even';
                 $content .= "<tr class='" . $class . "'>\n";
                 $checked = '';
                 if ($option['value'] == $defaultValue) {
@@ -597,7 +597,7 @@ switch ($action) {
                 ++$counter;
             }
         }
-        $class   = ($class === 'even') ? 'odd' : 'even';
+        $class   = ('even' === $class) ? 'odd' : 'even';
         $content .= "<tr class='" . $class . "'>\n";
         $content .= "<td colspan='$span' align='center'><input type='button'' name='bntAdd'' id='bntAdd' value='" . _AM_OLEDRION_ATTRIBUTE_ADD_OPTION . "'></td>\n";
         $content .= "</tr>\n";

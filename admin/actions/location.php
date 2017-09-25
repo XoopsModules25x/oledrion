@@ -46,12 +46,12 @@ switch ($action) {
         echo "<tr><th align='center'>" . _AM_OLEDRION_ID . "</th><th align='center'>" . _AM_OLEDRION_LOCATION_TITLE . "</th><th align='center'>" . _AM_OLEDRION_LOCATION_TYPE . "</th><th align='center'>" . _OLEDRION_ONLINE . "</th><th align='center'>" . _AM_OLEDRION_ACTION . '</th></tr>';
         foreach ($location as $item) {
             $id        = $item->getVar('location_id');
-            $class     = ($class === 'even') ? 'odd' : 'even';
+            $class     = ('even' === $class) ? 'odd' : 'even';
             $actions   = [];
             $actions[] = "<a href='$baseurl?op=location&action=edit&id=" . $id . "' title='" . _OLEDRION_EDIT . "'>" . $icones['edit'] . '</a>';
             $actions[] = "<a href='$baseurl?op=location&action=delete&id=" . $id . "' title='" . _OLEDRION_DELETE . "'" . $conf_msg . '>' . $icones['delete'] . '</a>';
-            $online    = $item->getVar('location_online') == 1 ? _YES : _NO;
-            if ($item->getVar('location_type') === 'parent') {
+            $online    = 1 == $item->getVar('location_online') ? _YES : _NO;
+            if ('parent' === $item->getVar('location_type')) {
                 $location_type = _AM_OLEDRION_LOCATION_PARENT;
             } else {
                 $location_type = _AM_OLEDRION_LOCATION_LOCATION;
@@ -60,7 +60,7 @@ switch ($action) {
             echo "<td align='center'>" . $id . "</td><td align='center'>" . $item->getVar('location_title') . "</td><td align='center'>" . $location_type . "</td><td align='center'>" . $online . "</td><td align='center'>" . implode(' ', $actions) . "</td>\n";
             echo "<tr>\n";
         }
-        $class = ($class === 'even') ? 'odd' : 'even';
+        $class = ('even' === $class) ? 'odd' : 'even';
         echo "<tr class='" . $class . "'>\n";
         echo "<td colspan='5' align='center'>" . $form . "</td>\n";
         echo "</tr>\n";
@@ -72,7 +72,7 @@ switch ($action) {
     case 'edit':
         xoops_cp_header();
         $id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
-        if ($action === 'edit') {
+        if ('edit' === $action) {
             $title = _AM_OLEDRION_LOCATION_EDIT;
             if (empty($id)) {
                 OledrionUtility::redirect(_AM_OLEDRION_ERROR_1, $baseurl, 5);
@@ -181,7 +181,7 @@ switch ($action) {
 
         $opRedirect = 'location';
         $item->setVars($post);
-        if ($post['location_type'] === 'parent') {
+        if ('parent' === $post['location_type']) {
             $item->setVar('location_pid', 0);
         }
         $res = $h_oledrion_location->insert($item);
@@ -218,7 +218,7 @@ switch ($action) {
     case 'delete':
         xoops_cp_header();
         $id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
-        if ($id == 0) {
+        if (0 == $id) {
             OledrionUtility::redirect(_AM_OLEDRION_ERROR_1, $baseurl, 5);
         }
         $location = null;

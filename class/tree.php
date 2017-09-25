@@ -84,13 +84,13 @@ class Oledrion_XoopsObjectTree extends XoopsObjectTree
         }
 
         $ret = "<select id='" . $name . "' name='" . $name . "'";
-        if ($additional !== '') {
+        if ('' !== $additional) {
             $ret .= $additional;
         }
         $ret .= '>';
-        if ($addEmptyOption !== '') {
+        if ('' !== $addEmptyOption) {
             $tmpSelected = '';
-            if ($selected == 0) {
+            if (0 == $selected) {
                 $tmpSelected = ' selected';
             }
             $ret .= '<option' . $tmpSelected . ' value="0">' . $addEmptyOption . '</option>';
@@ -115,7 +115,7 @@ class Oledrion_XoopsObjectTree extends XoopsObjectTree
     public function __get($name)
     {
         $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 1);
-        if ($name === '_tree') {
+        if ('_tree' === $name) {
             trigger_error("XoopsObjectTree::\$_tree is deprecated, accessed from {$trace[0]['file']} line {$trace[0]['line']},");
 
             return $this->tree;
@@ -159,7 +159,7 @@ class Oledrion_XoopsObjectTree extends XoopsObjectTree
     public function makeTreeAsArray($fieldName, $prefix = '-', $key = 0, $empty = null)
     {
         $ret = [];
-        if ($empty != null) {
+        if (null != $empty) {
             $ret[0] = $empty;
         }
         $this->_recursiveMakeTreeAsArray($fieldName, $key, $ret, $prefix);

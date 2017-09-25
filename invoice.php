@@ -63,7 +63,7 @@ $vats = $h_oledrion_vat->getAllVats(new Oledrion_parameters());
 
 // Récupération des caddy associés
 $caddy = $h_oledrion_caddy->getCaddyFromCommand($cmdId);
-if (count($caddy) == 0) {
+if (0 == count($caddy)) {
     OledrionUtility::redirect(_OLEDRION_ERROR11, 'index.php', 6);
 }
 

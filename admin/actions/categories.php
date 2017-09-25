@@ -118,7 +118,7 @@ switch ($action) {
         // ****************************************************************************************************************
         xoops_cp_header();
 
-        if ($action === 'edit') {
+        if ('edit' === $action) {
             $title = _AM_OLEDRION_EDIT_CATEG;
             $id    = isset($_POST['id']) ? (int)$_POST['id'] : 0;
             if (empty($id)) {
@@ -156,7 +156,7 @@ switch ($action) {
             $sform->addElement(new XoopsFormLabel(_AM_OLEDRION_PARENT_CATEG, $select_categ), false);
         }
 
-        if ($action === 'edit' && $item->pictureExists()) {
+        if ('edit' === $action && $item->pictureExists()) {
             $pictureTray = new XoopsFormElementTray(_AM_OLEDRION_CURRENT_PICTURE, '<br>');
             $pictureTray->addElement(new XoopsFormLabel('', "<img src='" . $item->getPictureUrl() . "' alt='' border='0'>"));
             $deleteCheckbox = new XoopsFormCheckBox('', 'delpicture');
@@ -218,19 +218,19 @@ switch ($action) {
         $opRedirect = 'categories';
         $item->setVars($_POST);
 
-        if (isset($_POST['delpicture']) && (int)$_POST['delpicture'] == 1) {
+        if (isset($_POST['delpicture']) && 1 == (int)$_POST['delpicture']) {
             $item->deletePicture();
         }
 
         $destname = '';
         $res1     = OledrionUtility::uploadFile(0, OLEDRION_PICTURES_PATH);
-        if ($res1 === true) {
+        if (true === $res1) {
             if (OledrionUtility::getModuleOption('resize_others')) { // Eventuellement on redimensionne l'image
                 OledrionUtility::resizePicture(OLEDRION_PICTURES_PATH . '/' . $destname, OLEDRION_PICTURES_PATH . '/' . $destname, OledrionUtility::getModuleOption('images_width'), OledrionUtility::getModuleOption('images_height'), true);
             }
             $item->setVar('cat_imgurl', basename($destname));
         } else {
-            if ($res1 !== false) {
+            if (false !== $res1) {
                 echo $res1;
             }
         }
@@ -254,7 +254,7 @@ switch ($action) {
         xoops_cp_header();
         oledrion_adminMenu(3);
         $id = isset($_POST['id']) ? (int)$_POST['id'] : 0;
-        if ($id == 0) {
+        if (0 == $id) {
             OledrionUtility::redirect(_AM_OLEDRION_ERROR_1, $baseurl, 5);
         }
         $category = null;
@@ -277,7 +277,7 @@ switch ($action) {
         $opRedirect = 'categories';
         // On vérifie que cette catégorie (et ses sous-catégories) ne sont pas utilisées par des produits
         $cnt = $h_oledrion_cat->getCategoryProductsCount($id);
-        if ($cnt == 0) {
+        if (0 == $cnt) {
             $item = null;
             $item = $h_oledrion_cat->get($id);
             if (is_object($item)) {

@@ -56,7 +56,7 @@ switch ($action) {
         echo "<table width='100%' cellspacing='1' cellpadding='3' border='0' class='outer'>";
         echo "<tr><th align='center'>" . _AM_OLEDRION_ID . "</th><th align='center'>" . _TITLE . "</th><th align='center'>" . _AM_OLEDRION_ACTION . '</th></tr>';
         foreach ($discounts as $item) {
-            $class     = ($class === 'even') ? 'odd' : 'even';
+            $class     = ('even' === $class) ? 'odd' : 'even';
             $id        = $item->getVar('disc_id');
             $actions   = [];
             $actions[] = "<a href='$baseurl?op=discounts&action=edit&id=" . $id . "' title='" . _OLEDRION_EDIT . "'>" . $icones['edit'] . '</a>';
@@ -66,7 +66,7 @@ switch ($action) {
             echo '<td>' . $id . "</td><td align='center'>" . $item->getVar('disc_title') . "</td><td align='center'>" . implode(' ', $actions) . "</td>\n";
             echo "<tr>\n";
         }
-        $class = ($class === 'even') ? 'odd' : 'even';
+        $class = ('even' === $class) ? 'odd' : 'even';
         echo "<tr class='" . $class . "'>\n";
         echo "<td colspan='3' align='center'>" . $form . "</td>\n";
         echo "</tr>\n";
@@ -86,7 +86,7 @@ switch ($action) {
 
         xoops_cp_header();
         //oledrion_adminMenu(7);
-        if ($action === 'edit') {
+        if ('edit' === $action) {
             $title = _AM_OLEDRION_EDIT_DISCOUNT;
             $id    = isset($_GET['id']) ? (int)$_GET['id'] : 0;
             if (empty($id)) {
@@ -142,18 +142,18 @@ switch ($action) {
         $discountForTemplate['disc_price_type_checked2'] = $reductionType2;
         // ****
         $disc_price_amount_type1 = $disc_price_amount_type2 = '';
-        if ($item->getVar('disc_price_amount_type') == OLEDRION_DISCOUNT_PRICE_REDUCE_PERCENT) {
+        if (OLEDRION_DISCOUNT_PRICE_REDUCE_PERCENT == $item->getVar('disc_price_amount_type')) {
             $disc_price_amount_type1 = $checked;
-        } elseif ($item->getVar('disc_price_amount_type') == OLEDRION_DISCOUNT_PRICE_REDUCE_MONEY) {
+        } elseif (OLEDRION_DISCOUNT_PRICE_REDUCE_MONEY == $item->getVar('disc_price_amount_type')) {
             $disc_price_amount_type2 = $checked;
         }
         $discountForTemplate['disc_price_amount_type_checked1'] = $disc_price_amount_type1;
         $discountForTemplate['disc_price_amount_type_checked2'] = $disc_price_amount_type2;
         // ****
         $disc_price_amount_on_checked1 = $disc_price_amount_on_checked2 = '';
-        if ($item->getVar('disc_price_amount_on') == OLEDRION_DISCOUNT_PRICE_AMOUNT_ON_PRODUCT) {
+        if (OLEDRION_DISCOUNT_PRICE_AMOUNT_ON_PRODUCT == $item->getVar('disc_price_amount_on')) {
             $disc_price_amount_on_checked1 = $checked;
-        } elseif ($item->getVar('disc_price_amount_on') == OLEDRION_DISCOUNT_PRICE_AMOUNT_ON_CART) {
+        } elseif (OLEDRION_DISCOUNT_PRICE_AMOUNT_ON_CART == $item->getVar('disc_price_amount_on')) {
             $disc_price_amount_on_checked2 = $checked;
         }
         $discountForTemplate['disc_price_amount_on_checked1'] = $disc_price_amount_on_checked1;
@@ -326,7 +326,7 @@ switch ($action) {
         }
         $opRedirect = 'discounts';
         $item->setVars($_POST);
-        if (isset($_POST['disc_pediod']) && (int)$_POST['disc_pediod'] == 1) {
+        if (isset($_POST['disc_pediod']) && 1 == (int)$_POST['disc_pediod']) {
             $item->setVar('disc_date_from', strtotime($_POST['disc_date_from']));
             $item->setVar('disc_date_to', strtotime($_POST['disc_date_to']));
         } else {

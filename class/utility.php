@@ -100,7 +100,7 @@ class OledrionUtility extends XoopsObject
         $dir = opendir($src);
         //    @mkdir($dst);
         while (false !== ($file = readdir($dir))) {
-            if (($file !== '.') && ($file !== '..')) {
+            if (('.' !== $file) && ('..' !== $file)) {
                 if (is_dir($src . '/' . $file)) {
                     self::recurseCopy($src . '/' . $file, $dst . '/' . $file);
                 } else {
@@ -268,7 +268,7 @@ class OledrionUtility extends XoopsObject
     {
         $x20 = false;
         $xv  = str_replace('XOOPS ', '', XOOPS_VERSION);
-        if (substr($xv, 2, 1) == '0') {
+        if ('0' == substr($xv, 2, 1)) {
             $x20 = true;
         }
 
@@ -455,11 +455,11 @@ class OledrionUtility extends XoopsObject
         global $xoopsConfig;
         require_once XOOPS_ROOT_PATH . '/class/xoopsmailer.php';
         if (!is_array($recipients)) {
-            if (trim($recipients) === '') {
+            if ('' === trim($recipients)) {
                 return false;
             }
         } else {
-            if (count($recipients) == 0) {
+            if (0 == count($recipients)) {
                 return false;
             }
         }
@@ -528,7 +528,7 @@ class OledrionUtility extends XoopsObject
         xoops_template_clear_module_cache($xoopsModule->getVar('mid')); // Clear module's blocks cache
 
         foreach ($tpllist as $onetemplate) { // Remove cache for each page.
-            if ($onetemplate->getVar('tpl_type') === 'module') {
+            if ('module' === $onetemplate->getVar('tpl_type')) {
                 //  Note, I've been testing all the other methods (like the one of Smarty) and none of them run, that's why I have used this code
                 $files_del = [];
                 $files_del = glob(XOOPS_CACHE_PATH . '/*' . $onetemplate->getVar('tpl_file') . '*');
@@ -565,7 +565,7 @@ class OledrionUtility extends XoopsObject
         static $mymodule;
         if (!isset($mymodule)) {
             global $xoopsModule;
-            if (isset($xoopsModule) && is_object($xoopsModule) && $xoopsModule->getVar('dirname') == OLEDRION_DIRNAME) {
+            if (isset($xoopsModule) && is_object($xoopsModule) && OLEDRION_DIRNAME == $xoopsModule->getVar('dirname')) {
                 $mymodule = $xoopsModule;
             } else {
                 $hModule  = xoops_getHandler('module');
@@ -684,7 +684,7 @@ class OledrionUtility extends XoopsObject
      */
     public static function SQLDateToHuman($date, $format = 'l')
     {
-        if ($date != '0000-00-00' && xoops_trim($date) !== '') {
+        if ('0000-00-00' != $date && '' !== xoops_trim($date)) {
             return formatTimestamp(strtotime($date), $format);
         } else {
             return '';
@@ -732,10 +732,10 @@ class OledrionUtility extends XoopsObject
         if (self::isX23()) {
             return false;
         }
-        if (strpos(strtolower(XOOPS_VERSION), 'impresscms') !== false) {
+        if (false !== strpos(strtolower(XOOPS_VERSION), 'impresscms')) {
             return false;
         }
-        if (strpos(strtolower(XOOPS_VERSION), 'legacy') === false) {
+        if (false === strpos(strtolower(XOOPS_VERSION), 'legacy')) {
             $xv = xoops_trim(str_replace('XOOPS ', '', XOOPS_VERSION));
             if ((int)substr($xv, 4, 2) >= 17) {
                 return false;
@@ -795,7 +795,7 @@ class OledrionUtility extends XoopsObject
     public static function createUploadName($folder, $fileName, $trimName = false)
     {
         $workingfolder = $folder;
-        if (xoops_substr($workingfolder, strlen($workingfolder) - 1, 1) !== '/') {
+        if ('/' !== xoops_substr($workingfolder, strlen($workingfolder) - 1, 1)) {
             $workingfolder .= '/';
         }
         $ext  = basename($fileName);
@@ -1133,7 +1133,7 @@ class OledrionUtility extends XoopsObject
         $keywords = str_replace('---', '-', $keywords);
         $keywords = str_replace('--', '-', $keywords);
         // Supprime un éventuel tiret à la fin de la chaine
-        if (substr($keywords, strlen($keywords) - 1, 1) == '-') {
+        if ('-' == substr($keywords, strlen($keywords) - 1, 1)) {
             $keywords = substr($keywords, 0, strlen($keywords) - 1);
         }
 
@@ -1242,7 +1242,7 @@ class OledrionUtility extends XoopsObject
                 break;
         }
         // Remove black listed words
-        if (xoops_trim(self::getModuleOption('metagen_blacklist')) !== '') {
+        if ('' !== xoops_trim(self::getModuleOption('metagen_blacklist'))) {
             $metagen_blacklist = str_replace("\r", '', self::getModuleOption('metagen_blacklist'));
             $metablack         = explode("\n", $metagen_blacklist);
             array_walk($metablack, 'trim');
@@ -1296,15 +1296,15 @@ class OledrionUtility extends XoopsObject
             $fldname = '';
             $fldname = $_FILES[$_POST['xoops_upload_file'][$indice]];
             $fldname = get_magic_quotes_gpc() ? stripslashes($fldname['name']) : $fldname['name'];
-            if (xoops_trim($fldname !== '')) {
+            if (xoops_trim('' !== $fldname)) {
                 $destname = self::createUploadName($dstpath, $fldname, true);
-                if ($mimeTypes === null) {
+                if (null === $mimeTypes) {
                     $permittedtypes = explode("\n", str_replace("\r", '', self::getModuleOption('mimetypes')));
                     array_walk($permittedtypes, 'trim');
                 } else {
                     $permittedtypes = $mimeTypes;
                 }
-                if ($uploadMaxSize === null) {
+                if (null === $uploadMaxSize) {
                     $uploadSize = self::getModuleOption('maxuploadsize');
                 } else {
                     $uploadSize = $uploadMaxSize;
@@ -1401,7 +1401,7 @@ class OledrionUtility extends XoopsObject
      */
     public static function addDaysToDate($duration = 1, $startingDate = 0)
     {
-        if ($startingDate == 0) {
+        if (0 == $startingDate) {
             $startingDate = time();
         }
         $endingDate = $startingDate + ($duration * 86400);
@@ -1483,7 +1483,7 @@ class OledrionUtility extends XoopsObject
      */
     public static function truncate_tagsafe($string, $length = 80, $etc = '...', $break_words = false)
     {
-        if ($length == 0) {
+        if (0 == $length) {
             return '';
         }
 
@@ -1525,7 +1525,7 @@ class OledrionUtility extends XoopsObject
     public static function setCSS($url = '')
     {
         global $xoopsTpl, $xoTheme;
-        if ($url === '') {
+        if ('' === $url) {
             $url = OLEDRION_URL . 'assets/css/oledrion.css';
         }
 
@@ -1719,7 +1719,7 @@ class OledrionUtility extends XoopsObject
     public static function getMemberGroups($uid = 0)
     {
         static $buffer = [];
-        if ($uid == 0) {
+        if (0 == $uid) {
             $uid = self::getCurrentUserID();
         }
 
@@ -1748,7 +1748,7 @@ class OledrionUtility extends XoopsObject
     {
         static $buffer = [];
         $retval = false;
-        if ($uid == 0) {
+        if (0 == $uid) {
             $uid = self::getCurrentUserID();
         }
         if (is_array($buffer) && array_key_exists($group, $buffer)) {
@@ -1876,7 +1876,7 @@ class OledrionUtility extends XoopsObject
         $ret      = [];
         $selected = '';
         if ($withNull) {
-            if ($default === 0) {
+            if (0 === $default) {
                 $selected = " selected = 'selected'";
             }
             $ret[] = '<option value=0' . $selected . '>---</option>';
@@ -1924,7 +1924,7 @@ class OledrionUtility extends XoopsObject
     public static function getId($string, $separator = '_')
     {
         $pos = strrpos($string, $separator);
-        if ($pos === false) {
+        if (false === $pos) {
             return $string;
         } else {
             return (int)substr($string, $pos + 1);
@@ -1942,7 +1942,7 @@ class OledrionUtility extends XoopsObject
     public static function getName($string, $separator = '_')
     {
         $pos = strrpos($string, $separator);
-        if ($pos === false) {
+        if (false === $pos) {
             return $string;
         } else {
             return substr($string, 0, $pos);

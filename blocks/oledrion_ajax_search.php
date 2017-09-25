@@ -28,7 +28,7 @@ function b_oledrion_ajax_search_show($options)
 
     include XOOPS_ROOT_PATH . '/modules/oledrion/include/common.php';
 
-    if ($options[0] == 1) {
+    if (1 == $options[0]) {
         $xoTheme->addScript('browse.php?Frameworks/jquery/jquery.js');
         $xoTheme->addScript(OLEDRION_URL . 'assets/js/autocomplete.js');
         $xoTheme->addStylesheet(OLEDRION_URL . 'assets/css/autocomplete.css');

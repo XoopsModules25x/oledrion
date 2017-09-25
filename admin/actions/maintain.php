@@ -51,7 +51,7 @@ switch ($action) {
     case 'import':
         xoops_cp_header();
         $categories = $h_oledrion_cat->getCategoriesCount();
-        if ($categories == 0) {
+        if (0 == $categories) {
             xoops_confirm(['op' => 'maintain', 'action' => 'doimport'], 'index.php', _AM_OLEDRION_IMPORT_CONF);
         } else {
             OledrionUtility::redirect(_AM_OLEDRION_SAVE_OK, $baseurl, 2);
@@ -61,7 +61,7 @@ switch ($action) {
     case 'doimport':
         xoops_cp_header();
         $categories = $h_oledrion_cat->getCategoriesCount();
-        if ($categories == 0) {
+        if (0 == $categories) {
             $cat_array = ['cat_cid' => 1, 'cat_pid' => 0, 'cat_title' => 'Test category'];
             $cat       = $h_oledrion_cat->create();
             $cat->setVars($cat_array);

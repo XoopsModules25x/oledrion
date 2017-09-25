@@ -59,7 +59,7 @@ switch ($action) {
         }
         echo "<tr><th align='center'>" . _OLEDRION_LASTNAME . "</th><th align='center'>" . _OLEDRION_COMM_NAME . "</th><th align='center'>" . _OLEDRION_EMAIL . "</th><th align='center'>" . _AM_OLEDRION_ACTION . '</th></tr>';
         foreach ($manufacturers as $item) {
-            $class     = ($class === 'even') ? 'odd' : 'even';
+            $class     = ('even' === $class) ? 'odd' : 'even';
             $id        = $item->getVar('manu_id');
             $actions   = [];
             $actions[] = "<a href='$baseurl?op=manufacturers&action=edit&id=" . $id . "' title='" . _OLEDRION_EDIT . "'>" . $icones['edit'] . '</a>';
@@ -68,7 +68,7 @@ switch ($action) {
             echo "<td><a href='" . $item->getLink() . "'>" . $item->getVar('manu_name') . "</a></td><td align='left'>" . $item->getVar('manu_commercialname') . "</td><td align='center'>" . $item->getVar('manu_email') . "</td><td align='center'>" . implode(' ', $actions) . "</td>\n";
             echo "<tr>\n";
         }
-        $class = ($class === 'even') ? 'odd' : 'even';
+        $class = ('even' === $class) ? 'odd' : 'even';
         echo "<tr class='" . $class . "'>\n";
         echo "<td colspan='4' align='center'>" . $form . "</td>\n";
         echo "</tr>\n";
@@ -84,7 +84,7 @@ switch ($action) {
     case 'edit': // Edition d'un fabricant
         // ****************************************************************************************************************
         xoops_cp_header();
-        if ($action === 'edit') {
+        if ('edit' === $action) {
             $title = _AM_OLEDRION_EDIT_MANUFACTURER;
             $id    = isset($_GET['id']) ? (int)$_GET['id'] : 0;
             if (empty($id)) {
@@ -121,7 +121,7 @@ switch ($action) {
         }
         // Les 5 images
         for ($i = 1; $i <= 5; ++$i) {
-            if ($action === 'edit' && $item->pictureExists($i)) {
+            if ('edit' === $action && $item->pictureExists($i)) {
                 $pictureTray = new XoopsFormElementTray(_AM_OLEDRION_CURRENT_PICTURE, '<br>');
                 $pictureTray->addElement(new XoopsFormLabel('', "<img src='" . $item->getPictureUrl($i) . "' alt='' border='0'>"));
                 $deleteCheckbox = new XoopsFormCheckBox('', 'delpicture' . $i);
@@ -161,7 +161,7 @@ switch ($action) {
         $opRedirect = 'manufacturers';
         $item->setVars($_POST);
         for ($i = 1; $i <= 5; ++$i) {
-            if (isset($_POST['delpicture' . $i]) && (int)$_POST['delpicture' . $i] == 1) {
+            if (isset($_POST['delpicture' . $i]) && 1 == (int)$_POST['delpicture' . $i]) {
                 $item->deletePicture($i);
             }
         }
@@ -169,13 +169,13 @@ switch ($action) {
         // Upload des fichiers
         for ($i = 1; $i <= 5; ++$i) {
             $res1 = OledrionUtility::uploadFile($i - 1, OLEDRION_PICTURES_PATH);
-            if ($res1 === true) {
+            if (true === $res1) {
                 if (OledrionUtility::getModuleOption('resize_others')) { // Eventuellement on redimensionne l'image
                     OledrionUtility::resizePicture(OLEDRION_PICTURES_PATH . '/' . $destname, OLEDRION_PICTURES_PATH . 'l' . $destname, OledrionUtility::getModuleOption('images_width'), OledrionUtility::getModuleOption('images_height'), true);
                 }
                 $item->setVar('manu_photo' . $i, basename($destname));
             } else {
-                if ($res1 !== false) {
+                if (false !== $res1) {
                     echo $res1;
                 }
             }
@@ -201,7 +201,7 @@ switch ($action) {
         $opRedirect = 'manufacturers';
         // On vérifie que ce fabriquant n'est pas relié à des produits
         $cnt = $h_oledrion_manufacturer->getManufacturerProductsCount($id);
-        if ($cnt == 0) {
+        if (0 == $cnt) {
             $item = null;
             $item = $h_oledrion_manufacturer->get($id);
             if (is_object($item)) {

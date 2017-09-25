@@ -77,7 +77,7 @@ class Oledrion_cat extends Oledrion_Object
     public function pictureExists()
     {
         $return = false;
-        if (xoops_trim($this->getVar('cat_imgurl')) !== ''
+        if ('' !== xoops_trim($this->getVar('cat_imgurl'))
             && file_exists(OLEDRION_PICTURES_PATH . '/' . $this->getVar('cat_imgurl'))) {
             $return = true;
         }
@@ -106,7 +106,7 @@ class Oledrion_cat extends Oledrion_Object
     {
         require_once XOOPS_ROOT_PATH . '/modules/oledrion/include/common.php';
         $url = '';
-        if (OledrionUtility::getModuleOption('urlrewriting') == 1) { // On utilise l'url rewriting
+        if (1 == OledrionUtility::getModuleOption('urlrewriting')) { // On utilise l'url rewriting
             $url = OLEDRION_URL . 'category-' . $this->getVar('cat_cid') . OledrionUtility::makeSeoUrl($this->getVar('cat_title', 'n')) . '.html';
         } else { // Pas d'utilisation de l'url rewriting
             $url = OLEDRION_URL . 'category.php?cat_cid=' . $this->getVar('cat_cid');
@@ -229,7 +229,7 @@ class OledrionOledrion_catHandler extends Oledrion_XoopsPersistableObjectHandler
 
         $ret = '';
         $this->_makeLi($fieldName, $key, $ret, $tree);
-        if (xoops_trim($ret) !== '') {
+        if ('' !== xoops_trim($ret)) {
             $ret = substr($ret, 0, -6);
         }
 

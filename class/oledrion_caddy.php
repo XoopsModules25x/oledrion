@@ -210,7 +210,7 @@ class OledrionOledrion_caddyHandler extends Oledrion_XoopsPersistableObjectHandl
     public function reloadPersistentCart()
     {
         global $xoopsUser, $h_oledrion_persistent_cart;
-        if (OledrionUtility::getModuleOption('persistent_cart') == 0) {
+        if (0 == OledrionUtility::getModuleOption('persistent_cart')) {
             return false;
         }
         if (is_object($xoopsUser)) {

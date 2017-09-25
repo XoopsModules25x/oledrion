@@ -56,7 +56,7 @@ class Oledrion_caddy_attributes extends Oledrion_Object
     public function getOption($valueToGet, $format = 'e')
     {
         $names = [];
-        if (xoops_trim($this->getVar($valueToGet, $format)) !== '') {
+        if ('' !== xoops_trim($this->getVar($valueToGet, $format))) {
             $names = explode(OLEDRION_ATTRIBUTE_SEPARATOR, $this->getVar($valueToGet, $format));
         }
 
@@ -182,7 +182,7 @@ class OledrionOledrion_caddy_attributesHandler extends Oledrion_XoopsPersistable
         $handlers   = OledrionHandler::getInstance();
         $attributes = $ret = [];
         $attributes = $this->getObjects(new Criteria('ca_caddy_id', $ca_caddy_id, '='));
-        if (count($attributes) == 0) {
+        if (0 == count($attributes)) {
             return $ret;
         }
         foreach ($attributes as $caddyAttribute) {

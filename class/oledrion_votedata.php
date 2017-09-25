@@ -122,7 +122,7 @@ class OledrionOledrion_votedataHandler extends Oledrion_XoopsPersistableObjectHa
      */
     public function hasUserAlreadyVoted($vote_uid, $vote_product_id)
     {
-        if ($vote_uid == 0) {
+        if (0 == $vote_uid) {
             $vote_uid = OledrionUtility::getCurrentUserID();
         }
         $criteria = new CriteriaCompo();
@@ -145,7 +145,7 @@ class OledrionOledrion_votedataHandler extends Oledrion_XoopsPersistableObjectHa
      */
     public function hasAnonymousAlreadyVoted($ip = '', $vote_product_id = 0)
     {
-        if ($ip === '') {
+        if ('' === $ip) {
             $ip = OledrionUtility::IP();
         }
         $anonwaitdays = 1;

@@ -56,7 +56,7 @@ switch ($action) {
         echo "<table width='100%' cellspacing='1' cellpadding='3' border='0' class='outer'>";
         echo "<tr><th align='center'>" . _AM_OLEDRION_ID . "</th><th align='center'>" . _AM_OLEDRION_DESCRIPTION . "</th><th align='center'>" . _AM_OLEDRION_DISCOUNT_PRODUCT . "</th><th align='center'>" . _AM_OLEDRION_ACTION . '</th></tr>';
         foreach ($items as $item) {
-            $class     = ($class === 'even') ? 'odd' : 'even';
+            $class     = ('even' === $class) ? 'odd' : 'even';
             $id        = $item->getVar('file_id');
             $actions   = [];
             $actions[] = "<a href='$baseurl?op=files&action=edit&id=" . $id . "' title='" . _OLEDRION_EDIT . "'>" . $icones['edit'] . '</a>';
@@ -67,7 +67,7 @@ switch ($action) {
             echo '<td>' . $item->getVar('file_description') . "</td><td align='center'>" . $product . "</td><td align='center'>" . implode(' ', $actions) . "</td>\n";
             echo "<tr>\n";
         }
-        $class = ($class === 'even') ? 'odd' : 'even';
+        $class = ('even' === $class) ? 'odd' : 'even';
         echo "<tr class='" . $class . "'>\n";
         echo "<td colspan='4' align='center'>" . $form . "</td>\n";
         echo "</tr>\n";
@@ -83,7 +83,7 @@ switch ($action) {
     case 'edit': // Edition d'un fichier
         // ****************************************************************************************************************
         xoops_cp_header();
-        if ($action === 'edit') {
+        if ('edit' === $action) {
             $title = _AM_OLEDRION_EDIT_FILE;
             $id    = isset($_GET['id']) ? (int)$_GET['id'] : 0;
             if (empty($id)) {
@@ -131,7 +131,7 @@ switch ($action) {
 
         $sform->addElement(new XoopsFormText(_AM_OLEDRION_DESCRIPTION, 'file_description', 50, 255, $item->getVar('file_description', 'e')), true);
 
-        if ($action === 'edit' && trim($item->getVar('file_filename')) !== '' && $item->fileExists()) {
+        if ('edit' === $action && '' !== trim($item->getVar('file_filename')) && $item->fileExists()) {
             $pictureTray = new XoopsFormElementTray(_AM_OLEDRION_CURRENT_FILE, '<br>');
             $pictureTray->addElement(new XoopsFormLabel('', "<a href='" . $item->getURL() . "' target='_blank'>" . $item->getVar('file_filename') . '</a>'));
             $sform->addElement($pictureTray);
@@ -166,11 +166,11 @@ switch ($action) {
         $item->setVars($_POST);
         $destname = '';
         $result   = OledrionUtility::uploadFile(0, OLEDRION_ATTACHED_FILES_PATH);
-        if ($result === true) {
+        if (true === $result) {
             $item->setVar('file_filename', basename($destname));
             $item->setVar('file_mimetype', OledrionUtility::getMimeType(OLEDRION_ATTACHED_FILES_PATH . '/' . $destname));
         } else {
-            if ($result !== false) {
+            if (false !== $result) {
                 OledrionUtility::redirect(_AM_OLEDRION_SAVE_PB . '<br>' . $result, $baseurl . '?op=' . $opRedirect, 5);
             }
         }

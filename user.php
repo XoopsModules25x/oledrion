@@ -22,7 +22,7 @@ $GLOBALS['xoopsOption']['template_main'] = 'oledrion_user.tpl';
 require_once XOOPS_ROOT_PATH . '/header.php';
 // Check is user
 $uid = OledrionUtility::getCurrentUserID();
-if ($uid == 0) {
+if (0 == $uid) {
     OledrionUtility::redirect(_OLEDRION_ERROR23, XOOPS_URL . '/register.php', 4);
 }
 // Load header

@@ -32,12 +32,12 @@ if ($product_id > 0) {
     }
 
     // Produit en ligne ?
-    if ($product->getVar('product_online') == 0) {
+    if (0 == $product->getVar('product_online')) {
         exit(_OLEDRION_ERROR2);
     }
 
     // Le produit est publié ?
-    if (OledrionUtility::getModuleOption('show_unpublished') == 0 && $product->getVar('product_submitted') > time()) {
+    if (0 == OledrionUtility::getModuleOption('show_unpublished') && $product->getVar('product_submitted') > time()) {
         exit(_OLEDRION_ERROR3);
     }
 } else {
@@ -47,7 +47,7 @@ if ($product_id > 0) {
 switch ($type) {
     case 'attachment': // Un fichier attaché à un produit
         $file_id = isset($_GET['file_id']) ? (int)$_GET['file_id'] : 0;
-        if ($file_id == 0) {
+        if (0 == $file_id) {
             exit(_OLEDRION_ERROR13);
         }
         $attachedFile = null;

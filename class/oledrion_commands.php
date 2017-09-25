@@ -136,7 +136,7 @@ class OledrionOledrion_commandsHandler extends Oledrion_XoopsPersistableObjectHa
      */
     public function isFirstCommand($uid = 0)
     {
-        if ($uid == 0) {
+        if (0 == $uid) {
             $uid = OledrionUtility::getCurrentUserID();
         }
         $critere = new Criteria('cmd_uid', (int)$uid, '=');
@@ -156,7 +156,7 @@ class OledrionOledrion_commandsHandler extends Oledrion_XoopsPersistableObjectHa
      */
     public function productAlreadyBought($uid = 0, $productId = 0)
     {
-        if ($uid == 0) {
+        if (0 == $uid) {
             $uid = OledrionUtility::getCurrentUserID();
         }
         $sql    = 'SELECT Count(*) AS cpt FROM ' . $this->db->prefix('oledrion_caddy') . ' c, ' . $this->db->prefix('oledrion_commands') . ' f WHERE c.caddy_product_id = ' . (int)$productId . ' AND c.caddy_cmd_id = f.cmd_id AND f.cmd_uid = ' . (int)$uid;
@@ -227,7 +227,7 @@ class OledrionOledrion_commandsHandler extends Oledrion_XoopsPersistableObjectHa
                     $produit = null;
                     if (isset($products[$item->getVar('caddy_product_id')])) {
                         $produit = $products[$item->getVar('caddy_product_id')];
-                        if (xoops_trim($produit->getVar('product_download_url')) !== '') {
+                        if ('' !== xoops_trim($produit->getVar('product_download_url'))) {
                             $retval[] = OLEDRION_URL . 'download.php?download_id=' . $item->getVar('caddy_pass');
                         }
                     }

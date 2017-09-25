@@ -48,7 +48,7 @@ switch ($action) {
         echo "<tr><th align='center'>" . _AM_OLEDRION_ID . "</th><th align='center'>" . _OLEDRION_VENDOR . "</th><th align='center'>" . _AM_OLEDRION_ACTION . '</th></tr>';
         foreach ($vendors as $item) {
             $id        = $item->getVar('vendor_id');
-            $class     = ($class === 'even') ? 'odd' : 'even';
+            $class     = ('even' === $class) ? 'odd' : 'even';
             $actions   = [];
             $actions[] = "<a href='$baseurl?op=vendors&action=edit&id=" . $id . "' title='" . _OLEDRION_EDIT . "'>" . $icones['edit'] . '</a>';
             $actions[] = "<a href='$baseurl?op=vendors&action=delete&id=" . $id . "' title='" . _OLEDRION_DELETE . "'" . $conf_msg . '>' . $icones['delete'] . '</a>';
@@ -56,7 +56,7 @@ switch ($action) {
             echo "<td align='center'>" . $id . "</td><td align='center'>" . $item->getVar('vendor_name') . "</td><td align='center'>" . implode(' ', $actions) . "</td>\n";
             echo "<tr>\n";
         }
-        $class = ($class === 'even') ? 'odd' : 'even';
+        $class = ('even' === $class) ? 'odd' : 'even';
         echo "<tr class='" . $class . "'>\n";
         echo "<td colspan='3' align='center'>" . $form . "</td>\n";
         echo "</tr>\n";
@@ -70,7 +70,7 @@ switch ($action) {
     case 'edit': // Edition d'un vendeur
         // ****************************************************************************************************************
         xoops_cp_header();
-        if ($action === 'edit') {
+        if ('edit' === $action) {
             $title = _AM_OLEDRION_EDIT_VENDOR;
             $id    = isset($_GET['id']) ? (int)$_GET['id'] : 0;
             if (empty($id)) {
@@ -142,7 +142,7 @@ switch ($action) {
         $opRedirect = 'vendors';
         // On vérifie que ce vendeur n'est pas rattaché à des produits
         $cnt = $h_oledrion_vendors->getVendorProductsCount($id);
-        if ($cnt == 0) {
+        if (0 == $cnt) {
             $item = null;
             $item = $h_oledrion_vendors->get($id);
             if (is_object($item)) {

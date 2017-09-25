@@ -69,7 +69,7 @@ class NewelementsAction extends Oledrion_action
     public function fireNewProduct($parameters)
     {
         $product = $parameters['product'];
-        if ((int)$product->getVar('product_online') == 1) {
+        if (1 == (int)$product->getVar('product_online')) {
             $tags                    = [];
             /** @var \XoopsNotificationHandler $notificationHandler */
             $notificationHandler     = xoops_getHandler('notification');

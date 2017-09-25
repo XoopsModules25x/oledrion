@@ -71,13 +71,13 @@ switch ($action) {
                     if (is_object($temporaryGateway)) {
                         ++$gatewaysCount;
                         $gatewayInformation = $temporaryGateway->getGatewayInformation();
-                        $class              = ($class === 'even') ? 'odd' : 'even';
+                        $class              = ('even' === $class) ? 'odd' : 'even';
                         echo "<tr class='" . $class . "'>\n";
                         echo '<td>' . $gatewayInformation['name'] . "</td>\n";
                         echo "<td align='center'>" . $gatewayInformation['version'] . "</td>\n";
                         echo '<td>' . $gatewayInformation['description'] . "</td>\n";
                         echo '<td>' . $gatewayInformation['author'];
-                        if (xoops_trim($gatewayInformation['credits']) !== '') {
+                        if ('' !== xoops_trim($gatewayInformation['credits'])) {
                             echo '<br>' . _AM_OLEDRION_GATEWAYS_CREDITS . $gatewayInformation['credits'];
                         }
                         echo "</td>\n";
@@ -101,7 +101,7 @@ switch ($action) {
             }
         }
         if ($gatewaysCount > 0) {
-            $class = ($class === 'even') ? 'odd' : 'even';
+            $class = ('even' === $class) ? 'odd' : 'even';
             echo "<tr class='" . $class . "'>\n";
             echo "<td colspan='6' align='center'><br><input type='submit' name='btngot' id='btngo' value='" . _AM_OLEDRION_GATEWAYS_UPDATE . "'><br><br></form></td></tr>\n";
             echo "</tr>\n";

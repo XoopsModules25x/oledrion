@@ -45,7 +45,7 @@ switch ($action) {
         //$adminObject->addConfigBoxLine(array(OLEDRION_CACHE_PATH, '777'), 'chmod');
 
         $categories = $h_oledrion_cat->getCategoriesCount();
-        if ($categories == 0) {
+        if (0 == $categories) {
             $link = OLEDRION_ADMIN_URL . 'index.php?op=maintain&action=import';
             $link = sprintf('<a href="%s">%s</a>', $link, _AM_OLEDRION_IMPORT_DATA_TITLE);
             $text = sprintf(_AM_OLEDRION_IMPORT_DATA_TEXT, $link);

@@ -23,7 +23,7 @@
 require_once __DIR__ . '/header.php';
 require_once XOOPS_ROOT_PATH . '/class/template.php';
 
-if (OledrionUtility::getModuleOption('use_rss') == 0) {
+if (0 == OledrionUtility::getModuleOption('use_rss')) {
     exit;
 }
 // Paramètre, soit rien auquel cas on prend tous les produits récents soit cat_cid

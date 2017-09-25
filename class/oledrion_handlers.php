@@ -78,7 +78,7 @@ class OledrionHandler
      */
     public function __get($name)
     {
-        if (substr($name, 0, 2) !== 'h_') {
+        if ('h_' !== substr($name, 0, 2)) {
             return null;
         }
         if (!in_array(substr($name, 2), $this->handlersNames)) {

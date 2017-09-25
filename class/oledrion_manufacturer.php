@@ -94,7 +94,7 @@ class Oledrion_manufacturer extends Oledrion_Object
         $pictureNumber = (int)$pictureNumber;
         $return        = false;
         if ($pictureNumber > 0 && $pictureNumber < 6) {
-            if (xoops_trim($this->getVar('manu_photo' . $pictureNumber)) !== ''
+            if ('' !== xoops_trim($this->getVar('manu_photo' . $pictureNumber))
                 && file_exists(OLEDRION_PICTURES_PATH . '/' . $this->getVar('manu_photo' . $pictureNumber))) {
                 $return = true;
             }
@@ -139,7 +139,7 @@ class Oledrion_manufacturer extends Oledrion_Object
     public function getLink()
     {
         $url = '';
-        if (OledrionUtility::getModuleOption('urlrewriting') == 1) { // On utilise l'url rewriting
+        if (1 == OledrionUtility::getModuleOption('urlrewriting')) { // On utilise l'url rewriting
             $url = OLEDRION_URL . 'manufacturer-' . $this->getVar('manu_id') . OledrionUtility::makeSeoUrl($this->getVar('manu_commercialname', 'n') . ' ' . $this->getVar('manu_name')) . '.html';
         } else { // Pas d'utilisation de l'url rewriting
             $url = OLEDRION_URL . 'manufacturer.php?manu_id=' . $this->getVar('manu_id');

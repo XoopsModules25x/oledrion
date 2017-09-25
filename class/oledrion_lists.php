@@ -65,8 +65,8 @@ class Oledrion_lists extends Oledrion_Object
     public function isSuitableForCurrentUser()
     {
         $uid = OledrionUtility::getCurrentUserID();
-        if ($this->getVar('list_type') == OLEDRION_LISTS_PRIVATE) {
-            if ($uid == 0 || $uid != $this->getVar('list_uid')) {
+        if (OLEDRION_LISTS_PRIVATE == $this->getVar('list_type')) {
+            if (0 == $uid || $uid != $this->getVar('list_uid')) {
                 return false;
             }
         }
@@ -108,7 +108,7 @@ class Oledrion_lists extends Oledrion_Object
     public function getLink()
     {
         $url = '';
-        if (OledrionUtility::getModuleOption('urlrewriting') == 1) { // On utilise l'url rewriting
+        if (1 == OledrionUtility::getModuleOption('urlrewriting')) { // On utilise l'url rewriting
             $url = OLEDRION_URL . 'list-' . $this->getVar('list_id') . OledrionUtility::makeSeoUrl($this->getVar('list_title', 'n')) . '.html';
         } else { // Pas d'utilisation de l'url rewriting
             $url = OLEDRION_URL . 'list.php?list_id=' . $this->getVar('list_id');
@@ -356,7 +356,7 @@ class OledrionOledrion_listsHandler extends Oledrion_XoopsPersistableObjectHandl
         $productsInList = $ret = $productsIds = [];
         $handlers       = OledrionHandler::getInstance();
         $productsInList = $handlers->h_oledrion_products_list->getProductsFromList($list);
-        if (count($productsInList) == 0) {
+        if (0 == count($productsInList)) {
             return $ret;
         }
         foreach ($productsInList as $product) {
@@ -378,7 +378,7 @@ class OledrionOledrion_listsHandler extends Oledrion_XoopsPersistableObjectHandl
      */
     public function isThisMyList($list_id, $list_uid = 0)
     {
-        if ($list_uid == 0) {
+        if (0 == $list_uid) {
             $list_uid = OledrionUtility::getCurrentUserID();
         }
         $list = null;
@@ -403,10 +403,10 @@ class OledrionOledrion_listsHandler extends Oledrion_XoopsPersistableObjectHandl
     public function isProductInUserList($productlist_product_id, $list_uid = 0)
     {
         //require_once __DIR__ . '/lite.php';
-        if ($list_uid == 0) {
+        if (0 == $list_uid) {
             $list_uid = OledrionUtility::getCurrentUserID();
         }
-        if ($list_uid == 0) {
+        if (0 == $list_uid) {
             return true;
         }
         $ret                    = false;

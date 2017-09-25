@@ -30,7 +30,7 @@ function b_oledrion_my_lists_show($options)
     $start = 0;
     $limit = (int)$options[0];
     $uid   = OledrionUtility::getCurrentUserID();
-    if ($uid == 0) {
+    if (0 == $uid) {
         return null;
     }
     $listType = OLEDRION_LISTS_ALL;

@@ -70,19 +70,19 @@ switch ($action) {
         $criteria->add(new Criteria('product_id', 0, '<>'));
 
         if (isset($_POST['filter_product_id'])) {
-            if ((int)$_POST['filter_product_id'] != 0) {
+            if (0 != (int)$_POST['filter_product_id']) {
                 $criteria->add(new Criteria('product_id', (int)$_POST['filter_product_id']), '=');
             }
             $filter_product_id = (int)$_POST['filter_product_id'];
             $newFilter         = true;
         }
-        if (isset($_POST['filter_product_cid']) && (int)$_POST['filter_product_cid'] != 0) {
+        if (isset($_POST['filter_product_cid']) && 0 != (int)$_POST['filter_product_cid']) {
             $criteria->add(new Criteria('product_cid', (int)$_POST['filter_product_cid']), '=');
             $filter_product_cid = (int)$_POST['filter_product_cid'];
             $newFilter          = true;
         }
-        if (isset($_POST['filter_product_recommended']) && (int)$_POST['filter_product_recommended'] != 0) {
-            if ((int)$_POST['filter_product_recommended'] == 1) {
+        if (isset($_POST['filter_product_recommended']) && 0 != (int)$_POST['filter_product_recommended']) {
+            if (1 == (int)$_POST['filter_product_recommended']) {
                 $criteria->add(new Criteria('product_recommended', '0000-00-00', '<>'));
             } else {
                 $criteria->add(new Criteria('product_recommended', '0000-00-00', '='));
@@ -90,33 +90,33 @@ switch ($action) {
             $filter_product_recommended = (int)$_POST['filter_product_recommended'];
             $newFilter                  = true;
         }
-        if (isset($_POST['filter_product_title']) && xoops_trim($_POST['filter_product_title']) !== '') {
+        if (isset($_POST['filter_product_title']) && '' !== xoops_trim($_POST['filter_product_title'])) {
             $criteria->add(new Criteria('product_title', '%' . $_POST['filter_product_title'] . '%', 'LIKE'));
             $filter_product_title = $_POST['filter_product_title'];
             $newFilter            = true;
         }
-        if (isset($_POST['filter_product_sku']) && xoops_trim($_POST['filter_product_sku']) !== '') {
+        if (isset($_POST['filter_product_sku']) && '' !== xoops_trim($_POST['filter_product_sku'])) {
             $criteria->add(new Criteria('product_sku', '%' . $_POST['filter_product_sku'] . '%', 'LIKE'));
             $filter_product_sku = $_POST['filter_product_sku'];
             $newFilter          = true;
         }
-        if (isset($_POST['filter_product_online']) && (int)$_POST['filter_product_online'] != 0) {
+        if (isset($_POST['filter_product_online']) && 0 != (int)$_POST['filter_product_online']) {
             $criteria->add(new Criteria('product_online', (int)$_POST['filter_product_online'] - 1, '='));
             $filter_product_online = (int)$_POST['filter_product_online'];
             $newFilter             = true;
         }
-        if (isset($_POST['filter_product_price']) && (int)$_POST['filter_product_price'] != 0) {
+        if (isset($_POST['filter_product_price']) && 0 != (int)$_POST['filter_product_price']) {
             $criteria->add(new Criteria('product_price', (int)$_POST['filter_product_price']), '>=');
             $filter_product_price = (int)$_POST['filter_product_price'];
             $newFilter            = true;
         }
-        if ($filter_product_id == 0
-            && $filter_product_cid == 0
-            && $filter_product_recommended == 0
-            && $filter_product_price == 0
-            && $filter_product_online == 0
-            && $filter_product_title === ''
-            && $filter_product_sku === '') {
+        if (0 == $filter_product_id
+            && 0 == $filter_product_cid
+            && 0 == $filter_product_recommended
+            && 0 == $filter_product_price
+            && 0 == $filter_product_online
+            && '' === $filter_product_title
+            && '' === $filter_product_sku) {
             $newFilter = true;
         }
 
@@ -203,7 +203,7 @@ switch ($action) {
         echo "<th align='center'><input type='text' size='5' name='filter_product_price' id='filter_product_price' value='$filter_product_price'></th>\n";
         echo "<th align='center'><input type='hidden' name='op' id='op' value='products'><input type='submit' name='btngo' id='btngo' value='" . _GO . "'></th></form></tr>\n";
         foreach ($products as $item) {
-            $class       = ($class === 'even') ? 'odd' : 'even';
+            $class       = ('even' === $class) ? 'odd' : 'even';
             $id          = $item->getVar('product_id');
             $recommended = '';
             if ($item->isRecommended()) { // Si le produit est recommandé, on affiche le lien qui permet d'arrêter de le recommander
@@ -219,7 +219,7 @@ switch ($action) {
             $actions[] = "<a href='$baseurl?op=products&action=edit&id=" . $id . "' title='" . _OLEDRION_EDIT . "'>" . $icones['edit'] . '</a>';
             $actions[] = "<a href='$baseurl?op=products&action=copy&id=" . $id . "' title='" . _OLEDRION_DUPLICATE_PRODUCT . "'>" . $icones['copy'] . '</a>';
             $actions[] = "<a href='$baseurl?op=products&action=confdelete&id=" . $id . "' title='" . _OLEDRION_DELETE . "'>" . $icones['delete'] . '</a>';
-            $online    = $item->getVar('product_online') == 1 ? _YES : _NO;
+            $online    = 1 == $item->getVar('product_online') ? _YES : _NO;
             echo "<tr class='" . $class . "'>\n";
             if (isset($categories[$item->getVar('product_cid')])) {
                 $productCategory = $categories[$item->getVar('product_cid')]->getVar('cat_title');
@@ -260,7 +260,7 @@ switch ($action) {
             echo "<td align='center'>" . implode(' ', $actions) . "</td>\n";
             echo "<tr>\n";
         }
-        $class = ($class === 'even') ? 'odd' : 'even';
+        $class = ('even' === $class) ? 'odd' : 'even';
         echo "<tr class='" . $class . "'>\n";
         echo "<td colspan='$span' align='center'>" . $form . "</td>\n";
         echo "</tr>\n";
@@ -324,7 +324,7 @@ switch ($action) {
         xoops_cp_header();
         global $xoopsUser;
 
-        if ($action === 'edit') {
+        if ('edit' === $action) {
             $title = _AM_OLEDRION_EDIT_PRODUCT;
             $id    = isset($_GET['id']) ? (int)$_GET['id'] : 0;
             if (empty($id)) {
@@ -350,13 +350,13 @@ switch ($action) {
         }
 
         $categories = $h_oledrion_cat->getAllCategories(new Oledrion_parameters());
-        if (count($categories) == 0) {
+        if (0 == count($categories)) {
             OledrionUtility::redirect(_AM_OLEDRION_ERROR_8, $baseurl, 5);
         }
         // TVA
         $vats = $vatsForDisplay = [];
         $vats = $h_oledrion_vat->getAllVats(new Oledrion_parameters());
-        if (count($vats) == 0 && OledrionUtility::getModuleOption('use_price')) {
+        if (0 == count($vats) && OledrionUtility::getModuleOption('use_price')) {
             OledrionUtility::redirect(_AM_OLEDRION_ERROR_9, $baseurl, 5);
         }
         foreach ($vats as $onevat) {
@@ -414,7 +414,7 @@ switch ($action) {
         $sform->addElement(new XoopsFormText(_AM_OLEDRION_URL_HLP3, 'product_url3', 50, 255, $item->getVar('product_url3', 'e')), false);
 
         // Images *************************************************************
-        if ($action === 'edit' && $item->pictureExists()) {
+        if ('edit' === $action && $item->pictureExists()) {
             $pictureTray = new XoopsFormElementTray(_AM_OLEDRION_IMAGE1_HELP, '<br>');
             $pictureTray->addElement(new XoopsFormLabel('', "<img src='" . $item->getPictureUrl() . "' alt='' border='0'>"));
             $deleteCheckbox = new XoopsFormCheckBox('', 'delpicture1');
@@ -426,7 +426,7 @@ switch ($action) {
         $sform->addElement(new XoopsFormFile(_AM_OLEDRION_IMAGE1_CHANGE, 'attachedfile1', OledrionUtility::getModuleOption('maxuploadsize')), false);
 
         if (!OledrionUtility::getModuleOption('create_thumbs')) { // L'utilisateur se charge de créer la vignette lui même
-            if ($action === 'edit' && $item->thumbExists()) {
+            if ('edit' === $action && $item->thumbExists()) {
                 $pictureTray = new XoopsFormElementTray(_AM_OLEDRION_IMAGE2_HELP, '<br>');
                 $pictureTray->addElement(new XoopsFormLabel('', "<img src='" . $item->getThumbUrl() . "' alt='' border='0'>"));
                 $deleteCheckbox = new XoopsFormCheckBox('', 'delpicture2');
@@ -548,7 +548,7 @@ switch ($action) {
             $sform->addElement(new XoopsFormText(_AM_OLEDRION_META_PAGETITLE, 'product_metatitle', 50, 255, $item->getVar('product_metatitle', 'e')), false);
         }
         // Fichier attaché
-        if ($action === 'edit' && trim($item->getVar('product_attachment')) !== ''
+        if ('edit' === $action && '' !== trim($item->getVar('product_attachment'))
             && file_exists(XOOPS_UPLOAD_PATH . '/' . trim($item->getVar('product_attachment')))) {
             $pictureTray = new XoopsFormElementTray(_OLEDRION_ATTACHED_FILE, '<br>');
             $pictureTray->addElement(new XoopsFormLabel('', "<a href='" . XOOPS_UPLOAD_URL . '/' . $item->getVar('product_attachment') . "' target='_blank'>" . XOOPS_UPLOAD_URL . '/' . $item->getVar('product_attachment') . '</a>'));
@@ -685,15 +685,15 @@ switch ($action) {
         $item->setVar('product_submitted', strtotime($_POST['product_submitted']));
 
         // Suppression de l'image principale
-        if (isset($_POST['delpicture1']) && (int)$_POST['delpicture1'] == 1) {
+        if (isset($_POST['delpicture1']) && 1 == (int)$_POST['delpicture1']) {
             $item->deletePicture();
         }
 
         // Suppression de la vignette
-        if (isset($_POST['delpicture2']) && (int)$_POST['delpicture2'] == 1) {
+        if (isset($_POST['delpicture2']) && 1 == (int)$_POST['delpicture2']) {
             $item->deleteThumb();
         }
-        if (isset($_POST['delpicture3']) && (int)$_POST['delpicture3'] == 1) {
+        if (isset($_POST['delpicture3']) && 1 == (int)$_POST['delpicture3']) {
             $item->deleteAttachment();
         }
 
@@ -701,14 +701,14 @@ switch ($action) {
         $destname    = '';
         $mainPicture = '';
         $res1        = OledrionUtility::uploadFile(0, OLEDRION_PICTURES_PATH);
-        if ($res1 === true) {
+        if (true === $res1) {
             $mainPicture = $destname;
             if (OledrionUtility::getModuleOption('resize_main')) { // On redimensionne l'image principale
                 OledrionUtility::resizePicture(OLEDRION_PICTURES_PATH . '/' . $destname, OLEDRION_PICTURES_PATH . '/' . $destname, OledrionUtility::getModuleOption('images_width'), OledrionUtility::getModuleOption('images_height'), true);
             }
             $item->setVar('product_image_url', basename($destname));
         } else {
-            if ($res1 !== false) {
+            if (false !== $res1) {
                 echo $res1;
             }
         }
@@ -718,16 +718,16 @@ switch ($action) {
         if (!OledrionUtility::getModuleOption('create_thumbs')) { // L'utilisateur se charge de créer la vignette lui-même
             $destname = '';
             $res2     = OledrionUtility::uploadFile(1, OLEDRION_PICTURES_PATH);
-            if ($res2 === true) {
+            if (true === $res2) {
                 $item->setVar('product_thumb_url', basename($destname));
             } else {
-                if ($res2 !== false) {
+                if (false !== $res2) {
                     echo $res2;
                 }
             }
         } else { // Il faut créer la vignette pour l'utilisateur
             $indiceAttached = 1;
-            if (xoops_trim($mainPicture) !== '') {
+            if ('' !== xoops_trim($mainPicture)) {
                 $thumbName = OLEDRION_THUMBS_PREFIX . $mainPicture;
                 OledrionUtility::resizePicture(OLEDRION_PICTURES_PATH . '/' . $mainPicture, OLEDRION_PICTURES_PATH . '/' . $thumbName, OledrionUtility::getModuleOption('thumbs_width'), OledrionUtility::getModuleOption('thumbs_height'), true);
                 $item->setVar('product_thumb_url', $thumbName);
@@ -737,10 +737,10 @@ switch ($action) {
         // Téléchargement du fichier attaché
         $destname = '';
         $res3     = OledrionUtility::uploadFile($indiceAttached, OLEDRION_ATTACHED_FILES_PATH);
-        if ($res3 === true) {
+        if (true === $res3) {
             $item->setVar('product_attachment', basename($destname));
         } else {
-            if ($res3 !== false) {
+            if (false !== $res3) {
                 echo $res3;
             }
         }
@@ -754,7 +754,7 @@ switch ($action) {
 
             $id = $item->getVar('product_id');
             // Notifications ******************************************************
-            if ($add === true) {
+            if (true === $add) {
                 //$plugins = Oledrion_plugins::getInstance();
                 //$plugins->fireAction(Oledrion_plugins::EVENT_ON_PRODUCT_CREATE, new Oledrion_parameters(array('product' => $item)));
             }
@@ -812,7 +812,7 @@ switch ($action) {
         if (is_object($product)) {
             $newProduct   = $h_oledrion_products->cloneProduct($product);
             $newProductId = $newProduct->product_id;
-            if ($newProduct !== false) {
+            if (false !== $newProduct) {
                 OledrionUtility::redirect(_AM_OLEDRION_SAVE_OK, $baseurl . '?op=' . $opRedirect . '&action=edit&id=' . $newProductId, 2);
             } else {
                 OledrionUtility::redirect(_AM_OLEDRION_SAVE_PB, $baseurl . '?op=' . $opRedirect, 5);
@@ -826,7 +826,7 @@ switch ($action) {
         xoops_cp_header();
 
         $id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
-        if ($id == 0) {
+        if (0 == $id) {
             OledrionUtility::redirect(_AM_OLEDRION_ERROR_1, $baseurl, 5);
         }
         $item = $h_oledrion_products->get($id);
@@ -841,13 +841,13 @@ switch ($action) {
         // ****************************************************************************************************************
         xoops_cp_header();
         $id = isset($_POST['id']) ? (int)$_POST['id'] : 0;
-        if ($id == 0) {
+        if (0 == $id) {
             OledrionUtility::redirect(_AM_OLEDRION_ERROR_1, $baseurl, 5);
         }
         $opRedirect = 'products';
         $tblTmp     = [];
         $tblTmp     = $h_oledrion_caddy->getCommandIdFromProduct($id);
-        if (count($tblTmp) == 0) {
+        if (0 == count($tblTmp)) {
             $item = null;
             $item = $h_oledrion_products->get($id);
             if (is_object($item)) {
@@ -870,7 +870,7 @@ switch ($action) {
             $class = '';
             echo "<tr><th align='center'>" . _AM_OLEDRION_ID . "</th><th align='center'>" . _AM_OLEDRION_DATE . "</th><th align='center'>" . _AM_OLEDRION_CLIENT . "</th><th align='center'>" . _AM_OLEDRION_TOTAL_SHIPP . '</th></tr>';
             foreach ($tblTmp2 as $item) {
-                $class = ($class === 'even') ? 'odd' : 'even';
+                $class = ('even' === $class) ? 'odd' : 'even';
                 $date  = formatTimestamp(strtotime($item->getVar('cmd_date')), 's');
                 echo "<tr class='" . $class . "'>\n";
                 echo "<td align='right'>"

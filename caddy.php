@@ -88,7 +88,7 @@ function listCart()
     $xoopsTpl->assign('discountsDescription', $discountsDescription);                    // Liste des réductions accordées
     $showOrderButton   = true;
     $showRegistredOnly = false;
-    if (OledrionUtility::getModuleOption('restrict_orders', false) && $uid == 0) {
+    if (OledrionUtility::getModuleOption('restrict_orders', false) && 0 == $uid) {
         $showRegistredOnly = true;
         $showOrderButton   = false;
     }
@@ -125,7 +125,7 @@ switch ($op) {
     // ****************************************************************************************************************
     case 'addproduct': // Ajout d'un produit
         // ****************************************************************************************************************
-        if ($productId == 0) {
+        if (0 == $productId) {
             OledrionUtility::redirect(_OLEDRION_ERROR9, 'index.php', 4);
         }
         $product = null;
@@ -133,7 +133,7 @@ switch ($op) {
         if (!is_object($product)) {
             OledrionUtility::redirect(_OLEDRION_ERROR9, 'index.php', 4);
         }
-        if ($product->getVar('product_online') == 0) {
+        if (0 == $product->getVar('product_online')) {
             OledrionUtility::redirect(_OLEDRION_ERROR2, 'index.php', 4);
         }
 

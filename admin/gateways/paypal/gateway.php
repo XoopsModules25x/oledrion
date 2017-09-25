@@ -147,7 +147,7 @@ class Oledrion_paypal extends Oledrion_gateway
     public function getRedirectURL($cmd_total, $cmd_id)
     {
         $test_mode = (int)$this->handlers->h_oledrion_gateways_options->getGatewayOptionValue($this->gatewayInformation['foldername'], 'paypal_test');
-        if ($test_mode == 1) {
+        if (1 == $test_mode) {
             return 'https://www.sandbox.paypal.com/cgi-bin/webscr';
         } else {
             return 'https://www.paypal.com/cgi-bin/webscr';
@@ -185,10 +185,10 @@ class Oledrion_paypal extends Oledrion_gateway
         $ret['custom']           = $order->getVar('cmd_id');
         //$ret['rm'] = 2;   // Renvoyer les données par POST (normalement)
         $ret['email'] = $order->getVar('cmd_email');
-        if (xoops_trim($order->getVar('cmd_cancel')) !== '') { // URL à laquelle le navigateur du client est ramené si le paiement est annulé
+        if ('' !== xoops_trim($order->getVar('cmd_cancel'))) { // URL à laquelle le navigateur du client est ramené si le paiement est annulé
             $ret['cancel_return'] = OLEDRION_URL . 'cancel-payment.php?id=' . $order->getVar('cmd_cancel');
         }
-        if ($use_ipn == 1) {
+        if (1 == $use_ipn) {
             $ret['notify_url'] = OLEDRION_URL . 'gateway-notify.php'; // paypal-notify.php
         }
 
@@ -216,7 +216,7 @@ class Oledrion_paypal extends Oledrion_gateway
     private function getdialogURL()
     {
         $test_mode = (int)$this->handlers->h_oledrion_gateways_options->getGatewayOptionValue($this->gatewayInformation['foldername'], 'paypal_test');
-        if ($test_mode == 1) {
+        if (1 == $test_mode) {
             return 'www.sandbox.paypal.com';
         } else {
             return 'www.paypal.com';
@@ -263,10 +263,10 @@ class Oledrion_paypal extends Oledrion_gateway
             fwrite($fp, "$header$req");
             while (!feof($fp)) {
                 $res = fgets($fp, 1024);
-                if (strcmp($res, 'VERIFIED') == 0) {
+                if (0 == strcmp($res, 'VERIFIED')) {
                     $log      .= "VERIFIED\t";
                     $paypalok = true;
-                    if (strtoupper($_POST['payment_status']) !== 'COMPLETED') {
+                    if ('COMPLETED' !== strtoupper($_POST['payment_status'])) {
                         $paypalok = false;
                     }
                     if (strtoupper($_POST['receiver_email']) != strtoupper($paypal_email)) {

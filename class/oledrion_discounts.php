@@ -320,7 +320,7 @@ class OledrionOledrion_discountsHandler extends Oledrion_XoopsPersistableObjectH
             foreach ($tblRules as $rule) {
                 switch ($rule->getVar('disc_when')) {
                     case OLEDRION_DISCOUNT_WHEN1: // Dans tous les cas
-                        if ($rule->getVar('disc_percent_monney') == OLEDRION_DISCOUNT_TYPE1) { // Réduction de x pourcent
+                        if (OLEDRION_DISCOUNT_TYPE1 == $rule->getVar('disc_percent_monney')) { // Réduction de x pourcent
                             $montantHT = $this->getDiscountedPrice($montantHT, $rule->getVar('disc_amount'));
                             if ($montantHT < 0) {
                                 $montantHT = 0;
@@ -336,7 +336,7 @@ class OledrionOledrion_discountsHandler extends Oledrion_XoopsPersistableObjectH
 
                     case OLEDRION_DISCOUNT_WHEN2: // Si c'est le premier achat de l'utilisateur sur le site
                         if ($h_oledrion_commands->isFirstCommand($uid)) {
-                            if ($rule->getVar('disc_percent_monney') == OLEDRION_DISCOUNT_TYPE1) { // Réduction de x pourcent
+                            if (OLEDRION_DISCOUNT_TYPE1 == $rule->getVar('disc_percent_monney')) { // Réduction de x pourcent
                                 $montantHT = $this->getDiscountedPrice($montantHT, $rule->getVar('disc_amount'));
                                 if ($montantHT < 0) {
                                     $montantHT = 0;
@@ -372,7 +372,7 @@ class OledrionOledrion_discountsHandler extends Oledrion_XoopsPersistableObjectH
             foreach ($tblRules as $rule) {
                 switch ($rule->getVar('disc_when')) {
                     case OLEDRION_DISCOUNT_WHEN1: // Dans tous les cas
-                        if ($rule->getVar('disc_percent_monney') == OLEDRION_DISCOUNT_TYPE1) { // Réduction de x pourcent
+                        if (OLEDRION_DISCOUNT_TYPE1 == $rule->getVar('disc_percent_monney')) { // Réduction de x pourcent
                             $montantHT = $this->getDiscountedPrice($montantHT, $rule->getVar('disc_amount'));
                             if ($montantHT < 0) {
                                 $montantHT = 0;
@@ -388,7 +388,7 @@ class OledrionOledrion_discountsHandler extends Oledrion_XoopsPersistableObjectH
 
                     case OLEDRION_DISCOUNT_WHEN2: // Si c'est le premier achat de l'utilisateur sur le site
                         if ($h_oledrion_commands->isFirstCommand($uid)) {
-                            if ($rule->getVar('disc_percent_monney') == OLEDRION_DISCOUNT_TYPE1) { // Réduction de x pourcent
+                            if (OLEDRION_DISCOUNT_TYPE1 == $rule->getVar('disc_percent_monney')) { // Réduction de x pourcent
                                 $montantHT = $this->getDiscountedPrice($montantHT, $rule->getVar('disc_amount'));
                                 if ($montantHT < 0) {
                                     $montantHT = 0;
@@ -438,7 +438,7 @@ class OledrionOledrion_discountsHandler extends Oledrion_XoopsPersistableObjectH
 
                         }
                         if ($qtyDiscount) {
-                            if ($rule->getVar('disc_percent_monney') == OLEDRION_DISCOUNT_TYPE1) { // Réduction de x pourcents
+                            if (OLEDRION_DISCOUNT_TYPE1 == $rule->getVar('disc_percent_monney')) { // Réduction de x pourcents
                                 $montantHT = $this->getDiscountedPrice($montantHT, $rule->getVar('disc_amount'));
                                 if ($montantHT < 0) {
                                     $montantHT = 0;
@@ -474,7 +474,7 @@ class OledrionOledrion_discountsHandler extends Oledrion_XoopsPersistableObjectH
             foreach ($tblRules as $rule) {
                 switch ($rule->getVar('disc_when')) {
                     case OLEDRION_DISCOUNT_WHEN1: // Dans tous les cas
-                        if ($rule->getVar('disc_percent_monney') == OLEDRION_DISCOUNT_TYPE1) { // Réduction de x pourcent
+                        if (OLEDRION_DISCOUNT_TYPE1 == $rule->getVar('disc_percent_monney')) { // Réduction de x pourcent
                             $montantHT = $this->getDiscountedPrice($montantHT, $rule->getVar('disc_amount'));
                             if ($montantHT < 0) {
                                 $montantHT = 0;
@@ -490,7 +490,7 @@ class OledrionOledrion_discountsHandler extends Oledrion_XoopsPersistableObjectH
 
                     case OLEDRION_DISCOUNT_WHEN2: // Si c'est le premier achat de l'utilisateur sur le site
                         if ($h_oledrion_commands->isFirstCommand($uid)) {
-                            if ($rule->getVar('disc_percent_monney') == OLEDRION_DISCOUNT_TYPE1) { // Réduction de x pourcent
+                            if (OLEDRION_DISCOUNT_TYPE1 == $rule->getVar('disc_percent_monney')) { // Réduction de x pourcent
                                 $montantHT = $this->getDiscountedPrice($montantHT, $rule->getVar('disc_amount'));
                                 if ($montantHT < 0) {
                                     $montantHT = 0;
@@ -540,7 +540,7 @@ class OledrionOledrion_discountsHandler extends Oledrion_XoopsPersistableObjectH
 
                         }
                         if ($qtyDiscount) {
-                            if ($rule->getVar('disc_percent_monney') == OLEDRION_DISCOUNT_TYPE1) { // Réduction de x pourcent
+                            if (OLEDRION_DISCOUNT_TYPE1 == $rule->getVar('disc_percent_monney')) { // Réduction de x pourcent
                                 $montantHT = $this->getDiscountedPrice($montantHT, $rule->getVar('disc_amount'));
                                 if ($montantHT < 0) {
                                     $montantHT = 0;
@@ -577,7 +577,7 @@ class OledrionOledrion_discountsHandler extends Oledrion_XoopsPersistableObjectH
             foreach ($rules as $rule) {
                 switch ($rule->getVar('disc_when')) {
                     case OLEDRION_DISCOUNT_WHEN1: // Dans tous les cas
-                        if ($rule->getVar('disc_percent_monney') == OLEDRION_DISCOUNT_TYPE1) { // Réduction de x pourcent
+                        if (OLEDRION_DISCOUNT_TYPE1 == $rule->getVar('disc_percent_monney')) { // Réduction de x pourcent
                             $prixHT = $this->getDiscountedPrice($prixHT, $rule->getVar('disc_amount'));
                             if ($prixHT < 0) {
                                 $prixHT = 0;
@@ -593,7 +593,7 @@ class OledrionOledrion_discountsHandler extends Oledrion_XoopsPersistableObjectH
 
                     case OLEDRION_DISCOUNT_WHEN2: // Si c'est le premier achat de l'utilisateur sur le site
                         if ($h_oledrion_commands->isFirstCommand($uid)) {
-                            if ($rule->getVar('disc_percent_monney') == OLEDRION_DISCOUNT_TYPE1) { // Réduction de x pourcent
+                            if (OLEDRION_DISCOUNT_TYPE1 == $rule->getVar('disc_percent_monney')) { // Réduction de x pourcent
                                 $prixHT = $this->getDiscountedPrice($prixHT, $rule->getVar('disc_amount'));
                                 if ($prixHT < 0) {
                                     $prixHT = 0;
@@ -610,7 +610,7 @@ class OledrionOledrion_discountsHandler extends Oledrion_XoopsPersistableObjectH
 
                     case OLEDRION_DISCOUNT_WHEN3: // Si le produit n'a jamais été acheté
                         if (!$h_oledrion_commands->productAlreadyBought($uid, $productId)) {
-                            if ($rule->getVar('disc_percent_monney') == OLEDRION_DISCOUNT_TYPE1) { // Réduction de x pourcent
+                            if (OLEDRION_DISCOUNT_TYPE1 == $rule->getVar('disc_percent_monney')) { // Réduction de x pourcent
                                 $prixHT = $this->getDiscountedPrice($prixHT, $rule->getVar('disc_amount'));
                                 if ($prixHT < 0) {
                                     $prixHT = 0;
@@ -660,7 +660,7 @@ class OledrionOledrion_discountsHandler extends Oledrion_XoopsPersistableObjectH
 
                         }
                         if ($qtyDiscount) {
-                            if ($rule->getVar('disc_percent_monney') == OLEDRION_DISCOUNT_TYPE1) { // Réduction de x pourcent
+                            if (OLEDRION_DISCOUNT_TYPE1 == $rule->getVar('disc_percent_monney')) { // Réduction de x pourcent
                                 $prixHT = $this->getDiscountedPrice($prixHT, $rule->getVar('disc_amount'));
                                 if ($prixHT < 0) {
                                     $prixHT = 0;

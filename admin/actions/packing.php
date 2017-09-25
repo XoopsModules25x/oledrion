@@ -47,16 +47,16 @@ switch ($action) {
         echo "<tr><th align='center'>" . _AM_OLEDRION_ID . "</th><th align='center'>" . _AM_OLEDRION_PACKING_TITLE . "</th><th align='center'>" . _OLEDRION_PRICE . "</th><th align='center'>" . _OLEDRION_ONLINE . "</th><th align='center'>" . _AM_OLEDRION_ACTION . '</th></tr>';
         foreach ($packing as $item) {
             $id        = $item->getVar('packing_id');
-            $class     = ($class === 'even') ? 'odd' : 'even';
+            $class     = ('even' === $class) ? 'odd' : 'even';
             $actions   = [];
             $actions[] = "<a href='$baseurl?op=packing&action=edit&id=" . $id . "' title='" . _OLEDRION_EDIT . "'>" . $icones['edit'] . '</a>';
             $actions[] = "<a href='$baseurl?op=packing&action=delete&id=" . $id . "' title='" . _OLEDRION_DELETE . "'" . $conf_msg . '>' . $icones['delete'] . '</a>';
-            $online    = $item->getVar('packing_online') == 1 ? _YES : _NO;
+            $online    = 1 == $item->getVar('packing_online') ? _YES : _NO;
             echo "<tr class='" . $class . "'>\n";
             echo "<td align='center'>" . $id . "</td><td align='center'>" . $item->getVar('packing_title') . "</td><td align='center'>" . $item->getVar('packing_price') . "</td><td align='center'>" . $online . "</td><td align='center'>" . implode(' ', $actions) . "</td>\n";
             echo "<tr>\n";
         }
-        $class = ($class === 'even') ? 'odd' : 'even';
+        $class = ('even' === $class) ? 'odd' : 'even';
         echo "<tr class='" . $class . "'>\n";
         echo "<td colspan='5' align='center'>" . $form . "</td>\n";
         echo "</tr>\n";
@@ -67,7 +67,7 @@ switch ($action) {
     case 'add':
     case 'edit':
         xoops_cp_header();
-        if ($action === 'edit') {
+        if ('edit' === $action) {
             $title = _AM_OLEDRION_PACKING_EDIT;
             $id    = isset($_GET['id']) ? (int)$_GET['id'] : 0;
             if (empty($id)) {
@@ -95,7 +95,7 @@ switch ($action) {
         $sform->addElement(new XoopsFormText(_AM_OLEDRION_PACKING_WIDTH, 'packing_width', 20, 20, $item->getVar('packing_width', 'e')), false);
         $sform->addElement(new XoopsFormText(_AM_OLEDRION_PACKING_LENGTH, 'packing_length', 20, 20, $item->getVar('packing_length', 'e')), false);
         $sform->addElement(new XoopsFormText(_AM_OLEDRION_PACKING_WEIGHT, 'packing_weight', 20, 20, $item->getVar('packing_weight', 'e')), false);
-        if ($action === 'edit' && $item->pictureExists()) {
+        if ('edit' === $action && $item->pictureExists()) {
             $pictureTray = new XoopsFormElementTray(_AM_OLEDRION_CURRENT_PICTURE, '<br>');
             $pictureTray->addElement(new XoopsFormLabel('', "<img src='" . $item->getPictureUrl() . "' alt='' border='0'>"));
             $deleteCheckbox = new XoopsFormCheckBox('', 'delpicture');
@@ -136,7 +136,7 @@ switch ($action) {
         $opRedirect = 'packing';
         $item->setVars($_POST);
 
-        if (isset($_POST['delpicture']) && (int)$_POST['delpicture'] == 1) {
+        if (isset($_POST['delpicture']) && 1 == (int)$_POST['delpicture']) {
             $item->deletePicture();
         }
         $destname = '';
@@ -147,7 +147,7 @@ switch ($action) {
             }
             $item->setVar('packing_image', basename($destname));
         } else {
-            if ($res1 !== false) {
+            if (false !== $res1) {
                 echo $res1;
             }
         }
@@ -163,7 +163,7 @@ switch ($action) {
     case 'delete':
         xoops_cp_header();
         $id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
-        if ($id == 0) {
+        if (0 == $id) {
             OledrionUtility::redirect(_AM_OLEDRION_ERROR_1, $baseurl, 5);
         }
         $packing = null;

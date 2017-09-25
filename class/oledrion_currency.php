@@ -86,14 +86,14 @@ class Oledrion_Currency
         $amount = $this->amountInCurrency($originalAmount);
 
         $monnaieLeft = $monnaieRight = $monnaieSleft = $monnaieSright = '';
-        if ($this->_monnaiePlace == 1) { // To the right
+        if (1 == $this->_monnaiePlace) { // To the right
             $monnaieRight  = '' . $this->_moneyFull; // Long version
             $monnaieSright = '' . $this->_moneyShort; // Short version
         } else { // To the left
             $monnaieLeft  = $this->_moneyFull . ''; // Long version
             $monnaieSleft = $this->_moneyShort . ''; // Short version
         }
-        if ($format !== 's') {
+        if ('s' !== $format) {
             return $monnaieLeft . $amount . $monnaieRight;
         } else {
             return $monnaieSleft . $amount . $monnaieSright;

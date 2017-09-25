@@ -72,7 +72,7 @@ switch ($action) {
              . _AM_OLEDRION_ACTION
              . '</th></tr>';
         foreach ($items as $item) {
-            $class     = ($class === 'even') ? 'odd' : 'even';
+            $class     = ('even' === $class) ? 'odd' : 'even';
             $id        = $item->getVar('list_id');
             $actions   = [];
             $actions[] = "<a href='$baseurl?op=$operation&action=delete&id=" . $id . "' title='" . _OLEDRION_DELETE . "'" . $conf_msg . '>' . $icones['delete'] . '</a>';

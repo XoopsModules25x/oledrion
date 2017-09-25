@@ -38,14 +38,14 @@ function b_sitemap_oledrion()
 
     $i   = 0;
     $sql = "SELECT `$id_name`,`$title_name` FROM `$table` WHERE `$pid_name`=0";
-    if ($order !== '') {
+    if ('' !== $order) {
         $sql .= " ORDER BY `$order`";
     }
     $result = $xoopsDB->query($sql);
     while (list($catid, $name) = $xoopsDB->fetchRow($result)) {
         $sitemap['parent'][$i]['id']    = $catid;
         $sitemap['parent'][$i]['title'] = $myts->htmlSpecialChars($name);
-        if (OledrionUtility::getModuleOption('urlrewriting') == 1) { // On utilise l'url rewriting
+        if (1 == OledrionUtility::getModuleOption('urlrewriting')) { // On utilise l'url rewriting
             $url = 'category' . '-' . (int)$catid . OledrionUtility::makeSeoUrl($name) . '.html';
         } else { // Pas d'utilisation de l'url rewriting
             $url = 'category.php?cat_cid=' . (int)$catid;
@@ -60,7 +60,7 @@ function b_sitemap_oledrion()
                 $sitemap['parent'][$i]['child'][$j]['id']    = $child[$id_name];
                 $sitemap['parent'][$i]['child'][$j]['title'] = $myts->htmlSpecialChars($child[$title_name]);
                 $sitemap['parent'][$i]['child'][$j]['image'] = (($count > 3) ? 4 : $count);
-                if (OledrionUtility::getModuleOption('urlrewriting') == 1) { // On utilise l'url rewriting
+                if (1 == OledrionUtility::getModuleOption('urlrewriting')) { // On utilise l'url rewriting
                     $url = 'category' . '-' . (int)$child[$id_name] . OledrionUtility::makeSeoUrl($child[$title_name]) . '.html';
                 } else { // Pas d'utilisation de l'url rewriting
                     $url = 'category.php?cat_cid=' . (int)$child[$id_name];

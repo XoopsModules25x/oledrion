@@ -48,7 +48,7 @@ class Oledrion_payment extends Oledrion_Object
      */
     public function getPictureUrl()
     {
-        if (xoops_trim($this->getVar('product_image_url')) !== '') {
+        if ('' !== xoops_trim($this->getVar('product_image_url'))) {
             return OLEDRION_PICTURES_URL . '/' . $this->getVar('payment_image');
         } else {
             return '';
@@ -63,7 +63,7 @@ class Oledrion_payment extends Oledrion_Object
     public function pictureExists()
     {
         $return = false;
-        if (xoops_trim($this->getVar('payment_image')) !== ''
+        if ('' !== xoops_trim($this->getVar('payment_image'))
             && file_exists(OLEDRION_PICTURES_PATH . '/' . $this->getVar('payment_image'))) {
             $return = true;
         }

@@ -27,7 +27,7 @@ error_reporting(0);
 @$xoopsLogger->activated = false;
 
 $op = isset($_POST['op']) ? $_POST['op'] : '';
-if ($op === '') {
+if ('' === $op) {
     $op = isset($_GET['op']) ? $_GET['op'] : '';
 }
 $return  = '';
@@ -52,7 +52,7 @@ switch ($op) {
             }
             $vat_id = $product->getVar('product_vat_id');
 
-            if ((int)$product->getVar('product_discount_price', '') != 0) {
+            if (0 != (int)$product->getVar('product_discount_price', '')) {
                 $productPrice = (float)$product->getVar('product_discount_price', 'e');
             } else {
                 $productPrice = (float)$product->getVar('product_price', 'e');
@@ -68,12 +68,12 @@ switch ($op) {
             foreach ($data as $key => $value) {
                 $attributesIds[] = OledrionUtility::getId($key);
             }
-            if (count($attributesIds) == 0) {
+            if (0 == count($attributesIds)) {
                 return _OLEDRION_NA;
             }
             // Puis les attributs
             $attributes = $handlers->h_oledrion_attributes->getItemsFromIds($attributesIds);
-            if (count($attributes) == 0) {
+            if (0 == count($attributes)) {
                 return _OLEDRION_NA;
             }
 
@@ -117,7 +117,7 @@ switch ($op) {
     // ajax search
     case 'search': // ajax search
         $key = $_GET['part'];
-        if (isset($key) && $key !== '') {
+        if (isset($key) && '' !== $key) {
             // Set captul
             $i = 1;
             // Query 1
@@ -157,7 +157,7 @@ switch ($op) {
             foreach ($items as $item) {
                 // if it starts with 'part' add to results
                 //if ( strpos($item['title'], $key) === 0 || strpos($item['title'], ucfirst($key)) === 0 ) {
-                if ($item['type'] === 'product') {
+                if ('product' === $item['type']) {
                     $results[] = '<div class="searchbox">
                          <div class="searchboxright"><a href="' . $item['link'] . '"><img src="' . $item['image'] . '" alt=""></a></div>
                          <div class="searchboxleft">
@@ -184,7 +184,7 @@ switch ($op) {
     case 'product':
         $start = (int)$_GET['start'];
         $limit = (int)$_GET['limit'];
-        if (isset($start) && $start !== '') {
+        if (isset($start) && '' !== $start) {
             $ret      = [];
             $criteria = new CriteriaCompo();
             $criteria->add(new Criteria('product_id', $start, '>='));
@@ -218,7 +218,7 @@ switch ($op) {
     // Product output as json
     case 'category':
         $start = (int)$_GET['start'];
-        if (isset($start) && $start !== '') {
+        if (isset($start) && '' !== $start) {
             $ret      = [];
             $criteria = new CriteriaCompo();
             $criteria->add(new Criteria('cat_cid', $start, '>='));
@@ -290,7 +290,7 @@ switch ($op) {
                 $GLOBALS['current_category'] = -1;
                 $ratinguser                  = OledrionUtility::getCurrentUserID();
                 $canRate                     = true;
-                if ($ratinguser != 0) {
+                if (0 != $ratinguser) {
                     if ($h_oledrion_votedata->hasUserAlreadyVoted($ratinguser, $product->getVar('product_id'))) {
                         $canRate = false;
                     }
@@ -307,7 +307,7 @@ switch ($op) {
                     /* if ($rating < 1 || $rating > 10) {
                         exit(_ERRORS);
                     } */
-                    if ($rating == 1 || $rating == -1) {
+                    if (1 == $rating || $rating == -1) {
                         $result = $h_oledrion_votedata->createRating($product->getVar('product_id'), $ratinguser, $rating);
 
                         $totalVotes = 0;

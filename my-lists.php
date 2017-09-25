@@ -27,7 +27,7 @@ require_once XOOPS_ROOT_PATH . '/header.php';
 require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
 
 $uid = OledrionUtility::getCurrentUserID();
-if ($uid == 0) {
+if (0 == $uid) {
     OledrionUtility::redirect(_OLEDRION_ERROR23, XOOPS_URL . '/register.php', 4);
 }
 
@@ -53,7 +53,7 @@ $breadcrumb = '';
 function listForm($op, $product_id = 0)
 {
     global $handlers, $baseurl;
-    if ($op === 'edit') {
+    if ('edit' === $op) {
         $title        = _OLEDRION_EDIT_LIST;
         $label_submit = _AM_OLEDRION_MODIFY;
         $list_id      = isset($_GET['list_id']) ? (int)$_GET['list_id'] : 0;
@@ -156,7 +156,7 @@ switch ($op) {
         // ************************************************************************
         $xoopsTpl->assign('op', $op);
         $product_id = isset($_GET['product_id']) ? (int)$_GET['product_id'] : 0;
-        if ($product_id == 0) {
+        if (0 == $product_id) {
             OledrionUtility::redirect(_OLEDRION_ERROR14, $baseurl, 4);
         }
         $userListsCount = $handlers->h_oledrion_lists->getRecentListsCount(OLEDRION_LISTS_ALL, $uid);
@@ -204,7 +204,7 @@ switch ($op) {
         // ************************************************************************
         $xoopsTpl->assign('op', $op);
         $product_id = isset($_POST['product_id']) ? (int)$_POST['product_id'] : 0;
-        if ($product_id == 0) {
+        if (0 == $product_id) {
             OledrionUtility::redirect(_OLEDRION_ERROR14, $baseurl, 4);
         }
         $product = null;
@@ -216,7 +216,7 @@ switch ($op) {
         }
 
         $list_id = isset($_POST['list_id']) ? (int)$_POST['list_id'] : 0;
-        if ($list_id == 0) { // Ajouter à une nouvelle liste
+        if (0 == $list_id) { // Ajouter à une nouvelle liste
             $sform      = listForm('addList', $product_id);
             $title      = _OLEDRION_ADD_LIST;
             $breadcrumb = [
@@ -254,7 +254,7 @@ switch ($op) {
         // ************************************************************************
         $xoopsTpl->assign('op', $op);
         $list_id = isset($_GET['list_id']) ? (int)$_GET['list_id'] : 0;
-        if ($list_id == 0) {
+        if (0 == $list_id) {
             OledrionUtility::redirect(_OLEDRION_ERROR21, $baseurl, 4);
         }
         // Vérification, est-ce que l'utilisateur courant est bien le propriétaire de cette liste ?
@@ -272,7 +272,7 @@ switch ($op) {
     case 'reallyDelete': // Suppression effective d'une liste **************
         // ************************************************************************
         $list_id = isset($_POST['list_id']) ? (int)$_POST['list_id'] : 0;
-        if ($list_id == 0) {
+        if (0 == $list_id) {
             OledrionUtility::redirect(_OLEDRION_ERROR21, $baseurl, 4);
         }
         // Vérification, est-ce que l'utilisateur courant est bien le propriétaire de cette liste ?
@@ -312,7 +312,7 @@ switch ($op) {
             $edit = false;
         }
         // Contrôle sur le titre
-        if (!isset($_POST['list_title']) || (isset($_POST['list_title']) && xoops_trim($_POST['list_title']) === '')) {
+        if (!isset($_POST['list_title']) || (isset($_POST['list_title']) && '' === xoops_trim($_POST['list_title']))) {
             OledrionUtility::redirect(_OLEDRION_ERROR24, $baseurl, 5);
         }
         $item->setVars($_POST);
@@ -363,7 +363,7 @@ switch ($op) {
         // ************************************************************************
         $xoopsTpl->assign('op', $op);
         $sform = listForm($op, 0);
-        if ($op === 'edit') {
+        if ('edit' === $op) {
             $title = _OLEDRION_EDIT_LIST;
         } else {
             $title = _OLEDRION_ADD_LIST;

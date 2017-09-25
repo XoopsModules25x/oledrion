@@ -82,7 +82,7 @@ class Oledrion_attributes extends Oledrion_Object
      */
     public function hasDefaultValue()
     {
-        if (xoops_trim($this->getVar('attribute_default_value')) !== '') {
+        if ('' !== xoops_trim($this->getVar('attribute_default_value'))) {
             return true;
         }
 
@@ -110,7 +110,7 @@ class Oledrion_attributes extends Oledrion_Object
     public function getOption($valueToGet, $format = 'e')
     {
         $names = [];
-        if (xoops_trim($this->getVar($valueToGet, $format)) !== '') {
+        if ('' !== xoops_trim($this->getVar($valueToGet, $format))) {
             $names = explode(OLEDRION_ATTRIBUTE_SEPARATOR, $this->getVar($valueToGet, $format));
         }
 
@@ -300,7 +300,7 @@ class Oledrion_attributes extends Oledrion_Object
     private function moveOption($optionNumber, $upDown)
     {
         $optionNumber = (int)$optionNumber;
-        if ($upDown == 1) {    // Up
+        if (1 == $upDown) {    // Up
             $newPosition = $optionNumber - 1;
         } else {    // Down
             $newPosition = $optionNumber + 1;
@@ -429,7 +429,7 @@ class Oledrion_attributes extends Oledrion_Object
     public function getDefaultAttributePrice($format = 'e')
     {
         $defaultValue = xoops_trim($this->getVar('attribute_default_value', 'e'));
-        if ($defaultValue !== '') {    // Il y a une option par défaut donc un prix
+        if ('' !== $defaultValue) {    // Il y a une option par défaut donc un prix
             $values  = $this->getOption('attribute_values', $format);
             $prices  = $this->getOption('attribute_prices', $format);
             $counter = 0;
@@ -639,14 +639,14 @@ class Oledrion_attributes extends Oledrion_Object
 
         $handlers = OledrionHandler::getInstance();
         $isInCart = $handlers->h_oledrion_caddy->isInCart($product->getVar('product_id'));
-        if ($isInCart === false) {    // Le produit n'est pas dans le panier, on prend la valeur par défaut
+        if (false === $isInCart) {    // Le produit n'est pas dans le panier, on prend la valeur par défaut
             $defaultValue = [$this->getVar('attribute_default_value')];
         } else {    // Le produit est dans le panier, on va chercher les options qui sont sélectionnées
             $Productattributes = $handlers->h_oledrion_caddy->getProductAttributesFromCart($product->getVar('product_id'));
             if (isset($Productattributes[$this->getVar('attribute_id')])) {
                 $defaultValue = $Productattributes[$this->getVar('attribute_id')];
             } else {    // On prend la valeur par défaut
-                if ($this->attribute_type == OLEDRION_ATTRIBUTE_RADIO) {    // Pour les boutons radio, il ne peut y avoir qu'un élément de sélectionné
+                if (OLEDRION_ATTRIBUTE_RADIO == $this->attribute_type) {    // Pour les boutons radio, il ne peut y avoir qu'un élément de sélectionné
                     $defaultValue = $this->getVar('attribute_default_value');
                 } else {
                     $defaultValue = [$this->getVar('attribute_default_value')];
@@ -676,7 +676,7 @@ class Oledrion_attributes extends Oledrion_Object
             case OLEDRION_ATTRIBUTE_SELECT:        // Liste déroulante
                 $templateName = 'oledrion_attribute_select.tpl';
                 $multiple     = '';
-                if ($option2 == 1) {    // La sélection multiple est autorisée
+                if (1 == $option2) {    // La sélection multiple est autorisée
                     $multiple = "multiple='multiple' ";
                 }
                 $template->assign('multiple', $multiple);
@@ -687,7 +687,7 @@ class Oledrion_attributes extends Oledrion_Object
             case OLEDRION_ATTRIBUTE_CHECKBOX:      // Cases à cocher
                 $templateName = 'oledrion_attribute_checkbox.tpl';
                 $delimiter    = '';
-                if ($option1 == OLEDRION_ATTRIBUTE_CHECKBOX_WHITE_SPACE) {
+                if (OLEDRION_ATTRIBUTE_CHECKBOX_WHITE_SPACE == $option1) {
                     $delimiter = ' ';
                 } else {
                     $delimiter = '<br>';
@@ -698,7 +698,7 @@ class Oledrion_attributes extends Oledrion_Object
             case OLEDRION_ATTRIBUTE_RADIO:         // Boutons radio
                 $templateName = 'oledrion_attribute_radio.tpl';
                 $delimiter    = '';
-                if ($option1 == OLEDRION_ATTRIBUTE_CHECKBOX_WHITE_SPACE) {
+                if (OLEDRION_ATTRIBUTE_CHECKBOX_WHITE_SPACE == $option1) {
                     $delimiter = ' ';
                 } else {
                     $delimiter = '<br>';
@@ -706,7 +706,7 @@ class Oledrion_attributes extends Oledrion_Object
                 $template->assign('delimiter', $delimiter);
                 break;
         }
-        if ($templateName !== '') {
+        if ('' !== $templateName) {
             $ret = $template->fetch('db:' . $templateName);
         }
 
@@ -791,7 +791,7 @@ class OledrionOledrion_attributesHandler extends Oledrion_XoopsPersistableObject
     {
         $attributes = $ret = [];
         $attributes = $this->getProductsAttributesList($product->getVar('product_id'));
-        if (count($attributes) == 0) {
+        if (0 == count($attributes)) {
             return $ret;
         }
         foreach ($attributes as $attribute) {
@@ -933,13 +933,13 @@ class OledrionOledrion_attributesHandler extends Oledrion_XoopsPersistableObject
         }
         $ret           = 0;
         $attributesIds = $attributes = [];
-        if (!is_array($choosenAttributes) || count($choosenAttributes) == 0) {
+        if (!is_array($choosenAttributes) || 0 == count($choosenAttributes)) {
             return $ret;
         }
         $attributesIds = array_keys($choosenAttributes);
 
         $attributes = $this->getItemsFromIds($attributesIds);
-        if (count($attributes) == 0) {
+        if (0 == count($attributes)) {
             return $ret;
         }
         $oledrion_Currency = Oledrion_Currency::getInstance();

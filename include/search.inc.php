@@ -31,13 +31,13 @@ function oledrion_search($queryarray, $andor, $limit, $offset, $userid)
 
     // Recherche dans les produits
     $sql = 'SELECT product_id, product_title, product_submitted, product_submitter FROM ' . $xoopsDB->prefix('oledrion_products') . ' WHERE (product_online = 1)';
-    if (OledrionUtility::getModuleOption('show_unpublished') == 0) { // Ne pas afficher les produits qui ne sont pas publiés
+    if (0 == OledrionUtility::getModuleOption('show_unpublished')) { // Ne pas afficher les produits qui ne sont pas publiés
         $sql .= ' AND product_submitted <= ' . time();
     }
-    if (OledrionUtility::getModuleOption('nostock_display') == 0) { // Se limiter aux seuls produits encore en stock
+    if (0 == OledrionUtility::getModuleOption('nostock_display')) { // Se limiter aux seuls produits encore en stock
         $sql .= ' AND product_stock > 0';
     }
-    if ($userid != 0) {
+    if (0 != $userid) {
         $sql .= '  AND product_submitter = ' . $userid;
     }
     $sql .= ') ';
@@ -47,8 +47,8 @@ function oledrion_search($queryarray, $andor, $limit, $offset, $userid)
     $tblFields = [];
     $cnt       = 0;
     foreach ($datas as $key => $value) {
-        if ($value['data_type'] == XOBJ_DTYPE_TXTBOX || $value['data_type'] == XOBJ_DTYPE_TXTAREA) {
-            if ($cnt == 0) {
+        if (XOBJ_DTYPE_TXTBOX == $value['data_type'] || XOBJ_DTYPE_TXTAREA == $value['data_type']) {
+            if (0 == $cnt) {
                 $tblFields[] = $key;
             } else {
                 $tblFields[] = ' OR ' . $key;

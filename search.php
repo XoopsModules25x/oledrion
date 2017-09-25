@@ -37,7 +37,7 @@ $categories    = $h_oledrion_cat->getAllCategories(new Oledrion_parameters());
 $vendors       = $h_oledrion_vendors->getAllVendors(new Oledrion_parameters());
 $manufacturers = $h_oledrion_manufacturer->getItems(0, 0, 'manu_name', 'ASC', false);
 
-if ((isset($_POST['op']) && $_POST['op'] === 'go') || isset($_GET['start'])) { // Recherche des résultats
+if ((isset($_POST['op']) && 'go' === $_POST['op']) || isset($_GET['start'])) { // Recherche des résultats
     $xoopsTpl->assign('search_results', true);
     $xoopsTpl->assign('global_advert', OledrionUtility::getModuleOption('advertisement'));
     $xoopsTpl->assign('breadcrumb', OledrionUtility::breadcrumb([OLEDRION_URL . basename(__FILE__) => _OLEDRION_SEARCHRESULTS]));
@@ -49,10 +49,10 @@ if ((isset($_POST['op']) && $_POST['op'] === 'go') || isset($_GET['start'])) { /
                . ' b, '
                . $xoopsDB->prefix('oledrion_productsmanu')
                . ' a WHERE (b.product_id = a.pm_product_id AND b.product_online = 1) ';
-        if (OledrionUtility::getModuleOption('show_unpublished') == 0) { // Ne pas afficher les produits qui ne sont pas publiés
+        if (0 == OledrionUtility::getModuleOption('show_unpublished')) { // Ne pas afficher les produits qui ne sont pas publiés
             $sql .= ' AND b.product_submitted <= ' . time();
         }
-        if (OledrionUtility::getModuleOption('nostock_display') == 0) { // Se limiter aux seuls produits encore en stock
+        if (0 == OledrionUtility::getModuleOption('nostock_display')) { // Se limiter aux seuls produits encore en stock
             $sql .= ' AND b.product_stock > 0';
         }
         $sql .= ') ';
@@ -69,7 +69,7 @@ if ((isset($_POST['op']) && $_POST['op'] === 'go') || isset($_GET['start'])) { /
         if (isset($_POST['product_manufacturers'])) {
             $submittedManufacturers = null;
             $submittedManufacturers = $_POST['product_manufacturers'];
-            if (is_array($submittedManufacturers) && (int)$submittedManufacturers[0] == 0) {
+            if (is_array($submittedManufacturers) && 0 == (int)$submittedManufacturers[0]) {
                 $submittedManufacturers = array_shift($submittedManufacturers);
             }
             if (is_array($submittedManufacturers) && count($submittedManufacturers) > 0) {
@@ -107,9 +107,9 @@ if ((isset($_POST['op']) && $_POST['op'] === 'go') || isset($_GET['start'])) { /
             }
         }
 
-        if ($_POST['product_stock'] == 2) {
+        if (2 == $_POST['product_stock']) {
             $sql .= ' AND (product_stock > 0)';
-        } elseif ($_POST['product_stock'] == 0) {
+        } elseif (0 == $_POST['product_stock']) {
             $sql .= ' AND (product_stock = 0)';
         }
 
@@ -174,7 +174,7 @@ if ((isset($_POST['op']) && $_POST['op'] === 'go') || isset($_GET['start'])) { /
         }
 
         // Recherche sur du texte
-        if (isset($_POST['product_text']) && xoops_trim($_POST['product_text']) !== '') {
+        if (isset($_POST['product_text']) && '' !== xoops_trim($_POST['product_text'])) {
             $temp_queries = $queries = [];
             $temp_queries = preg_split('/[\s,]+/', $_POST['product_text']);
 
@@ -188,8 +188,8 @@ if ((isset($_POST['op']) && $_POST['op'] === 'go') || isset($_GET['start'])) { /
                 $fields    = [];
                 $cnt       = 0;
                 foreach ($datas as $key => $value) {
-                    if ($value['data_type'] == XOBJ_DTYPE_TXTBOX || $value['data_type'] == XOBJ_DTYPE_TXTAREA) {
-                        if ($cnt == 0) {
+                    if (XOBJ_DTYPE_TXTBOX == $value['data_type'] || XOBJ_DTYPE_TXTAREA == $value['data_type']) {
+                        if (0 == $cnt) {
                             $fields[] = 'b.' . $key;
                         } else {
                             $fields[] = ' OR b.' . $key;
@@ -268,7 +268,7 @@ if ((isset($_POST['op']) && $_POST['op'] === 'go') || isset($_GET['start'])) { /
         $ret['product_property9']      = $myrow['product_property9'];
         $ret['product_property10']     = $myrow['product_property10'];
         $ret['product_price']          = $myrow['product_price'];
-        if ($myrow['product_price'] == 0) {
+        if (0 == $myrow['product_price']) {
             $criteria = new CriteriaCompo();
             $criteria->add(new Criteria('attribute_product_id', $myrow['product_id']));
             $attribute = OledrionHandler::getInstance()->h_oledrion_attributes->getObjects($criteria, false);
