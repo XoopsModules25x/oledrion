@@ -57,7 +57,10 @@ function oledrion_search($queryarray, $andor, $limit, $offset, $userid)
         }
     }
 
-    $count = count($queryarray);
+    $count = 0;
+    if(is_array($queryarray)) {
+        $count = count($queryarray);
+    }
     $more  = '';
     if (is_array($queryarray) && $count > 0) {
         $cnt  = 0;
