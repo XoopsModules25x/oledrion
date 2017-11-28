@@ -25,7 +25,7 @@ require_once __DIR__ . '/classheader.php';
 /**
  * Class Oledrion_vat
  */
-class Oledrion_vat extends Oledrion_Object
+class Oledrion_vat extends OledrionObject
 {
     /**
      * constructor
@@ -59,7 +59,7 @@ class Oledrion_vat extends Oledrion_Object
 /**
  * Class OledrionOledrion_vatHandler
  */
-class OledrionOledrion_vatHandler extends Oledrion_XoopsPersistableObjectHandler
+class OledrionOledrion_vatHandler extends OledrionPersistableObjectHandler
 {
     /**
      * OledrionOledrion_vatHandler constructor.
@@ -67,7 +67,7 @@ class OledrionOledrion_vatHandler extends Oledrion_XoopsPersistableObjectHandler
      */
     public function __construct(XoopsDatabase $db)
     { //                        Table           Classe          Id
-        parent::__construct($db, 'oledrion_vat', 'oledrion_vat', 'vat_id');
+        parent::__construct($db, 'oledrion_vat', 'Oledrion_vat', 'vat_id');
     }
 
     /**
@@ -138,7 +138,7 @@ class OledrionOledrion_vatHandler extends Oledrion_XoopsPersistableObjectHandler
     /**
      * Suppression d'une TVA
      *
-     * @param  oledrion_vat $vat
+     * @param  Oledrion_vat $vat
      * @return boolean      Le résultat de la suppressin
      */
     public function deleteVat(Oledrion_vat $vat)

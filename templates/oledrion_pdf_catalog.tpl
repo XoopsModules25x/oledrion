@@ -20,8 +20,25 @@
     <{/if}>
     <br>
     <br>
-    <a href="<{$product.product_url_rewrited}>"
-       title="<{$smarty.const._OLEDRION_READ_MORE}> <{$product.product_href_title}>"><{if $product.product_joined_manufacturers != ''}><{$smarty.const._OLEDRION_BY|capitalize}> <{$product.product_joined_manufacturers|strip_tags|wordwrap:100|nl2br}><{/if}> <{if $mod_pref.use_price}>- <{if $product.product_stock > 0 }><{$smarty.const._OLEDRION_PRICE}> <{if $product.product_discount_price_ttc != 0}><{$product.product_discount_price_ttc}><{else}><{$product.product_price_ttc}><{/if}></a><{else}><{$mod_pref.nostock_msg}><{/if}><{/if}>
+<a href="<{$product.product_url_rewrited}>"
+   title="<{$smarty.const._OLEDRION_READ_MORE}> <{$product.product_href_title}>">
+    <{if $product.product_joined_manufacturers != ''}>
+        <{$smarty.const._OLEDRION_BY|capitalize}>
+        <{$product.product_joined_manufacturers|strip_tags|wordwrap:100|nl2br}>
+    <{/if}>
+    <{if $mod_pref.use_price}>-
+        <{if $product.product_stock > 0 }><{$smarty.const._OLEDRION_PRICE}>
+            <{if $product.product_discount_price_ttc != 0}>
+                <{$product.product_discount_price_ttc}>
+            <{else}>
+                <{$product.product_price_ttc}>
+
+            <{/if}>
+            </a>
+        <{else}>
+            <{$mod_pref.nostock_msg}>
+        <{/if}>
+    <{/if}>
     <br>
     <br>
     <br>

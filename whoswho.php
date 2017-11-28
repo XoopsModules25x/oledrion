@@ -38,13 +38,13 @@ foreach ($manufacturers as $item) {
 }
 $xoopsTpl->assign('manufacturers', $tblAnnuaire);
 
-OledrionUtility::setCSS();
-OledrionUtility::setLocalCSS($xoopsConfig['language']);
-OledrionUtility::loadLanguageFile('modinfo.php');
+\Xoopsmodules\oledrion\Utility::setCSS();
+\Xoopsmodules\oledrion\Utility::setLocalCSS($xoopsConfig['language']);
+\Xoopsmodules\oledrion\Utility::loadLanguageFile('modinfo.php');
 
-$xoopsTpl->assign('global_advert', OledrionUtility::getModuleOption('advertisement'));
-$xoopsTpl->assign('breadcrumb', OledrionUtility::breadcrumb([OLEDRION_URL . basename(__FILE__) => _MI_OLEDRION_SMNAME5]));
+$xoopsTpl->assign('global_advert', \Xoopsmodules\oledrion\Utility::getModuleOption('advertisement'));
+$xoopsTpl->assign('breadcrumb', \Xoopsmodules\oledrion\Utility::breadcrumb([OLEDRION_URL . basename(__FILE__) => _MI_OLEDRION_SMNAME5]));
 
-$title = _MI_OLEDRION_SMNAME5 . ' - ' . OledrionUtility::getModuleName();
-OledrionUtility::setMetas($title, $title);
+$title = _MI_OLEDRION_SMNAME5 . ' - ' . \Xoopsmodules\oledrion\Utility::getModuleName();
+\Xoopsmodules\oledrion\Utility::setMetas($title, $title);
 require_once XOOPS_ROOT_PATH . '/footer.php';

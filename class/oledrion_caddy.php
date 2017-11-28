@@ -25,7 +25,7 @@ require_once __DIR__ . '/classheader.php';
 /**
  * Class Oledrion_caddy
  */
-class Oledrion_caddy extends Oledrion_Object
+class Oledrion_caddy extends OledrionObject
 {
     /**
      * constructor
@@ -66,7 +66,7 @@ class Oledrion_caddy extends Oledrion_Object
 /**
  * Class OledrionOledrion_caddyHandler
  */
-class OledrionOledrion_caddyHandler extends Oledrion_XoopsPersistableObjectHandler
+class OledrionOledrion_caddyHandler extends OledrionPersistableObjectHandler
 {
     const CADDY_NAME = 'oledrion_caddie'; // Nom du panier en session
 
@@ -76,7 +76,7 @@ class OledrionOledrion_caddyHandler extends Oledrion_XoopsPersistableObjectHandl
      */
     public function __construct(XoopsDatabase $db)
     { //                          Table             Classe          Id
-        parent::__construct($db, 'oledrion_caddy', 'oledrion_caddy', 'caddy_id');
+        parent::__construct($db, 'oledrion_caddy', 'Oledrion_caddy', 'caddy_id');
     }
 
     /**
@@ -121,7 +121,7 @@ class OledrionOledrion_caddyHandler extends Oledrion_XoopsPersistableObjectHandl
         } else {
             $sql = 'SELECT caddy_product_id, sum( caddy_qte ) AS mv FROM ' . $this->table . ' GROUP BY caddy_product_id ORDER BY mv DESC';
         }
-        //$Cache_Lite = new oledrion_Cache_Lite($this->cacheOptions);
+        //$Cache_Lite = new Oledrion_Cache_Lite($this->cacheOptions);
         $id = $this->_getIdForCache($sql, $start, $limit);
         //$cacheData = $Cache_Lite->get($id);
         //if ($cacheData === false) {
@@ -156,7 +156,7 @@ class OledrionOledrion_caddyHandler extends Oledrion_XoopsPersistableObjectHandl
         //require_once __DIR__ . '/lite.php';
         $ret = [];
         $sql = 'SELECT c.caddy_product_id FROM ' . $this->table . ' c, ' . $this->db->prefix('oledrion_commands') . ' o WHERE (c.caddy_cmd_id = o.cmd_id) AND (o.cmd_state = ' . OLEDRION_STATE_VALIDATED . ') ORDER BY cmd_date DESC';
-        //$Cache_Lite = new oledrion_Cache_Lite($this->cacheOptions);
+        //$Cache_Lite = new Oledrion_Cache_Lite($this->cacheOptions);
         $id = $this->_getIdForCache($sql, $start, $limit);
         //$cacheData = $Cache_Lite->get($id);
         //if ($cacheData === false) {
@@ -210,7 +210,7 @@ class OledrionOledrion_caddyHandler extends Oledrion_XoopsPersistableObjectHandl
     public function reloadPersistentCart()
     {
         global $xoopsUser, $h_oledrion_persistent_cart;
-        if (0 == OledrionUtility::getModuleOption('persistent_cart')) {
+        if (0 == \Xoopsmodules\oledrion\Utility::getModuleOption('persistent_cart')) {
             return false;
         }
         if (is_object($xoopsUser)) {
@@ -443,7 +443,7 @@ class OledrionOledrion_caddyHandler extends Oledrion_XoopsPersistableObjectHandl
     /**
      * Retourne tous les produits d'un caddy
      *
-     * @param  array $carts Objets de type oledrion_caddy
+     * @param  array $carts Objets de type Oledrion_caddy
      * @return array Tableau d'objets de type oledrion_products, Clé = Id produit
      * @since 2.31.2009.07.25
      */

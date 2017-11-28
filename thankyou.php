@@ -39,11 +39,11 @@ if (is_object($gateway) && method_exists($gateway, 'thankYou')) {
     unset($gateway);
 }
 $xoopsTpl->assign('success', $success);
-$xoopsTpl->assign('global_advert', OledrionUtility::getModuleOption('advertisement'));
-$xoopsTpl->assign('breadcrumb', OledrionUtility::breadcrumb([OLEDRION_URL . basename(__FILE__) => _OLEDRION_PURCHASE_FINSISHED]));
+$xoopsTpl->assign('global_advert', \Xoopsmodules\oledrion\Utility::getModuleOption('advertisement'));
+$xoopsTpl->assign('breadcrumb', \Xoopsmodules\oledrion\Utility::breadcrumb([OLEDRION_URL . basename(__FILE__) => _OLEDRION_PURCHASE_FINSISHED]));
 
-$title = _OLEDRION_PURCHASE_FINSISHED . ' - ' . OledrionUtility::getModuleName();
-OledrionUtility::setMetas($title, $title);
-OledrionUtility::setCSS();
-OledrionUtility::setLocalCSS($xoopsConfig['language']);
+$title = _OLEDRION_PURCHASE_FINSISHED . ' - ' . \Xoopsmodules\oledrion\Utility::getModuleName();
+\Xoopsmodules\oledrion\Utility::setMetas($title, $title);
+\Xoopsmodules\oledrion\Utility::setCSS();
+\Xoopsmodules\oledrion\Utility::setLocalCSS($xoopsConfig['language']);
 require_once XOOPS_ROOT_PATH . '/footer.php';

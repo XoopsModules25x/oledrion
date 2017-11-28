@@ -63,7 +63,7 @@
                 <table cellspacing="0">
                     <tr>
                         <td colspan="2" class="oledrion_producttitle_view-product">
-                            <h2><{$product.product_recommended_picture}><{$product.product_title}></h2>
+                            <strong><{$product.product_recommended_picture}><{$product.product_title}></strong>
                         </td>
                     </tr>
                     <tr>
@@ -143,10 +143,10 @@
                                             :
                                             <span class="bold">
            <{if $product.product_discount_price_ttc != ''}>
-               <s><{$product.product_price_ttc_long}> </s>
+               <s><{$product.product_price_ttc}> </s>
                <{$product.product_discount_price_ttc}>
            <{else}>
-               <{$product.product_price_ttc_long}>
+               <{$product.product_price_ttc}>
            <{/if}>
                             </span>
                                             <a href="<{$smarty.const.OLEDRION_URL}>caddy.php?op=addproduct&product_id=<{$product.product_id}>"
@@ -174,9 +174,9 @@
                                                                     <s><{$product.product_price_ttc}> </s>
                                                                     <b><{$product.product_discount_price_ttc}></b>
                                                                 <{else}>
-                                                                    <{$product.product_price_ttc_long}>
+                                                                    <{$product.product_price_ttc}>
                                                                 <{/if}>
-                                                                <span id="oledrion_final_price_ttc"><{$product.product_final_price_ttc_formated_long}></span>
+                                                                <span id="oledrion_final_price_ttc"><{$product.product_final_price_ttc_formated}></span>
                                                                 <{if $product.product_ecotaxe != ''}>
                                                                     <div class="oledrion_view-product_price_ecotaxe"><span
                                                                                 class="oledrion_productdescription-contentTitles"><{$smarty.const._OLEDRION_ECOTAXE}></span>
@@ -423,7 +423,7 @@
                     <td class="center top">
                         <{include file="db:oledrion_product_box.tpl" product=$oneitem}>
                     </td>
-                    <{if $oneitem.count % $columnsCount == 0}>
+                    <{if $columnsCount != 0 && $oneitem.count % $columnsCount == 0}>
                 </tr>
                 <tr>
                     <{/if}>
@@ -474,7 +474,7 @@
                         <td class="center top">
                             <{include file="db:oledrion_product_box.tpl" product=$oneitem}>
                         </td>
-                        <{if $oneitem.count % $columnsCount == 0}>
+                        <{if $columnsCount != 0 && $oneitem.count % $columnsCount == 0}>
                     </tr>
                     <tr>
                         <{/if}>
@@ -492,7 +492,7 @@
                         <td class="center top">
                             <{include file="db:oledrion_product_box.tpl" product=$oneitem}>
                         </td>
-                        <{if $oneitem.count % $columnsCount == 0}>
+                        <{if $columnsCount != 0 && $oneitem.count % $columnsCount == 0}>
                     </tr>
                     <tr>
                         <{/if}>

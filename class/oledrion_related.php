@@ -25,7 +25,7 @@ require_once __DIR__ . '/classheader.php';
 /**
  * Class Oledrion_related
  */
-class Oledrion_related extends Oledrion_Object
+class Oledrion_related extends OledrionObject
 {
     /**
      * constructor
@@ -46,7 +46,7 @@ class Oledrion_related extends Oledrion_Object
 /**
  * Class OledrionOledrion_relatedHandler
  */
-class OledrionOledrion_relatedHandler extends Oledrion_XoopsPersistableObjectHandler
+class OledrionOledrion_relatedHandler extends OledrionPersistableObjectHandler
 {
     /**
      * OledrionOledrion_relatedHandler constructor.
@@ -54,7 +54,7 @@ class OledrionOledrion_relatedHandler extends Oledrion_XoopsPersistableObjectHan
      */
     public function __construct(XoopsDatabase $db)
     { //                            Table               Classe                   Id
-        parent::__construct($db, 'oledrion_related', 'oledrion_related', 'related_id');
+        parent::__construct($db, 'oledrion_related', 'Oledrion_related', 'related_id');
     }
 
     /**
@@ -72,7 +72,7 @@ class OledrionOledrion_relatedHandler extends Oledrion_XoopsPersistableObjectHan
      * Retourne la liste des produits relatifs d'une liste de produits
      *
      * @param  array $ids Les ID des produits dont on recherche les produits relatifs
-     * @return array Objets de type oledrion_related
+     * @return array Objets de type Oledrion_related
      */
     public function getRelatedProductsFromProductsIds($ids)
     {

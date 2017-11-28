@@ -37,12 +37,12 @@ class Oledrion_Currency
     public function __construct()
     {
         // Get the module's preferences
-        $this->_decimalsCount = OledrionUtility::getModuleOption('decimals_count');
-        $this->_thousandsSep  = OledrionUtility::getModuleOption('thousands_sep');
-        $this->_decimalSep    = OledrionUtility::getModuleOption('decimal_sep');
-        $this->_moneyFull     = OledrionUtility::getModuleOption('money_full');
-        $this->_moneyShort    = OledrionUtility::getModuleOption('money_short');
-        $this->_monnaiePlace  = OledrionUtility::getModuleOption('monnaie_place');
+        $this->_decimalsCount = \Xoopsmodules\oledrion\Utility::getModuleOption('decimals_count');
+        $this->_thousandsSep  = \Xoopsmodules\oledrion\Utility::getModuleOption('thousands_sep');
+        $this->_decimalSep    = \Xoopsmodules\oledrion\Utility::getModuleOption('decimal_sep');
+        $this->_moneyFull     = \Xoopsmodules\oledrion\Utility::getModuleOption('money_full');
+        $this->_moneyShort    = \Xoopsmodules\oledrion\Utility::getModuleOption('money_short');
+        $this->_monnaiePlace  = \Xoopsmodules\oledrion\Utility::getModuleOption('monnaie_place');
         $this->_thousandsSep  = str_replace('[space]', ' ', $this->_thousandsSep);
         $this->_decimalSep    = str_replace('[space]', ' ', $this->_decimalSep);
     }

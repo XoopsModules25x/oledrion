@@ -26,7 +26,7 @@ require_once __DIR__ . '/classheader.php';
 /**
  * Class Oledrion_cat
  */
-class Oledrion_cat extends Oledrion_Object
+class Oledrion_cat extends OledrionObject
 {
     /**
      * constructor
@@ -106,8 +106,8 @@ class Oledrion_cat extends Oledrion_Object
     {
         require_once XOOPS_ROOT_PATH . '/modules/oledrion/include/common.php';
         $url = '';
-        if (1 == OledrionUtility::getModuleOption('urlrewriting')) { // On utilise l'url rewriting
-            $url = OLEDRION_URL . 'category-' . $this->getVar('cat_cid') . OledrionUtility::makeSeoUrl($this->getVar('cat_title', 'n')) . '.html';
+        if (1 == \Xoopsmodules\oledrion\Utility::getModuleOption('urlrewriting')) { // On utilise l'url rewriting
+            $url = OLEDRION_URL . 'category-' . $this->getVar('cat_cid') . \Xoopsmodules\oledrion\Utility::makeSeoUrl($this->getVar('cat_title', 'n')) . '.html';
         } else { // Pas d'utilisation de l'url rewriting
             $url = OLEDRION_URL . 'category.php?cat_cid=' . $this->getVar('cat_cid');
         }
@@ -122,7 +122,7 @@ class Oledrion_cat extends Oledrion_Object
      */
     public function getHrefTitle()
     {
-        return OledrionUtility::makeHrefTitle($this->getVar('cat_title'));
+        return \Xoopsmodules\oledrion\Utility::makeHrefTitle($this->getVar('cat_title'));
     }
 
     /**
@@ -146,7 +146,7 @@ class Oledrion_cat extends Oledrion_Object
 /**
  * Class OledrionOledrion_catHandler
  */
-class OledrionOledrion_catHandler extends Oledrion_XoopsPersistableObjectHandler
+class OledrionOledrion_catHandler extends OledrionPersistableObjectHandler
 {
     /**
      * OledrionOledrion_catHandler constructor.
@@ -154,7 +154,7 @@ class OledrionOledrion_catHandler extends Oledrion_XoopsPersistableObjectHandler
      */
     public function __construct(XoopsDatabase $db)
     { //                        Table               Classe       Id       Libellé
-        parent::__construct($db, 'oledrion_cat', 'oledrion_cat', 'cat_cid', 'cat_title');
+        parent::__construct($db, 'oledrion_cat', 'Oledrion_cat', 'cat_cid', 'cat_title');
     }
 
     /**
@@ -239,7 +239,7 @@ class OledrionOledrion_catHandler extends Oledrion_XoopsPersistableObjectHandler
     /**
      * Supprime une catégorie (et tout ce qui lui est relatif)
      *
-     * @param  oledrion_cat $category
+     * @param  Oledrion_cat $category
      * @return boolean      Le résultat de la suppression
      */
     public function deleteCategory(Oledrion_cat $category)
@@ -284,7 +284,7 @@ class OledrionOledrion_catHandler extends Oledrion_XoopsPersistableObjectHandler
      * Retourne des catégories selon leur ID
      *
      * @param  array $ids Les ID des catégories à retrouver
-     * @return array Objets de type oledrion_cat
+     * @return array Objets de type Oledrion_cat
      */
     public function getCategoriesFromIds($ids)
     {
@@ -300,7 +300,7 @@ class OledrionOledrion_catHandler extends Oledrion_XoopsPersistableObjectHandler
     /**
      * Retourne la liste des catégories mères (sous forme d'un tableau d'objets)
      *
-     * @return array Objets de type oledrion_cat
+     * @return array Objets de type Oledrion_cat
      */
     public function getMotherCategories()
     {

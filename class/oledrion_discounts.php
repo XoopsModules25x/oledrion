@@ -58,7 +58,7 @@ define('OLEDRION_DISCOUNT_SHIPPING_TYPE4', 4); // Les frais de port sont dégres
 /**
  * Class Oledrion_discounts
  */
-class Oledrion_discounts extends Oledrion_Object
+class Oledrion_discounts extends OledrionObject
 {
     /**
      * constructor
@@ -128,7 +128,7 @@ class Oledrion_discounts extends Oledrion_Object
 /**
  * Class OledrionOledrion_discountsHandler
  */
-class OledrionOledrion_discountsHandler extends Oledrion_XoopsPersistableObjectHandler
+class OledrionOledrion_discountsHandler extends OledrionPersistableObjectHandler
 {
     /**
      * OledrionOledrion_discountsHandler constructor.
@@ -136,7 +136,7 @@ class OledrionOledrion_discountsHandler extends Oledrion_XoopsPersistableObjectH
      */
     public function __construct(XoopsDatabase $db)
     { //                        Table                   Classe              Id        Libellé
-        parent::__construct($db, 'oledrion_discounts', 'oledrion_discounts', 'disc_id', 'disc_title');
+        parent::__construct($db, 'oledrion_discounts', 'Oledrion_discounts', 'disc_id', 'disc_title');
     }
 
     /**
@@ -152,7 +152,7 @@ class OledrionOledrion_discountsHandler extends Oledrion_XoopsPersistableObjectH
     /**
      * Retourne la liste des règles qui sont applicables sur la période courante
      * @param void
-     * @return array objets de type oledrion_discounts
+     * @return array objets de type Oledrion_discounts
      */
     public function getRulesForThisPeriod()
     {
@@ -190,7 +190,7 @@ class OledrionOledrion_discountsHandler extends Oledrion_XoopsPersistableObjectH
         static $buffer = [];
         if (is_array($buffer) && count($buffer) > 0) {
         } else {
-            $groups  = OledrionUtility::getCurrentMemberGroups();
+            $groups  = \Xoopsmodules\oledrion\Utility::getCurrentMemberGroups();
             $critere = new CriteriaCompo();
             $critere->add(new Criteria('disc_on_what', OLEDRION_DISCOUNT_ON3, '='));
             if (count($groups) > 0) {
@@ -214,7 +214,7 @@ class OledrionOledrion_discountsHandler extends Oledrion_XoopsPersistableObjectH
         } else {
             $critere = new CriteriaCompo();
             $critere->add(new Criteria('disc_on_what', OLEDRION_DISCOUNT_ON2, '='));
-            $tblGroups = OledrionUtility::getCurrentMemberGroups();
+            $tblGroups = \Xoopsmodules\oledrion\Utility::getCurrentMemberGroups();
             $critere->add(new Criteria('disc_group', '(' . implode(',', $tblGroups) . ')', 'IN'));
             $buffer = $this->getObjects($critere);
         }
@@ -234,7 +234,7 @@ class OledrionOledrion_discountsHandler extends Oledrion_XoopsPersistableObjectH
         } else {
             $critere = new CriteriaCompo();
             $critere->add(new Criteria('disc_on_what', OLEDRION_DISCOUNT_ON4, '='));
-            $tblGroups = OledrionUtility::getCurrentMemberGroups();
+            $tblGroups = \Xoopsmodules\oledrion\Utility::getCurrentMemberGroups();
             $critere->add(new Criteria('disc_group', '(' . implode(',', $tblGroups) . ')', 'IN'));
             $buffer = $this->getObjects($critere);
         }
@@ -255,7 +255,7 @@ class OledrionOledrion_discountsHandler extends Oledrion_XoopsPersistableObjectH
             $critere = new CriteriaCompo();
             $critere->add(new Criteria('disc_on_what', OLEDRION_DISCOUNT_ON5, '='));
             $critere->add(new Criteria('disc_shipping', OLEDRION_DISCOUNT_SHIPPING2, '='));
-            $tblGroups = OledrionUtility::getCurrentMemberGroups();
+            $tblGroups = \Xoopsmodules\oledrion\Utility::getCurrentMemberGroups();
             $critere->add(new Criteria('disc_group', '(' . implode(',', $tblGroups) . ')', 'IN'));
             $buffer = $this->getObjects($critere);
         }
@@ -275,7 +275,7 @@ class OledrionOledrion_discountsHandler extends Oledrion_XoopsPersistableObjectH
         } else {
             $critere = new CriteriaCompo();
             $critere->add(new Criteria('disc_on_what', OLEDRION_DISCOUNT_ON1, '='));
-            $tblGroups = OledrionUtility::getCurrentMemberGroups();
+            $tblGroups = \Xoopsmodules\oledrion\Utility::getCurrentMemberGroups();
             $critere->add(new Criteria('disc_group', '(' . implode(',', $tblGroups) . ')', 'IN'));
             $buffer = $this->getObjects($critere);
         }
@@ -316,7 +316,7 @@ class OledrionOledrion_discountsHandler extends Oledrion_XoopsPersistableObjectH
         $tblRules = [];
         $tblRules = $this->getRulesOnCommand(); // Renvoie des objets Discounts
         if (count($tblRules) > 0) {
-            $uid = OledrionUtility::getCurrentUserID();
+            $uid = \Xoopsmodules\oledrion\Utility::getCurrentUserID();
             foreach ($tblRules as $rule) {
                 switch ($rule->getVar('disc_when')) {
                     case OLEDRION_DISCOUNT_WHEN1: // Dans tous les cas
@@ -368,7 +368,7 @@ class OledrionOledrion_discountsHandler extends Oledrion_XoopsPersistableObjectH
         $tblRules = [];
         $tblRules = $this->getRulesOnShipping(); // Renvoie des objets Discounts
         if (count($tblRules) > 0) {
-            $uid = OledrionUtility::getCurrentUserID();
+            $uid = \Xoopsmodules\oledrion\Utility::getCurrentUserID();
             foreach ($tblRules as $rule) {
                 switch ($rule->getVar('disc_when')) {
                     case OLEDRION_DISCOUNT_WHEN1: // Dans tous les cas
@@ -470,7 +470,7 @@ class OledrionOledrion_discountsHandler extends Oledrion_XoopsPersistableObjectH
         $tblRules = [];
         $tblRules = $this->getRulesOnAllProducts(); // Renvoie des objets Discounts
         if (count($tblRules) > 0) {
-            $uid = OledrionUtility::getCurrentUserID();
+            $uid = \Xoopsmodules\oledrion\Utility::getCurrentUserID();
             foreach ($tblRules as $rule) {
                 switch ($rule->getVar('disc_when')) {
                     case OLEDRION_DISCOUNT_WHEN1: // Dans tous les cas
@@ -573,7 +573,7 @@ class OledrionOledrion_discountsHandler extends Oledrion_XoopsPersistableObjectH
         $rules = [];
         $rules = $this->getRulesOnEachProduct(); // Renvoie des objets Discounts
         if (count($rules) > 0) {
-            $uid = OledrionUtility::getCurrentUserID();
+            $uid = \Xoopsmodules\oledrion\Utility::getCurrentUserID();
             foreach ($rules as $rule) {
                 switch ($rule->getVar('disc_when')) {
                     case OLEDRION_DISCOUNT_WHEN1: // Dans tous les cas

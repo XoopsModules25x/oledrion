@@ -28,12 +28,12 @@ require_once OLEDRION_PATH . 'class/tree.php';
 if (!isset($xoopsUser) || !is_object($xoopsUser)) {
     exit;
 }
-if (!OledrionUtility::isAdmin()) {
+if (!\Xoopsmodules\oledrion\Utility::isAdmin()) {
     exit;
 }
 $xoopsTpl = new XoopsTpl();
 $ts       = MyTextSanitizer::getInstance();
-$limit    = OledrionUtility::getModuleOption('items_count'); // Nombre maximum d'éléments à afficher dans l'admin
+$limit    = \Xoopsmodules\oledrion\Utility::getModuleOption('items_count'); // Nombre maximum d'éléments à afficher dans l'admin
 
 $oledrionHandlers = OledrionHandler::getInstance();
 $searchFields     = [
@@ -137,10 +137,10 @@ if (isset($_REQUEST['op']) && 'search' === $_REQUEST['op']) {
     }
 }
 
-OledrionUtility::loadLanguageFile('modinfo.php');
-OledrionUtility::loadLanguageFile('main.php');
+\Xoopsmodules\oledrion\Utility::loadLanguageFile('modinfo.php');
+\Xoopsmodules\oledrion\Utility::loadLanguageFile('main.php');
 
-if (OledrionUtility::checkVerXoops($GLOBALS['xoopsModule'], '2.5.9')) {
+if (\Xoopsmodules\oledrion\Utility::checkVerXoops($GLOBALS['xoopsModule'], '2.5.9')) {
     $categoriesSelect = $mytree->makeSelectElement('product_cid', 'cat_title', '-', $selectedCategory, true, 0, '', '');
     $xoopsTpl->assign('searchCategory', $categoriesSelect->render());
 } else {

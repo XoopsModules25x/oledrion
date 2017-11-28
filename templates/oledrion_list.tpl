@@ -29,7 +29,7 @@
                 <td>
                     <{include file="db:oledrion_product_box.tpl"}>
                 </td>
-                <{if $product.product_count % $columnsCount == 0}>
+                <{if $columnsCount != 0 && $product.product_count % $columnsCount == 0}>
             </tr>
             <tr>
                 <{/if}>

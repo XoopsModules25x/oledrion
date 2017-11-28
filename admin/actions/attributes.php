@@ -58,7 +58,7 @@ switch ($action) {
                 . "'></form>";
         echo $form;
 
-        //        OledrionUtility::htitle(_AM_OLEDRION_ATTRIBUTES_LIST, 4);
+        //        \Xoopsmodules\oledrion\Utility::htitle(_AM_OLEDRION_ATTRIBUTES_LIST, 4);
 
         $start    = isset($_GET['start']) ? (int)$_GET['start'] : 0;
         $criteria = new CriteriaCompo();
@@ -137,7 +137,7 @@ switch ($action) {
                 $products = $oledrionHandlers->h_oledrion_products->getProductsFromIDs($productsIds, true);
             }
         }
-        $typeSelect = OledrionUtility::htmlSelect('filter_attribute_type', [
+        $typeSelect = \Xoopsmodules\oledrion\Utility::htmlSelect('filter_attribute_type', [
             OLEDRION_ATTRIBUTE_RADIO    => _AM_OLEDRION_TYPE_RADIO,
             OLEDRION_ATTRIBUTE_CHECKBOX => _AM_OLEDRION_TYPE_CHECKBOX,
             OLEDRION_ATTRIBUTE_SELECT   => _AM_OLEDRION_TYPE_LIST
@@ -147,7 +147,7 @@ switch ($action) {
         if (count($productsIdsForList) > 0) {
             $productsForList = $oledrionHandlers->h_oledrion_products->getList(new Criteria('product_id', '(' . implode(',', $productsIdsForList) . ')', 'IN'));
         }
-        $selectProduct = OledrionUtility::htmlSelect('filter_attribute_product_id', $productsForList, $filter_attribute_product_id);
+        $selectProduct = \Xoopsmodules\oledrion\Utility::htmlSelect('filter_attribute_product_id', $productsForList, $filter_attribute_product_id);
 
         echo "<table width='100%' cellspacing='1' cellpadding='3' border='0' class='outer'>";
         if (isset($pagenav) && is_object($pagenav)) {
@@ -179,9 +179,9 @@ switch ($action) {
             $class        = ('even' === $class) ? 'odd' : 'even';
             $id           = $item->getVar('attribute_id');
             $actions      = [];
-            $actions[]    = "<a href='$baseurl?op=$operation&action=edit&id=" . $id . "' title='" . _OLEDRION_EDIT . "'>" . $icones['edit'] . '</a>';
-            $actions[]    = "<a href='$baseurl?op=$operation&action=delete&id=" . $id . "' title='" . _OLEDRION_DELETE . "'" . $conf_msg . '>' . $icones['delete'] . '</a>';
-            $actions[]    = "<a href='$baseurl?op=$operation&action=copy&id=" . $id . "' title='" . _OLEDRION_DUPLICATE_ATTRIBUTE . "'>" . $icones['copy'] . '</a>';
+            $actions[]    = "<a href='$baseurl?op=$operation&action=edit&id=" . $id . "' title='" . _OLEDRION_EDIT . "'>" . $icons['edit'] . '</a>';
+            $actions[]    = "<a href='$baseurl?op=$operation&action=delete&id=" . $id . "' title='" . _OLEDRION_DELETE . "'" . $conf_msg . '>' . $icons['delete'] . '</a>';
+            $actions[]    = "<a href='$baseurl?op=$operation&action=copy&id=" . $id . "' title='" . _OLEDRION_DUPLICATE_ATTRIBUTE . "'>" . $icons['copy'] . '</a>';
             $productTitle = isset($products[$item->getVar('attribute_product_id')]) ? $products[$item->getVar('attribute_product_id')]->getVar('product_title') : '';
             $productLink  = isset($products[$item->getVar('attribute_product_id')]) ? $products[$item->getVar('attribute_product_id')]->getLink() : '';
             echo "<tr class='" . $class . "'>\n";
@@ -212,7 +212,7 @@ switch ($action) {
         xoops_cp_header();
         $id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
         if (empty($id)) {
-            OledrionUtility::redirect(_AM_OLEDRION_ERROR_1, $baseurl, 5);
+            \Xoopsmodules\oledrion\Utility::redirect(_AM_OLEDRION_ERROR_1, $baseurl, 5);
         }
         $attribute = null;
         $attribute = $oledrionHandlers->h_oledrion_attributes->get($id);
@@ -220,9 +220,9 @@ switch ($action) {
             $newAttribute   = $oledrionHandlers->h_oledrion_attributes->cloneAttribute($attribute);
             $newAttributeId = $newAttribute->attribute_id;
             if (false !== $newAttribute) {
-                OledrionUtility::redirect(_AM_OLEDRION_SAVE_OK, $baseurl . '?op=' . $operation . '&action=edit&id=' . $newAttributeId, 2);
+                \Xoopsmodules\oledrion\Utility::redirect(_AM_OLEDRION_SAVE_OK, $baseurl . '?op=' . $operation . '&action=edit&id=' . $newAttributeId, 2);
             } else {
-                OledrionUtility::redirect(_AM_OLEDRION_SAVE_PB, $baseurl . '?op=' . $operation, 5);
+                \Xoopsmodules\oledrion\Utility::redirect(_AM_OLEDRION_SAVE_PB, $baseurl . '?op=' . $operation, 5);
             }
         }
         break;
@@ -233,23 +233,23 @@ switch ($action) {
         xoops_cp_header();
         $id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
         if (empty($id)) {
-            OledrionUtility::redirect(_AM_OLEDRION_ERROR_1, $baseurl, 5);
+            \Xoopsmodules\oledrion\Utility::redirect(_AM_OLEDRION_ERROR_1, $baseurl, 5);
         }
         $attribute = null;
         $attribute = $oledrionHandlers->h_oledrion_attributes->get($id);
         if (!is_object($attribute)) {
-            OledrionUtility::redirect(_AM_OLEDRION_NOT_FOUND, $baseurl . '?op=' . $operation, 5);
+            \Xoopsmodules\oledrion\Utility::redirect(_AM_OLEDRION_NOT_FOUND, $baseurl . '?op=' . $operation, 5);
         }
         $attributesCountInCaddy = $oledrionHandlers->h_oledrion_caddy_attributes->getCaddyCountFromAttributeId($id);
         if (0 == $attributesCountInCaddy) {
             $res = $oledrionHandlers->h_oledrion_attributes->deleteAttribute($attribute);
             if ($res) {
-                OledrionUtility::redirect(_AM_OLEDRION_SAVE_OK, $baseurl . '?op=' . $operation, 2);
+                \Xoopsmodules\oledrion\Utility::redirect(_AM_OLEDRION_SAVE_OK, $baseurl . '?op=' . $operation, 2);
             } else {
-                OledrionUtility::redirect(_AM_OLEDRION_SAVE_PB, $baseurl . '?op=' . $operation, 5);
+                \Xoopsmodules\oledrion\Utility::redirect(_AM_OLEDRION_SAVE_PB, $baseurl . '?op=' . $operation, 5);
             }
         } else {
-            OledrionUtility::htitle(_AM_OLEDRION_SORRY_NOREMOVE2, 4);
+            \Xoopsmodules\oledrion\Utility::htitle(_AM_OLEDRION_SORRY_NOREMOVE2, 4);
             $tblTmp  = $oledrionHandlers->h_oledrion_caddy_attributes->getCommandIdFromAttribute($id);
             $tblTmp2 = $h_oledrion_commands->getObjects(new Criteria('cmd_id', '(' . implode(',', $tblTmp) . ')', 'IN'), true);
             echo "<table width='100%' cellspacing='1' cellpadding='3' border='0' class='outer'>";
@@ -270,11 +270,11 @@ switch ($action) {
                      . "</td><td align='center'>"
                      . $item->getVar('cmd_total')
                      . ' '
-                     . OledrionUtility::getModuleOption('money_short')
+                     . \Xoopsmodules\oledrion\Utility::getModuleOption('money_short')
                      . ' / '
                      . $item->getVar('cmd_shipping')
                      . ' '
-                     . OledrionUtility::getModuleOption('money_short')
+                     . \Xoopsmodules\oledrion\Utility::getModuleOption('money_short')
                      . "</td>\n";
                 echo "<tr>\n";
             }
@@ -294,13 +294,13 @@ switch ($action) {
             $title = _AM_OLEDRION_EDIT_ATTRIBUTE;
             $id    = isset($_GET['id']) ? (int)$_GET['id'] : 0;
             if (empty($id)) {
-                OledrionUtility::redirect(_AM_OLEDRION_ERROR_1, $baseurl, 5);
+                \Xoopsmodules\oledrion\Utility::redirect(_AM_OLEDRION_ERROR_1, $baseurl, 5);
             }
             // Item exits ?
             $item = null;
             $item = $oledrionHandlers->h_oledrion_attributes->get($id);
             if (!is_object($item)) {
-                OledrionUtility::redirect(_AM_OLEDRION_NOT_FOUND, $baseurl, 5);
+                \Xoopsmodules\oledrion\Utility::redirect(_AM_OLEDRION_NOT_FOUND, $baseurl, 5);
             }
             $edit         = true;
             $label_submit = _AM_OLEDRION_MODIFY;
@@ -313,9 +313,9 @@ switch ($action) {
         }
         // Appel à jQuery
         $xoTheme->addScript('browse.php?Frameworks/jquery/jquery.js');
-        OledrionUtility::callJavascriptFile('noconflict.js', false, true);
+        \Xoopsmodules\oledrion\Utility::callJavascriptFile('noconflict.js', false, true);
         // Appel du fichier langue
-        OledrionUtility::callJavascriptFile('messages.js', true, true);
+        \Xoopsmodules\oledrion\Utility::callJavascriptFile('messages.js', true, true);
 
         $sform = new XoopsThemeForm($title, 'frm' . $operation, $baseurl);
         $sform->addElement(new XoopsFormHidden('op', $operation));
@@ -360,7 +360,7 @@ switch ($action) {
             OLEDRION_ATTRIBUTE_CHECKBOX_WHITE_SPACE => _AM_OLEDRION_ATTRIBUTE_DELIMITER1,
             OLEDRION_ATTRIBUTE_CHECKBOX_NEW_LINE    => _AM_OLEDRION_ATTRIBUTE_DELIMITER2
         ];
-        $parameterButtonOption = _AM_OLEDRION_ATTRIBUTE_DELIMITER . ' ' . OledrionUtility::htmlSelect('option1', $options, $defaultValue, false);
+        $parameterButtonOption = _AM_OLEDRION_ATTRIBUTE_DELIMITER . ' ' . \Xoopsmodules\oledrion\Utility::htmlSelect('option1', $options, $defaultValue, false);
         $attributeParameters   .= "<div name='attributeParametersCheckbox' id='attributeParametersCheckbox'>\n";
         $attributeParameters   .= $parameterButtonOption . "\n";
         $attributeParameters   .= "</div>\n";
@@ -401,10 +401,10 @@ switch ($action) {
         $submit_btn  = new XoopsFormButton('', 'post', $label_submit, 'submit');
         $button_tray->addElement($submit_btn);
         $sform->addElement($button_tray);
-        OledrionUtility::callJavascriptFile('attributes.js', false, true);
-        $sform = OledrionUtility::formMarkRequiredFields($sform);
+        \Xoopsmodules\oledrion\Utility::callJavascriptFile('attributes.js', false, true);
+        $sform = \Xoopsmodules\oledrion\Utility::formMarkRequiredFields($sform);
         $sform->display();
-        require_once __DIR__ . '/admin_footer.php';
+        require_once OLEDRION_ADMIN_PATH . 'admin_footer.php';
         break;
 
     // ****************************************************************************************************************
@@ -416,7 +416,7 @@ switch ($action) {
             $edit = true;
             $item = $oledrionHandlers->h_oledrion_attributes->get($id);
             if (!is_object($item)) {
-                OledrionUtility::redirect(_AM_OLEDRION_NOT_FOUND, $baseurl, 5);
+                \Xoopsmodules\oledrion\Utility::redirect(_AM_OLEDRION_NOT_FOUND, $baseurl, 5);
             }
             $item->unsetNew();
         } else {
@@ -449,10 +449,10 @@ switch ($action) {
 
         $res = $oledrionHandlers->h_oledrion_attributes->insert($item);
         if ($res) {
-            OledrionUtility::updateCache();
-            OledrionUtility::redirect(_AM_OLEDRION_SAVE_OK, $baseurl . '?op=' . $operation, 2);
+            \Xoopsmodules\oledrion\Utility::updateCache();
+            \Xoopsmodules\oledrion\Utility::redirect(_AM_OLEDRION_SAVE_OK, $baseurl . '?op=' . $operation, 2);
         } else {
-            OledrionUtility::redirect(_AM_OLEDRION_SAVE_PB, $baseurl . '?op=' . $operation, 5);
+            \Xoopsmodules\oledrion\Utility::redirect(_AM_OLEDRION_SAVE_PB, $baseurl . '?op=' . $operation, 5);
         }
         break;
 
@@ -462,7 +462,7 @@ switch ($action) {
         if (!isset($xoopsUser) || !is_object($xoopsUser)) {
             exit;
         }
-        if (!OledrionUtility::isAdmin()) {
+        if (!\Xoopsmodules\oledrion\Utility::isAdmin()) {
             exit;
         }
         error_reporting(0);
@@ -543,11 +543,11 @@ switch ($action) {
         $content .= "<table border='0'>\n";
         $content .= "<tr>\n";
         $content .= "<th align='center'>" . _AM_OLEDRION_ATTRIBUTE_DEFAULT_VALUE . "</th><th align='center'>" . _AM_OLEDRION_ATTRIBUTE_TITLE . "</th><th align='center'>" . _AM_OLEDRION_ATTRIBUTE_VALUE . '</th>';
-        if (OledrionUtility::getModuleOption('use_price')) {
+        if (\Xoopsmodules\oledrion\Utility::getModuleOption('use_price')) {
             $content .= "<th align='center'>" . _AM_OLEDRION_ATTRIBUTE_PRICE . '</th>';
             ++$span;
         }
-        if (OledrionUtility::getModuleOption('attributes_stocks')) {
+        if (\Xoopsmodules\oledrion\Utility::getModuleOption('attributes_stocks')) {
             $content .= "<th align='center'>" . _AM_OLEDRION_ATTRIBUTE_STOCK . '</th>';
             ++$span;
         }
@@ -572,10 +572,10 @@ switch ($action) {
                 $content .= "<td align='center'><input type='radio' name='default' id='default' value='$counter' $checked></td>\n";
                 $content .= "<td align='center'><input type='text' name='name$counter' id='names$counter' size='15' maxlength='255' value='" . $option['name'] . "'></td>\n";
                 $content .= "<td align='center'><input type='text' name='value$counter' id='value$counter' size='15' maxlength='255' value='" . $option['value'] . "'></td>\n";
-                if (OledrionUtility::getModuleOption('use_price')) {
+                if (\Xoopsmodules\oledrion\Utility::getModuleOption('use_price')) {
                     $content .= "<td align='center'><input type='text' name='price$counter' id='price$counter' size='15' maxlength='10' value='" . $option['price'] . "'></td>\n";
                 }
-                if (OledrionUtility::getModuleOption('attributes_stocks')) {
+                if (\Xoopsmodules\oledrion\Utility::getModuleOption('attributes_stocks')) {
                     $content .= "<td align='center'><input type='text' name='stock$counter' id='stock$counter' size='15' maxlength='10' value='" . $option['stock'] . "'></td>\n";
                 }
                 // Les actions

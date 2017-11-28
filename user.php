@@ -21,9 +21,9 @@ require_once __DIR__ . '/header.php';
 $GLOBALS['xoopsOption']['template_main'] = 'oledrion_user.tpl';
 require_once XOOPS_ROOT_PATH . '/header.php';
 // Check is user
-$uid = OledrionUtility::getCurrentUserID();
+$uid = \Xoopsmodules\oledrion\Utility::getCurrentUserID();
 if (0 == $uid) {
-    OledrionUtility::redirect(_OLEDRION_ERROR23, XOOPS_URL . '/register.php', 4);
+    \Xoopsmodules\oledrion\Utility::redirect(_OLEDRION_ERROR23, XOOPS_URL . '/register.php', 4);
 }
 // Load header
 $handlers = OledrionHandler::getInstance();
@@ -91,8 +91,8 @@ if (!empty($orders)) {
 }
 
 $xoopsTpl->assign('list', $list);
-OledrionUtility::setCSS();
-OledrionUtility::setLocalCSS($xoopsConfig['language']);
-$title = _OLEDRION_USER . ' - ' . OledrionUtility::getModuleName();
-OledrionUtility::setMetas($title, $title);
+\Xoopsmodules\oledrion\Utility::setCSS();
+\Xoopsmodules\oledrion\Utility::setLocalCSS($xoopsConfig['language']);
+$title = _OLEDRION_USER . ' - ' . \Xoopsmodules\oledrion\Utility::getModuleName();
+\Xoopsmodules\oledrion\Utility::setMetas($title, $title);
 require_once XOOPS_ROOT_PATH . '/footer.php';

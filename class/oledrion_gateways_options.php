@@ -25,7 +25,7 @@ require_once __DIR__ . '/classheader.php';
 /**
  * Class Oledrion_gateways_options
  */
-class Oledrion_gateways_options extends Oledrion_Object
+class Oledrion_gateways_options extends OledrionObject
 {
     /**
      * constructor
@@ -46,7 +46,7 @@ class Oledrion_gateways_options extends Oledrion_Object
 /**
  * Class OledrionOledrion_gateways_optionsHandler
  */
-class OledrionOledrion_gateways_optionsHandler extends Oledrion_XoopsPersistableObjectHandler
+class OledrionOledrion_gateways_optionsHandler extends OledrionPersistableObjectHandler
 {
     /**
      * OledrionOledrion_gateways_optionsHandler constructor.
@@ -54,14 +54,14 @@ class OledrionOledrion_gateways_optionsHandler extends Oledrion_XoopsPersistable
      */
     public function __construct(XoopsDatabase $db)
     { //                                Table                       Classe                      Id
-        parent::__construct($db, 'oledrion_gateways_options', 'oledrion_gateways_options', 'option_id');
+        parent::__construct($db, 'oledrion_gateways_options', 'Oledrion_gateways_options', 'option_id');
     }
 
     /**
      * Retourne toutes les options d'une passerelle de paiement
      *
      * @param  string $option_gateway Le nom de la passerelle de paiement
-     * @return array  Tableau d'objets de type oledrion_gateways_options
+     * @return array  Tableau d'objets de type Oledrion_gateways_options
      */
     public function getGatewayOptions($option_gateway)
     {
@@ -88,7 +88,7 @@ class OledrionOledrion_gateways_optionsHandler extends Oledrion_XoopsPersistable
      *
      * @param  string $option_gateway Le nom de la passerelle de paiement
      * @param  string $option_name    L'option que l'on souhaite récupérer
-     * @return Oledrion_gateways_options Objet de type oledrion_gateways_options
+     * @return array Objet de type Oledrion_gateways_options
      */
     public function getGatewayOption($option_gateway, $option_name)
     {

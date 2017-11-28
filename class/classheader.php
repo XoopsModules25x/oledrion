@@ -23,6 +23,6 @@
 // defined('XOOPS_ROOT_PATH') || exit('Restricted access.');
 
 require_once XOOPS_ROOT_PATH . '/kernel/object.php';
-if (!class_exists('Oledrion_XoopsPersistableObjectHandler')) {
+if (!class_exists('OledrionPersistableObjectHandler')) {
     require_once XOOPS_ROOT_PATH . '/modules/oledrion/class/PersistableObjectHandler.php';
 }

@@ -35,7 +35,7 @@ class Oledrion_paypal extends Oledrion_gateway
     /**
      * Retourne des informations sur la passerelle de paiement
      *
-     * @return array
+     * @return void
      */
     public function setGatewayInformation()
     {
@@ -178,7 +178,7 @@ class Oledrion_paypal extends Oledrion_gateway
         $ret['image_url']        = XOOPS_URL . '/images/logo.gif';
         $ret['cpp_header_image'] = XOOPS_URL . '/images/logo.gif';
         $ret['invoice']          = $order->getVar('cmd_id');
-        $ret['item_name']        = _OLEDRION_COMMAND . $order->getVar('cmd_id') . ' - ' . OledrionUtility::makeHrefTitle($xoopsConfig['sitename']);
+        $ret['item_name']        = _OLEDRION_COMMAND . $order->getVar('cmd_id') . ' - ' . \Xoopsmodules\oledrion\Utility::makeHrefTitle($xoopsConfig['sitename']);
         $ret['item_number']      = $order->getVar('cmd_id');
         $ret['tax']              = 0; // ajout 25/03/2008
         $ret['amount']           = $this->formatAmount((float)$order->getVar('cmd_total', 'n'));

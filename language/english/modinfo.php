@@ -320,3 +320,11 @@ define('_MI_OLEDRION_SUPPORT', 'Support');
 
 define('_MI_OLEDRION_SHOW_SAMPLE_BUTTON', 'Show Sample Button?');
 define('_MI_OLEDRION_SHOW_SAMPLE_BUTTON_DESC', 'If yes, the "Add Sample Data" button will be visible to the Admin. It is Yes as a default for first installation.');
+
+define('_MI_OLEDRION_FORM_OPTIONS_ADMIN', 'Editor: Admin');
+define('_MI_OLEDRION_FORM_OPTIONS_ADMIN_DESC', 'Select the Editor to use by the Admin');
+define('_MI_OLEDRION_FORM_OPTIONS_USER', 'Editor: User');
+define('_MI_OLEDRION_FORM_OPTIONS_USER_DESC', 'Select the Editor to use by the User');
+
+define('_MI_OLEDRION_HOME', 'Home');
+define('_MI_OLEDRION_ABOUT', 'About');

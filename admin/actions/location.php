@@ -36,7 +36,7 @@ switch ($action) {
                     . _AM_OLEDRION_ADD_ITEM
                     . "'></form>";
         echo $form;
-        //        OledrionUtility::htitle(_MI_OLEDRION_ADMENU19, 4);
+        //        \Xoopsmodules\oledrion\Utility::htitle(_MI_OLEDRION_ADMENU19, 4);
         $location = $h_oledrion_location->getAllLocation(new Oledrion_parameters([
                                                                                      'start' => $start,
                                                                                      'limit' => $limit
@@ -48,8 +48,8 @@ switch ($action) {
             $id        = $item->getVar('location_id');
             $class     = ('even' === $class) ? 'odd' : 'even';
             $actions   = [];
-            $actions[] = "<a href='$baseurl?op=location&action=edit&id=" . $id . "' title='" . _OLEDRION_EDIT . "'>" . $icones['edit'] . '</a>';
-            $actions[] = "<a href='$baseurl?op=location&action=delete&id=" . $id . "' title='" . _OLEDRION_DELETE . "'" . $conf_msg . '>' . $icones['delete'] . '</a>';
+            $actions[] = "<a href='$baseurl?op=location&action=edit&id=" . $id . "' title='" . _OLEDRION_EDIT . "'>" . $icons['edit'] . '</a>';
+            $actions[] = "<a href='$baseurl?op=location&action=delete&id=" . $id . "' title='" . _OLEDRION_DELETE . "'" . $conf_msg . '>' . $icons['delete'] . '</a>';
             $online    = 1 == $item->getVar('location_online') ? _YES : _NO;
             if ('parent' === $item->getVar('location_type')) {
                 $location_type = _AM_OLEDRION_LOCATION_PARENT;
@@ -75,13 +75,13 @@ switch ($action) {
         if ('edit' === $action) {
             $title = _AM_OLEDRION_LOCATION_EDIT;
             if (empty($id)) {
-                OledrionUtility::redirect(_AM_OLEDRION_ERROR_1, $baseurl, 5);
+                \Xoopsmodules\oledrion\Utility::redirect(_AM_OLEDRION_ERROR_1, $baseurl, 5);
             }
             // Item exits ?
             $item = null;
             $item = $h_oledrion_location->get($id);
             if (!is_object($item)) {
-                OledrionUtility::redirect(_AM_OLEDRION_NOT_FOUND, $baseurl, 5);
+                \Xoopsmodules\oledrion\Utility::redirect(_AM_OLEDRION_NOT_FOUND, $baseurl, 5);
             }
             $edit         = true;
             $label_submit = _AM_OLEDRION_MODIFY;
@@ -97,7 +97,7 @@ switch ($action) {
                                                                                            'location' => $id
                                                                                        ]));
         if (empty($deliveres)) {
-            OledrionUtility::redirect(_AM_OLEDRION_LOCATION_DELIVERYADD, $baseurl, 5);
+            \Xoopsmodules\oledrion\Utility::redirect(_AM_OLEDRION_LOCATION_DELIVERYADD, $baseurl, 5);
         }
 
         $sform = new XoopsThemeForm($title, 'frmaddlocation', $baseurl);
@@ -108,7 +108,7 @@ switch ($action) {
         $location_pid = $h_oledrion_location->getAllPid(new Oledrion_parameters());
         $mytree       = new XoopsObjectTree($location_pid, 'location_id', 'location_pid');
 
-        if (OledrionUtility::checkVerXoops($GLOBALS['xoopsModule'], '2.5.9')) {
+        if (\Xoopsmodules\oledrion\Utility::checkVerXoops($GLOBALS['xoopsModule'], '2.5.9')) {
             $select_pid = $mytree->makeSelectElement('location_pid', 'location_title', '--', $item->getVar('location_pid'), true, 0, '', _AM_OLEDRION_LOCATION_PID);
             $sform->addElement($select_pid);
         } else {
@@ -144,7 +144,7 @@ switch ($action) {
         $submit_btn  = new XoopsFormButton('', 'post', $label_submit, 'submit');
         $button_tray->addElement($submit_btn);
         $sform->addElement($button_tray);
-        $sform = OledrionUtility::formMarkRequiredFields($sform);
+        $sform = \Xoopsmodules\oledrion\Utility::formMarkRequiredFields($sform);
         $sform->display();
         require_once OLEDRION_ADMIN_PATH . 'admin_footer.php';
         break;
@@ -156,7 +156,7 @@ switch ($action) {
             $edit = true;
             $item = $h_oledrion_location->get($id);
             if (!is_object($item)) {
-                OledrionUtility::redirect(_AM_OLEDRION_NOT_FOUND, $baseurl, 5);
+                \Xoopsmodules\oledrion\Utility::redirect(_AM_OLEDRION_NOT_FOUND, $baseurl, 5);
             }
             $item->unsetNew();
         } else {
@@ -206,10 +206,10 @@ switch ($action) {
         }
 
         if ($res) {
-            OledrionUtility::updateCache();
-            OledrionUtility::redirect(_AM_OLEDRION_SAVE_OK, $baseurl . '?op=' . $opRedirect, 2);
+            \Xoopsmodules\oledrion\Utility::updateCache();
+            \Xoopsmodules\oledrion\Utility::redirect(_AM_OLEDRION_SAVE_OK, $baseurl . '?op=' . $opRedirect, 2);
         } else {
-            OledrionUtility::redirect(_AM_OLEDRION_SAVE_PB, $baseurl . '?op=' . $opRedirect, 5);
+            \Xoopsmodules\oledrion\Utility::redirect(_AM_OLEDRION_SAVE_PB, $baseurl . '?op=' . $opRedirect, 5);
         }
 
         require_once OLEDRION_ADMIN_PATH . 'admin_footer.php';
@@ -219,12 +219,12 @@ switch ($action) {
         xoops_cp_header();
         $id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
         if (0 == $id) {
-            OledrionUtility::redirect(_AM_OLEDRION_ERROR_1, $baseurl, 5);
+            \Xoopsmodules\oledrion\Utility::redirect(_AM_OLEDRION_ERROR_1, $baseurl, 5);
         }
         $location = null;
         $location = $h_oledrion_location->get($id);
         if (!is_object($location)) {
-            OledrionUtility::redirect(_AM_OLEDRION_ERROR_10, $baseurl, 5);
+            \Xoopsmodules\oledrion\Utility::redirect(_AM_OLEDRION_ERROR_10, $baseurl, 5);
         }
         $msg = sprintf(_AM_OLEDRION_CONF_DEL_ITEM, $location->getVar('location_title'));
         xoops_confirm(['op' => 'location', 'action' => 'confdelete', 'id' => $id], 'index.php', $msg);
@@ -235,7 +235,7 @@ switch ($action) {
         xoops_cp_header();
         $id = isset($_POST['id']) ? (int)$_POST['id'] : 0;
         if (empty($id)) {
-            OledrionUtility::redirect(_AM_OLEDRION_ERROR_1, $baseurl, 5);
+            \Xoopsmodules\oledrion\Utility::redirect(_AM_OLEDRION_ERROR_1, $baseurl, 5);
         }
         $opRedirect = 'location';
 
@@ -249,13 +249,13 @@ switch ($action) {
             // Delete delivery
             $res = $h_oledrion_location->delete($item);
             if ($res) {
-                OledrionUtility::updateCache();
-                OledrionUtility::redirect(_AM_OLEDRION_SAVE_OK, $baseurl . '?op=' . $opRedirect, 2);
+                \Xoopsmodules\oledrion\Utility::updateCache();
+                \Xoopsmodules\oledrion\Utility::redirect(_AM_OLEDRION_SAVE_OK, $baseurl . '?op=' . $opRedirect, 2);
             } else {
-                OledrionUtility::redirect(_AM_OLEDRION_SAVE_PB, $baseurl . '?op=' . $opRedirect, 5);
+                \Xoopsmodules\oledrion\Utility::redirect(_AM_OLEDRION_SAVE_PB, $baseurl . '?op=' . $opRedirect, 5);
             }
         } else {
-            OledrionUtility::redirect(_AM_OLEDRION_NOT_FOUND, $baseurl . '?op=' . $opRedirect, 5);
+            \Xoopsmodules\oledrion\Utility::redirect(_AM_OLEDRION_NOT_FOUND, $baseurl . '?op=' . $opRedirect, 5);
         }
         break;
 }

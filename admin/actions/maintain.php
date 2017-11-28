@@ -43,9 +43,9 @@ switch ($action) {
             $xoopsDB->queryF('ANALYZE TABLE ' . $list);
             $xoopsDB->queryF('OPTIMIZE TABLE ' . $list);
         }
-        OledrionUtility::updateCache();
+        \Xoopsmodules\oledrion\Utility::updateCache();
         $h_oledrion_products->forceCacheClean();
-        OledrionUtility::redirect(_AM_OLEDRION_SAVE_OK, $baseurl, 2);
+        \Xoopsmodules\oledrion\Utility::redirect(_AM_OLEDRION_SAVE_OK, $baseurl, 2);
         break;
 
     case 'import':
@@ -54,7 +54,7 @@ switch ($action) {
         if (0 == $categories) {
             xoops_confirm(['op' => 'maintain', 'action' => 'doimport'], 'index.php', _AM_OLEDRION_IMPORT_CONF);
         } else {
-            OledrionUtility::redirect(_AM_OLEDRION_SAVE_OK, $baseurl, 2);
+            \Xoopsmodules\oledrion\Utility::redirect(_AM_OLEDRION_SAVE_OK, $baseurl, 2);
         }
         break;
 
@@ -104,6 +104,6 @@ switch ($action) {
             $vendor->setVars($vendor_array);
             $res = $h_oledrion_vendors->insert($vendor);
         }
-        OledrionUtility::redirect(_AM_OLEDRION_SAVE_OK, $baseurl, 2);
+        \Xoopsmodules\oledrion\Utility::redirect(_AM_OLEDRION_SAVE_OK, $baseurl, 2);
         break;
 }

@@ -36,7 +36,7 @@ switch ($action) {
         $start = isset($_GET['start']) ? (int)$_GET['start'] : 0;
         $form  = "<form method='post' action='$baseurl' name='frmadd' id='frmadd'><input type='hidden' name='op' id='op' value='files'><input type='hidden' name='action' id='action' value='add'><input type='submit' name='btngo' id='btngo' value='" . _AM_OLEDRION_ADD_ITEM . "'></form>";
         echo $form;
-        //        OledrionUtility::htitle(_MI_OLEDRION_ADMENU11, 4);
+        //        \Xoopsmodules\oledrion\Utility::htitle(_MI_OLEDRION_ADMENU11, 4);
         $itemsCount = $h_oledrion_files->getCount(); // Recherche du nombre total d'éléments
         if ($itemsCount > $limit) {
             $pagenav = new XoopsPageNav($itemsCount, $limit, $start, 'start', 'op=files');
@@ -59,8 +59,8 @@ switch ($action) {
             $class     = ('even' === $class) ? 'odd' : 'even';
             $id        = $item->getVar('file_id');
             $actions   = [];
-            $actions[] = "<a href='$baseurl?op=files&action=edit&id=" . $id . "' title='" . _OLEDRION_EDIT . "'>" . $icones['edit'] . '</a>';
-            $actions[] = "<a href='$baseurl?op=files&action=delete&id=" . $id . "' title='" . _OLEDRION_DELETE . "'" . $conf_msg . '>' . $icones['delete'] . '</a>';
+            $actions[] = "<a href='$baseurl?op=files&action=edit&id=" . $id . "' title='" . _OLEDRION_EDIT . "'>" . $icons['edit'] . '</a>';
+            $actions[] = "<a href='$baseurl?op=files&action=delete&id=" . $id . "' title='" . _OLEDRION_DELETE . "'" . $conf_msg . '>' . $icons['delete'] . '</a>';
             echo "<tr class='" . $class . "'>\n";
             $product = isset($products[$item->getVar('file_product_id')]) ? $products[$item->getVar('file_product_id')]->getVar('product_title') : '';
             echo "<td align='center'>" . $id . '</td>';
@@ -87,13 +87,13 @@ switch ($action) {
             $title = _AM_OLEDRION_EDIT_FILE;
             $id    = isset($_GET['id']) ? (int)$_GET['id'] : 0;
             if (empty($id)) {
-                OledrionUtility::redirect(_AM_OLEDRION_ERROR_1, $baseurl, 5);
+                \Xoopsmodules\oledrion\Utility::redirect(_AM_OLEDRION_ERROR_1, $baseurl, 5);
             }
             // Item exits ?
             $item = null;
             $item = $h_oledrion_files->get($id);
             if (!is_object($item)) {
-                OledrionUtility::redirect(_AM_OLEDRION_NOT_FOUND, $baseurl, 5);
+                \Xoopsmodules\oledrion\Utility::redirect(_AM_OLEDRION_NOT_FOUND, $baseurl, 5);
             }
             $edit         = true;
             $label_submit = _AM_OLEDRION_MODIFY;
@@ -137,13 +137,13 @@ switch ($action) {
             $sform->addElement($pictureTray);
             unset($pictureTray);
         }
-        $sform->addElement(new XoopsFormFile(_AM_OLEDRION_FILENAME, 'attachedfile', OledrionUtility::getModuleOption('maxuploadsize')), false);
+        $sform->addElement(new XoopsFormFile(_AM_OLEDRION_FILENAME, 'attachedfile', \Xoopsmodules\oledrion\Utility::getModuleOption('maxuploadsize')), false);
 
         $button_tray = new XoopsFormElementTray('', '');
         $submit_btn  = new XoopsFormButton('', 'post', $label_submit, 'submit');
         $button_tray->addElement($submit_btn);
         $sform->addElement($button_tray);
-        $sform = OledrionUtility::formMarkRequiredFields($sform);
+        $sform = \Xoopsmodules\oledrion\Utility::formMarkRequiredFields($sform);
         $sform->display();
         require_once OLEDRION_ADMIN_PATH . 'admin_footer.php';
         break;
@@ -157,7 +157,7 @@ switch ($action) {
             $edit = true;
             $item = $h_oledrion_files->get($id);
             if (!is_object($item)) {
-                OledrionUtility::redirect(_AM_OLEDRION_NOT_FOUND, $baseurl, 5);
+                \Xoopsmodules\oledrion\Utility::redirect(_AM_OLEDRION_NOT_FOUND, $baseurl, 5);
             }
             $item->unsetNew();
         } else {
@@ -165,21 +165,21 @@ switch ($action) {
         }
         $item->setVars($_POST);
         $destname = '';
-        $result   = OledrionUtility::uploadFile(0, OLEDRION_ATTACHED_FILES_PATH);
+        $result   = \Xoopsmodules\oledrion\Utility::uploadFile(0, OLEDRION_ATTACHED_FILES_PATH);
         if (true === $result) {
             $item->setVar('file_filename', basename($destname));
-            $item->setVar('file_mimetype', OledrionUtility::getMimeType(OLEDRION_ATTACHED_FILES_PATH . '/' . $destname));
+            $item->setVar('file_mimetype', \Xoopsmodules\oledrion\Utility::getMimeType(OLEDRION_ATTACHED_FILES_PATH . '/' . $destname));
         } else {
             if (false !== $result) {
-                OledrionUtility::redirect(_AM_OLEDRION_SAVE_PB . '<br>' . $result, $baseurl . '?op=' . $opRedirect, 5);
+                \Xoopsmodules\oledrion\Utility::redirect(_AM_OLEDRION_SAVE_PB . '<br>' . $result, $baseurl . '?op=' . $opRedirect, 5);
             }
         }
         $res = $h_oledrion_files->insert($item);
         if ($res) {
-            OledrionUtility::updateCache();
-            OledrionUtility::redirect(_AM_OLEDRION_SAVE_OK, $baseurl . '?op=' . $opRedirect, 2);
+            \Xoopsmodules\oledrion\Utility::updateCache();
+            \Xoopsmodules\oledrion\Utility::redirect(_AM_OLEDRION_SAVE_OK, $baseurl . '?op=' . $opRedirect, 2);
         } else {
-            OledrionUtility::redirect(_AM_OLEDRION_SAVE_PB, $baseurl . '?op=' . $opRedirect, 5);
+            \Xoopsmodules\oledrion\Utility::redirect(_AM_OLEDRION_SAVE_PB, $baseurl . '?op=' . $opRedirect, 5);
         }
         break;
 
@@ -189,20 +189,20 @@ switch ($action) {
         xoops_cp_header();
         $id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
         if (empty($id)) {
-            OledrionUtility::redirect(_AM_OLEDRION_ERROR_1, $baseurl, 5);
+            \Xoopsmodules\oledrion\Utility::redirect(_AM_OLEDRION_ERROR_1, $baseurl, 5);
         }
         $item = null;
         $item = $h_oledrion_files->get($id);
         if (is_object($item)) {
             $res = $h_oledrion_files->deleteAttachedFile($item);
             if ($res) {
-                OledrionUtility::updateCache();
-                OledrionUtility::redirect(_AM_OLEDRION_SAVE_OK, $baseurl . '?op=' . $opRedirect, 2);
+                \Xoopsmodules\oledrion\Utility::updateCache();
+                \Xoopsmodules\oledrion\Utility::redirect(_AM_OLEDRION_SAVE_OK, $baseurl . '?op=' . $opRedirect, 2);
             } else {
-                OledrionUtility::redirect(_AM_OLEDRION_SAVE_PB, $baseurl . '?op=' . $opRedirect, 5);
+                \Xoopsmodules\oledrion\Utility::redirect(_AM_OLEDRION_SAVE_PB, $baseurl . '?op=' . $opRedirect, 5);
             }
         } else {
-            OledrionUtility::redirect(_AM_OLEDRION_NOT_FOUND, $baseurl . '?op=' . $opRedirect, 5);
+            \Xoopsmodules\oledrion\Utility::redirect(_AM_OLEDRION_NOT_FOUND, $baseurl . '?op=' . $opRedirect, 5);
         }
         break;
 }

@@ -37,7 +37,7 @@ if ($product_id > 0) {
     }
 
     // Le produit est publié ?
-    if (0 == OledrionUtility::getModuleOption('show_unpublished') && $product->getVar('product_submitted') > time()) {
+    if (0 == \Xoopsmodules\oledrion\Utility::getModuleOption('show_unpublished') && $product->getVar('product_submitted') > time()) {
         exit(_OLEDRION_ERROR3);
     }
 } else {

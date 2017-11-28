@@ -30,7 +30,7 @@ switch ($action) {
         xoops_cp_header();
         $adminObject = \Xmf\Module\Admin::getInstance();
         $adminObject->displayNavigation('index.php?op=newsletter');
-        //        OledrionUtility::htitle(_MI_OLEDRION_ADMENU7, 4);
+        //        \Xoopsmodules\oledrion\Utility::htitle(_MI_OLEDRION_ADMENU7, 4);
 
         require_once OLEDRION_PATH . 'class/tree.php';
         $sform     = new XoopsThemeForm(_MI_OLEDRION_ADMENU7, 'frmnewsletter', $baseurl);
@@ -46,7 +46,7 @@ switch ($action) {
         $categories = $h_oledrion_cat->getAllCategories(new Oledrion_parameters());
         $mytree     = new Oledrion_XoopsObjectTree($categories, 'cat_cid', 'cat_pid');
 
-        if (OledrionUtility::checkVerXoops($GLOBALS['xoopsModule'], '2.5.9')) {
+        if (\Xoopsmodules\oledrion\Utility::checkVerXoops($GLOBALS['xoopsModule'], '2.5.9')) {
             $htmlSelect = $mytree->makeSelectElement('cat_cid', 'cat_title', '-', 0, true, 0, _AM_OLEDRION_ALL, _AM_OLEDRION_IN_CATEGORY);
             $sform->addElement($htmlSelect);
         } else {
@@ -64,7 +64,7 @@ switch ($action) {
         $submit_btn  = new XoopsFormButton('', 'post', _SUBMIT, 'submit');
         $button_tray->addElement($submit_btn);
         $sform->addElement($button_tray);
-        $sform = OledrionUtility::formMarkRequiredFields($sform);
+        $sform = \Xoopsmodules\oledrion\Utility::formMarkRequiredFields($sform);
         $sform->display();
         require_once OLEDRION_ADMIN_PATH . 'admin_footer.php';
         break;
@@ -75,7 +75,7 @@ switch ($action) {
         xoops_cp_header();
         $adminObject = \Xmf\Module\Admin::getInstance();
         $adminObject->displayNavigation('index.php?op=newsletter');
-        //        OledrionUtility::htitle(_MI_OLEDRION_ADMENU7, 4);
+        //        \Xoopsmodules\oledrion\Utility::htitle(_MI_OLEDRION_ADMENU7, 4);
 
         $newsletterTemplate = '';
         if (file_exists(OLEDRION_PATH . 'language/' . $xoopsConfig['language'] . '/newsletter.php')) {
@@ -110,7 +110,7 @@ switch ($action) {
 
         $fp = fopen($newsfile, 'w');
         if (!$fp) {
-            OledrionUtility::redirect(_AM_OLEDRION_ERROR_7, $baseurl . '?op=newsletter', 5);
+            \Xoopsmodules\oledrion\Utility::redirect(_AM_OLEDRION_ERROR_7, $baseurl . '?op=newsletter', 5);
         }
         if ('' !== xoops_trim($header)) {
             fwrite($fp, $header);
@@ -158,11 +158,11 @@ switch ($action) {
                 $categories[$item->getVar('product_cid')]->getVar('cat_title'),
                 implode(', ', $tblTmp),
                 formatTimestamp($item->getVar('product_submitted'), 's'),
-                OledrionUtility::getTTC($item->getVar('product_price'), $vats[$item->getVar('product_vat_id')]->getVar('vat_rate')),
-                OledrionUtility::getModuleOption('money_full'),
+                \Xoopsmodules\oledrion\Utility::getTTC($item->getVar('product_price'), $vats[$item->getVar('product_vat_id')]->getVar('vat_rate')),
+                \Xoopsmodules\oledrion\Utility::getModuleOption('money_short'),
                 $item->getVar('product_summary'),
                 $item->getVar('product_description'),
-                OledrionUtility::getTTC($item->getVar('product_discount_price'), $vats[$item->getVar('product_vat_id')]->getVar('vat_rate')),
+                \Xoopsmodules\oledrion\Utility::getTTC($item->getVar('product_discount_price'), $vats[$item->getVar('product_vat_id')]->getVar('vat_rate')),
                 $item->getLink(),
                 $item->getVar('product_sku'),
                 $item->getVar('product_extraid'),

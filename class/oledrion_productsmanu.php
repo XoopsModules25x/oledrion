@@ -25,7 +25,7 @@ require_once __DIR__ . '/classheader.php';
 /**
  * Class Oledrion_productsmanu
  */
-class Oledrion_productsmanu extends Oledrion_Object
+class Oledrion_productsmanu extends OledrionObject
 {
     /**
      * constructor
@@ -47,7 +47,7 @@ class Oledrion_productsmanu extends Oledrion_Object
 /**
  * Class OledrionOledrion_productsmanuHandler
  */
-class OledrionOledrion_productsmanuHandler extends Oledrion_XoopsPersistableObjectHandler
+class OledrionOledrion_productsmanuHandler extends OledrionPersistableObjectHandler
 {
     /**
      * OledrionOledrion_productsmanuHandler constructor.
@@ -55,7 +55,7 @@ class OledrionOledrion_productsmanuHandler extends Oledrion_XoopsPersistableObje
      */
     public function __construct(XoopsDatabase $db)
     { //                            Table                   Classe              Id
-        parent::__construct($db, 'oledrion_productsmanu', 'oledrion_productsmanu', 'pm_id');
+        parent::__construct($db, 'oledrion_productsmanu', 'Oledrion_productsmanu', 'pm_id');
     }
 
     /**
@@ -75,7 +75,7 @@ class OledrionOledrion_productsmanuHandler extends Oledrion_XoopsPersistableObje
      * Retourne des fabricants de produits en fonction de leur IDs
      *
      * @param  array $ids Les identifiants des produits
-     * @return array Tableau d'objets de type oledrion_productsmanu
+     * @return array Tableau d'objets de type Oledrion_productsmanu
      */
     public function getFromProductsIds($ids)
     {

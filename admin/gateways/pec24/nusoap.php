@@ -445,7 +445,7 @@ class Nusoap_base
      * sets error string
      *
      * @param $str
-     * @return bool $string error string
+     * @return void $string error string
      * @access   private
      */
     public function setError($str)
@@ -1151,7 +1151,6 @@ class Nusoap_fault extends Nusoap_base
      * @param string $faultactor  only used when msg routed between multiple actors
      * @param string $faultstring human readable error message
      * @param mixed  $faultdetail detail, typically a string or array of string
-     * @return Nusoap_fault
      */
     public function nusoap_fault($faultcode, $faultactor = '', $faultstring = '', $faultdetail = '')
     {
@@ -1249,7 +1248,6 @@ class Nusoap_xmlschema extends Nusoap_base
      * @param string       $xml        xml document URI
      * @param array|string $namespaces namespaces defined in enclosing XML
      * @access   public
-     * @return Nusoap_xmlschema
      */
     public function nusoap_xmlschema($schema = '', $xml = '', $namespaces = [])
     {
@@ -1288,7 +1286,7 @@ class Nusoap_xmlschema extends Nusoap_base
     {
         // parse xml file
         if ('' !== $xml) {
-            $xmlStr = @implode('', @file($xml));
+            $xmlStr = @file_get_contents($xml);
             if ('' === $xmlStr) {
                 $msg = 'Error reading XML from ' . $xml;
                 $this->setError($msg);
@@ -2296,7 +2294,6 @@ class Soapval extends Nusoap_base
      * @param mixed  $type_ns    optional namespace of type
      * @param mixed  $attributes associative array of attributes to add to element serialization
      * @access   public
-     * @return Soapval
      */
     public function soapval(
         $name = 'soapval',
@@ -2393,7 +2390,6 @@ class Soap_transport_http extends Nusoap_base
      * @param array   $curl_options User-specified cURL options
      * @param boolean $use_curl     Whether to try to force cURL use
      * @access public
-     * @return Soap_transport_http
      */
     public function soap_transport_http($url, $curl_options = null, $use_curl = false)
     {
@@ -3900,7 +3896,6 @@ class Nusoap_server extends Nusoap_base
      *
      * @param mixed $wsdl file path or URL (string) , or wsdl instance (object)
      * @access   public
-     * @return Nusoap_server
      */
     public function nusoap_server($wsdl = false)
     {
@@ -4981,7 +4976,6 @@ class Wsdl extends Nusoap_base
      * @param array       $curl_options     user-specified cURL options
      * @param boolean     $use_curl         try to use cURL
      * @access public
-     * @return Wsdl
      */
     public function wsdl(
         $wsdl = '',
@@ -5034,7 +5028,7 @@ class Wsdl extends Nusoap_base
                 foreach ($list as $xs) {
                     $wsdlparts = parse_url($this->wsdl);    // this is bogusly simple!
                     foreach ($xs->imports as $ns2 => $list2) {
-                        for ($ii = 0; $ii < count($list2); ++$ii) {
+                        for ($ii = 0, $iiMax = count($list2); $ii < $iiMax; ++$ii) {
                             if (!$list2[$ii]['loaded']) {
                                 $this->schemas[$ns]->imports[$ns2][$ii]['loaded'] = true;
                                 $url                                              = $list2[$ii]['location'];
@@ -5059,7 +5053,7 @@ class Wsdl extends Nusoap_base
             // WSDL imports
             $wsdlparts = parse_url($this->wsdl);    // this is bogusly simple!
             foreach ($this->import as $ns => $list) {
-                for ($ii = 0; $ii < count($list); ++$ii) {
+                for ($ii = 0, $iiMax = count($list); $ii < $iiMax; ++$ii) {
                     if (!$list[$ii]['loaded']) {
                         $this->import[$ns][$ii]['loaded'] = true;
                         $url                              = $list[$ii]['location'];
@@ -7015,7 +7009,6 @@ class Nusoap_parser extends Nusoap_base
      * @param string      $method      method for which XML is parsed (unused?)
      * @param bool|string $decode_utf8 whether to decode UTF-8 to ISO-8859-1
      * @access   public
-     * @return Nusoap_parser
      */
     public function nusoap_parser($xml, $encoding = 'UTF-8', $method = '', $decode_utf8 = true)
     {
@@ -7719,7 +7712,6 @@ class Nusoap_client extends Nusoap_base
      * @param integer     $response_timeout set the response timeout
      * @param string      $portName         optional portName in WSDL document
      * @access   public
-     * @return Nusoap_client
      */
     public function nusoap_client(
         $endpoint,

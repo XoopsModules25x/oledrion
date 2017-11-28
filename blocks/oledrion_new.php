@@ -39,7 +39,7 @@ function b_oledrion_new_show($options)
     }
     if (count($products) > 0) {
         $block                   = [];
-        $block['nostock_msg']    = OledrionUtility::getModuleOption('nostock_msg');
+        $block['nostock_msg']    = \Xoopsmodules\oledrion\Utility::getModuleOption('nostock_msg');
         $block['block_products'] = $products;
         $xoTheme->addStylesheet(OLEDRION_URL . 'assets/css/oledrion.css');
 

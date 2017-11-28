@@ -30,7 +30,7 @@ require_once XOOPS_ROOT_PATH . '/class/pagenav.php';
 
 $xoopsTpl->assign('mod_pref', $mod_pref); // Préférences du module
 $start = isset($_GET['start']) ? (int)$_GET['start'] : 0;
-$limit = OledrionUtility::getModuleOption('perpage');
+$limit = \Xoopsmodules\oledrion\Utility::getModuleOption('perpage');
 
 if ($limit > 0) {
     $handlers   = OledrionHandler::getInstance();
@@ -55,12 +55,12 @@ if ($limit > 0) {
     }
 }
 
-OledrionUtility::setCSS();
-OledrionUtility::setLocalCSS($xoopsConfig['language']);
-OledrionUtility::loadLanguageFile('modinfo.php');
+\Xoopsmodules\oledrion\Utility::setCSS();
+\Xoopsmodules\oledrion\Utility::setLocalCSS($xoopsConfig['language']);
+\Xoopsmodules\oledrion\Utility::loadLanguageFile('modinfo.php');
 
-$xoopsTpl->assign('breadcrumb', OledrionUtility::breadcrumb([OLEDRION_URL . basename(__FILE__) => _MI_OLEDRION_SMNAME11]));
+$xoopsTpl->assign('breadcrumb', \Xoopsmodules\oledrion\Utility::breadcrumb([OLEDRION_URL . basename(__FILE__) => _MI_OLEDRION_SMNAME11]));
 
-$title = _MI_OLEDRION_SMNAME11 . ' - ' . OledrionUtility::getModuleName();
-OledrionUtility::setMetas($title, $title);
+$title = _MI_OLEDRION_SMNAME11 . ' - ' . \Xoopsmodules\oledrion\Utility::getModuleName();
+\Xoopsmodules\oledrion\Utility::setMetas($title, $title);
 require_once XOOPS_ROOT_PATH . '/footer.php';

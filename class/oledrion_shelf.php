@@ -63,7 +63,8 @@ class Oledrion_shelf
 
     /**
      * Supprime un produit (et tout ce qui lui est relatif)
-     * @param oledrion_products $product
+     * @param Oledrion_products $product
+     * @return
      */
     public function deleteProduct(Oledrion_products $product)
     {
@@ -143,7 +144,7 @@ class Oledrion_shelf
     /**
      * Retourne une liste de produits selon certains critères
      *
-     * @param  oledrion_shelf_parameters $parameters Les paramètres de filtrage
+     * @param  Oledrion_shelf_parameters $parameters Les paramètres de filtrage
      * @return array                     Tableau prêt à être utilisé dans les templates
      */
     public function getProducts(Oledrion_shelf_parameters $parameters)
@@ -269,7 +270,7 @@ class Oledrion_shelf
         }
         // On récupère la liste des personnes qui ont soumis les produits
         if ($withXoopsUser) {
-            $users = OledrionUtility::getUsersFromIds($xoopsUsersIDs);
+            $users = \Xoopsmodules\oledrion\Utility::getUsersFromIds($xoopsUsersIDs);
         }
 
         // Il faut récupérer la liste des produits relatifs

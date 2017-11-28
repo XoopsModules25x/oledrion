@@ -1,4 +1,4 @@
-<?php
+<?php namespace Xoopsmodules\oledrion;
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -26,7 +26,7 @@ require_once __DIR__ . '/../../../include/cp_header.php';
  * Class DirectoryChecker
  * check status of a directory
  */
-class directorychecker
+class Directorychecker
 {
     /**
      * @param       $path

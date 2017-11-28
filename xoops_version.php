@@ -36,7 +36,7 @@ $modversion['image']         = 'assets/images/logoModule.png';
 $modversion['dirname']       = basename(__DIR__);
 // Modules scripts
 $modversion['onInstall'] = 'include/functions_install.php';
-$modversion['onUpdate']  = 'include/functions_update.php';
+//$modversion['onUpdate']  = 'include/functions_update.php';
 //icons
 //$modversion['dirmoduleadmin']      = '/Frameworks/moduleclasses/moduleadmin';
 //$modversion['icons16']             = '../../Frameworks/moduleclasses/icons/16';
@@ -325,8 +325,8 @@ $modversion['blocks'][] = [
 // Menu
 $modversion['hasMain'] = 1;
 $cptm                  = 0;
-require_once __DIR__ . '/class/utility.php';
-if (OledrionUtility::getModuleOption('use_price')) {
+require_once __DIR__ . '/class/Utility.php';
+if (\Xoopsmodules\oledrion\Utility::getModuleOption('use_price')) {
     ++$cptm;
     $modversion['sub'][$cptm]['name'] = _MI_OLEDRION_SMNAME1;
     $modversion['sub'][$cptm]['url']  = 'caddy.php';
@@ -360,7 +360,7 @@ $modversion['sub'][$cptm]['url']  = 'my-lists.php';
 $modversion['sub'][$cptm]['name'] = _MI_OLEDRION_SMNAME11;
 $modversion['sub'][$cptm]['url']  = 'all-lists.php';
 
-// Ajout des catégories mères en sous menu ********************************************************
+// Adding parent categories in submenu ********************************************************
 global $xoopsModule;
 if (is_object($xoopsModule) && $xoopsModule->getVar('dirname') == $modversion['dirname']
     && $xoopsModule->getVar('isactive')) {
@@ -451,14 +451,35 @@ $modversion['config'][] = [
 /**
  * Editor to use
  */
+//$modversion['config'][] = [
+//    'name'        => 'bl_form_options',
+//    'title'       => '_MI_OLEDRION_FORM_OPTIONS',
+//    'description' => '_MI_OLEDRION_FORM_OPTIONS_DESC',
+//    'formtype'    => 'select',
+//    'valuetype'   => 'text',
+//    'options'     => XoopsLists::getDirListAsArray(XOOPS_ROOT_PATH . '/class/xoopseditor'),
+//    'default'     => 'dhtmltextarea',
+//];
+
+
 $modversion['config'][] = [
-    'name'        => 'bl_form_options',
-    'title'       => '_MI_OLEDRION_FORM_OPTIONS',
-    'description' => '_MI_OLEDRION_FORM_OPTIONS_DESC',
-    'formtype'    => 'select',
-    'valuetype'   => 'text',
-    'options'     => XoopsLists::getDirListAsArray(XOOPS_ROOT_PATH . '/class/xoopseditor'),
-    'default'     => 'dhtmltextarea',
+    'name' => 'editorAdmin',
+    'title' => '_MI_OLEDRION_FORM_OPTIONS_ADMIN',
+    'description' => '_MI_OLEDRION_FORM_OPTIONS_ADMIN_DESC',
+    'formtype' => 'select',
+    'valuetype' => 'text',
+    'options' => XoopsLists::getDirListAsArray(XOOPS_ROOT_PATH . '/class/xoopseditor'),
+    'default' => 'tinymce'
+];
+
+$modversion['config'][] = [
+    'name' => 'editorUser',
+    'title' => '_MI_OLEDRION_FORM_OPTIONS_USER',
+    'description' => '_MI_OLEDRION_FORM_OPTIONS_USER_DESC',
+    'formtype' => 'select',
+    'valuetype' => 'text',
+    'options' => XoopsLists::getDirListAsArray(XOOPS_ROOT_PATH . '/class/xoopseditor'),
+    'default' => 'dhtmltextarea'
 ];
 
 /**
@@ -854,7 +875,7 @@ $modversion['config'][] = [
 ];
 
 $modversion['config'][] = [
-    'name'        => 'catagory_colums',
+    'name'        => 'category_colums',
     'title'       => '_MI_OLEDRION_COLUMNS_CATEGORY',
     'description' => '',
     'formtype'    => 'textbox',

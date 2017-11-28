@@ -31,8 +31,8 @@ if ('' === $op) {
     $op = isset($_GET['op']) ? $_GET['op'] : '';
 }
 $return  = '';
-$uid     = OledrionUtility::getCurrentUserID();
-$isAdmin = OledrionUtility::isAdmin();
+$uid     = \Xoopsmodules\oledrion\Utility::getCurrentUserID();
+$isAdmin = \Xoopsmodules\oledrion\Utility::isAdmin();
 
 switch ($op) {
     // ****************************************************************************************************************
@@ -66,7 +66,7 @@ switch ($op) {
             */
             // On récupère les ID des attributs valorisés
             foreach ($data as $key => $value) {
-                $attributesIds[] = OledrionUtility::getId($key);
+                $attributesIds[] = \Xoopsmodules\oledrion\Utility::getId($key);
             }
             if (0 == count($attributesIds)) {
                 return _OLEDRION_NA;
@@ -84,12 +84,12 @@ switch ($op) {
                     $attributeValues = $data[$attributeNameInForm];
                     if (is_array($attributeValues)) {
                         foreach ($attributeValues as $attributeValue) {
-                            $optionName   = OledrionUtility::getName($attributeValue);
+                            $optionName   = \Xoopsmodules\oledrion\Utility::getName($attributeValue);
                             $optionPrice  = $attribute->getOptionPriceFromValue($optionName);
                             $productPrice += $optionPrice;
                         }
                     } else {
-                        $optionPrice  = $attribute->getOptionPriceFromValue(OledrionUtility::getName($attributeValues));
+                        $optionPrice  = $attribute->getOptionPriceFromValue(\Xoopsmodules\oledrion\Utility::getName($attributeValues));
                         $productPrice += $optionPrice;
                     }
                 }
@@ -99,7 +99,7 @@ switch ($op) {
             $template        = new XoopsTpl();
             $vat             = null;
             $vat             = $handlers->h_oledrion_vat->get($vat_id);
-            $productPriceTTC = OledrionUtility::getAmountWithVat($productPrice, $vat_id);
+            $productPriceTTC = \Xoopsmodules\oledrion\Utility::getAmountWithVat($productPrice, $vat_id);
 
             $oledrion_Currency = Oledrion_Currency::getInstance();
 
@@ -134,7 +134,7 @@ switch ($op) {
                 $items[$i]['type']  = 'product';
                 $items[$i]['link']  = XOOPS_URL . '/modules/oledrion/product.php?product_id=' . $row['id'];
                 $items[$i]['image'] = OLEDRION_PICTURES_URL . '/' . $row['image'];
-                //$items[$i]['price'] = OledrionUtility::getTTC($row['price']);
+                //$items[$i]['price'] = \Xoopsmodules\oledrion\Utility::getTTC($row['price']);
                 $category               = $h_oledrion_cat->get($row['cid']);
                 $items[$i]['cat_cid']   = $category->getVar('cat_cid');
                 $items[$i]['cat_title'] = $category->getVar('cat_title');
@@ -283,12 +283,12 @@ switch ($op) {
             $product    = $h_oledrion_products->get($product_id);
             if (is_object($product)
                 && $product->getVar('product_online')
-                && !OledrionUtility::getModuleOption('show_unpublished')
+                && !\Xoopsmodules\oledrion\Utility::getModuleOption('show_unpublished')
                 && $product->getVar('product_submitted') < time()
-                && OledrionUtility::getModuleOption('nostock_display')
+                && \Xoopsmodules\oledrion\Utility::getModuleOption('nostock_display')
                 && $product->getVar('product_stock')) {
                 $GLOBALS['current_category'] = -1;
-                $ratinguser                  = OledrionUtility::getCurrentUserID();
+                $ratinguser                  = \Xoopsmodules\oledrion\Utility::getCurrentUserID();
                 $canRate                     = true;
                 if (0 != $ratinguser) {
                     if ($h_oledrion_votedata->hasUserAlreadyVoted($ratinguser, $product->getVar('product_id'))) {
@@ -301,7 +301,7 @@ switch ($op) {
                 }
                 if ($canRate) {
                     /* if ($_POST['rating'] == '--') {
-                        OledrionUtility::redirect(_OLEDRION_NORATING, OLEDRION_URL . 'product.php?product_id=' . $product->getVar('product_id'), 4);
+                        \Xoopsmodules\oledrion\Utility::redirect(_OLEDRION_NORATING, OLEDRION_URL . 'product.php?product_id=' . $product->getVar('product_id'), 4);
                     } */
                     $rating = (int)$_POST['rating'];
                     /* if ($rating < 1 || $rating > 10) {
@@ -320,7 +320,7 @@ switch ($op) {
 
                         $h_oledrion_products->updateRating($product_id, $sumRating, $totalVotes);
                         //$ratemessage = _OLEDRION_VOTEAPPRE . '<br>' . sprintf(_OLEDRION_THANKYOU, $xoopsConfig['sitename']);
-                        //OledrionUtility::redirect($ratemessage, OLEDRION_URL . 'product.php?product_id=' . $product->getVar('product_id'), 2);
+                        //\Xoopsmodules\oledrion\Utility::redirect($ratemessage, OLEDRION_URL . 'product.php?product_id=' . $product->getVar('product_id'), 2);
                     } else {
                         $return = false;
                     }
@@ -380,7 +380,7 @@ switch ($op) {
                 // Set parameter
                 $password       = md5(xoops_makepass());
                 $passwordCancel = md5(xoops_makepass());
-                $uid            = OledrionUtility::getCurrentUserID();
+                $uid            = \Xoopsmodules\oledrion\Utility::getCurrentUserID();
                 $cmd_total      = $product_price;
                 $cmd_shipping   = 0;
                 // Save command
@@ -389,7 +389,7 @@ switch ($op) {
                 $commande->setVar('cmd_date', date('Y-m-d'));
                 $commande->setVar('cmd_create', time());
                 $commande->setVar('cmd_state', OLEDRION_STATE_NOINFORMATION);
-                $commande->setVar('cmd_ip', OledrionUtility::IP());
+                $commande->setVar('cmd_ip', \Xoopsmodules\oledrion\Utility::IP());
                 $commande->setVar('cmd_lastname', $cmd_lastname);
                 $commande->setVar('cmd_firstname', $cmd_firstname);
                 $commande->setVar('cmd_adress', $cmd_adress);
@@ -400,8 +400,8 @@ switch ($op) {
                 $commande->setVar('cmd_mobile', $cmd_mobile);
                 $commande->setVar('cmd_email', $cmd_email);
                 $commande->setVar('cmd_articles_count', 1);
-                $commande->setVar('cmd_total', OledrionUtility::formatFloatForDB($cmd_total));
-                $commande->setVar('cmd_shipping', OledrionUtility::formatFloatForDB($cmd_shipping));
+                $commande->setVar('cmd_total', \Xoopsmodules\oledrion\Utility::formatFloatForDB($cmd_total));
+                $commande->setVar('cmd_shipping', \Xoopsmodules\oledrion\Utility::formatFloatForDB($cmd_shipping));
                 $commande->setVar('cmd_packing_price', $cmd_packing_price);
                 $commande->setVar('cmd_bill', $cmd_bill);
                 $commande->setVar('cmd_password', $password);
@@ -425,9 +425,9 @@ switch ($op) {
                 $caddy = $h_oledrion_caddy->create(true);
                 $caddy->setVar('caddy_product_id', $product_id);
                 $caddy->setVar('caddy_qte', $product->getVar('product_qty'));
-                $caddy->setVar('caddy_price', OledrionUtility::formatFloatForDB($cmd_total));
+                $caddy->setVar('caddy_price', \Xoopsmodules\oledrion\Utility::formatFloatForDB($cmd_total));
                 $caddy->setVar('caddy_cmd_id', $commande->getVar('cmd_id'));
-                $caddy->setVar('caddy_shipping', OledrionUtility::formatFloatForDB($cmd_shipping));
+                $caddy->setVar('caddy_shipping', \Xoopsmodules\oledrion\Utility::formatFloatForDB($cmd_shipping));
                 $caddy->setVar('caddy_pass', md5(xoops_makepass()));
                 $res2 = $h_oledrion_caddy->insert($caddy, true);
                 // Attributs
@@ -473,21 +473,21 @@ switch ($op) {
                     $msg['TELEPHONE'] = $commande->getVar('cmd_telephone');
                     $msg['EMAIL'] = $commande->getVar('cmd_email');
                     $msg['URL_BILL'] = OLEDRION_URL . 'invoice.php?id=' . $commande->getVar('cmd_id') . '&pass=' . $commande->getVar('cmd_password');
-                    $msg['IP'] = OledrionUtility::IP();
+                    $msg['IP'] = \Xoopsmodules\oledrion\Utility::IP();
                     if ($commande->getVar('cmd_bill') == 1) {
                         $msg['FACTURE'] = _YES;
                     } else {
                         $msg['FACTURE'] = _NO;
                     }
                     // Send mail to client
-                    OledrionUtility::sendEmailFromTpl('command_client.tpl', $commande -> getVar('cmd_email'), sprintf(_OLEDRION_THANKYOU_CMD, $xoopsConfig['sitename']), $msg);
+                    \Xoopsmodules\oledrion\Utility::sendEmailFromTpl('command_client.tpl', $commande -> getVar('cmd_email'), sprintf(_OLEDRION_THANKYOU_CMD, $xoopsConfig['sitename']), $msg);
                     // Send mail to admin
-                    OledrionUtility::sendEmailFromTpl('command_shop.tpl', OledrionUtility::getEmailsFromGroup(OledrionUtility::getModuleOption('grp_sold')), _OLEDRION_NEW_COMMAND, $msg);
+                    \Xoopsmodules\oledrion\Utility::sendEmailFromTpl('command_shop.tpl', \Xoopsmodules\oledrion\Utility::getEmailsFromGroup(\Xoopsmodules\oledrion\Utility::getModuleOption('grp_sold')), _OLEDRION_NEW_COMMAND, $msg);
                     */
                     // Send SMS
-                    if (OledrionUtility::getModuleOption('sms_checkout')) {
+                    if (\Xoopsmodules\oledrion\Utility::getModuleOption('sms_checkout')) {
                         $information['to']   = ltrim($commande->getVar('cmd_mobile'), 0);
-                        $information['text'] = OledrionUtility::getModuleOption('sms_checkout_text');
+                        $information['text'] = \Xoopsmodules\oledrion\Utility::getModuleOption('sms_checkout_text');
                         $sms                 = Oledrion_sms::sendSms($information);
                     }
                 }

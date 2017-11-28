@@ -40,7 +40,7 @@ switch ($action) {
         $items = $usersList = [];
         $class = '';
 
-        //        OledrionUtility::htitle(_MI_OLEDRION_ADMENU15, 4);
+        //        \Xoopsmodules\oledrion\Utility::htitle(_MI_OLEDRION_ADMENU15, 4);
 
         $start      = isset($_GET['start']) ? (int)$_GET['start'] : 0;
         $itemsCount = $oledrionHandlers->h_oledrion_lists->getRecentListsCount();
@@ -75,7 +75,7 @@ switch ($action) {
             $class     = ('even' === $class) ? 'odd' : 'even';
             $id        = $item->getVar('list_id');
             $actions   = [];
-            $actions[] = "<a href='$baseurl?op=$operation&action=delete&id=" . $id . "' title='" . _OLEDRION_DELETE . "'" . $conf_msg . '>' . $icones['delete'] . '</a>';
+            $actions[] = "<a href='$baseurl?op=$operation&action=delete&id=" . $id . "' title='" . _OLEDRION_DELETE . "'" . $conf_msg . '>' . $icons['delete'] . '</a>';
             $userName  = isset($usersList[$item->list_uid]) ? $usersList[$item->list_uid]->getVar('uname') : _AM_OLEDRION_ANONYMOUS;
             echo "<tr class='" . $class . "'>\n";
             echo "<td align='center'>" . $id . '</td>';
@@ -99,18 +99,18 @@ switch ($action) {
         xoops_cp_header();
         $id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
         if (empty($id)) {
-            OledrionUtility::redirect(_AM_OLEDRION_ERROR_1, $baseurl . '?op=' . $operation, 5);
+            \Xoopsmodules\oledrion\Utility::redirect(_AM_OLEDRION_ERROR_1, $baseurl . '?op=' . $operation, 5);
         }
         $list = null;
         $list = $oledrionHandlers->h_oledrion_lists->get($id);
         if (!is_object($list)) {
-            OledrionUtility::redirect(_AM_OLEDRION_NOT_FOUND, $baseurl . '?op=' . $operation, 5);
+            \Xoopsmodules\oledrion\Utility::redirect(_AM_OLEDRION_NOT_FOUND, $baseurl . '?op=' . $operation, 5);
         }
         if ($oledrionHandlers->h_oledrion_lists->deleteList($list)) {
-            OledrionUtility::updateCache();
-            OledrionUtility::redirect(_AM_OLEDRION_SAVE_OK, $baseurl . '?op=' . $operation, 2);
+            \Xoopsmodules\oledrion\Utility::updateCache();
+            \Xoopsmodules\oledrion\Utility::redirect(_AM_OLEDRION_SAVE_OK, $baseurl . '?op=' . $operation, 2);
         } else {
-            OledrionUtility::redirect(_AM_OLEDRION_SAVE_PB, $baseurl . '?op=' . $operation, 5);
+            \Xoopsmodules\oledrion\Utility::redirect(_AM_OLEDRION_SAVE_PB, $baseurl . '?op=' . $operation, 5);
         }
         break;
 }

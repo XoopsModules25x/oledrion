@@ -31,10 +31,10 @@ function oledrion_search($queryarray, $andor, $limit, $offset, $userid)
 
     // Recherche dans les produits
     $sql = 'SELECT product_id, product_title, product_submitted, product_submitter FROM ' . $xoopsDB->prefix('oledrion_products') . ' WHERE (product_online = 1)';
-    if (0 == OledrionUtility::getModuleOption('show_unpublished')) { // Ne pas afficher les produits qui ne sont pas publiés
+    if (0 == \Xoopsmodules\oledrion\Utility::getModuleOption('show_unpublished')) { // Ne pas afficher les produits qui ne sont pas publiés
         $sql .= ' AND product_submitted <= ' . time();
     }
-    if (0 == OledrionUtility::getModuleOption('nostock_display')) { // Se limiter aux seuls produits encore en stock
+    if (0 == \Xoopsmodules\oledrion\Utility::getModuleOption('nostock_display')) { // Se limiter aux seuls produits encore en stock
         $sql .= ' AND product_stock > 0';
     }
     if (0 != $userid) {
@@ -58,11 +58,11 @@ function oledrion_search($queryarray, $andor, $limit, $offset, $userid)
     }
 
     $count = 0;
-    if(is_array($queryarray)) {
+    if (is_array($queryarray)) {
         $count = count($queryarray);
     }
     $more  = '';
-    if (is_array($queryarray) && $count > 0) {
+    if ($count > 0) {
         $cnt  = 0;
         $sql  .= ' AND (';
         $more = ')';

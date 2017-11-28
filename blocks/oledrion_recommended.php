@@ -42,7 +42,7 @@ function b_oledrion_recomm_show($options)
         unset($products['lastTitle']);
     }
     if (count($products) > 0) {
-        $block['nostock_msg']    = OledrionUtility::getModuleOption('nostock_msg');
+        $block['nostock_msg']    = \Xoopsmodules\oledrion\Utility::getModuleOption('nostock_msg');
         $block['block_products'] = $products;
         $xoTheme->addStylesheet(OLEDRION_URL . 'assets/css/oledrion.css');
 
@@ -75,7 +75,7 @@ function b_oledrion_recomm_edit($options)
 
     $select                = $mytree->makeSelBox('options[]', 'cat_title', '-', $options[1], _MB_OLEDRION_ALL_CATEGORIES);
 
-    if (OledrionUtility::checkVerXoops($module, '2.5.9')) {
+    if (\Xoopsmodules\oledrion\Utility::checkVerXoops($module, '2.5.9')) {
         $select = $mytree->makeSelectElement('options[]', 'cat_title', '-', $options[1], true, 0, '', _MB_OLEDRION_ALL_CATEGORIES);
         $form->addElement($select);
     } else {

@@ -31,14 +31,14 @@ $category = null;
 if ($cat_cid > 0) {
     $category = $h_oledrion_cat->get($cat_cid);
     if (!is_object($category)) {
-        OledrionUtility::redirect(_OLEDRION_ERROR8, 'index.php', 5);
+        \Xoopsmodules\oledrion\Utility::redirect(_OLEDRION_ERROR8, 'index.php', 5);
     }
 }
 // On peut afficher les blocs *********************************************************************
 $GLOBALS['xoopsOption']['template_main'] = 'oledrion_category.tpl';
 require_once XOOPS_ROOT_PATH . '/header.php';
 $vatArray = $tbl_categories = [];
-$limit    = OledrionUtility::getModuleOption('perpage');
+$limit    = \Xoopsmodules\oledrion\Utility::getModuleOption('perpage');
 
 // Lecture des TVA ********************************************************************************
 $vatArray = $h_oledrion_vat->getAllVats(new Oledrion_parameters());
@@ -48,7 +48,7 @@ $categories = $h_oledrion_cat->getAllCategories(new Oledrion_parameters());
 
 // Options pour le template ***********************************************************************
 $xoopsTpl->assign('mod_pref', $mod_pref); // Préférences du module
-$xoopsTpl->assign('columnsCount', OledrionUtility::getModuleOption('catagory_colums'));
+$xoopsTpl->assign('columnsCount', \Xoopsmodules\oledrion\Utility::getModuleOption('category_colums'));
 
 require_once OLEDRION_PATH . 'class/tree.php';
 $tbl_tmp               = [];
@@ -71,16 +71,16 @@ if ((is_object($category) && 0 == $category->getVar('cat_pid')) || 0 == $cat_cid
 
     if (is_object($category)) { // On est sur une catégorie particulière
         $xoopsTpl->assign('category', $category->toArray());
-        $title = _OLEDRION_CATEGORYC . ' ' . $category->getVar('cat_title') . ' - ' . OledrionUtility::getModuleName();
-        if (!OledrionUtility::getModuleOption('manual_meta')) {
-            OledrionUtility::setMetas($title, $title);
+        $title = _OLEDRION_CATEGORYC . ' ' . $category->getVar('cat_title') . ' - ' . \Xoopsmodules\oledrion\Utility::getModuleName();
+        if (!\Xoopsmodules\oledrion\Utility::getModuleOption('manual_meta')) {
+            \Xoopsmodules\oledrion\Utility::setMetas($title, $title);
         } else {
             $pageTitle       = '' === xoops_trim($category->getVar('cat_metatitle')) ? $title : $category->getVar('cat_metatitle');
             $metaDescription = '' !== xoops_trim($category->getVar('cat_metadescription')) ? $category->getVar('cat_metadescription') : $title;
             $metaKeywords    = xoops_trim($category->getVar('cat_metakeywords'));
-            OledrionUtility::setMetas($pageTitle, $metaDescription, $metaKeywords);
+            \Xoopsmodules\oledrion\Utility::setMetas($pageTitle, $metaDescription, $metaKeywords);
         }
-        $xoopsTpl->assign('breadcrumb', OledrionUtility::breadcrumb([
+        $xoopsTpl->assign('breadcrumb', \Xoopsmodules\oledrion\Utility::breadcrumb([
                                                                         OLEDRION_URL . basename(__FILE__) => $category->getVar('cat_title')
                                                                     ]));
         if (OLEDRION_SHOW_SUB_CATEGORIES) {
@@ -97,9 +97,9 @@ if ((is_object($category) && 0 == $category->getVar('cat_pid')) || 0 == $cat_cid
             $subCategoriesSearched = true;
         }
     } else { // page d'accueil des catégories
-        $title = _OLEDRION_CATEGORIES . ' - ' . OledrionUtility::getModuleName();
-        OledrionUtility::setMetas($title, $title);
-        $xoopsTpl->assign('breadcrumb', OledrionUtility::breadcrumb([OLEDRION_URL . basename(__FILE__) => _OLEDRION_CATEGORIES]));
+        $title = _OLEDRION_CATEGORIES . ' - ' . \Xoopsmodules\oledrion\Utility::getModuleName();
+        \Xoopsmodules\oledrion\Utility::setMetas($title, $title);
+        $xoopsTpl->assign('breadcrumb', \Xoopsmodules\oledrion\Utility::breadcrumb([OLEDRION_URL . basename(__FILE__) => _OLEDRION_CATEGORIES]));
         if (OLEDRION_SHOW_MAIN_CATEGORIES) {
             $count            = 1;
             $motherCategories = $h_oledrion_cat->getMotherCategories();
@@ -114,10 +114,10 @@ if ((is_object($category) && 0 == $category->getVar('cat_pid')) || 0 == $cat_cid
     }
 
     // Paramétrage des catégories
-    $chunk1 = OledrionUtility::getModuleOption('chunk1'); // Produits les plus récents
-    $chunk2 = OledrionUtility::getModuleOption('chunk2'); // Produits les plus achetés
-    $chunk3 = OledrionUtility::getModuleOption('chunk3'); // Produits les plus vus
-    $chunk4 = OledrionUtility::getModuleOption('chunk4'); // Produits les mieux notés
+    $chunk1 = \Xoopsmodules\oledrion\Utility::getModuleOption('chunk1'); // Produits les plus récents
+    $chunk2 = \Xoopsmodules\oledrion\Utility::getModuleOption('chunk2'); // Produits les plus achetés
+    $chunk3 = \Xoopsmodules\oledrion\Utility::getModuleOption('chunk3'); // Produits les plus vus
+    $chunk4 = \Xoopsmodules\oledrion\Utility::getModuleOption('chunk4'); // Produits les mieux notés
 
     if ($chunk1 > 0) { // Produits les plus récents (dans cette catégorie ou dans toutes les catégories)
         $products = [];
@@ -192,7 +192,7 @@ if (is_object($category)
     // Pager ******************************************************************************************
     // Recherche du nombre de produits dans cette catégorie
     $productsCount = $h_oledrion_products->getTotalPublishedProductsCount($cat_cid);
-    $limit         = OledrionUtility::getModuleOption('perpage');
+    $limit         = \Xoopsmodules\oledrion\Utility::getModuleOption('perpage');
     if ($productsCount > $limit) {
         require_once XOOPS_ROOT_PATH . '/class/pagenav.php';
         $catLink = $category->getLink();
@@ -205,24 +205,24 @@ if (is_object($category)
     // Breadcrumb *********************************************************************************
     $ancestors = $mytree->getAllParent($cat_cid);
     $ancestors = array_reverse($ancestors);
-    $tbl_tmp[] = "<a href='" . OLEDRION_URL . "index.php' title='" . OledrionUtility::makeHrefTitle(OledrionUtility::getModuleName()) . "'>" . OledrionUtility::getModuleName() . '</a>';
+    $tbl_tmp[] = "<a href='" . OLEDRION_URL . "index.php' title='" . \Xoopsmodules\oledrion\Utility::makeHrefTitle(\Xoopsmodules\oledrion\Utility::getModuleName()) . "'>" . \Xoopsmodules\oledrion\Utility::getModuleName() . '</a>';
     foreach ($ancestors as $item) {
-        $tbl_tmp[] = "<a href='" . $item->getLink() . "' title='" . OledrionUtility::makeHrefTitle($item->getVar('cat_title')) . "'>" . $item->getVar('cat_title') . '</a>';
+        $tbl_tmp[] = "<a href='" . $item->getLink() . "' title='" . \Xoopsmodules\oledrion\Utility::makeHrefTitle($item->getVar('cat_title')) . "'>" . $item->getVar('cat_title') . '</a>';
     }
     // Ajout de la catégorie courante
-    $tbl_tmp[]  = "<a href='" . $category->getLink() . "' title='" . OledrionUtility::makeHrefTitle($category->getVar('cat_title')) . "'>" . $category->getVar('cat_title') . '</a>';
+    $tbl_tmp[]  = "<a href='" . $category->getLink() . "' title='" . \Xoopsmodules\oledrion\Utility::makeHrefTitle($category->getVar('cat_title')) . "'>" . $category->getVar('cat_title') . '</a>';
     $breadcrumb = implode(' &raquo; ', $tbl_tmp);
     $xoopsTpl->assign('breadcrumb', $breadcrumb);
 
     // Meta ***************************************************************************************
     $title = $category->getVar('cat_title');
-    if (!OledrionUtility::getModuleOption('manual_meta')) {
-        OledrionUtility::setMetas($title, $title, str_replace('&raquo;', ',', $title));
+    if (!\Xoopsmodules\oledrion\Utility::getModuleOption('manual_meta')) {
+        \Xoopsmodules\oledrion\Utility::setMetas($title, $title, str_replace('&raquo;', ',', $title));
     } else {
         $pageTitle       = '' === xoops_trim($category->getVar('cat_metatitle')) ? $title : $category->getVar('cat_metatitle');
         $metaDescription = '' !== xoops_trim($category->getVar('cat_metadescription')) ? $category->getVar('cat_metadescription') : $title;
         $metaKeywords    = xoops_trim($category->getVar('cat_metakeywords'));
-        OledrionUtility::setMetas($pageTitle, $metaDescription, $metaKeywords);
+        \Xoopsmodules\oledrion\Utility::setMetas($pageTitle, $metaDescription, $metaKeywords);
     }
 
     // Données des Produits *************************************************************************
@@ -238,6 +238,6 @@ if (is_object($category)
     }
 }
 
-OledrionUtility::setCSS();
-OledrionUtility::setLocalCSS($xoopsConfig['language']);
+\Xoopsmodules\oledrion\Utility::setCSS();
+\Xoopsmodules\oledrion\Utility::setLocalCSS($xoopsConfig['language']);
 require_once XOOPS_ROOT_PATH . '/footer.php';

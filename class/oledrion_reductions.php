@@ -153,7 +153,7 @@ class Oledrion_reductions
     /**
      * Calcul des quantités de produits par catégorie et du nombre de produits par catégorie
      *
-     * @param oledrion_products $product
+     * @param Oledrion_products $product
      * @param integer           $quantity
      */
     public function computePerCategories(Oledrion_products $product, $quantity)
@@ -178,7 +178,7 @@ class Oledrion_reductions
     /**
      * Ajoute à un tableau interne, le fabricant associé à un produit
      *
-     * @param oledrion_products $product
+     * @param Oledrion_products $product
      */
     private function addAssociatedManufacturers(Oledrion_products $product)
     {
@@ -190,7 +190,7 @@ class Oledrion_reductions
     /**
      * Recherche des attributs associés à chaque produit
      *
-     * @param oledrion_products $product
+     * @param Oledrion_products $product
      * @param attray            $attributes
      * @since 2.3
      */
@@ -204,7 +204,7 @@ class Oledrion_reductions
     /**
      * Ajoute à un tableau interne, le vendeur associé à un produit
      *
-     * @param oledrion_products $product
+     * @param Oledrion_products $product
      */
     private function addAssociatedVendors(Oledrion_products $product)
     {
@@ -216,7 +216,7 @@ class Oledrion_reductions
     /**
      * Ajoute à un tableau interne, la catégorie associée à un produit
      *
-     * @param oledrion_products $product
+     * @param Oledrion_products $product
      */
     private function addAssociatedCategories(Oledrion_products $product)
     {
@@ -441,7 +441,7 @@ class Oledrion_reductions
             $discountedPrice = $ht;
             $quantity        = (int)$cartProduct['qty'];
 
-            if (OledrionUtility::getModuleOption('shipping_quantity')) {
+            if (\Xoopsmodules\oledrion\Utility::getModuleOption('shipping_quantity')) {
                 $discountedShipping = (float)($cartProduct['product']->getVar('product_shipping_price', 'n') * $quantity);
             } else {
                 $discountedShipping = (float)$cartProduct['product']->getVar('product_shipping_price', 'n');
@@ -462,7 +462,7 @@ class Oledrion_reductions
             // Boucle sur les règles
             foreach ($this->allActiveRules as $rule) {
                 $applyRule = false;
-                if ((0 != $rule->disc_group && OledrionUtility::isMemberOfGroup($rule->disc_group))
+                if ((0 != $rule->disc_group && \Xoopsmodules\oledrion\Utility::isMemberOfGroup($rule->disc_group))
                     || 0 == $rule->disc_group) {
                     if ((0 != $rule->disc_cat_cid
                          && $cartProduct['product']->getVar('product_cid') == $rule->disc_cat_cid)
@@ -573,7 +573,7 @@ class Oledrion_reductions
                                 }
 
                                 // Pas de montants négatifs
-                                OledrionUtility::doNotAcceptNegativeAmounts($discountedPrice);
+                                \Xoopsmodules\oledrion\Utility::doNotAcceptNegativeAmounts($discountedPrice);
                                 $reduction = $rule->disc_description;
                                 ++$discountsCount;
                             } elseif (OLEDRION_DISCOUNT_PRICE_AMOUNT_ON_CART == $rule->disc_price_amount_on) {
@@ -602,7 +602,7 @@ class Oledrion_reductions
                                 $discountedShipping -= (float)$rule->getVar('disc_shipping_reduce_amount', 'n');
                             }
                             // Pas de montants négatifs
-                            OledrionUtility::doNotAcceptNegativeAmounts($discountedShipping);
+                            \Xoopsmodules\oledrion\Utility::doNotAcceptNegativeAmounts($discountedShipping);
                             break;
                         case OLEDRION_DISCOUNT_SHIPPING_TYPE4:
                             // Frais de port dégressifs
@@ -635,7 +635,7 @@ class Oledrion_reductions
             $vatId = $cartProduct['product']->getVar('product_vat_id');
             if (is_array($vats) && isset($vats[$vatId])) {
                 $vatRate   = (float)$vats[$vatId]->getVar('vat_rate', 'n');
-                $vatAmount = OledrionUtility::getVAT($discountedPrice * $quantity, $vatRate);
+                $vatAmount = \Xoopsmodules\oledrion\Utility::getVAT($discountedPrice * $quantity, $vatRate);
             } else {
                 $vatRate   = 0.0;
                 $vatAmount = 0.0;
@@ -712,7 +712,7 @@ class Oledrion_reductions
             $productTemplate['vatAmountFormated']          = $oledrion_Currency->amountInCurrency($vatAmount);
             $productTemplate['normalShippingFormated']     = $oledrion_Currency->amountForDisplay($cartProduct['product']->getVar('product_shipping_price', 'n'));
             $productTemplate['discountedShippingFormated'] = $oledrion_Currency->amountForDisplay($discountedShipping);
-            $productTemplate['totalPriceFormated']         = $oledrion_Currency->amountInCurrency($totalPrice);
+            $productTemplate['totalPriceFormated']         = $oledrion_Currency->amountForDisplay($totalPrice);
             $productTemplate['templateCategory']           = $associatedCategory;
             $productTemplate['templateVendor']             = $associatedVendor;
             $productTemplate['templateManufacturers']      = $associatedManufacturers;
@@ -740,8 +740,8 @@ class Oledrion_reductions
                             }
 
                             // Pas de montants négatifs
-                            OledrionUtility::doNotAcceptNegativeAmounts($totalHT);
-                            OledrionUtility::doNotAcceptNegativeAmounts($totalVAT);
+                            \Xoopsmodules\oledrion\Utility::doNotAcceptNegativeAmounts($totalHT);
+                            \Xoopsmodules\oledrion\Utility::doNotAcceptNegativeAmounts($totalVAT);
                             $discountsDescription[] = $rule->disc_description;
                             ++$discountsCount;
                         }// Règle à appliquer sur le panier

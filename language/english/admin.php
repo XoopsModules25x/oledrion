@@ -113,7 +113,7 @@ define('_AM_OLEDRION_TOTAL_SHIPP', 'Total / Shipping');
 define('_AM_OLEDRION_NEWSLETTER_BETWEEN', 'Select products published between');
 define('_AM_OLEDRION_EXPORT_AND', ' and ');
 define('_AM_OLEDRION_IN_CATEGORY', 'In the following categories');
-define('_AM_OLEDRION_REMOVE_BR', 'Convert the html &lt;br&gt; tag to a new line ?');
+define('_AM_OLEDRION_REMOVE_BR', 'Convert the html &lt;br> tag to a new line ?');
 define('_AM_OLEDRION_NEWSLETTER_HTML_TAGS', 'Remove HTML tags ?');
 define('_AM_OLEDRION_NEWSLETTER_HEADER', 'Header');
 define('_AM_OLEDRION_NEWSLETTER_FOOTER', 'Footer');

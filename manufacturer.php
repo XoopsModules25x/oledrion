@@ -30,7 +30,7 @@ require_once XOOPS_ROOT_PATH . '/class/pagenav.php';
 if (isset($_GET['manu_id'])) {
     $manu_id = (int)$_GET['manu_id'];
 } else {
-    OledrionUtility::redirect(_OLEDRION_ERROR7, 'index.php', 5);
+    \Xoopsmodules\oledrion\Utility::redirect(_OLEDRION_ERROR7, 'index.php', 5);
 }
 $start = isset($_GET['start']) ? (int)$_GET['start'] : 0;
 
@@ -38,13 +38,13 @@ $start = isset($_GET['start']) ? (int)$_GET['start'] : 0;
 $manufacturer = null;
 $manufacturer = $h_oledrion_manufacturer->get($manu_id);
 if (!is_object($manufacturer)) {
-    OledrionUtility::redirect(_OLEDRION_ERROR7, 'index.php', 5);
+    \Xoopsmodules\oledrion\Utility::redirect(_OLEDRION_ERROR7, 'index.php', 5);
 }
 
 $xoopsTpl->assign('mod_pref', $mod_pref); // Préférences du module
-$xoopsTpl->assign('columnsCount', OledrionUtility::getModuleOption('catagory_colums'));
+$xoopsTpl->assign('columnsCount', \Xoopsmodules\oledrion\Utility::getModuleOption('category_colums'));
 $xoopsTpl->assign('manufacturer', $manufacturer->toArray());
-$limit = OledrionUtility::getModuleOption('perpage');
+$limit = \Xoopsmodules\oledrion\Utility::getModuleOption('perpage');
 
 // Lecture des TVA ********************************************************************************
 $vatArray = [];
@@ -84,19 +84,19 @@ if (count($products) > 0) {
     }
 }
 
-OledrionUtility::setCSS();
-OledrionUtility::setLocalCSS($xoopsConfig['language']);
-OledrionUtility::loadLanguageFile('modinfo.php');
+\Xoopsmodules\oledrion\Utility::setCSS();
+\Xoopsmodules\oledrion\Utility::setLocalCSS($xoopsConfig['language']);
+\Xoopsmodules\oledrion\Utility::loadLanguageFile('modinfo.php');
 
-$xoopsTpl->assign('global_advert', OledrionUtility::getModuleOption('advertisement'));
+$xoopsTpl->assign('global_advert', \Xoopsmodules\oledrion\Utility::getModuleOption('advertisement'));
 // By voltan
 $breadcrumb = [ /*OLEDRION_URL.'whoswho.php' => _OLEDRION_MANUFACTURERS,*/
                      OLEDRION_URL . basename(__FILE__) => $manufacturer->getVar('manu_name') . ' ' . $manufacturer->getVar('manu_commercialname')
 ];
-$xoopsTpl->assign('breadcrumb', OledrionUtility::breadcrumb($breadcrumb));
+$xoopsTpl->assign('breadcrumb', \Xoopsmodules\oledrion\Utility::breadcrumb($breadcrumb));
 
-//$title = $manufacturer->getVar('manu_name') . ' ' . $manufacturer->getVar('manu_commercialname') . ' - ' . OledrionUtility::getModuleName();
+//$title = $manufacturer->getVar('manu_name') . ' ' . $manufacturer->getVar('manu_commercialname') . ' - ' . \Xoopsmodules\oledrion\Utility::getModuleName();
 
 $title = $manufacturer->getVar('manu_name') . ' ' . $manufacturer->getVar('manu_commercialname');
-OledrionUtility::setMetas($title, $title, OledrionUtility::createMetaKeywords($manufacturer->getVar('manu_name') . ' ' . $manufacturer->getVar('manu_commercialname') . ' ' . $manufacturer->getVar('manu_bio')));
+\Xoopsmodules\oledrion\Utility::setMetas($title, $title, \Xoopsmodules\oledrion\Utility::createMetaKeywords($manufacturer->getVar('manu_name') . ' ' . $manufacturer->getVar('manu_commercialname') . ' ' . $manufacturer->getVar('manu_bio')));
 require_once XOOPS_ROOT_PATH . '/footer.php';

@@ -58,7 +58,7 @@ class Oledrion_parameters extends ArrayObject
      *
      * @param  string $key   Le nom du champ à traiter
      * @param  mixed  $value La valeur à lui attribuer
-     * @return OledrionHandler
+     * @return \Oledrion_parameters
      */
     public function __set($key, $value)
     {
@@ -95,7 +95,7 @@ class Oledrion_parameters extends ArrayObject
      * Si des valeurs manquent, elles sont ajoutées
      *
      * @param  Oledrion_parameters $defaultValues
-     * @return oledrion_parameters
+     * @return Oledrion_parameters
      */
     public function extend(self $defaultValues)
     {

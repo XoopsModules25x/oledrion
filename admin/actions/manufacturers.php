@@ -36,7 +36,7 @@ switch ($action) {
                 . _AM_OLEDRION_ADD_ITEM
                 . "'></form>";
         echo $form;
-        //        OledrionUtility::htitle(_MI_OLEDRION_ADMENU3, 4);
+        //        \Xoopsmodules\oledrion\Utility::htitle(_MI_OLEDRION_ADMENU3, 4);
 
         $start    = isset($_GET['start']) ? (int)$_GET['start'] : 0;
         $criteria = new CriteriaCompo();
@@ -62,8 +62,8 @@ switch ($action) {
             $class     = ('even' === $class) ? 'odd' : 'even';
             $id        = $item->getVar('manu_id');
             $actions   = [];
-            $actions[] = "<a href='$baseurl?op=manufacturers&action=edit&id=" . $id . "' title='" . _OLEDRION_EDIT . "'>" . $icones['edit'] . '</a>';
-            $actions[] = "<a href='$baseurl?op=manufacturers&action=delete&id=" . $id . "' title='" . _OLEDRION_DELETE . "'" . $conf_msg . '>' . $icones['delete'] . '</a>';
+            $actions[] = "<a href='$baseurl?op=manufacturers&action=edit&id=" . $id . "' title='" . _OLEDRION_EDIT . "'>" . $icons['edit'] . '</a>';
+            $actions[] = "<a href='$baseurl?op=manufacturers&action=delete&id=" . $id . "' title='" . _OLEDRION_DELETE . "'" . $conf_msg . '>' . $icons['delete'] . '</a>';
             echo "<tr class='" . $class . "'>\n";
             echo "<td><a href='" . $item->getLink() . "'>" . $item->getVar('manu_name') . "</a></td><td align='left'>" . $item->getVar('manu_commercialname') . "</td><td align='center'>" . $item->getVar('manu_email') . "</td><td align='center'>" . implode(' ', $actions) . "</td>\n";
             echo "<tr>\n";
@@ -88,13 +88,13 @@ switch ($action) {
             $title = _AM_OLEDRION_EDIT_MANUFACTURER;
             $id    = isset($_GET['id']) ? (int)$_GET['id'] : 0;
             if (empty($id)) {
-                OledrionUtility::redirect(_AM_OLEDRION_ERROR_1, $baseurl, 5);
+                \Xoopsmodules\oledrion\Utility::redirect(_AM_OLEDRION_ERROR_1, $baseurl, 5);
             }
             // Item exits ?
             $item = null;
             $item = $h_oledrion_manufacturer->get($id);
             if (!is_object($item)) {
-                OledrionUtility::redirect(_AM_OLEDRION_NOT_FOUND, $baseurl, 5);
+                \Xoopsmodules\oledrion\Utility::redirect(_AM_OLEDRION_NOT_FOUND, $baseurl, 5);
             }
             $edit         = true;
             $label_submit = _AM_OLEDRION_MODIFY;
@@ -115,7 +115,7 @@ switch ($action) {
         $sform->addElement(new XoopsFormText(_OLEDRION_EMAIL, 'manu_email', 50, 255, $item->getVar('manu_email', 'e')), false);
         $sform->addElement(new XoopsFormText(_OLEDRION_SITEURL, 'manu_url', 50, 255, $item->getVar('manu_url', 'e')), false);
 
-        $editor = OledrionUtility::getWysiwygForm(_OLEDRION_MANUFACTURER_INF, 'manu_bio', $item->getVar('manu_bio', 'e'), 15, 60, 'bio_hidden');
+        $editor = \Xoopsmodules\oledrion\Utility::getWysiwygForm(_OLEDRION_MANUFACTURER_INF, 'manu_bio', $item->getVar('manu_bio', 'e'), 15, 60, 'bio_hidden');
         if ($editor) {
             $sform->addElement($editor, false);
         }
@@ -130,7 +130,7 @@ switch ($action) {
                 $sform->addElement($pictureTray);
                 unset($pictureTray, $deleteCheckbox);
             }
-            $sform->addElement(new XoopsFormFile(_AM_OLEDRION_PICTURE . ' ' . $i, 'attachedfile' . $i, OledrionUtility::getModuleOption('maxuploadsize')), false);
+            $sform->addElement(new XoopsFormFile(_AM_OLEDRION_PICTURE . ' ' . $i, 'attachedfile' . $i, \Xoopsmodules\oledrion\Utility::getModuleOption('maxuploadsize')), false);
         }
 
         $button_tray = new XoopsFormElementTray('', '');
@@ -138,7 +138,7 @@ switch ($action) {
         $button_tray->addElement($submit_btn);
         $sform->addElement($button_tray);
 
-        $sform = OledrionUtility::formMarkRequiredFields($sform);
+        $sform = \Xoopsmodules\oledrion\Utility::formMarkRequiredFields($sform);
         $sform->display();
         require_once OLEDRION_ADMIN_PATH . 'admin_footer.php';
         break;
@@ -152,7 +152,7 @@ switch ($action) {
             $edit = true;
             $item = $h_oledrion_manufacturer->get($id);
             if (!is_object($item)) {
-                OledrionUtility::redirect(_AM_OLEDRION_NOT_FOUND, $baseurl, 5);
+                \Xoopsmodules\oledrion\Utility::redirect(_AM_OLEDRION_NOT_FOUND, $baseurl, 5);
             }
             $item->unsetNew();
         } else {
@@ -168,10 +168,10 @@ switch ($action) {
 
         // Upload des fichiers
         for ($i = 1; $i <= 5; ++$i) {
-            $res1 = OledrionUtility::uploadFile($i - 1, OLEDRION_PICTURES_PATH);
+            $res1 = \Xoopsmodules\oledrion\Utility::uploadFile($i - 1, OLEDRION_PICTURES_PATH);
             if (true === $res1) {
-                if (OledrionUtility::getModuleOption('resize_others')) { // Eventuellement on redimensionne l'image
-                    OledrionUtility::resizePicture(OLEDRION_PICTURES_PATH . '/' . $destname, OLEDRION_PICTURES_PATH . 'l' . $destname, OledrionUtility::getModuleOption('images_width'), OledrionUtility::getModuleOption('images_height'), true);
+                if (\Xoopsmodules\oledrion\Utility::getModuleOption('resize_others')) { // Eventuellement on redimensionne l'image
+                    \Xoopsmodules\oledrion\Utility::resizePicture(OLEDRION_PICTURES_PATH . '/' . $destname, OLEDRION_PICTURES_PATH . 'l' . $destname, \Xoopsmodules\oledrion\Utility::getModuleOption('images_width'), \Xoopsmodules\oledrion\Utility::getModuleOption('images_height'), true);
                 }
                 $item->setVar('manu_photo' . $i, basename($destname));
             } else {
@@ -183,10 +183,10 @@ switch ($action) {
 
         $res = $h_oledrion_manufacturer->insert($item);
         if ($res) {
-            OledrionUtility::updateCache();
-            OledrionUtility::redirect(_AM_OLEDRION_SAVE_OK, $baseurl . '?op=' . $opRedirect, 2);
+            \Xoopsmodules\oledrion\Utility::updateCache();
+            \Xoopsmodules\oledrion\Utility::redirect(_AM_OLEDRION_SAVE_OK, $baseurl . '?op=' . $opRedirect, 2);
         } else {
-            OledrionUtility::redirect(_AM_OLEDRION_SAVE_PB, $baseurl . '?op=' . $opRedirect, 5);
+            \Xoopsmodules\oledrion\Utility::redirect(_AM_OLEDRION_SAVE_PB, $baseurl . '?op=' . $opRedirect, 5);
         }
         break;
 
@@ -196,7 +196,7 @@ switch ($action) {
         xoops_cp_header();
         $id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
         if (empty($id)) {
-            OledrionUtility::redirect(_AM_OLEDRION_ERROR_1, $baseurl, 5);
+            \Xoopsmodules\oledrion\Utility::redirect(_AM_OLEDRION_ERROR_1, $baseurl, 5);
         }
         $opRedirect = 'manufacturers';
         // On vérifie que ce fabriquant n'est pas relié à des produits
@@ -207,16 +207,16 @@ switch ($action) {
             if (is_object($item)) {
                 $res = $h_oledrion_manufacturer->deleteManufacturer($item);
                 if ($res) {
-                    OledrionUtility::updateCache();
-                    OledrionUtility::redirect(_AM_OLEDRION_SAVE_OK, $baseurl . '?op=' . $opRedirect, 2);
+                    \Xoopsmodules\oledrion\Utility::updateCache();
+                    \Xoopsmodules\oledrion\Utility::redirect(_AM_OLEDRION_SAVE_OK, $baseurl . '?op=' . $opRedirect, 2);
                 } else {
-                    OledrionUtility::redirect(_AM_OLEDRION_SAVE_PB, $baseurl . '?op=' . $opRedirect, 5);
+                    \Xoopsmodules\oledrion\Utility::redirect(_AM_OLEDRION_SAVE_PB, $baseurl . '?op=' . $opRedirect, 5);
                 }
             } else {
-                OledrionUtility::redirect(_AM_OLEDRION_NOT_FOUND, $baseurl . '?op=' . $opRedirect, 5);
+                \Xoopsmodules\oledrion\Utility::redirect(_AM_OLEDRION_NOT_FOUND, $baseurl . '?op=' . $opRedirect, 5);
             }
         } else {
-            OledrionUtility::redirect(_AM_OLEDRION_ERROR_5, $baseurl . '?op=' . $opRedirect, 5);
+            \Xoopsmodules\oledrion\Utility::redirect(_AM_OLEDRION_ERROR_5, $baseurl . '?op=' . $opRedirect, 5);
         }
         break;
 }

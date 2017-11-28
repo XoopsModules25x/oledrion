@@ -25,7 +25,7 @@ require_once __DIR__ . '/classheader.php';
 /**
  * Class Oledrion_manufacturer
  */
-class Oledrion_manufacturer extends Oledrion_Object
+class Oledrion_manufacturer extends OledrionObject
 {
     /**
      * constructor
@@ -139,8 +139,8 @@ class Oledrion_manufacturer extends Oledrion_Object
     public function getLink()
     {
         $url = '';
-        if (1 == OledrionUtility::getModuleOption('urlrewriting')) { // On utilise l'url rewriting
-            $url = OLEDRION_URL . 'manufacturer-' . $this->getVar('manu_id') . OledrionUtility::makeSeoUrl($this->getVar('manu_commercialname', 'n') . ' ' . $this->getVar('manu_name')) . '.html';
+        if (1 == \Xoopsmodules\oledrion\Utility::getModuleOption('urlrewriting')) { // On utilise l'url rewriting
+            $url = OLEDRION_URL . 'manufacturer-' . $this->getVar('manu_id') . \Xoopsmodules\oledrion\Utility::makeSeoUrl($this->getVar('manu_commercialname', 'n') . ' ' . $this->getVar('manu_name')) . '.html';
         } else { // Pas d'utilisation de l'url rewriting
             $url = OLEDRION_URL . 'manufacturer.php?manu_id=' . $this->getVar('manu_id');
         }
@@ -155,7 +155,7 @@ class Oledrion_manufacturer extends Oledrion_Object
      */
     public function getHrefTitle()
     {
-        return OledrionUtility::makeHrefTitle($this->getVar('manu_commercialname') . ' ' . $this->getVar('manu_name'));
+        return \Xoopsmodules\oledrion\Utility::makeHrefTitle($this->getVar('manu_commercialname') . ' ' . $this->getVar('manu_name'));
     }
 
     /**
@@ -191,7 +191,7 @@ class Oledrion_manufacturer extends Oledrion_Object
 /**
  * Class OledrionOledrion_manufacturerHandler
  */
-class OledrionOledrion_manufacturerHandler extends Oledrion_XoopsPersistableObjectHandler
+class OledrionOledrion_manufacturerHandler extends OledrionPersistableObjectHandler
 {
     /**
      * OledrionOledrion_manufacturerHandler constructor.
@@ -199,7 +199,7 @@ class OledrionOledrion_manufacturerHandler extends Oledrion_XoopsPersistableObje
      */
     public function __construct(XoopsDatabase $db)
     { //                            Table                   Classe               Id            Identifiant
-        parent::__construct($db, 'oledrion_manufacturer', 'oledrion_manufacturer', 'manu_id', 'manu_commercialname');
+        parent::__construct($db, 'oledrion_manufacturer', 'Oledrion_manufacturer', 'manu_id', 'manu_commercialname');
     }
 
     /**
@@ -226,7 +226,7 @@ class OledrionOledrion_manufacturerHandler extends Oledrion_XoopsPersistableObje
     /**
      * Supprime un fabricant et tout ce qui est relatif
      *
-     * @param  oledrion_manufacturer $manufacturer
+     * @param  Oledrion_manufacturer $manufacturer
      * @return boolean               Le résultat de la suppression
      */
     public function deleteManufacturer(Oledrion_manufacturer $manufacturer)
@@ -253,7 +253,7 @@ class OledrionOledrion_manufacturerHandler extends Oledrion_XoopsPersistableObje
      * Retourne des fabricants en fonction de leur IDs
      *
      * @param  array $ids Les identifiants des produits
-     * @return array Tableau d'objets de type oledrion_productsmanu
+     * @return array Tableau d'objets de type Oledrion_productsmanu
      */
     public function getManufacturersFromIds($ids)
     {
@@ -272,7 +272,7 @@ class OledrionOledrion_manufacturerHandler extends Oledrion_XoopsPersistableObje
      * @param  integer $manu_id Le fabricant dont on veut récupérer les produits
      * @param  integer $start   Position de départ
      * @param  integer $limit   Nombre maximum d'enregistrements à renvoyer
-     * @return array   Objects de type oledrion_products
+     * @return array   Objects de type Oledrion_products
      */
     public function getManufacturerProducts($manu_id, $start = 0, $limit = 0)
     {

@@ -492,7 +492,7 @@ class OledrionUtility
     /**
      * Vérifie que l'utilisateur courant fait partie du groupe des administrateurs
      *
-     * @return booleean Admin or not
+     * @return bool Admin or not
      */
     public static function isAdmin()
     {
@@ -1804,7 +1804,7 @@ class OledrionUtility
      * Renvoie un montant nul si le montant est négatif
      *
      * @param  float $amount
-     * @return float
+     * @return void
      */
     public static function doNotAcceptNegativeAmounts(&$amount)
     {

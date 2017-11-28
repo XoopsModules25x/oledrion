@@ -27,7 +27,7 @@ require_once __DIR__ . '/classheader.php';
 /**
  * Class Oledrion_products_list
  */
-class Oledrion_products_list extends Oledrion_Object
+class Oledrion_products_list extends OledrionObject
 {
     /**
      * constructor
@@ -48,7 +48,7 @@ class Oledrion_products_list extends Oledrion_Object
 /**
  * Class OledrionOledrion_products_listHandler
  */
-class OledrionOledrion_products_listHandler extends Oledrion_XoopsPersistableObjectHandler
+class OledrionOledrion_products_listHandler extends OledrionPersistableObjectHandler
 {
     /**
      * OledrionOledrion_products_listHandler constructor.
@@ -56,13 +56,13 @@ class OledrionOledrion_products_listHandler extends Oledrion_XoopsPersistableObj
      */
     public function __construct(XoopsDatabase $db)
     { //                            Table                       Classe                  Id
-        parent::__construct($db, 'oledrion_products_list', 'oledrion_products_list', 'productlist_id');
+        parent::__construct($db, 'oledrion_products_list', 'Oledrion_products_list', 'productlist_id');
     }
 
     /**
      * Supprime les produits liés à une liste
      *
-     * @param  oledrion_lists $list
+     * @param  Oledrion_lists $list
      * @return boolean
      */
     public function deleteListProducts(Oledrion_lists $list)
@@ -74,7 +74,7 @@ class OledrionOledrion_products_listHandler extends Oledrion_XoopsPersistableObj
      * Supprime un produit de toutes les listes
      *
      * @param  integer $productlist_product_id
-     * @return booelan
+     * @return bool
      */
     public function deleteProductFromLists($productlist_product_id)
     {
@@ -84,7 +84,7 @@ class OledrionOledrion_products_listHandler extends Oledrion_XoopsPersistableObj
     /**
      * Retourne la liste des produits appartenants à une liste
      *
-     * @param  oledrion_lists $list
+     * @param  Oledrion_lists $list
      * @return array
      */
     public function getProductsFromList(Oledrion_lists $list)
@@ -121,7 +121,7 @@ class OledrionOledrion_products_listHandler extends Oledrion_XoopsPersistableObj
         $product_list = $this->create(true);
         $product_list->setVar('productlist_list_id', (int)$productlist_list_id);
         $product_list->setVar('productlist_product_id', (int)$productlist_product_id);
-        $product_list->setVar('productlist_date', OledrionUtility::getCurrentSQLDate());
+        $product_list->setVar('productlist_date', \Xoopsmodules\oledrion\Utility::getCurrentSQLDate());
 
         return $this->insert($product_list, true);
     }

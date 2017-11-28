@@ -35,7 +35,7 @@ define('OLEDRION_LISTS_RECOMMEND', 2);
 /**
  * Class Oledrion_lists
  */
-class Oledrion_lists extends Oledrion_Object
+class Oledrion_lists extends OledrionObject
 {
     /**
      * constructor
@@ -64,7 +64,7 @@ class Oledrion_lists extends Oledrion_Object
      */
     public function isSuitableForCurrentUser()
     {
-        $uid = OledrionUtility::getCurrentUserID();
+        $uid = \Xoopsmodules\oledrion\Utility::getCurrentUserID();
         if (OLEDRION_LISTS_PRIVATE == $this->getVar('list_type')) {
             if (0 == $uid || $uid != $this->getVar('list_uid')) {
                 return false;
@@ -108,8 +108,8 @@ class Oledrion_lists extends Oledrion_Object
     public function getLink()
     {
         $url = '';
-        if (1 == OledrionUtility::getModuleOption('urlrewriting')) { // On utilise l'url rewriting
-            $url = OLEDRION_URL . 'list-' . $this->getVar('list_id') . OledrionUtility::makeSeoUrl($this->getVar('list_title', 'n')) . '.html';
+        if (1 == \Xoopsmodules\oledrion\Utility::getModuleOption('urlrewriting')) { // On utilise l'url rewriting
+            $url = OLEDRION_URL . 'list-' . $this->getVar('list_id') . \Xoopsmodules\oledrion\Utility::makeSeoUrl($this->getVar('list_title', 'n')) . '.html';
         } else { // Pas d'utilisation de l'url rewriting
             $url = OLEDRION_URL . 'list.php?list_id=' . $this->getVar('list_id');
         }
@@ -135,7 +135,7 @@ class Oledrion_lists extends Oledrion_Object
      */
     public function getHrefTitle()
     {
-        return OledrionUtility::makeHrefTitle($this->getVar('list_title'));
+        return \Xoopsmodules\oledrion\Utility::makeHrefTitle($this->getVar('list_title'));
     }
 
     /**
@@ -172,7 +172,7 @@ class Oledrion_lists extends Oledrion_Object
 /**
  * Class OledrionOledrion_listsHandler
  */
-class OledrionOledrion_listsHandler extends Oledrion_XoopsPersistableObjectHandler
+class OledrionOledrion_listsHandler extends OledrionPersistableObjectHandler
 {
     /**
      * OledrionOledrion_listsHandler constructor.
@@ -180,19 +180,19 @@ class OledrionOledrion_listsHandler extends Oledrion_XoopsPersistableObjectHandl
      */
     public function __construct(XoopsDatabase $db)
     { //                            Table               Classe           Id       Identifiant
-        parent::__construct($db, 'oledrion_lists', 'oledrion_lists', 'list_id', 'list_title');
+        parent::__construct($db, 'oledrion_lists', 'Oledrion_lists', 'list_id', 'list_title');
     }
 
     /**
      * Incrémente le compteur de vues d'une liste
      *
-     * @param  oledrion_lists $list
+     * @param  Oledrion_lists $list
      * @return boolean
      */
     public function incrementListViews(Oledrion_lists $list)
     {
         $res = true;
-        if (OledrionUtility::getCurrentUserID() != $list->getVar('list_uid')) {
+        if (\Xoopsmodules\oledrion\Utility::getCurrentUserID() != $list->getVar('list_uid')) {
             $sql = 'UPDATE ' . $this->table . ' SET list_views = list_views + 1 WHERE list_id = ' . $list->getVar('list_id');
             $res = $this->db->queryF($sql);
             $this->forceCacheClean();
@@ -204,7 +204,7 @@ class OledrionOledrion_listsHandler extends Oledrion_XoopsPersistableObjectHandl
     /**
      * Incrémente le nombre de produits dans une liste
      *
-     * @param  oledrion_lists $list
+     * @param  Oledrion_lists $list
      * @return boolean
      */
     public function incrementListProductsCount(Oledrion_lists $list)
@@ -220,7 +220,7 @@ class OledrionOledrion_listsHandler extends Oledrion_XoopsPersistableObjectHandl
     /**
      * Décrémente le nombre de produits dans une liste
      *
-     * @param  oledrion_lists $list
+     * @param  Oledrion_lists $list
      * @param  int            $value
      * @return bool
      */
@@ -239,7 +239,7 @@ class OledrionOledrion_listsHandler extends Oledrion_XoopsPersistableObjectHandl
      * Retourne la liste des listes récentes
      *
      * @param  Oledrion_parameters $parameters
-     * @return array               Tableau d'objets de type oledrion_lists [clé] = id liste
+     * @return array               Tableau d'objets de type Oledrion_lists [clé] = id liste
      * @internal param int $start
      * @internal param int $limit
      * @internal param string $sort
@@ -325,7 +325,7 @@ class OledrionOledrion_listsHandler extends Oledrion_XoopsPersistableObjectHandl
             $usersList[] = $list->list_uid;
         }
         if (count($usersList) > 0) {
-            return OledrionUtility::getUsersFromIds($usersList);
+            return \Xoopsmodules\oledrion\Utility::getUsersFromIds($usersList);
         } else {
             return [];
         }
@@ -334,7 +334,7 @@ class OledrionOledrion_listsHandler extends Oledrion_XoopsPersistableObjectHandl
     /**
      * Suppression d'une liste (et des produits qui lui sont rattachés)
      *
-     * @param  oledrion_lists $list
+     * @param  Oledrion_lists $list
      * @return boolean
      */
     public function deleteList(Oledrion_lists $list)
@@ -348,8 +348,8 @@ class OledrionOledrion_listsHandler extends Oledrion_XoopsPersistableObjectHandl
     /**
      * Retourne les produits d'une liste
      *
-     * @param  oledrion_lists $list
-     * @return array          Objets de type oledrion_products
+     * @param  Oledrion_lists $list
+     * @return array          Objets de type Oledrion_products
      */
     public function getListProducts(Oledrion_lists $list)
     {
@@ -379,7 +379,7 @@ class OledrionOledrion_listsHandler extends Oledrion_XoopsPersistableObjectHandl
     public function isThisMyList($list_id, $list_uid = 0)
     {
         if (0 == $list_uid) {
-            $list_uid = OledrionUtility::getCurrentUserID();
+            $list_uid = \Xoopsmodules\oledrion\Utility::getCurrentUserID();
         }
         $list = null;
         $list = $this->get((int)$list_id);
@@ -404,7 +404,7 @@ class OledrionOledrion_listsHandler extends Oledrion_XoopsPersistableObjectHandl
     {
         //require_once __DIR__ . '/lite.php';
         if (0 == $list_uid) {
-            $list_uid = OledrionUtility::getCurrentUserID();
+            $list_uid = \Xoopsmodules\oledrion\Utility::getCurrentUserID();
         }
         if (0 == $list_uid) {
             return true;
@@ -413,8 +413,8 @@ class OledrionOledrion_listsHandler extends Oledrion_XoopsPersistableObjectHandl
         $start                  = $limit = 0;
         $list_uid               = (int)$list_uid;
         $productlist_product_id = (int)$productlist_product_id;
-        $sql                    = 'SELECT Count(*) FROM ' . $this->table . ' l, ' . $this->db->prefix('oledrion_products_list') . ' p WHERE (p.productlist_list_id = l.list_id) AND (l.list_uid = ' . $list_uid . ') AND (p.productlist_product_id =' . $productlist_product_id . ')';
-        //$Cache_Lite = new oledrion_Cache_Lite($this->cacheOptions);
+        $sql                    = 'SELECT COUNT(*) FROM ' . $this->table . ' l, ' . $this->db->prefix('oledrion_products_list') . ' p WHERE (p.productlist_list_id = l.list_id) AND (l.list_uid = ' . $list_uid . ') AND (p.productlist_product_id =' . $productlist_product_id . ')';
+        //$Cache_Lite = new Oledrion_Cache_Lite($this->cacheOptions);
         $id = $this->_getIdForCache($sql, $start, $limit);
         //$cacheData = $Cache_Lite->get($id);
         //if ($cacheData === false) {
@@ -439,7 +439,7 @@ class OledrionOledrion_listsHandler extends Oledrion_XoopsPersistableObjectHandl
      * @param          $categoryId
      * @param  integer $list_type Le type de liste
      * @param  integer $limit     Le nombre maximum de listes à retourner
-     * @return array   Objets de type oledrion_lists, [clé] = id liste
+     * @return array   Objets de type Oledrion_lists, [clé] = id liste
      * @internal param int $cateGoryId L'identifiant de la catégorie
      */
     public function listsFromCurrentCategory($categoryId, $list_type, $limit)
@@ -461,7 +461,7 @@ class OledrionOledrion_listsHandler extends Oledrion_XoopsPersistableObjectHandl
                       . ') AND (p.product_cid = '
                       . $categoryId
                       . ') AND (l.list_id = z.productlist_list_id) AND (z.productlist_product_id = p.product_id) AND (p.product_online = 1) ORDER BY l.list_date DESC';
-        //$Cache_Lite = new oledrion_Cache_Lite($this->cacheOptions);
+        //$Cache_Lite = new Oledrion_Cache_Lite($this->cacheOptions);
         $id = $this->_getIdForCache($sql, $start, $limit);
         //$cacheData = $Cache_Lite->get($id);
         //if ($cacheData === false) {

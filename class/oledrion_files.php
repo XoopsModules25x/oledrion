@@ -26,7 +26,7 @@ require_once __DIR__ . '/classheader.php';
 /**
  * Class Oledrion_files
  */
-class Oledrion_files extends Oledrion_Object
+class Oledrion_files extends OledrionObject
 {
     /**
      * constructor
@@ -120,7 +120,7 @@ class Oledrion_files extends Oledrion_Object
 /**
  * Class OledrionOledrion_filesHandler
  */
-class OledrionOledrion_filesHandler extends Oledrion_XoopsPersistableObjectHandler
+class OledrionOledrion_filesHandler extends OledrionPersistableObjectHandler
 {
     /**
      * OledrionOledrion_filesHandler constructor.
@@ -128,13 +128,13 @@ class OledrionOledrion_filesHandler extends Oledrion_XoopsPersistableObjectHandl
      */
     public function __construct(XoopsDatabase $db)
     { //                            Table           Classe          Id          Libellé
-        parent::__construct($db, 'oledrion_files', 'oledrion_files', 'file_id', 'file_filename');
+        parent::__construct($db, 'oledrion_files', 'Oledrion_files', 'file_id', 'file_filename');
     }
 
     /**
      * Supprime un fichier (son fichier joint ET l'enregistrement dans la base de données)
      *
-     * @param  oledrion_files $file
+     * @param  Oledrion_files $file
      * @return boolean        Le résultat de la suppression
      */
     public function deleteAttachedFile(Oledrion_files $file)
@@ -152,7 +152,7 @@ class OledrionOledrion_filesHandler extends Oledrion_XoopsPersistableObjectHandl
      * @param  integer $file_product_id L'Id du produit
      * @param  integer $start           Position de départ
      * @param  integer $limit           Nombre maxi de produits à retourner
-     * @return array   tableau d'objets de type oledrion_files
+     * @return array   tableau d'objets de type Oledrion_files
      */
     public function getProductFiles($file_product_id, $start = 0, $limit = 0)
     {

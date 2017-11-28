@@ -25,7 +25,7 @@ require_once __DIR__ . '/classheader.php';
 /**
  * Class Oledrion_products
  */
-class Oledrion_products extends Oledrion_Object
+class Oledrion_products extends OledrionObject
 {
     /**
      * constructor
@@ -99,18 +99,18 @@ class Oledrion_products extends Oledrion_Object
      */
     public function isProductVisible()
     {
-        $isAdmin = OledrionUtility::isAdmin();
+        $isAdmin = \Xoopsmodules\oledrion\Utility::isAdmin();
         if (0 == $this->getVar('product_online')) {
             if (!$isAdmin) {
                 return false;
             }
         }
-        if (0 == OledrionUtility::getModuleOption('show_unpublished') && $this->getVar('product_submitted') > time()) {
+        if (0 == \Xoopsmodules\oledrion\Utility::getModuleOption('show_unpublished') && $this->getVar('product_submitted') > time()) {
             if (!$isAdmin) {
                 return false;
             }
         }
-        if (0 == OledrionUtility::getModuleOption('nostock_display') && 0 == $this->getVar('product_stock')) {
+        if (0 == \Xoopsmodules\oledrion\Utility::getModuleOption('nostock_display') && 0 == $this->getVar('product_stock')) {
             if (!$isAdmin) {
                 return false;
             }
@@ -280,7 +280,7 @@ class Oledrion_products extends Oledrion_Object
      */
     public function getDiscountTTC()
     {
-        return OledrionUtility::getAmountWithVat($this->getVar('product_discount_price', 'e'), $this->getVar('product_vat_id'));
+        return \Xoopsmodules\oledrion\Utility::getAmountWithVat($this->getVar('product_discount_price', 'e'), $this->getVar('product_vat_id'));
     }
 
     /**
@@ -290,7 +290,7 @@ class Oledrion_products extends Oledrion_Object
      */
     public function getTTC()
     {
-        return OledrionUtility::getAmountWithVat($this->getVar('product_price', 'e'), $this->getVar('product_vat_id'));
+        return \Xoopsmodules\oledrion\Utility::getAmountWithVat($this->getVar('product_price', 'e'), $this->getVar('product_vat_id'));
     }
 
     /**
@@ -357,11 +357,11 @@ class Oledrion_products extends Oledrion_Object
             $product_id    = $this->getVar('product_id');
             $product_title = $this->getVar('product_title', 'n');
         }
-        if (1 == OledrionUtility::getModuleOption('urlrewriting')) { // On utilise l'url rewriting
+        if (1 == \Xoopsmodules\oledrion\Utility::getModuleOption('urlrewriting')) { // On utilise l'url rewriting
             if (!$shortVersion) {
-                $url = OLEDRION_URL . 'product-' . $product_id . OledrionUtility::makeSeoUrl($product_title) . '.html';
+                $url = OLEDRION_URL . 'product-' . $product_id . \Xoopsmodules\oledrion\Utility::makeSeoUrl($product_title) . '.html';
             } else {
-                $url = 'product-' . $product_id . OledrionUtility::makeSeoUrl($product_title) . '.html';
+                $url = 'product-' . $product_id . \Xoopsmodules\oledrion\Utility::makeSeoUrl($product_title) . '.html';
             }
         } else { // Pas d'utilisation de l'url rewriting
             if (!$shortVersion) {
@@ -413,7 +413,7 @@ class Oledrion_products extends Oledrion_Object
      * Retourne la liste des attributs du produit courant
      *
      * @param  null $attributesIds
-     * @return array Objets de type oledrion_attributes
+     * @return array Objets de type Oledrion_attributes
      * @since 2.3.2009.03.20
      */
     public function getProductsAttributesList($attributesIds = null)
@@ -494,14 +494,14 @@ class Oledrion_products extends Oledrion_Object
 
         $ret['product_final_price_ht_formated_long']  = $oledrion_Currency->amountForDisplay($finalPriceHT, 'l');
         $ret['product_final_price_ttc']               = $finalPriceTTC;
-        $ret['product_final_price_ttc_javascript']    = OledrionUtility::formatFloatForDB($finalPriceTTC);
+        $ret['product_final_price_ttc_javascript']    = \Xoopsmodules\oledrion\Utility::formatFloatForDB($finalPriceTTC);
         $ret['product_final_price_ttc_formated']      = $oledrion_Currency->amountForDisplay($finalPriceTTC);
         $ret['product_final_price_ttc_formated_long'] = $oledrion_Currency->amountForDisplay($finalPriceTTC, 'l');
         $ret['product_vat_amount_formated_long']      = $oledrion_Currency->amountForDisplay($finalPriceHT - $finalPriceTTC);
 
-        $ret['product_tooltip']             = OledrionUtility::makeInfotips($this->getVar('product_description'));
+        $ret['product_tooltip']             = \Xoopsmodules\oledrion\Utility::makeInfotips($this->getVar('product_description'));
         $ret['product_url_rewrited']        = $this->getLink();
-        $ret['product_href_title']          = OledrionUtility::makeHrefTitle($this->getVar('product_title'));
+        $ret['product_href_title']          = \Xoopsmodules\oledrion\Utility::makeHrefTitle($this->getVar('product_title'));
         $ret['product_recommended']         = $this->isRecommended();
         $ret['product_recommended_picture'] = $this->recommendedPicture();
 
@@ -510,8 +510,8 @@ class Oledrion_products extends Oledrion_Object
         $ret['product_image_full_path'] = $this->getPicturePath();
         $ret['product_thumb_full_path'] = $this->getThumbPath();
 
-        $ret['product_shorten_summary']     = OledrionUtility::truncate_tagsafe($this->getVar('product_summary'), OLEDRION_SUMMARY_MAXLENGTH);
-        $ret['product_shorten_description'] = OledrionUtility::truncate_tagsafe($this->getVar('product_description'), OLEDRION_SUMMARY_MAXLENGTH);
+        $ret['product_shorten_summary']     = \Xoopsmodules\oledrion\Utility::truncate_tagsafe($this->getVar('product_summary'), OLEDRION_SUMMARY_MAXLENGTH);
+        $ret['product_shorten_description'] = \Xoopsmodules\oledrion\Utility::truncate_tagsafe($this->getVar('product_description'), OLEDRION_SUMMARY_MAXLENGTH);
         $ret['product_new']                 = $this->isNewProduct();
 
         return $ret;
@@ -521,7 +521,7 @@ class Oledrion_products extends Oledrion_Object
 /**
  * Class OledrionOledrion_productsHandler
  */
-class OledrionOledrion_productsHandler extends Oledrion_XoopsPersistableObjectHandler
+class OledrionOledrion_productsHandler extends OledrionPersistableObjectHandler
 {
     /**
      * OledrionOledrion_productsHandler constructor.
@@ -529,7 +529,7 @@ class OledrionOledrion_productsHandler extends Oledrion_XoopsPersistableObjectHa
      */
     public function __construct(XoopsDatabase $db)
     { //                            Table               Classe              Id          Libellé
-        parent::__construct($db, 'oledrion_products', 'oledrion_products', 'product_id', 'product_title');
+        parent::__construct($db, 'oledrion_products', 'Oledrion_products', 'product_id', 'product_title');
     }
 
     /**
@@ -555,10 +555,10 @@ class OledrionOledrion_productsHandler extends Oledrion_XoopsPersistableObjectHa
         $data       = [];
         $criteria   = new CriteriaCompo();
         $criteria->add(new Criteria('product_online', 1, '='));
-        if (0 == OledrionUtility::getModuleOption('show_unpublished')) { // Ne pas afficher les produits qui ne sont pas publiés
+        if (0 == \Xoopsmodules\oledrion\Utility::getModuleOption('show_unpublished')) { // Ne pas afficher les produits qui ne sont pas publiés
             $criteria->add(new Criteria('product_submitted', time(), '<='));
         }
-        if (0 == OledrionUtility::getModuleOption('nostock_display')) { // Se limiter aux seuls produits encore en stock
+        if (0 == \Xoopsmodules\oledrion\Utility::getModuleOption('nostock_display')) { // Se limiter aux seuls produits encore en stock
             $criteria->add(new Criteria('product_stock', 0, '>'));
         }
         if (is_array($parameters['category']) && count($parameters['category']) > 0) {
@@ -599,10 +599,10 @@ class OledrionOledrion_productsHandler extends Oledrion_XoopsPersistableObjectHa
         $criteria   = new CriteriaCompo();
         $criteria->add(new Criteria('product_online', 1, '='));
         $criteria->add(new Criteria('product_rating', 0, '>')); // Se limiter aux seuls produits qui ont été vraiment notés
-        if (0 == OledrionUtility::getModuleOption('show_unpublished')) { // Ne pas afficher les produits qui ne sont pas publiés
+        if (0 == \Xoopsmodules\oledrion\Utility::getModuleOption('show_unpublished')) { // Ne pas afficher les produits qui ne sont pas publiés
             $criteria->add(new Criteria('product_submitted', time(), '<='));
         }
-        if (0 == OledrionUtility::getModuleOption('nostock_display')) { // Se limiter aux seuls produits encore en stock
+        if (0 == \Xoopsmodules\oledrion\Utility::getModuleOption('nostock_display')) { // Se limiter aux seuls produits encore en stock
             $criteria->add(new Criteria('product_stock', 0, '>'));
         }
         if (is_array($parameters['category']) && count($parameters['category']) > 0) {
@@ -641,10 +641,10 @@ class OledrionOledrion_productsHandler extends Oledrion_XoopsPersistableObjectHa
         $criteria   = new CriteriaCompo();
         $criteria->add(new Criteria('product_online', 1, '='));
         $criteria->add(new Criteria('product_recommended', '0000-00-00', '<>'));
-        if (0 == OledrionUtility::getModuleOption('show_unpublished')) { // Ne pas afficher les produits qui ne sont pas publiés
+        if (0 == \Xoopsmodules\oledrion\Utility::getModuleOption('show_unpublished')) { // Ne pas afficher les produits qui ne sont pas publiés
             $criteria->add(new Criteria('product_submitted', time(), '<='));
         }
-        if (0 == OledrionUtility::getModuleOption('nostock_display')) { // Se limiter aux seuls produits encore en stock
+        if (0 == \Xoopsmodules\oledrion\Utility::getModuleOption('nostock_display')) { // Se limiter aux seuls produits encore en stock
             $criteria->add(new Criteria('product_stock', 0, '>'));
         }
         if (is_array($parameters['category'])) {
@@ -671,10 +671,10 @@ class OledrionOledrion_productsHandler extends Oledrion_XoopsPersistableObjectHa
         $criteria = new CriteriaCompo();
         $criteria->add(new Criteria('product_online', 1, '='));
         $criteria->add(new Criteria('product_recommended', '0000-00-00', '<>'));
-        if (0 == OledrionUtility::getModuleOption('show_unpublished')) { // Ne pas afficher les produits qui ne sont pas publiés
+        if (0 == \Xoopsmodules\oledrion\Utility::getModuleOption('show_unpublished')) { // Ne pas afficher les produits qui ne sont pas publiés
             $criteria->add(new Criteria('product_submitted', time(), '<='));
         }
-        if (0 == OledrionUtility::getModuleOption('nostock_display')) { // Se limiter aux seuls produits encore en stock
+        if (0 == \Xoopsmodules\oledrion\Utility::getModuleOption('nostock_display')) { // Se limiter aux seuls produits encore en stock
             $criteria->add(new Criteria('product_stock', 0, '>'));
         }
 
@@ -708,10 +708,10 @@ class OledrionOledrion_productsHandler extends Oledrion_XoopsPersistableObjectHa
         $data       = [];
         $criteria   = new CriteriaCompo();
         $criteria->add(new Criteria('product_online', 1, '='));
-        if (0 == OledrionUtility::getModuleOption('show_unpublished')) { // Ne pas afficher les produits qui ne sont pas publiés
+        if (0 == \Xoopsmodules\oledrion\Utility::getModuleOption('show_unpublished')) { // Ne pas afficher les produits qui ne sont pas publiés
             $criteria->add(new Criteria('product_submitted', time(), '<='));
         }
-        if (0 == OledrionUtility::getModuleOption('nostock_display')) { // Se limiter aux seuls produits encore en stock
+        if (0 == \Xoopsmodules\oledrion\Utility::getModuleOption('nostock_display')) { // Se limiter aux seuls produits encore en stock
             $criteria->add(new Criteria('product_stock', 0, '>'));
         }
         if (is_array($parameters['category']) && count($parameters['category']) > 0) {
@@ -724,7 +724,7 @@ class OledrionOledrion_productsHandler extends Oledrion_XoopsPersistableObjectHa
         }
 
         if ($parameters['thisMonthOnly']) {
-            $criteria->add(OledrionUtility::getThisMonthCriteria());
+            $criteria->add(\Xoopsmodules\oledrion\Utility::getThisMonthCriteria());
         }
 
         $criteria->setLimit($parameters['limit']);
@@ -749,10 +749,10 @@ class OledrionOledrion_productsHandler extends Oledrion_XoopsPersistableObjectHa
     {
         $criteria = new CriteriaCompo();
         $criteria->add(new Criteria('product_online', 1, '='));
-        if (0 == OledrionUtility::getModuleOption('show_unpublished')) { // Ne pas afficher les produits qui ne sont pas publiés
+        if (0 == \Xoopsmodules\oledrion\Utility::getModuleOption('show_unpublished')) { // Ne pas afficher les produits qui ne sont pas publiés
             $criteria->add(new Criteria('product_submitted', time(), '<='));
         }
-        if (0 == OledrionUtility::getModuleOption('nostock_display')) { // Se limiter aux seuls produits encore en stock
+        if (0 == \Xoopsmodules\oledrion\Utility::getModuleOption('nostock_display')) { // Se limiter aux seuls produits encore en stock
             $criteria->add(new Criteria('product_stock', 0, '>'));
         }
         if (is_array($category)) {
@@ -792,10 +792,10 @@ class OledrionOledrion_productsHandler extends Oledrion_XoopsPersistableObjectHa
         $criteria->add(new Criteria('product_online', 1, '='));
         $criteria->add(new Criteria('product_submitted', $parameters['startingDate'], '>='));
         $criteria->add(new Criteria('product_submitted', $parameters['endingDate'], '<='));
-        if (0 == OledrionUtility::getModuleOption('show_unpublished')) { // Ne pas afficher les produits qui ne sont pas publiés
+        if (0 == \Xoopsmodules\oledrion\Utility::getModuleOption('show_unpublished')) { // Ne pas afficher les produits qui ne sont pas publiés
             $criteria->add(new Criteria('product_submitted', time(), '<='));
         }
-        if (0 == OledrionUtility::getModuleOption('nostock_display')) { // Se limiter aux seuls produits encore en stock
+        if (0 == \Xoopsmodules\oledrion\Utility::getModuleOption('nostock_display')) { // Se limiter aux seuls produits encore en stock
             $criteria->add(new Criteria('product_stock', 0, '>'));
         }
         if (is_array($parameters['category'])) {
@@ -821,10 +821,10 @@ class OledrionOledrion_productsHandler extends Oledrion_XoopsPersistableObjectHa
     {
         $criteria = new CriteriaCompo();
         $criteria->add(new Criteria('product_online', 1, '='));
-        if (0 == OledrionUtility::getModuleOption('show_unpublished')) { // Ne pas afficher les produits qui ne sont pas publiés
+        if (0 == \Xoopsmodules\oledrion\Utility::getModuleOption('show_unpublished')) { // Ne pas afficher les produits qui ne sont pas publiés
             $criteria->add(new Criteria('product_submitted', time(), '<='));
         }
-        if (0 == OledrionUtility::getModuleOption('nostock_display')) { // Se limiter aux seuls produits encore en stock
+        if (0 == \Xoopsmodules\oledrion\Utility::getModuleOption('nostock_display')) { // Se limiter aux seuls produits encore en stock
             $criteria->add(new Criteria('product_stock', 0, '>'));
         }
         if ($product_cid > 0) {
@@ -845,7 +845,7 @@ class OledrionOledrion_productsHandler extends Oledrion_XoopsPersistableObjectHa
         global $myts;
         $ret = [];
         $sql = 'SELECT product_id, product_title FROM ' . $this->table;
-        if (isset($criteria) && is_subclass_of($criteria, 'criteriaelement')) {
+        if (isset($criteria) && is_subclass_of($criteria, 'CriteriaElement')) {
             $sql .= ' ' . $criteria->renderWhere();
             if ('' !== $criteria->getSort()) {
                 $sql .= ' ORDER BY ' . $criteria->getSort() . ' ' . $criteria->getOrder();
@@ -934,10 +934,10 @@ class OledrionOledrion_productsHandler extends Oledrion_XoopsPersistableObjectHa
         $data       = [];
         $criteria   = new CriteriaCompo();
         $criteria->add(new Criteria('product_online', 1, '='));
-        if (0 == OledrionUtility::getModuleOption('show_unpublished')) { // Ne pas afficher les produits qui ne sont pas publiés
+        if (0 == \Xoopsmodules\oledrion\Utility::getModuleOption('show_unpublished')) { // Ne pas afficher les produits qui ne sont pas publiés
             $criteria->add(new Criteria('product_submitted', time(), '<='));
         }
-        if (0 == OledrionUtility::getModuleOption('nostock_display')) { // Se limiter aux seuls produits encore en stock
+        if (0 == \Xoopsmodules\oledrion\Utility::getModuleOption('nostock_display')) { // Se limiter aux seuls produits encore en stock
             $criteria->add(new Criteria('product_stock', 0, '>'));
         }
         if (is_array($parameters['category'])) {
@@ -947,7 +947,7 @@ class OledrionOledrion_productsHandler extends Oledrion_XoopsPersistableObjectHa
         }
 
         if ($parameters['thisMonthOnly']) {
-            $criteria->add(OledrionUtility::getThisMonthCriteria());
+            $criteria->add(\Xoopsmodules\oledrion\Utility::getThisMonthCriteria());
         }
 
         $criteria->setLimit($parameters['limit']);
@@ -980,10 +980,10 @@ class OledrionOledrion_productsHandler extends Oledrion_XoopsPersistableObjectHa
         $data       = [];
         $criteria   = new CriteriaCompo();
         $criteria->add(new Criteria('product_online', 1, '='));
-        if (0 == OledrionUtility::getModuleOption('show_unpublished')) { // Ne pas afficher les produits qui ne sont pas publiés
+        if (0 == \Xoopsmodules\oledrion\Utility::getModuleOption('show_unpublished')) { // Ne pas afficher les produits qui ne sont pas publiés
             $criteria->add(new Criteria('product_submitted', time(), '<='));
         }
-        if (0 == OledrionUtility::getModuleOption('nostock_display')) { // Se limiter aux seuls produits encore en stock
+        if (0 == \Xoopsmodules\oledrion\Utility::getModuleOption('nostock_display')) { // Se limiter aux seuls produits encore en stock
             $criteria->add(new Criteria('product_stock', 0, '>'));
         }
         if (is_array($parameters['category'])) {
@@ -1012,7 +1012,7 @@ class OledrionOledrion_productsHandler extends Oledrion_XoopsPersistableObjectHa
     {
         $ret = [];
         $sql = 'SELECT * FROM ' . $this->table . ' WHERE product_online = 1';
-        if (0 == OledrionUtility::getModuleOption('show_unpublished')) { // Ne pas afficher les produits qui ne sont pas publiés
+        if (0 == \Xoopsmodules\oledrion\Utility::getModuleOption('show_unpublished')) { // Ne pas afficher les produits qui ne sont pas publiés
             $sql .= ' AND product_submitted <= ' . time();
         }
         $sql    .= ' AND product_stock <= product_alert_stock ';
@@ -1037,7 +1037,7 @@ class OledrionOledrion_productsHandler extends Oledrion_XoopsPersistableObjectHa
     {
         $ret = [];
         $sql = 'SELECT Count(*) AS cpt FROM ' . $this->table . ' WHERE product_online = 1';
-        if (0 == OledrionUtility::getModuleOption('show_unpublished')) { // Ne pas afficher les produits qui ne sont pas publiés
+        if (0 == \Xoopsmodules\oledrion\Utility::getModuleOption('show_unpublished')) { // Ne pas afficher les produits qui ne sont pas publiés
             $sql .= ' AND product_submitted <= ' . time();
         }
         $sql    .= ' AND product_stock <= product_alert_stock ';
@@ -1117,7 +1117,7 @@ class OledrionOledrion_productsHandler extends Oledrion_XoopsPersistableObjectHa
             $msg['ALERT_QUANTITY']  = $product->getVar('product_alert_stock');
             $msg['PUBLIC_URL']      = $product->getLink();
             $msg['ADMIN_URL']       = OLEDRION_URL . 'admin/index.php?op=editproduct&id=' . $product->getVar('product_id');
-            OledrionUtility::sendEmailFromTpl('shop_lowstock.tpl', OledrionUtility::getEmailsFromGroup(OledrionUtility::getModuleOption('stock_alert_email')), _OLEDRION_STOCK_ALERT, $msg);
+            \Xoopsmodules\oledrion\Utility::sendEmailFromTpl('shop_lowstock.tpl', \Xoopsmodules\oledrion\Utility::getEmailsFromGroup(\Xoopsmodules\oledrion\Utility::getModuleOption('stock_alert_email')), _OLEDRION_STOCK_ALERT, $msg);
 
             return true;
         } else {
@@ -1151,17 +1151,17 @@ class OledrionOledrion_productsHandler extends Oledrion_XoopsPersistableObjectHa
      *
      * @param  array   $ids     Les identifiants des produits
      * @param  boolean $showAll Afficher les produits même s'ils ne sont plus en stock ?
-     * @return array   Tableau d'objets de type oledrion_products, Clé = Id Produit
+     * @return array   Tableau d'objets de type Oledrion_products, Clé = Id Produit
      */
     public function getProductsFromIDs($ids, $showAll = false)
     {
         $ret = [];
         if (is_array($ids)) {
             $criteria = new CriteriaCompo();
-            if (0 == OledrionUtility::getModuleOption('show_unpublished')) { // Ne pas afficher les produits qui ne sont pas publiés
+            if (0 == \Xoopsmodules\oledrion\Utility::getModuleOption('show_unpublished')) { // Ne pas afficher les produits qui ne sont pas publiés
                 $criteria->add(new Criteria('product_submitted', time(), '<='));
             }
-            if (0 == OledrionUtility::getModuleOption('nostock_display')
+            if (0 == \Xoopsmodules\oledrion\Utility::getModuleOption('nostock_display')
                 && !$showAll) { // Se limiter aux seuls produits encore en stock
                 $criteria->add(new Criteria('product_stock', 0, '>'));
             }
@@ -1236,13 +1236,13 @@ class OledrionOledrion_productsHandler extends Oledrion_XoopsPersistableObjectHa
 
         // Copie des 2 images
         if ('' !== xoops_trim($originalProduct->getVar('product_image_url'))) {
-            $resCopy = OledrionUtility::duplicateFile(OLEDRION_PICTURES_PATH, $originalProduct->getVar('product_image_url'));
+            $resCopy = \Xoopsmodules\oledrion\Utility::duplicateFile(OLEDRION_PICTURES_PATH, $originalProduct->getVar('product_image_url'));
             if (false !== $resCopy) {
                 $newProduct->setVar('product_image_url', $resCopy);
             }
         }
         if ('' !== xoops_trim($originalProduct->getVar('product_thumb_url'))) {
-            $resCopy = OledrionUtility::duplicateFile(OLEDRION_PICTURES_PATH, $originalProduct->getVar('product_thumb_url'));
+            $resCopy = \Xoopsmodules\oledrion\Utility::duplicateFile(OLEDRION_PICTURES_PATH, $originalProduct->getVar('product_thumb_url'));
             if (false !== $resCopy) {
                 $newProduct->setVar('product_thumb_url', $resCopy);
             }
@@ -1250,7 +1250,7 @@ class OledrionOledrion_productsHandler extends Oledrion_XoopsPersistableObjectHa
 
         // Copie du fichier attaché
         if ('' !== xoops_trim($originalProduct->getVar('product_attachment'))) {
-            $resCopy = OledrionUtility::duplicateFile(OLEDRION_ATTACHED_FILES_PATH, $originalProduct->getVar('product_attachment'));
+            $resCopy = \Xoopsmodules\oledrion\Utility::duplicateFile(OLEDRION_ATTACHED_FILES_PATH, $originalProduct->getVar('product_attachment'));
             if (false !== $resCopy) {
                 $newProduct->setVar('product_attachment', $resCopy);
             }
@@ -1267,7 +1267,7 @@ class OledrionOledrion_productsHandler extends Oledrion_XoopsPersistableObjectHa
                     foreach ($attachedFiles as $oneFile) {
                         $newAttachedFile = $oneFile->xoopsClone();
                         $newAttachedFile->setVar('file_product_id', $newProductId);
-                        $resCopy = OledrionUtility::duplicateFile(OLEDRION_ATTACHED_FILES_PATH, $oneFile->getVar('file_filename'));
+                        $resCopy = \Xoopsmodules\oledrion\Utility::duplicateFile(OLEDRION_ATTACHED_FILES_PATH, $oneFile->getVar('file_filename'));
                         if (false !== $resCopy) {
                             $newAttachedFile->setVar('file_filename', $resCopy);
                         }
@@ -1360,24 +1360,24 @@ class OledrionOledrion_productsHandler extends Oledrion_XoopsPersistableObjectHa
         $criteria = new CriteriaCompo();
         $criteria->add(new Criteria('product_id', 0, '<>'));
         if (!$parameters['showAll']) {
-            if (0 == OledrionUtility::getModuleOption('show_unpublished')) { // Ne pas afficher les produits qui ne sont pas publiés
+            if (0 == \Xoopsmodules\oledrion\Utility::getModuleOption('show_unpublished')) { // Ne pas afficher les produits qui ne sont pas publiés
                 $criteria->add(new Criteria('product_submitted', time(), '<='));
             }
-            if (0 == OledrionUtility::getModuleOption('nostock_display')) { // Se limiter aux seuls produits encore en stock
+            if (0 == \Xoopsmodules\oledrion\Utility::getModuleOption('nostock_display')) { // Se limiter aux seuls produits encore en stock
                 $criteria->add(new Criteria('product_stock', 0, '>'));
             }
         }
         $criteria->setSort($parameters['sort']);
         $criteria->setOrder($parameters['order']);
         $itemsCount = $this->getCount($criteria);
-        if ($itemsCount > OledrionUtility::getModuleOption('max_products')) { // Il faut créer notre propre sélecteur
+        if ($itemsCount > \Xoopsmodules\oledrion\Utility::getModuleOption('max_products')) { // Il faut créer notre propre sélecteur
             if ($parameters['multiple']) {
                 if (null == $jqueryIncluded) {
                     $jqueryIncluded = true;
                     global $xoTheme;
                     $xoTheme->addScript('browse.php?Frameworks/jquery/jquery.js');
                 }
-                OledrionUtility::callJavascriptFile('select/select.js', false, true);
+                \Xoopsmodules\oledrion\Utility::callJavascriptFile('select/select.js', false, true);
                 $productTray  = new XoopsFormElementTray($parameters['caption'], '');
                 $productsList = new XoopsFormSelect('', $parameters['name'], $parameters['values'], $parameters['size'], $parameters['multiple']);
                 // Recherche des produits
@@ -1385,13 +1385,13 @@ class OledrionOledrion_productsHandler extends Oledrion_XoopsPersistableObjectHa
                 $productsList->addOptionArray($selectedProducts); // Les valeurs sélectionnées
                 $productTray->addElement($productsList);
                 $removeButton = new XoopsFormButton('', 'removeProduct', _AM_OLEDRION_REMOVE_SELECTED, 'button');
-                if (OledrionUtility::isX20()) {
+                if (\Xoopsmodules\oledrion\Utility::isX20()) {
                     $removeButton->setExtra(" onclick=\"removeOptionSelected('" . $parameters['name'] . "[]');\"");
                 } else {
                     $removeButton->setExtra(" onclick=\"removeOptionSelected('" . $parameters['name'] . "');\"");
                 }
                 $productTray->addElement($removeButton);
-                if (OledrionUtility::isX20()) {
+                if (\Xoopsmodules\oledrion\Utility::isX20()) {
                     $link = "<a href=\"javascript:openWithSelfMain('"
                             . OLEDRION_ADMIN_URL
                             . 'productsselector.php?mutipleSelect=1&amp;callerName='

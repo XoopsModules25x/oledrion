@@ -34,7 +34,7 @@ $vatArray = $h_oledrion_vat->getAllVats(new Oledrion_parameters());
 $xoopsTpl->assign('mod_pref', $mod_pref);
 
 $start = isset($_GET['start']) ? (int)$_GET['start'] : 0;
-$limit = OledrionUtility::getModuleOption('perpage');
+$limit = \Xoopsmodules\oledrion\Utility::getModuleOption('perpage');
 
 // Lecture des produits
 $itemsCount = $oledrion_shelf->getProductsCount('recent');
@@ -52,21 +52,21 @@ if (isset($products['lastTitle'])) {
 }
 $xoopsTpl->assign('products', $products);
 
-$xoopsTpl->assign('pdf_catalog', OledrionUtility::getModuleOption('pdf_catalog'));
+$xoopsTpl->assign('pdf_catalog', \Xoopsmodules\oledrion\Utility::getModuleOption('pdf_catalog'));
 
-OledrionUtility::setCSS();
-OledrionUtility::setLocalCSS($xoopsConfig['language']);
+\Xoopsmodules\oledrion\Utility::setCSS();
+\Xoopsmodules\oledrion\Utility::setLocalCSS($xoopsConfig['language']);
 if (!OLEDRION_MY_THEME_USES_JQUERY) {
     $xoTheme->addScript('browse.php?Frameworks/jquery/jquery.js');
 }
-OledrionUtility::callJavascriptFile('noconflict.js');
-OledrionUtility::callJavascriptFile('tablesorter/jquery.tablesorter.min.js');
+\Xoopsmodules\oledrion\Utility::callJavascriptFile('noconflict.js');
+\Xoopsmodules\oledrion\Utility::callJavascriptFile('tablesorter/jquery.tablesorter.min.js');
 
-OledrionUtility::loadLanguageFile('modinfo.php');
+\Xoopsmodules\oledrion\Utility::loadLanguageFile('modinfo.php');
 
-$xoopsTpl->assign('global_advert', OledrionUtility::getModuleOption('advertisement'));
-$xoopsTpl->assign('breadcrumb', OledrionUtility::breadcrumb([OLEDRION_URL . basename(__FILE__) => _MI_OLEDRION_SMNAME6]));
+$xoopsTpl->assign('global_advert', \Xoopsmodules\oledrion\Utility::getModuleOption('advertisement'));
+$xoopsTpl->assign('breadcrumb', \Xoopsmodules\oledrion\Utility::breadcrumb([OLEDRION_URL . basename(__FILE__) => _MI_OLEDRION_SMNAME6]));
 
-$title = _MI_OLEDRION_SMNAME6 . ' - ' . OledrionUtility::getModuleName();
-OledrionUtility::setMetas($title, $title);
+$title = _MI_OLEDRION_SMNAME6 . ' - ' . \Xoopsmodules\oledrion\Utility::getModuleName();
+\Xoopsmodules\oledrion\Utility::setMetas($title, $title);
 require_once XOOPS_ROOT_PATH . '/footer.php';

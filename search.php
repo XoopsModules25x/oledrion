@@ -26,12 +26,12 @@ $GLOBALS['current_category']             = -1; // Pour le bloc des catégories
 $GLOBALS['xoopsOption']['template_main'] = 'oledrion_search.tpl';
 require_once XOOPS_ROOT_PATH . '/header.php';
 
-$limit      = OledrionUtility::getModuleOption('newproducts'); // Nombre maximum d'éléments à afficher
+$limit      = \Xoopsmodules\oledrion\Utility::getModuleOption('newproducts'); // Nombre maximum d'éléments à afficher
 $categories = $manufacturers = $vendors = [];
 $baseurl    = OLEDRION_URL . basename(__FILE__); // URL de ce script (sans son nom)
 
 $xoopsTpl->assign('mod_pref', $mod_pref); // Préférences du module
-$xoopsTpl->assign('columnsCount', OledrionUtility::getModuleOption('catagory_colums'));
+$xoopsTpl->assign('columnsCount', \Xoopsmodules\oledrion\Utility::getModuleOption('category_colums'));
 
 $categories    = $h_oledrion_cat->getAllCategories(new Oledrion_parameters());
 $vendors       = $h_oledrion_vendors->getAllVendors(new Oledrion_parameters());
@@ -39,9 +39,9 @@ $manufacturers = $h_oledrion_manufacturer->getItems(0, 0, 'manu_name', 'ASC', fa
 
 if ((isset($_POST['op']) && 'go' === $_POST['op']) || isset($_GET['start'])) { // Recherche des résultats
     $xoopsTpl->assign('search_results', true);
-    $xoopsTpl->assign('global_advert', OledrionUtility::getModuleOption('advertisement'));
-    $xoopsTpl->assign('breadcrumb', OledrionUtility::breadcrumb([OLEDRION_URL . basename(__FILE__) => _OLEDRION_SEARCHRESULTS]));
-    OledrionUtility::setMetas(OledrionUtility::getModuleName() . ' - ' . _OLEDRION_SEARCHRESULTS, OledrionUtility::getModuleName() . ' - ' . _OLEDRION_SEARCHRESULTS);
+    $xoopsTpl->assign('global_advert', \Xoopsmodules\oledrion\Utility::getModuleOption('advertisement'));
+    $xoopsTpl->assign('breadcrumb', \Xoopsmodules\oledrion\Utility::breadcrumb([OLEDRION_URL . basename(__FILE__) => _OLEDRION_SEARCHRESULTS]));
+    \Xoopsmodules\oledrion\Utility::setMetas(\Xoopsmodules\oledrion\Utility::getModuleName() . ' - ' . _OLEDRION_SEARCHRESULTS, \Xoopsmodules\oledrion\Utility::getModuleName() . ' - ' . _OLEDRION_SEARCHRESULTS);
 
     if (!isset($_GET['start'])) {
         $sql = 'SELECT b.product_id, b.product_title, b.product_submitted, b.product_submitter, b.product_thumb_url, b.product_price, b.product_property1, b.product_property2, b.product_property3, b.product_property4, b.product_property5, b.product_property6, b.product_property7, b.product_property8, b.product_property9, b.product_property10, b.product_stock, b.product_summary FROM '
@@ -49,10 +49,10 @@ if ((isset($_POST['op']) && 'go' === $_POST['op']) || isset($_GET['start'])) { /
                . ' b, '
                . $xoopsDB->prefix('oledrion_productsmanu')
                . ' a WHERE (b.product_id = a.pm_product_id AND b.product_online = 1) ';
-        if (0 == OledrionUtility::getModuleOption('show_unpublished')) { // Ne pas afficher les produits qui ne sont pas publiés
+        if (0 == \Xoopsmodules\oledrion\Utility::getModuleOption('show_unpublished')) { // Ne pas afficher les produits qui ne sont pas publiés
             $sql .= ' AND b.product_submitted <= ' . time();
         }
-        if (0 == OledrionUtility::getModuleOption('nostock_display')) { // Se limiter aux seuls produits encore en stock
+        if (0 == \Xoopsmodules\oledrion\Utility::getModuleOption('nostock_display')) { // Se limiter aux seuls produits encore en stock
             $sql .= ' AND b.product_stock > 0';
         }
         $sql .= ') ';
@@ -251,7 +251,7 @@ if ((isset($_POST['op']) && 'go' === $_POST['op']) || isset($_GET['start'])) { /
         $ret                           = [];
         $ret['product_url_rewrited']   = $tempProduct->getLink($myrow['product_id'], $myrow['product_title']);
         $ret['product_title']          = $myts->htmlSpecialChars($myrow['product_title']);
-        $ret['product_href_title']     = OledrionUtility::makeHrefTitle($myts->htmlSpecialChars($myrow['product_title']));
+        $ret['product_href_title']     = \Xoopsmodules\oledrion\Utility::makeHrefTitle($myts->htmlSpecialChars($myrow['product_title']));
         $ret['product_time']           = $myrow['product_submitted'];
         $ret['product_uid']            = $myrow['product_submitter'];
         $ret['product_id']             = $myrow['product_id'];
@@ -277,7 +277,7 @@ if ((isset($_POST['op']) && 'go' === $_POST['op']) || isset($_GET['start'])) { /
             }
         }
         $ret['product_stock']     = $myrow['product_stock'];
-        $ret['product_price_ttc'] = OledrionUtility::getTTC($ret['product_price'], '');
+        $ret['product_price_ttc'] = \Xoopsmodules\oledrion\Utility::getTTC($ret['product_price'], '');
         $ret['product_count']     = $count;
         $ret['product_summary']   = $myrow['product_summary'];
         $xoopsTpl->append('products', $ret);
@@ -286,16 +286,16 @@ if ((isset($_POST['op']) && 'go' === $_POST['op']) || isset($_GET['start'])) { /
     unset($tempProduct);
 } else {
     $xoopsTpl->assign('search_results', false);
-    $xoopsTpl->assign('global_advert', OledrionUtility::getModuleOption('advertisement'));
-    $xoopsTpl->assign('breadcrumb', OledrionUtility::breadcrumb([OLEDRION_URL . basename(__FILE__) => _OLEDRION_SEARCHFOR]));
-    OledrionUtility::setMetas(OledrionUtility::getModuleName() . ' - ' . _OLEDRION_SEARCHFOR, OledrionUtility::getModuleName() . ' - ' . _OLEDRION_SEARCHFOR);
+    $xoopsTpl->assign('global_advert', \Xoopsmodules\oledrion\Utility::getModuleOption('advertisement'));
+    $xoopsTpl->assign('breadcrumb', \Xoopsmodules\oledrion\Utility::breadcrumb([OLEDRION_URL . basename(__FILE__) => _OLEDRION_SEARCHFOR]));
+    \Xoopsmodules\oledrion\Utility::setMetas(\Xoopsmodules\oledrion\Utility::getModuleName() . ' - ' . _OLEDRION_SEARCHFOR, \Xoopsmodules\oledrion\Utility::getModuleName() . ' - ' . _OLEDRION_SEARCHFOR);
 }
 
 require_once OLEDRION_PATH . 'include/product_search_form.php';
-$sform = OledrionUtility::formMarkRequiredFields($sform);
+$sform = \Xoopsmodules\oledrion\Utility::formMarkRequiredFields($sform);
 $xoopsTpl->assign('search_form', $sform->render());
 
-OledrionUtility::setCSS();
-OledrionUtility::setLocalCSS($xoopsConfig['language']);
+\Xoopsmodules\oledrion\Utility::setCSS();
+\Xoopsmodules\oledrion\Utility::setLocalCSS($xoopsConfig['language']);
 
 require_once XOOPS_ROOT_PATH . '/footer.php';

@@ -23,7 +23,7 @@
 require_once __DIR__ . '/header.php';
 require_once XOOPS_ROOT_PATH . '/class/template.php';
 
-if (0 == OledrionUtility::getModuleOption('use_rss')) {
+if (0 == \Xoopsmodules\oledrion\Utility::getModuleOption('use_rss')) {
     exit;
 }
 // Paramètre, soit rien auquel cas on prend tous les produits récents soit cat_cid
@@ -50,7 +50,7 @@ if (!$tpl->is_cached('db:oledrion_rss.tpl', $cat_cid)) {
     $sitename = htmlspecialchars($xoopsConfig['sitename'], ENT_QUOTES);
     $email    = checkEmail($xoopsConfig['adminmail'], true);
     $slogan   = htmlspecialchars($xoopsConfig['slogan'], ENT_QUOTES);
-    $limit    = OledrionUtility::getModuleOption('perpage');
+    $limit    = \Xoopsmodules\oledrion\Utility::getModuleOption('perpage');
 
     $tpl->assign('charset', $charset);
     $tpl->assign('channel_title', xoops_utf8_encode($sitename));
@@ -60,7 +60,7 @@ if (!$tpl->is_cached('db:oledrion_rss.tpl', $cat_cid)) {
     $tpl->assign('channel_webmaster', xoops_utf8_encode($email));
     $tpl->assign('channel_editor', xoops_utf8_encode($email));
     $tpl->assign('channel_category', xoops_utf8_encode($categoryTitle));
-    $tpl->assign('channel_generator', xoops_utf8_encode(OledrionUtility::getModuleName()));
+    $tpl->assign('channel_generator', xoops_utf8_encode(\Xoopsmodules\oledrion\Utility::getModuleName()));
     $tpl->assign('channel_language', _LANGCODE);
     $tpl->assign('image_url', XOOPS_URL . '/images/logo.png');
     $dimention = getimagesize(XOOPS_ROOT_PATH . '/images/logo.png');

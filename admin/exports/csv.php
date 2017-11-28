@@ -62,7 +62,7 @@ class Oledrion_csv_export extends Oledrion_export
             $entete1[] = $fieldName;
         }
         // Ajout des infos de caddy
-        $cart = new oledrion_caddy();
+        $cart = new Oledrion_caddy();
         foreach ($cart->getVars() as $fieldName => $properties) {
             $entete2[] = $fieldName;
         }

@@ -60,7 +60,7 @@
 
     <{if $pdf_catalog == 1 }>
         <h3><{$smarty.const._OLEDRION_PDF_CATALOG}></h3>
-        <form name="frmCatalog" id="frmCatalog" method="post" action="<{$smarty.const.OLEDRION_URL}>pdf/catalog.php">
+        <form name="frmCatalog" id="frmCatalog" method="post" action="<{$smarty.const.OLEDRION_URL}>makepdf.php">
             <input type="radio" name="catalogFormat" id="catalogFormat" value="0"
                    checked="checked"><{$smarty.const._OLEDRION_PDF_CATALOG1}>
             <br><input type="radio" name="catalogFormat" id="catalogFormat"

@@ -43,10 +43,10 @@ if (is_object($gateway) && method_exists($gateway, 'cancelOrder')) {
 }
 $h_oledrion_caddy->emptyCart();
 $xoopsTpl->assign('mod_pref', $mod_pref);
-$xoopsTpl->assign('breadcrumb', OledrionUtility::breadcrumb([OLEDRION_URL . basename(__FILE__) => _OLEDRION_ORDER_CANCELED]));
+$xoopsTpl->assign('breadcrumb', \Xoopsmodules\oledrion\Utility::breadcrumb([OLEDRION_URL . basename(__FILE__) => _OLEDRION_ORDER_CANCELED]));
 
-$title = _OLEDRION_ORDER_CANCELED . ' - ' . OledrionUtility::getModuleName();
-OledrionUtility::setMetas($title, $title);
-OledrionUtility::setCSS();
-OledrionUtility::setLocalCSS($xoopsConfig['language']);
+$title = _OLEDRION_ORDER_CANCELED . ' - ' . \Xoopsmodules\oledrion\Utility::getModuleName();
+\Xoopsmodules\oledrion\Utility::setMetas($title, $title);
+\Xoopsmodules\oledrion\Utility::setCSS();
+\Xoopsmodules\oledrion\Utility::setLocalCSS($xoopsConfig['language']);
 require_once XOOPS_ROOT_PATH . '/footer.php';

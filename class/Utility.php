@@ -1,4 +1,5 @@
-<?php
+<?php namespace Xoopsmodules\oledrion;
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -31,159 +32,29 @@
 // defined('XOOPS_ROOT_PATH') || exit('Restricted access.');
 
 use WideImage\WideImage;
+use Xmf\Request;
+use Xoopsmodules\oledrion\common;
+
+require_once __DIR__ . '/common/VersionChecks.php';
+require_once __DIR__ . '/common/ServerStats.php';
+require_once __DIR__ . '/common/FilesManagement.php';
+
+//require_once __DIR__ . '/../include/common.php';
 
 /**
  * Class OledrionUtility
  */
-class OledrionUtility extends XoopsObject
+class Utility extends \XoopsObject
 {
     const MODULE_NAME = 'oledrion';
 
-    /**
-     * Function responsible for checking if a directory exists, we can also write in and create an index.html file
-     *
-     * @param string $folder The full path of the directory to check
-     *
-     * @return void
-     */
-    public static function createFolder($folder)
-    {
-        //        try {
-        //            if (!mkdir($folder) && !is_dir($folder)) {
-        //                throw new \RuntimeException(sprintf('Unable to create the %s directory', $folder));
-        //            } else {
-        //                file_put_contents($folder . '/index.html', '<script>history.go(-1);</script>');
-        //            }
-        //        }
-        //        catch (Exception $e) {
-        //            echo 'Caught exception: ', $e->getMessage(), "\n", '<br>';
-        //        }
-        try {
-            if (!file_exists($folder)) {
-                if (!mkdir($folder) && !is_dir($folder)) {
-                    throw new \RuntimeException(sprintf('Unable to create the %s directory', $folder));
-                } else {
-                    file_put_contents($folder . '/index.html', '<script>history.go(-1);</script>');
-                }
-            }
-        } catch (Exception $e) {
-            echo 'Caught exception: ', $e->getMessage(), "\n", '<br>';
-        }
-    }
+    use common\VersionChecks; //checkVerXoops, checkVerPhp Traits
 
-    /**
-     * @param $file
-     * @param $folder
-     * @return bool
-     */
-    public static function copyFile($file, $folder)
-    {
-        return copy($file, $folder);
-        //        try {
-        //            if (!is_dir($folder)) {
-        //                throw new \RuntimeException(sprintf('Unable to copy file as: %s ', $folder));
-        //            } else {
-        //                return copy($file, $folder);
-        //            }
-        //        } catch (Exception $e) {
-        //            echo 'Caught exception: ', $e->getMessage(), "\n", "<br>";
-        //        }
-        //        return false;
-    }
+    use common\ServerStats; // getServerStats Trait
 
-    /**
-     * @param $src
-     * @param $dst
-     */
-    public static function recurseCopy($src, $dst)
-    {
-        $dir = opendir($src);
-        //    @mkdir($dst);
-        while (false !== ($file = readdir($dir))) {
-            if (('.' !== $file) && ('..' !== $file)) {
-                if (is_dir($src . '/' . $file)) {
-                    self::recurseCopy($src . '/' . $file, $dst . '/' . $file);
-                } else {
-                    copy($src . '/' . $file, $dst . '/' . $file);
-                }
-            }
-        }
-        closedir($dir);
-    }
+    use common\FilesManagement; // Files Management Trait
 
-    /**
-     *
-     * Verifies XOOPS version meets minimum requirements for this module
-     * @static
-     * @param XoopsModule $module
-     *
-     * @param null|string $requiredVer
-     * @return bool true if meets requirements, false if not
-     */
-    public static function checkVerXoops(XoopsModule $module = null, $requiredVer = null)
-    {
-        $moduleDirName = basename(dirname(__DIR__));
-        if (null === $module) {
-            $module = XoopsModule::getByDirname($moduleDirName);
-        }
-        xoops_loadLanguage('admin', $moduleDirName);
-        //check for minimum XOOPS version
-        $currentVer = substr(XOOPS_VERSION, 6); // get the numeric part of string
-        $currArray  = explode('.', $currentVer);
-        if (null === $requiredVer) {
-            $requiredVer = '' . $module->getInfo('min_xoops'); //making sure it's a string
-        }
-        $reqArray = explode('.', $requiredVer);
-        $success  = true;
-        foreach ($reqArray as $k => $v) {
-            if (isset($currArray[$k])) {
-                if ($currArray[$k] > $v) {
-                    break;
-                } elseif ($currArray[$k] == $v) {
-                    continue;
-                } else {
-                    $success = false;
-                    break;
-                }
-            } else {
-                if ((int)$v > 0) { // handles versions like x.x.x.0_RC2
-                    $success = false;
-                    break;
-                }
-            }
-        }
-
-        if (false === $success) {
-            $module->setErrors(sprintf(_AM_OLEDRION_ERROR_BAD_XOOPS, $requiredVer, $currentVer));
-        }
-
-        return $success;
-    }
-
-    /**
-     *
-     * Verifies PHP version meets minimum requirements for this module
-     * @static
-     * @param XoopsModule $module
-     *
-     * @return bool true if meets requirements, false if not
-     */
-    public static function checkVerPhp(XoopsModule $module)
-    {
-        xoops_loadLanguage('admin', $module->dirname());
-        // check for minimum PHP version
-        $success = true;
-        $verNum  = PHP_VERSION;
-        $reqVer  = $module->getInfo('min_php');
-        if (false !== $reqVer && '' !== $reqVer) {
-            if (version_compare($verNum, $reqVer, '<')) {
-                $module->setErrors(sprintf(_AM_OLEDRION_ERROR_BAD_PHP, $reqVer, $verNum));
-                $success = false;
-            }
-        }
-
-        return $success;
-    }
+    //--------------- Custom module methods -----------------------------
 
     /**
      * Access the only instance of this class
@@ -292,8 +163,9 @@ class OledrionUtility extends XoopsObject
         $value = '',
         $width = '100%',
         $height = '400px',
-        $supplemental = ''
-    ) {
+        $supplemental = '')
+    {
+        $helper                   = \Xoopsmodules\oledrion\Helper::getInstance();
         $editor                   = false;
         $editor_configs           = [];
         $editor_configs['name']   = $name;
@@ -303,58 +175,14 @@ class OledrionUtility extends XoopsObject
         $editor_configs['width']  = '100%';
         $editor_configs['height'] = '400px';
 
-        $editor_option = strtolower(self::getModuleOption('bl_form_options'));
+        $editor_option = strtolower(self::getModuleOption('editorAdmin'));
+//        $editor = new \XoopsFormEditor($caption, $editor_option, $editor_configs);
+//        public function __construct($caption, $name, $configs = null, $nohtml = false, $OnFailure = '')
 
-        if (self::isX23()) {
-            $editor = new XoopsFormEditor($caption, $editor_option, $editor_configs);
-
-            return $editor;
-        }
-
-        // Only for Xoops 2.0.x
-        switch ($editor_option) {
-            case 'fckeditor':
-                if (is_readable(XOOPS_ROOT_PATH . '/class/fckeditor/formfckeditor.php')) {
-                    require_once XOOPS_ROOT_PATH . '/class/fckeditor/formfckeditor.php';
-                    $editor = new XoopsFormFckeditor($caption, $name, $value);
-                }
-                break;
-
-            case 'htmlarea':
-                if (is_readable(XOOPS_ROOT_PATH . '/class/htmlarea/formhtmlarea.php')) {
-                    require_once XOOPS_ROOT_PATH . '/class/htmlarea/formhtmlarea.php';
-                    $editor = new XoopsFormHtmlarea($caption, $name, $value);
-                }
-                break;
-
-            case 'dhtmltextarea':
-                $editor = new XoopsFormDhtmlTextArea($caption, $name, $value, 10, 50, $supplemental);
-                break;
-
-            case 'textarea':
-                $editor = new XoopsFormTextArea($caption, $name, $value);
-                break;
-
-            case 'tinyeditor':
-            case 'tinymce':
-                if (is_readable(XOOPS_ROOT_PATH . '/class/xoopseditor/tinyeditor/formtinyeditortextarea.php')) {
-                    require_once XOOPS_ROOT_PATH . '/class/xoopseditor/tinyeditor/formtinyeditortextarea.php';
-                    $editor = new XoopsFormTinyeditorTextArea([
-                                                                  'caption' => $caption,
-                                                                  'name'    => $name,
-                                                                  'value'   => $value,
-                                                                  'width'   => '100%',
-                                                                  'height'  => '400px'
-                                                              ]);
-                }
-                break;
-
-            case 'koivi':
-                if (is_readable(XOOPS_ROOT_PATH . '/class/wysiwyg/formwysiwygtextarea.php')) {
-                    require_once XOOPS_ROOT_PATH . '/class/wysiwyg/formwysiwygtextarea.php';
-                    $editor = new XoopsFormWysiwygTextArea($caption, $name, $value, $width, $height, '');
-                }
-                break;
+        if ($helper->isUserAdmin()) {
+            $editor = new \XoopsFormEditor($caption, $helper->getConfig('editorAdmin'), $editor_configs, $nohtml = false, $onfailure = 'textarea');
+        } else {
+            $editor = new \XoopsFormEditor($caption, $helper->getConfig('editorUser'), $editor_configs, $nohtml = false, $onfailure = 'textarea');
         }
 
         return $editor;
@@ -641,7 +469,7 @@ class OledrionUtility extends XoopsObject
     /**
      * Vérifie que l'utilisateur courant fait partie du groupe des administrateurs
      *
-     * @return booleean Admin or not
+     * @return bool Admin or not
      */
     public static function isAdmin()
     {
@@ -1161,7 +989,7 @@ class OledrionUtility extends XoopsObject
             $limit                               = $xoopsConfigSearch['keyword_min'];
             $_SESSION['oledrion_keywords_limit'] = $limit;
         }
-        $myts            = MyTextSanitizer::getInstance();
+        $myts            = \MyTextSanitizer::getInstance();
         $content         = str_replace('<br>', ' ', $content);
         $content         = $myts->undoHtmlSpecialChars($content);
         $content         = strip_tags($content);
@@ -1287,8 +1115,8 @@ class OledrionUtility extends XoopsObject
         $mimeTypes = null,
         $uploadMaxSize = null,
         $maxWidth = null,
-        $maxHeight = null
-    ) {
+        $maxHeight = null)
+    {
         require_once XOOPS_ROOT_PATH . '/class/uploader.php';
         global $destname;
         if (isset($_POST['xoops_upload_file'])) {
@@ -1309,7 +1137,7 @@ class OledrionUtility extends XoopsObject
                 } else {
                     $uploadSize = $uploadMaxSize;
                 }
-                $uploader = new XoopsMediaUploader($dstpath, $permittedtypes, $uploadSize, $maxWidth, $maxHeight);
+                $uploader = new \XoopsMediaUploader($dstpath, $permittedtypes, $uploadSize, $maxWidth, $maxHeight);
                 //$uploader->allowUnknownTypes = true;
                 $uploader->setTargetFileName($destname);
                 if ($uploader->fetchMedia($_POST['xoops_upload_file'][$indice])) {
@@ -1346,8 +1174,8 @@ class OledrionUtility extends XoopsObject
         $param_width,
         $param_height,
         $keep_original = false,
-        $fit = 'inside'
-    ) {
+        $fit = 'inside')
+    {
         //        require_once OLEDRION_PATH . 'class/wideimage/WideImage.inc.php';
         $resize = true;
         if (OLEDRION_DONT_RESIZE_IF_SMALLER) {
@@ -1511,7 +1339,7 @@ class OledrionUtility extends XoopsObject
         $ret      = '';
         $infotips = self::getModuleOption('infotips');
         if ($infotips > 0) {
-            $myts = MyTextSanitizer::getInstance();
+            $myts = \MyTextSanitizer::getInstance();
             $ret  = $myts->htmlSpecialChars(xoops_substr(strip_tags($text), 0, $infotips));
         }
 
@@ -1562,9 +1390,11 @@ class OledrionUtility extends XoopsObject
      * @param  string  $format Format d'affichage du résultat (long ou court)
      * @return mixed   Soit une chaine soit un flottant
      */
-    public static function getTTC($ht, $vat, $edit = false, $format = 's')
+    public static function getTTC($ht = 0, $vat = 0, $edit = false, $format = 's')
     {
-        $oledrion_Currency = Oledrion_Currency::getInstance();
+        $ht                = (int)$ht;
+        $vat               = (int)$vat;
+        $oledrion_Currency = \Oledrion_Currency::getInstance();
         $ttc               = $ht * (1 + ($vat / 100));
         if (!$edit) {
             return $oledrion_Currency->amountForDisplay($ttc, $format);
@@ -1598,7 +1428,7 @@ class OledrionUtility extends XoopsObject
         if (is_array($vats) && in_array($vat_id, $vats)) {
             $vat_rate = $vats[$vat_id];
         } else {
-            $handlers = OledrionHandler::getInstance();
+            $handlers = \OledrionHandler::getInstance();
             $vat      = null;
             $vat      = $handlers->h_oledrion_vat->get($vat_id);
             if (is_object($vat)) {
@@ -1669,9 +1499,9 @@ class OledrionUtility extends XoopsObject
     {
         $start             = mktime(0, 1, 0, date('n'), date('j'), date('Y'));
         $end               = mktime(0, 0, 0, date('n'), date('t'), date('Y'));
-        $criteriaThisMonth = new CriteriaCompo();
-        $criteriaThisMonth->add(new Criteria('product_submitted', $start, '>='));
-        $criteriaThisMonth->add(new Criteria('product_submitted', $end, '<='));
+        $criteriaThisMonth = new \CriteriaCompo();
+        $criteriaThisMonth->add(new \Criteria('product_submitted', $start, '>='));
+        $criteriaThisMonth->add(new \Criteria('product_submitted', $end, '<='));
 
         return $criteriaThisMonth;
     }
@@ -1690,7 +1520,7 @@ class OledrionUtility extends XoopsObject
             sort($xoopsUsersIDs);
             if (count($xoopsUsersIDs) > 0) {
                 $memberHandler = xoops_getHandler('user');
-                $criteria      = new Criteria('uid', '(' . implode(',', $xoopsUsersIDs) . ')', 'IN');
+                $criteria      = new \Criteria('uid', '(' . implode(',', $xoopsUsersIDs) . ')', 'IN');
                 $criteria->setSort('uid');
                 $users = $memberHandler->getObjects($criteria, true);
             }
@@ -1953,7 +1783,7 @@ class OledrionUtility extends XoopsObject
      * Renvoie un montant nul si le montant est négatif
      *
      * @param  float $amount
-     * @return float
+     * @return void
      */
     public static function doNotAcceptNegativeAmounts(&$amount)
     {
@@ -2109,6 +1939,6 @@ class OledrionUtility extends XoopsObject
     {
         require_once XOOPS_ROOT_PATH . '/class/xoopslists.php';
 
-        return XoopsLists::getCountryList();
+        return \XoopsLists::getCountryList();
     }
 }

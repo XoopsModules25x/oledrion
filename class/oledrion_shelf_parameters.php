@@ -22,7 +22,7 @@
 // defined('XOOPS_ROOT_PATH') || exit('Restricted access.');
 
 /**
- * Utilisé comme paramètre dans la façcade oledrion_shelf
+ * Utilisé comme paramètre dans la façcade Oledrion_shelf
  */
 class Oledrion_shelf_parameters
 {
@@ -129,7 +129,7 @@ class Oledrion_shelf_parameters
      * Fixe l'ordre de tri
      *
      * @param  string $value
-     * @return array
+     * @return \Oledrion_shelf_parameters
      */
     public function setOrder($value)
     {

@@ -26,10 +26,10 @@
 function b_oledrion_my_lists_show($options)
 {
     require XOOPS_ROOT_PATH . '/modules/oledrion/include/common.php';
-    OledrionUtility::loadLanguageFile('modinfo.php');
+    \Xoopsmodules\oledrion\Utility::loadLanguageFile('modinfo.php');
     $start = 0;
     $limit = (int)$options[0];
-    $uid   = OledrionUtility::getCurrentUserID();
+    $uid   = \Xoopsmodules\oledrion\Utility::getCurrentUserID();
     if (0 == $uid) {
         return null;
     }
@@ -59,7 +59,7 @@ function b_oledrion_my_lists_show($options)
  * Edition des paramètres du bloc
  *
  * @param  array $options [0] = Nombre maximum de listes à voir
- * @return array
+ * @return string
  */
 function b_oledrion_my_lists_edit($options)
 {

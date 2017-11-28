@@ -30,22 +30,22 @@ require_once XOOPS_ROOT_PATH . '/class/xoopslists.php';
 require_once OLEDRION_PATH . 'class/tree.php';
 
 // Lecture de certains param�tres de l'application ********************************************************************
-$limit             = OledrionUtility::getModuleOption('items_count'); // Nombre maximum d'�l�ments � afficher dans l'admin
+$limit             = \Xoopsmodules\oledrion\Utility::getModuleOption('items_count'); // Nombre maximum d'�l�ments � afficher dans l'admin
 $baseurl           = OLEDRION_URL . 'admin/' . basename(__FILE__); // URL de ce script
-$conf_msg          = OledrionUtility::javascriptLinkConfirm(_AM_OLEDRION_CONF_DELITEM);
+$conf_msg          = \Xoopsmodules\oledrion\Utility::javascriptLinkConfirm(_AM_OLEDRION_CONF_DELITEM);
 $oledrion_Currency = Oledrion_Currency::getInstance();
-$manual_meta       = OledrionUtility::getModuleOption('manual_meta');
+$manual_meta       = \Xoopsmodules\oledrion\Utility::getModuleOption('manual_meta');
 
-OledrionUtility::loadLanguageFile('modinfo.php');
-OledrionUtility::loadLanguageFile('main.php');
+\Xoopsmodules\oledrion\Utility::loadLanguageFile('modinfo.php');
+\Xoopsmodules\oledrion\Utility::loadLanguageFile('main.php');
 
 // V�rification de l'existance du r�pertoire de cache
-OledrionUtility::prepareFolder(OLEDRION_UPLOAD_PATH);
-OledrionUtility::prepareFolder(OLEDRION_ATTACHED_FILES_PATH);
-OledrionUtility::prepareFolder(OLEDRION_PICTURES_PATH);
-OledrionUtility::prepareFolder(OLEDRION_CSV_PATH);
-OledrionUtility::prepareFolder(OLEDRION_CACHE_PATH);
-OledrionUtility::prepareFolder(OLEDRION_TEXT_PATH);
+\Xoopsmodules\oledrion\Utility::prepareFolder(OLEDRION_UPLOAD_PATH);
+\Xoopsmodules\oledrion\Utility::prepareFolder(OLEDRION_ATTACHED_FILES_PATH);
+\Xoopsmodules\oledrion\Utility::prepareFolder(OLEDRION_PICTURES_PATH);
+\Xoopsmodules\oledrion\Utility::prepareFolder(OLEDRION_CSV_PATH);
+\Xoopsmodules\oledrion\Utility::prepareFolder(OLEDRION_CACHE_PATH);
+\Xoopsmodules\oledrion\Utility::prepareFolder(OLEDRION_TEXT_PATH);
 
 // Est-ce que le r�pertoire du cache est ouvert en �criture ?
 if (!is_writable(OLEDRION_CACHE_PATH)) {
@@ -71,11 +71,11 @@ if (isset($_POST['action'])) {
 }
 
 // Check admin have access to this page
-$part = OledrionUtility::getModuleOption('admin_groups_part');
+$part = \Xoopsmodules\oledrion\Utility::getModuleOption('admin_groups_part');
 $part = explode('|', $part);
 if (!in_array($op, $part)) {
     $group  = $xoopsUser->getGroups();
-    $groups = OledrionUtility::getModuleOption('admin_groups');
+    $groups = \Xoopsmodules\oledrion\Utility::getModuleOption('admin_groups');
     if (count(array_intersect($group, $groups)) <= 0) {
         redirect_header('index.php', 3, _NOPERM);
     }

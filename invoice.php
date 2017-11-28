@@ -25,34 +25,34 @@ $op = isset($_GET['op']) ? $_GET['op'] : 'default';
 if (isset($_GET['id'])) {
     $cmdId = (int)$_GET['id'];
 } else {
-    OledrionUtility::redirect(_OLEDRION_ERROR11, 'index.php', 6);
+    \Xoopsmodules\oledrion\Utility::redirect(_OLEDRION_ERROR11, 'index.php', 6);
 }
 
 if (isset($_GET['pass'])) {
     $pass = $_GET['pass'];
 } else {
-    if (!OledrionUtility::isAdmin()) {
-        OledrionUtility::redirect(_OLEDRION_ERROR11, 'index.php', 6);
+    if (!\Xoopsmodules\oledrion\Utility::isAdmin()) {
+        \Xoopsmodules\oledrion\Utility::redirect(_OLEDRION_ERROR11, 'index.php', 6);
     }
 }
 
 $order = null;
 $order = $h_oledrion_commands->get($cmdId);
 if (!is_object($order)) {
-    OledrionUtility::redirect(_OLEDRION_ERROR11, 'index.php', 6);
+    \Xoopsmodules\oledrion\Utility::redirect(_OLEDRION_ERROR11, 'index.php', 6);
 }
 
 // Vérification du mot de passe (si pas admin)
-if (!OledrionUtility::isAdmin()) {
+if (!\Xoopsmodules\oledrion\Utility::isAdmin()) {
     if ($pass != $order->getVar('cmd_password')) {
-        OledrionUtility::redirect(_OLEDRION_ERROR11, 'index.php', 6);
+        \Xoopsmodules\oledrion\Utility::redirect(_OLEDRION_ERROR11, 'index.php', 6);
     }
 }
 
 // Vérification de la validité de la facture (si pas admin)
-/* if (!OledrionUtility::isAdmin()) {
+/* if (!\Xoopsmodules\oledrion\Utility::isAdmin()) {
     if ($order->getVar('cmd_state') != OLEDRION_STATE_VALIDATED) { // Commande non validée
-        OledrionUtility::redirect(_OLEDRION_ERROR12, 'index.php', 6);
+        \Xoopsmodules\oledrion\Utility::redirect(_OLEDRION_ERROR12, 'index.php', 6);
     }
 } */
 
@@ -64,7 +64,7 @@ $vats = $h_oledrion_vat->getAllVats(new Oledrion_parameters());
 // Récupération des caddy associés
 $caddy = $h_oledrion_caddy->getCaddyFromCommand($cmdId);
 if (0 == count($caddy)) {
-    OledrionUtility::redirect(_OLEDRION_ERROR11, 'index.php', 6);
+    \Xoopsmodules\oledrion\Utility::redirect(_OLEDRION_ERROR11, 'index.php', 6);
 }
 
 // Récupération de la liste des produits associés
@@ -90,7 +90,7 @@ switch ($op) {
 
         // Informations sur la commande ***************************************************************************************
         $xoopsTpl->assign('order', $order->toArray());
-        $xoopsTpl->assign('ask_vatnumber', OledrionUtility::getModuleOption('ask_vatnumber'));
+        $xoopsTpl->assign('ask_vatnumber', \Xoopsmodules\oledrion\Utility::getModuleOption('ask_vatnumber'));
         $handlers = OledrionHandler::getInstance();
 
         // Boucle sur le caddy ************************************************************************************************
@@ -131,7 +131,7 @@ switch ($op) {
 
         // Informations sur la commande ***************************************************************************************
         $xoopsTpl->assign('order', $order->toArray());
-        $xoopsTpl->assign('ask_vatnumber', OledrionUtility::getModuleOption('ask_vatnumber'));
+        $xoopsTpl->assign('ask_vatnumber', \Xoopsmodules\oledrion\Utility::getModuleOption('ask_vatnumber'));
         $xoopsTpl->assign('printurl', OLEDRION_URL . basename(__FILE__) . '?op=print&id=' . $order->getVar('cmd_id') . '&pass=' . $order->getVar('cmd_password'));
 
         $handlers = OledrionHandler::getInstance();
@@ -161,10 +161,10 @@ switch ($op) {
             $xoopsTpl->append('products', $productForTemplate);
         }
 
-        OledrionUtility::setCSS();
-        OledrionUtility::setLocalCSS($xoopsConfig['language']);
-        $title = _OLEDRION_BILL . ' - ' . OledrionUtility::getModuleName();
-        OledrionUtility::setMetas($title, $title);
+        \Xoopsmodules\oledrion\Utility::setCSS();
+        \Xoopsmodules\oledrion\Utility::setLocalCSS($xoopsConfig['language']);
+        $title = _OLEDRION_BILL . ' - ' . \Xoopsmodules\oledrion\Utility::getModuleName();
+        \Xoopsmodules\oledrion\Utility::setMetas($title, $title);
         require_once XOOPS_ROOT_PATH . '/footer.php';
         break;
 }

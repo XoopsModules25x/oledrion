@@ -43,7 +43,7 @@ class Oledrion_gateways
         if ($gateway) {
             $return = $gateway;
         } else {
-            $return = xoops_trim(OledrionUtility::getModuleOption('used_gateway'));
+            $return = xoops_trim(\Xoopsmodules\oledrion\Utility::getModuleOption('used_gateway'));
         }
 
         if ('' === $return) {
@@ -60,7 +60,7 @@ class Oledrion_gateways
      */
     public static function getDefaultGateway()
     {
-        $return = xoops_trim(OledrionUtility::getModuleOption('used_gateway'));
+        $return = xoops_trim(\Xoopsmodules\oledrion\Utility::getModuleOption('used_gateway'));
         if ('' === $return) {
             $return = 'paypal'; // Valeur par défaut
         }

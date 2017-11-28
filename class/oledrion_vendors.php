@@ -25,7 +25,7 @@ require_once __DIR__ . '/classheader.php';
 /**
  * Class Oledrion_vendors
  */
-class Oledrion_vendors extends Oledrion_Object
+class Oledrion_vendors extends OledrionObject
 {
     /**
      * constructor
@@ -44,7 +44,7 @@ class Oledrion_vendors extends Oledrion_Object
 /**
  * Class OledrionOledrion_vendorsHandler
  */
-class OledrionOledrion_vendorsHandler extends Oledrion_XoopsPersistableObjectHandler
+class OledrionOledrion_vendorsHandler extends OledrionPersistableObjectHandler
 {
     /**
      * OledrionOledrion_vendorsHandler constructor.
@@ -52,7 +52,7 @@ class OledrionOledrion_vendorsHandler extends Oledrion_XoopsPersistableObjectHan
      */
     public function __construct(XoopsDatabase $db)
     { //                            Table               Classe          Id          Libellé
-        parent::__construct($db, 'oledrion_vendors', 'oledrion_vendors', 'vendor_id', 'vendor_name');
+        parent::__construct($db, 'oledrion_vendors', 'Oledrion_vendors', 'vendor_id', 'vendor_name');
     }
 
     /**
@@ -102,7 +102,7 @@ class OledrionOledrion_vendorsHandler extends Oledrion_XoopsPersistableObjectHan
     /**
      * Supprime un vendeur
      *
-     * @param  oledrion_vendors $vendor
+     * @param  Oledrion_vendors $vendor
      * @return boolean          Le résultat de la suppression
      */
     public function deleteVendor(Oledrion_vendors $vendor)
@@ -114,7 +114,7 @@ class OledrionOledrion_vendorsHandler extends Oledrion_XoopsPersistableObjectHan
      * Retourne des vendeurs selon leur ID
      *
      * @param  array $ids Les ID des vendeurs à retrouver
-     * @return array Objets de type oledrion_vendors
+     * @return array Objets de type Oledrion_vendors
      */
     public function getVendorsFromIds($ids)
     {

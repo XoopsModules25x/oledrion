@@ -35,7 +35,7 @@ define('OLEDRION_STATE_DELIVERYED', 8);
 /**
  * Class Oledrion_commands
  */
-class Oledrion_commands extends Oledrion_Object
+class Oledrion_commands extends OledrionObject
 {
     /**
      * constructor
@@ -117,7 +117,7 @@ class Oledrion_commands extends Oledrion_Object
 /**
  * Class OledrionOledrion_commandsHandler
  */
-class OledrionOledrion_commandsHandler extends Oledrion_XoopsPersistableObjectHandler
+class OledrionOledrion_commandsHandler extends OledrionPersistableObjectHandler
 {
     /**
      * OledrionOledrion_commandsHandler constructor.
@@ -125,7 +125,7 @@ class OledrionOledrion_commandsHandler extends Oledrion_XoopsPersistableObjectHa
      */
     public function __construct(XoopsDatabase $db)
     { //                        Table                   Classe           Id
-        parent::__construct($db, 'oledrion_commands', 'oledrion_commands', 'cmd_id');
+        parent::__construct($db, 'oledrion_commands', 'Oledrion_commands', 'cmd_id');
     }
 
     /**
@@ -137,7 +137,7 @@ class OledrionOledrion_commandsHandler extends Oledrion_XoopsPersistableObjectHa
     public function isFirstCommand($uid = 0)
     {
         if (0 == $uid) {
-            $uid = OledrionUtility::getCurrentUserID();
+            $uid = \Xoopsmodules\oledrion\Utility::getCurrentUserID();
         }
         $critere = new Criteria('cmd_uid', (int)$uid, '=');
         if ($this->getCount($critere) > 0) {
@@ -157,7 +157,7 @@ class OledrionOledrion_commandsHandler extends Oledrion_XoopsPersistableObjectHa
     public function productAlreadyBought($uid = 0, $productId = 0)
     {
         if (0 == $uid) {
-            $uid = OledrionUtility::getCurrentUserID();
+            $uid = \Xoopsmodules\oledrion\Utility::getCurrentUserID();
         }
         $sql    = 'SELECT Count(*) AS cpt FROM ' . $this->db->prefix('oledrion_caddy') . ' c, ' . $this->db->prefix('oledrion_commands') . ' f WHERE c.caddy_product_id = ' . (int)$productId . ' AND c.caddy_cmd_id = f.cmd_id AND f.cmd_uid = ' . (int)$uid;
         $result = $this->db->query($sql);
@@ -176,7 +176,7 @@ class OledrionOledrion_commandsHandler extends Oledrion_XoopsPersistableObjectHa
      * Mise à jour des stocks pour chaque produit composant la commande
      *
      * @param  Oledrion_commands $order La commande à traiter
-     * @return void
+     * @return bool
      */
     public function updateStocks($order)
     {
@@ -256,8 +256,8 @@ class OledrionOledrion_commandsHandler extends Oledrion_XoopsPersistableObjectHa
         if (count($Urls) > 0) {
             $msg['ADDITIONAL_CONTENT'] = _OLEDRION_YOU_CAN_DOWNLOAD . "\n" . implode("\n", $Urls);
         }
-        OledrionUtility::sendEmailFromTpl('command_shop_verified.tpl', OledrionUtility::getEmailsFromGroup(OledrionUtility::getModuleOption('grp_sold')), _OLEDRION_GATEWAY_VALIDATED, $msg);
-        OledrionUtility::sendEmailFromTpl('command_client_verified.tpl', $order->getVar('cmd_email'), sprintf(_OLEDRION_GATEWAY_VALIDATED, $xoopsConfig['sitename']), $msg);
+        \Xoopsmodules\oledrion\Utility::sendEmailFromTpl('command_shop_verified.tpl', \Xoopsmodules\oledrion\Utility::getEmailsFromGroup(\Xoopsmodules\oledrion\Utility::getModuleOption('grp_sold')), _OLEDRION_GATEWAY_VALIDATED, $msg);
+        \Xoopsmodules\oledrion\Utility::sendEmailFromTpl('command_client_verified.tpl', $order->getVar('cmd_email'), sprintf(_OLEDRION_GATEWAY_VALIDATED, $xoopsConfig['sitename']), $msg);
     }
 
     /**
@@ -343,7 +343,7 @@ class OledrionOledrion_commandsHandler extends Oledrion_XoopsPersistableObjectHa
         $msg                 = [];
         $msg['NUM_COMMANDE'] = $order->getVar('cmd_id');
         $msg['COMMENT']      = $comment;
-        OledrionUtility::sendEmailFromTpl('command_shop_fraud.tpl', OledrionUtility::getEmailsFromGroup(OledrionUtility::getModuleOption('grp_sold')), _OLEDRION_GATEWAY_FRAUD, $msg);
+        \Xoopsmodules\oledrion\Utility::sendEmailFromTpl('command_shop_fraud.tpl', \Xoopsmodules\oledrion\Utility::getEmailsFromGroup(\Xoopsmodules\oledrion\Utility::getModuleOption('grp_sold')), _OLEDRION_GATEWAY_FRAUD, $msg);
     }
 
     /**
@@ -371,7 +371,7 @@ class OledrionOledrion_commandsHandler extends Oledrion_XoopsPersistableObjectHa
         $msg                 = [];
         $msg['NUM_COMMANDE'] = $order->getVar('cmd_id');
         $msg['COMMENT']      = $comment;
-        OledrionUtility::sendEmailFromTpl('command_shop_pending.tpl', OledrionUtility::getEmailsFromGroup(OledrionUtility::getModuleOption('grp_sold')), _OLEDRION_GATEWAY_PENDING, $msg);
+        \Xoopsmodules\oledrion\Utility::sendEmailFromTpl('command_shop_pending.tpl', \Xoopsmodules\oledrion\Utility::getEmailsFromGroup(\Xoopsmodules\oledrion\Utility::getModuleOption('grp_sold')), _OLEDRION_GATEWAY_PENDING, $msg);
     }
 
     /**
@@ -399,7 +399,7 @@ class OledrionOledrion_commandsHandler extends Oledrion_XoopsPersistableObjectHa
         $msg                 = [];
         $msg['NUM_COMMANDE'] = $order->getVar('cmd_id');
         $msg['COMMENT']      = $comment;
-        OledrionUtility::sendEmailFromTpl('command_shop_failed.tpl', OledrionUtility::getEmailsFromGroup(OledrionUtility::getModuleOption('grp_sold')), _OLEDRION_GATEWAY_FAILED, $msg);
+        \Xoopsmodules\oledrion\Utility::sendEmailFromTpl('command_shop_failed.tpl', \Xoopsmodules\oledrion\Utility::getEmailsFromGroup(\Xoopsmodules\oledrion\Utility::getModuleOption('grp_sold')), _OLEDRION_GATEWAY_FAILED, $msg);
     }
 
     /**
@@ -427,8 +427,8 @@ class OledrionOledrion_commandsHandler extends Oledrion_XoopsPersistableObjectHa
         $msg                 = [];
         $msg['NUM_COMMANDE'] = $order->getVar('cmd_id');
         $msg['COMMENT']      = $comment;
-        OledrionUtility::sendEmailFromTpl('command_shop_cancel.tpl', OledrionUtility::getEmailsFromGroup(OledrionUtility::getModuleOption('grp_sold')), _OLEDRION_ORDER_CANCELED, $msg);
-        OledrionUtility::sendEmailFromTpl('command_client_cancel.tpl', $order->getVar('cmd_email'), _OLEDRION_ORDER_CANCELED, $msg);
+        \Xoopsmodules\oledrion\Utility::sendEmailFromTpl('command_shop_cancel.tpl', \Xoopsmodules\oledrion\Utility::getEmailsFromGroup(\Xoopsmodules\oledrion\Utility::getModuleOption('grp_sold')), _OLEDRION_ORDER_CANCELED, $msg);
+        \Xoopsmodules\oledrion\Utility::sendEmailFromTpl('command_client_cancel.tpl', $order->getVar('cmd_email'), _OLEDRION_ORDER_CANCELED, $msg);
     }
 
     /**

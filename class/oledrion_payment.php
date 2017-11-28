@@ -22,7 +22,7 @@ require_once __DIR__ . '/classheader.php';
 /**
  * Class Oledrion_payment
  */
-class Oledrion_payment extends Oledrion_Object
+class Oledrion_payment extends OledrionObject
 {
     /**
      * constructor
@@ -102,7 +102,7 @@ class Oledrion_payment extends Oledrion_Object
 /**
  * Class OledrionOledrion_paymentHandler
  */
-class OledrionOledrion_paymentHandler extends Oledrion_XoopsPersistableObjectHandler
+class OledrionOledrion_paymentHandler extends OledrionPersistableObjectHandler
 {
     /**
      * OledrionOledrion_paymentHandler constructor.
@@ -110,7 +110,7 @@ class OledrionOledrion_paymentHandler extends Oledrion_XoopsPersistableObjectHan
      */
     public function __construct(XoopsDatabase $db)
     { //                                       Table                    Classe              Id
-        parent::__construct($db, 'oledrion_payment', 'oledrion_payment', 'payment_id');
+        parent::__construct($db, 'oledrion_payment', 'Oledrion_payment', 'payment_id');
     }
 
     /**

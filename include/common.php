@@ -17,6 +17,21 @@
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
  */
 
+
+use Xoopsmodules\oledrion;
+
+$moduleDirName = basename(dirname(__DIR__));
+
+require_once __DIR__ . '/../class/Helper.php';
+require_once __DIR__ . '/../class/Utility.php';
+
+$db     = \XoopsDatabaseFactory::getDatabase();
+$helper = oledrion\Helper::getInstance();
+$helper->loadLanguage('common');
+
+/** @var \Xoopsmodules\oledrion\Utility $utility */
+$utility = new \Xoopsmodules\oledrion\Utility();
+
 // defined('XOOPS_ROOT_PATH') || exit('Restricted access.');
 
 // Load config file
@@ -28,7 +43,7 @@ require_once OLEDRION_PLUGINS_PATH . 'models/oledrion_action.php'; // model
 require_once OLEDRION_PLUGINS_PATH . 'models/oledrion_filter.php'; // model
 
 // Les classes métier ou utilitaires (non ORM)
-require_once OLEDRION_CLASS_PATH . 'utility.php';
+require_once OLEDRION_CLASS_PATH . 'Utility.php';
 require_once OLEDRION_CLASS_PATH . 'oledrion_handlers.php';
 require_once OLEDRION_CLASS_PATH . 'oledrion_parameters.php';
 require_once OLEDRION_CLASS_PATH . 'oledrion_currency.php';
@@ -72,8 +87,8 @@ $h_oledrion_location_delivery = $oledrionHandlers->h_oledrion_location_delivery;
 $h_oledrion_delivery_payment  = $oledrionHandlers->h_oledrion_delivery_payment;
 $h_oledrion_payment_log       = $oledrionHandlers->h_oledrion_payment_log;
 
-$oledrion_shelf            = new oledrion_shelf(); // Facade
-$oledrion_shelf_parameters = new oledrion_shelf_parameters(); // Parameters of the facade
+$oledrion_shelf            = new Oledrion_shelf(); // Facade
+$oledrion_shelf_parameters = new Oledrion_shelf_parameters(); // Parameters of the facade
 
 $moduleDirName = basename(dirname(__DIR__));
 $helper        = Xmf\Module\Helper::getHelper($moduleDirName);
@@ -92,8 +107,7 @@ if (!defined('_OLEDRION_EDIT')) {
 
 $pathIcon16    = Xmf\Module\Admin::iconUrl('', 16);
 
-
-$icones = [
+$icons = [
     'edit'     => "<img src='" . $pathIcon16 . "/edit.png'  alt=" . _OLEDRION_EDIT . "' align='middle'>",
     'delete'   => "<img src='" . $pathIcon16 . "/delete.png' alt='" . _OLEDRION_DELETE . "' align='middle'>",
     'online'   => "<img src='" . OLEDRION_IMAGES_URL . "online.gif' alt='" . _OLEDRION_ONLINE . "' align='middle'>",
@@ -110,16 +124,16 @@ $icones = [
 
 // Loading some preferences
 $mod_pref = [
-//    'money_short'     => OledrionUtility::getModuleOption('money_short'),
-//    'money_full'      => OledrionUtility::getModuleOption('money_full'),
-//    'url_rewriting'   => OledrionUtility::getModuleOption('urlrewriting'),
-//    'tooltip'         => OledrionUtility::getModuleOption('infotips'),
-//    'advertisement'   => OledrionUtility::getModuleOption('advertisement'),
-//    'rss'             => OledrionUtility::getModuleOption('use_rss'),
-//    'nostock_msg'     => OledrionUtility::getModuleOption('nostock_msg'),
-//    'use_price'       => OledrionUtility::getModuleOption('use_price'),
-//    'restrict_orders' => OledrionUtility::getModuleOption('restrict_orders'),
-//    'isAdmin'         => OledrionUtility::isAdmin()
+//    'money_short'     => \Xoopsmodules\oledrion\Utility::getModuleOption('money_short'),
+//    'money_full'      => \Xoopsmodules\oledrion\Utility::getModuleOption('money_full'),
+//    'url_rewriting'   => \Xoopsmodules\oledrion\Utility::getModuleOption('urlrewriting'),
+//    'tooltip'         => \Xoopsmodules\oledrion\Utility::getModuleOption('infotips'),
+//    'advertisement'   => \Xoopsmodules\oledrion\Utility::getModuleOption('advertisement'),
+//    'rss'             => \Xoopsmodules\oledrion\Utility::getModuleOption('use_rss'),
+//    'nostock_msg'     => \Xoopsmodules\oledrion\Utility::getModuleOption('nostock_msg'),
+//    'use_price'       => \Xoopsmodules\oledrion\Utility::getModuleOption('use_price'),
+//    'restrict_orders' => \Xoopsmodules\oledrion\Utility::getModuleOption('restrict_orders'),
+//    'isAdmin'         => \Xoopsmodules\oledrion\Utility::isAdmin()
         'money_short'     => $helper->getConfig('money_short'),
         'money_full'      => $helper->getConfig('money_full'),
         'url_rewriting'   => $helper->getConfig('urlrewriting'),
@@ -132,3 +146,25 @@ $mod_pref = [
         'isAdmin'         => $helper->isUserAdmin(),
 
 ];
+
+
+$pathIcon16    = \Xmf\Module\Admin::iconUrl('', 16);
+$pathIcon32    = \Xmf\Module\Admin::iconUrl('', 32);
+$pathModIcon16 = $helper->getModule()->getInfo('modicons16');
+$pathModIcon32 = $helper->getModule()->getInfo('modicons32');
+
+$debug = false;
+
+if (!isset($GLOBALS['xoopsTpl']) || !($GLOBALS['xoopsTpl'] instanceof \XoopsTpl)) {
+    require_once $GLOBALS['xoops']->path('class/template.php');
+    $xoopsTpl = new \XoopsTpl();
+}
+
+//module URL for templates
+$GLOBALS['xoopsTpl']->assign('mod_url', XOOPS_URL . '/modules/' . $moduleDirName);
+
+// Local icons path
+$GLOBALS['xoopsTpl']->assign('pathModIcon16', XOOPS_URL . '/modules/' . $moduleDirName . '/' . $pathModIcon16);
+$GLOBALS['xoopsTpl']->assign('pathModIcon32', $pathModIcon32);
+
+//module handlers

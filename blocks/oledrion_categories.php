@@ -29,7 +29,7 @@ function b_oledrion_category_show($options)
     include XOOPS_ROOT_PATH . '/modules/oledrion/include/common.php';
     $xoTheme->addStylesheet(OLEDRION_URL . 'assets/css/oledrion.css');
 
-    $block['nostock_msg'] = OledrionUtility::getModuleOption('nostock_msg');
+    $block['nostock_msg'] = \Xoopsmodules\oledrion\Utility::getModuleOption('nostock_msg');
 
     if (0 == (int)$options[0]) { // Catégories selon la page en cours
         $block['block_option'] = 0;
@@ -47,7 +47,7 @@ function b_oledrion_category_show($options)
             $tblChilds      = $mytree->getAllChild($cat_cid);
             //$tblChilds = array_reverse($tblChilds);
             foreach ($tblChilds as $item) {
-                $tbl_tmp[] = "<a href='" . $item->getLink() . "' title='" . OledrionUtility::makeHrefTitle($item->getVar('cat_title')) . "'>" . $item->getVar('cat_title') . '</a>';
+                $tbl_tmp[] = "<a href='" . $item->getLink() . "' title='" . \Xoopsmodules\oledrion\Utility::makeHrefTitle($item->getVar('cat_title')) . "'>" . $item->getVar('cat_title') . '</a>';
             }
             $block['block_categories'] = $tbl_tmp;
 
@@ -64,7 +64,7 @@ function b_oledrion_category_show($options)
             $criteria->setSort('cat_title');
             $tbl_categories = $h_oledrion_cat->getObjects($criteria, true);
             foreach ($tbl_categories as $item) {
-                $tbl_tmp[] = "<a href='" . $item->getLink() . "' title='" . OledrionUtility::makeHrefTitle($item->getVar('cat_title')) . "'>" . $item->getVar('cat_title') . '</a>';
+                $tbl_tmp[] = "<a href='" . $item->getLink() . "' title='" . \Xoopsmodules\oledrion\Utility::makeHrefTitle($item->getVar('cat_title')) . "'>" . $item->getVar('cat_title') . '</a>';
             }
             $block['block_categories'] = $tbl_tmp;
         }

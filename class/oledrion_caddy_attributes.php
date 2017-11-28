@@ -25,7 +25,7 @@ require_once __DIR__ . '/classheader.php';
 /**
  * Class Oledrion_caddy_attributes
  */
-class Oledrion_caddy_attributes extends Oledrion_Object
+class Oledrion_caddy_attributes extends OledrionObject
 {
     /**
      * constructor
@@ -78,17 +78,17 @@ class Oledrion_caddy_attributes extends Oledrion_Object
         $format = 'e';
         $names  = $this->getOption('ca_attribute_names', $format);
         $values = $this->getOption('ca_attribute_values', $format);
-        if (OledrionUtility::getModuleOption('use_price')) {
+        if (\Xoopsmodules\oledrion\Utility::getModuleOption('use_price')) {
             $prices = $this->getOption('ca_attribute_prices', $format);
         }
         $names[]  = $name;
         $values[] = $value;
-        if (OledrionUtility::getModuleOption('use_price')) {
+        if (\Xoopsmodules\oledrion\Utility::getModuleOption('use_price')) {
             $prices[] = $price;
         }
         $this->setVar('ca_attribute_names', implode(OLEDRION_ATTRIBUTE_SEPARATOR, $names));
         $this->setVar('ca_attribute_values', implode(OLEDRION_ATTRIBUTE_SEPARATOR, $values));
-        if (OledrionUtility::getModuleOption('use_price')) {
+        if (\Xoopsmodules\oledrion\Utility::getModuleOption('use_price')) {
             $this->setVar('ca_attribute_prices', implode(OLEDRION_ATTRIBUTE_SEPARATOR, $prices));
         }
 
@@ -112,7 +112,7 @@ class Oledrion_caddy_attributes extends Oledrion_Object
     /**
      * Retourne les informations formatées de l'attribut pour affichage dans la facture
      *
-     * @param  oledrion_products $product Le produit concerné par l'attribut
+     * @param  Oledrion_products $product Le produit concerné par l'attribut
      * @param  string            $format
      * @return array
      * @since 2.3.2009.03.23
@@ -121,7 +121,7 @@ class Oledrion_caddy_attributes extends Oledrion_Object
     {
         $names = $prices = $ret = [];
         $names = $this->getOption('ca_attribute_names', $format);
-        if (OledrionUtility::getModuleOption('use_price')) {
+        if (\Xoopsmodules\oledrion\Utility::getModuleOption('use_price')) {
             $prices = $this->getOption('ca_attribute_prices', $format);
         }
 
@@ -129,9 +129,9 @@ class Oledrion_caddy_attributes extends Oledrion_Object
         $counter           = 0;
         foreach ($names as $name) {
             $price = 0;
-            if (OledrionUtility::getModuleOption('use_price')) {
+            if (\Xoopsmodules\oledrion\Utility::getModuleOption('use_price')) {
                 if (isset($prices[$counter])) {
-                    $price = OledrionUtility::getAmountWithVat((float)$prices[$counter], $product->getVar('product_vat_id'));
+                    $price = \Xoopsmodules\oledrion\Utility::getAmountWithVat((float)$prices[$counter], $product->getVar('product_vat_id'));
                     $price = $oledrion_Currency->amountForDisplay($price);
                 }
             }
@@ -146,7 +146,7 @@ class Oledrion_caddy_attributes extends Oledrion_Object
 /**
  * Class OledrionOledrion_caddy_attributesHandler
  */
-class OledrionOledrion_caddy_attributesHandler extends Oledrion_XoopsPersistableObjectHandler
+class OledrionOledrion_caddy_attributesHandler extends OledrionPersistableObjectHandler
 {
     /**
      * OledrionOledrion_caddy_attributesHandler constructor.
@@ -154,7 +154,7 @@ class OledrionOledrion_caddy_attributesHandler extends Oledrion_XoopsPersistable
      */
     public function __construct(XoopsDatabase $db)
     { //                                Table                   Classe                      Id
-        parent::__construct($db, 'oledrion_caddy_attributes', 'oledrion_caddy_attributes', 'ca_id');
+        parent::__construct($db, 'oledrion_caddy_attributes', 'Oledrion_caddy_attributes', 'ca_id');
     }
 
     /**

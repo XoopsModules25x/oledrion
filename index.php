@@ -28,16 +28,16 @@ require_once OLEDRION_PATH . 'class/registryfile.php';
 
 // Initialisations
 $start     = isset($_GET['start']) ? (int)$_GET['start'] : 0;
-$limit     = OledrionUtility::getModuleOption('newproducts'); // Nombre maximum d'éléments à afficher
+$limit     = \Xoopsmodules\oledrion\Utility::getModuleOption('newproducts'); // Nombre maximum d'éléments à afficher
 $baseurl   = OLEDRION_URL . basename(__FILE__); // URL de ce script (sans son nom)
 $registry  = new oledrion_registryfile();
 $lastTitle = '';
 
 // Quelques options pour le template
-$xoopsTpl->assign('nostock_msg', OledrionUtility::getModuleOption('nostock_msg'));
+$xoopsTpl->assign('nostock_msg', \Xoopsmodules\oledrion\Utility::getModuleOption('nostock_msg'));
 $xoopsTpl->assign('mod_pref', $mod_pref); // Préférences du module
 $xoopsTpl->assign('welcome_msg', nl2br($registry->getfile(OLEDRION_TEXTFILE1)));
-$xoopsTpl->assign('columnsCount', OledrionUtility::getModuleOption('index_colums'));
+$xoopsTpl->assign('columnsCount', \Xoopsmodules\oledrion\Utility::getModuleOption('index_colums'));
 
 // Lecture des TVA ********************************************************************************
 $vatArray = $h_oledrion_vat->getAllVats(new Oledrion_parameters());
@@ -73,7 +73,7 @@ foreach ($categories as $category) {
     ++$count;
 }
 
-OledrionUtility::setCSS();
-OledrionUtility::setLocalCSS($xoopsConfig['language']);
-OledrionUtility::setMetas($lastTitle . ' - ' . OledrionUtility::getModuleName(), OledrionUtility::getModuleName());
+\Xoopsmodules\oledrion\Utility::setCSS();
+\Xoopsmodules\oledrion\Utility::setLocalCSS($xoopsConfig['language']);
+\Xoopsmodules\oledrion\Utility::setMetas($lastTitle . ' - ' . \Xoopsmodules\oledrion\Utility::getModuleName(), \Xoopsmodules\oledrion\Utility::getModuleName());
 require_once XOOPS_ROOT_PATH . '/footer.php';
