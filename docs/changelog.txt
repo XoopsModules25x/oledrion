@@ -1,4 +1,4 @@
-<h5>2.34  Beta 5                      [NOT RELEASED]</h5>
+<h5>2.35  Alpha 1                  [NOT RELEASED]</h5>
 <hr>
 - moved all images, CSS, and JS files to /assets (mamba)
 - renamed .html Smarty templates to .tpl (mamba)
@@ -23,6 +23,7 @@
 - added install checks for PHP 5.5 and XOOPS 2.5.8 (mamba)
 - added auto-creation of upload folders (mamba)
 - moved functions to Utility class (mamba)
+- added namespaces (mamba)
 
 
 <h5>2.34  Beta 4                      [NOT RELEASED]</h5>

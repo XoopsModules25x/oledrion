@@ -154,17 +154,19 @@ $pathModIcon16 = $helper->getModule()->getInfo('modicons16');
 $pathModIcon32 = $helper->getModule()->getInfo('modicons32');
 
 $debug = false;
+global $xoopsTpl;
 
 if (!isset($GLOBALS['xoopsTpl']) || !($GLOBALS['xoopsTpl'] instanceof \XoopsTpl)) {
     require_once $GLOBALS['xoops']->path('class/template.php');
     $xoopsTpl = new \XoopsTpl();
 }
 
+
 //module URL for templates
-$GLOBALS['xoopsTpl']->assign('mod_url', XOOPS_URL . '/modules/' . $moduleDirName);
+$xoopsTpl->assign('mod_url', XOOPS_URL . '/modules/' . $moduleDirName);
 
 // Local icons path
-$GLOBALS['xoopsTpl']->assign('pathModIcon16', XOOPS_URL . '/modules/' . $moduleDirName . '/' . $pathModIcon16);
-$GLOBALS['xoopsTpl']->assign('pathModIcon32', $pathModIcon32);
+$xoopsTpl->assign('pathModIcon16', XOOPS_URL . '/modules/' . $moduleDirName . '/' . $pathModIcon16);
+$xoopsTpl->assign('pathModIcon32', $pathModIcon32);
 
 //module handlers

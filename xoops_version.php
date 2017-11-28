@@ -21,9 +21,9 @@
 
 $moduleDirName = basename(__DIR__);
 
-$modversion['version']       = 2.34;
-$modversion['module_status'] = 'Beta 5';
-$modversion['release_date']  = '2015/01/15';
+$modversion['version']       = 2.35;
+$modversion['module_status'] = 'Alpha 1';
+$modversion['release_date']  = '2017/11/22';
 $modversion['name']          = _MI_OLEDRION_NAME;
 $modversion['description']   = _MI_OLEDRION_DESC;
 $modversion['author']        = 'Hervé Thouzard (http://www.herve-thouzard.com/)';
