@@ -646,10 +646,9 @@ class Oledrion_attributes extends OledrionObject
             if (isset($Productattributes[$this->getVar('attribute_id')])) {
                 $defaultValue = $Productattributes[$this->getVar('attribute_id')];
             } else {    // On prend la valeur par défaut
+                $defaultValue = [$this->getVar('attribute_default_value')];
                 if (OLEDRION_ATTRIBUTE_RADIO == $this->attribute_type) {    // Pour les boutons radio, il ne peut y avoir qu'un élément de sélectionné
                     $defaultValue = $this->getVar('attribute_default_value');
-                } else {
-                    $defaultValue = [$this->getVar('attribute_default_value')];
                 }
             }
             if (!is_array($defaultValue)) {
@@ -687,10 +686,9 @@ class Oledrion_attributes extends OledrionObject
             case OLEDRION_ATTRIBUTE_CHECKBOX:      // Cases à cocher
                 $templateName = 'oledrion_attribute_checkbox.tpl';
                 $delimiter    = '';
+                $delimiter = '<br>';
                 if (OLEDRION_ATTRIBUTE_CHECKBOX_WHITE_SPACE == $option1) {
                     $delimiter = ' ';
-                } else {
-                    $delimiter = '<br>';
                 }
                 $template->assign('delimiter', $delimiter);
                 break;
@@ -698,10 +696,9 @@ class Oledrion_attributes extends OledrionObject
             case OLEDRION_ATTRIBUTE_RADIO:         // Boutons radio
                 $templateName = 'oledrion_attribute_radio.tpl';
                 $delimiter    = '';
+                $delimiter = '<br>';
                 if (OLEDRION_ATTRIBUTE_CHECKBOX_WHITE_SPACE == $option1) {
                     $delimiter = ' ';
-                } else {
-                    $delimiter = '<br>';
                 }
                 $template->assign('delimiter', $delimiter);
                 break;

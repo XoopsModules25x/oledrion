@@ -33,12 +33,11 @@ switch ($action) {
 
         $start   = isset($_GET['start']) ? (int)$_GET['start'] : 0;
         $filter3 = $totalOrder = 0;
+        $filter3 = 1;
         if (isset($_POST['filter3'])) {
             $filter3 = (int)$_POST['filter3'];
         } elseif (isset($_SESSION['filter3'])) {
             $filter3 = (int)$_SESSION['filter3'];
-        } else {
-            $filter3 = 1;
         }
         $_SESSION['filter3'] = $filter3;
         $selected            = ['', '', '', '', '', ''];

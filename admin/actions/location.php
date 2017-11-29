@@ -51,10 +51,9 @@ switch ($action) {
             $actions[] = "<a href='$baseurl?op=location&action=edit&id=" . $id . "' title='" . _OLEDRION_EDIT . "'>" . $icons['edit'] . '</a>';
             $actions[] = "<a href='$baseurl?op=location&action=delete&id=" . $id . "' title='" . _OLEDRION_DELETE . "'" . $conf_msg . '>' . $icons['delete'] . '</a>';
             $online    = 1 == $item->getVar('location_online') ? _YES : _NO;
+            $location_type = _AM_OLEDRION_LOCATION_LOCATION;
             if ('parent' === $item->getVar('location_type')) {
                 $location_type = _AM_OLEDRION_LOCATION_PARENT;
-            } else {
-                $location_type = _AM_OLEDRION_LOCATION_LOCATION;
             }
             echo "<tr class='" . $class . "'>\n";
             echo "<td align='center'>" . $id . "</td><td align='center'>" . $item->getVar('location_title') . "</td><td align='center'>" . $location_type . "</td><td align='center'>" . $online . "</td><td align='center'>" . implode(' ', $actions) . "</td>\n";

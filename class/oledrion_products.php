@@ -276,7 +276,7 @@ class Oledrion_products extends OledrionObject
     /**
      * Retourne le prix TTC du prix réduit du produit courant
      *
-     * @return floatval Le montant TTC du prix réduit
+     * @return \Xoopsmodules\oledrion\floatval Le montant TTC du prix réduit
      */
     public function getDiscountTTC()
     {
@@ -286,7 +286,7 @@ class Oledrion_products extends OledrionObject
     /**
      * Retourne le montant TTC du prix normal du produit
      *
-     * @return floatval
+     * @return \Xoopsmodules\oledrion\floatval
      */
     public function getTTC()
     {

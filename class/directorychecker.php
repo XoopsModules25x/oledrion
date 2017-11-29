@@ -131,7 +131,7 @@ switch ($dircheck) {
         if (isset($_GET['languageConstants'])) {
             $languageConstants = json_decode($_GET['languageConstants']);
         }
-        $result = directorychecker::createDirectory($path);
+        $result = Directorychecker::createDirectory($path);
         $msg    = $result ? $languageConstants[0] : $languageConstants[1];
         redirect_header($redirect, 2, $msg . ': ' . $path);
 
@@ -150,7 +150,7 @@ switch ($dircheck) {
         if (isset($_GET['languageConstants'])) {
             $languageConstants = json_decode($_GET['languageConstants']);
         }
-        $result = directorychecker::setDirectoryPermissions($path, $mode);
+        $result = Directorychecker::setDirectoryPermissions($path, $mode);
         $msg    = $result ? $languageConstants[0] : $languageConstants[1];
         redirect_header($redirect, 2, $msg . ': ' . $path);
 

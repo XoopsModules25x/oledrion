@@ -60,7 +60,8 @@ if (!$tpl->is_cached('db:oledrion_rss.tpl', $cat_cid)) {
     $tpl->assign('channel_webmaster', xoops_utf8_encode($email));
     $tpl->assign('channel_editor', xoops_utf8_encode($email));
     $tpl->assign('channel_category', xoops_utf8_encode($categoryTitle));
-    $tpl->assign('channel_generator', xoops_utf8_encode(\Xoopsmodules\oledrion\Utility::getModuleName()));
+    $temp = \Xoopsmodules\oledrion\Utility::getModuleName();
+    $tpl->assign('channel_generator', xoops_utf8_encode($temp));
     $tpl->assign('channel_language', _LANGCODE);
     $tpl->assign('image_url', XOOPS_URL . '/images/logo.png');
     $dimention = getimagesize(XOOPS_ROOT_PATH . '/images/logo.png');

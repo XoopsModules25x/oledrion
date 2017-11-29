@@ -74,22 +74,22 @@ switch ($action) {
         ];
 
         //$path =  $xoopsModuleConfig['uploaddir'] . '/';
-        $adminObject->addConfigBoxLine(oledrion\DirectoryChecker::getDirectoryStatus(OLEDRION_UPLOAD_PATH, 0777, $languageConstants, $redirectFile));
+        $adminObject->addConfigBoxLine(oledrion\Directorychecker::getDirectoryStatus(OLEDRION_UPLOAD_PATH, 0777, $languageConstants, $redirectFile));
 
         //$path = XOOPS_ROOT_PATH . '/' . $xoopsModuleConfig['screenshots'] . '/';
-        $adminObject->addConfigBoxLine(oledrion\DirectoryChecker::getDirectoryStatus(OLEDRION_ATTACHED_FILES_PATH, 0777, $languageConstants, $redirectFile));
+        $adminObject->addConfigBoxLine(oledrion\Directorychecker::getDirectoryStatus(OLEDRION_ATTACHED_FILES_PATH, 0777, $languageConstants, $redirectFile));
 
         //$path = XOOPS_ROOT_PATH . '/' . $xoopsModuleConfig['catimage'] . '/';
-        $adminObject->addConfigBoxLine(oledrion\DirectoryChecker::getDirectoryStatus(OLEDRION_PICTURES_PATH, 0777, $languageConstants, $redirectFile));
+        $adminObject->addConfigBoxLine(oledrion\Directorychecker::getDirectoryStatus(OLEDRION_PICTURES_PATH, 0777, $languageConstants, $redirectFile));
 
         //$path = XOOPS_ROOT_PATH . '/' . $xoopsModuleConfig['mainimagedir'] . '/';
-        $adminObject->addConfigBoxLine(oledrion\DirectoryChecker::getDirectoryStatus(OLEDRION_CSV_PATH, 0777, $languageConstants, $redirectFile));
+        $adminObject->addConfigBoxLine(oledrion\Directorychecker::getDirectoryStatus(OLEDRION_CSV_PATH, 0777, $languageConstants, $redirectFile));
 
         //$path = XOOPS_ROOT_PATH . '/' . $xoopsModuleConfig['catimage'] . '/';
-        $adminObject->addConfigBoxLine(oledrion\DirectoryChecker::getDirectoryStatus(OLEDRION_CACHE_PATH, 0777, $languageConstants, $redirectFile));
+        $adminObject->addConfigBoxLine(oledrion\Directorychecker::getDirectoryStatus(OLEDRION_CACHE_PATH, 0777, $languageConstants, $redirectFile));
 
         //$path = XOOPS_ROOT_PATH . '/' . $xoopsModuleConfig['mainimagedir'] . '/';
-        $adminObject->addConfigBoxLine(oledrion\DirectoryChecker::getDirectoryStatus(OLEDRION_TEXT_PATH, 0777, $languageConstants, $redirectFile));
+        $adminObject->addConfigBoxLine(oledrion\Directorychecker::getDirectoryStatus(OLEDRION_TEXT_PATH, 0777, $languageConstants, $redirectFile));
 
         //$adminObject->displayNavigation(basename(__FILE__));
         //$adminObject->displayIndex();

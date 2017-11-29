@@ -59,7 +59,7 @@ class Utility extends \XoopsObject
     /**
      * Access the only instance of this class
      *
-     * @return OledrionUtility
+     * @return \Xoopsmodules\oledrion\Utility
      *
      * @static
      * @staticvar   object
@@ -155,7 +155,7 @@ class Utility extends \XoopsObject
      * @param  string $width   Editor's width
      * @param  string $height  Editor's height
      * @param  string $supplemental
-     * @return XoopsEditor The editor to use
+     * @return bool|\XoopsFormEditor The editor to use
      */
     public static function getWysiwygForm(
         $caption,
@@ -560,10 +560,10 @@ class Utility extends \XoopsObject
         if (self::isX23()) {
             return false;
         }
-        if (false !== strpos(strtolower(XOOPS_VERSION), 'impresscms')) {
+        if (false !== stripos(XOOPS_VERSION, 'impresscms')) {
             return false;
         }
-        if (false === strpos(strtolower(XOOPS_VERSION), 'legacy')) {
+        if (false === stripos(XOOPS_VERSION, 'legacy')) {
             $xv = xoops_trim(str_replace('XOOPS ', '', XOOPS_VERSION));
             if ((int)substr($xv, 4, 2) >= 17) {
                 return false;
@@ -1132,10 +1132,9 @@ class Utility extends \XoopsObject
                 } else {
                     $permittedtypes = $mimeTypes;
                 }
+                $uploadSize = $uploadMaxSize;
                 if (null === $uploadMaxSize) {
                     $uploadSize = self::getModuleOption('maxuploadsize');
-                } else {
-                    $uploadSize = $uploadMaxSize;
                 }
                 $uploader = new \XoopsMediaUploader($dstpath, $permittedtypes, $uploadSize, $maxWidth, $maxHeight);
                 //$uploader->allowUnknownTypes = true;
@@ -1384,8 +1383,8 @@ class Utility extends \XoopsObject
     /**
      * Calcul du TTC à partir du HT et de la TVA
      *
-     * @param  float   $ht     Montant HT
-     * @param  float   $vat    Taux de TVA
+     * @param int      $ht     Montant HT
+     * @param int      $vat    Taux de TVA
      * @param  boolean $edit   Si faux alors le montant est formaté pour affichage sinon il reste tel quel
      * @param  string  $format Format d'affichage du résultat (long ou court)
      * @return mixed   Soit une chaine soit un flottant
@@ -1493,7 +1492,7 @@ class Utility extends \XoopsObject
     /**
      * Retourne un criteria compo qui permet de filtrer les produits sur le mois courant
      *
-     * @return CriteriaCompo
+     * @return \CriteriaCompo
      */
     public static function getThisMonthCriteria()
     {

@@ -583,10 +583,10 @@ class OledrionUtility
         if (self::isX23()) {
             return false;
         }
-        if (false !== strpos(strtolower(XOOPS_VERSION), 'impresscms')) {
+        if (false !== stripos(XOOPS_VERSION, 'impresscms')) {
             return false;
         }
-        if (false === strpos(strtolower(XOOPS_VERSION), 'legacy')) {
+        if (false === stripos(XOOPS_VERSION, 'legacy')) {
             $xv = xoops_trim(str_replace('XOOPS ', '', XOOPS_VERSION));
             if ((int)substr($xv, 4, 2) >= 17) {
                 return false;
@@ -1155,10 +1155,9 @@ class OledrionUtility
                 } else {
                     $permittedtypes = $mimeTypes;
                 }
+                $uploadSize = $uploadMaxSize;
                 if (null === $uploadMaxSize) {
                     $uploadSize = self::getModuleOption('maxuploadsize');
-                } else {
-                    $uploadSize = $uploadMaxSize;
                 }
                 $uploader = new XoopsMediaUploader($dstpath, $permittedtypes, $uploadSize, $maxWidth, $maxHeight);
                 //$uploader->allowUnknownTypes = true;

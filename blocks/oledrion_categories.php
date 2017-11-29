@@ -76,10 +76,9 @@ function b_oledrion_category_show($options)
         $mytree         = new Oledrion_XoopsObjectTree($tbl_categories, 'cat_cid', 'cat_pid');
         $jump           = OLEDRION_URL . 'category.php?cat_cid=';
         $additional     = "onchange='location=\"" . $jump . "\"+this.options[this.selectedIndex].value'";
+        $cat_cid = 0;
         if (isset($GLOBALS['current_category']) && $GLOBALS['current_category'] != -1) {
             $cat_cid = (int)$GLOBALS['current_category'];
-        } else {
-            $cat_cid = 0;
         }
         $htmlSelect          = $mytree->makeSelBox('cat_cid', 'cat_title', '-', $cat_cid, false, 0, $additional);
         $block['htmlSelect'] = $htmlSelect;

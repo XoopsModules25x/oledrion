@@ -52,10 +52,9 @@ switch ($action) {
             $actions[] = "<a href='$baseurl?op=payment&action=edit&id=" . $id . "' title='" . _OLEDRION_EDIT . "'>" . $icons['edit'] . '</a>';
             $actions[] = "<a href='$baseurl?op=payment&action=delete&id=" . $id . "' title='" . _OLEDRION_DELETE . "'" . $conf_msg . '>' . $icons['delete'] . '</a>';
             $online    = 1 == $item->getVar('payment_online') ? _YES : _NO;
+            $payment_type = _AM_OLEDRION_PAYMENT_OFFLINE;
             if ('online' === $item->getVar('payment_type')) {
                 $payment_type = _AM_OLEDRION_PAYMENT_ONLINE . '( ' . $item->getVar('payment_gateway') . ' )';
-            } else {
-                $payment_type = _AM_OLEDRION_PAYMENT_OFFLINE;
             }
             echo "<tr class='" . $class . "'>\n";
             echo "<td align='center'>" . $id . "</td><td align='center'>" . $item->getVar('payment_title') . "</td><td align='center'>" . $payment_type . "</td><td align='center'>" . $online . "</td><td align='center'>" . implode(' ', $actions) . "</td>\n";

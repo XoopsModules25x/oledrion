@@ -15,7 +15,7 @@
  * @return bool true if ready to uninstall, false if not
  */
 
-function xoops_module_pre_uninstall_xxxx(XoopsModule $module)
+function xoops_module_pre_uninstall_oledrion(XoopsModule $module)
 {
     // Do some synchronization
     return true;
@@ -28,7 +28,7 @@ function xoops_module_pre_uninstall_xxxx(XoopsModule $module)
  *
  * @return bool true if uninstallation successful, false if not
  */
-function xoops_module_uninstall_xxxx(XoopsModule $module)
+function xoops_module_uninstall_oledrion(XoopsModule $module)
 {
     return true;
 }
@@ -42,7 +42,7 @@ function xoops_module_uninstall_xxxx(XoopsModule $module)
  *
  * @return bool
  */
-function xoops_module_uninstall_XXXX(XoopsModule $module)
+function xoops_module_uninstall_oledrion(XoopsModule $module)
 {
     // global $xoopsDB,$xoopsConfig;
     //

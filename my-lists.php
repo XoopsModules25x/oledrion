@@ -33,12 +33,11 @@ if (0 == $uid) {
 
 $baseurl  = OLEDRION_URL . basename(__FILE__); // URL de ce script
 $handlers = OledrionHandler::getInstance();
+$op = 'default';
 if (isset($_GET['op'])) {
     $op = $_GET['op'];
 } elseif (isset($_POST['op'])) {
     $op = $_POST['op'];
-} else {
-    $op = 'default';
 }
 $xoopsTpl->assign('baseurl', $baseurl);
 \Xoopsmodules\oledrion\Utility::loadLanguageFile('modinfo.php');
@@ -363,10 +362,9 @@ switch ($op) {
         // ************************************************************************
         $xoopsTpl->assign('op', $op);
         $sform = listForm($op, 0);
+        $title = _OLEDRION_ADD_LIST;
         if ('edit' === $op) {
             $title = _OLEDRION_EDIT_LIST;
-        } else {
-            $title = _OLEDRION_ADD_LIST;
         }
         $breadcrumb = [
             OLEDRION_URL . 'all-lists.php'    => _MI_OLEDRION_SMNAME11,
