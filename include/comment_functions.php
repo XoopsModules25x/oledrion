@@ -24,12 +24,12 @@
 function oledrion_com_update($product_id, $total_num)
 {
     include XOOPS_ROOT_PATH . '/modules/oledrion/include/common.php';
-    global $h_oledrion_products;
-    if (!is_object($h_oledrion_products)) {
-        $handlers            = OledrionHandler::getInstance();
-        $h_oledrion_products = $handlers->oledrion_products;
+    global $productsHandler;
+    if (!is_object($productsHandler)) {
+//        $handlers            = HandlerManager::getInstance();
+        $productsHandler = $handlers->oledrion_products;
     }
-    $h_oledrion_products->updateCommentsCount($product_id, $total_num);
+    $productsHandler->updateCommentsCount($product_id, $total_num);
 }
 
 /**

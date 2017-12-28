@@ -47,7 +47,7 @@ function oledrion_notify_iteminfo($category, $item_id)
     if ('new_category' === $category) {
         include OLEDRION_PATH . 'include/common.php';
         $category = null;
-        $category = $h_oledrion_cat->get($item_id);
+        $category = $categoryHandler->get($item_id);
         if (is_object($category)) {
             $item['name'] = $category->getVar('cat_title');
             $item['url']  = OLEDRION_URL . 'category.php?cat_cid=' . $item_id;
@@ -59,7 +59,7 @@ function oledrion_notify_iteminfo($category, $item_id)
     if ('new_product' === $category) {
         include OLEDRION_PATH . 'include/common.php';
         $product = null;
-        $product = $h_oledrion_products->get($item_id);
+        $product = $productsHandler->get($item_id);
         if (is_object($product)) {
             $item['name'] = $product->getVar('product_title');
             $item['url']  = OLEDRION_URL . 'product.php?product_id=' . $item_id;

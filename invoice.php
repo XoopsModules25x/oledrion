@@ -17,6 +17,8 @@
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
  */
 
+use Xoopsmodules\oledrion;
+
 require_once __DIR__ . '/header.php';
 $GLOBALS['current_category'] = -1;
 
@@ -25,46 +27,46 @@ $op = isset($_GET['op']) ? $_GET['op'] : 'default';
 if (isset($_GET['id'])) {
     $cmdId = (int)$_GET['id'];
 } else {
-    \Xoopsmodules\oledrion\Utility::redirect(_OLEDRION_ERROR11, 'index.php', 6);
+    oledrion\Utility::redirect(_OLEDRION_ERROR11, 'index.php', 6);
 }
 
 if (isset($_GET['pass'])) {
     $pass = $_GET['pass'];
 } else {
-    if (!\Xoopsmodules\oledrion\Utility::isAdmin()) {
-        \Xoopsmodules\oledrion\Utility::redirect(_OLEDRION_ERROR11, 'index.php', 6);
+    if (!oledrion\Utility::isAdmin()) {
+        oledrion\Utility::redirect(_OLEDRION_ERROR11, 'index.php', 6);
     }
 }
 
 $order = null;
-$order = $h_oledrion_commands->get($cmdId);
+$order = $commandsHandler->get($cmdId);
 if (!is_object($order)) {
-    \Xoopsmodules\oledrion\Utility::redirect(_OLEDRION_ERROR11, 'index.php', 6);
+    oledrion\Utility::redirect(_OLEDRION_ERROR11, 'index.php', 6);
 }
 
 // Vérification du mot de passe (si pas admin)
-if (!\Xoopsmodules\oledrion\Utility::isAdmin()) {
+if (!oledrion\Utility::isAdmin()) {
     if ($pass != $order->getVar('cmd_password')) {
-        \Xoopsmodules\oledrion\Utility::redirect(_OLEDRION_ERROR11, 'index.php', 6);
+        oledrion\Utility::redirect(_OLEDRION_ERROR11, 'index.php', 6);
     }
 }
 
 // Vérification de la validité de la facture (si pas admin)
-/* if (!\Xoopsmodules\oledrion\Utility::isAdmin()) {
+/* if (!oledrion\Utility::isAdmin()) {
     if ($order->getVar('cmd_state') != OLEDRION_STATE_VALIDATED) { // Commande non validée
-        \Xoopsmodules\oledrion\Utility::redirect(_OLEDRION_ERROR12, 'index.php', 6);
+        oledrion\Utility::redirect(_OLEDRION_ERROR12, 'index.php', 6);
     }
 } */
 
 $caddy = $tmp = $products = $vats = $manufacturers = $tmp2 = $manufacturers = $productsManufacturers = [];
 
 // Récupération des TVA
-$vats = $h_oledrion_vat->getAllVats(new Oledrion_parameters());
+$vats = $vatHandler->getAllVats(new oledrion\Parameters());
 
 // Récupération des caddy associés
-$caddy = $h_oledrion_caddy->getCaddyFromCommand($cmdId);
+$caddy = $caddyHandler->getCaddyFromCommand($cmdId);
 if (0 == count($caddy)) {
-    \Xoopsmodules\oledrion\Utility::redirect(_OLEDRION_ERROR11, 'index.php', 6);
+    oledrion\Utility::redirect(_OLEDRION_ERROR11, 'index.php', 6);
 }
 
 // Récupération de la liste des produits associés
@@ -73,16 +75,16 @@ foreach ($caddy as $item) {
 }
 
 // Recherche des produits ***********************************************************************************************
-$products = $h_oledrion_products->getProductsFromIDs($tmp, true);
+$products = $productsHandler->getProductsFromIDs($tmp, true);
 
 // Recherche des fabricants **********************************************************************************************
-$tmp2 = $h_oledrion_productsmanu->getFromProductsIds($tmp);
+$tmp2 = $productsmanuHandler->getFromProductsIds($tmp);
 $tmp  = [];
 foreach ($tmp2 as $item) {
     $tmp[]                                                   = $item->getVar('pm_manu_id');
     $productsManufacturers[$item->getVar('pm_product_id')][] = $item;
 }
-$manufacturers = $h_oledrion_manufacturer->getManufacturersFromIds($tmp);
+$manufacturers = $manufacturerHandler->getManufacturersFromIds($tmp);
 
 switch ($op) {
     case 'print':
@@ -90,8 +92,8 @@ switch ($op) {
 
         // Informations sur la commande ***************************************************************************************
         $xoopsTpl->assign('order', $order->toArray());
-        $xoopsTpl->assign('ask_vatnumber', \Xoopsmodules\oledrion\Utility::getModuleOption('ask_vatnumber'));
-        $handlers = OledrionHandler::getInstance();
+        $xoopsTpl->assign('ask_vatnumber', oledrion\Utility::getModuleOption('ask_vatnumber'));
+//        $handlers = HandlerManager::getInstance();
 
         // Boucle sur le caddy ************************************************************************************************
         foreach ($caddy as $itemCaddy) {
@@ -99,8 +101,8 @@ switch ($op) {
             $product            = $products[$itemCaddy->getVar('caddy_product_id')];
             $productForTemplate = $product->toArray(); // Produit
             // Est-ce qu'il y a des attributs ?
-            if ($handlers->h_oledrion_caddy_attributes->getAttributesCountForCaddy($itemCaddy->getVar('caddy_id')) > 0) {
-                $productAttributes = $handlers->h_oledrion_caddy_attributes->getFormatedAttributesForCaddy($itemCaddy->getVar('caddy_id'), $product);
+            if ($caddyAttributesHandler->getAttributesCountForCaddy($itemCaddy->getVar('caddy_id')) > 0) {
+                $productAttributes = $caddyAttributesHandler->getFormatedAttributesForCaddy($itemCaddy->getVar('caddy_id'), $product);
             }
             $productForTemplate['product_attributes'] = $productAttributes;
 
@@ -131,10 +133,10 @@ switch ($op) {
 
         // Informations sur la commande ***************************************************************************************
         $xoopsTpl->assign('order', $order->toArray());
-        $xoopsTpl->assign('ask_vatnumber', \Xoopsmodules\oledrion\Utility::getModuleOption('ask_vatnumber'));
+        $xoopsTpl->assign('ask_vatnumber', oledrion\Utility::getModuleOption('ask_vatnumber'));
         $xoopsTpl->assign('printurl', OLEDRION_URL . basename(__FILE__) . '?op=print&id=' . $order->getVar('cmd_id') . '&pass=' . $order->getVar('cmd_password'));
 
-        $handlers = OledrionHandler::getInstance();
+//        $handlers = HandlerManager::getInstance();
 
         // Boucle sur le caddy ************************************************************************************************
         foreach ($caddy as $itemCaddy) {
@@ -142,8 +144,8 @@ switch ($op) {
             $product            = $products[$itemCaddy->getVar('caddy_product_id')];
             $productForTemplate = $product->toArray(); // Produit
             // Est-ce qu'il y a des attributs ?
-            if ($handlers->h_oledrion_caddy_attributes->getAttributesCountForCaddy($itemCaddy->getVar('caddy_id')) > 0) {
-                $productAttributes = $handlers->h_oledrion_caddy_attributes->getFormatedAttributesForCaddy($itemCaddy->getVar('caddy_id'), $product);
+            if ($caddyAttributesHandler->getAttributesCountForCaddy($itemCaddy->getVar('caddy_id')) > 0) {
+                $productAttributes = $caddyAttributesHandler->getFormatedAttributesForCaddy($itemCaddy->getVar('caddy_id'), $product);
             }
             $productForTemplate['product_attributes'] = $productAttributes;
 
@@ -161,10 +163,10 @@ switch ($op) {
             $xoopsTpl->append('products', $productForTemplate);
         }
 
-        \Xoopsmodules\oledrion\Utility::setCSS();
-        \Xoopsmodules\oledrion\Utility::setLocalCSS($xoopsConfig['language']);
-        $title = _OLEDRION_BILL . ' - ' . \Xoopsmodules\oledrion\Utility::getModuleName();
-        \Xoopsmodules\oledrion\Utility::setMetas($title, $title);
+        oledrion\Utility::setCSS();
+        oledrion\Utility::setLocalCSS($xoopsConfig['language']);
+        $title = _OLEDRION_BILL . ' - ' . oledrion\Utility::getModuleName();
+        oledrion\Utility::setMetas($title, $title);
         require_once XOOPS_ROOT_PATH . '/footer.php';
         break;
 }

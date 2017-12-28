@@ -17,6 +17,8 @@
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
  */
 
+use Xoopsmodules\oledrion;
+
 /**
  * Page appelée par la passerelle de paiement dans le cas de l'annulation d'une commande
  */
@@ -27,7 +29,7 @@ require_once XOOPS_ROOT_PATH . '/header.php';
 
 // On donne la possibilité à la passerelle d'annuler la commande
 $gateway = null;
-$gateway = Oledrion_gateways::getGatewayObject();
+$gateway = Gateways::getGatewayObject();
 if (is_object($gateway) && method_exists($gateway, 'cancelOrder')) {
     if (!file_exists(OLEDRION_GATEWAY_LOG_PATH)) {
         file_put_contents(OLEDRION_GATEWAY_LOG_PATH, '<?php exit(); ?>');
@@ -36,17 +38,17 @@ if (is_object($gateway) && method_exists($gateway, 'cancelOrder')) {
     unset($gateway);
 } elseif (isset($_GET['id'])) {
     $order = null;
-    $order = $h_oledrion_commands->getOrderFromCancelPassword($_GET['id']);
+    $order = $commandsHandler->getOrderFromCancelPassword($_GET['id']);
     if (is_object($order)) {
-        $h_oledrion_commands->setOrderCanceled($order);
+        $commandsHandler->setOrderCanceled($order);
     }
 }
-$h_oledrion_caddy->emptyCart();
+$caddyHandler->emptyCart();
 $xoopsTpl->assign('mod_pref', $mod_pref);
-$xoopsTpl->assign('breadcrumb', \Xoopsmodules\oledrion\Utility::breadcrumb([OLEDRION_URL . basename(__FILE__) => _OLEDRION_ORDER_CANCELED]));
+$xoopsTpl->assign('breadcrumb', oledrion\Utility::breadcrumb([OLEDRION_URL . basename(__FILE__) => _OLEDRION_ORDER_CANCELED]));
 
-$title = _OLEDRION_ORDER_CANCELED . ' - ' . \Xoopsmodules\oledrion\Utility::getModuleName();
-\Xoopsmodules\oledrion\Utility::setMetas($title, $title);
-\Xoopsmodules\oledrion\Utility::setCSS();
-\Xoopsmodules\oledrion\Utility::setLocalCSS($xoopsConfig['language']);
+$title = _OLEDRION_ORDER_CANCELED . ' - ' . oledrion\Utility::getModuleName();
+oledrion\Utility::setMetas($title, $title);
+oledrion\Utility::setCSS();
+oledrion\Utility::setLocalCSS($xoopsConfig['language']);
 require_once XOOPS_ROOT_PATH . '/footer.php';

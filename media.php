@@ -21,12 +21,14 @@
  * Script chargé d'afficher un média d'un produit
  */
 
+use Xoopsmodules\oledrion;
+
 require_once __DIR__ . '/header.php';
 $type       = isset($_GET['type']) ? strtolower($_GET['type']) : 'picture';
 $product_id = isset($_GET['product_id']) ? (int)$_GET['product_id'] : 0;
 if ($product_id > 0) {
     $product = null;
-    $product = $h_oledrion_products->get($product_id);
+    $product = $productsHandler->get($product_id);
     if (!is_object($product)) {
         exit(_OLEDRION_ERROR1);
     }
@@ -37,7 +39,7 @@ if ($product_id > 0) {
     }
 
     // Le produit est publié ?
-    if (0 == \Xoopsmodules\oledrion\Utility::getModuleOption('show_unpublished') && $product->getVar('product_submitted') > time()) {
+    if (0 == oledrion\Utility::getModuleOption('show_unpublished') && $product->getVar('product_submitted') > time()) {
         exit(_OLEDRION_ERROR3);
     }
 } else {
@@ -51,7 +53,7 @@ switch ($type) {
             exit(_OLEDRION_ERROR13);
         }
         $attachedFile = null;
-        $attachedFile = $h_oledrion_files->get($file_id);
+        $attachedFile = $filesHandler->get($file_id);
         if (!is_object($attachedFile)) {
             exit(_OLEDRION_ERROR19);
         }

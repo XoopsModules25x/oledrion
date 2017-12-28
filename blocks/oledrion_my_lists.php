@@ -17,6 +17,9 @@
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
  */
 
+use Xoopsmodules\oledrion;
+use Xoopsmodules\oledrion\Constants;
+
 /**
  * Affiche les listes de l'utilisateur
  *
@@ -26,18 +29,20 @@
 function b_oledrion_my_lists_show($options)
 {
     require XOOPS_ROOT_PATH . '/modules/oledrion/include/common.php';
-    \Xoopsmodules\oledrion\Utility::loadLanguageFile('modinfo.php');
+    $helper->loadLanguage('modinfo');
     $start = 0;
     $limit = (int)$options[0];
-    $uid   = \Xoopsmodules\oledrion\Utility::getCurrentUserID();
+    $uid   = oledrion\Utility::getCurrentUserID();
     if (0 == $uid) {
         return null;
     }
-    $listType = OLEDRION_LISTS_ALL;
+    $listType = Constants::OLEDRION_LISTS_ALL;
     $block    = [];
-    $handlers = OledrionHandler::getInstance();
+//    $handlers = HandlerManager::getInstance();
+    $db      = \XoopsDatabaseFactory::getDatabaseConnection();
+    $listsHandler = new oledrion\ListsHandler($db);
     $items    = [];
-    $items    = $handlers->h_oledrion_lists->getRecentLists(new Oledrion_parameters([
+    $items    =  $listsHandler->getRecentLists(new oledrion\Parameters([
                                                                                         'start'    => $start,
                                                                                         'limit'    => $limit,
                                                                                         'sort'     => 'list_date',
@@ -81,7 +86,7 @@ function b_oledrion_my_lists_duplicatable($options)
     $options = explode('|', $options);
     $block   = b_oledrion_my_lists_show($options);
 
-    $tpl = new XoopsTpl();
+    $tpl = new \XoopsTpl();
     $tpl->assign('block', $block);
     $tpl->display('db:oledrion_block_my_lists.tpl');
 }

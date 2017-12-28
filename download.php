@@ -20,6 +20,9 @@
 /**
  * Téléchargement de fichier après passage d'une commande (et validation de celle-ci)
  */
+
+use Xoopsmodules\oledrion;
+
 require_once __DIR__ . '/header.php';
 error_reporting(0);
 @$xoopsLogger->activated = false;
@@ -29,58 +32,58 @@ $download_id = isset($_GET['download_id']) ? $_GET['download_id'] : '';
 // TODO: Permettre au webmaster de réactiver un téléchargement
 
 if ('' === xoops_trim($download_id)) {
-    \Xoopsmodules\oledrion\Utility::redirect(_OLEDRION_ERROR13, OLEDRION_URL, 5);
+    oledrion\Utility::redirect(_OLEDRION_ERROR13, OLEDRION_URL, 5);
 }
 
 // Recherche dans les caddy du produit associé
 $caddy = null;
-$caddy = $h_oledrion_caddy->getCaddyFromPassword($download_id);
+$caddy = $caddyHandler->getCaddyFromPassword($download_id);
 if (!is_object($caddy)) {
-    \Xoopsmodules\oledrion\Utility::redirect(_OLEDRION_ERROR14, OLEDRION_URL, 5);
+    oledrion\Utility::redirect(_OLEDRION_ERROR14, OLEDRION_URL, 5);
 }
 
 // Recherche du produit associé
 $product = null;
-$product = $h_oledrion_products->get($caddy->getVar('caddy_product_id'));
+$product = $productsHandler->get($caddy->getVar('caddy_product_id'));
 if (null == $product) {
-    \Xoopsmodules\oledrion\Utility::redirect(_OLEDRION_ERROR15, OLEDRION_URL, 5);
+    oledrion\Utility::redirect(_OLEDRION_ERROR15, OLEDRION_URL, 5);
 }
 
 // On vérifie que la commande associée est payée
 $order = null;
-$order = $h_oledrion_commands->get($caddy->getVar('caddy_cmd_id'));
+$order = $commandsHandler->get($caddy->getVar('caddy_cmd_id'));
 if (null == $order) {
-    \Xoopsmodules\oledrion\Utility::redirect(_OLEDRION_ERROR16, OLEDRION_URL, 5);
+    oledrion\Utility::redirect(_OLEDRION_ERROR16, OLEDRION_URL, 5);
 }
 
 // Tout est bon, on peut envoyer le fichier au navigateur, s'il y a un fichier à télécharger, et s'il existe
 $file = '';
 $file = $product->getVar('product_download_url');
 if ('' === xoops_trim($file)) {
-    \Xoopsmodules\oledrion\Utility::redirect(_OLEDRION_ERROR17, OLEDRION_URL, 5);
+    oledrion\Utility::redirect(_OLEDRION_ERROR17, OLEDRION_URL, 5);
 }
 if (!file_exists($file)) {
-    \Xoopsmodules\oledrion\Utility::redirect(_OLEDRION_ERROR18, OLEDRION_URL, 5);
+    oledrion\Utility::redirect(_OLEDRION_ERROR18, OLEDRION_URL, 5);
 }
 
 // Mise à jour, le fichier n'est plus disponible au téléchargement
-$h_oledrion_caddy->markCaddyAsNotDownloadableAnyMore($caddy);
+$caddyHandler->markCaddyAsNotDownloadableAnyMore($caddy);
 
 $fileContent = file_get_contents($file);
 // Plugins ************************************************
-$plugins    = Oledrion_plugins::getInstance();
-$parameters = new Oledrion_parameters([
+$plugins    = Plugin::getInstance();
+$parameters = new oledrion\Parameters([
                                           'fileContent'  => $fileContent,
                                           'product'      => $product,
                                           'order'        => $order,
                                           'fullFilename' => $file
                                       ]);
-$parameters = $plugins->fireFilter(Oledrion_plugins::EVENT_ON_PRODUCT_DOWNLOAD, $parameters);
+$parameters = $plugins->fireFilter(Plugin::EVENT_ON_PRODUCT_DOWNLOAD, $parameters);
 if ('' !== trim($parameters['fileContent'])) {
     $fileContent = $parameters['fileContent'];
 }
 // *********************************************************
 // Et affichage du fichier avec le type mime qui va bien
-header('Content-Type: ' . \Xoopsmodules\oledrion\Utility::getMimeType($file));
+header('Content-Type: ' . oledrion\Utility::getMimeType($file));
 header('Content-disposition: inline; filename="' . basename($file) . '"');
 echo $fileContent;

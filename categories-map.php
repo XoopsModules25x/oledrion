@@ -17,6 +17,8 @@
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
  */
 
+use Xoopsmodules\oledrion;
+
 /**
  * Plan des catégories
  */
@@ -24,12 +26,12 @@ require_once __DIR__ . '/header.php';
 $GLOBALS['current_category']             = -1;
 $GLOBALS['xoopsOption']['template_main'] = 'oledrion_map.tpl';
 require_once XOOPS_ROOT_PATH . '/header.php';
-require_once OLEDRION_PATH . 'class/tree.php';
+// require_once OLEDRION_PATH . 'class/tree.php';
 
 $xoopsTpl->assign('mod_pref', $mod_pref); // Préférences du module
 $categories = [];
-$categories = $h_oledrion_cat->getAllCategories(new Oledrion_parameters());
-$mytree     = new Oledrion_XoopsObjectTree($categories, 'cat_cid', 'cat_pid');
+$categories = $categoryHandler->getAllCategories(new oledrion\Parameters());
+$mytree     = new oledrion\XoopsObjectTree($categories, 'cat_cid', 'cat_pid');
 $tree       = $mytree->makeTreeAsArray('cat_title', '-');
 foreach ($tree as $key => $value) {
     if (isset($categories[$key])) {
@@ -42,13 +44,13 @@ foreach ($tree as $key => $value) {
     }
 }
 
-\Xoopsmodules\oledrion\Utility::setCSS();
-\Xoopsmodules\oledrion\Utility::setLocalCSS($xoopsConfig['language']);
-\Xoopsmodules\oledrion\Utility::loadLanguageFile('modinfo.php');
+oledrion\Utility::setCSS();
+oledrion\Utility::setLocalCSS($xoopsConfig['language']);
+$helper->loadLanguage('modinfo');
 
-$xoopsTpl->assign('global_advert', \Xoopsmodules\oledrion\Utility::getModuleOption('advertisement'));
-$xoopsTpl->assign('breadcrumb', \Xoopsmodules\oledrion\Utility::breadcrumb([OLEDRION_URL . basename(__FILE__) => _MI_OLEDRION_SMNAME4]));
+$xoopsTpl->assign('global_advert', oledrion\Utility::getModuleOption('advertisement'));
+$xoopsTpl->assign('breadcrumb', oledrion\Utility::breadcrumb([OLEDRION_URL . basename(__FILE__) => _MI_OLEDRION_SMNAME4]));
 
-$title = _MI_OLEDRION_SMNAME4 . ' - ' . \Xoopsmodules\oledrion\Utility::getModuleName();
-\Xoopsmodules\oledrion\Utility::setMetas($title, $title);
+$title = _MI_OLEDRION_SMNAME4 . ' - ' . oledrion\Utility::getModuleName();
+oledrion\Utility::setMetas($title, $title);
 require_once XOOPS_ROOT_PATH . '/footer.php';

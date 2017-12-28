@@ -17,6 +17,10 @@
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
  */
 
+use Xoopsmodules\oledrion;
+
+include __DIR__ . '/preloads/autoloader.php';
+
 // defined('XOOPS_ROOT_PATH') || exit('Restricted access.');
 
 $moduleDirName = basename(__DIR__);
@@ -35,8 +39,15 @@ $modversion['official']      = 0; //1 indicates supported by XOOPS Dev Team, 0 m
 $modversion['image']         = 'assets/images/logoModule.png';
 $modversion['dirname']       = basename(__DIR__);
 // Modules scripts
-$modversion['onInstall'] = 'include/functions_install.php';
+//$modversion['onInstall'] = 'include/functions_install.php';
 //$modversion['onUpdate']  = 'include/functions_update.php';
+
+$modversion['onInstall']   = 'include/oninstall.php';
+$modversion['onUpdate']    = 'include/onupdate.php';
+$modversion['onUninstall'] = 'include/onuninstall.php';
+
+
+
 //icons
 //$modversion['dirmoduleadmin']      = '/Frameworks/moduleclasses/moduleadmin';
 //$modversion['icons16']             = '../../Frameworks/moduleclasses/icons/16';
@@ -325,8 +336,8 @@ $modversion['blocks'][] = [
 // Menu
 $modversion['hasMain'] = 1;
 $cptm                  = 0;
-require_once __DIR__ . '/class/Utility.php';
-if (\Xoopsmodules\oledrion\Utility::getModuleOption('use_price')) {
+//require_once __DIR__ . '/class/Utility.php';
+if (oledrion\Utility::getModuleOption('use_price')) {
     ++$cptm;
     $modversion['sub'][$cptm]['name'] = _MI_OLEDRION_SMNAME1;
     $modversion['sub'][$cptm]['url']  = 'caddy.php';
@@ -364,10 +375,12 @@ $modversion['sub'][$cptm]['url']  = 'all-lists.php';
 global $xoopsModule;
 if (is_object($xoopsModule) && $xoopsModule->getVar('dirname') == $modversion['dirname']
     && $xoopsModule->getVar('isactive')) {
-    if (!isset($h_oledrion_cat)) {
-        $h_oledrion_cat = xoops_getModuleHandler('oledrion_cat', 'oledrion');
+    if (!isset($categoryHandler)) {
+        //mb        $categoryHandler = xoops_getModuleHandler('oledrion_cat', 'oledrion');
+        $db      = \XoopsDatabaseFactory::getDatabaseConnection();
+        $categoryHandler =  new oledrion\CategoryHandler($db);
     }
-    $categories = $h_oledrion_cat->getMotherCategories();
+    $categories = $categoryHandler->getMotherCategories();
     foreach ($categories as $category) {
         ++$cptm;
         $modversion['sub'][$cptm]['name'] = $category->getVar('cat_title');
@@ -457,7 +470,7 @@ $modversion['config'][] = [
 //    'description' => '_MI_OLEDRION_FORM_OPTIONS_DESC',
 //    'formtype'    => 'select',
 //    'valuetype'   => 'text',
-//    'options'     => XoopsLists::getDirListAsArray(XOOPS_ROOT_PATH . '/class/xoopseditor'),
+//    'options'     => \XoopsLists::getDirListAsArray(XOOPS_ROOT_PATH . '/class/xoopseditor'),
 //    'default'     => 'dhtmltextarea',
 //];
 
@@ -468,7 +481,7 @@ $modversion['config'][] = [
     'description' => '_MI_OLEDRION_FORM_OPTIONS_ADMIN_DESC',
     'formtype' => 'select',
     'valuetype' => 'text',
-    'options' => XoopsLists::getDirListAsArray(XOOPS_ROOT_PATH . '/class/xoopseditor'),
+    'options' => \XoopsLists::getDirListAsArray(XOOPS_ROOT_PATH . '/class/xoopseditor'),
     'default' => 'tinymce'
 ];
 
@@ -478,7 +491,7 @@ $modversion['config'][] = [
     'description' => '_MI_OLEDRION_FORM_OPTIONS_USER_DESC',
     'formtype' => 'select',
     'valuetype' => 'text',
-    'options' => XoopsLists::getDirListAsArray(XOOPS_ROOT_PATH . '/class/xoopseditor'),
+    'options' => \XoopsLists::getDirListAsArray(XOOPS_ROOT_PATH . '/class/xoopseditor'),
     'default' => 'dhtmltextarea'
 ];
 
@@ -658,8 +671,8 @@ $modversion['config'][] = [
 ];
 
 // Get Admin groups
-$criteria = new CriteriaCompo();
-$criteria->add(new Criteria('group_type', 'Admin'));
+$criteria = new \CriteriaCompo();
+$criteria->add(new \Criteria('group_type', 'Admin'));
 $memberHandler     = xoops_getHandler('member');
 $admin_xoopsgroups = $memberHandler->getGroupList($criteria);
 foreach ($admin_xoopsgroups as $key => $admin_group) {

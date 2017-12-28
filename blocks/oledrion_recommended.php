@@ -17,6 +17,8 @@
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
  */
 
+use Xoopsmodules\oledrion;
+
 /**
  * Renvoie la liste des produits recommandés
  * @param $options
@@ -32,17 +34,17 @@ function b_oledrion_recomm_show($options)
     $limit      = $options[0];
     $categoyrId = $options[1];
 
-    $oledrion_shelf_parameters->resetDefaultValues()->setProductsType('recommended')->setStart($start)->setLimit($limit)->setSort('product_recommended')->setOrder('DESC')->setCategory($categoyrId);
-    $products = $oledrion_shelf->getProducts($oledrion_shelf_parameters);
+    $shelfParameters->resetDefaultValues()->setProductsType('recommended')->setStart($start)->setLimit($limit)->setSort('product_recommended')->setOrder('DESC')->setCategory($categoyrId);
+    $products = $shelf->getProducts($shelfParameters);
 
-    if ($h_oledrion_products->getRecommendedCount() > $limit) { // Il y a plus de produits recommandés dans la BDD que dans le bloc, on affiche donc un lien vers la page des produits recommandés
+    if ($productsHandler->getRecommendedCount() > $limit) { // Il y a plus de produits recommandés dans la BDD que dans le bloc, on affiche donc un lien vers la page des produits recommandés
         $block['showMore'] = true;
     }
     if (isset($products['lastTitle'])) {
         unset($products['lastTitle']);
     }
     if (count($products) > 0) {
-        $block['nostock_msg']    = \Xoopsmodules\oledrion\Utility::getModuleOption('nostock_msg');
+        $block['nostock_msg']    = oledrion\Utility::getModuleOption('nostock_msg');
         $block['block_products'] = $products;
         $xoTheme->addStylesheet(OLEDRION_URL . 'assets/css/oledrion.css');
 
@@ -63,10 +65,10 @@ function b_oledrion_recomm_edit($options)
     // '10|0';  // Voir 10 produits, pour toutes les catégories
     global $xoopsConfig;
     include XOOPS_ROOT_PATH . '/modules/oledrion/include/common.php';
-    require_once OLEDRION_PATH . 'class/tree.php';
+    // require_once OLEDRION_PATH . 'class/tree.php';
     $tblCategories         = [];
-    $tblCategories         = $h_oledrion_cat->getAllCategories(new Oledrion_parameters());
-    $mytree                = new Oledrion_XoopsObjectTree($tblCategories, 'cat_cid', 'cat_pid');
+    $tblCategories         = $categoryHandler->getAllCategories(new oledrion\Parameters());
+    $mytree                = new oledrion\XoopsObjectTree($tblCategories, 'cat_cid', 'cat_pid');
     $form                  = '';
     $checkeds              = ['', ''];
     $checkeds[$options[1]] = 'checked';
@@ -75,12 +77,12 @@ function b_oledrion_recomm_edit($options)
 
     $select                = $mytree->makeSelBox('options[]', 'cat_title', '-', $options[1], _MB_OLEDRION_ALL_CATEGORIES);
 
-    if (\Xoopsmodules\oledrion\Utility::checkVerXoops($module, '2.5.9')) {
+    if (oledrion\Utility::checkVerXoops($module, '2.5.9')) {
         $select = $mytree->makeSelectElement('options[]', 'cat_title', '-', $options[1], true, 0, '', _MB_OLEDRION_ALL_CATEGORIES);
         $form->addElement($select);
     } else {
         $select = $mytree->makeSelBox('options[]', 'cat_title', '-', $options[1], true);
-        $form->addElement(new XoopsFormLabel(_MB_OLEDRION_ALL_CATEGORIES, $select));
+        $form->addElement(new \XoopsFormLabel(_MB_OLEDRION_ALL_CATEGORIES, $select));
     }
 
 
@@ -101,7 +103,7 @@ function b_oledrion_recomm_show_duplicatable($options)
     $options = explode('|', $options);
     $block   = b_oledrion_recomm_show($options);
 
-    $tpl = new XoopsTpl();
+    $tpl = new \XoopsTpl();
     $tpl->assign('block', $block);
     $tpl->display('db:oledrion_block_recommended.tpl');
 }

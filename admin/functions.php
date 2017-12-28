@@ -59,9 +59,9 @@ function oledrion_get_module_option($optionName = '')
     $tbl_options   = [];
     $mid           = oledrion_get_mid();
     $configHandler = oledrion_get_configHandler();
-    $critere       = new CriteriaCompo();
-    $critere->add(new Criteria('conf_modid', $mid, '='));
-    $critere->add(new Criteria('conf_name', $optionName, '='));
+    $critere       = new \CriteriaCompo();
+    $critere->add(new \Criteria('conf_modid', $mid, '='));
+    $critere->add(new \Criteria('conf_name', $optionName, '='));
     $tbl_options = $configHandler->getConfigs($critere, false, false);
     if (count($tbl_options) > 0) {
         $option = $tbl_options[0];

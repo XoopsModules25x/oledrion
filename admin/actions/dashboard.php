@@ -23,6 +23,7 @@ use Xoopsmodules\oledrion;
 /**
  * Actions relatives au Dashboard (affichage et suppression d'un vote)
  */
+
 if (!defined('OLEDRION_ADMIN')) {
     exit();
 }
@@ -34,7 +35,7 @@ switch ($action) {
 
         require_once __DIR__ . '/../../class/directorychecker.php';
 
-        //        \Xoopsmodules\oledrion\Utility::htitle(_MI_OLEDRION_ADMENU10, 4);
+        //        oledrion\Utility::htitle(_MI_OLEDRION_ADMENU10, 4);
         $adminObject = \Xmf\Module\Admin::getInstance();
         //$adminObject->addConfigBoxLine(OLEDRION_UPLOAD_PATH, 'folder');
         //$adminObject->addConfigBoxLine(array(OLEDRION_UPLOAD_PATH, '777'), 'chmod');
@@ -47,7 +48,7 @@ switch ($action) {
         //$adminObject->addConfigBoxLine(OLEDRION_CACHE_PATH, 'folder');
         //$adminObject->addConfigBoxLine(array(OLEDRION_CACHE_PATH, '777'), 'chmod');
 
-        $categories = $h_oledrion_cat->getCategoriesCount();
+        $categories = $categoryHandler->getCategoriesCount();
         if (0 == $categories) {
             $link = OLEDRION_ADMIN_URL . 'index.php?op=maintain&action=import';
             $link = sprintf('<a href="%s">%s</a>', $link, _AM_OLEDRION_IMPORT_DATA_TITLE);
@@ -108,19 +109,19 @@ switch ($action) {
         echo $utility::getServerStats();
 
         $itemsCount = 5; // Nombre d'éléments à afficher
-        if ($h_oledrion_products->getCount() > 0) {
+        if ($productsHandler->getCount() > 0) {
             echo "<table border='0' width='100%' cellpadding='2' cellspacing='2'>";
             echo "<tr>\n";
             // Dernières commandes ************************************************
             echo "<td valign='top' width='50%' align='center'><b>" . _AM_OLEDRION_LAST_ORDERS . '</b>';
             $tblTmp   = [];
-            $criteria = new CriteriaCompo();
-            $criteria->add(new Criteria('cmd_id', 0, '<>'));
+            $criteria = new \CriteriaCompo();
+            $criteria->add(new \Criteria('cmd_id', 0, '<>'));
             $criteria->setSort('cmd_date');
             $criteria->setOrder('DESC');
             $criteria->setLimit($itemsCount);
             $criteria->setStart(0);
-            $tblTmp = $h_oledrion_commands->getObjects($criteria);
+            $tblTmp = $commandsHandler->getObjects($criteria);
             echo "<table border='0' cellpadding='2' cellspacing='2' width='100%'>";
             echo "<tr><th align='center'>" . _AM_OLEDRION_DATE . "</th><th align='center'>" . _AM_OLEDRION_ID . "</th><th align='center'>" . _OLEDRION_TOTAL . "</th></tr>\n";
             foreach ($tblTmp as $item) {
@@ -132,7 +133,7 @@ switch ($action) {
             // Stocks bas *********************************************************
             echo "</td><td valign='top' width='50%' align='center'><b>" . _MI_OLEDRION_ADMENU9 . '</b>';
             $tblTmp = [];
-            $tblTmp = $h_oledrion_products->getLowStocks(0, $itemsCount);
+            $tblTmp = $productsHandler->getLowStocks(0, $itemsCount);
             echo "<table border='0' cellpadding='2' cellspacing='2' width='100%'>";
             echo "<tr><th align='center'>" . _OLEDRION_TITLE . "</th><th align='center'>" . _OLEDRION_STOCK_QUANTITY . "</th></tr>\n";
             foreach ($tblTmp as $item) {
@@ -146,11 +147,11 @@ switch ($action) {
 
             // produits les plus vendus *********************************************
             echo "<td valign='top' width='50%' align='center'><b>" . _MI_OLEDRION_BNAME4 . '</b>';
-            if ($h_oledrion_commands->getCount() > 0) {
+            if ($commandsHandler->getCount() > 0) {
                 $tblTmp  = $tblTmp2 = [];
-                $tblTmp2 = $h_oledrion_caddy->getMostSoldProducts(0, $itemsCount, 0, true);
+                $tblTmp2 = $caddyHandler->getMostSoldProducts(0, $itemsCount, 0, true);
 
-                $tblTmp = $h_oledrion_products->getObjects(new Criteria('product_id', '(' . implode(',', array_keys($tblTmp2)) . ')', 'IN'), true);
+                $tblTmp = $productsHandler->getObjects(new \Criteria('product_id', '(' . implode(',', array_keys($tblTmp2)) . ')', 'IN'), true);
                 echo "<table border='0' cellpadding='2' cellspacing='2' width='100%'>";
                 echo "<tr><th align='center'>" . _OLEDRION_TITLE . "</th><th align='center'>" . _OLEDRION_QUANTITY . "</th></tr>\n";
                 foreach ($tblTmp2 as $key => $value) {
@@ -162,7 +163,7 @@ switch ($action) {
             }
             // produits les plus vus ************************************************
             $tblTmp = [];
-            $tblTmp = $h_oledrion_products->getMostViewedProducts(new Oledrion_parameters([
+            $tblTmp = $productsHandler->getMostViewedProducts(new oledrion\Parameters([
                                                                                               'start' => 0,
                                                                                               'limit' => $itemsCount
                                                                                           ]));
@@ -180,13 +181,13 @@ switch ($action) {
 
             // Derniers votes *****************************************************
             echo "</td><td colspan='2' valign='top' align='center'><b>" . _AM_OLEDRION_LAST_VOTES . '</b>';
-            if ($h_oledrion_votedata->getCount() > 0) {
+            if ($votedataHandler->getCount() > 0) {
                 $tblTmp  = $tblTmp2 = $tblTmp3 = [];
-                $tblTmp3 = $h_oledrion_votedata->getLastVotes(0, $itemsCount);
+                $tblTmp3 = $votedataHandler->getLastVotes(0, $itemsCount);
                 foreach ($tblTmp3 as $item) {
                     $tblTmp2[] = $item->getVar('vote_product_id');
                 }
-                $tblTmp = $h_oledrion_products->getObjects(new Criteria('product_id', '(' . implode(',', $tblTmp2) . ')', 'IN'), true);
+                $tblTmp = $productsHandler->getObjects(new \Criteria('product_id', '(' . implode(',', $tblTmp2) . ')', 'IN'), true);
                 echo "<table border='0' cellpadding='2' cellspacing='2' width='100%'>";
                 echo "<tr><th align='center'>" . _OLEDRION_TITLE . "</th><th align='center'>" . _AM_OLEDRION_DATE . "</th><th colspan='2' align='center'>" . _AM_OLEDRION_NOTE . '</th></tr>';
                 foreach ($tblTmp3 as $vote) {
@@ -209,31 +210,31 @@ switch ($action) {
         // ****************************************************************************************************************
         $id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
         if (empty($id)) {
-            \Xoopsmodules\oledrion\Utility::redirect(_AM_OLEDRION_ERROR_1, $baseurl, 5);
+            oledrion\Utility::redirect(_AM_OLEDRION_ERROR_1, $baseurl, 5);
         }
         $opRedirect = 'dashboard';
-        $item       = $h_oledrion_votedata->get($id);
+        $item       = $votedataHandler->get($id);
         if (is_object($item)) {
-            $res = $h_oledrion_votedata->delete($item, true);
+            $res = $votedataHandler->delete($item, true);
             if ($res) {
                 $product_id = $item->getVar('vote_product_id');
                 $product    = null;
-                $product    = $h_oledrion_products->get($product_id);
+                $product    = $productsHandler->get($product_id);
                 if (is_object($product)) { // Update Product's rating
                     $totalVotes = $sumRating = $ret = $finalrating = 0;
-                    $ret        = $h_oledrion_votedata->getCountRecordSumRating($product->getVar('product_id'), $totalVotes, $sumRating);
+                    $ret        = $votedataHandler->getCountRecordSumRating($product->getVar('product_id'), $totalVotes, $sumRating);
                     if ($totalVotes > 0) {
                         $finalrating = $sumRating / $totalVotes;
                         $finalrating = number_format($finalrating, 4);
                     }
-                    $h_oledrion_products->updateRating($product_id, $finalrating, $totalVotes);
+                    $productsHandler->updateRating($product_id, $finalrating, $totalVotes);
                 }
-                \Xoopsmodules\oledrion\Utility::redirect(_AM_OLEDRION_SAVE_OK, $baseurl . '?op=' . $opRedirect, 2);
+                oledrion\Utility::redirect(_AM_OLEDRION_SAVE_OK, $baseurl . '?op=' . $opRedirect, 2);
             } else {
-                \Xoopsmodules\oledrion\Utility::redirect(_AM_OLEDRION_SAVE_PB, $baseurl . '?op=' . $opRedirect, 5);
+                oledrion\Utility::redirect(_AM_OLEDRION_SAVE_PB, $baseurl . '?op=' . $opRedirect, 5);
             }
         } else {
-            \Xoopsmodules\oledrion\Utility::redirect(_AM_OLEDRION_NOT_FOUND, $baseurl . '?op=' . $opRedirect, 5);
+            oledrion\Utility::redirect(_AM_OLEDRION_NOT_FOUND, $baseurl . '?op=' . $opRedirect, 5);
         }
         break;
 }

@@ -15,11 +15,11 @@
  * @copyright   {@link https://xoops.org/ XOOPS Project}
  * @license     {@link http://www.fsf.org/copyleft/gpl.html GNU public license}
  * @author      Hossein Azizabadi (azizabadi@faragostaresh.com)
- * @param $module
+ * @param \XoopsModule $module
  * @return bool
  */
 
-function xoops_module_pre_install_oledrion($module)
+function xoops_module_pre_install_oledrion(\XoopsModule $module)
 {
     return true;
 }

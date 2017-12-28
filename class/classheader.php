@@ -24,5 +24,5 @@
 
 require_once XOOPS_ROOT_PATH . '/kernel/object.php';
 if (!class_exists('OledrionPersistableObjectHandler')) {
-    require_once XOOPS_ROOT_PATH . '/modules/oledrion/class/PersistableObjectHandler.php';
+    require_once XOOPS_ROOT_PATH . '/modules/oledrion/class/OledrionObject.php';
 }

@@ -17,6 +17,8 @@
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
  */
 
+use Xoopsmodules\oledrion;
+
 /**
  * block to display items in cart
  *
@@ -36,14 +38,14 @@ function b_oledrion_cart_show($options)
     $commandAmountTTC     = 0;
     $discountsDescription = [];
     // Calcul du montant total du caddy
-    $reductions = new oledrion_reductions();
+    $reductions = new oledrion\Reductions();
     $reductions->computeCart($cartForTemplate, $emptyCart, $shippingAmount, $commandAmount, $vatAmount, $goOn, $commandAmountTTC, $discountsDescription, $discountsCount);
-    $dec = \Xoopsmodules\oledrion\Utility::getModuleOption('decimals_count');
+    $dec = oledrion\Utility::getModuleOption('decimals_count');
     if ($emptyCart) {
         return '';
     }
-    $block['block_money_full']           = \Xoopsmodules\oledrion\Utility::getModuleOption('money_full');
-    $block['block_money_short']          = \Xoopsmodules\oledrion\Utility::getModuleOption('money_short');
+    $block['block_money_full']           = oledrion\Utility::getModuleOption('money_full');
+    $block['block_money_short']          = oledrion\Utility::getModuleOption('money_short');
     $block['block_shippingAmount']       = sprintf('%0.' . $dec . 'f', $shippingAmount); // Montant des frais de port
     $block['block_commandAmount']        = sprintf('%0.' . $dec . 'f', $commandAmount); // Montant HT de la commande
     $block['block_vatAmount']            = sprintf('%0.' . $dec . 'f', $vatAmount); // Montant de la TVA

@@ -23,18 +23,28 @@
  * @return array
  */
 
+use Xoopsmodules\oledrion;
+
+/**
+ * @param $queryarray
+ * @param $andor
+ * @param $limit
+ * @param $offset
+ * @param $userid
+ * @return array
+ */
 function oledrion_search($queryarray, $andor, $limit, $offset, $userid)
 {
     global $xoopsDB;
     require XOOPS_ROOT_PATH . '/modules/oledrion/include/common.php';
-    require_once XOOPS_ROOT_PATH . '/modules/oledrion/class/oledrion_products.php';
+    require_once XOOPS_ROOT_PATH . '/modules/oledrion/class/Products.php';
 
     // Recherche dans les produits
     $sql = 'SELECT product_id, product_title, product_submitted, product_submitter FROM ' . $xoopsDB->prefix('oledrion_products') . ' WHERE (product_online = 1)';
-    if (0 == \Xoopsmodules\oledrion\Utility::getModuleOption('show_unpublished')) { // Ne pas afficher les produits qui ne sont pas publiés
+    if (0 == oledrion\Utility::getModuleOption('show_unpublished')) { // Ne pas afficher les produits qui ne sont pas publiés
         $sql .= ' AND product_submitted <= ' . time();
     }
-    if (0 == \Xoopsmodules\oledrion\Utility::getModuleOption('nostock_display')) { // Se limiter aux seuls produits encore en stock
+    if (0 == oledrion\Utility::getModuleOption('nostock_display')) { // Se limiter aux seuls produits encore en stock
         $sql .= ' AND product_stock > 0';
     }
     if (0 != $userid) {
@@ -42,7 +52,7 @@ function oledrion_search($queryarray, $andor, $limit, $offset, $userid)
     }
     $sql .= ') ';
 
-    $tmpObject = new oledrion_products();
+    $tmpObject = new oledrion\Products();
     $datas     =& $tmpObject->getVars();
     $tblFields = [];
     $cnt       = 0;
@@ -79,7 +89,7 @@ function oledrion_search($queryarray, $andor, $limit, $offset, $userid)
     $sql    .= $more . ' ORDER BY product_submitted DESC';
     $i      = 0;
     $ret    = [];
-    $myts   = MyTextSanitizer::getInstance();
+    $myts   = \MyTextSanitizer::getInstance();
     $result = $xoopsDB->query($sql, $limit, $offset);
     while ($myrow = $xoopsDB->fetchArray($result)) {
         $ret[$i]['image'] = 'assets/images/product.png';

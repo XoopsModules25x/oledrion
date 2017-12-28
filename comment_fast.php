@@ -22,7 +22,7 @@ $com_replytitle = '';
 if ($product_id > 0) {
     require_once XOOPS_ROOT_PATH . '/modules/oledrion/include/common.php';
     $product = null;
-    $product = $h_oledrion_products->get($product_id);
+    $product = $productsHandler->get($product_id);
     if (is_object($product)) {
         $com_replytitle = $product->getVar('product_title');
     }

@@ -49,8 +49,8 @@ if (!defined('OLEDRION_ATTACHED_FILES_URL')) {
     define('OLEDRION_GATEWAY_PATH', OLEDRION_ADMIN_PATH . 'gateways' . '/');
 
     // Set plugin URL and PATH
-    define('OLEDRION_PLUGINS_PATH', OLEDRION_PATH . 'plugins/');
-    define('OLEDRION_PLUGINS_URL', OLEDRION_URL . 'plugins/');
+    define('OLEDRION_PLUGINS_PATH', OLEDRION_PATH . 'class/plugins/');
+    define('OLEDRION_PLUGINS_URL', OLEDRION_URL . 'class/plugins/');
 
     // Set text path
     define('OLEDRION_TEXT_PATH', XOOPS_UPLOAD_PATH . '/' . OLEDRION_DIRNAME . '/' . 'text/');

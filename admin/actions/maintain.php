@@ -17,7 +17,10 @@
  * @author      Hossein Azizabadi (azizabadi@faragostaresh.com)
  */
 
+use Xoopsmodules\oledrion;
+
 /**
+ *
  * Check is admin
  */
 if (!defined('OLEDRION_ADMIN')) {
@@ -43,34 +46,34 @@ switch ($action) {
             $xoopsDB->queryF('ANALYZE TABLE ' . $list);
             $xoopsDB->queryF('OPTIMIZE TABLE ' . $list);
         }
-        \Xoopsmodules\oledrion\Utility::updateCache();
-        $h_oledrion_products->forceCacheClean();
-        \Xoopsmodules\oledrion\Utility::redirect(_AM_OLEDRION_SAVE_OK, $baseurl, 2);
+        oledrion\Utility::updateCache();
+        $productsHandler->forceCacheClean();
+        oledrion\Utility::redirect(_AM_OLEDRION_SAVE_OK, $baseurl, 2);
         break;
 
     case 'import':
         xoops_cp_header();
-        $categories = $h_oledrion_cat->getCategoriesCount();
+        $categories = $categoryHandler->getCategoriesCount();
         if (0 == $categories) {
             xoops_confirm(['op' => 'maintain', 'action' => 'doimport'], 'index.php', _AM_OLEDRION_IMPORT_CONF);
         } else {
-            \Xoopsmodules\oledrion\Utility::redirect(_AM_OLEDRION_SAVE_OK, $baseurl, 2);
+            oledrion\Utility::redirect(_AM_OLEDRION_SAVE_OK, $baseurl, 2);
         }
         break;
 
     case 'doimport':
         xoops_cp_header();
-        $categories = $h_oledrion_cat->getCategoriesCount();
+        $categories = $categoryHandler->getCategoriesCount();
         if (0 == $categories) {
             $cat_array = ['cat_cid' => 1, 'cat_pid' => 0, 'cat_title' => 'Test category'];
-            $cat       = $h_oledrion_cat->create();
+            $cat       = $categoryHandler->create();
             $cat->setVars($cat_array);
-            $res = $h_oledrion_cat->insert($cat);
+            $res = $categoryHandler->insert($cat);
 
             $manufacturer_array = ['manu_id' => 1, 'manu_name' => 'Test manufacturer'];
-            $manufacturer       = $h_oledrion_manufacturer->create(true);
+            $manufacturer       = $manufacturerHandler->create(true);
             $manufacturer->setVars($manufacturer_array);
-            $res = $h_oledrion_manufacturer->insert($manufacturer);
+            $res = $manufacturerHandler->insert($manufacturer);
 
             $product_array = [
                 'product_id'        => 1,
@@ -85,25 +88,25 @@ switch ($action) {
                 'product_vat_id'    => 1,
                 'product_stock'     => 100
             ];
-            $product       = $h_oledrion_products->create(true);
+            $product       = $productsHandler->create(true);
             $product->setVars($product_array);
-            $res = $h_oledrion_products->insert($product);
+            $res = $productsHandler->insert($product);
 
             $productsmanu_array = ['pm_id' => 1, 'pm_id' => 1, 'pm_manu_id' => 1];
-            $productsmanu       = $h_oledrion_productsmanu->create(true);
+            $productsmanu       = $productsmanuHandler->create(true);
             $productsmanu->setVars($productsmanu_array);
-            $res = $h_oledrion_products->insert($productsmanu);
+            $res = $productsHandler->insert($productsmanu);
 
             $vat_array = ['vat_id' => 1, 'vat_rate' => '0.00', 'vat_country' => 'us'];
-            $vat       = $h_oledrion_vat->create(true);
+            $vat       = $vatHandler->create(true);
             $vat->setVars($vat_array);
-            $res = $h_oledrion_vat->insert($vat);
+            $res = $vatHandler->insert($vat);
 
             $vendor_array = ['vendor_id' => 1, 'vendor_name' => 'Test vendor'];
-            $vendor       = $h_oledrion_vendors->create(true);
+            $vendor       = $vendorsHandler->create(true);
             $vendor->setVars($vendor_array);
-            $res = $h_oledrion_vendors->insert($vendor);
+            $res = $vendorsHandler->insert($vendor);
         }
-        \Xoopsmodules\oledrion\Utility::redirect(_AM_OLEDRION_SAVE_OK, $baseurl, 2);
+        oledrion\Utility::redirect(_AM_OLEDRION_SAVE_OK, $baseurl, 2);
         break;
 }

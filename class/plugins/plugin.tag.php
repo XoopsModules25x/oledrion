@@ -26,7 +26,7 @@ function oledrion_tag_iteminfo(&$items)
             $items_id[] = (int)$item_id;
         }
     }
-    $items_obj = $h_oledrion_products->getItemsFromIds($items_id);
+    $items_obj = $productsHandler->getItemsFromIds($items_id);
 
     foreach (array_keys($items) as $cat_id) {
         foreach (array_keys($items[$cat_id]) as $item_id) {

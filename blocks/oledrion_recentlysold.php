@@ -17,6 +17,8 @@
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
  */
 
+use Xoopsmodules\oledrion;
+
 /**
  * This block shows the products that were recently sold
  * @param  array $options [0] = Nombre maximum de produits à voir
@@ -29,14 +31,14 @@ function b_oledrion_recentlysold_show($options)
     $categoryId = 0;
     $start      = 0;
     $limit      = $options[0];
-    $oledrion_shelf_parameters->resetDefaultValues()->setProductsType('recentlysold')->setStart($start)->setLimit($limit);
-    $products = $oledrion_shelf->getProducts($oledrion_shelf_parameters);
+    $shelfParameters->resetDefaultValues()->setProductsType('recentlysold')->setStart($start)->setLimit($limit);
+    $products = $shelf->getProducts($shelfParameters);
     if (isset($products['lastTitle'])) {
         unset($products['lastTitle']);
     }
     if (count($products) > 0) {
         $block                   = [];
-        $block['nostock_msg']    = \Xoopsmodules\oledrion\Utility::getModuleOption('nostock_msg');
+        $block['nostock_msg']    = oledrion\Utility::getModuleOption('nostock_msg');
         $block['block_products'] = $products;
         $xoTheme->addStylesheet(OLEDRION_URL . 'assets/css/oledrion.css');
 
@@ -73,7 +75,7 @@ function b_oledrion_recentlysold_duplicatable($options)
     $options = explode('|', $options);
     $block   = b_oledrion_bestsales_show($options);
 
-    $tpl = new XoopsTpl();
+    $tpl = new \XoopsTpl();
     $tpl->assign('block', $block);
     $tpl->display('db:oledrion_block_recentlysold.tpl');
 }

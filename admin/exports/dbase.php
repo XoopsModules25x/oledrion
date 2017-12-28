@@ -16,11 +16,20 @@
  * @license     {@link http://www.fsf.org/copyleft/gpl.html GNU public license}
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
  */
+
 /**
  * Export au format Dbase 3
  */
+
+use Xoopsmodules\oledrion;
+use Xoopsmodules\oledrion\Constants;
+
+
 // defined('XOOPS_ROOT_PATH') || exit('Restricted access.');
 
+/**
+ * Class Oledrion_dbase_export
+ */
 class Oledrion_dbase_export extends Oledrion_export
 {
     /**
@@ -33,7 +42,7 @@ class Oledrion_dbase_export extends Oledrion_export
             $this->filename  = 'oledrion.dbf';
             $this->folder    = OLEDRION_CSV_PATH;
             $this->url       = OLEDRION_CSV_URL;
-            $this->orderType = OLEDRION_STATE_VALIDATED;
+            $this->orderType = Constants::OLEDRION_STATE_VALIDATED;
         }
         parent::__construct($parameters);
     }
@@ -103,6 +112,9 @@ class Oledrion_dbase_export extends Oledrion_export
            * caddy_shipping          c_shipping
            * caddy_pass              c_pass
            */
+        $db              = \XoopsDatabaseFactory::getDatabaseConnection();
+        $caddyHandler    = new oledrion\CaddyHandler($db);
+        $commandsHandler = new oledrion\CommandsHandler($db);
         if (!dbase_create($this->folder . '/' . $this->filename, $def)) {
             $this->success = false;
 
@@ -115,15 +127,15 @@ class Oledrion_dbase_export extends Oledrion_export
             return false;
         }
 
-        $criteria = new CriteriaCompo();
-        $criteria->add(new Criteria('cmd_id', 0, '<>'));
-        $criteria->add(new Criteria('cmd_state', $this->orderType, '='));
+        $criteria = new \CriteriaCompo();
+        $criteria->add(new \Criteria('cmd_id', 0, '<>'));
+        $criteria->add(new \Criteria('cmd_state', $this->orderType, '='));
         $criteria->setSort('cmd_date');
         $criteria->setOrder('DESC');
-        $orders = $this->handlers->h_oledrion_commands->getObjects($criteria);
+        $orders = $commandsHandler->getObjects($criteria);
         foreach ($orders as $order) {
             $carts = [];
-            $carts = $this->handlers->h_oledrion_caddy->getObjects(new Criteria('caddy_cmd_id', $order->getVar('cmd_id'), '='));
+            $carts = $caddyHandler->getObjects(new \Criteria('caddy_cmd_id', $order->getVar('cmd_id'), '='));
             foreach ($carts as $cart) {
                 dbase_add_record($dbf, [
                     $order->getVar('cmd_id'),

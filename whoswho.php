@@ -20,16 +20,19 @@
 /**
  * Liste des fabricants
  */
+
+use Xoopsmodules\oledrion;
+
 require_once __DIR__ . '/header.php';
 $GLOBALS['current_category']             = -1;
 $GLOBALS['xoopsOption']['template_main'] = 'oledrion_whoswho.tpl';
 require_once XOOPS_ROOT_PATH . '/header.php';
 
 $tblAll = $tblAnnuaire = [];
-$xoopsTpl->assign('alphabet', $h_oledrion_manufacturer->getAlphabet());
+$xoopsTpl->assign('alphabet', $manufacturerHandler->getAlphabet());
 $xoopsTpl->assign('mod_pref', $mod_pref); // Préférences du module
 
-$manufacturers = $h_oledrion_manufacturer->getItems(0, 0, 'manu_name, manu_commercialname');
+$manufacturers = $manufacturerHandler->getItems(0, 0, 'manu_name, manu_commercialname');
 foreach ($manufacturers as $item) {
     $forTemplate              = [];
     $forTemplate              = $item->toArray();
@@ -38,13 +41,13 @@ foreach ($manufacturers as $item) {
 }
 $xoopsTpl->assign('manufacturers', $tblAnnuaire);
 
-\Xoopsmodules\oledrion\Utility::setCSS();
-\Xoopsmodules\oledrion\Utility::setLocalCSS($xoopsConfig['language']);
-\Xoopsmodules\oledrion\Utility::loadLanguageFile('modinfo.php');
+oledrion\Utility::setCSS();
+oledrion\Utility::setLocalCSS($xoopsConfig['language']);
+$helper->loadLanguage('modinfo');
 
-$xoopsTpl->assign('global_advert', \Xoopsmodules\oledrion\Utility::getModuleOption('advertisement'));
-$xoopsTpl->assign('breadcrumb', \Xoopsmodules\oledrion\Utility::breadcrumb([OLEDRION_URL . basename(__FILE__) => _MI_OLEDRION_SMNAME5]));
+$xoopsTpl->assign('global_advert', oledrion\Utility::getModuleOption('advertisement'));
+$xoopsTpl->assign('breadcrumb', oledrion\Utility::breadcrumb([OLEDRION_URL . basename(__FILE__) => _MI_OLEDRION_SMNAME5]));
 
-$title = _MI_OLEDRION_SMNAME5 . ' - ' . \Xoopsmodules\oledrion\Utility::getModuleName();
-\Xoopsmodules\oledrion\Utility::setMetas($title, $title);
+$title = _MI_OLEDRION_SMNAME5 . ' - ' . oledrion\Utility::getModuleName();
+oledrion\Utility::setMetas($title, $title);
 require_once XOOPS_ROOT_PATH . '/footer.php';

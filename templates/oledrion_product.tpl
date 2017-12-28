@@ -176,7 +176,7 @@
                                                                 <{else}>
                                                                     <{$product.product_price_ttc}>
                                                                 <{/if}>
-                                                                <span id="oledrion_final_price_ttc"><{$product.product_final_price_ttc_formated}></span>
+                                                                <span class="oledrion_final_price_ttc"><{$product.product_final_price_ttc_formated}></span>
                                                                 <{if $product.product_ecotaxe != ''}>
                                                                     <div class="oledrion_view-product_price_ecotaxe"><span
                                                                                 class="oledrion_productdescription-contentTitles"><{$smarty.const._OLEDRION_ECOTAXE}></span>

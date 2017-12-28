@@ -17,6 +17,9 @@
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
  */
 
+use Xoopsmodules\oledrion;
+use Xoopsmodules\oledrion\Constants;
+
 /**
  * Affichage des listes les plus vues
  *
@@ -26,21 +29,23 @@
 function b_oledrion_mostviewed_lists_show($options)
 {
     require XOOPS_ROOT_PATH . '/modules/oledrion/include/common.php';
-    \Xoopsmodules\oledrion\Utility::loadLanguageFile('main.php');
+    $helper->loadLanguage('main');
     $start    = 0;
     $limit    = (int)$options[0];
     $listType = (int)$options[1];
     $block    = [];
-    $handlers = OledrionHandler::getInstance();
+//    $handlers = HandlerManager::getInstance();
+    $db      = \XoopsDatabaseFactory::getDatabaseConnection();
+    $listsHandler = new oledrion\ListsHandler($db);
     $items    = [];
-    //$items = $handlers->h_oledrion_lists->getRecentLists(new Oledrion_parameters(array('start' => $start, 'limit' => $limit, 'sort' => 'list_views', 'order' => 'DESC', 'idAsKey' => true, 'listType' => $listType)));
-    $items = $handlers->h_oledrion_lists->getRecentLists(new Oledrion_parameters([
+    //$items = $handlers->h_oledrion_lists->getRecentLists(new oledrion\Parameters(array('start' => $start, 'limit' => $limit, 'sort' => 'list_views', 'order' => 'DESC', 'idAsKey' => true, 'listType' => $listType)));
+    $items =  $listsHandler->getRecentLists(new oledrion\Parameters([
                                                                                      'start'    => $start,
                                                                                      'limit'    => $limit,
                                                                                      'sort'     => 'list_views',
                                                                                      'order'    => 'DESC',
                                                                                      'idAsKey'  => true,
-                                                                                     'listType' => OLEDRION_LISTS_ALL_PUBLIC
+                                                                                     'listType' => Constants::OLEDRION_LISTS_ALL_PUBLIC
                                                                                  ]));
     if (count($items) > 0) {
         foreach ($items as $item) {
@@ -63,8 +68,8 @@ function b_oledrion__mostviewed_lists_edit($options)
     $form           = '';
     $form           .= "<table border='0'>";
     $form           .= '<tr><td>' . _MB_OLEDRION_LISTS_COUNT . "</td><td><input type='text' name='options[]' id='options' value='" . (int)$options[0] . "'></td></tr>";
-    $listTypes      = Oledrion_lists::getTypesArray();
-    $listTypeSelect = \Xoopsmodules\oledrion\Utility::htmlSelect('options[]', $listTypes, (int)$options[1], false);
+    $listTypes      = oledrion\Lists::getTypesArray();
+    $listTypeSelect = oledrion\Utility::htmlSelect('options[]', $listTypes, (int)$options[1], false);
     $form           .= '<tr><td>' . _MB_OLEDRION_LISTS_TYPE . '</td><td>' . $listTypeSelect . '</td></tr>';
     $form           .= '</table>';
 
@@ -80,7 +85,7 @@ function b_oledrion_mostviewed_lists_duplicatable($options)
     $options = explode('|', $options);
     $block   = b_oledrion_mostviewed_lists_show($options);
 
-    $tpl = new XoopsTpl();
+    $tpl = new \XoopsTpl();
     $tpl->assign('block', $block);
     $tpl->display('oledrion_block_mostviewed_lists.tpl');
 }

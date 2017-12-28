@@ -33,13 +33,8 @@
 
 use WideImage\WideImage;
 use Xmf\Request;
+use Xoopsmodules\oledrion;
 use Xoopsmodules\oledrion\common;
-
-require_once __DIR__ . '/common/VersionChecks.php';
-require_once __DIR__ . '/common/ServerStats.php';
-require_once __DIR__ . '/common/FilesManagement.php';
-
-//require_once __DIR__ . '/../include/common.php';
 
 /**
  * Class OledrionUtility
@@ -59,7 +54,7 @@ class Utility extends \XoopsObject
     /**
      * Access the only instance of this class
      *
-     * @return \Xoopsmodules\oledrion\Utility
+     * @return oledrion\Utility
      *
      * @static
      * @staticvar   object
@@ -98,7 +93,7 @@ class Utility extends \XoopsObject
                 $retval = $xoopsModuleConfig[$option];
             }
         } else {
-            /** @var XoopsModuleHandler $moduleHandler */
+            /** @var \XoopsModuleHandler $moduleHandler */
             $moduleHandler = xoops_getHandler('module');
             $module        = $moduleHandler->getByDirname($repmodule);
             $configHandler = xoops_getHandler('config');
@@ -163,9 +158,9 @@ class Utility extends \XoopsObject
         $value = '',
         $width = '100%',
         $height = '400px',
-        $supplemental = '')
-    {
-        $helper                   = \Xoopsmodules\oledrion\Helper::getInstance();
+        $supplemental = ''
+    ) {
+        $helper                   = oledrion\Helper::getInstance();
         $editor                   = false;
         $editor_configs           = [];
         $editor_configs['name']   = $name;
@@ -176,8 +171,8 @@ class Utility extends \XoopsObject
         $editor_configs['height'] = '400px';
 
         $editor_option = strtolower(self::getModuleOption('editorAdmin'));
-//        $editor = new \XoopsFormEditor($caption, $editor_option, $editor_configs);
-//        public function __construct($caption, $name, $configs = null, $nohtml = false, $OnFailure = '')
+        //        $editor = new \XoopsFormEditor($caption, $editor_option, $editor_configs);
+        //        public function __construct($caption, $name, $configs = null, $nohtml = false, $OnFailure = '')
 
         if ($helper->isUserAdmin()) {
             $editor = new \XoopsFormEditor($caption, $helper->getConfig('editorAdmin'), $editor_configs, $nohtml = false, $onfailure = 'textarea');
@@ -1115,8 +1110,8 @@ class Utility extends \XoopsObject
         $mimeTypes = null,
         $uploadMaxSize = null,
         $maxWidth = null,
-        $maxHeight = null)
-    {
+        $maxHeight = null
+    ) {
         require_once XOOPS_ROOT_PATH . '/class/uploader.php';
         global $destname;
         if (isset($_POST['xoops_upload_file'])) {
@@ -1173,8 +1168,8 @@ class Utility extends \XoopsObject
         $param_width,
         $param_height,
         $keep_original = false,
-        $fit = 'inside')
-    {
+        $fit = 'inside'
+    ) {
         //        require_once OLEDRION_PATH . 'class/wideimage/WideImage.inc.php';
         $resize = true;
         if (OLEDRION_DONT_RESIZE_IF_SMALLER) {
@@ -1393,7 +1388,7 @@ class Utility extends \XoopsObject
     {
         $ht                = (int)$ht;
         $vat               = (int)$vat;
-        $oledrion_Currency = \Oledrion_Currency::getInstance();
+        $oledrion_Currency = oledrion\Currency::getInstance();
         $ttc               = $ht * (1 + ($vat / 100));
         if (!$edit) {
             return $oledrion_Currency->amountForDisplay($ttc, $format);
@@ -1410,7 +1405,7 @@ class Utility extends \XoopsObject
      */
     public static function getVAT($ht, $vat)
     {
-        return (float)(($ht * $vat) / 100);
+        return (($ht * $vat) / 100);
     }
 
     /**
@@ -1422,14 +1417,16 @@ class Utility extends \XoopsObject
      */
     public static function getAmountWithVat($product_price, $vat_id)
     {
+        $vat      = null;
         static $vats = [];
         $vat_rate = null;
+        $vatHandler =  new oledrion\VatHandler(\XoopsDatabaseFactory::getDatabaseConnection());
         if (is_array($vats) && in_array($vat_id, $vats)) {
             $vat_rate = $vats[$vat_id];
         } else {
-            $handlers = \OledrionHandler::getInstance();
-            $vat      = null;
-            $vat      = $handlers->h_oledrion_vat->get($vat_id);
+//            $handlers = \HandlerManager::getInstance();
+            require_once __DIR__ . '/../include/common.php';
+            $vat      = $vatHandler->get($vat_id);
             if (is_object($vat)) {
                 $vat_rate      = $vat->getVar('vat_rate', 'e');
                 $vats[$vat_id] = $vat_rate;
@@ -1639,11 +1636,8 @@ class Utility extends \XoopsObject
         if (false === strpos($languageFile, $defaultExtension)) {
             $languageFile .= $defaultExtension;
         }
-        if (file_exists($root . 'language/' . $xoopsConfig['language'] . '/' . $languageFile)) {
-            require_once $root . 'language/' . $xoopsConfig['language'] . '/' . $languageFile;
-        } else { // Fallback
-            require_once $root . 'language/english' . '/' . $languageFile;
-        }
+        $helper = oledrion\Helper::getInstance();
+        $helper->loadLanguage($languageFile);
     }
 
     /**

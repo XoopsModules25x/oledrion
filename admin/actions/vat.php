@@ -17,6 +17,8 @@
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
  */
 
+use Xoopsmodules\oledrion;
+
 /**
  * Actions relatives aux TVA (affichage, édition, suppression)
  */
@@ -37,8 +39,8 @@ switch ($action) {
                  . _AM_OLEDRION_ADD_ITEM
                  . "'></form>";
         echo $form;
-        //        \Xoopsmodules\oledrion\Utility::htitle(_MI_OLEDRION_ADMENU1, 4);
-        $vats  = $h_oledrion_vat->getAllVats(new Oledrion_parameters(['start' => $start, 'limit' => $limit]));
+        //        oledrion\Utility::htitle(_MI_OLEDRION_ADMENU1, 4);
+        $vats  = $vatHandler->getAllVats(new oledrion\Parameters(['start' => $start, 'limit' => $limit]));
         $class = '';
         echo "<table width='100%' cellspacing='1' cellpadding='3' border='0' class='outer'>";
         echo "<tr><th align='center'>" . _AM_OLEDRION_ID . "</th><th align='center'>" . _AM_OLEDRION_RATE . "</th><th align='center'>" . _AM_OLEDRION_COUNTRY . "</th><th align='center'>" . _AM_OLEDRION_ACTION . '</th></tr>';
@@ -70,34 +72,34 @@ switch ($action) {
             $title = _AM_OLEDRION_EDIT_VAT;
             $id    = isset($_GET['id']) ? (int)$_GET['id'] : 0;
             if (empty($id)) {
-                \Xoopsmodules\oledrion\Utility::redirect(_AM_OLEDRION_ERROR_1, $baseurl, 5);
+                oledrion\Utility::redirect(_AM_OLEDRION_ERROR_1, $baseurl, 5);
             }
             // Item exits ?
             $item = null;
-            $item = $h_oledrion_vat->get($id);
+            $item = $vatHandler->get($id);
             if (!is_object($item)) {
-                \Xoopsmodules\oledrion\Utility::redirect(_AM_OLEDRION_NOT_FOUND, $baseurl, 5);
+                oledrion\Utility::redirect(_AM_OLEDRION_NOT_FOUND, $baseurl, 5);
             }
             $edit         = true;
             $label_submit = _AM_OLEDRION_MODIFY;
         } else {
             $title        = _AM_OLEDRION_ADD_VAT;
-            $item         = $h_oledrion_vat->create(true);
+            $item         = $vatHandler->create(true);
             $label_submit = _AM_OLEDRION_ADD;
             $edit         = false;
         }
-        $sform = new XoopsThemeForm($title, 'frmaddvat', $baseurl);
-        $sform->addElement(new XoopsFormHidden('op', 'vat'));
-        $sform->addElement(new XoopsFormHidden('action', 'saveedit'));
-        $sform->addElement(new XoopsFormHidden('vat_id', $item->getVar('vat_id')));
-        $sform->addElement(new XoopsFormText(_AM_OLEDRION_RATE, 'vat_rate', 10, 15, $item->getVar('vat_rate', 'e')), true);
-        $sform->addElement(new XoopsFormText(_AM_OLEDRION_COUNTRY, 'vat_country', 35, 128, $item->getVar('vat_country', 'e')), true);
+        $sform = new \XoopsThemeForm($title, 'frmaddvat', $baseurl);
+        $sform->addElement(new \XoopsFormHidden('op', 'vat'));
+        $sform->addElement(new \XoopsFormHidden('action', 'saveedit'));
+        $sform->addElement(new \XoopsFormHidden('vat_id', $item->getVar('vat_id')));
+        $sform->addElement(new \XoopsFormText(_AM_OLEDRION_RATE, 'vat_rate', 10, 15, $item->getVar('vat_rate', 'e')), true);
+        $sform->addElement(new \XoopsFormText(_AM_OLEDRION_COUNTRY, 'vat_country', 35, 128, $item->getVar('vat_country', 'e')), true);
 
-        $button_tray = new XoopsFormElementTray('', '');
-        $submit_btn  = new XoopsFormButton('', 'post', $label_submit, 'submit');
+        $button_tray = new \XoopsFormElementTray('', '');
+        $submit_btn  = new \XoopsFormButton('', 'post', $label_submit, 'submit');
         $button_tray->addElement($submit_btn);
         $sform->addElement($button_tray);
-        $sform = \Xoopsmodules\oledrion\Utility::formMarkRequiredFields($sform);
+        $sform = oledrion\Utility::formMarkRequiredFields($sform);
         $sform->display();
         require_once OLEDRION_ADMIN_PATH . 'admin_footer.php';
         break;
@@ -109,22 +111,22 @@ switch ($action) {
         $id = isset($_POST['vat_id']) ? (int)$_POST['vat_id'] : 0;
         if (!empty($id)) {
             $edit = true;
-            $item = $h_oledrion_vat->get($id);
+            $item = $vatHandler->get($id);
             if (!is_object($item)) {
-                \Xoopsmodules\oledrion\Utility::redirect(_AM_OLEDRION_NOT_FOUND, $baseurl, 5);
+                oledrion\Utility::redirect(_AM_OLEDRION_NOT_FOUND, $baseurl, 5);
             }
             $item->unsetNew();
         } else {
-            $item = $h_oledrion_vat->create(true);
+            $item = $vatHandler->create(true);
         }
         $opRedirect = 'vat';
         $item->setVars($_POST);
-        $res = $h_oledrion_vat->insert($item);
+        $res = $vatHandler->insert($item);
         if ($res) {
-            \Xoopsmodules\oledrion\Utility::updateCache();
-            \Xoopsmodules\oledrion\Utility::redirect(_AM_OLEDRION_SAVE_OK, $baseurl . '?op=' . $opRedirect, 2);
+            oledrion\Utility::updateCache();
+            oledrion\Utility::redirect(_AM_OLEDRION_SAVE_OK, $baseurl . '?op=' . $opRedirect, 2);
         } else {
-            \Xoopsmodules\oledrion\Utility::redirect(_AM_OLEDRION_SAVE_PB, $baseurl . '?op=' . $opRedirect, 5);
+            oledrion\Utility::redirect(_AM_OLEDRION_SAVE_PB, $baseurl . '?op=' . $opRedirect, 5);
         }
         break;
 
@@ -134,27 +136,27 @@ switch ($action) {
         xoops_cp_header();
         $id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
         if (empty($id)) {
-            \Xoopsmodules\oledrion\Utility::redirect(_AM_OLEDRION_ERROR_1, $baseurl, 5);
+            oledrion\Utility::redirect(_AM_OLEDRION_ERROR_1, $baseurl, 5);
         }
         $opRedirect = 'vat';
         // On vérifie que cette TVA n'est pas utilisée par des produits
-        $cnt = $h_oledrion_vat->getVatProductsCount($id);
+        $cnt = $vatHandler->getVatProductsCount($id);
         if (0 == $cnt) {
             $item = null;
-            $item = $h_oledrion_vat->get($id);
+            $item = $vatHandler->get($id);
             if (is_object($item)) {
-                $res = $h_oledrion_vat->deleteVat($item);
+                $res = $vatHandler->deleteVat($item);
                 if ($res) {
-                    \Xoopsmodules\oledrion\Utility::updateCache();
-                    \Xoopsmodules\oledrion\Utility::redirect(_AM_OLEDRION_SAVE_OK, $baseurl . '?op=' . $opRedirect, 2);
+                    oledrion\Utility::updateCache();
+                    oledrion\Utility::redirect(_AM_OLEDRION_SAVE_OK, $baseurl . '?op=' . $opRedirect, 2);
                 } else {
-                    \Xoopsmodules\oledrion\Utility::redirect(_AM_OLEDRION_SAVE_PB, $baseurl . '?op=' . $opRedirect, 5);
+                    oledrion\Utility::redirect(_AM_OLEDRION_SAVE_PB, $baseurl . '?op=' . $opRedirect, 5);
                 }
             } else {
-                \Xoopsmodules\oledrion\Utility::redirect(_AM_OLEDRION_NOT_FOUND, $baseurl . '?op=' . $opRedirect, 5);
+                oledrion\Utility::redirect(_AM_OLEDRION_NOT_FOUND, $baseurl . '?op=' . $opRedirect, 5);
             }
         } else {
-            \Xoopsmodules\oledrion\Utility::redirect(_AM_OLEDRION_ERROR_2, $baseurl . '?op=' . $opRedirect, 5);
+            oledrion\Utility::redirect(_AM_OLEDRION_ERROR_2, $baseurl . '?op=' . $opRedirect, 5);
         }
         break;
 }

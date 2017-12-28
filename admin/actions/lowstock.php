@@ -17,6 +17,8 @@
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
  */
 
+use Xoopsmodules\oledrion;
+
 /**
  * Gestion des stocks bas (dans l'administration)
  */
@@ -31,15 +33,15 @@ switch ($action) {
         $adminObject = \Xmf\Module\Admin::getInstance();
         $adminObject->displayNavigation('index.php?op=lowstock');
 
-        //        \Xoopsmodules\oledrion\Utility::htitle(_MI_OLEDRION_ADMENU9, 4);
+        //        oledrion\Utility::htitle(_MI_OLEDRION_ADMENU9, 4);
         $start    = isset($_GET['start']) ? (int)$_GET['start'] : 0;
-        $criteria = new CriteriaCompo();
+        $criteria = new \CriteriaCompo();
         // Recherche des produits dont la quantité en stock est inférieure ou égale à la quantité d'alerte et ou la quantité d'alerte est supérieure à 0
-        $itemsCount = $h_oledrion_products->getLowStocksCount();
+        $itemsCount = $productsHandler->getLowStocksCount();
         if ($itemsCount > $limit) {
-            $pagenav = new XoopsPageNav($itemsCount, $limit, $start, 'start', 'op=lowstock');
+            $pagenav = new \XoopsPageNav($itemsCount, $limit, $start, 'start', 'op=lowstock');
         }
-        $products = $h_oledrion_products->getLowStocks($start, $limit);
+        $products = $productsHandler->getLowStocks($start, $limit);
         $class    = $name = '';
         $names    = [];
         echo "<form name='frmupdatequant' id='frmupdatequant' method='post' action='$baseurl'><input type='hidden' name='op' id='op' value='lowstock'><input type='hidden' name='action' id='action' value='updatequantities'>";
@@ -78,14 +80,14 @@ switch ($action) {
                     $quantity   = (int)$_POST[$name];
                     $product_id = (int)$item;
                     $product    = null;
-                    $product    = $h_oledrion_products->get($product_id);
+                    $product    = $productsHandler->get($product_id);
                     if (is_object($product)) {
-                        $h_oledrion_products->updateAll('product_stock', $quantity, new Criteria('product_id', $product_id, '='), true);
+                        $productsHandler->updateAll('product_stock', $quantity, new \Criteria('product_id', $product_id, '='), true);
                     }
                 }
             }
         }
-        \Xoopsmodules\oledrion\Utility::redirect(_AM_OLEDRION_SAVE_OK, $baseurl . '?op=lowstock', 2);
+        oledrion\Utility::redirect(_AM_OLEDRION_SAVE_OK, $baseurl . '?op=lowstock', 2);
         break;
 
 }

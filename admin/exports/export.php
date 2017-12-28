@@ -29,8 +29,8 @@ abstract class Oledrion_export
     protected $folder; // Folder's path (where to create the file) WITHOUT TRAILING SLASH
     protected $url; // Folder's URL (where to download the file) WITHOUT TRAILING SLASH
     protected $orderType; // Type of order to treat
-    protected $h_oledrion_commands;
-    protected $h_oledrion_caddy;
+    protected $commandsHandler;
+    protected $caddyHandler;
     protected $success = false;
     protected $handlers;
 
@@ -52,7 +52,7 @@ abstract class Oledrion_export
 
     private function getHandlers()
     {
-        $this->handlers = OledrionHandler::getInstance();
+//        $this->handlers = HandlerManager::getInstance();
     }
 
     /**

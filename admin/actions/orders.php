@@ -16,6 +16,11 @@
  * @license     {@link http://www.fsf.org/copyleft/gpl.html GNU public license}
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
  */
+
+use Xoopsmodules\oledrion;
+use Xoopsmodules\oledrion\Constants;
+
+
 /**
  * Gestion des commandes
  */
@@ -29,7 +34,7 @@ switch ($action) {
         xoops_cp_header();
         $adminObject = \Xmf\Module\Admin::getInstance();
         $adminObject->displayNavigation('index.php?op=orders');
-        //        \Xoopsmodules\oledrion\Utility::htitle(_MI_OLEDRION_ADMENU5, 4);
+        //        oledrion\Utility::htitle(_MI_OLEDRION_ADMENU5, 4);
 
         $start   = isset($_GET['start']) ? (int)$_GET['start'] : 0;
         $filter3 = $totalOrder = 0;
@@ -42,30 +47,30 @@ switch ($action) {
         $_SESSION['filter3'] = $filter3;
         $selected            = ['', '', '', '', '', ''];
         $conditions          = [
-            OLEDRION_STATE_NOINFORMATION,
-            OLEDRION_STATE_VALIDATED,
-            OLEDRION_STATE_PENDING,
-            OLEDRION_STATE_FAILED,
-            OLEDRION_STATE_CANCELED,
-            OLEDRION_STATE_FRAUD,
-            OLEDRION_STATE_PACKED,
-            OLEDRION_STATE_SUBMITED,
-            OLEDRION_STATE_DELIVERYED
+            Constants::OLEDRION_STATE_NOINFORMATION,
+            Constants::OLEDRION_STATE_VALIDATED,
+            Constants::OLEDRION_STATE_PENDING,
+            Constants::OLEDRION_STATE_FAILED,
+            Constants::OLEDRION_STATE_CANCELED,
+            Constants::OLEDRION_STATE_FRAUD,
+            Constants::OLEDRION_STATE_PACKED,
+            Constants::OLEDRION_STATE_SUBMITED,
+            Constants::OLEDRION_STATE_DELIVERYED
         ];
         $selected[$filter3]  = ' selected';
 
-        $criteria = new CriteriaCompo();
-        $criteria->add(new Criteria('cmd_id', 0, '<>'));
-        $criteria->add(new Criteria('cmd_state', $conditions[$filter3], '='));
-        $itemsCount = $h_oledrion_commands->getCount($criteria); // Recherche du nombre total de commandes
+        $criteria = new \CriteriaCompo();
+        $criteria->add(new \Criteria('cmd_id', 0, '<>'));
+        $criteria->add(new \Criteria('cmd_state', $conditions[$filter3], '='));
+        $itemsCount = $commandsHandler->getCount($criteria); // Recherche du nombre total de commandes
         if ($itemsCount > $limit) {
-            $pagenav = new XoopsPageNav($itemsCount, $limit, $start, 'start', 'op=orders');
+            $pagenav = new \XoopsPageNav($itemsCount, $limit, $start, 'start', 'op=orders');
         }
         $criteria->setSort('cmd_id');
         $criteria->setOrder('DESC');
         $criteria->setLimit($limit);
         $criteria->setStart($start);
-        $orders = $h_oledrion_commands->getObjects($criteria);
+        $orders = $commandsHandler->getObjects($criteria);
         $class  = '';
         echo "<table width='100%' cellspacing='1' cellpadding='3' border='0' class='outer'>";
         $form              = "<form method='post' name='frmfilter' id='frmfilter' action='$baseurl'><b>" . _AM_OLEDRION_LIMIT_TO . "</b> <select name='filter3' id='filter3'>
@@ -79,10 +84,10 @@ switch ($action) {
         <option value='7'" . $selected[7] . '>' . _OLEDRION_CMD_STATE8 . "</option>
         <option value='8'" . $selected[8] . '>' . _OLEDRION_CMD_STATE9 . "</option>
         </select> <input type='hidden' name='op' id='op' value='orders'><input type='submit' name='btnfilter' id='btnfilter' value='" . _AM_OLEDRION_FILTER . "'></form>";
-        $confValidateOrder = \Xoopsmodules\oledrion\Utility::javascriptLinkConfirm(_AM_OLEDRION_CONF_VALIDATE);
-        $confPackOrder     = \Xoopsmodules\oledrion\Utility::javascriptLinkConfirm(_AM_OLEDRION_CONF_PACK);
-        $confSubmitOrder   = \Xoopsmodules\oledrion\Utility::javascriptLinkConfirm(_AM_OLEDRION_CONF_SUBMIT);
-        $confDeliveryOrder = \Xoopsmodules\oledrion\Utility::javascriptLinkConfirm(_AM_OLEDRION_CONF_DELIVERY);
+        $confValidateOrder = oledrion\Utility::javascriptLinkConfirm(_AM_OLEDRION_CONF_VALIDATE);
+        $confPackOrder     = oledrion\Utility::javascriptLinkConfirm(_AM_OLEDRION_CONF_PACK);
+        $confSubmitOrder   = oledrion\Utility::javascriptLinkConfirm(_AM_OLEDRION_CONF_SUBMIT);
+        $confDeliveryOrder = oledrion\Utility::javascriptLinkConfirm(_AM_OLEDRION_CONF_DELIVERY);
         echo "<tr><td colspan='2' align='left'>";
         if (isset($pagenav) && is_object($pagenav)) {
             echo $pagenav->renderNav();
@@ -157,13 +162,13 @@ switch ($action) {
         xoops_cp_header();
         $id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
         if (0 == $id) {
-            \Xoopsmodules\oledrion\Utility::redirect(_AM_OLEDRION_ERROR_1, $baseurl, 5);
+            oledrion\Utility::redirect(_AM_OLEDRION_ERROR_1, $baseurl, 5);
         }
-        $item = $h_oledrion_commands->get($id);
+        $item = $commandsHandler->get($id);
         if (is_object($item)) {
             xoops_confirm(['op' => 'orders', 'action' => 'remove', 'id' => $id], 'index.php', _AM_OLEDRION_CONF_DELITEM);
         } else {
-            \Xoopsmodules\oledrion\Utility::redirect(_AM_OLEDRION_NOT_FOUND, $baseurl . '?op=' . $opRedirect, 5);
+            oledrion\Utility::redirect(_AM_OLEDRION_NOT_FOUND, $baseurl . '?op=' . $opRedirect, 5);
         }
         break;
 
@@ -172,19 +177,19 @@ switch ($action) {
         // ****************************************************************************************************************
         $id = isset($_POST['id']) ? (int)$_POST['id'] : 0;
         if (empty($id)) {
-            \Xoopsmodules\oledrion\Utility::redirect(_AM_OLEDRION_ERROR_1, $baseurl, 5);
+            oledrion\Utility::redirect(_AM_OLEDRION_ERROR_1, $baseurl, 5);
         }
         $opRedirect = 'orders';
-        $item       = $h_oledrion_commands->get($id);
+        $item       = $commandsHandler->get($id);
         if (is_object($item)) {
-            $res = $h_oledrion_commands->removeOrder($item);
+            $res = $commandsHandler->removeOrder($item);
             if ($res) {
-                \Xoopsmodules\oledrion\Utility::redirect(_AM_OLEDRION_SAVE_OK, $baseurl . '?op=' . $opRedirect, 2);
+                oledrion\Utility::redirect(_AM_OLEDRION_SAVE_OK, $baseurl . '?op=' . $opRedirect, 2);
             } else {
-                \Xoopsmodules\oledrion\Utility::redirect(_AM_OLEDRION_SAVE_PB, $baseurl . '?op=' . $opRedirect, 5);
+                oledrion\Utility::redirect(_AM_OLEDRION_SAVE_PB, $baseurl . '?op=' . $opRedirect, 5);
             }
         } else {
-            \Xoopsmodules\oledrion\Utility::redirect(_AM_OLEDRION_NOT_FOUND, $baseurl . '?op=' . $opRedirect, 5);
+            oledrion\Utility::redirect(_AM_OLEDRION_NOT_FOUND, $baseurl . '?op=' . $opRedirect, 5);
         }
         break;
 
@@ -194,26 +199,26 @@ switch ($action) {
         xoops_cp_header();
         $id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
         if (empty($id)) {
-            \Xoopsmodules\oledrion\Utility::redirect(_AM_OLEDRION_ERROR_1, $baseurl, 5);
+            oledrion\Utility::redirect(_AM_OLEDRION_ERROR_1, $baseurl, 5);
         }
         $opRedirect = 'orders';
-        $item       = $h_oledrion_commands->get($id);
+        $item       = $commandsHandler->get($id);
         if (is_object($item)) {
-            $res = $h_oledrion_commands->validateOrder($item);
+            $res = $commandsHandler->validateOrder($item);
             if ($res) {
                 // Send sms
-                if (\Xoopsmodules\oledrion\Utility::getModuleOption('sms_validate')) {
+                if (oledrion\Utility::getModuleOption('sms_validate')) {
                     $information['to']   = ltrim($item->getVar('cmd_mobile'), 0);
-                    $information['text'] = \Xoopsmodules\oledrion\Utility::getModuleOption('sms_validate_text');
-                    $sms                 = Oledrion_sms::sendSms($information);
+                    $information['text'] = oledrion\Utility::getModuleOption('sms_validate_text');
+                    $sms                 = Sms::sendSms($information);
                 }
                 //
-                \Xoopsmodules\oledrion\Utility::redirect(_AM_OLEDRION_SAVE_OK, $baseurl . '?op=' . $opRedirect, 2);
+                oledrion\Utility::redirect(_AM_OLEDRION_SAVE_OK, $baseurl . '?op=' . $opRedirect, 2);
             } else {
-                \Xoopsmodules\oledrion\Utility::redirect(_AM_OLEDRION_SAVE_PB, $baseurl . '?op=' . $opRedirect, 5);
+                oledrion\Utility::redirect(_AM_OLEDRION_SAVE_PB, $baseurl . '?op=' . $opRedirect, 5);
             }
         } else {
-            \Xoopsmodules\oledrion\Utility::redirect(_AM_OLEDRION_NOT_FOUND, $baseurl . '?op=' . $opRedirect, 5);
+            oledrion\Utility::redirect(_AM_OLEDRION_NOT_FOUND, $baseurl . '?op=' . $opRedirect, 5);
         }
         break;
 
@@ -223,26 +228,26 @@ switch ($action) {
         xoops_cp_header();
         $id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
         if (empty($id)) {
-            \Xoopsmodules\oledrion\Utility::redirect(_AM_OLEDRION_ERROR_1, $baseurl, 5);
+            oledrion\Utility::redirect(_AM_OLEDRION_ERROR_1, $baseurl, 5);
         }
         $opRedirect = 'orders';
-        $item       = $h_oledrion_commands->get($id);
+        $item       = $commandsHandler->get($id);
         if (is_object($item)) {
-            $res = $h_oledrion_commands->packOrder($item);
+            $res = $commandsHandler->packOrder($item);
             if ($res) {
                 // Send sms
-                if (\Xoopsmodules\oledrion\Utility::getModuleOption('sms_validate')) {
+                if (oledrion\Utility::getModuleOption('sms_validate')) {
                     $information['to']   = ltrim($item->getVar('cmd_mobile'), 0);
-                    $information['text'] = \Xoopsmodules\oledrion\Utility::getModuleOption('sms_pack_text');
-                    $sms                 = Oledrion_sms::sendSms($information);
+                    $information['text'] = oledrion\Utility::getModuleOption('sms_pack_text');
+                    $sms                 = Sms::sendSms($information);
                 }
                 //
-                \Xoopsmodules\oledrion\Utility::redirect(_AM_OLEDRION_SAVE_OK, $baseurl . '?op=' . $opRedirect, 2);
+                oledrion\Utility::redirect(_AM_OLEDRION_SAVE_OK, $baseurl . '?op=' . $opRedirect, 2);
             } else {
-                \Xoopsmodules\oledrion\Utility::redirect(_AM_OLEDRION_SAVE_PB, $baseurl . '?op=' . $opRedirect, 5);
+                oledrion\Utility::redirect(_AM_OLEDRION_SAVE_PB, $baseurl . '?op=' . $opRedirect, 5);
             }
         } else {
-            \Xoopsmodules\oledrion\Utility::redirect(_AM_OLEDRION_NOT_FOUND, $baseurl . '?op=' . $opRedirect, 5);
+            oledrion\Utility::redirect(_AM_OLEDRION_NOT_FOUND, $baseurl . '?op=' . $opRedirect, 5);
         }
         break;
 
@@ -252,26 +257,26 @@ switch ($action) {
         xoops_cp_header();
         $id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
         if (empty($id)) {
-            \Xoopsmodules\oledrion\Utility::redirect(_AM_OLEDRION_ERROR_1, $baseurl, 5);
+            oledrion\Utility::redirect(_AM_OLEDRION_ERROR_1, $baseurl, 5);
         }
         $opRedirect = 'orders';
-        $item       = $h_oledrion_commands->get($id);
+        $item       = $commandsHandler->get($id);
         if (is_object($item)) {
-            $res = $h_oledrion_commands->submitOrder($item);
+            $res = $commandsHandler->submitOrder($item);
             if ($res) {
                 // Send sms
-                if (\Xoopsmodules\oledrion\Utility::getModuleOption('sms_validate')) {
+                if (oledrion\Utility::getModuleOption('sms_validate')) {
                     $information['to']   = ltrim($item->getVar('cmd_mobile'), 0);
-                    $information['text'] = \Xoopsmodules\oledrion\Utility::getModuleOption('sms_submit_text');
-                    $sms                 = Oledrion_sms::sendSms($information);
+                    $information['text'] = oledrion\Utility::getModuleOption('sms_submit_text');
+                    $sms                 = Sms::sendSms($information);
                 }
                 //
-                \Xoopsmodules\oledrion\Utility::redirect(_AM_OLEDRION_SAVE_OK, $baseurl . '?op=' . $opRedirect, 2);
+                oledrion\Utility::redirect(_AM_OLEDRION_SAVE_OK, $baseurl . '?op=' . $opRedirect, 2);
             } else {
-                \Xoopsmodules\oledrion\Utility::redirect(_AM_OLEDRION_SAVE_PB, $baseurl . '?op=' . $opRedirect, 5);
+                oledrion\Utility::redirect(_AM_OLEDRION_SAVE_PB, $baseurl . '?op=' . $opRedirect, 5);
             }
         } else {
-            \Xoopsmodules\oledrion\Utility::redirect(_AM_OLEDRION_NOT_FOUND, $baseurl . '?op=' . $opRedirect, 5);
+            oledrion\Utility::redirect(_AM_OLEDRION_NOT_FOUND, $baseurl . '?op=' . $opRedirect, 5);
         }
         break;
 
@@ -281,26 +286,26 @@ switch ($action) {
         xoops_cp_header();
         $id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
         if (empty($id)) {
-            \Xoopsmodules\oledrion\Utility::redirect(_AM_OLEDRION_ERROR_1, $baseurl, 5);
+            oledrion\Utility::redirect(_AM_OLEDRION_ERROR_1, $baseurl, 5);
         }
         $opRedirect = 'orders';
-        $item       = $h_oledrion_commands->get($id);
+        $item       = $commandsHandler->get($id);
         if (is_object($item)) {
-            $res = $h_oledrion_commands->deliveryOrder($item);
+            $res = $commandsHandler->deliveryOrder($item);
             if ($res) {
                 // Send sms
-                if (\Xoopsmodules\oledrion\Utility::getModuleOption('sms_validate')) {
+                if (oledrion\Utility::getModuleOption('sms_validate')) {
                     $information['to']   = ltrim($item->getVar('cmd_mobile'), 0);
-                    $information['text'] = \Xoopsmodules\oledrion\Utility::getModuleOption('sms_delivery_text');
-                    $sms                 = Oledrion_sms::sendSms($information);
+                    $information['text'] = oledrion\Utility::getModuleOption('sms_delivery_text');
+                    $sms                 = Sms::sendSms($information);
                 }
                 //
-                \Xoopsmodules\oledrion\Utility::redirect(_AM_OLEDRION_SAVE_OK, $baseurl . '?op=' . $opRedirect, 2);
+                oledrion\Utility::redirect(_AM_OLEDRION_SAVE_OK, $baseurl . '?op=' . $opRedirect, 2);
             } else {
-                \Xoopsmodules\oledrion\Utility::redirect(_AM_OLEDRION_SAVE_PB, $baseurl . '?op=' . $opRedirect, 5);
+                oledrion\Utility::redirect(_AM_OLEDRION_SAVE_PB, $baseurl . '?op=' . $opRedirect, 5);
             }
         } else {
-            \Xoopsmodules\oledrion\Utility::redirect(_AM_OLEDRION_NOT_FOUND, $baseurl . '?op=' . $opRedirect, 5);
+            oledrion\Utility::redirect(_AM_OLEDRION_NOT_FOUND, $baseurl . '?op=' . $opRedirect, 5);
         }
         break;
 
@@ -310,7 +315,7 @@ switch ($action) {
         xoops_cp_header();
         $adminObject = \Xmf\Module\Admin::getInstance();
         $adminObject->displayNavigation('index.php?op=orders');
-        \Xoopsmodules\oledrion\Utility::htitle(_MI_OLEDRION_ADMENU5, 4);
+        oledrion\Utility::htitle(_MI_OLEDRION_ADMENU5, 4);
 
         $orderType      = (int)$_POST['cmdtype'];
         $exportFilter   = $_POST['exportfilter'];
@@ -328,7 +333,7 @@ switch ($action) {
                 }
             }
         } else {
-            \Xoopsmodules\oledrion\Utility::redirect(_AM_OLEDRION_ERROR_11);
+            oledrion\Utility::redirect(_AM_OLEDRION_ERROR_11);
         }
         require_once OLEDRION_ADMIN_PATH . 'admin_footer.php';
         break;
@@ -339,24 +344,24 @@ switch ($action) {
         xoops_cp_header();
         $adminObject = \Xmf\Module\Admin::getInstance();
         $adminObject->displayNavigation('index.php?op=orders');
-        \Xoopsmodules\oledrion\Utility::htitle(_MI_OLEDRION_ADMENU5, 4);
+        oledrion\Utility::htitle(_MI_OLEDRION_ADMENU5, 4);
         $id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
         if (empty($id)) {
-            \Xoopsmodules\oledrion\Utility::redirect(_AM_OLEDRION_ERROR_1, $baseurl, 5);
+            oledrion\Utility::redirect(_AM_OLEDRION_ERROR_1, $baseurl, 5);
         }
-        $item = $h_oledrion_commands->get($id);
+        $item = $commandsHandler->get($id);
 
-        $sform = new XoopsThemeForm(_OLEDRION_TRACK, 'frmproduct', $baseurl);
+        $sform = new \XoopsThemeForm(_OLEDRION_TRACK, 'frmproduct', $baseurl);
         $sform->setExtra('enctype="multipart/form-data"');
-        $sform->addElement(new XoopsFormHidden('op', 'orders'));
-        $sform->addElement(new XoopsFormHidden('action', 'savetrack'));
-        $sform->addElement(new XoopsFormHidden('cmd_id', $item->getVar('cmd_id')));
-        $sform->addElement(new XoopsFormText(_OLEDRION_TRACK, 'cmd_track', 50, 255, $item->getVar('cmd_track', 'e')), true);
-        $button_tray = new XoopsFormElementTray('', '');
-        $submit_btn  = new XoopsFormButton('', 'post', _SUBMIT, 'submit');
+        $sform->addElement(new \XoopsFormHidden('op', 'orders'));
+        $sform->addElement(new \XoopsFormHidden('action', 'savetrack'));
+        $sform->addElement(new \XoopsFormHidden('cmd_id', $item->getVar('cmd_id')));
+        $sform->addElement(new \XoopsFormText(_OLEDRION_TRACK, 'cmd_track', 50, 255, $item->getVar('cmd_track', 'e')), true);
+        $button_tray = new \XoopsFormElementTray('', '');
+        $submit_btn  = new \XoopsFormButton('', 'post', _SUBMIT, 'submit');
         $button_tray->addElement($submit_btn);
         $sform->addElement($button_tray);
-        $sform = \Xoopsmodules\oledrion\Utility::formMarkRequiredFields($sform);
+        $sform = oledrion\Utility::formMarkRequiredFields($sform);
         $sform->display();
 
         require_once OLEDRION_ADMIN_PATH . 'admin_footer.php';
@@ -367,23 +372,23 @@ switch ($action) {
         // ****************************************************************************************************************
         xoops_cp_header();
         $id         = isset($_POST['cmd_id']) ? (int)$_POST['cmd_id'] : 0;
-        $item       = $h_oledrion_commands->get($id);
+        $item       = $commandsHandler->get($id);
         $opRedirect = 'orders';
         if (!is_object($item)) {
-            \Xoopsmodules\oledrion\Utility::redirect(_AM_OLEDRION_NOT_FOUND, $baseurl, 5);
+            oledrion\Utility::redirect(_AM_OLEDRION_NOT_FOUND, $baseurl, 5);
         }
         $item->setVar('cmd_track', $_POST['cmd_track']);
-        $res = $h_oledrion_commands->insert($item);
+        $res = $commandsHandler->insert($item);
         if ($res) {
             // Send sms
-            if (\Xoopsmodules\oledrion\Utility::getModuleOption('sms_track')) {
+            if (oledrion\Utility::getModuleOption('sms_track')) {
                 $information['to']   = ltrim($item->getVar('cmd_mobile'), 0);
-                $information['text'] = sprintf(\Xoopsmodules\oledrion\Utility::getModuleOption('sms_track_text'), $_POST['cmd_track']);
-                $sms                 = Oledrion_sms::sendSms($information);
+                $information['text'] = sprintf(oledrion\Utility::getModuleOption('sms_track_text'), $_POST['cmd_track']);
+                $sms                 = Sms::sendSms($information);
             }
-            \Xoopsmodules\oledrion\Utility::redirect(_AM_OLEDRION_SAVE_OK, $baseurl . '?op=' . $opRedirect, 2);
+            oledrion\Utility::redirect(_AM_OLEDRION_SAVE_OK, $baseurl . '?op=' . $opRedirect, 2);
         } else {
-            \Xoopsmodules\oledrion\Utility::redirect(_AM_OLEDRION_SAVE_PB, $baseurl . '?op=' . $opRedirect, 5);
+            oledrion\Utility::redirect(_AM_OLEDRION_SAVE_PB, $baseurl . '?op=' . $opRedirect, 5);
         }
         break;
 
@@ -395,19 +400,19 @@ switch ($action) {
         @$xoopsLogger->activated = false;
         $cmdId = isset($_GET['id']) ? (int)$_GET['id'] : 0;
         if (0 == $cmdId) {
-            \Xoopsmodules\oledrion\Utility::redirect(_AM_OLEDRION_ERROR_1, $baseurl, 5);
+            oledrion\Utility::redirect(_AM_OLEDRION_ERROR_1, $baseurl, 5);
         }
         $order = null;
-        $order = $h_oledrion_commands->get($cmdId);
+        $order = $commandsHandler->get($cmdId);
         $caddy = $tmp = $products = $vats = $manufacturers = $tmp2 = $manufacturers = $productsManufacturers = [];
 
         // Récupération des TVA
-        $vats = $h_oledrion_vat->getAllVats(new Oledrion_parameters());
+        $vats = $vatHandler->getAllVats(new oledrion\Parameters());
 
         // Récupération des caddy associés
-        $caddy = $h_oledrion_caddy->getCaddyFromCommand($cmdId);
+        $caddy = $caddyHandler->getCaddyFromCommand($cmdId);
         if (0 == count($caddy)) {
-            \Xoopsmodules\oledrion\Utility::redirect(_OLEDRION_ERROR11, 'index.php', 6);
+            oledrion\Utility::redirect(_OLEDRION_ERROR11, 'index.php', 6);
         }
 
         // Récupération de la liste des produits associés
@@ -416,29 +421,29 @@ switch ($action) {
         }
 
         // Recherche des produits ***********************************************************************************************
-        $products = $h_oledrion_products->getProductsFromIDs($tmp, true);
+        $products = $productsHandler->getProductsFromIDs($tmp, true);
 
         // Recherche des fabricants **********************************************************************************************
-        $tmp2 = $h_oledrion_productsmanu->getFromProductsIds($tmp);
+        $tmp2 = $productsmanuHandler->getFromProductsIds($tmp);
         $tmp  = [];
         foreach ($tmp2 as $item) {
             $tmp[]                                                   = $item->getVar('pm_manu_id');
             $productsManufacturers[$item->getVar('pm_product_id')][] = $item;
         }
-        $manufacturers     = $h_oledrion_manufacturer->getManufacturersFromIds($tmp);
-        $handlers          = OledrionHandler::getInstance();
-        $oledrion_Currency = Oledrion_Currency::getInstance();
+        $manufacturers     = $manufacturerHandler->getManufacturersFromIds($tmp);
+//        $handlers          = HandlerManager::getInstance();
+        $oledrion_Currency = oledrion\Currency::getInstance();
         // Informations sur la commande ***************************************************************************************
         foreach ($caddy as $itemCaddy) {
             $productForTemplate = $tblJoin = $productManufacturers = $productAttributes = [];
             $product            = $products[$itemCaddy->getVar('caddy_product_id')];
             $productForTemplate = $product->toArray(); // Produit
             // Get cat title
-            $cat                                     = $h_oledrion_cat->get($productForTemplate['product_cid'])->toArray();
+            $cat                                     = $categoryHandler->get($productForTemplate['product_cid'])->toArray();
             $productForTemplate['product_cat_title'] = $cat['cat_title'];
             // Est-ce qu'il y a des attributs ?
-            if ($handlers->h_oledrion_caddy_attributes->getAttributesCountForCaddy($itemCaddy->getVar('caddy_id')) > 0) {
-                $productAttributes = $handlers->h_oledrion_caddy_attributes->getFormatedAttributesForCaddy($itemCaddy->getVar('caddy_id'), $product);
+            if ($caddyAttributesHandler->getAttributesCountForCaddy($itemCaddy->getVar('caddy_id')) > 0) {
+                $productAttributes = $caddyAttributesHandler->getFormatedAttributesForCaddy($itemCaddy->getVar('caddy_id'), $product);
             }
             $productForTemplate['product_attributes']       = $productAttributes;
             $productForTemplate['product_attributes_count'] = count($productAttributes[0]['attribute_options']);

@@ -17,6 +17,9 @@
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
  */
 
+use Xoopsmodules\oledrion;
+use Xoopsmodules\oledrion\Constants;
+
 /**
  * Export au format CSV
  */
@@ -35,7 +38,7 @@ class Oledrion_csv_export extends Oledrion_export
             $this->filename  = 'oledrion.csv';
             $this->folder    = OLEDRION_CSV_PATH;
             $this->url       = OLEDRION_CSV_URL;
-            $this->orderType = OLEDRION_STATE_VALIDATED;
+            $this->orderType = Constants::OLEDRION_STATE_VALIDATED;
         }
         parent::__construct($parameters);
     }
@@ -46,6 +49,9 @@ class Oledrion_csv_export extends Oledrion_export
      */
     public function export()
     {
+        $db                = \XoopsDatabaseFactory::getDatabaseConnection();
+        $caddyHandler = new oledrion\CaddyHandler($db);
+        $commandsHandler = new oledrion\CommandsHandler($db);
         $file = $this->folder . '/' . $this->filename;
         $fp   = fopen($file, 'w');
         if (!$fp) {
@@ -57,26 +63,26 @@ class Oledrion_csv_export extends Oledrion_export
         // Création de l'entête du fichier
         $list = $entete1 = $entete2 = [];
         $s    = $this->separator;
-        $cmd  = new Oledrion_commands();
+        $cmd  = new Commands();
         foreach ($cmd->getVars() as $fieldName => $properties) {
             $entete1[] = $fieldName;
         }
         // Ajout des infos de caddy
-        $cart = new Oledrion_caddy();
+        $cart = new Caddy();
         foreach ($cart->getVars() as $fieldName => $properties) {
             $entete2[] = $fieldName;
         }
         $list[] = array_merge($entete1, $entete2);
         // make item array
-        $criteria = new CriteriaCompo();
-        $criteria->add(new Criteria('cmd_id', 0, '<>'));
-        $criteria->add(new Criteria('cmd_state', $this->orderType, '='));
+        $criteria = new \CriteriaCompo();
+        $criteria->add(new \Criteria('cmd_id', 0, '<>'));
+        $criteria->add(new \Criteria('cmd_state', $this->orderType, '='));
         $criteria->setSort('cmd_date');
         $criteria->setOrder('DESC');
-        $orders = $this->handlers->h_oledrion_commands->getObjects($criteria);
+        $orders = $commandsHandler->getObjects($criteria);
         foreach ($orders as $order) {
             $carts = [];
-            $carts = $this->handlers->h_oledrion_caddy->getObjects(new Criteria('caddy_cmd_id', $order->getVar('cmd_id'), '='));
+            $carts = $caddyHandler->getObjects(new \Criteria('caddy_cmd_id', $order->getVar('cmd_id'), '='));
             $ligne = [];
             foreach ($carts as $cart) {
                 $ligne = [];

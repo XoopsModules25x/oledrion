@@ -96,8 +96,7 @@
                     <td colspan="8">
                         <{$smarty.const._OLEDRION_QTE_MODIFIED}>
                         <input type="hidden" name="op" id="op" value="update">
-                        <input type="submit" name="btnUpdate" id="btnUpdate"
-                               value="<{$smarty.const._OLEDRION_UPDATE}>">
+                        <input type="submit" name="btnUpdate" id="btnUpdate" value="<{$smarty.const._OLEDRION_UPDATE}>">
         </form>
         <form method="post" name="frmEmpty" id="frmEmpty"
               action="<{$smarty.const.OLEDRION_URL}>caddy.php" <{$confEmpty}>

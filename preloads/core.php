@@ -18,9 +18,9 @@
 defined('XOOPS_ROOT_PATH') || exit('Restricted access.');
 
 /**
- * Class UserlogCorePreload
+ * Class OledrionCorePreload
  */
-class OledrionCorePreload extends XoopsPreloadItem
+class OledrionCorePreload extends \XoopsPreloadItem
 {
     // to add PSR-4 autoloader
     /**

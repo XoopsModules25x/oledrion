@@ -17,25 +17,27 @@
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
  */
 
+use Xoopsmodules\oledrion;
+
 /**
  * Sélecteur de produits
  */
 require_once __DIR__ . '/../../../include/cp_header.php';
 require_once __DIR__ . '/../include/common.php';
 require_once XOOPS_ROOT_PATH . '/class/template.php';
-require_once OLEDRION_PATH . 'class/tree.php';
+// require_once OLEDRION_PATH . 'class/tree.php';
 
 if (!isset($xoopsUser) || !is_object($xoopsUser)) {
     exit;
 }
-if (!\Xoopsmodules\oledrion\Utility::isAdmin()) {
+if (!oledrion\Utility::isAdmin()) {
     exit;
 }
-$xoopsTpl = new XoopsTpl();
-$ts       = MyTextSanitizer::getInstance();
-$limit    = \Xoopsmodules\oledrion\Utility::getModuleOption('items_count'); // Nombre maximum d'éléments à afficher dans l'admin
+$xoopsTpl = new \XoopsTpl();
+$ts       = \MyTextSanitizer::getInstance();
+$limit    = oledrion\Utility::getModuleOption('items_count'); // Nombre maximum d'éléments à afficher dans l'admin
 
-$oledrionHandlers = OledrionHandler::getInstance();
+//$oledrionHandlers = HandlerManager::getInstance();
 $searchFields     = [
     'product_title'       => _OLEDRION_TITLE,
     'product_summary'     => _OLEDRION_SUMMARY,
@@ -51,12 +53,16 @@ $searchCriterias  = [
     XOOPS_MATCH_CONTAIN => _CONTAINS
 ];
 
+$db = \XoopsDatabaseFactory::getDatabaseConnection();
+$vendorsHandler = new oledrion\VendorsHandler($db);
+$categoryHandler = new oledrion\CategoryHandler($db);
 $vendors    = [];
-$vendors    = $oledrionHandlers->h_oledrion_vendors->getList();
+$vendors    = $vendorsHandler->getList();
 $vendors[0] = '---';
 sort($vendors);
-$categories           = $oledrionHandlers->h_oledrion_cat->getAllCategories(new Oledrion_parameters());
-$mytree               = new Oledrion_XoopsObjectTree($categories, 'cat_cid', 'cat_pid');
+//$categories           = $oledrionHandlers->h_oledrion_cat->getAllCategories(new oledrion\Parameters());
+$categories = $categoryHandler->getAllCategories(new oledrion\Parameters());
+$mytree               = new oledrion\XoopsObjectTree($categories, 'cat_cid', 'cat_pid');
 $searchVendorSelected = $selectedCategory = $selectedSearchField = 0;
 
 $start         = isset($_REQUEST['start']) ? (int)$_REQUEST['start'] : 0;
@@ -86,44 +92,44 @@ if (isset($_REQUEST['op']) && 'search' === $_REQUEST['op']) {
     $additionnalParameters['searchVendor']   = $searchVendor;
     $additionnalParameters['product_cid']    = $product_cid;
 
-    $criteria = new CriteriaCompo();
+    $criteria = new \CriteriaCompo();
     if ('' !== $searchText) {
         $xoopsTpl->assign('searchTextValue', $ts->htmlSpecialChars($searchText));
         if (array_key_exists($searchField, $searchFields)) {
             switch ($searchCriteria) {
                 case XOOPS_MATCH_START:
-                    $criteria->add(new Criteria($searchField, $searchText . '%', 'LIKE'));
+                    $criteria->add(new \Criteria($searchField, $searchText . '%', 'LIKE'));
                     break;
                 case XOOPS_MATCH_END:
-                    $criteria->add(new Criteria($searchField, '%' . $searchText, 'LIKE'));
+                    $criteria->add(new \Criteria($searchField, '%' . $searchText, 'LIKE'));
                     break;
                 case XOOPS_MATCH_EQUAL:
-                    $criteria->add(new Criteria($searchField, $searchText, '='));
+                    $criteria->add(new \Criteria($searchField, $searchText, '='));
                     break;
                 case XOOPS_MATCH_CONTAIN:
-                    $criteria->add(new Criteria($searchField, '%' . $searchText . '%', 'LIKE'));
+                    $criteria->add(new \Criteria($searchField, '%' . $searchText . '%', 'LIKE'));
                     break;
             }
         }
     }
 
     if ($searchVendor > 0) {
-        $criteria->add(new Criteria('product_vendor_id', $searchVendor, '='));
+        $criteria->add(new \Criteria('product_vendor_id', $searchVendor, '='));
     }
     if ($product_cid > 0) {
-        $criteria->add(new Criteria('product_cid', $product_cid, '='));
+        $criteria->add(new \Criteria('product_cid', $product_cid, '='));
     }
-    $itemsCount = $oledrionHandlers->h_oledrion_products->getcount($criteria);
+    $itemsCount = $productsHandler->getCount($criteria);
     $xoopsTpl->assign('productsCount', $itemsCount);
     if ($itemsCount > $limit) {
         require_once XOOPS_ROOT_PATH . '/class/pagenav.php';
-        $pagenav = new XoopsPageNav($itemsCount, $limit, $start, 'start', http_build_query($additionnalParameters));
+        $pagenav = new \XoopsPageNav($itemsCount, $limit, $start, 'start', http_build_query($additionnalParameters));
         $xoopsTpl->assign('pagenav', $pagenav->renderNav());
     }
     $criteria->setStart($start);
     $criteria->setLimit($limit);
     $products          = [];
-    $products          = $oledrionHandlers->h_oledrion_products->getObjects($criteria);
+    $products          = $productsHandler->getObjects($criteria);
     $javascriptSearch  = ["'", '"'];
     $javascriptReplace = [' ', ' '];
 
@@ -137,10 +143,10 @@ if (isset($_REQUEST['op']) && 'search' === $_REQUEST['op']) {
     }
 }
 
-\Xoopsmodules\oledrion\Utility::loadLanguageFile('modinfo.php');
-\Xoopsmodules\oledrion\Utility::loadLanguageFile('main.php');
+$helper->loadLanguage('modinfo');
+$helper->loadLanguage('main');
 
-if (\Xoopsmodules\oledrion\Utility::checkVerXoops($GLOBALS['xoopsModule'], '2.5.9')) {
+if (oledrion\Utility::checkVerXoops($GLOBALS['xoopsModule'], '2.5.9')) {
     $categoriesSelect = $mytree->makeSelectElement('product_cid', 'cat_title', '-', $selectedCategory, true, 0, '', '');
     $xoopsTpl->assign('searchCategory', $categoriesSelect->render());
 } else {

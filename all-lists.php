@@ -17,6 +17,9 @@
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
  */
 
+use Xoopsmodules\oledrion;
+use Xoopsmodules\oledrion\Constants;
+
 /**
  * Toutes les listes publiques
  *
@@ -30,23 +33,23 @@ require_once XOOPS_ROOT_PATH . '/class/pagenav.php';
 
 $xoopsTpl->assign('mod_pref', $mod_pref); // Préférences du module
 $start = isset($_GET['start']) ? (int)$_GET['start'] : 0;
-$limit = \Xoopsmodules\oledrion\Utility::getModuleOption('perpage');
+$limit = oledrion\Utility::getModuleOption('perpage');
 
 if ($limit > 0) {
-    $handlers   = OledrionHandler::getInstance();
-    $itemsCount = $handlers->h_oledrion_lists->getRecentListsCount(OLEDRION_LISTS_ALL_PUBLIC);
+//    $handlers   = HandlerManager::getInstance();
+    $itemsCount = $listsHandler->getRecentListsCount(Constants::OLEDRION_LISTS_ALL_PUBLIC);
     if ($itemsCount > $limit) {
-        $pagenav = new XoopsPageNav($itemsCount, $limit, $start, 'start');
+        $pagenav = new \XoopsPageNav($itemsCount, $limit, $start, 'start');
         $xoopsTpl->assign('pagenav', $pagenav->renderNav());
     }
     $items = [];
-    $items = $handlers->h_oledrion_lists->getRecentLists(new Oledrion_parameters([
+    $items =  $listsHandler->getRecentLists(new oledrion\Parameters([
                                                                                      'start'    => $start,
                                                                                      'limit'    => $limit,
                                                                                      'sort'     => 'list_date',
                                                                                      'order'    => 'DESC',
                                                                                      'idAsKey'  => true,
-                                                                                     'listType' => OLEDRION_LISTS_ALL_PUBLIC
+                                                                                     'listType' => Constants::OLEDRION_LISTS_ALL_PUBLIC
                                                                                  ]));
     if (count($items) > 0) {
         foreach ($items as $item) {
@@ -55,12 +58,12 @@ if ($limit > 0) {
     }
 }
 
-\Xoopsmodules\oledrion\Utility::setCSS();
-\Xoopsmodules\oledrion\Utility::setLocalCSS($xoopsConfig['language']);
-\Xoopsmodules\oledrion\Utility::loadLanguageFile('modinfo.php');
+oledrion\Utility::setCSS();
+oledrion\Utility::setLocalCSS($xoopsConfig['language']);
+$helper->loadLanguage('modinfo');
 
-$xoopsTpl->assign('breadcrumb', \Xoopsmodules\oledrion\Utility::breadcrumb([OLEDRION_URL . basename(__FILE__) => _MI_OLEDRION_SMNAME11]));
+$xoopsTpl->assign('breadcrumb', oledrion\Utility::breadcrumb([OLEDRION_URL . basename(__FILE__) => _MI_OLEDRION_SMNAME11]));
 
-$title = _MI_OLEDRION_SMNAME11 . ' - ' . \Xoopsmodules\oledrion\Utility::getModuleName();
-\Xoopsmodules\oledrion\Utility::setMetas($title, $title);
+$title = _MI_OLEDRION_SMNAME11 . ' - ' . oledrion\Utility::getModuleName();
+oledrion\Utility::setMetas($title, $title);
 require_once XOOPS_ROOT_PATH . '/footer.php';

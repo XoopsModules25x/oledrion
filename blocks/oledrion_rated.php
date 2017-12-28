@@ -17,6 +17,8 @@
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
  */
 
+use Xoopsmodules\oledrion;
+
 /**
  * Affiche les produits les mieux notés
  * @param $options
@@ -32,13 +34,13 @@ function b_oledrion_rated_show($options)
     $limit      = $options[0];
     $categoryId = $options[1];
 
-    $oledrion_shelf_parameters->resetDefaultValues()->setProductsType('bestrated')->setStart($start)->setLimit($limit)->setSort('product_rating')->setOrder('DESC')->setCategory($categoryId);
-    $products = $oledrion_shelf->getProducts($oledrion_shelf_parameters);
+    $shelfParameters->resetDefaultValues()->setProductsType('bestrated')->setStart($start)->setLimit($limit)->setSort('product_rating')->setOrder('DESC')->setCategory($categoryId);
+    $products = $shelf->getProducts($shelfParameters);
     if (isset($products['lastTitle'])) {
         unset($products['lastTitle']);
     }
     if (count($products) > 0) {
-        $block['nostock_msg']    = \Xoopsmodules\oledrion\Utility::getModuleOption('nostock_msg');
+        $block['nostock_msg']    = oledrion\Utility::getModuleOption('nostock_msg');
         $block['block_products'] = $products;
         $xoTheme->addStylesheet(OLEDRION_URL . 'assets/css/oledrion.css');
 
@@ -59,10 +61,10 @@ function b_oledrion_rated_edit($options)
     // '10|0';  // Voir 10 produits, pour toutes les catégories
     global $xoopsConfig;
     include XOOPS_ROOT_PATH . '/modules/oledrion/include/common.php';
-    require_once OLEDRION_PATH . 'class/tree.php';
+    // require_once OLEDRION_PATH . 'class/tree.php';
     $tblCategories         = [];
-    $tblCategories         = $h_oledrion_cat->getAllCategories(new Oledrion_parameters());
-    $mytree                = new Oledrion_XoopsObjectTree($tblCategories, 'cat_cid', 'cat_pid');
+    $tblCategories         = $categoryHandler->getAllCategories(new oledrion\Parameters());
+    $mytree                = new oledrion\XoopsObjectTree($tblCategories, 'cat_cid', 'cat_pid');
     $form                  = '';
     $checkeds              = ['', ''];
     $checkeds[$options[1]] = 'checked';
@@ -85,7 +87,7 @@ function b_oledrion_rated_show_duplicatable($options)
     $options = explode('|', $options);
     $block   = b_oledrion_rated_show($options);
 
-    $tpl = new XoopsTpl();
+    $tpl = new \XoopsTpl();
     $tpl->assign('block', $block);
     $tpl->display('db:oledrion_block_rated.tpl');
 }

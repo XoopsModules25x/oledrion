@@ -26,9 +26,9 @@
 require_once __DIR__ . '/header.php';
 @error_reporting(0);
 @$xoopsLogger->activated = false;
-$gateway          = Oledrion_gateways::getCurrentGateway();
+$gateway          = Gateways::getCurrentGateway();
 $temporaryGateway = null;
-$temporaryGateway = Oledrion_gateways::getGatewayObject();
+$temporaryGateway = Gateways::getGatewayObject();
 if (is_object($temporaryGateway)) {
     if (!file_exists(OLEDRION_GATEWAY_LOG_PATH)) {
         file_put_contents(OLEDRION_GATEWAY_LOG_PATH, '<?php exit(); ?>');

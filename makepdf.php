@@ -22,6 +22,7 @@
 
 use Xmf\Request;
 use Xoopsmodules\oledrion;
+
 //use tecnickcom\TCPDF;
 require_once __DIR__ . '/../../mainfile.php';
 require_once XOOPS_ROOT_PATH . '/modules/oledrion/include/common.php';
@@ -34,56 +35,56 @@ if (!is_file(XOOPS_ROOT_PATH . '/class/libraries/vendor/tecnickcom/tcpdf/tcpdf.p
 error_reporting(0);
 @$xoopsLogger->activated = false;
 
-if(1 != \Xoopsmodules\oledrion\Utility::getModuleOption('pdf_catalog')) {
-	die();
+if (1 != oledrion\Utility::getModuleOption('pdf_catalog')) {
+    die();
 }
 
 require_once XOOPS_ROOT_PATH.'/class/template.php';
 $details = isset($_POST['catalogFormat']) ? (int)$_POST['catalogFormat'] : 0;
-$Tpl = new XoopsTpl();
+$Tpl = new \XoopsTpl();
 $vatArray = $tbl_categories  = [];
-$vatArray = $h_oledrion_vat->getAllVats(new Oledrion_parameters());
-$tbl_categories = $h_oledrion_cat->getAllCategories(new Oledrion_parameters());
+$vatArray = $vatHandler->getAllVats(new oledrion\Parameters());
+$tbl_categories = $categoryHandler->getAllCategories(new oledrion\Parameters());
 $Tpl->assign('mod_pref', $mod_pref);	// module preferences
 
 $cat_cid = 0 ;
 $tbl_tmp = [];
 $products = [];
-$products = $h_oledrion_products->getRecentProducts(new Oledrion_parameters(['start' => 0, 'limit' => 0, 'category' => $cat_cid]));
+$products = $productsHandler->getRecentProducts(new oledrion\Parameters(['start' => 0, 'limit' => 0, 'category' => $cat_cid]));
 
-if(count($products) > 0) {
-	\Xoopsmodules\oledrion\Utility::loadLanguageFile('modinfo.php');
-	$Tpl->assign('details', $details);
-	$tblAuthors = $tbl_tmp = $tblManufacturersPerProduct = [];
-	$tblAuthors = $h_oledrion_productsmanu->getObjects(new Criteria('pm_product_id', '('.implode(',', array_keys($products)).')', 'IN'), true);
-	foreach($tblAuthors as $item) {
-		$tbl_tmp[] = $item->getVar('pm_manu_id');
-		$tblManufacturersPerProduct[$item->getVar('pm_product_id')][] = $item;
-	}
-	$tbl_tmp = array_unique($tbl_tmp);
-	$tblAuthors = $h_oledrion_manufacturer->getObjects(new Criteria('manu_id', '('.implode(',', $tbl_tmp).')', 'IN'), true);
-	foreach($products as $item) {
-		$tbl_tmp = [];
-		$tbl_tmp = $item->toArray();
-		$tbl_tmp['product_category'] = isset($tbl_categories[$item->getVar('product_cid')]) ? $tbl_categories[$item->getVar('product_cid')]->toArray() : null;
-		$tbl_tmp['product_price_ttc'] = \Xoopsmodules\oledrion\Utility::getTTC($item->getVar('product_price'), $vatArray[$item->getVar('product_vat_id')]->getVar('vat_rate'), false, 's');
-		$tbl_tmp['product_discount_price_ttc'] = \Xoopsmodules\oledrion\Utility::getTTC($item->getVar('product_discount_price'), $vatArray[$item->getVar('product_vat_id')]->getVar('vat_rate') , false, 's');
-		$tbl_join = [];
-		foreach($tblManufacturersPerProduct[$item->getVar('product_id')] as $author) {
-			$auteur = $tblAuthors[$author->getVar('pm_manu_id')];
-			$tbl_join[] = $auteur->getVar('manu_commercialname').' '.$auteur->getVar('manu_name');
-		}
-		if(count($tbl_join) > 0) {
-			$tbl_tmp['product_joined_manufacturers'] = implode(', ', $tbl_join);
-		}
-		$Tpl->append('products', $tbl_tmp);
-	}
+if (count($products) > 0) {
+    $helper->loadLanguage('modinfo');
+    $Tpl->assign('details', $details);
+    $tblAuthors = $tbl_tmp = $tblManufacturersPerProduct = [];
+    $tblAuthors = $productsmanuHandler->getObjects(new \Criteria('pm_product_id', '('.implode(',', array_keys($products)).')', 'IN'), true);
+    foreach ($tblAuthors as $item) {
+        $tbl_tmp[] = $item->getVar('pm_manu_id');
+        $tblManufacturersPerProduct[$item->getVar('pm_product_id')][] = $item;
+    }
+    $tbl_tmp = array_unique($tbl_tmp);
+    $tblAuthors = $manufacturerHandler->getObjects(new \Criteria('manu_id', '('.implode(',', $tbl_tmp).')', 'IN'), true);
+    foreach ($products as $item) {
+        $tbl_tmp = [];
+        $tbl_tmp = $item->toArray();
+        $tbl_tmp['product_category'] = isset($tbl_categories[$item->getVar('product_cid')]) ? $tbl_categories[$item->getVar('product_cid')]->toArray() : null;
+        $tbl_tmp['product_price_ttc'] = oledrion\Utility::getTTC($item->getVar('product_price'), $vatArray[$item->getVar('product_vat_id')]->getVar('vat_rate'), false, 's');
+        $tbl_tmp['product_discount_price_ttc'] = oledrion\Utility::getTTC($item->getVar('product_discount_price'), $vatArray[$item->getVar('product_vat_id')]->getVar('vat_rate'), false, 's');
+        $tbl_join = [];
+        foreach ($tblManufacturersPerProduct[$item->getVar('product_id')] as $author) {
+            $auteur = $tblAuthors[$author->getVar('pm_manu_id')];
+            $tbl_join[] = $auteur->getVar('manu_commercialname').' '.$auteur->getVar('manu_name');
+        }
+        if (count($tbl_join) > 0) {
+            $tbl_tmp['product_joined_manufacturers'] = implode(', ', $tbl_join);
+        }
+        $Tpl->append('products', $tbl_tmp);
+    }
 }
 
 $content1 = utf8_encode($Tpl->fetch('db:oledrion_pdf_catalog.tpl'));
 $content2 = '';
-if(\Xoopsmodules\oledrion\Utility::getModuleOption('use_price')) {
-	$content2 = utf8_encode($Tpl->fetch('db:oledrion_purchaseorder.tpl'));
+if (oledrion\Utility::getModuleOption('use_price')) {
+    $content2 = utf8_encode($Tpl->fetch('db:oledrion_purchaseorder.tpl'));
 }
 
 // ****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************
@@ -108,14 +109,14 @@ $pdf->SetTitle($doc_title);
 $pdf->SetSubject($doc_subject);
 $pdf->SetKeywords($doc_keywords);
 
-$firstLine = utf8_encode(\Xoopsmodules\oledrion\Utility::getModuleName().' - '.$xoopsConfig['sitename']);
+$firstLine = utf8_encode(oledrion\Utility::getModuleName().' - '.$xoopsConfig['sitename']);
 $secondLine = OLEDRION_URL.' - '.formatTimestamp(time(), 'm');
 $pdf->setHeaderData('', '', $firstLine, $secondLine);
 
 //set margins
 $pdf->SetMargins(PDF_MARGIN_LEFT, PDF_MARGIN_TOP, PDF_MARGIN_RIGHT);
 //set auto page breaks
-$pdf->SetAutoPageBreak(TRUE, PDF_MARGIN_BOTTOM);
+$pdf->SetAutoPageBreak(true, PDF_MARGIN_BOTTOM);
 $pdf->setHeaderMargin(PDF_MARGIN_HEADER);
 $pdf->setFooterMargin(PDF_MARGIN_FOOTER);
 $pdf->setImageScale(PDF_IMAGE_SCALE_RATIO); //set image scale factor
@@ -130,9 +131,8 @@ $pdf->setLanguageArray($l); //set language items
 //$pdf->AliasNbPages();
 $pdf->AddPage();
 $pdf->writeHTML($content1, true, 0);
-if(\Xoopsmodules\oledrion\Utility::getModuleOption('use_price')) {
-	$pdf->AddPage();
-	$pdf->writeHTML($content2, true, 0);
+if (oledrion\Utility::getModuleOption('use_price')) {
+    $pdf->AddPage();
+    $pdf->writeHTML($content2, true, 0);
 }
 $pdf->Output();
-

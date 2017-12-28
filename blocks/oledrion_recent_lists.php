@@ -16,6 +16,9 @@
  * @license     {@link http://www.fsf.org/copyleft/gpl.html GNU public license}
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
  */
+
+use Xoopsmodules\oledrion;
+
 /**
  * Affichage des dernières listes utilisateurs
  *
@@ -25,15 +28,17 @@
 function b_oledrion_recent_lists_show($options)
 {
     require XOOPS_ROOT_PATH . '/modules/oledrion/include/common.php';
-    \Xoopsmodules\oledrion\Utility::loadLanguageFile('main.php');
+    $helper->loadLanguage('main');
     $start    = 0;
     $limit    = (int)$options[0];
     $listType = (int)$options[1];
     $block    = [];
-    $handlers = OledrionHandler::getInstance();
+//    $handlers = HandlerManager::getInstance();
+    $db      = \XoopsDatabaseFactory::getDatabaseConnection();
+    $listsHandler = new oledrion\ListsHandler($db);
     $items    = [];
-    //$items = $handlers->h_oledrion_lists->getRecentLists(new Oledrion_parameters(array('start' => $start, 'limit' => $limit, 'sort' => 'list_date', 'order' => 'DESC', 'idAsKey' => true, 'listType'  => $listType)));
-    $items = $handlers->h_oledrion_lists->getRecentLists(new Oledrion_parameters([
+    //$items = $handlers->h_oledrion_lists->getRecentLists(new oledrion\Parameters(array('start' => $start, 'limit' => $limit, 'sort' => 'list_date', 'order' => 'DESC', 'idAsKey' => true, 'listType'  => $listType)));
+    $items =  $listsHandler->getRecentLists(new oledrion\Parameters([
                                                                                      'start'    => $start,
                                                                                      'limit'    => $limit,
                                                                                      'sort'     => 'list_date',
@@ -62,8 +67,8 @@ function b_oledrion_recent_lists_edit($options)
     $form           = '';
     $form           .= "<table border='0'>";
     $form           .= '<tr><td>' . _MB_OLEDRION_LISTS_COUNT . "</td><td><input type='text' name='options[]' id='options' value='" . (int)$options[0] . "'></td></tr>";
-    $listTypes      = Oledrion_lists::getTypesArray();
-    $listTypeSelect = \Xoopsmodules\oledrion\Utility::htmlSelect('options[]', $listTypes, (int)$options[1], false);
+    $listTypes      = Lists::getTypesArray();
+    $listTypeSelect = oledrion\Utility::htmlSelect('options[]', $listTypes, (int)$options[1], false);
     $form           .= '<tr><td>' . _MB_OLEDRION_LISTS_TYPE . '</td><td>' . $listTypeSelect . '</td></tr>';
     $form           .= '</table>';
 
@@ -79,7 +84,7 @@ function b_oledrion_recent_lists_duplicatable($options)
     $options = explode('|', $options);
     $block   = b_oledrion_recent_lists_show($options);
 
-    $tpl = new XoopsTpl();
+    $tpl = new \XoopsTpl();
     $tpl->assign('block', $block);
     $tpl->display('db:oledrion_block_recent_lists.tpl');
 }

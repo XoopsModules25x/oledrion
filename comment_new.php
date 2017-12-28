@@ -23,7 +23,7 @@ $com_itemid = isset($_GET['com_itemid']) ? (int)$_GET['com_itemid'] : 0;
 if ($com_itemid > 0) {
     include XOOPS_ROOT_PATH . '/modules/oledrion/include/common.php';
     $product = null;
-    $product = $h_oledrion_products->get($com_itemid);
+    $product = $productsHandler->get($com_itemid);
     if (is_object($product)) {
         $com_replytitle = $product->getVar('product_title');
         require XOOPS_ROOT_PATH . '/include/comment_new.php';
