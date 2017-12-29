@@ -68,7 +68,7 @@ function b_oledrion_random_lists_edit($options)
     $form           = '';
     $form           .= "<table border='0'>";
     $form           .= '<tr><td>' . _MB_OLEDRION_LISTS_COUNT . "</td><td><input type='text' name='options[]' id='options' value='" . (int)$options[0] . "'></td></tr>";
-    $listTypes      = Lists::getTypesArray();
+    $listTypes      = oledrion\Lists::getTypesArray();
     $listTypeSelect = oledrion\Utility::htmlSelect('options[]', $listTypes, (int)$options[1], false);
     $form           .= '<tr><td>' . _MB_OLEDRION_LISTS_TYPE . '</td><td>' . $listTypeSelect . '</td></tr>';
     $form           .= '</table>';

@@ -17,6 +17,8 @@
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
  */
 
+use Xoopsmodules\oledrion;
+
 /**
  * block to display ajax search
  * @param $options

@@ -18,6 +18,7 @@
  */
 
 use Xoopsmodules\oledrion;
+use Xoopsmodules\oledrion\Constants;
 
 /**
  * Affichage des dernières listes utilisateurs
@@ -44,7 +45,7 @@ function b_oledrion_recent_lists_show($options)
                                                                                      'sort'     => 'list_date',
                                                                                      'order'    => 'DESC',
                                                                                      'idAsKey'  => true,
-                                                                                     'listType' => OLEDRION_LISTS_ALL_PUBLIC
+                                                                                     'listType' => Constants::OLEDRION_LISTS_ALL_PUBLIC
                                                                                  ]));
     if (count($items) > 0) {
         foreach ($items as $item) {
@@ -67,7 +68,7 @@ function b_oledrion_recent_lists_edit($options)
     $form           = '';
     $form           .= "<table border='0'>";
     $form           .= '<tr><td>' . _MB_OLEDRION_LISTS_COUNT . "</td><td><input type='text' name='options[]' id='options' value='" . (int)$options[0] . "'></td></tr>";
-    $listTypes      = Lists::getTypesArray();
+    $listTypes      = oledrion\Lists::getTypesArray();
     $listTypeSelect = oledrion\Utility::htmlSelect('options[]', $listTypes, (int)$options[1], false);
     $form           .= '<tr><td>' . _MB_OLEDRION_LISTS_TYPE . '</td><td>' . $listTypeSelect . '</td></tr>';
     $form           .= '</table>';

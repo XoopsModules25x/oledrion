@@ -17,6 +17,8 @@
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
  */
 
+use Xoopsmodules\oledrion;
+
 /**
  * Affiche x produit(s) en promotion
  * @param $options
