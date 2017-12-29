@@ -19,61 +19,42 @@
  *
  */
 
-require_once dirname(__DIR__) . '/include/common.php';
+//require_once __DIR__ . '/../../include/common.php';
 
 /**
- * Class PublisherConfigurator
+ * Class Configurator
  */
 class Configurator
 {
+    public $name;
+    public $paths           = [];
     public $uploadFolders   = [];
-    public $blankFiles  = [];
+    public $copyBlankFiles  = [];
+    public $copyTestFolders = [];
     public $templateFolders = [];
     public $oldFiles        = [];
     public $oldFolders      = [];
-    public $name;
+    public $modCopyright;
 
     /**
-     * PublisherConfigurator constructor.
+     * Configurator constructor.
      */
     public function __construct()
     {
         $moduleDirName        = basename(dirname(__DIR__));
         $capsDirName          = strtoupper($moduleDirName);
-        $this->name           = 'Module Configurator';
-        $this->uploadFolders  = [
-            constant($capsDirName . '_UPLOAD_PATH'),
-            constant($capsDirName . '_UPLOAD_PATH') . '/content',
-            constant($capsDirName . '_UPLOAD_PATH') . '/images',
-            constant($capsDirName . '_UPLOAD_PATH') . '/images/category',
-            constant($capsDirName . '_UPLOAD_PATH') . '/images/thumbnails',
-        ];
-        $this->blankFiles = [
-            constant($capsDirName . '_UPLOAD_PATH'),
-            constant($capsDirName . '_UPLOAD_PATH') . '/images/category',
-            constant($capsDirName . '_UPLOAD_PATH') . '/images/thumbnails',
-        ];
 
-        $this->templateFolders = [
-            '/templates/',
-            '/templates/blocks/',
-            '/templates/admin/'
+        $config = include __DIR__ . '/../../include/config.php';
 
-        ];
-        $this->oldFiles        = [
-            '/class/request.php',
-            '/class/registry.php',
-            '/class/utilities.php',
-            '/class/util.php',
-            '/include/constants.php',
-            '/include/functions.php',
-            '/ajaxrating.txt'
-        ];
-        $this->oldFolders      = [
-            '/images',
-            '/css',
-            '/js',
-            '/tcpdf',
-        ];
+        $this->name            = $config->name;
+        $this->paths           = $config->paths;
+        $this->uploadFolders   = $config->uploadFolders;
+        $this->copyBlankFiles  = $config->copyBlankFiles;
+        $this->copyTestFolders = $config->copyTestFolders;
+        $this->templateFolders = $config->templateFolders;
+        $this->oldFiles        = $config->oldFiles;
+        $this->oldFolders      = $config->oldFolders;
+        $this->modCopyright    = $config->modCopyright;
+
     }
 }

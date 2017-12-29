@@ -69,3 +69,7 @@ define('CO_' . $moduleDirNameUpper . '_OVERVIEW', 'Overview');
 define('CO_' . $moduleDirNameUpper . '_DISCLAIMER', 'Disclaimer');
 define('CO_' . $moduleDirNameUpper . '_LICENSE', 'License');
 define('CO_' . $moduleDirNameUpper . '_SUPPORT', 'Support');
+
+//Sample Data
+define('CO_' . $moduleDirNameUpper . '_ADD_SAMPLEDATA', 'Add Sample Data (will delete ALL current data)');
+define('CO_' . $moduleDirNameUpper . '_SAMPLEDATA_SUCCESS', 'Sample Date uploaded successfully');

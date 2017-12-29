@@ -15,7 +15,12 @@
  * @author          Michael Beck (aka Mamba)
  */
 
+use Xoopsmodules\oledrion;
+use Xoopsmodules\oledrion\common;
+
 require_once __DIR__ . '/../../../mainfile.php';
+
+include __DIR__ . '/../preloads/autoloader.php';
 
 $op = \Xmf\Request::getCmd('op', '');
 
@@ -30,7 +35,14 @@ switch ($op) {
 function loadSampleData()
 {
     $moduleDirName = basename(dirname(__DIR__));
-    xoops_loadLanguage('comment');
+    $moduleDirNameUpper = strtoupper($moduleDirName); //$capsDirName
+    $helper       = oledrion\Helper::getInstance();
+    $utility      = new oledrion\Utility();
+    $configurator = new common\Configurator();
+    // Load language files
+    $helper->loadLanguage('admin');
+    $helper->loadLanguage('modinfo');
+    $helper->loadLanguage('common');
 
     $oledrion_manufacturerData = \Xmf\Yaml::readWrapped('oledrion_manufacturer.yml');
     \Xmf\Database\TableLoad::truncateTable('oledrion_manufacturer');
@@ -132,5 +144,16 @@ function loadSampleData()
     //    \Xmf\Database\TableLoad::truncateTable('oledrion_payment_log');
     //    \Xmf\Database\TableLoad::loadTableFromArray($moduleDirName . '_payment_log', $oledrion_payment_logData);
 
-    redirect_header('../admin/index.php', 1, _CM_ACTIVE);
+
+    //  ---  COPY test folder files ---------------
+    if (count($configurator->copyTestFolders) > 0) {
+        //        $file = __DIR__ . '/../testdata/images/';
+        foreach (array_keys($configurator->copyTestFolders) as $i) {
+            $src  = $configurator->copyTestFolders[$i][0];
+            $dest = $configurator->copyTestFolders[$i][1];
+            $utility::xcopy($src, $dest);
+        }
+    }
+    
+    redirect_header('../admin/index.php', 0, constant('CO_' . $moduleDirNameUpper . '_SAMPLEDATA_SUCCESS'));
 }
