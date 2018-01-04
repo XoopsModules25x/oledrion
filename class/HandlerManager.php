@@ -1,4 +1,4 @@
-<?php namespace Xoopsmodules\oledrion;
+<?php namespace XoopsModules\Oledrion;
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -17,7 +17,7 @@
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
  */
 
-use Xoopsmodules\oledrion;
+use XoopsModules\Oledrion;
 
 /**
  * Chargement des handlers utilisés par le module
@@ -90,7 +90,7 @@ class HandlerManager
         if (!isset($this->handlersNames[$name])) {
 //            $this->handlers[$name] = xoops_getModuleHandler(substr($name, 2), OLEDRION_DIRNAME);
             $db      = \XoopsDatabaseFactory::getDatabaseConnection();
-            $class = 'oledrion\\' . $name;
+            $class = 'Oledrion\\' . $name;
             $this->handlers[$name] = new $class($db);
         }
 

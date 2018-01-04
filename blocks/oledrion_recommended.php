@@ -17,7 +17,7 @@
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
  */
 
-use Xoopsmodules\oledrion;
+use XoopsModules\Oledrion;
 
 /**
  * Renvoie la liste des produits recommandés
@@ -44,7 +44,7 @@ function b_oledrion_recomm_show($options)
         unset($products['lastTitle']);
     }
     if (count($products) > 0) {
-        $block['nostock_msg']    = oledrion\Utility::getModuleOption('nostock_msg');
+        $block['nostock_msg']    = Oledrion\Utility::getModuleOption('nostock_msg');
         $block['block_products'] = $products;
         $xoTheme->addStylesheet(OLEDRION_URL . 'assets/css/oledrion.css');
 
@@ -67,8 +67,8 @@ function b_oledrion_recomm_edit($options)
     include XOOPS_ROOT_PATH . '/modules/oledrion/include/common.php';
     // require_once OLEDRION_PATH . 'class/tree.php';
     $tblCategories         = [];
-    $tblCategories         = $categoryHandler->getAllCategories(new oledrion\Parameters());
-    $mytree                = new oledrion\XoopsObjectTree($tblCategories, 'cat_cid', 'cat_pid');
+    $tblCategories         = $categoryHandler->getAllCategories(new Oledrion\Parameters());
+    $mytree                = new Oledrion\XoopsObjectTree($tblCategories, 'cat_cid', 'cat_pid');
     $form                  = '';
     $checkeds              = ['', ''];
     $checkeds[$options[1]] = 'checked';
@@ -77,7 +77,7 @@ function b_oledrion_recomm_edit($options)
 
     //$select                = $mytree->makeSelBox('options[]', 'cat_title', '-', $options[1], _MB_OLEDRION_ALL_CATEGORIES);
 
-    if (oledrion\Utility::checkVerXoops($GLOBALS['xoopsModule'], '2.5.9')) {
+    if (Oledrion\Utility::checkVerXoops($GLOBALS['xoopsModule'], '2.5.9')) {
         $select0 = $mytree->makeSelectElement('options[]', 'cat_title', '-', $options[1], true, 0, '', _MB_OLEDRION_ALL_CATEGORIES);
         $select  = $select0->render();
     } else {

@@ -1,4 +1,4 @@
-<?php namespace Xoopsmodules\oledrion;
+<?php namespace XoopsModules\Oledrion;
 
 /*
  You may not change or alter any portion of this comment or credits
@@ -33,8 +33,8 @@
 
 use WideImage\WideImage;
 use Xmf\Request;
-use Xoopsmodules\oledrion;
-use Xoopsmodules\oledrion\common;
+use XoopsModules\Oledrion;
+use XoopsModules\Oledrion\Common;
 
 /**
  * Class OledrionUtility
@@ -54,7 +54,7 @@ class Utility extends \XoopsObject
     /**
      * Access the only instance of this class
      *
-     * @return oledrion\Utility
+     * @return Oledrion\Utility
      *
      * @static
      * @staticvar   object
@@ -160,7 +160,7 @@ class Utility extends \XoopsObject
         $height = '400px',
         $supplemental = ''
     ) {
-        $helper                   = oledrion\Helper::getInstance();
+        $helper                   = Oledrion\Helper::getInstance();
         $editor                   = false;
         $editor_configs           = [];
         $editor_configs['name']   = $name;
@@ -1388,7 +1388,7 @@ class Utility extends \XoopsObject
     {
         $ht                = (int)$ht;
         $vat               = (int)$vat;
-        $oledrion_Currency = oledrion\Currency::getInstance();
+        $oledrion_Currency = Oledrion\Currency::getInstance();
         $ttc               = $ht * (1 + ($vat / 100));
         if (!$edit) {
             return $oledrion_Currency->amountForDisplay($ttc, $format);
@@ -1420,7 +1420,7 @@ class Utility extends \XoopsObject
         $vat      = null;
         static $vats = [];
         $vat_rate = null;
-        $vatHandler =  new oledrion\VatHandler(\XoopsDatabaseFactory::getDatabaseConnection());
+        $vatHandler =  new Oledrion\VatHandler(\XoopsDatabaseFactory::getDatabaseConnection());
         if (is_array($vats) && in_array($vat_id, $vats)) {
             $vat_rate = $vats[$vat_id];
         } else {
@@ -1636,7 +1636,7 @@ class Utility extends \XoopsObject
         if (false === strpos($languageFile, $defaultExtension)) {
             $languageFile .= $defaultExtension;
         }
-        $helper = oledrion\Helper::getInstance();
+        $helper = Oledrion\Helper::getInstance();
         $helper->loadLanguage($languageFile);
     }
 

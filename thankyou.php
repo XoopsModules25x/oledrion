@@ -21,7 +21,7 @@
  * Page appelée par la passerelle après le paiement en ligne
  */
 
-use Xoopsmodules\oledrion;
+use XoopsModules\Oledrion;
 
 require_once __DIR__ . '/header.php';
 $GLOBALS['current_category'] = -1;
@@ -42,11 +42,11 @@ if (is_object($gateway) && method_exists($gateway, 'thankYou')) {
     unset($gateway);
 }
 $xoopsTpl->assign('success', $success);
-$xoopsTpl->assign('global_advert', oledrion\Utility::getModuleOption('advertisement'));
-$xoopsTpl->assign('breadcrumb', oledrion\Utility::breadcrumb([OLEDRION_URL . basename(__FILE__) => _OLEDRION_PURCHASE_FINSISHED]));
+$xoopsTpl->assign('global_advert', Oledrion\Utility::getModuleOption('advertisement'));
+$xoopsTpl->assign('breadcrumb', Oledrion\Utility::breadcrumb([OLEDRION_URL . basename(__FILE__) => _OLEDRION_PURCHASE_FINSISHED]));
 
-$title = _OLEDRION_PURCHASE_FINSISHED . ' - ' . oledrion\Utility::getModuleName();
-oledrion\Utility::setMetas($title, $title);
-oledrion\Utility::setCSS();
-oledrion\Utility::setLocalCSS($xoopsConfig['language']);
+$title = _OLEDRION_PURCHASE_FINSISHED . ' - ' . Oledrion\Utility::getModuleName();
+Oledrion\Utility::setMetas($title, $title);
+Oledrion\Utility::setCSS();
+Oledrion\Utility::setLocalCSS($xoopsConfig['language']);
 require_once XOOPS_ROOT_PATH . '/footer.php';

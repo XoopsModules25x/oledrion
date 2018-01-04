@@ -1,4 +1,4 @@
-<?php namespace Xoopsmodules\oledrion\gateways\paypal;
+<?php namespace XoopsModules\Oledrion\gateways\paypal;
 
 /*
  You may not change or alter any portion of this comment or credits
@@ -18,8 +18,8 @@
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
  */
 
-use Xoopsmodules\oledrion;
-use Xoopsmodules\oledrion\gateways\Gateway;
+use XoopsModules\Oledrion;
+use XoopsModules\Oledrion\gateways\Gateway;
 
 /**
  * Paypal Gateway
@@ -66,7 +66,7 @@ class Paypal extends Gateway
     {
         require $this->getGatewayLanguageFile();
         $db = \XoopsDatabaseFactory::getDatabaseConnection();
-        $gatewaysOptionsHandler = new oledrion\GatewaysOptionsHandler($db);
+        $gatewaysOptionsHandler = new Oledrion\GatewaysOptionsHandler($db);
 
         $sform = new \XoopsThemeForm(_OLEDRION_PAYPAL_PARAMETERS . ' - ' . $this->gatewayInformation['name'], 'frmPaypal', $postUrl);
         // You must specify the gateway folder's name
@@ -123,7 +123,7 @@ class Paypal extends Gateway
     public function saveParametersForm($data)
     {
         $db = \XoopsDatabaseFactory::getDatabaseConnection();
-        $gatewaysOptionsHandler = new oledrion\GatewaysOptionsHandler($db);
+        $gatewaysOptionsHandler = new Oledrion\GatewaysOptionsHandler($db);
         $parameters = ['paypal_email', 'paypal_money', 'paypal_test', 'use_ipn'];
         // On commence par supprimer les valeurs actuelles
         $gatewayName = $this->gatewayInformation['foldername'];
@@ -157,7 +157,7 @@ class Paypal extends Gateway
     public function getRedirectURL($cmd_total, $cmd_id)
     {
         $db = \XoopsDatabaseFactory::getDatabaseConnection();
-        $gatewaysOptionsHandler = new oledrion\GatewaysOptionsHandler($db);
+        $gatewaysOptionsHandler = new Oledrion\GatewaysOptionsHandler($db);
         $test_mode = (int)$gatewaysOptionsHandler->getGatewayOptionValue($this->gatewayInformation['foldername'], 'paypal_test');
         if (1 == $test_mode) {
             return 'https://www.sandbox.paypal.com/cgi-bin/webscr';
@@ -177,7 +177,7 @@ class Paypal extends Gateway
     {
         global $xoopsConfig;
         $db = \XoopsDatabaseFactory::getDatabaseConnection();
-        $gatewaysOptionsHandler = new oledrion\GatewaysOptionsHandler($db);
+        $gatewaysOptionsHandler = new Oledrion\GatewaysOptionsHandler($db);
         $gatewayName  = $this->gatewayInformation['foldername'];
         $paypal_money = $gatewaysOptionsHandler->getGatewayOptionValue($gatewayName, 'paypal_money');
         $paypal_email = $gatewaysOptionsHandler->getGatewayOptionValue($gatewayName, 'paypal_email');
@@ -192,7 +192,7 @@ class Paypal extends Gateway
         $ret['image_url']        = XOOPS_URL . '/images/logo.gif';
         $ret['cpp_header_image'] = XOOPS_URL . '/images/logo.gif';
         $ret['invoice']          = $order->getVar('cmd_id');
-        $ret['item_name']        = _OLEDRION_COMMAND . $order->getVar('cmd_id') . ' - ' . oledrion\Utility::makeHrefTitle($xoopsConfig['sitename']);
+        $ret['item_name']        = _OLEDRION_COMMAND . $order->getVar('cmd_id') . ' - ' . Oledrion\Utility::makeHrefTitle($xoopsConfig['sitename']);
         $ret['item_number']      = $order->getVar('cmd_id');
         $ret['tax']              = 0; // ajout 25/03/2008
         $ret['amount']           = $this->formatAmount((float)$order->getVar('cmd_total', 'n'));
@@ -230,7 +230,7 @@ class Paypal extends Gateway
     private function getdialogURL()
     {
         $db = \XoopsDatabaseFactory::getDatabaseConnection();
-        $gatewaysOptionsHandler = new oledrion\GatewaysOptionsHandler($db);
+        $gatewaysOptionsHandler = new Oledrion\GatewaysOptionsHandler($db);
         $test_mode = (int)$gatewaysOptionsHandler->getGatewayOptionValue($this->gatewayInformation['foldername'], 'paypal_test');
         if (1 == $test_mode) {
             return 'www.sandbox.paypal.com';
@@ -249,8 +249,8 @@ class Paypal extends Gateway
     public function gatewayNotify($gatewaysLogPath)
     {
         $db = \XoopsDatabaseFactory::getDatabaseConnection();
-        $gatewaysOptionsHandler = new oledrion\GatewaysOptionsHandler($db);
-        $commandsHandler = new oledrion\CommandsHandler($db);
+        $gatewaysOptionsHandler = new Oledrion\GatewaysOptionsHandler($db);
+        $commandsHandler = new Oledrion\CommandsHandler($db);
         error_reporting(0);
         @$xoopsLogger->activated = false;
 

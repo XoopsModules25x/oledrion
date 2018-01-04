@@ -21,7 +21,7 @@
  * Script chargé d'afficher un média d'un produit
  */
 
-use Xoopsmodules\oledrion;
+use XoopsModules\Oledrion;
 
 require_once __DIR__ . '/header.php';
 $type       = isset($_GET['type']) ? strtolower($_GET['type']) : 'picture';
@@ -39,7 +39,7 @@ if ($product_id > 0) {
     }
 
     // Le produit est publié ?
-    if (0 == oledrion\Utility::getModuleOption('show_unpublished') && $product->getVar('product_submitted') > time()) {
+    if (0 == Oledrion\Utility::getModuleOption('show_unpublished') && $product->getVar('product_submitted') > time()) {
         exit(_OLEDRION_ERROR3);
     }
 } else {

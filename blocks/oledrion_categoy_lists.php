@@ -17,7 +17,7 @@
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
  */
 
-use Xoopsmodules\oledrion;
+use XoopsModules\Oledrion;
 
 /**
  * Affichage des listes les plus vues
@@ -36,7 +36,7 @@ function b_oledrion_category_lists_show($options)
     if (isset($GLOBALS['current_category']) && (int)$GLOBALS['current_category'] > 0) {
 //        $handlers = HandlerManager::getInstance();
         $db      = \XoopsDatabaseFactory::getDatabaseConnection();
-        $listsHandler = new oledrion\ListsHandler($db);
+        $listsHandler = new Oledrion\ListsHandler($db);
         $items    = [];
         $items    =  $listsHandler->listsFromCurrentCategory($GLOBALS['current_category'], $listType, $limit);
         if (count($items) > 0) {
@@ -61,8 +61,8 @@ function b_oledrion_category_lists_edit($options)
     $form           = '';
     $form           .= "<table border='0'>";
     $form           .= '<tr><td>' . _MB_OLEDRION_LISTS_COUNT . "</td><td><input type='text' name='options[]' id='options' value='" . (int)$options[0] . "'></td></tr>";
-    $listTypes      = oledrion\Lists::getTypesArray();
-    $listTypeSelect = oledrion\Utility::htmlSelect('options[]', $listTypes, (int)$options[1], false);
+    $listTypes      = Oledrion\Lists::getTypesArray();
+    $listTypeSelect = Oledrion\Utility::htmlSelect('options[]', $listTypes, (int)$options[1], false);
     $form           .= '<tr><td>' . _MB_OLEDRION_LISTS_TYPE . '</td><td>' . $listTypeSelect . '</td></tr>';
     $form           .= '</table>';
 

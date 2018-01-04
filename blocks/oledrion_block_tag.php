@@ -19,7 +19,7 @@
  * @return array
  */
 
-use Xoopsmodules\oledrion;
+use XoopsModules\Oledrion;
 
 function oledrion_tag_block_cloud_show($options)
 {

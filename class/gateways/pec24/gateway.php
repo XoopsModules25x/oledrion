@@ -1,10 +1,10 @@
-<?php namespace Xoopsmodules\oledrion\gateways\pec24;
+<?php namespace XoopsModules\Oledrion\gateways\pec24;
 // defined('XOOPS_ROOT_PATH') || exit('Restricted access.');
 //require_once('nusoap.php');
 
-use Xoopsmodules\oledrion;
-use Xoopsmodules\oledrion\Constants;
-use Xoopsmodules\oledrion\gateways\Gateway;
+use XoopsModules\Oledrion;
+use XoopsModules\Oledrion\Constants;
+use XoopsModules\Oledrion\gateways\Gateway;
 
 /**
  * Class Pec24
@@ -47,7 +47,7 @@ class Pec24 extends Gateway
     public function getParametersForm($postUrl)
     {
         $db = \XoopsDatabaseFactory::getDatabaseConnection();
-        $gatewaysOptionsHandler = new oledrion\GatewaysOptionsHandler($db);
+        $gatewaysOptionsHandler = new Oledrion\GatewaysOptionsHandler($db);
         $sform = new \XoopsThemeForm(_OLEDRION_PARSIAN_PARAMETERS . ' - ' . $this->gatewayInformation['name'], 'frmParsian', $postUrl);
         $sform->addElement(new \XoopsFormHidden('gateway', $this->gatewayInformation['foldername']));
         $pin = new \XoopsFormText(_OLEDRION_PARSIAN_MID, 'parsian_mid', 50, 255, $gatewaysOptionsHandler->getGatewayOptionValue($this->gatewayInformation['foldername'], 'parsian_mid'));
@@ -74,7 +74,7 @@ class Pec24 extends Gateway
             require $this->languageFilename;
         }
         $db = \XoopsDatabaseFactory::getDatabaseConnection();
-        $gatewaysOptionsHandler = new oledrion\GatewaysOptionsHandler($db);
+        $gatewaysOptionsHandler = new Oledrion\GatewaysOptionsHandler($db);
         $gatewayName = $this->gatewayInformation['foldername'];
         $gatewaysOptionsHandler->deleteGatewayOptions($gatewayName);
         if (!$gatewaysOptionsHandler->setGatewayOptionValue($gatewayName, 'parsian_mid', $data['parsian_mid'])) {
@@ -125,7 +125,7 @@ class Pec24 extends Gateway
     public function getParsianMid()
     {
         $db = \XoopsDatabaseFactory::getDatabaseConnection();
-        $gatewaysOptionsHandler = new oledrion\GatewaysOptionsHandler($db);
+        $gatewaysOptionsHandler = new Oledrion\GatewaysOptionsHandler($db);
         global $xoopsConfig;
         $gatewayName = $this->gatewayInformation['foldername'];
         $parsian_mid = $gatewaysOptionsHandler->getGatewayOptionValue($gatewayName, 'parsian_mid');
@@ -193,7 +193,7 @@ class Pec24 extends Gateway
     public function gatewayNotify($gatewaysLogPath)
     {
         $db = \XoopsDatabaseFactory::getDatabaseConnection();
-        $commandsHandler = new oledrion\CommandsHandler($db);
+        $commandsHandler = new Oledrion\CommandsHandler($db);
         // Get from bank
         $authority = $_GET['au'];
         $status    = $_GET['rs'];

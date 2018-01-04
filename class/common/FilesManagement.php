@@ -1,4 +1,4 @@
-<?php namespace Xoopsmodules\oledrion\common;
+<?php namespace XoopsModules\Oledrion\Common;
 
 /*
  You may not change or alter any portion of this comment or credits

@@ -17,7 +17,7 @@
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
  */
 
-use Xoopsmodules\oledrion;
+use XoopsModules\Oledrion;
 
 /**
  * Gestion des stocks bas (dans l'administration)
@@ -33,7 +33,7 @@ switch ($action) {
         $adminObject = \Xmf\Module\Admin::getInstance();
         $adminObject->displayNavigation('index.php?op=lowstock');
 
-        //        oledrion\Utility::htitle(_MI_OLEDRION_ADMENU9, 4);
+        //        Oledrion\Utility::htitle(_MI_OLEDRION_ADMENU9, 4);
         $start    = isset($_GET['start']) ? (int)$_GET['start'] : 0;
         $criteria = new \CriteriaCompo();
         // Recherche des produits dont la quantité en stock est inférieure ou égale à la quantité d'alerte et ou la quantité d'alerte est supérieure à 0
@@ -87,7 +87,7 @@ switch ($action) {
                 }
             }
         }
-        oledrion\Utility::redirect(_AM_OLEDRION_SAVE_OK, $baseurl . '?op=lowstock', 2);
+        Oledrion\Utility::redirect(_AM_OLEDRION_SAVE_OK, $baseurl . '?op=lowstock', 2);
         break;
 
 }

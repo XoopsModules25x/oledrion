@@ -1,4 +1,4 @@
-<?php namespace Xoopsmodules\oledrion\gateways;
+<?php namespace XoopsModules\Oledrion\gateways;
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -9,7 +9,7 @@
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 */
 
-use Xoopsmodules\oledrion;
+use XoopsModules\Oledrion;
 
 /**
  * oledrion

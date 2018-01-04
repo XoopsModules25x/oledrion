@@ -21,7 +21,7 @@
  * Gestion des catégories de produits
  */
 
-use Xoopsmodules\oledrion;
+use XoopsModules\Oledrion;
 
 if (!defined('OLEDRION_ADMIN')) {
     exit();
@@ -37,12 +37,12 @@ switch ($action) {
 
         // Display categories **********************************************************************
         $categories = [];
-        //        oledrion\Utility::htitle(_AM_OLEDRION_CATEGORIES, 4);
+        //        Oledrion\Utility::htitle(_AM_OLEDRION_CATEGORIES, 4);
 
-        $categories = $categoryHandler->getAllCategories(new oledrion\Parameters());
-        $mytree     = new oledrion\XoopsObjectTree($categories, 'cat_cid', 'cat_pid');
+        $categories = $categoryHandler->getAllCategories(new Oledrion\Parameters());
+        $mytree     = new Oledrion\XoopsObjectTree($categories, 'cat_cid', 'cat_pid');
 
-        if (oledrion\Utility::checkVerXoops($GLOBALS['xoopsModule'], '2.5.9')) {
+        if (Oledrion\Utility::checkVerXoops($GLOBALS['xoopsModule'], '2.5.9')) {
             $categoriesSelect0 = $mytree->makeSelectElement('id', 'cat_title', '--', '', true, 0, '', '');
             $categoriesSelect  = $categoriesSelect0->render();
         } else {
@@ -64,10 +64,10 @@ switch ($action) {
         echo "<br><br>\n";
 
         // Categories preferences *****************************************************************
-        $chunk1    = oledrion\Utility::getModuleOption('chunk1');
-        $chunk2    = oledrion\Utility::getModuleOption('chunk2');
-        $chunk3    = oledrion\Utility::getModuleOption('chunk3');
-        $chunk4    = oledrion\Utility::getModuleOption('chunk4');
+        $chunk1    = Oledrion\Utility::getModuleOption('chunk1');
+        $chunk2    = Oledrion\Utility::getModuleOption('chunk2');
+        $chunk3    = Oledrion\Utility::getModuleOption('chunk3');
+        $chunk4    = Oledrion\Utility::getModuleOption('chunk4');
         $positions = [0 => _AM_OLEDRION_INVISIBLE, 1 => '1', 2 => '2', 3 => '3', 4 => '4'];
 
         $sform = new \XoopsThemeForm(_AM_OLEDRION_CATEG_CONFIG, 'frmchunk', $baseurl);
@@ -99,7 +99,7 @@ switch ($action) {
         $submit_btn  = new \XoopsFormButton('', 'post', _AM_OLEDRION_OK, 'submit');
         $button_tray->addElement($submit_btn);
         $sform->addElement($button_tray);
-        $sform = oledrion\Utility::formMarkRequiredFields($sform);
+        $sform = Oledrion\Utility::formMarkRequiredFields($sform);
         $sform->display();
         require_once OLEDRION_ADMIN_PATH . 'admin_footer.php';
         break;
@@ -111,8 +111,8 @@ switch ($action) {
         oledrion_set_module_option('chunk2', (int)$_POST['chunk2']);
         oledrion_set_module_option('chunk3', (int)$_POST['chunk3']);
         oledrion_set_module_option('chunk4', (int)$_POST['chunk4']);
-        oledrion\Utility::updateCache();
-        oledrion\Utility::redirect(_AM_OLEDRION_SAVE_OK, $baseurl . '?op=categories');
+        Oledrion\Utility::updateCache();
+        Oledrion\Utility::redirect(_AM_OLEDRION_SAVE_OK, $baseurl . '?op=categories');
         break;
 
     // ****************************************************************************************************************
@@ -125,13 +125,13 @@ switch ($action) {
             $title = _AM_OLEDRION_EDIT_CATEG;
             $id    = isset($_POST['id']) ? (int)$_POST['id'] : 0;
             if (empty($id)) {
-                oledrion\Utility::redirect(_AM_OLEDRION_ERROR_1, $baseurl, 5);
+                Oledrion\Utility::redirect(_AM_OLEDRION_ERROR_1, $baseurl, 5);
             }
             // Item exits ?
             $item = null;
             $item = $categoryHandler->get($id);
             if (!is_object($item)) {
-                oledrion\Utility::redirect(_AM_OLEDRION_NOT_FOUND, $baseurl, 5);
+                Oledrion\Utility::redirect(_AM_OLEDRION_NOT_FOUND, $baseurl, 5);
             }
             $edit         = true;
             $label_submit = _AM_OLEDRION_MODIFY;
@@ -141,8 +141,8 @@ switch ($action) {
             $label_submit = _AM_OLEDRION_ADD;
             $edit         = false;
         }
-        $tbl_categories = $categoryHandler->getAllCategories(new oledrion\Parameters());
-        $mytree         = new oledrion\XoopsObjectTree($tbl_categories, 'cat_cid', 'cat_pid');
+        $tbl_categories = $categoryHandler->getAllCategories(new Oledrion\Parameters());
+        $mytree         = new Oledrion\XoopsObjectTree($tbl_categories, 'cat_cid', 'cat_pid');
 
         $sform = new \XoopsThemeForm($title, 'frmcategory', $baseurl);
         $sform->setExtra('enctype="multipart/form-data"');
@@ -151,7 +151,7 @@ switch ($action) {
         $sform->addElement(new \XoopsFormHidden('cat_cid', $item->getVar('cat_cid')));
         $sform->addElement(new \XoopsFormText(_AM_OLEDRION_CATEG_TITLE, 'cat_title', 50, 255, $item->getVar('cat_title', 'e')), true);
 
-        if (oledrion\Utility::checkVerXoops($GLOBALS['xoopsModule'], '2.5.9')) {
+        if (Oledrion\Utility::checkVerXoops($GLOBALS['xoopsModule'], '2.5.9')) {
             $select_categ = $mytree->makeSelectElement('cat_pid', 'cat_title', '--', $item->getVar('cat_pid'), true, 0, '', _AM_OLEDRION_PARENT_CATEG);
             $sform->addElement($select_categ);
         } else {
@@ -168,18 +168,18 @@ switch ($action) {
             $sform->addElement($pictureTray);
             unset($pictureTray, $deleteCheckbox);
         }
-        $sform->addElement(new \XoopsFormFile(_AM_OLEDRION_PICTURE, 'attachedfile', oledrion\Utility::getModuleOption('maxuploadsize')), false);
-        $editor = oledrion\Utility::getWysiwygForm(_AM_OLEDRION_DESCRIPTION, 'cat_description', $item->getVar('cat_description', 'e'), 15, 60, 'description_hidden');
+        $sform->addElement(new \XoopsFormFile(_AM_OLEDRION_PICTURE, 'attachedfile', Oledrion\Utility::getModuleOption('maxuploadsize')), false);
+        $editor = Oledrion\Utility::getWysiwygForm(_AM_OLEDRION_DESCRIPTION, 'cat_description', $item->getVar('cat_description', 'e'), 15, 60, 'description_hidden');
         if ($editor) {
             $sform->addElement($editor, false);
         }
 
-        $editor3 = oledrion\Utility::getWysiwygForm(_AM_OLEDRION_FOOTER, 'cat_footer', $item->getVar('cat_footer', 'e'), 15, 60, 'footer_hidden');
+        $editor3 = Oledrion\Utility::getWysiwygForm(_AM_OLEDRION_FOOTER, 'cat_footer', $item->getVar('cat_footer', 'e'), 15, 60, 'footer_hidden');
         if ($editor3) {
             $sform->addElement($editor3, false);
         }
 
-        $editor2 = oledrion\Utility::getWysiwygForm(_MI_OLEDRION_ADVERTISEMENT, 'cat_advertisement', $item->getVar('cat_advertisement', 'e'), 15, 60, 'pub_hidden');
+        $editor2 = Oledrion\Utility::getWysiwygForm(_MI_OLEDRION_ADVERTISEMENT, 'cat_advertisement', $item->getVar('cat_advertisement', 'e'), 15, 60, 'pub_hidden');
         if ($editor2) {
             $sform->addElement($editor2, false);
         }
@@ -196,7 +196,7 @@ switch ($action) {
         $button_tray->addElement($submit_btn);
         $sform->addElement($button_tray);
 
-        $sform = oledrion\Utility::formMarkRequiredFields($sform);
+        $sform = Oledrion\Utility::formMarkRequiredFields($sform);
         $sform->display();
         require_once OLEDRION_ADMIN_PATH . 'admin_footer.php';
         break;
@@ -210,7 +210,7 @@ switch ($action) {
             $edit = true;
             $item = $categoryHandler->get($id);
             if (!is_object($item)) {
-                oledrion\Utility::redirect(_AM_OLEDRION_NOT_FOUND, $baseurl, 5);
+                Oledrion\Utility::redirect(_AM_OLEDRION_NOT_FOUND, $baseurl, 5);
             }
             $item->unsetNew();
             $add = false;
@@ -226,10 +226,10 @@ switch ($action) {
         }
 
         $destname = '';
-        $res1     = oledrion\Utility::uploadFile(0, OLEDRION_PICTURES_PATH);
+        $res1     = Oledrion\Utility::uploadFile(0, OLEDRION_PICTURES_PATH);
         if (true === $res1) {
-            if (oledrion\Utility::getModuleOption('resize_others')) { // Eventuellement on redimensionne l'image
-                oledrion\Utility::resizePicture(OLEDRION_PICTURES_PATH . '/' . $destname, OLEDRION_PICTURES_PATH . '/' . $destname, oledrion\Utility::getModuleOption('images_width'), oledrion\Utility::getModuleOption('images_height'), true);
+            if (Oledrion\Utility::getModuleOption('resize_others')) { // Eventuellement on redimensionne l'image
+                Oledrion\Utility::resizePicture(OLEDRION_PICTURES_PATH . '/' . $destname, OLEDRION_PICTURES_PATH . '/' . $destname, Oledrion\Utility::getModuleOption('images_width'), Oledrion\Utility::getModuleOption('images_height'), true);
             }
             $item->setVar('cat_imgurl', basename($destname));
         } else {
@@ -240,14 +240,14 @@ switch ($action) {
 
         $res = $categoryHandler->insert($item);
         if ($res) {
-            oledrion\Utility::updateCache();
+            Oledrion\Utility::updateCache();
             if ($add) {
                 //$plugins = Plugin::getInstance();
-                //$plugins->fireAction(Plugin::EVENT_ON_CATEGORY_CREATE, new oledrion\Parameters(array('category' => $item)));
+                //$plugins->fireAction(Plugin::EVENT_ON_CATEGORY_CREATE, new Oledrion\Parameters(array('category' => $item)));
             }
-            oledrion\Utility::redirect(_AM_OLEDRION_SAVE_OK, $baseurl . '?op=' . $opRedirect, 2);
+            Oledrion\Utility::redirect(_AM_OLEDRION_SAVE_OK, $baseurl . '?op=' . $opRedirect, 2);
         } else {
-            oledrion\Utility::redirect(_AM_OLEDRION_SAVE_PB, $baseurl . '?op=' . $opRedirect, 5);
+            Oledrion\Utility::redirect(_AM_OLEDRION_SAVE_PB, $baseurl . '?op=' . $opRedirect, 5);
         }
         break;
 
@@ -258,12 +258,12 @@ switch ($action) {
         oledrion_adminMenu(3);
         $id = isset($_POST['id']) ? (int)$_POST['id'] : 0;
         if (0 == $id) {
-            oledrion\Utility::redirect(_AM_OLEDRION_ERROR_1, $baseurl, 5);
+            Oledrion\Utility::redirect(_AM_OLEDRION_ERROR_1, $baseurl, 5);
         }
         $category = null;
         $category = $categoryHandler->get($id);
         if (!is_object($category)) {
-            oledrion\Utility::redirect(_AM_OLEDRION_ERROR_10, $baseurl, 5);
+            Oledrion\Utility::redirect(_AM_OLEDRION_ERROR_10, $baseurl, 5);
         }
         $msg = sprintf(_AM_OLEDRION_CONF_DEL_CATEG, $category->getVar('cat_title'));
         xoops_confirm(['op' => 'categories', 'action' => 'confdelete', 'id' => $id], 'index.php', $msg);
@@ -275,7 +275,7 @@ switch ($action) {
         xoops_cp_header();
         $id = isset($_POST['id']) ? (int)$_POST['id'] : 0;
         if (empty($id)) {
-            oledrion\Utility::redirect(_AM_OLEDRION_ERROR_1, $baseurl, 5);
+            Oledrion\Utility::redirect(_AM_OLEDRION_ERROR_1, $baseurl, 5);
         }
         $opRedirect = 'categories';
         // On vérifie que cette catégorie (et ses sous-catégories) ne sont pas utilisées par des produits
@@ -286,16 +286,16 @@ switch ($action) {
             if (is_object($item)) {
                 $res = $categoryHandler->deleteCategory($item);
                 if ($res) {
-                    oledrion\Utility::updateCache();
-                    oledrion\Utility::redirect(_AM_OLEDRION_SAVE_OK, $baseurl . '?op=' . $opRedirect, 2);
+                    Oledrion\Utility::updateCache();
+                    Oledrion\Utility::redirect(_AM_OLEDRION_SAVE_OK, $baseurl . '?op=' . $opRedirect, 2);
                 } else {
-                    oledrion\Utility::redirect(_AM_OLEDRION_SAVE_PB, $baseurl . '?op=' . $opRedirect, 5);
+                    Oledrion\Utility::redirect(_AM_OLEDRION_SAVE_PB, $baseurl . '?op=' . $opRedirect, 5);
                 }
             } else {
-                oledrion\Utility::redirect(_AM_OLEDRION_NOT_FOUND, $baseurl . '?op=' . $opRedirect, 5);
+                Oledrion\Utility::redirect(_AM_OLEDRION_NOT_FOUND, $baseurl . '?op=' . $opRedirect, 5);
             }
         } else {
-            oledrion\Utility::redirect(_AM_OLEDRION_ERROR_4, $baseurl . '?op=' . $opRedirect, 5);
+            Oledrion\Utility::redirect(_AM_OLEDRION_ERROR_4, $baseurl . '?op=' . $opRedirect, 5);
         }
         break;
 }

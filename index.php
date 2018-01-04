@@ -21,7 +21,7 @@
  * Page d'index, liste des derniers produits
  */
 
-use Xoopsmodules\oledrion;
+use XoopsModules\Oledrion;
 
 require_once __DIR__ . '/header.php';
 $GLOBALS['current_category']             = -1;
@@ -31,19 +31,19 @@ require_once XOOPS_ROOT_PATH . '/header.php';
 
 // Initialisations
 $start     = isset($_GET['start']) ? (int)$_GET['start'] : 0;
-$limit     = oledrion\Utility::getModuleOption('newproducts'); // Nombre maximum d'éléments à afficher
+$limit     = Oledrion\Utility::getModuleOption('newproducts'); // Nombre maximum d'éléments à afficher
 $baseurl   = OLEDRION_URL . basename(__FILE__); // URL de ce script (sans son nom)
-$registry  = new oledrion\Registryfile();
+$registry  = new Oledrion\Registryfile();
 $lastTitle = '';
 
 // Quelques options pour le template
-$xoopsTpl->assign('nostock_msg', oledrion\Utility::getModuleOption('nostock_msg'));
+$xoopsTpl->assign('nostock_msg', Oledrion\Utility::getModuleOption('nostock_msg'));
 $xoopsTpl->assign('mod_pref', $mod_pref); // Préférences du module
 $xoopsTpl->assign('welcome_msg', nl2br($registry->getfile(OLEDRION_TEXTFILE1)));
-$xoopsTpl->assign('columnsCount', oledrion\Utility::getModuleOption('index_colums'));
+$xoopsTpl->assign('columnsCount', Oledrion\Utility::getModuleOption('index_colums'));
 
 // Lecture des TVA ********************************************************************************
-$vatArray = $vatHandler->getAllVats(new oledrion\Parameters());
+$vatArray = $vatHandler->getAllVats(new Oledrion\Parameters());
 
 // Récupération du nombre total de produits de la base
 $xoopsTpl->assign('total_products_count', sprintf(_OLEDRION_THEREARE, $productsHandler->getTotalPublishedProductsCount()));
@@ -76,7 +76,7 @@ foreach ($categories as $category) {
     ++$count;
 }
 
-oledrion\Utility::setCSS();
-oledrion\Utility::setLocalCSS($xoopsConfig['language']);
-oledrion\Utility::setMetas($lastTitle . ' - ' . oledrion\Utility::getModuleName(), oledrion\Utility::getModuleName());
+Oledrion\Utility::setCSS();
+Oledrion\Utility::setLocalCSS($xoopsConfig['language']);
+Oledrion\Utility::setMetas($lastTitle . ' - ' . Oledrion\Utility::getModuleName(), Oledrion\Utility::getModuleName());
 require_once XOOPS_ROOT_PATH . '/footer.php';

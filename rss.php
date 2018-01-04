@@ -21,12 +21,12 @@
  * Flux RSS pour suivre les derniers produits
  */
 
-use Xoopsmodules\oledrion;
+use XoopsModules\Oledrion;
 
 require_once __DIR__ . '/header.php';
 require_once XOOPS_ROOT_PATH . '/class/template.php';
 
-if (0 == oledrion\Utility::getModuleOption('use_rss')) {
+if (0 == Oledrion\Utility::getModuleOption('use_rss')) {
     exit;
 }
 // Paramètre, soit rien auquel cas on prend tous les produits récents soit cat_cid
@@ -53,7 +53,7 @@ if (!$tpl->is_cached('db:oledrion_rss.tpl', $cat_cid)) {
     $sitename = htmlspecialchars($xoopsConfig['sitename'], ENT_QUOTES);
     $email    = checkEmail($xoopsConfig['adminmail'], true);
     $slogan   = htmlspecialchars($xoopsConfig['slogan'], ENT_QUOTES);
-    $limit    = oledrion\Utility::getModuleOption('perpage');
+    $limit    = Oledrion\Utility::getModuleOption('perpage');
 
     $tpl->assign('charset', $charset);
     $tpl->assign('channel_title', xoops_utf8_encode($sitename));
@@ -63,7 +63,7 @@ if (!$tpl->is_cached('db:oledrion_rss.tpl', $cat_cid)) {
     $tpl->assign('channel_webmaster', xoops_utf8_encode($email));
     $tpl->assign('channel_editor', xoops_utf8_encode($email));
     $tpl->assign('channel_category', xoops_utf8_encode($categoryTitle));
-    $temp = oledrion\Utility::getModuleName();
+    $temp = Oledrion\Utility::getModuleName();
     $tpl->assign('channel_generator', xoops_utf8_encode($temp));
     $tpl->assign('channel_language', _LANGCODE);
     $tpl->assign('image_url', XOOPS_URL . '/images/logo.png');
@@ -81,7 +81,7 @@ if (!$tpl->is_cached('db:oledrion_rss.tpl', $cat_cid)) {
     $tpl->assign('image_width', $width);
     $tpl->assign('image_height', $height);
 
-    $products = $productsHandler->getRecentProducts(new oledrion\Parameters([
+    $products = $productsHandler->getRecentProducts(new Oledrion\Parameters([
                                                                                     'start'    => 0,
                                                                                     'limit'    => $limit,
                                                                                     'category' => $cat_cid

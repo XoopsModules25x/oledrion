@@ -1,4 +1,4 @@
-<?php namespace Xoopsmodules\oledrion;
+<?php namespace XoopsModules\Oledrion;
 
 /*
  You may not change or alter any portion of this comment or credits
@@ -23,14 +23,14 @@
  */
 // defined('XOOPS_ROOT_PATH') || exit('Restricted access.');
 
-use Xoopsmodules\oledrion;
+use XoopsModules\Oledrion;
 
 include __DIR__ . '/../preloads/autoloader.php';
 include __DIR__ . '/../include/common.php';
 
 /**
  * Class Shelf
- * @package Xoopsmodules\oledrion
+ * @package XoopsModules\Oledrion
  */
 class Shelf
 {
@@ -65,7 +65,7 @@ class Shelf
         switch (strtolower($type)) {
             case 'recent':
                 $db              = \XoopsDatabaseFactory::getDatabaseConnection();
-                $productsHandler = new oledrion\ProductsHandler($db);
+                $productsHandler = new Oledrion\ProductsHandler($db);
 
                 return $productsHandler->getRecentProductsCount($category, $excluded);
                 break;
@@ -132,8 +132,8 @@ class Shelf
     {
         $relatedProducts = $relatedProductsIds = [];
         $db              = \XoopsDatabaseFactory::getDatabaseConnection();
-        $relatedHandler  = new oledrion\RelatedHandler($db);
-        $productsHandler = new oledrion\ProductsHandler($db);
+        $relatedHandler  = new Oledrion\RelatedHandler($db);
+        $productsHandler = new Oledrion\ProductsHandler($db);
         if (is_array($productsIds) && count($productsIds) > 0) {
             $relatedProductsIds = $relatedHandler->getRelatedProductsFromProductsIds($productsIds);
             if (count($relatedProductsIds) > 0) {
@@ -167,9 +167,9 @@ class Shelf
     {
 
         $db              = \XoopsDatabaseFactory::getDatabaseConnection();
-        $productsHandler = new oledrion\ProductsHandler($db);
-        $vendorsHandler  = new oledrion\VendorsHandler($db);
-        $caddyHandler    = new oledrion\CaddyHandler($db);
+        $productsHandler = new Oledrion\ProductsHandler($db);
+        $vendorsHandler  = new Oledrion\VendorsHandler($db);
+        $caddyHandler    = new Oledrion\CaddyHandler($db);
 
         $parametersValues    = $parameters->getParameters();
         $productType         = $parametersValues['productsType'];
@@ -188,7 +188,7 @@ class Shelf
         switch (strtolower($productType)) {
             case 'recent':
 
-                $products = $productsHandler->getRecentProducts(new oledrion\Parameters([
+                $products = $productsHandler->getRecentProducts(new Oledrion\Parameters([
                                                                                             'start'         => $start,
                                                                                             'limit'         => $limit,
                                                                                             'category'      => $category,
@@ -219,7 +219,7 @@ class Shelf
                 break;
 
             case 'mostviewed':
-                $products = $productsHandler->getMostViewedProducts(new oledrion\Parameters([
+                $products = $productsHandler->getMostViewedProducts(new Oledrion\Parameters([
                                                                                                 'start'    => $start,
                                                                                                 'limit'    => $limit,
                                                                                                 'category' => $category,
@@ -229,7 +229,7 @@ class Shelf
                 break;
 
             case 'bestrated':
-                $products = $productsHandler->getBestRatedProducts(new oledrion\Parameters([
+                $products = $productsHandler->getBestRatedProducts(new Oledrion\Parameters([
                                                                                                'start'    => $start,
                                                                                                'limit'    => $limit,
                                                                                                'category' => $category,
@@ -239,7 +239,7 @@ class Shelf
                 break;
 
             case 'recommended':
-                $products = $productsHandler->getRecentRecommended(new oledrion\Parameters([
+                $products = $productsHandler->getRecentRecommended(new Oledrion\Parameters([
                                                                                                'start'    => $start,
                                                                                                'limit'    => $limit,
                                                                                                'category' => $category,
@@ -249,7 +249,7 @@ class Shelf
                 break;
 
             case 'promotional':
-                $products = $productsHandler->getPromotionalProducts(new oledrion\Parameters([
+                $products = $productsHandler->getPromotionalProducts(new Oledrion\Parameters([
                                                                                                  'start'    => $start,
                                                                                                  'limit'    => $limit,
                                                                                                  'category' => $category,
@@ -259,7 +259,7 @@ class Shelf
                 break;
 
             case 'random':
-                $products = $productsHandler->getRandomProducts(new oledrion\Parameters([
+                $products = $productsHandler->getRandomProducts(new Oledrion\Parameters([
                                                                                             'start'         => $start,
                                                                                             'limit'         => $limit,
                                                                                             'category'      => $category,
@@ -285,11 +285,11 @@ class Shelf
         }
 
         $db                    = \XoopsDatabaseFactory::getDatabaseConnection();
-        $productsmanuHandler   = new oledrion\ProductsmanuHandler($db);
-        $categoryHandler       = new oledrion\CategoryHandler($db);
+        $productsmanuHandler   = new Oledrion\ProductsmanuHandler($db);
+        $categoryHandler       = new Oledrion\CategoryHandler($db);
         $productsManufacturers = $productsmanuHandler->getFromProductsIds($productsIds);
-        $vendorsHandler        = new oledrion\VendorsHandler($db);
-        $manufacturerHandler   = new oledrion\ManufacturerHandler($db);
+        $vendorsHandler        = new Oledrion\VendorsHandler($db);
+        $manufacturerHandler   = new Oledrion\ManufacturerHandler($db);
         // Regroupement des fabricants par produit
         foreach ($productsManufacturers as $item) {
             $manufacturersIds[]                                        = $item->getVar('pm_manu_id');
@@ -297,7 +297,7 @@ class Shelf
         }
         // On récupère la liste des personnes qui ont soumis les produits
         if ($withXoopsUser) {
-            $users = oledrion\Utility::getUsersFromIds($xoopsUsersIDs);
+            $users = Oledrion\Utility::getUsersFromIds($xoopsUsersIDs);
         }
 
         // Il faut récupérer la liste des produits relatifs

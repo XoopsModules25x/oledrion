@@ -17,8 +17,8 @@
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
  */
 
-use Xoopsmodules\oledrion;
-use Xoopsmodules\oledrion\Constants;
+use XoopsModules\Oledrion;
+use XoopsModules\Oledrion\Constants;
 
 /**
  * Affichage des dernières listes utilisateurs
@@ -36,10 +36,10 @@ function b_oledrion_recent_lists_show($options)
     $block    = [];
 //    $handlers = HandlerManager::getInstance();
     $db      = \XoopsDatabaseFactory::getDatabaseConnection();
-    $listsHandler = new oledrion\ListsHandler($db);
+    $listsHandler = new Oledrion\ListsHandler($db);
     $items    = [];
-    //$items = $handlers->h_oledrion_lists->getRecentLists(new oledrion\Parameters(array('start' => $start, 'limit' => $limit, 'sort' => 'list_date', 'order' => 'DESC', 'idAsKey' => true, 'listType'  => $listType)));
-    $items =  $listsHandler->getRecentLists(new oledrion\Parameters([
+    //$items = $handlers->h_oledrion_lists->getRecentLists(new Oledrion\Parameters(array('start' => $start, 'limit' => $limit, 'sort' => 'list_date', 'order' => 'DESC', 'idAsKey' => true, 'listType'  => $listType)));
+    $items =  $listsHandler->getRecentLists(new Oledrion\Parameters([
                                                                                      'start'    => $start,
                                                                                      'limit'    => $limit,
                                                                                      'sort'     => 'list_date',
@@ -68,8 +68,8 @@ function b_oledrion_recent_lists_edit($options)
     $form           = '';
     $form           .= "<table border='0'>";
     $form           .= '<tr><td>' . _MB_OLEDRION_LISTS_COUNT . "</td><td><input type='text' name='options[]' id='options' value='" . (int)$options[0] . "'></td></tr>";
-    $listTypes      = oledrion\Lists::getTypesArray();
-    $listTypeSelect = oledrion\Utility::htmlSelect('options[]', $listTypes, (int)$options[1], false);
+    $listTypes      = Oledrion\Lists::getTypesArray();
+    $listTypeSelect = Oledrion\Utility::htmlSelect('options[]', $listTypes, (int)$options[1], false);
     $form           .= '<tr><td>' . _MB_OLEDRION_LISTS_TYPE . '</td><td>' . $listTypeSelect . '</td></tr>';
     $form           .= '</table>';
 

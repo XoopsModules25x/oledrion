@@ -1,4 +1,4 @@
-<?php namespace Xoopsmodules\oledrion;
+<?php namespace XoopsModules\Oledrion;
 
 /*
  You may not change or alter any portion of this comment or credits
@@ -29,7 +29,7 @@
  *
  */
 
-use Xoopsmodules\oledrion;
+use XoopsModules\Oledrion;
 
 // defined('XOOPS_ROOT_PATH') || exit('Restricted access.');
 
@@ -1411,7 +1411,7 @@ class OledrionUtility
      */
     public static function getTTC($ht, $vat, $edit = false, $format = 's')
     {
-        $oledrion_Currency = oledrion\Currency::getInstance();
+        $oledrion_Currency = Oledrion\Currency::getInstance();
         $ttc               = $ht * (1 + ($vat / 100));
         if (!$edit) {
             return $oledrion_Currency->amountForDisplay($ttc, $format);
@@ -1447,7 +1447,7 @@ class OledrionUtility
         } else {
 //            $handlers = HandlerManager::getInstance();
             $db = \XoopsDatabaseFactory::getDatabaseConnection();
-            $vatHandler = new oledrion\VatHandler($db);
+            $vatHandler = new Oledrion\VatHandler($db);
             $vat      = null;
             $vat      = $vatHandler->get($vat_id);
             if (is_object($vat)) {

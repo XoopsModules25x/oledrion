@@ -17,8 +17,8 @@
  * @author       XOOPS Development Team
  */
 
-use Xoopsmodules\oledrion;
-use Xoopsmodules\oledrion\common;
+use XoopsModules\Oledrion;
+use XoopsModules\Oledrion\Common;
 
 if ((!defined('XOOPS_ROOT_PATH')) || !($GLOBALS['xoopsUser'] instanceof XoopsUser)
     || !$GLOBALS['xoopsUser']->IsAdmin()
@@ -49,10 +49,10 @@ function tableExists($tablename)
  */
 function xoops_module_pre_update_oledrion(\XoopsModule $module)
 {
-    /** @var oledrion\Helper $helper */
-    /** @var oledrion\Utility $utility */
-    $helper       = oledrion\Helper::getInstance();
-    $utility      = new oledrion\Utility();
+    /** @var Oledrion\Helper $helper */
+    /** @var Oledrion\Utility $utility */
+    $helper       = Oledrion\Helper::getInstance();
+    $utility      = new Oledrion\Utility();
 
     $xoopsSuccess = $utility::checkVerXoops($module);
     $phpSuccess   = $utility::checkVerPhp($module);
@@ -73,11 +73,11 @@ function xoops_module_update_oledrion(\XoopsModule $module, $previousVersion = n
     $moduleDirName = basename(dirname(__DIR__));
     $moduleDirNameUpper = strtoupper($moduleDirName);
 
-    /** @var oledrion\Helper $helper */
-    /** @var oledrion\Utility $utility */
+    /** @var Oledrion\Helper $helper */
+    /** @var Oledrion\Utility $utility */
     /** @var common\Configurator $configurator */
-    $helper  = oledrion\Helper::getInstance();
-    $utility = new oledrion\Utility();
+    $helper  = Oledrion\Helper::getInstance();
+    $utility = new Oledrion\Utility();
     $configurator = new common\Configurator();
 
     $helper->loadLanguage('common');

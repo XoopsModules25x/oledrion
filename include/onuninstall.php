@@ -8,7 +8,7 @@
  * @link            https://xoops.org XOOPS
  */
 
-use Xoopsmodules\oledrion;
+use XoopsModules\Oledrion;
 
 /**
  * Prepares system prior to attempting to uninstall module
@@ -36,11 +36,11 @@ function xoops_module_uninstall_oledrion(\XoopsModule $module)
 
     $moduleDirName = basename(dirname(__DIR__));
     $moduleDirNameUpper   = strtoupper($moduleDirName); //$capsDirName
-    /** @var oledrion\Helper $helper */
-    /** @var oledrion\Utility $utility */
-    $helper  = oledrion\Helper::getInstance();
-    $utility     = new oledrion\Utility();
-//    $configurator = new xoopstube\common\Configurator();
+    /** @var Oledrion\Helper $helper */
+    /** @var Oledrion\Utility $utility */
+    $helper  = Oledrion\Helper::getInstance();
+    $utility     = new Oledrion\Utility();
+//    $configurator = new xoopstube\Common\Configurator();
 
     // Load language files
     $helper->loadLanguage('admin');

@@ -1,4 +1,4 @@
-<?php namespace Xoopsmodules\oledrion;
+<?php namespace XoopsModules\Oledrion;
 /**
  * XOOPS tree class
  *
@@ -16,7 +16,7 @@
  * @author              Kazumi Ono (http://www.myweb.ne.jp/, http://jp.xoops.org/)
  */
 
-use Xoopsmodules\oledrion;
+use XoopsModules\Oledrion;
 
 defined('XOOPS_ROOT_PATH') || exit('Restricted access.');
 

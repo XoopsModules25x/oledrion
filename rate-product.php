@@ -21,16 +21,16 @@
  * Notation d'un produit
  */
 
-use Xoopsmodules\oledrion;
+use XoopsModules\Oledrion;
 
 require_once __DIR__ . '/header.php';
-oledrion\Utility::redirect(_OLEDRION_NORATE, 'index.php', 5);
+Oledrion\Utility::redirect(_OLEDRION_NORATE, 'index.php', 5);
 /*
 $product_id = 0;
 // Les tests **************************************************************************************
 // Peut on voter ?
-if (oledrion\Utility::getModuleOption('rateproducts') == 0 ) {
-    oledrion\Utility::redirect(_OLEDRION_NORATE, 'index.php', 5);
+if (Oledrion\Utility::getModuleOption('rateproducts') == 0 ) {
+    Oledrion\Utility::redirect(_OLEDRION_NORATE, 'index.php', 5);
 }
 // Recherche du n° du produit
 if (isset($_GET['product_id'])) {
@@ -38,29 +38,29 @@ if (isset($_GET['product_id'])) {
 } elseif (isset($_POST['product_id'])) {
     $product_id = (int) $_POST['product_id'];
 } else {
-    oledrion\Utility::redirect(_OLEDRION_ERROR1, 'index.php', 5);
+    Oledrion\Utility::redirect(_OLEDRION_ERROR1, 'index.php', 5);
 }
 // Le produit existe ?
 $product = null;
 $product = $productsHandler->get($product_id);
 if (!is_object($product)) {
-    oledrion\Utility::redirect(_OLEDRION_ERROR1, 'index.php', 5);
+    Oledrion\Utility::redirect(_OLEDRION_ERROR1, 'index.php', 5);
 }
 
 // Le produit est il online ?
 if ($product->getVar('product_online') == 0) {
-    oledrion\Utility::redirect(_OLEDRION_ERROR2, 'index.php', 5);
+    Oledrion\Utility::redirect(_OLEDRION_ERROR2, 'index.php', 5);
 }
 
 // Le produit est il publié ?
-if (oledrion\Utility::getModuleOption('show_unpublished') == 0 && $product->getVar('product_submitted') > time()) {
-    oledrion\Utility::redirect(_OLEDRION_ERROR3, 'index.php', 5);
+if (Oledrion\Utility::getModuleOption('show_unpublished') == 0 && $product->getVar('product_submitted') > time()) {
+    Oledrion\Utility::redirect(_OLEDRION_ERROR3, 'index.php', 5);
 }
 
 // Faut il afficher les produits même lorsqu'ils ne sont plus en stock ?
-if (oledrion\Utility::getModuleOption('nostock_display') == 0 && $product->getVar('product_stock') == 0) {
-    if (xoops_trim(oledrion\Utility::getModuleOption('nostock_display')) != '') {
-        oledrion\Utility::redirect(oledrion\Utility::getModuleOption('nostock_display'), 'main.php', 5);
+if (Oledrion\Utility::getModuleOption('nostock_display') == 0 && $product->getVar('product_stock') == 0) {
+    if (xoops_trim(Oledrion\Utility::getModuleOption('nostock_display')) != '') {
+        Oledrion\Utility::redirect(Oledrion\Utility::getModuleOption('nostock_display'), 'main.php', 5);
     }
 }
 
@@ -68,7 +68,7 @@ if (oledrion\Utility::getModuleOption('nostock_display') == 0 && $product->getVa
 if (!empty($_POST['btnsubmit'])) {
     $GLOBALS['current_category'] = -1;
 
-    $ratinguser = oledrion\Utility::getCurrentUserID();
+    $ratinguser = Oledrion\Utility::getCurrentUserID();
     $canRate = true;
     if ($ratinguser != 0) {
         if ($votedataHandler->hasUserAlreadyVoted($ratinguser, $product->getVar('product_id'))) {
@@ -81,7 +81,7 @@ if (!empty($_POST['btnsubmit'])) {
     }
     if ($canRate) {
         if ($_POST['rating'] == '--') {
-            oledrion\Utility::redirect(_OLEDRION_NORATING, OLEDRION_URL.'product.php?product_id='.$product->getVar('product_id'),4);
+            Oledrion\Utility::redirect(_OLEDRION_NORATING, OLEDRION_URL.'product.php?product_id='.$product->getVar('product_id'),4);
         }
         $rating = (int) $_POST['rating'];
         if ($rating <1 || $rating > 10) {
@@ -99,9 +99,9 @@ if (!empty($_POST['btnsubmit'])) {
         $finalrating = number_format($finalrating, 4);
         $productsHandler->updateRating($product_id, $finalrating, $totalVotes);
         $ratemessage = _OLEDRION_VOTEAPPRE.'<br>'.sprintf(_OLEDRION_THANKYOU,$xoopsConfig['sitename']);
-        oledrion\Utility::redirect($ratemessage, OLEDRION_URL.'product.php?product_id='.$product->getVar('product_id'), 2);
+        Oledrion\Utility::redirect($ratemessage, OLEDRION_URL.'product.php?product_id='.$product->getVar('product_id'), 2);
     } else {
-        oledrion\Utility::redirect(_OLEDRION_VOTEONCE, OLEDRION_URL.'product.php?product_id='.$product->getVar('product_id'),5);
+        Oledrion\Utility::redirect(_OLEDRION_VOTEONCE, OLEDRION_URL.'product.php?product_id='.$product->getVar('product_id'),5);
     }
 } else {    // Affichage du formulaire
     $GLOBALS['current_category'] = $product->getVar('product_cid');
@@ -110,15 +110,15 @@ if (!empty($_POST['btnsubmit'])) {
     $xoopsTpl->assign('mod_pref', $mod_pref);   // Préférences du module
     $xoopsTpl->assign('product', $product->toArray());
 
-    $xoopsTpl->assign('global_advert', oledrion\Utility::getModuleOption('advertisement'));
+    $xoopsTpl->assign('global_advert', Oledrion\Utility::getModuleOption('advertisement'));
     $breadcrumb = array( $product->getLink() => $product->getVar('product_title'),
                 OLEDRION_URL.basename(__FILE__) => _OLEDRION_RATETHISPRODUCT);
-    $xoopsTpl->assign('breadcrumb', oledrion\Utility::breadcrumb($breadcrumb));
+    $xoopsTpl->assign('breadcrumb', Oledrion\Utility::breadcrumb($breadcrumb));
 
-    $title = _OLEDRION_RATETHISPRODUCT.' : '.strip_tags($product->getVar('product_title')).' - '.oledrion\Utility::getModuleName();
-    oledrion\Utility::setMetas($title, $title);
-    oledrion\Utility::setCSS();
-oledrion\Utility::setLocalCSS($xoopsConfig['language']);
+    $title = _OLEDRION_RATETHISPRODUCT.' : '.strip_tags($product->getVar('product_title')).' - '.Oledrion\Utility::getModuleName();
+    Oledrion\Utility::setMetas($title, $title);
+    Oledrion\Utility::setCSS();
+Oledrion\Utility::setLocalCSS($xoopsConfig['language']);
 }
 */
 

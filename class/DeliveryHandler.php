@@ -1,4 +1,4 @@
-<?php namespace Xoopsmodules\oledrion;
+<?php namespace XoopsModules\Oledrion;
 
 /*
  You may not change or alter any portion of this comment or credits
@@ -18,7 +18,7 @@
  * @author      Hossein Azizabadi (azizabadi@faragostaresh.com)
  */
 
-use Xoopsmodules\oledrion;
+use XoopsModules\Oledrion;
 
 require_once __DIR__ . '/classheader.php';
 
@@ -43,7 +43,7 @@ class DeliveryHandler extends OledrionPersistableObjectHandler
      */
     public function getAllDelivery(Parameters $parameters)
     {
-        $parameters = $parameters->extend(new oledrion\Parameters([
+        $parameters = $parameters->extend(new Oledrion\Parameters([
                                                                       'start' => 0,
                                                                       'limit' => 0,
                                                                       'sort'  => 'delivery_id',
@@ -68,7 +68,7 @@ class DeliveryHandler extends OledrionPersistableObjectHandler
     {
         global $locationDeliveryHandler;
         $ret               = [];
-        $parameters        = $parameters->extend(new oledrion\Parameters([
+        $parameters        = $parameters->extend(new Oledrion\Parameters([
                                                                              'start'    => 0,
                                                                              'limit'    => 0,
                                                                              'sort'     => 'delivery_id',
@@ -110,7 +110,7 @@ class DeliveryHandler extends OledrionPersistableObjectHandler
     public function getThisLocationDelivery($location_id)
     {
         global $locationDeliveryHandler;
-        $oledrion_Currency = oledrion\Currency::getInstance();
+        $oledrion_Currency = Oledrion\Currency::getInstance();
         $ret               = [];
         $parameters        = ['location' => $location_id];
         $location_delivery = $locationDeliveryHandler->getLocationDeliveryId($parameters);

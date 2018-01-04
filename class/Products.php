@@ -1,4 +1,4 @@
-<?php namespace Xoopsmodules\oledrion;
+<?php namespace XoopsModules\Oledrion;
 
 /*
  You may not change or alter any portion of this comment or credits
@@ -22,7 +22,7 @@
  * Gestion des produits mis en vente
  */
 
-use Xoopsmodules\oledrion;
+use XoopsModules\Oledrion;
 
 require_once __DIR__ . '/classheader.php';
 
@@ -103,18 +103,18 @@ class Products extends OledrionObject
      */
     public function isProductVisible()
     {
-        $isAdmin = oledrion\Utility::isAdmin();
+        $isAdmin = Oledrion\Utility::isAdmin();
         if (0 == $this->getVar('product_online')) {
             if (!$isAdmin) {
                 return false;
             }
         }
-        if (0 == oledrion\Utility::getModuleOption('show_unpublished') && $this->getVar('product_submitted') > time()) {
+        if (0 == Oledrion\Utility::getModuleOption('show_unpublished') && $this->getVar('product_submitted') > time()) {
             if (!$isAdmin) {
                 return false;
             }
         }
-        if (0 == oledrion\Utility::getModuleOption('nostock_display') && 0 == $this->getVar('product_stock')) {
+        if (0 == Oledrion\Utility::getModuleOption('nostock_display') && 0 == $this->getVar('product_stock')) {
             if (!$isAdmin) {
                 return false;
             }
@@ -280,21 +280,21 @@ class Products extends OledrionObject
     /**
      * Retourne le prix TTC du prix réduit du produit courant
      *
-     * @return \Xoopsmodules\oledrion\floatval Le montant TTC du prix réduit
+     * @return \XoopsModules\Oledrion\floatval Le montant TTC du prix réduit
      */
     public function getDiscountTTC()
     {
-        return oledrion\Utility::getAmountWithVat($this->getVar('product_discount_price', 'e'), $this->getVar('product_vat_id'));
+        return Oledrion\Utility::getAmountWithVat($this->getVar('product_discount_price', 'e'), $this->getVar('product_vat_id'));
     }
 
     /**
      * Retourne le montant TTC du prix normal du produit
      *
-     * @return \Xoopsmodules\oledrion\floatval
+     * @return \XoopsModules\Oledrion\floatval
      */
     public function getTTC()
     {
-        return oledrion\Utility::getAmountWithVat($this->getVar('product_price', 'e'), $this->getVar('product_vat_id'));
+        return Oledrion\Utility::getAmountWithVat($this->getVar('product_price', 'e'), $this->getVar('product_vat_id'));
     }
 
     /**
@@ -361,11 +361,11 @@ class Products extends OledrionObject
             $product_id    = $this->getVar('product_id');
             $product_title = $this->getVar('product_title', 'n');
         }
-        if (1 == oledrion\Utility::getModuleOption('urlrewriting')) { // On utilise l'url rewriting
+        if (1 == Oledrion\Utility::getModuleOption('urlrewriting')) { // On utilise l'url rewriting
             if (!$shortVersion) {
-                $url = OLEDRION_URL . 'product-' . $product_id . oledrion\Utility::makeSeoUrl($product_title) . '.html';
+                $url = OLEDRION_URL . 'product-' . $product_id . Oledrion\Utility::makeSeoUrl($product_title) . '.html';
             } else {
-                $url = 'product-' . $product_id . oledrion\Utility::makeSeoUrl($product_title) . '.html';
+                $url = 'product-' . $product_id . Oledrion\Utility::makeSeoUrl($product_title) . '.html';
             }
         } else { // Pas d'utilisation de l'url rewriting
             if (!$shortVersion) {
@@ -387,7 +387,7 @@ class Products extends OledrionObject
     public function productAttributesCount()
     {
         $db                = \XoopsDatabaseFactory::getDatabaseConnection();
-        $attributesHandler = new oledrion\AttributesHandler($db);
+        $attributesHandler = new Oledrion\AttributesHandler($db);
         return $attributesHandler->getProductAttributesCount($this->getVar('product_id'));
     }
 
@@ -402,7 +402,7 @@ class Products extends OledrionObject
     public function getProductMandatoryAttributesCount()
     {
         $db                = \XoopsDatabaseFactory::getDatabaseConnection();
-        $attributesHandler = new oledrion\AttributesHandler($db);
+        $attributesHandler = new Oledrion\AttributesHandler($db);
         return $attributesHandler->getProductMandatoryAttributesCount($this);
     }
 
@@ -415,7 +415,7 @@ class Products extends OledrionObject
     public function getProductMandatoryFieldsList()
     {
         $db                = \XoopsDatabaseFactory::getDatabaseConnection();
-        $attributesHandler = new oledrion\AttributesHandler($db);
+        $attributesHandler = new Oledrion\AttributesHandler($db);
         return $attributesHandler->getProductMandatoryFieldsList($this);
     }
 
@@ -429,7 +429,7 @@ class Products extends OledrionObject
     public function getProductsAttributesList($attributesIds = null)
     {
         $db                = \XoopsDatabaseFactory::getDatabaseConnection();
-        $attributesHandler = new oledrion\AttributesHandler($db);
+        $attributesHandler = new Oledrion\AttributesHandler($db);
         return $attributesHandler->getProductsAttributesList($this->getVar('product_id'), $attributesIds);
     }
 
@@ -441,7 +441,7 @@ class Products extends OledrionObject
     public function getInitialOptionsPrice()
     {
         $db                = \XoopsDatabaseFactory::getDatabaseConnection();
-        $attributesHandler = new oledrion\AttributesHandler($db);
+        $attributesHandler = new Oledrion\AttributesHandler($db);
         return $attributesHandler->getInitialOptionsPrice($this);
     }
 
@@ -468,7 +468,7 @@ class Products extends OledrionObject
     {
         $ret               = [];
         $ret               = parent::toArray($format);
-        $oledrion_Currency = oledrion\Currency::getInstance();
+        $oledrion_Currency = Oledrion\Currency::getInstance();
         $ttc               = $finalPriceTTC = $this->getTTC();
         $finalPriceHT      = (float)$this->getVar('product_price');
 
@@ -508,14 +508,14 @@ class Products extends OledrionObject
 
         $ret['product_final_price_ht_formated_long']  = $oledrion_Currency->amountForDisplay($finalPriceHT, 'l');
         $ret['product_final_price_ttc']               = $finalPriceTTC;
-        $ret['product_final_price_ttc_javascript']    = oledrion\Utility::formatFloatForDB($finalPriceTTC);
+        $ret['product_final_price_ttc_javascript']    = Oledrion\Utility::formatFloatForDB($finalPriceTTC);
         $ret['product_final_price_ttc_formated']      = $oledrion_Currency->amountForDisplay($finalPriceTTC);
         $ret['product_final_price_ttc_formated_long'] = $oledrion_Currency->amountForDisplay($finalPriceTTC, 'l');
         $ret['product_vat_amount_formated_long']      = $oledrion_Currency->amountForDisplay($finalPriceHT - $finalPriceTTC);
 
-        $ret['product_tooltip']             = oledrion\Utility::makeInfotips($this->getVar('product_description'));
+        $ret['product_tooltip']             = Oledrion\Utility::makeInfotips($this->getVar('product_description'));
         $ret['product_url_rewrited']        = $this->getLink();
-        $ret['product_href_title']          = oledrion\Utility::makeHrefTitle($this->getVar('product_title'));
+        $ret['product_href_title']          = Oledrion\Utility::makeHrefTitle($this->getVar('product_title'));
         $ret['product_recommended']         = $this->isRecommended();
         $ret['product_recommended_picture'] = $this->recommendedPicture();
 
@@ -524,8 +524,8 @@ class Products extends OledrionObject
         $ret['product_image_full_path'] = $this->getPicturePath();
         $ret['product_thumb_full_path'] = $this->getThumbPath();
 
-        $ret['product_shorten_summary']     = oledrion\Utility::truncate_tagsafe($this->getVar('product_summary'), OLEDRION_SUMMARY_MAXLENGTH);
-        $ret['product_shorten_description'] = oledrion\Utility::truncate_tagsafe($this->getVar('product_description'), OLEDRION_SUMMARY_MAXLENGTH);
+        $ret['product_shorten_summary']     = Oledrion\Utility::truncate_tagsafe($this->getVar('product_summary'), OLEDRION_SUMMARY_MAXLENGTH);
+        $ret['product_shorten_description'] = Oledrion\Utility::truncate_tagsafe($this->getVar('product_description'), OLEDRION_SUMMARY_MAXLENGTH);
         $ret['product_new']                 = $this->isNewProduct();
 
         return $ret;

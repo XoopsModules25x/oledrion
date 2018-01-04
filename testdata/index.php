@@ -15,8 +15,8 @@
  * @author          Michael Beck (aka Mamba)
  */
 
-use Xoopsmodules\oledrion;
-use Xoopsmodules\oledrion\common;
+use XoopsModules\Oledrion;
+use XoopsModules\Oledrion\Common;
 
 require_once __DIR__ . '/../../../mainfile.php';
 
@@ -36,8 +36,8 @@ function loadSampleData()
 {
     $moduleDirName = basename(dirname(__DIR__));
     $moduleDirNameUpper = strtoupper($moduleDirName); //$capsDirName
-    $helper       = oledrion\Helper::getInstance();
-    $utility      = new oledrion\Utility();
+    $helper       = Oledrion\Helper::getInstance();
+    $utility      = new Oledrion\Utility();
     $configurator = new common\Configurator();
     // Load language files
     $helper->loadLanguage('admin');

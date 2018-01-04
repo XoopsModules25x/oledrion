@@ -17,7 +17,7 @@
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
  */
 
-use Xoopsmodules\oledrion;
+use XoopsModules\Oledrion;
 
 /**
  * Affichage et gestion du caddy
@@ -30,7 +30,7 @@ require_once XOOPS_ROOT_PATH . '/header.php';
 
 $xoopsTpl->assign('mod_pref', $mod_pref); // Préférences du module
 
-if (oledrion\Utility::getModuleOption('restrict_orders', false)) {
+if (Oledrion\Utility::getModuleOption('restrict_orders', false)) {
     $registry = new Registryfile();
     $text     = $registry->getfile(OLEDRION_TEXTFILE5);
     $xoopsTpl->assign('restrict_orders_text', xoops_trim($text));
@@ -53,10 +53,10 @@ if (isset($_POST['product_id'])) {
 }
 
 $xoopsTpl->assign('op', $op);
-$xoopsTpl->assign('confEmpty', oledrion\Utility::javascriptLinkConfirm(_OLEDRION_EMPTY_CART_SURE, true));
-$xoopsTpl->assign('confirm_delete_item', oledrion\Utility::javascriptLinkConfirm(_OLEDRION_EMPTY_ITEM_SURE, false));
+$xoopsTpl->assign('confEmpty', Oledrion\Utility::javascriptLinkConfirm(_OLEDRION_EMPTY_CART_SURE, true));
+$xoopsTpl->assign('confirm_delete_item', Oledrion\Utility::javascriptLinkConfirm(_OLEDRION_EMPTY_ITEM_SURE, false));
 
-$uid = oledrion\Utility::getCurrentUserID();
+$uid = Oledrion\Utility::getCurrentUserID();
 if ($uid > 0) {
     $xoopsTpl->assign('isCartExists', $persistentCartHandler->isCartExists());
 } else {
@@ -73,9 +73,9 @@ function listCart()
     $emptyCart       = false;
     $shippingAmount  = $commandAmount = $vatAmount = $commandAmountTTC = $discountsCount = $ecotaxeAmount = $discountAmount = $totalSavings = 0;
     $goOn            = '';
-    $reductions      = new oledrion\Reductions();
+    $reductions      = new Oledrion\Reductions();
     $reductions->computeCart($cartForTemplate, $emptyCart, $shippingAmount, $commandAmount, $vatAmount, $goOn, $commandAmountTTC, $discountsDescription, $discountsCount, $ecotaxeAmount, $discountAmount, $totalSavings);
-    $oledrion_Currency = oledrion\Currency::getInstance();
+    $oledrion_Currency = Oledrion\Currency::getInstance();
     $xoopsTpl->assign('emptyCart', $emptyCart);                                            // Caddy Vide ?
     $xoopsTpl->assign('caddieProducts', $cartForTemplate);                                // Produits dans le caddy
     $xoopsTpl->assign('shippingAmount', $oledrion_Currency->amountForDisplay($shippingAmount));        // Montant des frais de port
@@ -91,7 +91,7 @@ function listCart()
     $xoopsTpl->assign('discountsDescription', $discountsDescription);                    // Liste des réductions accordées
     $showOrderButton   = true;
     $showRegistredOnly = false;
-    if (oledrion\Utility::getModuleOption('restrict_orders', false) && 0 == $uid) {
+    if (Oledrion\Utility::getModuleOption('restrict_orders', false) && 0 == $uid) {
         $showRegistredOnly = true;
         $showOrderButton   = false;
     }
@@ -129,15 +129,15 @@ switch ($op) {
     case 'addproduct': // Ajout d'un produit
         // ****************************************************************************************************************
         if (0 == $productId) {
-            oledrion\Utility::redirect(_OLEDRION_ERROR9, 'index.php', 4);
+            Oledrion\Utility::redirect(_OLEDRION_ERROR9, 'index.php', 4);
         }
         $product = null;
         $product = $productsHandler->get($productId);
         if (!is_object($product)) {
-            oledrion\Utility::redirect(_OLEDRION_ERROR9, 'index.php', 4);
+            Oledrion\Utility::redirect(_OLEDRION_ERROR9, 'index.php', 4);
         }
         if (0 == $product->getVar('product_online')) {
-            oledrion\Utility::redirect(_OLEDRION_ERROR2, 'index.php', 4);
+            Oledrion\Utility::redirect(_OLEDRION_ERROR2, 'index.php', 4);
         }
 
         if ($product->getVar('product_stock') - 1 >= 0) {
@@ -156,7 +156,7 @@ switch ($op) {
                             $mandatoryFieldKey  = $mandatoryField->getAttributeNameInForm();
                             $mandatoryFieldText = $mandatoryField->getVar('attribute_title');
                             if (!isset($_POST[$mandatoryFieldKey]) && !$mandatoryField->hasDefaultValue()) {
-                                oledrion\Utility::redirect(sprintf(_OLEDRION_MANDATORY_MISSED, $mandatoryFieldText), $productUrl, 4);
+                                Oledrion\Utility::redirect(sprintf(_OLEDRION_MANDATORY_MISSED, $mandatoryFieldText), $productUrl, 4);
                             }
                         }
                     }
@@ -183,7 +183,7 @@ switch ($op) {
                 listCart();
             }
         } else {
-            oledrion\Utility::redirect(_OLEDRION_PROBLEM_QTY, 'index.php', 5); // Plus de stock !
+            Oledrion\Utility::redirect(_OLEDRION_PROBLEM_QTY, 'index.php', 5); // Plus de stock !
         }
         listCart();
         break;
@@ -216,12 +216,12 @@ $xoopsTpl->assign('step1', $step1);
 $xoopsTpl->assign('step2', $step2);
 $xoopsTpl->assign('step3', $step3);
 
-oledrion\Utility::setCSS();
-oledrion\Utility::setLocalCSS($xoopsConfig['language']);
+Oledrion\Utility::setCSS();
+Oledrion\Utility::setLocalCSS($xoopsConfig['language']);
 $helper->loadLanguage('modinfo');
 
-$xoopsTpl->assign('breadcrumb', oledrion\Utility::breadcrumb([OLEDRION_URL . basename(__FILE__) => _MI_OLEDRION_SMNAME1]));
+$xoopsTpl->assign('breadcrumb', Oledrion\Utility::breadcrumb([OLEDRION_URL . basename(__FILE__) => _MI_OLEDRION_SMNAME1]));
 
-$title = _MI_OLEDRION_SMNAME1 . ' - ' . oledrion\Utility::getModuleName();
-oledrion\Utility::setMetas($title, $title);
+$title = _MI_OLEDRION_SMNAME1 . ' - ' . Oledrion\Utility::getModuleName();
+Oledrion\Utility::setMetas($title, $title);
 require_once XOOPS_ROOT_PATH . '/footer.php';

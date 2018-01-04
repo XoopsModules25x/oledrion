@@ -1,4 +1,4 @@
-<?php namespace Xoopsmodules\oledrion;
+<?php namespace XoopsModules\Oledrion;
 
 /*
  You may not change or alter any portion of this comment or credits
@@ -18,7 +18,7 @@
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
  */
 
-use Xoopsmodules\oledrion;
+use XoopsModules\Oledrion;
 
 /**
  * Gestion des caddy
@@ -35,7 +35,7 @@ class CaddyHandler extends OledrionPersistableObjectHandler
     const CADDY_NAME = 'oledrion_caddie'; // Nom du panier en session
 
     /**
-     * oledrion\CaddyHandler constructor.
+     * Oledrion\CaddyHandler constructor.
      * @param \XoopsDatabase $db
      */
     public function __construct(\XoopsDatabase $db)
@@ -174,7 +174,7 @@ class CaddyHandler extends OledrionPersistableObjectHandler
     public function reloadPersistentCart()
     {
         global $xoopsUser, $persistentCartHandler;
-        if (0 == oledrion\Utility::getModuleOption('persistent_cart')) {
+        if (0 == Oledrion\Utility::getModuleOption('persistent_cart')) {
             return false;
         }
         if (is_object($xoopsUser)) {
@@ -468,7 +468,7 @@ class CaddyHandler extends OledrionPersistableObjectHandler
     /**
      * Marque un caddy comme ayant été téléchargé
      *
-     * @param \Xoopsmodules\oledrion\Caddy $caddy
+     * @param \XoopsModules\Oledrion\Caddy $caddy
      * @return boolean        Le résultat de la mise à jour
      */
     public function markCaddyAsNotDownloadableAnyMore(Caddy $caddy)

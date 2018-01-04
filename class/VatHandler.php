@@ -1,4 +1,4 @@
-<?php namespace Xoopsmodules\oledrion;
+<?php namespace XoopsModules\Oledrion;
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -17,7 +17,7 @@
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
  */
 
-use Xoopsmodules\oledrion;
+use XoopsModules\Oledrion;
 
 /**
  * Gestion des TVA
@@ -52,7 +52,7 @@ class VatHandler extends OledrionPersistableObjectHandler
      */
     public function getAllVats(Parameters $parameters)
     {
-        $parameters = $parameters->extend(new oledrion\Parameters([
+        $parameters = $parameters->extend(new Oledrion\Parameters([
                                                                       'start'   => 0,
                                                                       'limit'   => 0,
                                                                       'sort'    => 'vat_id',
@@ -83,7 +83,7 @@ class VatHandler extends OledrionPersistableObjectHandler
      */
     public function getCountryVats($country)
     {
-        $parameters = new oledrion\Parameters([
+        $parameters = new Oledrion\Parameters([
                                                   'start'   => 0,
                                                   'limit'   => 0,
                                                   'sort'    => 'vat_id',

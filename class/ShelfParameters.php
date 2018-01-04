@@ -1,4 +1,4 @@
-<?php namespace Xoopsmodules\oledrion;
+<?php namespace XoopsModules\Oledrion;
 
 /*
  You may not change or alter any portion of this comment or credits
@@ -21,7 +21,7 @@
  * Classe interne dont le but est de passer des paramètres à la classe oeldrion_shelf
  */
 
-use Xoopsmodules\oledrion;
+use XoopsModules\Oledrion;
 
 // defined('XOOPS_ROOT_PATH') || exit('Restricted access.');
 
@@ -133,7 +133,7 @@ class ShelfParameters
      * Fixe l'ordre de tri
      *
      * @param  string $value
-     * @return \Xoopsmodules\oledrion\ShelfParameters
+     * @return \XoopsModules\Oledrion\ShelfParameters
      */
     public function setOrder($value)
     {

@@ -1,4 +1,4 @@
-<?php namespace Xoopsmodules\oledrion;
+<?php namespace XoopsModules\Oledrion;
 
 /*
  You may not change or alter any portion of this comment or credits
@@ -18,7 +18,7 @@
  * @author      Hossein Azizabadi (azizabadi@faragostaresh.com)
  */
 
-use Xoopsmodules\oledrion;
+use XoopsModules\Oledrion;
 
 // defined('XOOPS_ROOT_PATH') || exit('Restricted access.');
 
@@ -31,7 +31,7 @@ $sms = Sms::sendSms($information);
 
 /**
  * Class Sms
- * @package Xoopsmodules\oledrion
+ * @package XoopsModules\Oledrion
  */
 class Sms
 {

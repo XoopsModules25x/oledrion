@@ -1,4 +1,4 @@
-<?php namespace Xoopsmodules\oledrion;
+<?php namespace XoopsModules\Oledrion;
 
 /*
  You may not change or alter any portion of this comment or credits
@@ -22,8 +22,8 @@
  *
  * @since 2.3.2009.06.13
  */
-use Xoopsmodules\oledrion;
-use Xoopsmodules\oledrion\Constants;
+use XoopsModules\Oledrion;
+use XoopsModules\Oledrion\Constants;
 
 require_once __DIR__ . '/classheader.php';
 
@@ -60,7 +60,7 @@ class Lists extends OledrionObject
      */
     public function isSuitableForCurrentUser()
     {
-        $uid = oledrion\Utility::getCurrentUserID();
+        $uid = Oledrion\Utility::getCurrentUserID();
         if (Constants::OLEDRION_LISTS_PRIVATE == $this->getVar('list_type')) {
             if (0 == $uid || $uid != $this->getVar('list_uid')) {
                 return false;
@@ -104,8 +104,8 @@ class Lists extends OledrionObject
     public function getLink()
     {
         $url = '';
-        if (1 == oledrion\Utility::getModuleOption('urlrewriting')) { // On utilise l'url rewriting
-            $url = OLEDRION_URL . 'list-' . $this->getVar('list_id') . oledrion\Utility::makeSeoUrl($this->getVar('list_title', 'n')) . '.html';
+        if (1 == Oledrion\Utility::getModuleOption('urlrewriting')) { // On utilise l'url rewriting
+            $url = OLEDRION_URL . 'list-' . $this->getVar('list_id') . Oledrion\Utility::makeSeoUrl($this->getVar('list_title', 'n')) . '.html';
         } else { // Pas d'utilisation de l'url rewriting
             $url = OLEDRION_URL . 'list.php?list_id=' . $this->getVar('list_id');
         }
@@ -131,7 +131,7 @@ class Lists extends OledrionObject
      */
     public function getHrefTitle()
     {
-        return oledrion\Utility::makeHrefTitle($this->getVar('list_title'));
+        return Oledrion\Utility::makeHrefTitle($this->getVar('list_title'));
     }
 
     /**

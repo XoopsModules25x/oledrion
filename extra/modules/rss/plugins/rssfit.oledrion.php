@@ -17,7 +17,7 @@
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
  */
 
-use Xoopsmodules\oledrion;
+use XoopsModules\Oledrion;
 
 if (!defined('RSSFIT_ROOT_PATH')) {
     exit();
@@ -61,7 +61,7 @@ class RssfitOledrion
     {
         $ret = false;
         include XOOPS_ROOT_PATH . '/modules/oledrion/include/common.php';
-        $items = $productsHandler->getRecentProducts(new oledrion\Parameters([
+        $items = $productsHandler->getRecentProducts(new Oledrion\Parameters([
                                                                                      'start' => 0,
                                                                                      'limit' => $this->grab
                                                                                  ]));

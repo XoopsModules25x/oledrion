@@ -1,4 +1,4 @@
-<?php namespace Xoopsmodules\oledrion;
+<?php namespace XoopsModules\Oledrion;
 
 /*
  You may not change or alter any portion of this comment or credits
@@ -22,7 +22,7 @@
  * Gestion des fabricants
  */
 
-use Xoopsmodules\oledrion;
+use XoopsModules\Oledrion;
 
 require_once __DIR__ . '/classheader.php';
 
@@ -143,8 +143,8 @@ class Manufacturer extends OledrionObject
     public function getLink()
     {
         $url = '';
-        if (1 == oledrion\Utility::getModuleOption('urlrewriting')) { // On utilise l'url rewriting
-            $url = OLEDRION_URL . 'manufacturer-' . $this->getVar('manu_id') . oledrion\Utility::makeSeoUrl($this->getVar('manu_commercialname', 'n') . ' ' . $this->getVar('manu_name')) . '.html';
+        if (1 == Oledrion\Utility::getModuleOption('urlrewriting')) { // On utilise l'url rewriting
+            $url = OLEDRION_URL . 'manufacturer-' . $this->getVar('manu_id') . Oledrion\Utility::makeSeoUrl($this->getVar('manu_commercialname', 'n') . ' ' . $this->getVar('manu_name')) . '.html';
         } else { // Pas d'utilisation de l'url rewriting
             $url = OLEDRION_URL . 'manufacturer.php?manu_id=' . $this->getVar('manu_id');
         }
@@ -159,7 +159,7 @@ class Manufacturer extends OledrionObject
      */
     public function getHrefTitle()
     {
-        return oledrion\Utility::makeHrefTitle($this->getVar('manu_commercialname') . ' ' . $this->getVar('manu_name'));
+        return Oledrion\Utility::makeHrefTitle($this->getVar('manu_commercialname') . ' ' . $this->getVar('manu_name'));
     }
 
     /**

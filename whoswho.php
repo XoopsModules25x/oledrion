@@ -21,7 +21,7 @@
  * Liste des fabricants
  */
 
-use Xoopsmodules\oledrion;
+use XoopsModules\Oledrion;
 
 require_once __DIR__ . '/header.php';
 $GLOBALS['current_category']             = -1;
@@ -41,13 +41,13 @@ foreach ($manufacturers as $item) {
 }
 $xoopsTpl->assign('manufacturers', $tblAnnuaire);
 
-oledrion\Utility::setCSS();
-oledrion\Utility::setLocalCSS($xoopsConfig['language']);
+Oledrion\Utility::setCSS();
+Oledrion\Utility::setLocalCSS($xoopsConfig['language']);
 $helper->loadLanguage('modinfo');
 
-$xoopsTpl->assign('global_advert', oledrion\Utility::getModuleOption('advertisement'));
-$xoopsTpl->assign('breadcrumb', oledrion\Utility::breadcrumb([OLEDRION_URL . basename(__FILE__) => _MI_OLEDRION_SMNAME5]));
+$xoopsTpl->assign('global_advert', Oledrion\Utility::getModuleOption('advertisement'));
+$xoopsTpl->assign('breadcrumb', Oledrion\Utility::breadcrumb([OLEDRION_URL . basename(__FILE__) => _MI_OLEDRION_SMNAME5]));
 
-$title = _MI_OLEDRION_SMNAME5 . ' - ' . oledrion\Utility::getModuleName();
-oledrion\Utility::setMetas($title, $title);
+$title = _MI_OLEDRION_SMNAME5 . ' - ' . Oledrion\Utility::getModuleName();
+Oledrion\Utility::setMetas($title, $title);
 require_once XOOPS_ROOT_PATH . '/footer.php';

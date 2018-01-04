@@ -1,4 +1,4 @@
-<?php namespace Xoopsmodules\oledrion;
+<?php namespace XoopsModules\Oledrion;
 
 /**
  * ****************************************************************************
@@ -21,7 +21,7 @@
  * ****************************************************************************
  */
 
-use Xoopsmodules\oledrion;
+use XoopsModules\Oledrion;
 
 /**
  * Gestion des options (attributs) de produits
@@ -258,7 +258,7 @@ class AttributesHandler extends OledrionPersistableObjectHandler
     public function getProductOptionsPrice($choosenAttributes, $product_vat_id, &$descriptions = null)
     {
         $db                = \XoopsDatabaseFactory::getDatabaseConnection();
-        $vatHandler = new oledrion\VatHandler($db);        
+        $vatHandler = new Oledrion\VatHandler($db);        
         static $vats = [];
         if (is_array($vats) && isset($vats[$product_vat_id])) {
             $vat_rate = $vats[$product_vat_id];
@@ -280,7 +280,7 @@ class AttributesHandler extends OledrionPersistableObjectHandler
         if (0 == count($attributes)) {
             return $ret;
         }
-        $oledrion_Currency = oledrion\Currency::getInstance();
+        $oledrion_Currency = Oledrion\Currency::getInstance();
 
         foreach ($choosenAttributes as $userAttributeId => $userAttributeValues) {
             if (isset($attributes[$userAttributeId])) {
@@ -289,10 +289,10 @@ class AttributesHandler extends OledrionPersistableObjectHandler
                 $optionDescription   = '';
                 if (is_array($userAttributeValues) && count($userAttributeValues) > 0) {
                     foreach ($userAttributeValues as $option) {
-                        $optionName            = oledrion\Utility::getName($option);
+                        $optionName            = Oledrion\Utility::getName($option);
                         $price                 = $attribute->getOptionPriceFromValue($optionName);
                         $optionDescription     = $attribute->getOptionNameFromValue($optionName);
-                        $vatAmount             = oledrion\Utility::getVAT($price, $vat_rate);
+                        $vatAmount             = Oledrion\Utility::getVAT($price, $vat_rate);
                         $ttc                   = $price + $vatAmount;
                         $vatAmountFormated     = $oledrion_Currency->amountForDisplay($vatAmount);
                         $htFormated            = $oledrion_Currency->amountForDisplay($price);
@@ -310,10 +310,10 @@ class AttributesHandler extends OledrionPersistableObjectHandler
                         $ret                   += $price;    // Total de toutes les options
                     }
                 } else {
-                    $optionName            = oledrion\Utility::getName($userAttributeValues);
+                    $optionName            = Oledrion\Utility::getName($userAttributeValues);
                     $price                 = $attribute->getOptionPriceFromValue($optionName);
                     $optionDescription     = $attribute->getOptionNameFromValue($optionName);
-                    $vatAmount             = oledrion\Utility::getVAT($price, $vat_rate);
+                    $vatAmount             = Oledrion\Utility::getVAT($price, $vat_rate);
                     $ttc                   = $price + $vatAmount;
                     $vatAmountFormated     = $oledrion_Currency->amountForDisplay($vatAmount);
                     $htFormated            = $oledrion_Currency->amountForDisplay($price);

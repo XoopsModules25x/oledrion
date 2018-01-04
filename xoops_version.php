@@ -17,7 +17,7 @@
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
  */
 
-use Xoopsmodules\oledrion;
+use XoopsModules\Oledrion;
 
 include __DIR__ . '/preloads/autoloader.php';
 
@@ -337,7 +337,7 @@ $modversion['blocks'][] = [
 $modversion['hasMain'] = 1;
 $cptm                  = 0;
 //require_once __DIR__ . '/class/Utility.php';
-if (oledrion\Utility::getModuleOption('use_price')) {
+if (Oledrion\Utility::getModuleOption('use_price')) {
     ++$cptm;
     $modversion['sub'][$cptm]['name'] = _MI_OLEDRION_SMNAME1;
     $modversion['sub'][$cptm]['url']  = 'caddy.php';
@@ -378,7 +378,7 @@ if (is_object($xoopsModule) && $xoopsModule->getVar('dirname') == $modversion['d
     if (!isset($categoryHandler)) {
         //mb        $categoryHandler = xoops_getModuleHandler('oledrion_cat', 'oledrion');
         $db      = \XoopsDatabaseFactory::getDatabaseConnection();
-        $categoryHandler =  new oledrion\CategoryHandler($db);
+        $categoryHandler =  new Oledrion\CategoryHandler($db);
     }
     $categories = $categoryHandler->getMotherCategories();
     foreach ($categories as $category) {

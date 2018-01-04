@@ -1,4 +1,4 @@
-<?php namespace Xoopsmodules\oledrion;
+<?php namespace XoopsModules\Oledrion;
 
 /*
  You may not change or alter any portion of this comment or credits
@@ -23,8 +23,8 @@
  * @since 2.3.2009.06.13
  */
 
-use Xoopsmodules\oledrion;
-use Xoopsmodules\oledrion\Constants;
+use XoopsModules\Oledrion;
+use XoopsModules\Oledrion\Constants;
 
 require_once __DIR__ . '/classheader.php';
 
@@ -52,7 +52,7 @@ class ListsHandler extends OledrionPersistableObjectHandler
     public function incrementListViews(Lists $list)
     {
         $res = true;
-        if (oledrion\Utility::getCurrentUserID() != $list->getVar('list_uid')) {
+        if (Oledrion\Utility::getCurrentUserID() != $list->getVar('list_uid')) {
             $sql = 'UPDATE ' . $this->table . ' SET list_views = list_views + 1 WHERE list_id = ' . $list->getVar('list_id');
             $res = $this->db->queryF($sql);
             $this->forceCacheClean();
@@ -110,7 +110,7 @@ class ListsHandler extends OledrionPersistableObjectHandler
      */
     public function getRecentLists(Parameters $parameters)
     {
-        $parameters = $parameters->extend(new oledrion\Parameters([
+        $parameters = $parameters->extend(new Oledrion\Parameters([
                                                                       'start'    => 0,
                                                                       'limit'    => 0,
                                                                       'sort'     => 'list_date',
@@ -185,7 +185,7 @@ class ListsHandler extends OledrionPersistableObjectHandler
             $usersList[] = $list->list_uid;
         }
         if (count($usersList) > 0) {
-            return oledrion\Utility::getUsersFromIds($usersList);
+            return Oledrion\Utility::getUsersFromIds($usersList);
         } else {
             return [];
         }
@@ -214,8 +214,8 @@ class ListsHandler extends OledrionPersistableObjectHandler
     public function getListProducts(Lists $list)
     {
         $db = \XoopsDatabaseFactory::getDatabaseConnection();
-        $productsListHandler = new oledrion\ProductsListHandler($db);
-        $productsHandler = new oledrion\ProductsHandler($db);
+        $productsListHandler = new Oledrion\ProductsListHandler($db);
+        $productsHandler = new Oledrion\ProductsHandler($db);
         $productsInList = $ret = $productsIds = [];
 //        $handlers       = HandlerManager::getInstance();
         $productsInList = $productsListHandler->getProductsFromList($list);
@@ -242,7 +242,7 @@ class ListsHandler extends OledrionPersistableObjectHandler
     public function isThisMyList($list_id, $list_uid = 0)
     {
         if (0 == $list_uid) {
-            $list_uid = oledrion\Utility::getCurrentUserID();
+            $list_uid = Oledrion\Utility::getCurrentUserID();
         }
         $list = null;
         $list = $this->get((int)$list_id);
@@ -267,7 +267,7 @@ class ListsHandler extends OledrionPersistableObjectHandler
     {
         //require_once __DIR__ . '/lite.php';
         if (0 == $list_uid) {
-            $list_uid = oledrion\Utility::getCurrentUserID();
+            $list_uid = Oledrion\Utility::getCurrentUserID();
         }
         if (0 == $list_uid) {
             return true;

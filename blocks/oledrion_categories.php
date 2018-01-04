@@ -17,7 +17,7 @@
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
  */
 
-use Xoopsmodules\oledrion;
+use XoopsModules\Oledrion;
 
 /**
  * Affiche le bloc des catégories en fonction de la catégorie en cours (fonctionne de paire avec les pages du module)
@@ -31,7 +31,7 @@ function b_oledrion_category_show($options)
     include XOOPS_ROOT_PATH . '/modules/oledrion/include/common.php';
     $xoTheme->addStylesheet(OLEDRION_URL . 'assets/css/oledrion.css');
 
-    $block['nostock_msg'] = oledrion\Utility::getModuleOption('nostock_msg');
+    $block['nostock_msg'] = Oledrion\Utility::getModuleOption('nostock_msg');
 
     if (0 == (int)$options[0]) { // Catégories selon la page en cours
         $block['block_option'] = 0;
@@ -44,12 +44,12 @@ function b_oledrion_category_show($options)
         if ($cat_cid > 0) {
             require_once XOOPS_ROOT_PATH . '/class/tree.php';
             $tbl_categories = $tblChilds = $tbl_tmp = [];
-            $tbl_categories = $categoryHandler->getAllCategories(new oledrion\Parameters());
-            $mytree         = new oledrion\XoopsObjectTree($tbl_categories, 'cat_cid', 'cat_pid');
+            $tbl_categories = $categoryHandler->getAllCategories(new Oledrion\Parameters());
+            $mytree         = new Oledrion\XoopsObjectTree($tbl_categories, 'cat_cid', 'cat_pid');
             $tblChilds      = $mytree->getAllChild($cat_cid);
             //$tblChilds = array_reverse($tblChilds);
             foreach ($tblChilds as $item) {
-                $tbl_tmp[] = "<a href='" . $item->getLink() . "' title='" . oledrion\Utility::makeHrefTitle($item->getVar('cat_title')) . "'>" . $item->getVar('cat_title') . '</a>';
+                $tbl_tmp[] = "<a href='" . $item->getLink() . "' title='" . Oledrion\Utility::makeHrefTitle($item->getVar('cat_title')) . "'>" . $item->getVar('cat_title') . '</a>';
             }
             $block['block_categories'] = $tbl_tmp;
 
@@ -66,7 +66,7 @@ function b_oledrion_category_show($options)
             $criteria->setSort('cat_title');
             $tbl_categories = $categoryHandler->getObjects($criteria, true);
             foreach ($tbl_categories as $item) {
-                $tbl_tmp[] = "<a href='" . $item->getLink() . "' title='" . oledrion\Utility::makeHrefTitle($item->getVar('cat_title')) . "'>" . $item->getVar('cat_title') . '</a>';
+                $tbl_tmp[] = "<a href='" . $item->getLink() . "' title='" . Oledrion\Utility::makeHrefTitle($item->getVar('cat_title')) . "'>" . $item->getVar('cat_title') . '</a>';
             }
             $block['block_categories'] = $tbl_tmp;
         }
@@ -74,8 +74,8 @@ function b_oledrion_category_show($options)
         $block['block_option'] = 1;
         include XOOPS_ROOT_PATH . '/modules/oledrion/include/common.php';
         // require_once OLEDRION_PATH . 'class/tree.php';
-        $tbl_categories = $categoryHandler->getAllCategories(new oledrion\Parameters());
-        $mytree         = new oledrion\XoopsObjectTree($tbl_categories, 'cat_cid', 'cat_pid');
+        $tbl_categories = $categoryHandler->getAllCategories(new Oledrion\Parameters());
+        $mytree         = new Oledrion\XoopsObjectTree($tbl_categories, 'cat_cid', 'cat_pid');
         $jump           = OLEDRION_URL . 'category.php?cat_cid=';
         $additional     = "onchange='location=\"" . $jump . "\"+this.options[this.selectedIndex].value'";
         $cat_cid = 0;

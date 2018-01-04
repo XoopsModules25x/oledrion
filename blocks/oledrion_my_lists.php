@@ -17,8 +17,8 @@
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
  */
 
-use Xoopsmodules\oledrion;
-use Xoopsmodules\oledrion\Constants;
+use XoopsModules\Oledrion;
+use XoopsModules\Oledrion\Constants;
 
 /**
  * Affiche les listes de l'utilisateur
@@ -32,7 +32,7 @@ function b_oledrion_my_lists_show($options)
     $helper->loadLanguage('modinfo');
     $start = 0;
     $limit = (int)$options[0];
-    $uid   = oledrion\Utility::getCurrentUserID();
+    $uid   = Oledrion\Utility::getCurrentUserID();
     if (0 == $uid) {
         return null;
     }
@@ -40,9 +40,9 @@ function b_oledrion_my_lists_show($options)
     $block    = [];
 //    $handlers = HandlerManager::getInstance();
     $db      = \XoopsDatabaseFactory::getDatabaseConnection();
-    $listsHandler = new oledrion\ListsHandler($db);
+    $listsHandler = new Oledrion\ListsHandler($db);
     $items    = [];
-    $items    =  $listsHandler->getRecentLists(new oledrion\Parameters([
+    $items    =  $listsHandler->getRecentLists(new Oledrion\Parameters([
                                                                                         'start'    => $start,
                                                                                         'limit'    => $limit,
                                                                                         'sort'     => 'list_date',

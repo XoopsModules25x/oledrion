@@ -17,8 +17,8 @@
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
  */
 
-use Xoopsmodules\oledrion;
-use Xoopsmodules\oledrion\Constants;
+use XoopsModules\Oledrion;
+use XoopsModules\Oledrion\Constants;
 
 /**
  * Export au format CSV
@@ -50,8 +50,8 @@ class Oledrion_csv_export extends Oledrion_export
     public function export()
     {
         $db                = \XoopsDatabaseFactory::getDatabaseConnection();
-        $caddyHandler = new oledrion\CaddyHandler($db);
-        $commandsHandler = new oledrion\CommandsHandler($db);
+        $caddyHandler = new Oledrion\CaddyHandler($db);
+        $commandsHandler = new Oledrion\CommandsHandler($db);
         $file = $this->folder . '/' . $this->filename;
         $fp   = fopen($file, 'w');
         if (!$fp) {

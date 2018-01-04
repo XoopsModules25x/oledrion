@@ -1,4 +1,4 @@
-<?php namespace Xoopsmodules\oledrion;
+<?php namespace XoopsModules\Oledrion;
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -23,7 +23,7 @@
  * @since 2.3.2009.06.13
  */
 
-use Xoopsmodules\oledrion;
+use XoopsModules\Oledrion;
 
 require_once __DIR__ . '/classheader.php';
 
@@ -105,7 +105,7 @@ class ProductsListHandler extends OledrionPersistableObjectHandler
         $product_list = $this->create(true);
         $product_list->setVar('productlist_list_id', (int)$productlist_list_id);
         $product_list->setVar('productlist_product_id', (int)$productlist_product_id);
-        $product_list->setVar('productlist_date', oledrion\Utility::getCurrentSQLDate());
+        $product_list->setVar('productlist_date', Oledrion\Utility::getCurrentSQLDate());
 
         return $this->insert($product_list, true);
     }

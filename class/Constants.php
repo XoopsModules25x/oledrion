@@ -1,4 +1,4 @@
-<?php namespace Xoopsmodules\oledrion;
+<?php namespace XoopsModules\Oledrion;
 
 /*
  You may not change or alter any portion of this comment or credits
@@ -20,7 +20,7 @@
  * @link            https://xoops.org/
  * @since           1.0.0
  */
-//use Xoopsmodules\oledrion;
+//use XoopsModules\Oledrion;
 
 /**
  *

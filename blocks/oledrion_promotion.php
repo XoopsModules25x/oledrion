@@ -17,7 +17,7 @@
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
  */
 
-use Xoopsmodules\oledrion;
+use XoopsModules\Oledrion;
 
 /**
  * Affiche x produit(s) en promotion
@@ -40,7 +40,7 @@ function b_oledrion_promotion_show($options)
         unset($products['lastTitle']);
     }
     if (count($products) > 0) {
-        $block['nostock_msg']    = oledrion\Utility::getModuleOption('nostock_msg');
+        $block['nostock_msg']    = Oledrion\Utility::getModuleOption('nostock_msg');
         $block['block_products'] = $products;
         $xoTheme->addStylesheet(OLEDRION_URL . 'assets/css/oledrion.css');
 
@@ -62,8 +62,8 @@ function b_oledrion_promotion_edit($options)
     include XOOPS_ROOT_PATH . '/modules/oledrion/include/common.php';
     // require_once OLEDRION_PATH . 'class/tree.php';
     $tblCategories         = [];
-    $tblCategories         = $categoryHandler->getAllCategories(new oledrion\Parameters());
-    $mytree                = new oledrion\XoopsObjectTree($tblCategories, 'cat_cid', 'cat_pid');
+    $tblCategories         = $categoryHandler->getAllCategories(new Oledrion\Parameters());
+    $mytree                = new Oledrion\XoopsObjectTree($tblCategories, 'cat_cid', 'cat_pid');
     $form                  = '';
     $checkeds              = ['', ''];
     $checkeds[$options[1]] = 'checked';

@@ -1,4 +1,4 @@
-<?php namespace Xoopsmodules\oledrion;
+<?php namespace XoopsModules\Oledrion;
 
 /*
  You may not change or alter any portion of this comment or credits
@@ -18,7 +18,7 @@
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
  */
 
-use Xoopsmodules\oledrion;
+use XoopsModules\Oledrion;
 
 /**
  * Gestion des caddy
@@ -58,7 +58,7 @@ class Caddy extends OledrionObject
     {
         $ret                              = [];
         $ret                              = parent::toArray($format);
-        $oledrion_Currency                = oledrion\Currency::getInstance();
+        $oledrion_Currency                = Oledrion\Currency::getInstance();
         $ret['caddy_price_fordisplay']    = $oledrion_Currency->amountForDisplay($this->getVar('caddy_price'));
         $ret['caddy_shipping_fordisplay'] = $oledrion_Currency->amountForDisplay($this->getVar('caddy_shipping'));
 

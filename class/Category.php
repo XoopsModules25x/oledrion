@@ -1,4 +1,4 @@
-<?php namespace Xoopsmodules\oledrion;
+<?php namespace XoopsModules\Oledrion;
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -17,7 +17,7 @@
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
  */
 
-use Xoopsmodules\oledrion;
+use XoopsModules\Oledrion;
 
 /**
  * Gestion des catégories de produits
@@ -108,8 +108,8 @@ class Category extends OledrionObject
     {
         require_once XOOPS_ROOT_PATH . '/modules/oledrion/include/common.php';
         $url = '';
-        if (1 == oledrion\Utility::getModuleOption('urlrewriting')) { // On utilise l'url rewriting
-            $url = OLEDRION_URL . 'category-' . $this->getVar('cat_cid') . oledrion\Utility::makeSeoUrl($this->getVar('cat_title', 'n')) . '.html';
+        if (1 == Oledrion\Utility::getModuleOption('urlrewriting')) { // On utilise l'url rewriting
+            $url = OLEDRION_URL . 'category-' . $this->getVar('cat_cid') . Oledrion\Utility::makeSeoUrl($this->getVar('cat_title', 'n')) . '.html';
         } else { // Pas d'utilisation de l'url rewriting
             $url = OLEDRION_URL . 'category.php?cat_cid=' . $this->getVar('cat_cid');
         }
@@ -124,7 +124,7 @@ class Category extends OledrionObject
      */
     public function getHrefTitle()
     {
-        return oledrion\Utility::makeHrefTitle($this->getVar('cat_title'));
+        return Oledrion\Utility::makeHrefTitle($this->getVar('cat_title'));
     }
 
     /**

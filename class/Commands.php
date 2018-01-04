@@ -1,4 +1,4 @@
-<?php namespace Xoopsmodules\oledrion;
+<?php namespace XoopsModules\Oledrion;
 
 /*
  You may not change or alter any portion of this comment or credits
@@ -18,7 +18,7 @@
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
  */
 
-use Xoopsmodules\oledrion;
+use XoopsModules\Oledrion;
 
 /**
  * Gestion des commandes clients
@@ -91,7 +91,7 @@ class Commands extends OledrionObject
         require_once XOOPS_ROOT_PATH . '/class/xoopslists.php';
         $countries                           = [];
         $countries                           = \XoopsLists::getCountryList();
-        $oledrion_Currency                   = oledrion\Currency::getInstance();
+        $oledrion_Currency                   = Oledrion\Currency::getInstance();
         $ret['cmd_total_fordisplay']         = $oledrion_Currency->amountForDisplay($this->getVar('cmd_total')); // Montant TTC de la commande
         $ret['cmd_shipping_fordisplay']      = $oledrion_Currency->amountForDisplay($this->getVar('cmd_shipping')); // Montant TTC des frais de port
         $ret['cmd_packing_price_fordisplay'] = $oledrion_Currency->amountForDisplay($this->getVar('cmd_packing_price'));

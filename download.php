@@ -21,7 +21,7 @@
  * Téléchargement de fichier après passage d'une commande (et validation de celle-ci)
  */
 
-use Xoopsmodules\oledrion;
+use XoopsModules\Oledrion;
 
 require_once __DIR__ . '/header.php';
 error_reporting(0);
@@ -32,38 +32,38 @@ $download_id = isset($_GET['download_id']) ? $_GET['download_id'] : '';
 // TODO: Permettre au webmaster de réactiver un téléchargement
 
 if ('' === xoops_trim($download_id)) {
-    oledrion\Utility::redirect(_OLEDRION_ERROR13, OLEDRION_URL, 5);
+    Oledrion\Utility::redirect(_OLEDRION_ERROR13, OLEDRION_URL, 5);
 }
 
 // Recherche dans les caddy du produit associé
 $caddy = null;
 $caddy = $caddyHandler->getCaddyFromPassword($download_id);
 if (!is_object($caddy)) {
-    oledrion\Utility::redirect(_OLEDRION_ERROR14, OLEDRION_URL, 5);
+    Oledrion\Utility::redirect(_OLEDRION_ERROR14, OLEDRION_URL, 5);
 }
 
 // Recherche du produit associé
 $product = null;
 $product = $productsHandler->get($caddy->getVar('caddy_product_id'));
 if (null == $product) {
-    oledrion\Utility::redirect(_OLEDRION_ERROR15, OLEDRION_URL, 5);
+    Oledrion\Utility::redirect(_OLEDRION_ERROR15, OLEDRION_URL, 5);
 }
 
 // On vérifie que la commande associée est payée
 $order = null;
 $order = $commandsHandler->get($caddy->getVar('caddy_cmd_id'));
 if (null == $order) {
-    oledrion\Utility::redirect(_OLEDRION_ERROR16, OLEDRION_URL, 5);
+    Oledrion\Utility::redirect(_OLEDRION_ERROR16, OLEDRION_URL, 5);
 }
 
 // Tout est bon, on peut envoyer le fichier au navigateur, s'il y a un fichier à télécharger, et s'il existe
 $file = '';
 $file = $product->getVar('product_download_url');
 if ('' === xoops_trim($file)) {
-    oledrion\Utility::redirect(_OLEDRION_ERROR17, OLEDRION_URL, 5);
+    Oledrion\Utility::redirect(_OLEDRION_ERROR17, OLEDRION_URL, 5);
 }
 if (!file_exists($file)) {
-    oledrion\Utility::redirect(_OLEDRION_ERROR18, OLEDRION_URL, 5);
+    Oledrion\Utility::redirect(_OLEDRION_ERROR18, OLEDRION_URL, 5);
 }
 
 // Mise à jour, le fichier n'est plus disponible au téléchargement
@@ -72,7 +72,7 @@ $caddyHandler->markCaddyAsNotDownloadableAnyMore($caddy);
 $fileContent = file_get_contents($file);
 // Plugins ************************************************
 $plugins    = Plugin::getInstance();
-$parameters = new oledrion\Parameters([
+$parameters = new Oledrion\Parameters([
                                           'fileContent'  => $fileContent,
                                           'product'      => $product,
                                           'order'        => $order,
@@ -84,6 +84,6 @@ if ('' !== trim($parameters['fileContent'])) {
 }
 // *********************************************************
 // Et affichage du fichier avec le type mime qui va bien
-header('Content-Type: ' . oledrion\Utility::getMimeType($file));
+header('Content-Type: ' . Oledrion\Utility::getMimeType($file));
 header('Content-disposition: inline; filename="' . basename($file) . '"');
 echo $fileContent;

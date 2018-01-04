@@ -1,4 +1,4 @@
-<?php namespace Xoopsmodules\oledrion;
+<?php namespace XoopsModules\Oledrion;
 
 /*
  You may not change or alter any portion of this comment or credits
@@ -18,7 +18,7 @@
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
  */
 
-use Xoopsmodules\oledrion;
+use XoopsModules\Oledrion;
 
 /**
  * Gestion des TVA
@@ -52,7 +52,7 @@ class Vat extends OledrionObject
     {
         $ret                      = [];
         $ret                      = parent::toArray($format);
-        $oledrion_Currency        = oledrion\Currency::getInstance();
+        $oledrion_Currency        = Oledrion\Currency::getInstance();
         $ret['vat_rate_formated'] = $oledrion_Currency->amountInCurrency((float)$this->getVar('vat_rate', 'e'));
 
         return $ret;

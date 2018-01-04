@@ -17,7 +17,7 @@
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
  */
 
-use Xoopsmodules\oledrion;
+use XoopsModules\Oledrion;
 
 $path = dirname(dirname(dirname(__DIR__)));
 //require_once $path . '/mainfile.php';
@@ -25,7 +25,7 @@ $path = dirname(dirname(dirname(__DIR__)));
 require_once $path . '/include/cp_header.php';
 
 $moduleDirName = basename(dirname(__DIR__));
-$helper = oledrion\Helper::getInstance();
+$helper = Oledrion\Helper::getInstance();
 $adminObject = \Xmf\Module\Admin::getInstance();
 
 $pathIcon16    = \Xmf\Module\Admin::iconUrl('', 16);

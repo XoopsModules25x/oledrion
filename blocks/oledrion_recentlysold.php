@@ -17,7 +17,7 @@
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
  */
 
-use Xoopsmodules\oledrion;
+use XoopsModules\Oledrion;
 
 /**
  * This block shows the products that were recently sold
@@ -38,7 +38,7 @@ function b_oledrion_recentlysold_show($options)
     }
     if (count($products) > 0) {
         $block                   = [];
-        $block['nostock_msg']    = oledrion\Utility::getModuleOption('nostock_msg');
+        $block['nostock_msg']    = Oledrion\Utility::getModuleOption('nostock_msg');
         $block['block_products'] = $products;
         $xoTheme->addStylesheet(OLEDRION_URL . 'assets/css/oledrion.css');
 

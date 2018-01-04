@@ -1,4 +1,4 @@
-<?php namespace Xoopsmodules\oledrion;
+<?php namespace XoopsModules\Oledrion;
 
 /*
  You may not change or alter any portion of this comment or credits
@@ -18,7 +18,7 @@
  * @author      Hossein Azizabadi (azizabadi@faragostaresh.com)
  */
 
-use Xoopsmodules\oledrion;
+use XoopsModules\Oledrion;
 
 require_once __DIR__ . '/classheader.php';
 
@@ -96,7 +96,7 @@ class Packing extends OledrionObject
      */
     public function toArray($format = 's')
     {
-        $oledrion_Currency               = oledrion\Currency::getInstance();
+        $oledrion_Currency               = Oledrion\Currency::getInstance();
         $ret                             = [];
         $ret                             = parent::toArray($format);
         $ret['packing_price_fordisplay'] = $oledrion_Currency->amountForDisplay($this->getVar('packing_price'));

@@ -1,4 +1,4 @@
-<?php namespace Xoopsmodules\oledrion;
+<?php namespace XoopsModules\Oledrion;
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -17,7 +17,7 @@
  * @author      Hossein Azizabadi (azizabadi@faragostaresh.com)
  */
 
-use Xoopsmodules\oledrion;
+use XoopsModules\Oledrion;
 
 require_once __DIR__ . '/classheader.php';
 
@@ -43,7 +43,7 @@ class LocationHandler extends OledrionPersistableObjectHandler
      */
     public function getAllLocation(Parameters $parameters)
     {
-        $parameters = $parameters->extend(new oledrion\Parameters([
+        $parameters = $parameters->extend(new Oledrion\Parameters([
                                                                       'start' => 0,
                                                                       'limit' => 0,
                                                                       'sort'  => 'location_id',
@@ -66,7 +66,7 @@ class LocationHandler extends OledrionPersistableObjectHandler
      */
     public function getAllPid(Parameters $parameters)
     {
-        $parameters = $parameters->extend(new oledrion\Parameters([
+        $parameters = $parameters->extend(new Oledrion\Parameters([
                                                                       'start' => 0,
                                                                       'limit' => 0,
                                                                       'sort'  => 'location_id',

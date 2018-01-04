@@ -17,8 +17,8 @@
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
  */
 
-use Xoopsmodules\oledrion;
-use Xoopsmodules\oledrion\plugins\models;
+use XoopsModules\Oledrion;
+use XoopsModules\Oledrion\plugins\models;
 
 include_once __DIR__ . '/../preloads/autoloader.php';
 //include_once __DIR__ . '/../config.php';
@@ -27,12 +27,12 @@ $moduleDirName      = basename(dirname(__DIR__));
 $moduleDirNameUpper = strtoupper($moduleDirName); //$capsDirName
 
 /** @var \XoopsDatabase $db */
-/** @var oledrion\Helper $helper */
-/** @var oledrion\Utility $utility */
+/** @var Oledrion\Helper $helper */
+/** @var Oledrion\Utility $utility */
 $db      = \XoopsDatabaseFactory::getDatabaseConnection();
-$helper  = oledrion\Helper::getInstance();
-$utility = new oledrion\Utility();
-//$configurator = new oledrion\common\Configurator();
+$helper  = Oledrion\Helper::getInstance();
+$utility = new Oledrion\Utility();
+//$configurator = new Oledrion\Common\Configurator();
 
 $helper->loadLanguage('common');
 $helper->loadLanguage('main');
@@ -205,40 +205,40 @@ if (!defined($moduleDirNameUpper . '_CONSTANTS_DEFINED')) {
 //require_once OLEDRION_CLASS_PATH . 'Lists.php';
 //require_once OLEDRION_CLASS_PATH . 'Sms.php';
 
-$oledrionHandlers = oledrion\HandlerManager::getInstance();
+$oledrionHandlers = Oledrion\HandlerManager::getInstance();
 
 $myts = \MyTextSanitizer::getInstance();
 
 // Loading handlers
-$caddyHandler           = new oledrion\CaddyHandler($db);
-$categoryHandler        = new oledrion\CategoryHandler($db);
-$commandsHandler        = new oledrion\CommandsHandler($db);
-$discountsHandler       = new oledrion\DiscountsHandler($db);
-$filesHandler           = new oledrion\FilesHandler($db);
-$gatewaysOptionsHandler = new oledrion\GatewaysOptionsHandler($db);
-$manufacturerHandler    = new oledrion\ManufacturerHandler($db);
-$persistentCartHandler  = new oledrion\PersistentCartHandler($db);
-$productsHandler        = new oledrion\ProductsHandler($db);
-$productsmanuHandler    = new oledrion\ProductsmanuHandler($db);
-$relatedHandler         = new oledrion\RelatedHandler($db);
-$vatHandler             = new oledrion\VatHandler($db);
-$vendorsHandler         = new oledrion\VendorsHandler($db);
-$votedataHandler        = new oledrion\VotedataHandler($db);
+$caddyHandler           = new Oledrion\CaddyHandler($db);
+$categoryHandler        = new Oledrion\CategoryHandler($db);
+$commandsHandler        = new Oledrion\CommandsHandler($db);
+$discountsHandler       = new Oledrion\DiscountsHandler($db);
+$filesHandler           = new Oledrion\FilesHandler($db);
+$gatewaysOptionsHandler = new Oledrion\GatewaysOptionsHandler($db);
+$manufacturerHandler    = new Oledrion\ManufacturerHandler($db);
+$persistentCartHandler  = new Oledrion\PersistentCartHandler($db);
+$productsHandler        = new Oledrion\ProductsHandler($db);
+$productsmanuHandler    = new Oledrion\ProductsmanuHandler($db);
+$relatedHandler         = new Oledrion\RelatedHandler($db);
+$vatHandler             = new Oledrion\VatHandler($db);
+$vendorsHandler         = new Oledrion\VendorsHandler($db);
+$votedataHandler        = new Oledrion\VotedataHandler($db);
 // Added by voltan
-$attributesHandler       = new oledrion\AttributesHandler($db);
-$caddyAttributesHandler  = new oledrion\CaddyAttributesHandler($db);
-$deliveryHandler         = new oledrion\DeliveryHandler($db);
-$deliveryPaymentHandler  = new oledrion\DeliveryPaymentHandler($db);
-$listsHandler            = new oledrion\ListsHandler($db);
-$locationDeliveryHandler = new oledrion\LocationDeliveryHandler($db);
-$locationHandler         = new oledrion\LocationHandler($db);
-$packingHandler          = new oledrion\PackingHandler($db);
-$paymentHandler          = new oledrion\PaymentHandler($db);
-$paymentLogHandler       = new oledrion\PaymentLogHandler($db);
-$productsListHandler     = new oledrion\ProductsListHandler($db);
+$attributesHandler       = new Oledrion\AttributesHandler($db);
+$caddyAttributesHandler  = new Oledrion\CaddyAttributesHandler($db);
+$deliveryHandler         = new Oledrion\DeliveryHandler($db);
+$deliveryPaymentHandler  = new Oledrion\DeliveryPaymentHandler($db);
+$listsHandler            = new Oledrion\ListsHandler($db);
+$locationDeliveryHandler = new Oledrion\LocationDeliveryHandler($db);
+$locationHandler         = new Oledrion\LocationHandler($db);
+$packingHandler          = new Oledrion\PackingHandler($db);
+$paymentHandler          = new Oledrion\PaymentHandler($db);
+$paymentLogHandler       = new Oledrion\PaymentLogHandler($db);
+$productsListHandler     = new Oledrion\ProductsListHandler($db);
 
-$shelf           = new oledrion\Shelf(); // Facade
-$shelfParameters = new oledrion\ShelfParameters(); // Parameters of the facade
+$shelf           = new Oledrion\Shelf(); // Facade
+$shelfParameters = new Oledrion\ShelfParameters(); // Parameters of the facade
 
 // Definition of Images
 if (!defined('_OLEDRION_EDIT')) {
@@ -270,16 +270,16 @@ $icons = [
 
 // Loading some preferences
 $mod_pref = [
-    //    'money_short'     => oledrion\Utility::getModuleOption('money_short'),
-    //    'money_full'      => oledrion\Utility::getModuleOption('money_full'),
-    //    'url_rewriting'   => oledrion\Utility::getModuleOption('urlrewriting'),
-    //    'tooltip'         => oledrion\Utility::getModuleOption('infotips'),
-    //    'advertisement'   => oledrion\Utility::getModuleOption('advertisement'),
-    //    'rss'             => oledrion\Utility::getModuleOption('use_rss'),
-    //    'nostock_msg'     => oledrion\Utility::getModuleOption('nostock_msg'),
-    //    'use_price'       => oledrion\Utility::getModuleOption('use_price'),
-    //    'restrict_orders' => oledrion\Utility::getModuleOption('restrict_orders'),
-    //    'isAdmin'         => oledrion\Utility::isAdmin()
+    //    'money_short'     => Oledrion\Utility::getModuleOption('money_short'),
+    //    'money_full'      => Oledrion\Utility::getModuleOption('money_full'),
+    //    'url_rewriting'   => Oledrion\Utility::getModuleOption('urlrewriting'),
+    //    'tooltip'         => Oledrion\Utility::getModuleOption('infotips'),
+    //    'advertisement'   => Oledrion\Utility::getModuleOption('advertisement'),
+    //    'rss'             => Oledrion\Utility::getModuleOption('use_rss'),
+    //    'nostock_msg'     => Oledrion\Utility::getModuleOption('nostock_msg'),
+    //    'use_price'       => Oledrion\Utility::getModuleOption('use_price'),
+    //    'restrict_orders' => Oledrion\Utility::getModuleOption('restrict_orders'),
+    //    'isAdmin'         => Oledrion\Utility::isAdmin()
     'money_short'     => $helper->getConfig('money_short'),
     'money_full'      => $helper->getConfig('money_full'),
     'url_rewriting'   => $helper->getConfig('urlrewriting'),

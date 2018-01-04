@@ -21,7 +21,7 @@
  * Affiche la liste des produits recommandés
  */
 
-use Xoopsmodules\oledrion;
+use XoopsModules\Oledrion;
 
 require_once __DIR__ . '/header.php';
 $GLOBALS['current_category']             = -1;
@@ -36,20 +36,20 @@ $tbl_products_id      = $tbl_auteurs = $tbl_infos_auteurs = $tbl_tmp_auteurs = [
 $tbl_tmp_related      = $tbl_related = $tbl_info_related_products = [];
 $tbl_related_products = [];
 $start                = isset($_GET['start']) ? (int)$_GET['start'] : 0;
-$limit                = oledrion\Utility::getModuleOption('perpage');
+$limit                = Oledrion\Utility::getModuleOption('perpage');
 $baseurl              = OLEDRION_URL . basename(__FILE__); // URL de ce script (sans son nom)
-$oledrion_Currency    = oledrion\Currency::getInstance();
+$oledrion_Currency    = Oledrion\Currency::getInstance();
 
-$registry = new oledrion\Registryfile();
+$registry = new Oledrion\Registryfile();
 
 // Lecture des TVA ********************************************************************************
 $vatArray = [];
-$vatArray = $vatHandler->getAllVats(new oledrion\Parameters());
+$vatArray = $vatHandler->getAllVats(new Oledrion\Parameters());
 
 // Quelques options pour le template
-$xoopsTpl->assign('nostock_msg', oledrion\Utility::getModuleOption('nostock_msg'));
+$xoopsTpl->assign('nostock_msg', Oledrion\Utility::getModuleOption('nostock_msg'));
 $xoopsTpl->assign('mod_pref', $mod_pref); // Préférences du module
-$xoopsTpl->assign('columnsCount', oledrion\Utility::getModuleOption('category_colums'));
+$xoopsTpl->assign('columnsCount', Oledrion\Utility::getModuleOption('category_colums'));
 $xoopsTpl->assign('welcome_msg', nl2br($registry->getfile(OLEDRION_TEXTFILE3)));
 
 // Récupération du nombre total de produits publiés dans la base
@@ -69,10 +69,10 @@ if ($limit > 0) {
     }
     $xoopsTpl->assign('products', $products);
 }
-$xoopsTpl->assign('global_advert', oledrion\Utility::getModuleOption('advertisement'));
-$xoopsTpl->assign('breadcrumb', oledrion\Utility::breadcrumb([OLEDRION_URL . basename(__FILE__) => _OLEDRION_RECOMMENDED]));
+$xoopsTpl->assign('global_advert', Oledrion\Utility::getModuleOption('advertisement'));
+$xoopsTpl->assign('breadcrumb', Oledrion\Utility::breadcrumb([OLEDRION_URL . basename(__FILE__) => _OLEDRION_RECOMMENDED]));
 
-oledrion\Utility::setCSS();
-oledrion\Utility::setLocalCSS($xoopsConfig['language']);
-oledrion\Utility::setMetas(_OLEDRION_RECOMMENDED . ' - ' . oledrion\Utility::getModuleName(), oledrion\Utility::getModuleName());
+Oledrion\Utility::setCSS();
+Oledrion\Utility::setLocalCSS($xoopsConfig['language']);
+Oledrion\Utility::setMetas(_OLEDRION_RECOMMENDED . ' - ' . Oledrion\Utility::getModuleName(), Oledrion\Utility::getModuleName());
 require_once XOOPS_ROOT_PATH . '/footer.php';

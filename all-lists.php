@@ -17,8 +17,8 @@
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
  */
 
-use Xoopsmodules\oledrion;
-use Xoopsmodules\oledrion\Constants;
+use XoopsModules\Oledrion;
+use XoopsModules\Oledrion\Constants;
 
 /**
  * Toutes les listes publiques
@@ -33,7 +33,7 @@ require_once XOOPS_ROOT_PATH . '/class/pagenav.php';
 
 $xoopsTpl->assign('mod_pref', $mod_pref); // Préférences du module
 $start = isset($_GET['start']) ? (int)$_GET['start'] : 0;
-$limit = oledrion\Utility::getModuleOption('perpage');
+$limit = Oledrion\Utility::getModuleOption('perpage');
 
 if ($limit > 0) {
 //    $handlers   = HandlerManager::getInstance();
@@ -43,7 +43,7 @@ if ($limit > 0) {
         $xoopsTpl->assign('pagenav', $pagenav->renderNav());
     }
     $items = [];
-    $items =  $listsHandler->getRecentLists(new oledrion\Parameters([
+    $items =  $listsHandler->getRecentLists(new Oledrion\Parameters([
                                                                                      'start'    => $start,
                                                                                      'limit'    => $limit,
                                                                                      'sort'     => 'list_date',
@@ -58,12 +58,12 @@ if ($limit > 0) {
     }
 }
 
-oledrion\Utility::setCSS();
-oledrion\Utility::setLocalCSS($xoopsConfig['language']);
+Oledrion\Utility::setCSS();
+Oledrion\Utility::setLocalCSS($xoopsConfig['language']);
 $helper->loadLanguage('modinfo');
 
-$xoopsTpl->assign('breadcrumb', oledrion\Utility::breadcrumb([OLEDRION_URL . basename(__FILE__) => _MI_OLEDRION_SMNAME11]));
+$xoopsTpl->assign('breadcrumb', Oledrion\Utility::breadcrumb([OLEDRION_URL . basename(__FILE__) => _MI_OLEDRION_SMNAME11]));
 
-$title = _MI_OLEDRION_SMNAME11 . ' - ' . oledrion\Utility::getModuleName();
-oledrion\Utility::setMetas($title, $title);
+$title = _MI_OLEDRION_SMNAME11 . ' - ' . Oledrion\Utility::getModuleName();
+Oledrion\Utility::setMetas($title, $title);
 require_once XOOPS_ROOT_PATH . '/footer.php';

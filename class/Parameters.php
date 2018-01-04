@@ -1,4 +1,4 @@
-<?php namespace Xoopsmodules\oledrion;
+<?php namespace XoopsModules\Oledrion;
 
 /*
  You may not change or alter any portion of this comment or credits
@@ -29,7 +29,7 @@
  * Example :
  *
  * // Instanciate it like this
- * $param = new oledrion\Parameters();
+ * $param = new Oledrion\Parameters();
  *
  * // Create several parameters in one time:
  * $param->setLimit(10)->setSort('manu_name');
@@ -47,15 +47,15 @@
  * echo $param->limit();    // 10
  *
  * // Set the default values
- * $newParameters = $param->extend(new oledrion\Parameters(array('sort' => 'firstName', 'start' => 0, 'limit' => 15, 'showAll' => true)));
+ * $newParameters = $param->extend(new Oledrion\Parameters(array('sort' => 'firstName', 'start' => 0, 'limit' => 15, 'showAll' => true)));
  *
  */
 
-use Xoopsmodules\oledrion;
+use XoopsModules\Oledrion;
 
 /**
  * Class Parameters
- * @package Xoopsmodules\oledrion
+ * @package XoopsModules\Oledrion
  */
 class Parameters extends \ArrayObject
 {
@@ -66,7 +66,7 @@ class Parameters extends \ArrayObject
      *
      * @param  string $key   Le nom du champ à traiter
      * @param  mixed  $value La valeur à lui attribuer
-     * @return \Xoopsmodules\oledrion\Parameters
+     * @return \XoopsModules\Oledrion\Parameters
      */
     public function __set($key, $value)
     {

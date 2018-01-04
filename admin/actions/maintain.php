@@ -17,7 +17,7 @@
  * @author      Hossein Azizabadi (azizabadi@faragostaresh.com)
  */
 
-use Xoopsmodules\oledrion;
+use XoopsModules\Oledrion;
 
 /**
  *
@@ -46,9 +46,9 @@ switch ($action) {
             $xoopsDB->queryF('ANALYZE TABLE ' . $list);
             $xoopsDB->queryF('OPTIMIZE TABLE ' . $list);
         }
-        oledrion\Utility::updateCache();
+        Oledrion\Utility::updateCache();
         $productsHandler->forceCacheClean();
-        oledrion\Utility::redirect(_AM_OLEDRION_SAVE_OK, $baseurl, 2);
+        Oledrion\Utility::redirect(_AM_OLEDRION_SAVE_OK, $baseurl, 2);
         break;
 
     case 'import':
@@ -57,7 +57,7 @@ switch ($action) {
         if (0 == $categories) {
             xoops_confirm(['op' => 'maintain', 'action' => 'doimport'], 'index.php', _AM_OLEDRION_IMPORT_CONF);
         } else {
-            oledrion\Utility::redirect(_AM_OLEDRION_SAVE_OK, $baseurl, 2);
+            Oledrion\Utility::redirect(_AM_OLEDRION_SAVE_OK, $baseurl, 2);
         }
         break;
 
@@ -107,6 +107,6 @@ switch ($action) {
             $vendor->setVars($vendor_array);
             $res = $vendorsHandler->insert($vendor);
         }
-        oledrion\Utility::redirect(_AM_OLEDRION_SAVE_OK, $baseurl, 2);
+        Oledrion\Utility::redirect(_AM_OLEDRION_SAVE_OK, $baseurl, 2);
         break;
 }

@@ -1,4 +1,4 @@
-<?php namespace Xoopsmodules\oledrion;
+<?php namespace XoopsModules\Oledrion;
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -21,7 +21,7 @@
  * Gestion des votes sur les produits
  */
 
-use Xoopsmodules\oledrion;
+use XoopsModules\Oledrion;
 
 require_once __DIR__ . '/classheader.php';
 
@@ -104,7 +104,7 @@ class VotedataHandler extends OledrionPersistableObjectHandler
     public function hasUserAlreadyVoted($vote_uid, $vote_product_id)
     {
         if (0 == $vote_uid) {
-            $vote_uid = oledrion\Utility::getCurrentUserID();
+            $vote_uid = Oledrion\Utility::getCurrentUserID();
         }
         $criteria = new \CriteriaCompo();
         $criteria->add(new \Criteria('vote_product_id', $vote_product_id, '='));
@@ -127,7 +127,7 @@ class VotedataHandler extends OledrionPersistableObjectHandler
     public function hasAnonymousAlreadyVoted($ip = '', $vote_product_id = 0)
     {
         if ('' === $ip) {
-            $ip = oledrion\Utility::IP();
+            $ip = Oledrion\Utility::IP();
         }
         $anonwaitdays = 1;
         $yesterday    = (time() - (86400 * $anonwaitdays));
@@ -158,7 +158,7 @@ class VotedataHandler extends OledrionPersistableObjectHandler
         $product->setVar('vote_product_id', $vote_product_id);
         $product->setVar('vote_uid', $vote_uid);
         $product->setVar('vote_rating', $vote_rating);
-        $product->setVar('vote_ratinghostname', oledrion\Utility::IP());
+        $product->setVar('vote_ratinghostname', Oledrion\Utility::IP());
         $product->setVar('vote_ratingtimestamp', time());
 
         return $this->insert($product);

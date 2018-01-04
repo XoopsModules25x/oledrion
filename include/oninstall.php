@@ -11,8 +11,8 @@
 
 /**
  * oledrion
-use Xoopsmodules\oledrion;
-use Xoopsmodules\oledrion\common;
+use XoopsModules\Oledrion;
+use XoopsModules\Oledrion\Common;
  *
  * @copyright   {@link https://xoops.org/ XOOPS Project}
  * @license     {@link http://www.fsf.org/copyleft/gpl.html GNU public license}
@@ -23,8 +23,8 @@ use Xoopsmodules\oledrion\common;
 
 function xoops_module_pre_install_oledrion(\XoopsModule $module) {
 include __DIR__ . '/../preloads/autoloader.php';
-    /** @var oledrion\Utility $utility */
-    $utility = new oledrion\Utility();
+    /** @var Oledrion\Utility $utility */
+    $utility = new Oledrion\Utility();
 
     //check for minimum XOOPS version
     $xoopsSuccess = $utility::checkVerXoops($module);
@@ -54,11 +54,11 @@ function xoops_module_install_oledrion(\XoopsModule $module)
 
     $moduleDirName = basename(dirname(__DIR__));
 
-    /** @var oledrion\Helper $helper */
-    /** @var oledrion\Utility $utility */
+    /** @var Oledrion\Helper $helper */
+    /** @var Oledrion\Utility $utility */
    /** @var common\Configurator $configurator */
-    $helper       = oledrion\Helper::getInstance();
-    $utility      = new oledrion\Utility();
+    $helper       = Oledrion\Helper::getInstance();
+    $utility      = new Oledrion\Utility();
     $configurator = new common\Configurator();
 
     // Load language files

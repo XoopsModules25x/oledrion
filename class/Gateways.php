@@ -1,4 +1,4 @@
-<?php namespace Xoopsmodules\oledrion;
+<?php namespace XoopsModules\Oledrion;
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -17,7 +17,7 @@
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
  */
 
-use Xoopsmodules\oledrion;
+use XoopsModules\Oledrion;
 
 /**
  * Classe chargée de la manipulation des passerelles de paiement
@@ -45,7 +45,7 @@ class Gateways
         if ($gateway) {
             $return = $gateway;
         } else {
-            $return = xoops_trim(oledrion\Utility::getModuleOption('used_gateway'));
+            $return = xoops_trim(Oledrion\Utility::getModuleOption('used_gateway'));
         }
 
         if ('' === $return) {
@@ -62,7 +62,7 @@ class Gateways
      */
     public static function getDefaultGateway()
     {
-        $return = xoops_trim(oledrion\Utility::getModuleOption('used_gateway'));
+        $return = xoops_trim(Oledrion\Utility::getModuleOption('used_gateway'));
         if ('' === $return) {
             $return = 'paypal'; // Valeur par défaut
         }

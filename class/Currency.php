@@ -1,4 +1,4 @@
-<?php namespace Xoopsmodules\oledrion;
+<?php namespace XoopsModules\Oledrion;
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -17,7 +17,7 @@
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
  */
 
-use Xoopsmodules\oledrion;
+use XoopsModules\Oledrion;
 
 /**
  * Gestion de la monnaie
@@ -39,12 +39,12 @@ class Currency
     public function __construct()
     {
         // Get the module's preferences
-        $this->_decimalsCount = oledrion\Utility::getModuleOption('decimals_count');
-        $this->_thousandsSep  = oledrion\Utility::getModuleOption('thousands_sep');
-        $this->_decimalSep    = oledrion\Utility::getModuleOption('decimal_sep');
-        $this->_moneyFull     = oledrion\Utility::getModuleOption('money_full');
-        $this->_moneyShort    = oledrion\Utility::getModuleOption('money_short');
-        $this->_monnaiePlace  = oledrion\Utility::getModuleOption('monnaie_place');
+        $this->_decimalsCount = Oledrion\Utility::getModuleOption('decimals_count');
+        $this->_thousandsSep  = Oledrion\Utility::getModuleOption('thousands_sep');
+        $this->_decimalSep    = Oledrion\Utility::getModuleOption('decimal_sep');
+        $this->_moneyFull     = Oledrion\Utility::getModuleOption('money_full');
+        $this->_moneyShort    = Oledrion\Utility::getModuleOption('money_short');
+        $this->_monnaiePlace  = Oledrion\Utility::getModuleOption('monnaie_place');
         $this->_thousandsSep  = str_replace('[space]', ' ', $this->_thousandsSep);
         $this->_decimalSep    = str_replace('[space]', ' ', $this->_decimalSep);
     }

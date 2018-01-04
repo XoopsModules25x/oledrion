@@ -18,15 +18,15 @@
  */
 
 
-use Xoopsmodules\oledrion;
+use XoopsModules\Oledrion;
 
 require_once __DIR__ . '/header.php';
 $GLOBALS['xoopsOption']['template_main'] = 'oledrion_user.tpl';
 require_once XOOPS_ROOT_PATH . '/header.php';
 // Check is user
-$uid = oledrion\Utility::getCurrentUserID();
+$uid = Oledrion\Utility::getCurrentUserID();
 if (0 == $uid) {
-    oledrion\Utility::redirect(_OLEDRION_ERROR23, XOOPS_URL . '/register.php', 4);
+    Oledrion\Utility::redirect(_OLEDRION_ERROR23, XOOPS_URL . '/register.php', 4);
 }
 // Load header
 //$handlers = HandlerManager::getInstance();
@@ -37,7 +37,7 @@ $criteria->add(new \Criteria('cmd_uid', $uid));
 $criteria->setSort('cmd_id');
 $criteria->setOrder('DESC');
 $db = \XoopsDatabaseFactory::getDatabaseConnection();
-$commandsHandler = new oledrion\CommandsHandler($db);
+$commandsHandler = new Oledrion\CommandsHandler($db);
 $orders = $commandsHandler->getObjects($criteria, false);
 if (!empty($orders)) {
     foreach ($orders as $item) {
@@ -96,8 +96,8 @@ if (!empty($orders)) {
 }
 
 $xoopsTpl->assign('list', $list);
-oledrion\Utility::setCSS();
-oledrion\Utility::setLocalCSS($xoopsConfig['language']);
-$title = _OLEDRION_USER . ' - ' . oledrion\Utility::getModuleName();
-oledrion\Utility::setMetas($title, $title);
+Oledrion\Utility::setCSS();
+Oledrion\Utility::setLocalCSS($xoopsConfig['language']);
+$title = _OLEDRION_USER . ' - ' . Oledrion\Utility::getModuleName();
+Oledrion\Utility::setMetas($title, $title);
 require_once XOOPS_ROOT_PATH . '/footer.php';

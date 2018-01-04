@@ -1,4 +1,4 @@
-<?php namespace Xoopsmodules\oledrion;
+<?php namespace XoopsModules\Oledrion;
 
 /*
  You may not change or alter any portion of this comment or credits
@@ -18,7 +18,7 @@
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
  */
 
-use Xoopsmodules\oledrion;
+use XoopsModules\Oledrion;
 
 /**
  * Gestion des options (attributs) produits dans les commandes
@@ -81,17 +81,17 @@ class CaddyAttributes extends OledrionObject
         $format = 'e';
         $names  = $this->getOption('ca_attribute_names', $format);
         $values = $this->getOption('ca_attribute_values', $format);
-        if (oledrion\Utility::getModuleOption('use_price')) {
+        if (Oledrion\Utility::getModuleOption('use_price')) {
             $prices = $this->getOption('ca_attribute_prices', $format);
         }
         $names[]  = $name;
         $values[] = $value;
-        if (oledrion\Utility::getModuleOption('use_price')) {
+        if (Oledrion\Utility::getModuleOption('use_price')) {
             $prices[] = $price;
         }
         $this->setVar('ca_attribute_names', implode(Constants::OLEDRION_ATTRIBUTE_SEPARATOR, $names));
         $this->setVar('ca_attribute_values', implode(Constants::OLEDRION_ATTRIBUTE_SEPARATOR, $values));
-        if (oledrion\Utility::getModuleOption('use_price')) {
+        if (Oledrion\Utility::getModuleOption('use_price')) {
             $this->setVar('ca_attribute_prices', implode(Constants::OLEDRION_ATTRIBUTE_SEPARATOR, $prices));
         }
 
@@ -124,17 +124,17 @@ class CaddyAttributes extends OledrionObject
     {
         $names = $prices = $ret = [];
         $names = $this->getOption('ca_attribute_names', $format);
-        if (oledrion\Utility::getModuleOption('use_price')) {
+        if (Oledrion\Utility::getModuleOption('use_price')) {
             $prices = $this->getOption('ca_attribute_prices', $format);
         }
 
-        $oledrion_Currency = oledrion\Currency::getInstance();
+        $oledrion_Currency = Oledrion\Currency::getInstance();
         $counter           = 0;
         foreach ($names as $name) {
             $price = 0;
-            if (oledrion\Utility::getModuleOption('use_price')) {
+            if (Oledrion\Utility::getModuleOption('use_price')) {
                 if (isset($prices[$counter])) {
-                    $price = oledrion\Utility::getAmountWithVat((float)$prices[$counter], $product->getVar('product_vat_id'));
+                    $price = Oledrion\Utility::getAmountWithVat((float)$prices[$counter], $product->getVar('product_vat_id'));
                     $price = $oledrion_Currency->amountForDisplay($price);
                 }
             }

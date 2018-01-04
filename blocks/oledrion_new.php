@@ -17,7 +17,7 @@
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
  */
 
-use Xoopsmodules\oledrion;
+use XoopsModules\Oledrion;
 
 /**
  * Affiche les produits récents
@@ -41,7 +41,7 @@ function b_oledrion_new_show($options)
     }
     if (count($products) > 0) {
         $block                   = [];
-        $block['nostock_msg']    = oledrion\Utility::getModuleOption('nostock_msg');
+        $block['nostock_msg']    = Oledrion\Utility::getModuleOption('nostock_msg');
         $block['block_products'] = $products;
         $xoTheme->addStylesheet(OLEDRION_URL . 'assets/css/oledrion.css');
 
@@ -63,8 +63,8 @@ function b_oledrion_new_edit($options)
     include XOOPS_ROOT_PATH . '/modules/oledrion/include/common.php';
     // require_once OLEDRION_PATH . 'class/tree.php';
     $tblCategories = [];
-    $tblCategories = $categoryHandler->getAllCategories(new oledrion\Parameters());
-    $mytree        = new oledrion\XoopsObjectTree($tblCategories, 'cat_cid', 'cat_pid');
+    $tblCategories = $categoryHandler->getAllCategories(new Oledrion\Parameters());
+    $mytree        = new Oledrion\XoopsObjectTree($tblCategories, 'cat_cid', 'cat_pid');
     $form          = '';
     $form          .= "<table border='0'>";
     $form          .= '<tr><td>' . _MB_OLEDRION_PRODUCTS_CNT . "</td><td><input type='text' name='options[]' id='options' value='" . $options[0] . "'></td></tr>";

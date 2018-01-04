@@ -17,7 +17,7 @@
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
  */
 
-use Xoopsmodules\oledrion;
+use XoopsModules\Oledrion;
 
 /**
  * Sélecteur de produits
@@ -30,12 +30,12 @@ require_once XOOPS_ROOT_PATH . '/class/template.php';
 if (!isset($xoopsUser) || !is_object($xoopsUser)) {
     exit;
 }
-if (!oledrion\Utility::isAdmin()) {
+if (!Oledrion\Utility::isAdmin()) {
     exit;
 }
 $xoopsTpl = new \XoopsTpl();
 $ts       = \MyTextSanitizer::getInstance();
-$limit    = oledrion\Utility::getModuleOption('items_count'); // Nombre maximum d'éléments à afficher dans l'admin
+$limit    = Oledrion\Utility::getModuleOption('items_count'); // Nombre maximum d'éléments à afficher dans l'admin
 
 //$oledrionHandlers = HandlerManager::getInstance();
 $searchFields     = [
@@ -54,15 +54,15 @@ $searchCriterias  = [
 ];
 
 $db = \XoopsDatabaseFactory::getDatabaseConnection();
-$vendorsHandler = new oledrion\VendorsHandler($db);
-$categoryHandler = new oledrion\CategoryHandler($db);
+$vendorsHandler = new Oledrion\VendorsHandler($db);
+$categoryHandler = new Oledrion\CategoryHandler($db);
 $vendors    = [];
 $vendors    = $vendorsHandler->getList();
 $vendors[0] = '---';
 sort($vendors);
-//$categories           = $oledrionHandlers->h_oledrion_cat->getAllCategories(new oledrion\Parameters());
-$categories = $categoryHandler->getAllCategories(new oledrion\Parameters());
-$mytree               = new oledrion\XoopsObjectTree($categories, 'cat_cid', 'cat_pid');
+//$categories           = $oledrionHandlers->h_oledrion_cat->getAllCategories(new Oledrion\Parameters());
+$categories = $categoryHandler->getAllCategories(new Oledrion\Parameters());
+$mytree               = new Oledrion\XoopsObjectTree($categories, 'cat_cid', 'cat_pid');
 $searchVendorSelected = $selectedCategory = $selectedSearchField = 0;
 
 $start         = isset($_REQUEST['start']) ? (int)$_REQUEST['start'] : 0;
@@ -146,7 +146,7 @@ if (isset($_REQUEST['op']) && 'search' === $_REQUEST['op']) {
 $helper->loadLanguage('modinfo');
 $helper->loadLanguage('main');
 
-if (oledrion\Utility::checkVerXoops($GLOBALS['xoopsModule'], '2.5.9')) {
+if (Oledrion\Utility::checkVerXoops($GLOBALS['xoopsModule'], '2.5.9')) {
     $categoriesSelect = $mytree->makeSelectElement('product_cid', 'cat_title', '-', $selectedCategory, true, 0, '', '');
     $xoopsTpl->assign('searchCategory', $categoriesSelect->render());
 } else {

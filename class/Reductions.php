@@ -1,4 +1,4 @@
-<?php namespace Xoopsmodules\oledrion;
+<?php namespace XoopsModules\Oledrion;
 
 /**
  * ****************************************************************************
@@ -63,12 +63,12 @@
  *
  */
 
-use Xoopsmodules\oledrion;
-use Xoopsmodules\oledrion\Constants;
+use XoopsModules\Oledrion;
+use XoopsModules\Oledrion\Constants;
 
 /**
  * Class Reductions
- * @package Xoopsmodules\oledrion
+ * @package XoopsModules\Oledrion
  */
 class Reductions
 {
@@ -160,7 +160,7 @@ class Reductions
 
 //        $this->allActiveRules = $this->handlers->h_oledrion_discounts->getObjects($critere);
 //        $this->allActiveRules = $this->handlers->DiscountsHandler->getObjects($critere);
-        $discountsHandler       = new oledrion\DiscountsHandler($xoopsDB);
+        $discountsHandler       = new Oledrion\DiscountsHandler($xoopsDB);
         $this->allActiveRules = $discountsHandler->getObjects($critere);
     }
 
@@ -246,8 +246,8 @@ class Reductions
     {
         if (count($this->associatedManufacturers) > 0) {
             $db                = \XoopsDatabaseFactory::getDatabaseConnection();
-            $manufacturerHandler = new oledrion\ManufacturerHandler($db);
-            $productsmanuHandler = new oledrion\ProductsmanuHandler($db);
+            $manufacturerHandler = new Oledrion\ManufacturerHandler($db);
+            $productsmanuHandler = new Oledrion\ProductsmanuHandler($db);
             sort($this->associatedManufacturers);
             $productsIds                   = $this->associatedManufacturers;
             $this->associatedManufacturers = [];
@@ -276,7 +276,7 @@ class Reductions
     {
         if (count($this->associatedVendors) > 0) {
             $db = \XoopsDatabaseFactory::getDatabaseConnection();
-            $vendorsHandler = new oledrion\VendorsHandler($db);
+            $vendorsHandler = new Oledrion\VendorsHandler($db);
 
             sort($this->associatedVendors);
             $ids                     = $this->associatedVendors;
@@ -294,7 +294,7 @@ class Reductions
             $ids                        = $this->associatedCategories;
             //mb            $this->associatedCategories = $this->handlers->h_oledrion_cat->getCategoriesFromIds($ids);
             $db = \XoopsDatabaseFactory::getDatabaseConnection();
-            $categoryHandler = new oledrion\CategoryHandler($db);
+            $categoryHandler = new Oledrion\CategoryHandler($db);
             $this->associatedCategories = $categoryHandler->getCategoriesFromIds($ids);
         }
     }
@@ -316,8 +316,8 @@ class Reductions
     {
         $newCart = [];
         $db                = \XoopsDatabaseFactory::getDatabaseConnection();
-        $productsHandler = new oledrion\ProductsHandler($db);
-        $attributesHandler = new oledrion\AttributesHandler($db);
+        $productsHandler = new Oledrion\ProductsHandler($db);
+        $attributesHandler = new Oledrion\AttributesHandler($db);
         foreach ($this->cart as $cartProduct) {
             $data               = [];
             $data['id']         = $cartProduct['id'];
@@ -428,7 +428,7 @@ class Reductions
         $vats           = [];
         $cpt            = 0;
         $discountsCount = 0;
-        $this->cart     = isset($_SESSION[oledrion\CaddyHandler::CADDY_NAME]) ? $_SESSION[oledrion\CaddyHandler::CADDY_NAME] : [];
+        $this->cart     = isset($_SESSION[Oledrion\CaddyHandler::CADDY_NAME]) ? $_SESSION[Oledrion\CaddyHandler::CADDY_NAME] : [];
         $cartCount      = count($this->cart);
         if (0 == $cartCount) {
             $emptyCart = true;
@@ -436,9 +436,9 @@ class Reductions
             return true;
         }
         $db = \XoopsDatabaseFactory::getDatabaseConnection();
-        $commandsHandler = new oledrion\CommandsHandler($db);
-        $attributesHandler = new oledrion\AttributesHandler($db);
-        $categoryHandler = new oledrion\CategoryHandler($db);
+        $commandsHandler = new Oledrion\CommandsHandler($db);
+        $attributesHandler = new Oledrion\AttributesHandler($db);
+        $categoryHandler = new Oledrion\CategoryHandler($db);
 
         // Réinitialisation des données privées
         $this->initializePrivateData();
@@ -449,9 +449,9 @@ class Reductions
             $_POST['cmd_country'] = OLEDRION_DEFAULT_COUNTRY;
         }
         $db                = \XoopsDatabaseFactory::getDatabaseConnection();
-        $vatHandler = new oledrion\VatHandler($db);          
+        $vatHandler = new Oledrion\VatHandler($db);          
         $vats              = $vatHandler->getCountryVats($_POST['cmd_country']);
-        $oledrion_Currency = oledrion\Currency::getInstance();
+        $oledrion_Currency = Oledrion\Currency::getInstance();
         $caddyCount        = count($this->cart);
 
         // Initialisation des totaux généraux (ht, tva et frais de port)
@@ -473,7 +473,7 @@ class Reductions
             $discountedPrice = $ht;
             $quantity        = (int)$cartProduct['qty'];
 
-            if (oledrion\Utility::getModuleOption('shipping_quantity')) {
+            if (Oledrion\Utility::getModuleOption('shipping_quantity')) {
                 $discountedShipping = (float)($cartProduct['product']->getVar('product_shipping_price', 'n') * $quantity);
             } else {
                 $discountedShipping = (float)$cartProduct['product']->getVar('product_shipping_price', 'n');
@@ -495,7 +495,7 @@ class Reductions
             // Boucle sur les règles
             foreach ($this->allActiveRules as $rule) {
                 $applyRule = false;
-                if ((0 != $rule->disc_group && oledrion\Utility::isMemberOfGroup($rule->disc_group))
+                if ((0 != $rule->disc_group && Oledrion\Utility::isMemberOfGroup($rule->disc_group))
                     || 0 == $rule->disc_group) {
                     if ((0 != $rule->disc_cat_cid
                          && $cartProduct['product']->getVar('product_cid') == $rule->disc_cat_cid)
@@ -606,7 +606,7 @@ class Reductions
                                 }
 
                                 // Pas de montants négatifs
-                                oledrion\Utility::doNotAcceptNegativeAmounts($discountedPrice);
+                                Oledrion\Utility::doNotAcceptNegativeAmounts($discountedPrice);
                                 $reduction = $rule->disc_description;
                                 ++$discountsCount;
                             } elseif (Constants::OLEDRION_DISCOUNT_PRICE_AMOUNT_ON_CART == $rule->disc_price_amount_on) {
@@ -635,7 +635,7 @@ class Reductions
                                 $discountedShipping -= (float)$rule->getVar('disc_shipping_reduce_amount', 'n');
                             }
                             // Pas de montants négatifs
-                            oledrion\Utility::doNotAcceptNegativeAmounts($discountedShipping);
+                            Oledrion\Utility::doNotAcceptNegativeAmounts($discountedShipping);
                             break;
                         case Constants::OLEDRION_DISCOUNT_SHIPPING_TYPE4:
                             // Frais de port dégressifs
@@ -668,7 +668,7 @@ class Reductions
             $vatId = $cartProduct['product']->getVar('product_vat_id');
             if (is_array($vats) && isset($vats[$vatId])) {
                 $vatRate   = (float)$vats[$vatId]->getVar('vat_rate', 'n');
-                $vatAmount = oledrion\Utility::getVAT($discountedPrice * $quantity, $vatRate);
+                $vatAmount = Oledrion\Utility::getVAT($discountedPrice * $quantity, $vatRate);
             } else {
                 $vatRate   = 0.0;
                 $vatAmount = 0.0;
@@ -773,8 +773,8 @@ class Reductions
                             }
 
                             // Pas de montants négatifs
-                            oledrion\Utility::doNotAcceptNegativeAmounts($totalHT);
-                            oledrion\Utility::doNotAcceptNegativeAmounts($totalVAT);
+                            Oledrion\Utility::doNotAcceptNegativeAmounts($totalHT);
+                            Oledrion\Utility::doNotAcceptNegativeAmounts($totalVAT);
                             $discountsDescription[] = $rule->disc_description;
                             ++$discountsCount;
                         }// Règle à appliquer sur le panier

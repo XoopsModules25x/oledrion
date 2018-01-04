@@ -1,4 +1,4 @@
-<?php namespace Xoopsmodules\oledrion;
+<?php namespace XoopsModules\Oledrion;
 
 /*
  You may not change or alter any portion of this comment or credits
@@ -22,7 +22,7 @@
  * Gestion des catégories de produits
  */
 
-use Xoopsmodules\oledrion;
+use XoopsModules\Oledrion;
 
 require_once __DIR__ . '/classheader.php';
 
@@ -54,7 +54,7 @@ class CategoryHandler extends OledrionPersistableObjectHandler
      */
     public function getAllCategories(Parameters $parameters)
     {
-        $parameters = $parameters->extend(new oledrion\Parameters([
+        $parameters = $parameters->extend(new Oledrion\Parameters([
                                                                       'start'   => 0,
                                                                       'limit'   => 0,
                                                                       'sort'    => 'cat_title',
@@ -78,7 +78,7 @@ class CategoryHandler extends OledrionPersistableObjectHandler
      * @param  string          $fieldName
      * @param  string          $key
      * @param  string          $ret
-     * @param  oledrion\XoopsObjectTree $tree
+     * @param  Oledrion\XoopsObjectTree $tree
      * @return string
      */
     private function _makeLi($fieldName, $key, &$ret, $tree)
@@ -107,8 +107,8 @@ class CategoryHandler extends OledrionPersistableObjectHandler
     public function getUlMenu($fieldName, $key = 0)
     {
         require_once XOOPS_ROOT_PATH . '/class/tree.php';
-        $items      = $this->getAllCategories(new oledrion\Parameters());
-        $treeObject = new oledrion\XoopsObjectTree($items, 'cat_cid', 'cat_pid');
+        $items      = $this->getAllCategories(new Oledrion\Parameters());
+        $treeObject = new Oledrion\XoopsObjectTree($items, 'cat_cid', 'cat_pid');
         $tree       = $treeObject->getTree();
 
         $ret = '';
@@ -151,8 +151,8 @@ class CategoryHandler extends OledrionPersistableObjectHandler
         if ($withNested) { // Recherche des sous catégories de cette catégorie
             $items = $childs = [];
             require_once XOOPS_ROOT_PATH . '/class/tree.php';
-            $items  = $this->getAllCategories(new oledrion\Parameters());
-            $mytree = new oledrion\XoopsObjectTree($items, 'cat_cid', 'cat_pid');
+            $items  = $this->getAllCategories(new Oledrion\Parameters());
+            $mytree = new Oledrion\XoopsObjectTree($items, 'cat_cid', 'cat_pid');
             $childs = $mytree->getAllChild($cat_cid);
             if (count($childs) > 0) {
                 foreach ($childs as $onechild) {

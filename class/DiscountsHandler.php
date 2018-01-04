@@ -1,4 +1,4 @@
-<?php namespace Xoopsmodules\oledrion;
+<?php namespace XoopsModules\Oledrion;
 
 /*
  You may not change or alter any portion of this comment or credits
@@ -18,8 +18,8 @@
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
  */
 
-use Xoopsmodules\oledrion;
-use Xoopsmodules\oledrion\Constants;
+use XoopsModules\Oledrion;
+use XoopsModules\Oledrion\Constants;
 
 /**
  * Gestion des réductions
@@ -94,7 +94,7 @@ class DiscountsHandler extends OledrionPersistableObjectHandler
         static $buffer = [];
         if (is_array($buffer) && count($buffer) > 0) {
         } else {
-            $groups  = oledrion\Utility::getCurrentMemberGroups();
+            $groups  = Oledrion\Utility::getCurrentMemberGroups();
             $critere = new \CriteriaCompo();
             $critere->add(new \Criteria('disc_on_what', Constants::OLEDRION_DISCOUNT_ON3, '='));
             if (count($groups) > 0) {
@@ -118,7 +118,7 @@ class DiscountsHandler extends OledrionPersistableObjectHandler
         } else {
             $critere = new \CriteriaCompo();
             $critere->add(new \Criteria('disc_on_what', Constants::OLEDRION_DISCOUNT_ON2, '='));
-            $tblGroups = oledrion\Utility::getCurrentMemberGroups();
+            $tblGroups = Oledrion\Utility::getCurrentMemberGroups();
             $critere->add(new \Criteria('disc_group', '(' . implode(',', $tblGroups) . ')', 'IN'));
             $buffer = $this->getObjects($critere);
         }
@@ -138,7 +138,7 @@ class DiscountsHandler extends OledrionPersistableObjectHandler
         } else {
             $critere = new \CriteriaCompo();
             $critere->add(new \Criteria('disc_on_what', Constants::OLEDRION_DISCOUNT_ON4, '='));
-            $tblGroups = oledrion\Utility::getCurrentMemberGroups();
+            $tblGroups = Oledrion\Utility::getCurrentMemberGroups();
             $critere->add(new \Criteria('disc_group', '(' . implode(',', $tblGroups) . ')', 'IN'));
             $buffer = $this->getObjects($critere);
         }
@@ -159,7 +159,7 @@ class DiscountsHandler extends OledrionPersistableObjectHandler
             $critere = new \CriteriaCompo();
             $critere->add(new \Criteria('disc_on_what', Constants::OLEDRION_DISCOUNT_ON5, '='));
             $critere->add(new \Criteria('disc_shipping', Constants::OLEDRION_DISCOUNT_SHIPPING2, '='));
-            $tblGroups = oledrion\Utility::getCurrentMemberGroups();
+            $tblGroups = Oledrion\Utility::getCurrentMemberGroups();
             $critere->add(new \Criteria('disc_group', '(' . implode(',', $tblGroups) . ')', 'IN'));
             $buffer = $this->getObjects($critere);
         }
@@ -179,7 +179,7 @@ class DiscountsHandler extends OledrionPersistableObjectHandler
         } else {
             $critere = new \CriteriaCompo();
             $critere->add(new \Criteria('disc_on_what', Constants::OLEDRION_DISCOUNT_ON1, '='));
-            $tblGroups = oledrion\Utility::getCurrentMemberGroups();
+            $tblGroups = Oledrion\Utility::getCurrentMemberGroups();
             $critere->add(new \Criteria('disc_group', '(' . implode(',', $tblGroups) . ')', 'IN'));
             $buffer = $this->getObjects($critere);
         }
@@ -220,7 +220,7 @@ class DiscountsHandler extends OledrionPersistableObjectHandler
         $tblRules = [];
         $tblRules = $this->getRulesOnCommand(); // Renvoie des objets Discounts
         if (count($tblRules) > 0) {
-            $uid = oledrion\Utility::getCurrentUserID();
+            $uid = Oledrion\Utility::getCurrentUserID();
             foreach ($tblRules as $rule) {
                 switch ($rule->getVar('disc_when')) {
                     case Constants::OLEDRION_DISCOUNT_WHEN1: // Dans tous les cas
@@ -272,7 +272,7 @@ class DiscountsHandler extends OledrionPersistableObjectHandler
         $tblRules = [];
         $tblRules = $this->getRulesOnShipping(); // Renvoie des objets Discounts
         if (count($tblRules) > 0) {
-            $uid = oledrion\Utility::getCurrentUserID();
+            $uid = Oledrion\Utility::getCurrentUserID();
             foreach ($tblRules as $rule) {
                 switch ($rule->getVar('disc_when')) {
                     case Constants::OLEDRION_DISCOUNT_WHEN1: // Dans tous les cas
@@ -374,7 +374,7 @@ class DiscountsHandler extends OledrionPersistableObjectHandler
         $tblRules = [];
         $tblRules = $this->getRulesOnAllProducts(); // Renvoie des objets Discounts
         if (count($tblRules) > 0) {
-            $uid = oledrion\Utility::getCurrentUserID();
+            $uid = Oledrion\Utility::getCurrentUserID();
             foreach ($tblRules as $rule) {
                 switch ($rule->getVar('disc_when')) {
                     case Constants::OLEDRION_DISCOUNT_WHEN1: // Dans tous les cas
@@ -477,7 +477,7 @@ class DiscountsHandler extends OledrionPersistableObjectHandler
         $rules = [];
         $rules = $this->getRulesOnEachProduct(); // Renvoie des objets Discounts
         if (count($rules) > 0) {
-            $uid = oledrion\Utility::getCurrentUserID();
+            $uid = Oledrion\Utility::getCurrentUserID();
             foreach ($rules as $rule) {
                 switch ($rule->getVar('disc_when')) {
                     case Constants::OLEDRION_DISCOUNT_WHEN1: // Dans tous les cas

@@ -17,7 +17,7 @@
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
  */
 
-use Xoopsmodules\oledrion;
+use XoopsModules\Oledrion;
 
 require_once __DIR__ . '/header.php';
 $GLOBALS['current_category'] = -1;
@@ -27,46 +27,46 @@ $op = isset($_GET['op']) ? $_GET['op'] : 'default';
 if (isset($_GET['id'])) {
     $cmdId = (int)$_GET['id'];
 } else {
-    oledrion\Utility::redirect(_OLEDRION_ERROR11, 'index.php', 6);
+    Oledrion\Utility::redirect(_OLEDRION_ERROR11, 'index.php', 6);
 }
 
 if (isset($_GET['pass'])) {
     $pass = $_GET['pass'];
 } else {
-    if (!oledrion\Utility::isAdmin()) {
-        oledrion\Utility::redirect(_OLEDRION_ERROR11, 'index.php', 6);
+    if (!Oledrion\Utility::isAdmin()) {
+        Oledrion\Utility::redirect(_OLEDRION_ERROR11, 'index.php', 6);
     }
 }
 
 $order = null;
 $order = $commandsHandler->get($cmdId);
 if (!is_object($order)) {
-    oledrion\Utility::redirect(_OLEDRION_ERROR11, 'index.php', 6);
+    Oledrion\Utility::redirect(_OLEDRION_ERROR11, 'index.php', 6);
 }
 
 // Vérification du mot de passe (si pas admin)
-if (!oledrion\Utility::isAdmin()) {
+if (!Oledrion\Utility::isAdmin()) {
     if ($pass != $order->getVar('cmd_password')) {
-        oledrion\Utility::redirect(_OLEDRION_ERROR11, 'index.php', 6);
+        Oledrion\Utility::redirect(_OLEDRION_ERROR11, 'index.php', 6);
     }
 }
 
 // Vérification de la validité de la facture (si pas admin)
-/* if (!oledrion\Utility::isAdmin()) {
+/* if (!Oledrion\Utility::isAdmin()) {
     if ($order->getVar('cmd_state') != OLEDRION_STATE_VALIDATED) { // Commande non validée
-        oledrion\Utility::redirect(_OLEDRION_ERROR12, 'index.php', 6);
+        Oledrion\Utility::redirect(_OLEDRION_ERROR12, 'index.php', 6);
     }
 } */
 
 $caddy = $tmp = $products = $vats = $manufacturers = $tmp2 = $manufacturers = $productsManufacturers = [];
 
 // Récupération des TVA
-$vats = $vatHandler->getAllVats(new oledrion\Parameters());
+$vats = $vatHandler->getAllVats(new Oledrion\Parameters());
 
 // Récupération des caddy associés
 $caddy = $caddyHandler->getCaddyFromCommand($cmdId);
 if (0 == count($caddy)) {
-    oledrion\Utility::redirect(_OLEDRION_ERROR11, 'index.php', 6);
+    Oledrion\Utility::redirect(_OLEDRION_ERROR11, 'index.php', 6);
 }
 
 // Récupération de la liste des produits associés
@@ -92,7 +92,7 @@ switch ($op) {
 
         // Informations sur la commande ***************************************************************************************
         $xoopsTpl->assign('order', $order->toArray());
-        $xoopsTpl->assign('ask_vatnumber', oledrion\Utility::getModuleOption('ask_vatnumber'));
+        $xoopsTpl->assign('ask_vatnumber', Oledrion\Utility::getModuleOption('ask_vatnumber'));
 //        $handlers = HandlerManager::getInstance();
 
         // Boucle sur le caddy ************************************************************************************************
@@ -133,7 +133,7 @@ switch ($op) {
 
         // Informations sur la commande ***************************************************************************************
         $xoopsTpl->assign('order', $order->toArray());
-        $xoopsTpl->assign('ask_vatnumber', oledrion\Utility::getModuleOption('ask_vatnumber'));
+        $xoopsTpl->assign('ask_vatnumber', Oledrion\Utility::getModuleOption('ask_vatnumber'));
         $xoopsTpl->assign('printurl', OLEDRION_URL . basename(__FILE__) . '?op=print&id=' . $order->getVar('cmd_id') . '&pass=' . $order->getVar('cmd_password'));
 
 //        $handlers = HandlerManager::getInstance();
@@ -163,10 +163,10 @@ switch ($op) {
             $xoopsTpl->append('products', $productForTemplate);
         }
 
-        oledrion\Utility::setCSS();
-        oledrion\Utility::setLocalCSS($xoopsConfig['language']);
-        $title = _OLEDRION_BILL . ' - ' . oledrion\Utility::getModuleName();
-        oledrion\Utility::setMetas($title, $title);
+        Oledrion\Utility::setCSS();
+        Oledrion\Utility::setLocalCSS($xoopsConfig['language']);
+        $title = _OLEDRION_BILL . ' - ' . Oledrion\Utility::getModuleName();
+        Oledrion\Utility::setMetas($title, $title);
         require_once XOOPS_ROOT_PATH . '/footer.php';
         break;
 }

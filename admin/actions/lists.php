@@ -17,7 +17,7 @@
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
  */
 
-use Xoopsmodules\oledrion;
+use XoopsModules\Oledrion;
 
 /**
  * Gestion des listes
@@ -42,14 +42,14 @@ switch ($action) {
         $items = $usersList = [];
         $class = '';
 
-        //        oledrion\Utility::htitle(_MI_OLEDRION_ADMENU15, 4);
+        //        Oledrion\Utility::htitle(_MI_OLEDRION_ADMENU15, 4);
 
         $start      = isset($_GET['start']) ? (int)$_GET['start'] : 0;
         $itemsCount = $listsHandler->getRecentListsCount();
         if ($itemsCount > $limit) {
             $pagenav = new \XoopsPageNav($itemsCount, $limit, $start, 'start', 'op=' . $operation);
         }
-        $items = $listsHandler->getRecentLists(new oledrion\Parameters([
+        $items = $listsHandler->getRecentLists(new Oledrion\Parameters([
                                                                                                  'start' => $start,
                                                                                                  'limit' => $limit
                                                                                              ]));
@@ -101,18 +101,18 @@ switch ($action) {
         xoops_cp_header();
         $id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
         if (empty($id)) {
-            oledrion\Utility::redirect(_AM_OLEDRION_ERROR_1, $baseurl . '?op=' . $operation, 5);
+            Oledrion\Utility::redirect(_AM_OLEDRION_ERROR_1, $baseurl . '?op=' . $operation, 5);
         }
         $list = null;
         $list = $listsHandler->get($id);
         if (!is_object($list)) {
-            oledrion\Utility::redirect(_AM_OLEDRION_NOT_FOUND, $baseurl . '?op=' . $operation, 5);
+            Oledrion\Utility::redirect(_AM_OLEDRION_NOT_FOUND, $baseurl . '?op=' . $operation, 5);
         }
         if ($listsHandler->deleteList($list)) {
-            oledrion\Utility::updateCache();
-            oledrion\Utility::redirect(_AM_OLEDRION_SAVE_OK, $baseurl . '?op=' . $operation, 2);
+            Oledrion\Utility::updateCache();
+            Oledrion\Utility::redirect(_AM_OLEDRION_SAVE_OK, $baseurl . '?op=' . $operation, 2);
         } else {
-            oledrion\Utility::redirect(_AM_OLEDRION_SAVE_PB, $baseurl . '?op=' . $operation, 5);
+            Oledrion\Utility::redirect(_AM_OLEDRION_SAVE_PB, $baseurl . '?op=' . $operation, 5);
         }
         break;
 }

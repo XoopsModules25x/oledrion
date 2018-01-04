@@ -17,9 +17,9 @@
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
  */
 
-use Xoopsmodules\oledrion;
+use XoopsModules\Oledrion;
 
-$helper = oledrion\Helper::getInstance();
+$helper = Oledrion\Helper::getInstance();
 $helper->loadLanguage('admin');
 
 $pathIcon32 = \Xmf\Module\Admin::iconUrl('', 32);

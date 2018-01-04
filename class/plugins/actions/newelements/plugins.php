@@ -1,4 +1,4 @@
-<?php namespace Xoopsmodules\oledrion\plugins\actions\newelements;
+<?php namespace XoopsModules\Oledrion\plugins\actions\newelements;
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -17,8 +17,8 @@
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
  */
 
-use Xoopsmodules\oledrion;
-use Xoopsmodules\oledrion\plugins\models;
+use XoopsModules\Oledrion;
+use XoopsModules\Oledrion\plugins\models;
 
 /**
  * Plugin to notify users of the creation of a new product and a new category
@@ -46,15 +46,15 @@ class NewelementsAction extends models\Action
          */
         $events   = [];
         $events[] = [
-            oledrion\Plugin::EVENT_ON_PRODUCT_CREATE,
-            oledrion\Plugin::EVENT_PRIORITY_1,
+            Oledrion\Plugin::EVENT_ON_PRODUCT_CREATE,
+            Oledrion\Plugin::EVENT_PRIORITY_1,
             basename(__FILE__),
             __CLASS__,
             'fireNewProduct'
         ];
         $events[] = [
-            oledrion\Plugin::EVENT_ON_CATEGORY_CREATE,
-            oledrion\Plugin::EVENT_PRIORITY_1,
+            Oledrion\Plugin::EVENT_ON_CATEGORY_CREATE,
+            Oledrion\Plugin::EVENT_PRIORITY_1,
             basename(__FILE__),
             __CLASS__,
             'fireNewCategory'

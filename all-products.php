@@ -17,7 +17,7 @@
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
  */
 
-use Xoopsmodules\oledrion;
+use XoopsModules\Oledrion;
 
 /**
  * Liste de tous les produits du catalogue (en fonction des paramètres du module)
@@ -30,15 +30,15 @@ require_once XOOPS_ROOT_PATH . '/class/pagenav.php';
 
 $categories = $vatArray = [];
 $db         = \XoopsDatabaseFactory::getDatabaseConnection();
-$vatHandler = new oledrion\VatHandler($db);
+$vatHandler = new Oledrion\VatHandler($db);
 
 // Lecture des TVA
-$vatArray = $vatHandler->getAllVats(new oledrion\Parameters());
+$vatArray = $vatHandler->getAllVats(new Oledrion\Parameters());
 // Préférences du module
 $xoopsTpl->assign('mod_pref', $mod_pref);
 
 $start = isset($_GET['start']) ? (int)$_GET['start'] : 0;
-$limit = oledrion\Utility::getModuleOption('perpage');
+$limit = Oledrion\Utility::getModuleOption('perpage');
 
 // Lecture des produits
 $itemsCount = $shelf->getProductsCount('recent');
@@ -56,21 +56,21 @@ if (isset($products['lastTitle'])) {
 }
 $xoopsTpl->assign('products', $products);
 
-$xoopsTpl->assign('pdf_catalog', oledrion\Utility::getModuleOption('pdf_catalog'));
+$xoopsTpl->assign('pdf_catalog', Oledrion\Utility::getModuleOption('pdf_catalog'));
 
-oledrion\Utility::setCSS();
-oledrion\Utility::setLocalCSS($xoopsConfig['language']);
+Oledrion\Utility::setCSS();
+Oledrion\Utility::setLocalCSS($xoopsConfig['language']);
 if (!OLEDRION_MY_THEME_USES_JQUERY) {
     $xoTheme->addScript('browse.php?Frameworks/jquery/jquery.js');
 }
-oledrion\Utility::callJavascriptFile('noconflict.js');
-oledrion\Utility::callJavascriptFile('tablesorter/jquery.tablesorter.min.js');
+Oledrion\Utility::callJavascriptFile('noconflict.js');
+Oledrion\Utility::callJavascriptFile('tablesorter/jquery.tablesorter.min.js');
 
 $helper->loadLanguage('modinfo');
 
-$xoopsTpl->assign('global_advert', oledrion\Utility::getModuleOption('advertisement'));
-$xoopsTpl->assign('breadcrumb', oledrion\Utility::breadcrumb([OLEDRION_URL . basename(__FILE__) => _MI_OLEDRION_SMNAME6]));
+$xoopsTpl->assign('global_advert', Oledrion\Utility::getModuleOption('advertisement'));
+$xoopsTpl->assign('breadcrumb', Oledrion\Utility::breadcrumb([OLEDRION_URL . basename(__FILE__) => _MI_OLEDRION_SMNAME6]));
 
-$title = _MI_OLEDRION_SMNAME6 . ' - ' . oledrion\Utility::getModuleName();
-oledrion\Utility::setMetas($title, $title);
+$title = _MI_OLEDRION_SMNAME6 . ' - ' . Oledrion\Utility::getModuleName();
+Oledrion\Utility::setMetas($title, $title);
 require_once XOOPS_ROOT_PATH . '/footer.php';

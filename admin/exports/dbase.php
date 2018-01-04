@@ -21,8 +21,8 @@
  * Export au format Dbase 3
  */
 
-use Xoopsmodules\oledrion;
-use Xoopsmodules\oledrion\Constants;
+use XoopsModules\Oledrion;
+use XoopsModules\Oledrion\Constants;
 
 
 // defined('XOOPS_ROOT_PATH') || exit('Restricted access.');
@@ -113,8 +113,8 @@ class Oledrion_dbase_export extends Oledrion_export
            * caddy_pass              c_pass
            */
         $db              = \XoopsDatabaseFactory::getDatabaseConnection();
-        $caddyHandler    = new oledrion\CaddyHandler($db);
-        $commandsHandler = new oledrion\CommandsHandler($db);
+        $caddyHandler    = new Oledrion\CaddyHandler($db);
+        $commandsHandler = new Oledrion\CommandsHandler($db);
         if (!dbase_create($this->folder . '/' . $this->filename, $def)) {
             $this->success = false;
 

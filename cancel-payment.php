@@ -17,7 +17,7 @@
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
  */
 
-use Xoopsmodules\oledrion;
+use XoopsModules\Oledrion;
 
 /**
  * Page appelée par la passerelle de paiement dans le cas de l'annulation d'une commande
@@ -45,10 +45,10 @@ if (is_object($gateway) && method_exists($gateway, 'cancelOrder')) {
 }
 $caddyHandler->emptyCart();
 $xoopsTpl->assign('mod_pref', $mod_pref);
-$xoopsTpl->assign('breadcrumb', oledrion\Utility::breadcrumb([OLEDRION_URL . basename(__FILE__) => _OLEDRION_ORDER_CANCELED]));
+$xoopsTpl->assign('breadcrumb', Oledrion\Utility::breadcrumb([OLEDRION_URL . basename(__FILE__) => _OLEDRION_ORDER_CANCELED]));
 
-$title = _OLEDRION_ORDER_CANCELED . ' - ' . oledrion\Utility::getModuleName();
-oledrion\Utility::setMetas($title, $title);
-oledrion\Utility::setCSS();
-oledrion\Utility::setLocalCSS($xoopsConfig['language']);
+$title = _OLEDRION_ORDER_CANCELED . ' - ' . Oledrion\Utility::getModuleName();
+Oledrion\Utility::setMetas($title, $title);
+Oledrion\Utility::setCSS();
+Oledrion\Utility::setLocalCSS($xoopsConfig['language']);
 require_once XOOPS_ROOT_PATH . '/footer.php';

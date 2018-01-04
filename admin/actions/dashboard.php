@@ -10,7 +10,7 @@
 */
 
 
-use Xoopsmodules\oledrion;
+use XoopsModules\Oledrion;
 
 /**
  * oledrion
@@ -35,7 +35,7 @@ switch ($action) {
 
         require_once __DIR__ . '/../../class/directorychecker.php';
 
-        //        oledrion\Utility::htitle(_MI_OLEDRION_ADMENU10, 4);
+        //        Oledrion\Utility::htitle(_MI_OLEDRION_ADMENU10, 4);
         $adminObject = \Xmf\Module\Admin::getInstance();
         //$adminObject->addConfigBoxLine(OLEDRION_UPLOAD_PATH, 'folder');
         //$adminObject->addConfigBoxLine(array(OLEDRION_UPLOAD_PATH, '777'), 'chmod');
@@ -75,22 +75,22 @@ switch ($action) {
         ];
 
         //$path =  $xoopsModuleConfig['uploaddir'] . '/';
-        $adminObject->addConfigBoxLine(oledrion\Directorychecker::getDirectoryStatus(OLEDRION_UPLOAD_PATH, 0777, $languageConstants, $redirectFile));
+        $adminObject->addConfigBoxLine(Oledrion\Directorychecker::getDirectoryStatus(OLEDRION_UPLOAD_PATH, 0777, $languageConstants, $redirectFile));
 
         //$path = XOOPS_ROOT_PATH . '/' . $xoopsModuleConfig['screenshots'] . '/';
-        $adminObject->addConfigBoxLine(oledrion\Directorychecker::getDirectoryStatus(OLEDRION_ATTACHED_FILES_PATH, 0777, $languageConstants, $redirectFile));
+        $adminObject->addConfigBoxLine(Oledrion\Directorychecker::getDirectoryStatus(OLEDRION_ATTACHED_FILES_PATH, 0777, $languageConstants, $redirectFile));
 
         //$path = XOOPS_ROOT_PATH . '/' . $xoopsModuleConfig['catimage'] . '/';
-        $adminObject->addConfigBoxLine(oledrion\Directorychecker::getDirectoryStatus(OLEDRION_PICTURES_PATH, 0777, $languageConstants, $redirectFile));
+        $adminObject->addConfigBoxLine(Oledrion\Directorychecker::getDirectoryStatus(OLEDRION_PICTURES_PATH, 0777, $languageConstants, $redirectFile));
 
         //$path = XOOPS_ROOT_PATH . '/' . $xoopsModuleConfig['mainimagedir'] . '/';
-        $adminObject->addConfigBoxLine(oledrion\Directorychecker::getDirectoryStatus(OLEDRION_CSV_PATH, 0777, $languageConstants, $redirectFile));
+        $adminObject->addConfigBoxLine(Oledrion\Directorychecker::getDirectoryStatus(OLEDRION_CSV_PATH, 0777, $languageConstants, $redirectFile));
 
         //$path = XOOPS_ROOT_PATH . '/' . $xoopsModuleConfig['catimage'] . '/';
-        $adminObject->addConfigBoxLine(oledrion\Directorychecker::getDirectoryStatus(OLEDRION_CACHE_PATH, 0777, $languageConstants, $redirectFile));
+        $adminObject->addConfigBoxLine(Oledrion\Directorychecker::getDirectoryStatus(OLEDRION_CACHE_PATH, 0777, $languageConstants, $redirectFile));
 
         //$path = XOOPS_ROOT_PATH . '/' . $xoopsModuleConfig['mainimagedir'] . '/';
-        $adminObject->addConfigBoxLine(oledrion\Directorychecker::getDirectoryStatus(OLEDRION_TEXT_PATH, 0777, $languageConstants, $redirectFile));
+        $adminObject->addConfigBoxLine(Oledrion\Directorychecker::getDirectoryStatus(OLEDRION_TEXT_PATH, 0777, $languageConstants, $redirectFile));
 
         //$adminObject->displayNavigation(basename(__FILE__));
         //$adminObject->displayIndex();
@@ -163,7 +163,7 @@ switch ($action) {
             }
             // produits les plus vus ************************************************
             $tblTmp = [];
-            $tblTmp = $productsHandler->getMostViewedProducts(new oledrion\Parameters([
+            $tblTmp = $productsHandler->getMostViewedProducts(new Oledrion\Parameters([
                                                                                               'start' => 0,
                                                                                               'limit' => $itemsCount
                                                                                           ]));
@@ -210,7 +210,7 @@ switch ($action) {
         // ****************************************************************************************************************
         $id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
         if (empty($id)) {
-            oledrion\Utility::redirect(_AM_OLEDRION_ERROR_1, $baseurl, 5);
+            Oledrion\Utility::redirect(_AM_OLEDRION_ERROR_1, $baseurl, 5);
         }
         $opRedirect = 'dashboard';
         $item       = $votedataHandler->get($id);
@@ -229,12 +229,12 @@ switch ($action) {
                     }
                     $productsHandler->updateRating($product_id, $finalrating, $totalVotes);
                 }
-                oledrion\Utility::redirect(_AM_OLEDRION_SAVE_OK, $baseurl . '?op=' . $opRedirect, 2);
+                Oledrion\Utility::redirect(_AM_OLEDRION_SAVE_OK, $baseurl . '?op=' . $opRedirect, 2);
             } else {
-                oledrion\Utility::redirect(_AM_OLEDRION_SAVE_PB, $baseurl . '?op=' . $opRedirect, 5);
+                Oledrion\Utility::redirect(_AM_OLEDRION_SAVE_PB, $baseurl . '?op=' . $opRedirect, 5);
             }
         } else {
-            oledrion\Utility::redirect(_AM_OLEDRION_NOT_FOUND, $baseurl . '?op=' . $opRedirect, 5);
+            Oledrion\Utility::redirect(_AM_OLEDRION_NOT_FOUND, $baseurl . '?op=' . $opRedirect, 5);
         }
         break;
 }
