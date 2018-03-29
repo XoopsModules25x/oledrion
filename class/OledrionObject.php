@@ -1,4 +1,5 @@
 <?php namespace XoopsModules\Oledrion;
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -16,7 +17,7 @@
  * @license     {@link http://www.fsf.org/copyleft/gpl.html GNU public license}
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
  */
-// defined('XOOPS_ROOT_PATH') || exit('Restricted access.');
+// defined('XOOPS_ROOT_PATH') || die('Restricted access');
 
 class OledrionObject extends \XoopsObject
 {
@@ -63,4 +64,3 @@ class OledrionObject extends \XoopsObject
         return $this->getVar($key);
     }
 }
-

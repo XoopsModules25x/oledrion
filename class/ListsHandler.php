@@ -330,7 +330,7 @@ class ListsHandler extends OledrionPersistableObjectHandler
         //if ($cacheData === false) {
         $result = $this->db->query($sql, $limit, $start);
         if ($result) {
-            while ($row = $this->db->fetchArray($result)) {
+            while (false !== ($row = $this->db->fetchArray($result))) {
                 $ret[] = $row['productlist_list_id'];
             }
             $ret = $this->getItemsFromIds($ret);

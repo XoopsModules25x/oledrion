@@ -19,6 +19,7 @@
  */
 
 use XoopsModules\Oledrion;
+use XoopsModules\Oledrion\Constants;
 
 /**
  * Gestion des caddy
@@ -91,7 +92,7 @@ class CaddyHandler extends OledrionPersistableObjectHandler
         //if ($cacheData === false) {
         $result = $this->db->query($sql, $limit, $start);
         if ($result) {
-            while ($myrow = $this->db->fetchArray($result)) {
+            while (false !== ($myrow = $this->db->fetchArray($result))) {
                 if (!$withQuantity) {
                     $ret[$myrow['caddy_product_id']] = $myrow['caddy_product_id'];
                 } else {
@@ -126,7 +127,7 @@ class CaddyHandler extends OledrionPersistableObjectHandler
         //if ($cacheData === false) {
         $result = $this->db->query($sql, $limit, $start);
         if ($result) {
-            while ($row = $this->db->fetchArray($result)) {
+            while (false !== ($row = $this->db->fetchArray($result))) {
                 $ret[$row['caddy_product_id']] = $row['caddy_product_id'];
             }
         }
@@ -399,7 +400,7 @@ class CaddyHandler extends OledrionPersistableObjectHandler
     {
         $ret     = [];
         $critere = new \Criteria('caddy_cmd_id', $caddy_cmd_id, '=');
-        $ret     = $this->getObjects($critere);
+        $ret     =& $this->getObjects($critere);
 
         return $ret;
     }
@@ -439,7 +440,7 @@ class CaddyHandler extends OledrionPersistableObjectHandler
         if (!$result) {
             return $ret;
         }
-        while ($myrow = $this->db->fetchArray($result)) {
+        while (false !== ($myrow = $this->db->fetchArray($result))) {
             $ret[] = $myrow['caddy_cmd_id'];
         }
 
@@ -457,7 +458,7 @@ class CaddyHandler extends OledrionPersistableObjectHandler
         $ret     = null;
         $caddies = [];
         $critere = new \Criteria('caddy_pass', $caddy_pass, '=');
-        $caddies = $this->getObjects($critere);
+        $caddies =& $this->getObjects($critere);
         if (count($caddies) > 0) {
             $ret = $caddies[0];
         }

@@ -19,7 +19,7 @@
  * @param $total_num
  */
 
-// defined('XOOPS_ROOT_PATH') || exit('Restricted access.');
+// defined('XOOPS_ROOT_PATH') || die('Restricted access');
 
 function oledrion_com_update($product_id, $total_num)
 {

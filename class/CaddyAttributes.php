@@ -19,6 +19,7 @@
  */
 
 use XoopsModules\Oledrion;
+use XoopsModules\Oledrion\Constants;
 
 /**
  * Gestion des options (attributs) produits dans les commandes

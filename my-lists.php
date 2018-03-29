@@ -245,7 +245,7 @@ switch ($op) {
                     $list = null;
                     $list =  $listsHandler->get($list_id);
                     if (is_object($list)) {
-                         $listsHandler->incrementListProductsCount($list);
+                        $listsHandler->incrementListProductsCount($list);
                     }
                     Oledrion\Utility::updateCache();
                     Oledrion\Utility::redirect(_OLEDRION_PRODUCT_LIST_ADD_OK, $product->getLink(), 2);
@@ -290,7 +290,7 @@ switch ($op) {
         if (!is_object($item)) {
             Oledrion\Utility::redirect(_AM_OLEDRION_NOT_FOUND, $baseurl, 5);
         }
-        if ( $listsHandler->deleteList($item)) {
+        if ($listsHandler->deleteList($item)) {
             Oledrion\Utility::updateCache();
             Oledrion\Utility::redirect(_AM_OLEDRION_SAVE_OK, $baseurl, 2);
         } else {
@@ -350,7 +350,7 @@ switch ($op) {
                         && $product->isProductVisible()) { // On peut ajouter le produit à cette nouvelle liste
                         $res = $productsListHandler->addProductToUserList($item->getVar('list_id'), $product_id);
                         if ($res) { // Mise à jour du nombre de produits de la liste
-                             $listsHandler->incrementListProductsCount($item);
+                            $listsHandler->incrementListProductsCount($item);
                             Oledrion\Utility::updateCache();
                             Oledrion\Utility::redirect(_AM_OLEDRION_SAVE_OK, $product->getLink(), 2);
                         }

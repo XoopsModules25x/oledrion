@@ -1,4 +1,5 @@
 <?php namespace XoopsModules\Oledrion;
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -18,7 +19,7 @@
  * @author          Xoops Development Team
  */
 
-//// defined('XOOPS_ROOT_PATH') || exit('Restricted access.');
+//// defined('XOOPS_ROOT_PATH') || die('Restricted access');
 
 require_once __DIR__ . '/../../../include/cp_header.php';
 

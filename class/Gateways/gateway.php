@@ -1,4 +1,5 @@
-<?php namespace XoopsModules\Oledrion\gateways;
+<?php namespace XoopsModules\Oledrion\Gateways;
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -22,7 +23,7 @@ use XoopsModules\Oledrion;
 /**
  * Every gateway script must extends this class
  */
-// defined('XOOPS_ROOT_PATH') || exit('Restricted access.');
+// defined('XOOPS_ROOT_PATH') || die('Restricted access');
 
 abstract class Gateway
 {
@@ -165,10 +166,8 @@ abstract class Gateway
         global $xoopsConfig;
         $gatewayName  = $this->gatewayInformation['foldername'];
         $fullFilePath = OLEDRION_GATEWAY_PATH . $gatewayName; // c:/inetpub/wwwroot/xoops3/modules/oledrion/admin/gateways/passerelle
-        if (file_exists($fullFilePath . '/language/' . $xoopsConfig['language'] . '/main.php')) {
-            return $fullFilePath . '/language/' . $xoopsConfig['language'] . '/main.php';
-        } else {
-            return $fullFilePath . '/language/english/main.php';
-        }
+        /** @var Oledrion\Helper $helper */
+        $helper = Oledrion\Helper::getInstance();
+        $helper->loadLanguage('newsletter');
     }
 }

@@ -1,4 +1,5 @@
 <?php namespace XoopsModules\Oledrion;
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -53,7 +54,7 @@ class ManufacturerHandler extends OledrionPersistableObjectHandler
         if (!$result) {
             return $ret;
         }
-        while ($myrow = $this->db->fetchArray($result)) {
+        while (false !== ($myrow = $this->db->fetchArray($result))) {
             $ret[] = $myts->htmlSpecialChars($myrow['oneletter']);
         }
 
@@ -97,7 +98,7 @@ class ManufacturerHandler extends OledrionPersistableObjectHandler
         $ret = [];
         if (is_array($ids) && count($ids) > 0) {
             $criteria = new \Criteria('manu_id', '(' . implode(',', $ids) . ')', 'IN');
-            $ret      = $this->getObjects($criteria, true, true, '*', false);
+            $ret      =& $this->getObjects($criteria, true, true, '*', false);
         }
 
         return $ret;

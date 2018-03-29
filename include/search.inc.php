@@ -36,7 +36,7 @@ use XoopsModules\Oledrion;
 function oledrion_search($queryarray, $andor, $limit, $offset, $userid)
 {
     global $xoopsDB;
-    require XOOPS_ROOT_PATH . '/modules/oledrion/include/common.php';
+    require_once __DIR__ . '/common.php';
     require_once XOOPS_ROOT_PATH . '/modules/oledrion/class/Products.php';
 
     // Recherche dans les produits
@@ -91,7 +91,7 @@ function oledrion_search($queryarray, $andor, $limit, $offset, $userid)
     $ret    = [];
     $myts   = \MyTextSanitizer::getInstance();
     $result = $xoopsDB->query($sql, $limit, $offset);
-    while ($myrow = $xoopsDB->fetchArray($result)) {
+    while (false !== ($myrow = $xoopsDB->fetchArray($result))) {
         $ret[$i]['image'] = 'assets/images/product.png';
         $ret[$i]['link']  = 'product.php?product_id=' . $myrow['product_id'];
         $ret[$i]['title'] = $myts->htmlSpecialChars($myrow['product_title']);

@@ -1,4 +1,5 @@
-<?php namespace XoopsModules\Oledrion\plugins\models;
+<?php namespace XoopsModules\Oledrion\Plugins\Models;
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -20,7 +21,7 @@
 /**
  * Every filter plugin must extend this class
  */
-// defined('XOOPS_ROOT_PATH') || exit('Restricted access.');
+// defined('XOOPS_ROOT_PATH') || die('Restricted access');
 
 abstract class Filter
 {

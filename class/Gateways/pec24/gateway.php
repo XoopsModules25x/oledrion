@@ -1,10 +1,11 @@
-<?php namespace XoopsModules\Oledrion\gateways\pec24;
-// defined('XOOPS_ROOT_PATH') || exit('Restricted access.');
+<?php namespace XoopsModules\Oledrion\Gateways\pec24;
+
+// defined('XOOPS_ROOT_PATH') || die('Restricted access');
 //require_once('nusoap.php');
 
 use XoopsModules\Oledrion;
 use XoopsModules\Oledrion\Constants;
-use XoopsModules\Oledrion\gateways\Gateway;
+use XoopsModules\Oledrion\Gateways\Gateway;
 
 /**
  * Class Pec24

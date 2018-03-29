@@ -29,7 +29,7 @@ require_once __DIR__ . '/header.php';
 error_reporting(0);
 @$xoopsLogger->activated = false;
 $db                = \XoopsDatabaseFactory::getDatabaseConnection();
-$vatHandler = new Oledrion\VatHandler($db); 
+$vatHandler = new Oledrion\VatHandler($db);
 
 $op = isset($_POST['op']) ? $_POST['op'] : '';
 if ('' === $op) {
@@ -134,7 +134,7 @@ switch ($op) {
                       . ucfirst($key)
                       . "%') LIMIT 0, 10";
             $result = $xoopsDB->query($query);
-            while ($row = $xoopsDB->fetchArray($result)) {
+            while (false !== ($row = $xoopsDB->fetchArray($result))) {
                 $items[$i]['title'] = $row['title'];
                 $items[$i]['type']  = 'product';
                 $items[$i]['link']  = XOOPS_URL . '/modules/oledrion/product.php?product_id=' . $row['id'];
@@ -148,7 +148,7 @@ switch ($op) {
             // Query 2
             $query  = 'SELECT `cat_cid` AS `id` , `cat_title` AS `title`, `cat_imgurl` AS `image`  FROM `' . $xoopsDB->prefix('oledrion_cat') . "` WHERE (`cat_title` LIKE '%" . $key . "%') OR (`cat_title` LIKE '%" . ucfirst($key) . "%') LIMIT 0, 5";
             $result = $xoopsDB->query($query);
-            while ($row = $xoopsDB->fetchArray($result)) {
+            while (false !== ($row = $xoopsDB->fetchArray($result))) {
                 $items[$i]['title'] = $row['title'];
                 $items[$i]['type']  = 'cat';
                 $items[$i]['link']  = XOOPS_URL . '/modules/oledrion/category.php?cat_cid=' . $row['id'];
@@ -312,7 +312,7 @@ switch ($op) {
                     /* if ($rating < 1 || $rating > 10) {
                         exit(_ERRORS);
                     } */
-                    if (1 == $rating || $rating == -1) {
+                    if (1 == $rating || -1 == $rating) {
                         $result = $votedataHandler->createRating($product->getVar('product_id'), $ratinguser, $rating);
 
                         $totalVotes = 0;
@@ -324,7 +324,7 @@ switch ($op) {
                         //$finalrating = number_format($finalrating, 4);
 
                         $productsHandler->updateRating($product_id, $sumRating, $totalVotes);
-                        //$ratemessage = _OLEDRION_VOTEAPPRE . '<br>' . sprintf(_OLEDRION_THANKYOU, $xoopsConfig['sitename']);
+                    //$ratemessage = _OLEDRION_VOTEAPPRE . '<br>' . sprintf(_OLEDRION_THANKYOU, $xoopsConfig['sitename']);
                         //Oledrion\Utility::redirect($ratemessage, OLEDRION_URL . 'product.php?product_id=' . $product->getVar('product_id'), 2);
                     } else {
                         $return = false;

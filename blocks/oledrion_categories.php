@@ -35,7 +35,7 @@ function b_oledrion_category_show($options)
 
     if (0 == (int)$options[0]) { // Catégories selon la page en cours
         $block['block_option'] = 0;
-        if (!isset($GLOBALS['current_category']) || $GLOBALS['current_category'] == -1) {
+        if (!isset($GLOBALS['current_category']) || -1 == $GLOBALS['current_category']) {
             return false;
         }
         $cat_cid = (int)$GLOBALS['current_category'];
@@ -79,7 +79,7 @@ function b_oledrion_category_show($options)
         $jump           = OLEDRION_URL . 'category.php?cat_cid=';
         $additional     = "onchange='location=\"" . $jump . "\"+this.options[this.selectedIndex].value'";
         $cat_cid = 0;
-        if (isset($GLOBALS['current_category']) && $GLOBALS['current_category'] != -1) {
+        if (isset($GLOBALS['current_category']) && -1 != $GLOBALS['current_category']) {
             $cat_cid = (int)$GLOBALS['current_category'];
         }
         $htmlSelect          = $mytree->makeSelBox('cat_cid', 'cat_title', '-', $cat_cid, false, 0, $additional);

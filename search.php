@@ -249,7 +249,7 @@ if ((isset($_POST['op']) && 'go' === $_POST['op']) || isset($_GET['start'])) { /
     $ret         = [];
     $tempProduct = $productsHandler->create(true);
     $count       = 1;
-    while ($myrow = $xoopsDB->fetchArray($result)) {
+    while (false !== ($myrow = $xoopsDB->fetchArray($result))) {
         $ret                           = [];
         $ret['product_url_rewrited']   = $tempProduct->getLink($myrow['product_id'], $myrow['product_title']);
         $ret['product_title']          = $myts->htmlSpecialChars($myrow['product_title']);

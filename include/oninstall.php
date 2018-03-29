@@ -21,8 +21,9 @@ use XoopsModules\Oledrion\Common;
  * @return bool
  */
 
-function xoops_module_pre_install_oledrion(\XoopsModule $module) {
-include __DIR__ . '/../preloads/autoloader.php';
+function xoops_module_pre_install_oledrion(\XoopsModule $module)
+{
+    include __DIR__ . '/../preloads/autoloader.php';
     /** @var Oledrion\Utility $utility */
     $utility = new Oledrion\Utility();
 
@@ -56,7 +57,7 @@ function xoops_module_install_oledrion(\XoopsModule $module)
 
     /** @var Oledrion\Helper $helper */
     /** @var Oledrion\Utility $utility */
-   /** @var common\Configurator $configurator */
+    /** @var common\Configurator $configurator */
     $helper       = Oledrion\Helper::getInstance();
     $utility      = new Oledrion\Utility();
     $configurator = new common\Configurator();
@@ -65,7 +66,7 @@ function xoops_module_install_oledrion(\XoopsModule $module)
     $helper->loadLanguage('admin');
     $helper->loadLanguage('modinfo');
 
-    // default Permission Settings ----------------------   
+    // default Permission Settings ----------------------
     $moduleId     = $module->getVar('mid');
     $moduleId2    = $helper->getModule()->mid();
     //$moduleName = $module->getVar('name');

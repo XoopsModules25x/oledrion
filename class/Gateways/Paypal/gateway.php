@@ -1,4 +1,4 @@
-<?php namespace XoopsModules\Oledrion\gateways\paypal;
+<?php namespace XoopsModules\Oledrion\Gateways\Paypal;
 
 /*
  You may not change or alter any portion of this comment or credits
@@ -19,14 +19,14 @@
  */
 
 use XoopsModules\Oledrion;
-use XoopsModules\Oledrion\gateways\Gateway;
+use XoopsModules\Oledrion\Gateways\Gateway;
 
 /**
  * Paypal Gateway
  */
 
 
-// defined('XOOPS_ROOT_PATH') || exit('Restricted access.');
+// defined('XOOPS_ROOT_PATH') || die('Restricted access');
 
 class Paypal extends Gateway
 {

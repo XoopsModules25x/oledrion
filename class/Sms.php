@@ -20,7 +20,7 @@
 
 use XoopsModules\Oledrion;
 
-// defined('XOOPS_ROOT_PATH') || exit('Restricted access.');
+// defined('XOOPS_ROOT_PATH') || die('Restricted access');
 
 /*
 $information = array();
@@ -97,6 +97,6 @@ class Sms
         $option         = self::getSmsGatewayOption($smsGatewayName);
         self::includeSmsGatewayClass($smsGatewayName);
 
-        return Sms::sendSms($information, $option);
+        return self::sendSms($information, $option);
     }
 }

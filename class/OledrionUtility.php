@@ -31,7 +31,7 @@
 
 use XoopsModules\Oledrion;
 
-// defined('XOOPS_ROOT_PATH') || exit('Restricted access.');
+// defined('XOOPS_ROOT_PATH') || die('Restricted access');
 
 use WideImage\WideImage;
 
@@ -955,7 +955,7 @@ class OledrionUtility
         $content = strtr($content, $s, $r);
         $content = strip_tags($content);
         $content = strtolower($content);
-        $content = htmlentities($content); // TODO: Vérifier
+        $content = htmlentities($content, ENT_QUOTES | ENT_HTML5); // TODO: Vérifier
         $content = preg_replace('/&([a-zA-Z])(uml|acute|grave|circ|tilde);/', '$1', $content);
         $content = html_entity_decode($content);
         $content = preg_replace('/quot/i', ' ', $content);
@@ -1163,10 +1163,10 @@ class OledrionUtility
                     if ($uploader->upload()) {
                         return true;
                     } else {
-                        return _ERRORS . ' ' . htmlentities($uploader->getErrors());
+                        return _ERRORS . ' ' . htmlentities($uploader->getErrors(), ENT_QUOTES | ENT_HTML5);
                     }
                 } else {
-                    return htmlentities($uploader->getErrors());
+                    return htmlentities($uploader->getErrors(), ENT_QUOTES | ENT_HTML5);
                 }
             } else {
                 return false;

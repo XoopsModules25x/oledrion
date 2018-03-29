@@ -449,7 +449,7 @@ class Reductions
             $_POST['cmd_country'] = OLEDRION_DEFAULT_COUNTRY;
         }
         $db                = \XoopsDatabaseFactory::getDatabaseConnection();
-        $vatHandler = new Oledrion\VatHandler($db);          
+        $vatHandler = new Oledrion\VatHandler($db);
         $vats              = $vatHandler->getCountryVats($_POST['cmd_country']);
         $oledrion_Currency = Oledrion\Currency::getInstance();
         $caddyCount        = count($this->cart);

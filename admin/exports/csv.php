@@ -23,7 +23,7 @@ use XoopsModules\Oledrion\Constants;
 /**
  * Export au format CSV
  */
-// defined('XOOPS_ROOT_PATH') || exit('Restricted access.');
+// defined('XOOPS_ROOT_PATH') || die('Restricted access');
 
 class Oledrion_csv_export extends Oledrion_export
 {

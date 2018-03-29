@@ -24,8 +24,7 @@
 use XoopsModules\Oledrion;
 use XoopsModules\Oledrion\Constants;
 
-
-// defined('XOOPS_ROOT_PATH') || exit('Restricted access.');
+// defined('XOOPS_ROOT_PATH') || die('Restricted access');
 
 /**
  * Class Oledrion_dbase_export

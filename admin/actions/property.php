@@ -25,7 +25,7 @@ use XoopsModules\Oledrion;
 if (!defined('OLEDRION_ADMIN')) {
     exit();
 }
-
+/** @var \XoopsConfigHandler $configHandler */
 $configHandler    = xoops_getHandler('config');
 $moduleIdCriteria = new \Criteria('conf_modid', $xoopsModule->getVar('mid'));
 

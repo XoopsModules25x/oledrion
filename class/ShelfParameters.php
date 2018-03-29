@@ -23,7 +23,7 @@
 
 use XoopsModules\Oledrion;
 
-// defined('XOOPS_ROOT_PATH') || exit('Restricted access.');
+// defined('XOOPS_ROOT_PATH') || die('Restricted access');
 
 /**
  * Utilisé comme paramètre dans la façcade Shelf

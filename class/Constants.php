@@ -24,7 +24,7 @@
 
 /**
  *
- * Class to define xoopstube module constant values. These constants are
+ * Class to define Oledrion module constant values. These constants are
  * used to make the code easier to read and to keep values in central
  * location if they need to be changed.  These should not normally need
  * to be modified. If they are to be modified it is recommended to change
@@ -33,7 +33,7 @@
  *
  **/
 
-interface Constants
+class Constants
 {
     // Les types d'option
     const OLEDRION_ATTRIBUTE_RADIO = 1;
@@ -106,5 +106,4 @@ interface Constants
     const OLEDRION_LISTS_PRIVATE = 0;
     const OLEDRION_LISTS_WISH = 1;
     const OLEDRION_LISTS_RECOMMEND = 2;
-
 }

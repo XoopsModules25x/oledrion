@@ -110,7 +110,7 @@ class AttributesHandler extends OledrionPersistableObjectHandler
             $criteria->add(new \Criteria('attribute_id', '(' . implode(',', array_keys($attributesIds)) . ')', 'IN'));
         }
         $criteria->setSort('attribute_weight, attribute_title');    // L'ajout du titre dans le tri permet de trier même lorsque le poids n'est pas valorisé
-        $ret = $this->getObjects($criteria);
+        $ret =& $this->getObjects($criteria);
 
         return $ret;
     }
@@ -258,7 +258,7 @@ class AttributesHandler extends OledrionPersistableObjectHandler
     public function getProductOptionsPrice($choosenAttributes, $product_vat_id, &$descriptions = null)
     {
         $db                = \XoopsDatabaseFactory::getDatabaseConnection();
-        $vatHandler = new Oledrion\VatHandler($db);        
+        $vatHandler = new Oledrion\VatHandler($db);
         static $vats = [];
         if (is_array($vats) && isset($vats[$product_vat_id])) {
             $vat_rate = $vats[$product_vat_id];

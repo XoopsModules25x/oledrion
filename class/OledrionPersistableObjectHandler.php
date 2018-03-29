@@ -107,7 +107,7 @@ class OledrionPersistableObjectHandler extends \XoopsPersistableObjectHandler
     public function convertResultSet($result, $id_as_key = false, $as_object = true, $fields = '*')
     {
         $ret = [];
-        while ($myrow = $this->db->fetchArray($result)) {
+        while (false !== ($myrow = $this->db->fetchArray($result))) {
             $obj = $this->create(false);
             $obj->assignVars($myrow);
             if (!$id_as_key) {
@@ -158,7 +158,7 @@ class OledrionPersistableObjectHandler extends \XoopsPersistableObjectHandler
         $ret = [];
         if (is_array($ids) && count($ids) > 0) {
             $criteria = new \Criteria($this->keyName, '(' . implode(',', $ids) . ')', 'IN');
-            $ret      = $this->getObjects($criteria, true);
+            $ret      =& $this->getObjects($criteria, true);
         }
 
         return $ret;
@@ -308,7 +308,7 @@ class OledrionPersistableObjectHandler extends \XoopsPersistableObjectHandler
         $result = $this->db->query($sql, $limit, $start);
         $ret    = [];
         $obj    = new $this->className();
-        while ($myrow = $this->db->fetchArray($result)) {
+        while (false !== ($myrow = $this->db->fetchArray($result))) {
             $obj->setVar($field, $myrow[$field]);
             $ret[$myrow[$this->keyName]] = $obj->getVar($field, $format);
         }
@@ -347,7 +347,7 @@ class OledrionPersistableObjectHandler extends \XoopsPersistableObjectHandler
         $critere->setStart($start);
         $critere->setSort($sort);
         $critere->setOrder($order);
-        $items = $this->getObjects($critere, $idAsKey);
+        $items =& $this->getObjects($critere, $idAsKey);
 
         return $items;
     }

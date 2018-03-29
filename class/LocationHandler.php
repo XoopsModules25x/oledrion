@@ -1,4 +1,5 @@
 <?php namespace XoopsModules\Oledrion;
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -55,7 +56,7 @@ class LocationHandler extends OledrionPersistableObjectHandler
         $critere->setSort($parameters['sort']);
         $critere->setOrder($parameters['order']);
         $location = [];
-        $location = $this->getObjects($critere);
+        $location =& $this->getObjects($critere);
 
         return $location;
     }
@@ -79,7 +80,7 @@ class LocationHandler extends OledrionPersistableObjectHandler
         $critere->setSort($parameters['sort']);
         $critere->setOrder($parameters['order']);
         $pid = [];
-        $pid = $this->getObjects($critere);
+        $pid =& $this->getObjects($critere);
 
         return $pid;
     }
@@ -95,7 +96,7 @@ class LocationHandler extends OledrionPersistableObjectHandler
         $critere->add(new \Criteria('location_type', 'location'));
         $critere->add(new \Criteria('location_pid', $id));
         $location = [];
-        $location = $this->getObjects($critere);
+        $location =& $this->getObjects($critere);
 
         return $location;
     }

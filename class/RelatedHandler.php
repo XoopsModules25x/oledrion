@@ -1,4 +1,5 @@
 <?php namespace XoopsModules\Oledrion;
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -62,7 +63,7 @@ class RelatedHandler extends OledrionPersistableObjectHandler
         $ret = [];
         if (is_array($ids)) {
             $criteria = new \Criteria('related_product_id', '(' . implode(',', $ids) . ')', 'IN');
-            $ret      = $this->getObjects($criteria, true, true, '*', false);
+            $ret      =& $this->getObjects($criteria, true, true, '*', false);
         }
 
         return $ret;

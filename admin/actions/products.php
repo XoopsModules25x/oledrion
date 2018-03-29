@@ -750,7 +750,7 @@ switch ($action) {
         $res = $productsHandler->insert($item);
         if ($res) {
             if (Oledrion\Utility::getModuleOption('use_tags')) {
-                $tagHandler = xoops_getModuleHandler('tag', 'tag');
+                $tagHandler = \XoopsModules\Tag\Helper::getInstance()->getHandler('Tag'); // xoops_getModuleHandler('tag', 'tag');
                 $tagHandler->updateByItem($_POST['item_tag'], $item->getVar('product_id'), $xoopsModule->getVar('dirname'), 0);
             }
 

@@ -16,7 +16,7 @@
  * @license     {@link http://www.fsf.org/copyleft/gpl.html GNU public license}
  * @author      Hossein Azizabadi (azizabadi@faragostaresh.com)
  */
-class sms
+class Sms
 {
     /**
      * @param  array $information

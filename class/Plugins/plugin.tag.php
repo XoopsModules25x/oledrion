@@ -52,7 +52,7 @@ function oledrion_tag_synchronization($mid)
     global $xoopsDB;
     $itemHandler_keyName = 'product_id';
     $itemHandler_table   = $xoopsDB->prefix('oledrion_products');
-    $linkHandler         = xoops_getModuleHandler('link', 'tag');
+    $linkHandler         = \XoopsModules\Tag\Helper::getInstance()->getHandler('Link'); //@var \XoopsModules\Tag\Handler $tagHandler
     $where               = '1=1';
     $where1              = '1=1';
 

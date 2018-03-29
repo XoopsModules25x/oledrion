@@ -21,7 +21,7 @@
 /**
  * Facade pour les produits
  */
-// defined('XOOPS_ROOT_PATH') || exit('Restricted access.');
+// defined('XOOPS_ROOT_PATH') || die('Restricted access');
 
 use XoopsModules\Oledrion;
 
@@ -165,7 +165,6 @@ class Shelf
      */
     public function getProducts(ShelfParameters $parameters)
     {
-
         $db              = \XoopsDatabaseFactory::getDatabaseConnection();
         $productsHandler = new Oledrion\ProductsHandler($db);
         $vendorsHandler  = new Oledrion\VendorsHandler($db);

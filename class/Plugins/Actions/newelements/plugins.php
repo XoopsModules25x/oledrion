@@ -1,4 +1,5 @@
-<?php namespace XoopsModules\Oledrion\plugins\actions\newelements;
+<?php namespace XoopsModules\Oledrion\Plugins\Actions\Newelements;
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -18,14 +19,14 @@
  */
 
 use XoopsModules\Oledrion;
-use XoopsModules\Oledrion\plugins\models;
+use XoopsModules\Oledrion\Plugins\Models;
 
 /**
  * Plugin to notify users of the creation of a new product and a new category
  *
  * @since 2.31
  */
-class NewelementsAction extends models\Action
+class NewelementsAction extends Models\Action
 {
     /**
      * Returns the list of events processed by the plugin

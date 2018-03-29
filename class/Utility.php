@@ -29,7 +29,7 @@
  *
  */
 
-// defined('XOOPS_ROOT_PATH') || exit('Restricted access.');
+// defined('XOOPS_ROOT_PATH') || die('Restricted access');
 
 use WideImage\WideImage;
 use Xmf\Request;
@@ -43,11 +43,11 @@ class Utility extends \XoopsObject
 {
     const MODULE_NAME = 'oledrion';
 
-    use common\VersionChecks; //checkVerXoops, checkVerPhp Traits
+    use Common\VersionChecks; //checkVerXoops, checkVerPhp Traits
 
-    use common\ServerStats; // getServerStats Trait
+    use Common\ServerStats; // getServerStats Trait
 
-    use common\FilesManagement; // Files Management Trait
+    use Common\FilesManagement; // Files Management Trait
 
     //--------------- Custom module methods -----------------------------
 
@@ -930,7 +930,7 @@ class Utility extends \XoopsObject
         $content = strtr($content, $s, $r);
         $content = strip_tags($content);
         $content = strtolower($content);
-        $content = htmlentities($content); // TODO: Vérifier
+        $content = htmlentities($content, ENT_QUOTES | ENT_HTML5); // TODO: Vérifier
         $content = preg_replace('/&([a-zA-Z])(uml|acute|grave|circ|tilde);/', '$1', $content);
         $content = html_entity_decode($content);
         $content = preg_replace('/quot/i', ' ', $content);
@@ -1138,10 +1138,10 @@ class Utility extends \XoopsObject
                     if ($uploader->upload()) {
                         return true;
                     } else {
-                        return _ERRORS . ' ' . htmlentities($uploader->getErrors());
+                        return _ERRORS . ' ' . htmlentities($uploader->getErrors(), ENT_QUOTES | ENT_HTML5);
                     }
                 } else {
-                    return htmlentities($uploader->getErrors());
+                    return htmlentities($uploader->getErrors(), ENT_QUOTES | ENT_HTML5);
                 }
             } else {
                 return false;

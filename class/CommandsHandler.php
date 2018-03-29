@@ -369,7 +369,7 @@ class CommandsHandler extends OledrionPersistableObjectHandler
         $critere = new \Criteria('cmd_cancel', $cmd_cancel, '=');
         if ($this->getCount($critere) > 0) {
             $tblCmd = [];
-            $tblCmd = $this->getObjects($critere);
+            $tblCmd =& $this->getObjects($critere);
             if (count($tblCmd) > 0) {
                 return $tblCmd[0];
             }
@@ -394,7 +394,7 @@ class CommandsHandler extends OledrionPersistableObjectHandler
         $criteria->setSort('cmd_date');
         $criteria->setOrder('DESC');
         $criteria->setLimit(1);
-        $orders = $this->getObjects($criteria, false);
+        $orders =& $this->getObjects($criteria, false);
         if (count($orders) > 0) {
             $order = $orders[0];
         }

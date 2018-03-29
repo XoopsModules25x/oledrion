@@ -822,7 +822,7 @@ class Nusoap_base
      */
     public function formatDump($str)
     {
-        $str = htmlspecialchars($str);
+        $str = htmlspecialchars($str, ENT_QUOTES | ENT_HTML5);
 
         return nl2br($str);
     }
@@ -1081,7 +1081,7 @@ function iso8601_to_timestamp($datestr)
         }
 
         return gmmktime($regs[4], $regs[5], $regs[6], $regs[2], $regs[3], $regs[1]);
-        //      return strtotime("$regs[1]-$regs[2]-$regs[3] $regs[4]:$regs[5]:$regs[6]Z");
+    //      return strtotime("$regs[1]-$regs[2]-$regs[3] $regs[4]:$regs[5]:$regs[6]Z");
     } else {
         return false;
     }
@@ -2070,7 +2070,7 @@ class Nusoap_xmlschema extends Nusoap_base
                     <td><input type='text' name='parameters[" . $name . "][$childDef[name]]'></td></tr>";
                 }
                 $buffer .= '</table>';
-                // if array
+            // if array
             } elseif ('array' === $typeDef['phpType']) {
                 $buffer .= '<table>';
                 for ($i = 0; $i < 3; ++$i) {
@@ -2079,7 +2079,7 @@ class Nusoap_xmlschema extends Nusoap_base
                     <td><input type='text' name='parameters[" . $name . "][]'></td></tr>";
                 }
                 $buffer .= '</table>';
-                // if scalar
+            // if scalar
             } else {
                 $buffer .= "<input type='text' name='parameters[$name]'>";
             }
@@ -4339,7 +4339,7 @@ class Nusoap_server extends Nusoap_base
         } else {
             if ('' === $class) {
                 $this->debug('in invoke_method, calling function using call_user_func_array()');
-                $call_arg = "$this->methodname";    // straight assignment changes $this->methodname to lower case after call_user_func_array()
+                $call_arg = (string)$this->methodname;    // straight assignment changes $this->methodname to lower case after call_user_func_array()
             } elseif ('..' === $delim) {
                 $this->debug('in invoke_method, calling class method using call_user_func_array()');
                 $call_arg = [$class, $method];
@@ -4383,7 +4383,7 @@ class Nusoap_server extends Nusoap_base
             return;
         } elseif ($this->methodreturnisliteralxml) {
             $return_val = $this->methodreturn;
-            // returned value(s)
+        // returned value(s)
         } else {
             $this->debug('got a(n) ' . gettype($this->methodreturn) . ' from method');
             $this->debug('serializing return value');
@@ -4609,7 +4609,7 @@ class Nusoap_server extends Nusoap_base
         if ($err = $parser->getError()) {
             $this->result = 'fault: error in msg parsing: ' . $err;
             $this->fault('SOAP-ENV:Client', "error in msg parsing:\n" . $err);
-            // else successfully parsed request into soapval object
+        // else successfully parsed request into soapval object
         } else {
             // get/set methodname
             $this->methodURI  = $parser->root_struct_namespace;
@@ -5911,7 +5911,7 @@ class Wsdl extends Nusoap_base
                     }
                     $portType_xml .= '>';
                     if (isset($opParts['documentation']) && '' !== $opParts['documentation']) {
-                        $portType_xml .= "\n" . '    <documentation>' . htmlspecialchars($opParts['documentation']) . '</documentation>';
+                        $portType_xml .= "\n" . '    <documentation>' . htmlspecialchars($opParts['documentation'], ENT_QUOTES | ENT_HTML5) . '</documentation>';
                     }
                     $portType_xml .= "\n" . '    <input message="tns:' . $opParts['input']['message'] . '">';
                     $portType_xml .= "\n" . '    <output message="tns:' . $opParts['output']['message'] . '">';
@@ -7104,7 +7104,7 @@ class Nusoap_parser extends Nusoap_base
         } elseif ('Body' === $name && 'envelope' === $this->status) {
             $this->status        = 'body';
             $this->body_position = $pos;
-            // set method
+        // set method
         } elseif ('body' === $this->status && $pos == ($this->body_position + 1)) {
             $this->status                = 'method';
             $this->root_struct_name      = $name;
@@ -7115,7 +7115,7 @@ class Nusoap_parser extends Nusoap_base
         // set my status
         $this->message[$pos]['status'] = $this->status;
         // set name
-        $this->message[$pos]['name'] = htmlspecialchars($name);
+        $this->message[$pos]['name'] = htmlspecialchars($name, ENT_QUOTES | ENT_HTML5);
         // set attrs
         $this->message[$pos]['attrs'] = $attrs;
 
@@ -7178,7 +7178,7 @@ class Nusoap_parser extends Nusoap_base
                 // specifies nil value (or not)
             } elseif ('nil' === $key_localpart) {
                 $this->message[$pos]['nil'] = ('true' === $value || '1' == $value);
-                // some other attribute
+            // some other attribute
             } elseif ('href' !== $key && 'xmlns' !== $key && 'encodingStyle' !== $key_localpart
                       && 'root' !== $key_localpart) {
                 $this->message[$pos]['xattrs']['!' . $key] = $value;
@@ -7247,7 +7247,7 @@ class Nusoap_parser extends Nusoap_base
                 $this->multirefs[$id][$pos] = 'placeholder';
                 // add set a reference to it as the result value
                 $this->message[$pos]['result'] = $this->multirefs[$id][$pos];
-                // build complexType values
+            // build complexType values
             } elseif ('' !== $this->message[$pos]['children']) {
                 // if result has already been generated (struct/array)
                 if (!isset($this->message[$pos]['result'])) {
@@ -7271,7 +7271,7 @@ class Nusoap_parser extends Nusoap_base
                     }
                 }
                 $this->message[$pos]['result'] = $this->message[$pos]['xattrs'];
-                // set value of simpleType (or nil complexType)
+            // set value of simpleType (or nil complexType)
             } else {
                 //$this->debug('adding data for scalar value '.$this->message[$pos]['name'].' of value '.$this->message[$pos]['cdata']);
                 if (isset($this->message[$pos]['nil']) && $this->message[$pos]['nil']) {
@@ -7922,7 +7922,7 @@ class Nusoap_client extends Nusoap_base
                     $this->appendDebug($this->varDump($return));
 
                     return $return;
-                    // nothing returned (ie, echoVoid)
+                // nothing returned (ie, echoVoid)
                 } else {
                     return '';
                 }

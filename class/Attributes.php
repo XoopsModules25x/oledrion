@@ -1,4 +1,5 @@
 <?php namespace XoopsModules\Oledrion;
+
 /**
  * ****************************************************************************
  * oledrion - MODULE FOR XOOPS
@@ -714,4 +715,3 @@ class Attributes extends OledrionObject
         return $ret;
     }
 }
-

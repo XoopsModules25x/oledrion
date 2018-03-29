@@ -20,7 +20,6 @@
 use XoopsModules\Oledrion;
 use XoopsModules\Oledrion\Gateways;
 
-
 /**
  * Gestion des passerelles de paiement
  */

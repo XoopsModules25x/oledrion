@@ -1,4 +1,4 @@
-<h5>2.35  Alpha 1                  [2017-12-28]</h5>  Dev: Xoops 2.5.9, PHP 7.2.0
+<h5>2.35  Alpha 1                  [2017-12-28]</h5>  Dev: Xoops 2.5.9, PHP 7.2.1
 <hr>
 - moved all images, CSS, and JS files to /assets (mamba)
 - renamed .html Smarty templates to .tpl (mamba)

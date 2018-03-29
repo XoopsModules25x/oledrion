@@ -1,4 +1,5 @@
 <?php namespace XoopsModules\Oledrion;
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -54,7 +55,7 @@ class PackingHandler extends OledrionPersistableObjectHandler
         $critere->setSort($parameters['sort']);
         $critere->setOrder($parameters['order']);
         $packings = [];
-        $packings = $this->getObjects($critere);
+        $packings =& $this->getObjects($critere);
 
         return $packings;
     }
@@ -67,7 +68,7 @@ class PackingHandler extends OledrionPersistableObjectHandler
         $ret     = [];
         $critere = new \CriteriaCompo();
         $critere->add(new \Criteria('packing_online', '1'));
-        $packings = $this->getObjects($critere);
+        $packings =& $this->getObjects($critere);
         foreach ($packings as $root) {
             $tab   = [];
             $tab   = $root->toArray();

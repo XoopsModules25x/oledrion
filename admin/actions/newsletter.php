@@ -80,11 +80,9 @@ switch ($action) {
         //        Oledrion\Utility::htitle(_MI_OLEDRION_ADMENU7, 4);
 
         $newsletterTemplate = '';
-        if (file_exists(OLEDRION_PATH . 'language/' . $xoopsConfig['language'] . '/newsletter.php')) {
-            require_once OLEDRION_PATH . 'language/' . $xoopsConfig['language'] . '/newsletter.php';
-        } else {
-            require_once OLEDRION_PATH . 'language/english/newsletter.php';
-        }
+        /** @var Oledrion\Helper $helper */
+        $helper = Oledrion\Helper::getInstance();
+        $helper->loadLanguage('newsletter');
         echo '<br>';
         $removeBr   = $removeHtml = false;
         $removeBr   = isset($_POST['removebr']) ? (int)$_POST['removebr'] : 0;

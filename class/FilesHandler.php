@@ -1,4 +1,5 @@
 <?php namespace XoopsModules\Oledrion;
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -111,7 +112,7 @@ class FilesHandler extends OledrionPersistableObjectHandler
     {
         $files    = [];
         $criteria = new \Criteria('file_product_id', $file_product_id, '=');
-        $files    = $this->getObjects($criteria);
+        $files    =& $this->getObjects($criteria);
         if (count($files) > 0) {
             foreach ($files as $file) {
                 $file->deleteAttachedFile();

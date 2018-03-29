@@ -21,7 +21,7 @@ use XoopsModules\Oledrion;
 
 include __DIR__ . '/preloads/autoloader.php';
 
-// defined('XOOPS_ROOT_PATH') || exit('Restricted access.');
+// defined('XOOPS_ROOT_PATH') || die('Restricted access');
 
 $moduleDirName = basename(__DIR__);
 

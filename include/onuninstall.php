@@ -19,7 +19,7 @@ use XoopsModules\Oledrion;
 
 function xoops_module_pre_uninstall_oledrion(\XoopsModule $module)
 {
-  // Do some synchronization if needed
+    // Do some synchronization if needed
     return true;
 }
 
@@ -50,20 +50,20 @@ function xoops_module_uninstall_oledrion(\XoopsModule $module)
     //------------------------------------------------------------------
     // Remove uploads folder (and all subfolders) if they exist
     //------------------------------------------------------------------
-/*
-    $old_directories = [$GLOBALS['xoops']->path("uploads/{$moduleDirName}")];
-    foreach ($old_directories as $old_dir) {
-        $dirInfo = new SplFileInfo($old_dir);
-        if ($dirInfo->isDir()) {
-            // The directory exists so delete it
-            if (false === $utility::rrmdir($old_dir)) {
-                $module->setErrors(sprintf(constant('CO_' . $moduleDirNameUpper . '_ERROR_BAD_DEL_PATH'), $old_dir));
-                $success = false;
+    /*
+        $old_directories = [$GLOBALS['xoops']->path("uploads/{$moduleDirName}")];
+        foreach ($old_directories as $old_dir) {
+            $dirInfo = new \SplFileInfo($old_dir);
+            if ($dirInfo->isDir()) {
+                // The directory exists so delete it
+                if (false === $utility::rrmdir($old_dir)) {
+                    $module->setErrors(sprintf(constant('CO_' . $moduleDirNameUpper . '_ERROR_BAD_DEL_PATH'), $old_dir));
+                    $success = false;
+                }
             }
+            unset($dirInfo);
         }
-        unset($dirInfo);
-    }
-*/
+    */
 
     /*
     //------------ START ----------------
@@ -81,5 +81,4 @@ function xoops_module_uninstall_oledrion(\XoopsModule $module)
 
     return $success;
     //------------ END  ----------------
-
 }

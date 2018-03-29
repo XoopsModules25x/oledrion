@@ -29,14 +29,13 @@ trait FilesManagement
     {
         try {
             if (!file_exists($folder)) {
-                if (!mkdir($folder) && !is_dir($folder)) {
+                if (!is_dir($folder) && !mkdir($folder) && !is_dir($folder)) {
                     throw new \RuntimeException(sprintf('Unable to create the %s directory', $folder));
                 }
 
                 file_put_contents($folder . '/index.html', '<script>history.go(-1);</script>');
             }
-        }
-        catch (\Exception $e) {
+        } catch (\Exception $e) {
             echo 'Caught exception: ', $e->getMessage(), '<br>';
         }
     }
@@ -58,16 +57,16 @@ trait FilesManagement
     public static function recurseCopy($src, $dst)
     {
         $dir = opendir($src);
-                @mkdir($dst);
-            while (false !== ($file = readdir($dir))) {
-                if (('.' !== $file) && ('..' !== $file)) {
-                    if (is_dir($src . '/' . $file)) {
-                        self::recurseCopy($src . '/' . $file, $dst . '/' . $file);
-                    } else {
-                        copy($src . '/' . $file, $dst . '/' . $file);
-                    }
+        @mkdir($dst);
+        while (false !== ($file = readdir($dir))) {
+            if (('.' !== $file) && ('..' !== $file)) {
+                if (is_dir($src . '/' . $file)) {
+                    self::recurseCopy($src . '/' . $file, $dst . '/' . $file);
+                } else {
+                    copy($src . '/' . $file, $dst . '/' . $file);
                 }
             }
+        }
         closedir($dir);
     }
 
@@ -98,21 +97,19 @@ trait FilesManagement
             mkdir($dest);
         }
 
-        if (@is_dir($source)) {
         // Loop through the folder
         $dir = dir($source);
-        while (false !== $entry = $dir->read()) {
-            // Skip pointers
+        if (@is_dir($dir)) {
+            while (false !== $entry = $dir->read()) {
+                // Skip pointers
                 if ('.' === $entry || '..' === $entry) {
-                continue;
-        }
-
-            // Deep copy directories
+                    continue;
+                }
+                // Deep copy directories
                 self::xcopy("$source/$entry", "$dest/$entry");
-        }
-
-        // Clean up
-        $dir->close();
+            }
+            // Clean up
+            $dir->close();
         }
         return true;
     }
@@ -229,7 +226,7 @@ trait FilesManagement
         }
 
         // If the destination directory does not exist and could not be created stop processing
-        if (!is_dir($dest) && !mkdir($dest, 0755)) {
+        if (!is_dir($dest) && !mkdir($dest) && !is_dir($dest)) {
             return false;
         }
 
@@ -272,7 +269,7 @@ trait FilesManagement
         }
 
         // If the destination directory does not exist and could not be created stop processing
-        if (!is_dir($dest) && !mkdir($dest, 0755)) {
+        if (!is_dir($dest) && !mkdir($dest) && !is_dir($dest)) {
             return false;
         }
 

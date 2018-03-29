@@ -20,7 +20,7 @@
 /**
  * Entête pour les classes d'ORM
  */
-// defined('XOOPS_ROOT_PATH') || exit('Restricted access.');
+// defined('XOOPS_ROOT_PATH') || die('Restricted access');
 
 require_once XOOPS_ROOT_PATH . '/kernel/object.php';
 if (!class_exists('OledrionPersistableObjectHandler')) {

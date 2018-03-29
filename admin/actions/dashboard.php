@@ -74,22 +74,22 @@ switch ($action) {
             _AM_OLEDRION_PERMNOTSET
         ];
 
-        //$path =  $xoopsModuleConfig['uploaddir'] . '/';
+        //$path =  $helper->getConfig('uploaddir') . '/';
         $adminObject->addConfigBoxLine(Oledrion\Directorychecker::getDirectoryStatus(OLEDRION_UPLOAD_PATH, 0777, $languageConstants, $redirectFile));
 
-        //$path = XOOPS_ROOT_PATH . '/' . $xoopsModuleConfig['screenshots'] . '/';
+        //$path = XOOPS_ROOT_PATH . '/' . $helper->getConfig('screenshots') . '/';
         $adminObject->addConfigBoxLine(Oledrion\Directorychecker::getDirectoryStatus(OLEDRION_ATTACHED_FILES_PATH, 0777, $languageConstants, $redirectFile));
 
-        //$path = XOOPS_ROOT_PATH . '/' . $xoopsModuleConfig['catimage'] . '/';
+        //$path = XOOPS_ROOT_PATH . '/' . $helper->getConfig('catimage') . '/';
         $adminObject->addConfigBoxLine(Oledrion\Directorychecker::getDirectoryStatus(OLEDRION_PICTURES_PATH, 0777, $languageConstants, $redirectFile));
 
-        //$path = XOOPS_ROOT_PATH . '/' . $xoopsModuleConfig['mainimagedir'] . '/';
+        //$path = XOOPS_ROOT_PATH . '/' . $helper->getConfig('mainimagedir') . '/';
         $adminObject->addConfigBoxLine(Oledrion\Directorychecker::getDirectoryStatus(OLEDRION_CSV_PATH, 0777, $languageConstants, $redirectFile));
 
-        //$path = XOOPS_ROOT_PATH . '/' . $xoopsModuleConfig['catimage'] . '/';
+        //$path = XOOPS_ROOT_PATH . '/' . $helper->getConfig('catimage') . '/';
         $adminObject->addConfigBoxLine(Oledrion\Directorychecker::getDirectoryStatus(OLEDRION_CACHE_PATH, 0777, $languageConstants, $redirectFile));
 
-        //$path = XOOPS_ROOT_PATH . '/' . $xoopsModuleConfig['mainimagedir'] . '/';
+        //$path = XOOPS_ROOT_PATH . '/' . $helper->getConfig('mainimagedir') . '/';
         $adminObject->addConfigBoxLine(Oledrion\Directorychecker::getDirectoryStatus(OLEDRION_TEXT_PATH, 0777, $languageConstants, $redirectFile));
 
         //$adminObject->displayNavigation(basename(__FILE__));
@@ -99,10 +99,20 @@ switch ($action) {
 
         $adminObject->displayNavigation('index.php?op=dashboard');
         //------------- Test Data ----------------------------
-        xoops_loadLanguage('admin/modulesadmin', 'system');
-        require_once OLEDRION_PATH . '/testdata/index.php';
-        $adminObject->addItemButton(_AM_SYSTEM_MODULES_INSTALL_TESTDATA, '__DIR__ . /../../testdata/index.php?op=load', 'add');
-        $adminObject->displayButton('left', '');
+
+        if ($helper->getConfig('displaySampleButton')) {
+            xoops_loadLanguage('admin/modulesadmin', 'system');
+            require_once __DIR__ . '/../testdata/index.php';
+
+            $adminObject->addItemButton(constant('CO_' . $moduleDirNameUpper . '_' . 'ADD_SAMPLEDATA'), '__DIR__ . /../../testdata/index.php?op=load', 'add');
+
+            $adminObject->addItemButton(constant('CO_' . $moduleDirNameUpper . '_' . 'SAVE_SAMPLEDATA'), '__DIR__ . /../../testdata/index.php?op=save', 'add');
+
+            //    $adminObject->addItemButton(constant('CO_' . $moduleDirNameUpper . '_' . 'EXPORT_SCHEMA'), '__DIR__ . /../../testdata/index.php?op=exportschema', 'add');
+
+            $adminObject->displayButton('left', '');
+        }
+
         //------------- End Test Data ----------------------------
         $adminObject->displayIndex();
 

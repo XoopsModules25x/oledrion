@@ -1,4 +1,5 @@
 <?php namespace XoopsModules\Oledrion;
+
 /**
  * XOOPS tree class
  *
@@ -18,7 +19,7 @@
 
 use XoopsModules\Oledrion;
 
-defined('XOOPS_ROOT_PATH') || exit('Restricted access.');
+defined('XOOPS_ROOT_PATH') || die('Restricted access');
 
 require_once __DIR__ . '/../../../class/tree.php';
 

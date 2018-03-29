@@ -20,7 +20,6 @@
 use XoopsModules\Oledrion;
 use XoopsModules\Oledrion\Constants;
 
-
 /**
  * Gestion des commandes
  */
