@@ -44,7 +44,7 @@ switch ($action) {
 
         //        Oledrion\Utility::htitle(_MI_OLEDRION_ADMENU15, 4);
 
-        $start      = isset($_GET['start']) ? (int)$_GET['start'] : 0;
+        $start      = \Xmf\Request::getInt('start', 0, 'GET');
         $itemsCount = $listsHandler->getRecentListsCount();
         if ($itemsCount > $limit) {
             $pagenav = new \XoopsPageNav($itemsCount, $limit, $start, 'start', 'op=' . $operation);
@@ -99,7 +99,7 @@ switch ($action) {
     case 'delete': // Suppression d'une liste
         // ****************************************************************************************************************
         xoops_cp_header();
-        $id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
+        $id = \Xmf\Request::getInt('id', 0, 'GET');
         if (empty($id)) {
             Oledrion\Utility::redirect(_AM_OLEDRION_ERROR_1, $baseurl . '?op=' . $operation, 5);
         }

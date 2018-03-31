@@ -30,7 +30,7 @@ if (0 == Oledrion\Utility::getModuleOption('use_rss')) {
     exit;
 }
 // Paramètre, soit rien auquel cas on prend tous les produits récents soit cat_cid
-$cat_cid = isset($_GET['cat_cid']) ? (int)$_GET['cat_cid'] : 0;
+$cat_cid = \Xmf\Request::getInt('cat_cid', 0, 'GET');
 if (function_exists('mb_http_output')) {
     mb_http_output('pass');
 }

@@ -85,10 +85,10 @@ switch ($action) {
         $helper->loadLanguage('newsletter');
         echo '<br>';
         $removeBr   = $removeHtml = false;
-        $removeBr   = isset($_POST['removebr']) ? (int)$_POST['removebr'] : 0;
-        $removeHtml = isset($_POST['removehtml']) ? (int)$_POST['removehtml'] : 0;
-        $header     = isset($_POST['header']) ? $_POST['header'] : '';
-        $footer     = isset($_POST['footer']) ? $_POST['footer'] : '';
+        $removeBr   = \Xmf\Request::getInt('removebr', 0, 'POST');
+        $removeHtml = \Xmf\Request::getInt('removehtml', 0, 'POST');
+        $header     = \Xmf\Request::getString('header', '', 'POST');
+        $footer     = \Xmf\Request::getString('footer', '', 'POST');
         $date1      = strtotime($_POST['date1']);
         $date2      = strtotime($_POST['date2']);
         $cat_id     = (int)$_POST['cat_cid'];

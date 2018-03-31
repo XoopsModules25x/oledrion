@@ -31,9 +31,9 @@ error_reporting(0);
 $db                = \XoopsDatabaseFactory::getDatabaseConnection();
 $vatHandler = new Oledrion\VatHandler($db);
 
-$op = isset($_POST['op']) ? $_POST['op'] : '';
+$op = \Xmf\Request::getString('op', '', 'POST');
 if ('' === $op) {
-    $op = isset($_GET['op']) ? $_GET['op'] : '';
+    $op = \Xmf\Request::getString('op', '', 'GET');
 }
 $return  = '';
 $uid     = Oledrion\Utility::getCurrentUserID();
@@ -43,7 +43,7 @@ switch ($op) {
     // ****************************************************************************************************************
     case 'updatePrice': // Mise à jour du prix du produit en fonction des attributs sélectionnés
         // ****************************************************************************************************************
-        $product_id = isset($_POST['product_id']) ? (int)$_POST['product_id'] : 0;
+        $product_id = \Xmf\Request::getInt('product_id', 0, 'POST');
         if (isset($_POST['formcontent']) && $product_id > 0) {
             $data     = $data = $attributesIds = $attributes = $templateProduct = [];
 //            $handlers = HandlerManager::getInstance();
@@ -342,34 +342,34 @@ switch ($op) {
         $ret['message'] = 'error';
         if (isset($_POST['product_id']) && is_numeric($_POST['product_id'])) {
             // Set from post
-            $product_id    = isset($_POST['product_id']) ? $_POST['product_id'] : '';
-            $cmd_lastname  = isset($_POST['cmd_lastname']) ? $_POST['cmd_lastname'] : '';
-            $cmd_firstname = isset($_POST['cmd_firstname']) ? $_POST['cmd_firstname'] : '';
-            $cmd_adress    = isset($_POST['cmd_adress']) ? $_POST['cmd_adress'] : '';
-            $cmd_zip       = isset($_POST['cmd_zip']) ? $_POST['cmd_zip'] : '';
-            $cmd_town      = isset($_POST['cmd_town']) ? $_POST['cmd_town'] : '';
-            $cmd_country   = isset($_POST['cmd_country']) ? $_POST['cmd_country'] : '';
-            $cmd_telephone = isset($_POST['cmd_telephone']) ? $_POST['cmd_telephone'] : '';
-            $cmd_mobile    = isset($_POST['cmd_mobile']) ? $_POST['cmd_mobile'] : '';
-            $cmd_email     = isset($_POST['cmd_email']) ? $_POST['cmd_email'] : '';
+            $product_id    = \Xmf\Request::getString('product_id', '', 'POST');
+            $cmd_lastname  = \Xmf\Request::getString('cmd_lastname', '', 'POST');
+            $cmd_firstname = \Xmf\Request::getString('cmd_firstname', '', 'POST');
+            $cmd_adress    = \Xmf\Request::getString('cmd_adress', '', 'POST');
+            $cmd_zip       = \Xmf\Request::getString('cmd_zip', '', 'POST');
+            $cmd_town      = \Xmf\Request::getString('cmd_town', '', 'POST');
+            $cmd_country   = \Xmf\Request::getString('cmd_country', '', 'POST');
+            $cmd_telephone = \Xmf\Request::getString('cmd_telephone', '', 'POST');
+            $cmd_mobile    = \Xmf\Request::getString('cmd_mobile', '', 'POST');
+            $cmd_email     = \Xmf\Request::getString('cmd_email', '', 'POST');
             //$cmd_total = isset($_POST['cmd_total']) ? $_POST['cmd_total'] : '';
             //$cmd_shipping = isset($_POST['cmd_shipping']) ? $_POST['cmd_shipping'] : '';
-            $cmd_packing_price = isset($_POST['cmd_packing_price']) ? $_POST['cmd_packing_price'] : '';
-            $cmd_bill          = isset($_POST['cmd_bill']) ? $_POST['cmd_bill'] : '';
-            $cmd_text          = isset($_POST['cmd_text']) ? $_POST['cmd_text'] : '';
-            $cmd_comment       = isset($_POST['cmd_comment']) ? $_POST['cmd_comment'] : '';
-            $cmd_vat_number    = isset($_POST['cmd_vat_number']) ? $_POST['cmd_vat_number'] : '';
-            $cmd_packing       = isset($_POST['cmd_packing']) ? $_POST['cmd_packing'] : '';
-            $cmd_packing_id    = isset($_POST['cmd_packing_id']) ? $_POST['cmd_packing_id'] : '';
-            $cmd_location      = isset($_POST['cmd_location']) ? $_POST['cmd_location'] : '';
-            $cmd_location_id   = isset($_POST['cmd_location_id']) ? $_POST['cmd_location_id'] : '';
-            $cmd_delivery      = isset($_POST['cmd_delivery']) ? $_POST['cmd_delivery'] : '';
-            $cmd_delivery_id   = isset($_POST['cmd_delivery_id']) ? $_POST['cmd_delivery_id'] : '';
-            $cmd_payment       = isset($_POST['cmd_payment']) ? $_POST['cmd_payment'] : '';
-            $cmd_payment_id    = isset($_POST['cmd_payment_id']) ? $_POST['cmd_payment_id'] : '';
-            $cmd_track         = isset($_POST['cmd_track']) ? $_POST['cmd_track'] : '';
-            $cmd_gift          = isset($_POST['cmd_gift']) ? $_POST['cmd_gift'] : '';
-            $attributes        = isset($_POST['attributes']) ? $_POST['attributes'] : '';
+            $cmd_packing_price = \Xmf\Request::getString('cmd_packing_price', '', 'POST');
+            $cmd_bill          = \Xmf\Request::getString('cmd_bill', '', 'POST');
+            $cmd_text          = \Xmf\Request::getString('cmd_text', '', 'POST');
+            $cmd_comment       = \Xmf\Request::getString('cmd_comment', '', 'POST');
+            $cmd_vat_number    = \Xmf\Request::getString('cmd_vat_number', '', 'POST');
+            $cmd_packing       = \Xmf\Request::getString('cmd_packing', '', 'POST');
+            $cmd_packing_id    = \Xmf\Request::getString('cmd_packing_id', '', 'POST');
+            $cmd_location      = \Xmf\Request::getString('cmd_location', '', 'POST');
+            $cmd_location_id   = \Xmf\Request::getString('cmd_location_id', '', 'POST');
+            $cmd_delivery      = \Xmf\Request::getString('cmd_delivery', '', 'POST');
+            $cmd_delivery_id   = \Xmf\Request::getString('cmd_delivery_id', '', 'POST');
+            $cmd_payment       = \Xmf\Request::getString('cmd_payment', '', 'POST');
+            $cmd_payment_id    = \Xmf\Request::getString('cmd_payment_id', '', 'POST');
+            $cmd_track         = \Xmf\Request::getString('cmd_track', '', 'POST');
+            $cmd_gift          = \Xmf\Request::getString('cmd_gift', '', 'POST');
+            $attributes        = \Xmf\Request::getString('attributes', '', 'POST');
             // Get product
             $product       = $productsHandler->get($product_id);
             $product_price = $product->getVar('product_price');

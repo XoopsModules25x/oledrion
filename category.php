@@ -26,9 +26,9 @@
 use XoopsModules\Oledrion;
 
 require_once __DIR__ . '/header.php';
-$cat_cid                     = isset($_GET['cat_cid']) ? (int)$_GET['cat_cid'] : 0;
+$cat_cid                     = \Xmf\Request::getInt('cat_cid', 0, 'GET');
 $GLOBALS['current_category'] = $cat_cid;
-$start                       = isset($_GET['start']) ? (int)$_GET['start'] : 0;
+$start                       = \Xmf\Request::getInt('start', 0, 'GET');
 
 $category = null;
 if ($cat_cid > 0) {

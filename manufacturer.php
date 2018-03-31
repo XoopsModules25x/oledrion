@@ -35,7 +35,7 @@ if (isset($_GET['manu_id'])) {
 } else {
     Oledrion\Utility::redirect(_OLEDRION_ERROR7, 'index.php', 5);
 }
-$start = isset($_GET['start']) ? (int)$_GET['start'] : 0;
+$start = \Xmf\Request::getInt('start', 0, 'GET');
 
 // Le fabricant existe ?
 $manufacturer = null;

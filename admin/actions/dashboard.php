@@ -218,7 +218,7 @@ switch ($action) {
     // ****************************************************************************************************************
     case 'deleterating': // Delete a rating
         // ****************************************************************************************************************
-        $id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
+        $id = \Xmf\Request::getInt('id', 0, 'GET');
         if (empty($id)) {
             Oledrion\Utility::redirect(_AM_OLEDRION_ERROR_1, $baseurl, 5);
         }

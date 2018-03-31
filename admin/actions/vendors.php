@@ -33,7 +33,7 @@ switch ($action) {
         $adminObject = \Xmf\Module\Admin::getInstance();
         $adminObject->displayNavigation('index.php?op=vendors');
 
-        $start   = isset($_GET['start']) ? (int)$_GET['start'] : 0;
+        $start   = \Xmf\Request::getInt('start', 0, 'GET');
         $vendors = [];
         $form    = "<form method='post' action='$baseurl' name='frmaddvendor' id='frmaddvendor'><input type='hidden' name='op' id='op' value='vendors'><input type='hidden' name='action' id='action' value='add'><input type='submit' name='btngo' id='btngo' value='"
                    . _AM_OLEDRION_ADD_ITEM
@@ -74,7 +74,7 @@ switch ($action) {
         xoops_cp_header();
         if ('edit' === $action) {
             $title = _AM_OLEDRION_EDIT_VENDOR;
-            $id    = isset($_GET['id']) ? (int)$_GET['id'] : 0;
+            $id    = \Xmf\Request::getInt('id', 0, 'GET');
             if (empty($id)) {
                 Oledrion\Utility::redirect(_AM_OLEDRION_ERROR_1, $baseurl, 5);
             }
@@ -111,7 +111,7 @@ switch ($action) {
     case 'saveedit': // Sauvegarde d'un vendeur (édition et ajout)
         // ****************************************************************************************************************
         xoops_cp_header();
-        $id = isset($_POST['vendor_id']) ? (int)$_POST['vendor_id'] : 0;
+        $id = \Xmf\Request::getInt('vendor_id', 0, 'POST');
         if (!empty($id)) {
             $edit = true;
             $item = $vendorsHandler->get($id);
@@ -137,7 +137,7 @@ switch ($action) {
     case 'delete': // Suppression d'un vendeur
         // ****************************************************************************************************************
         xoops_cp_header();
-        $id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
+        $id = \Xmf\Request::getInt('id', 0, 'GET');
         if (empty($id)) {
             Oledrion\Utility::redirect(_AM_OLEDRION_ERROR_1, $baseurl, 5);
         }

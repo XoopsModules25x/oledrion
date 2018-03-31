@@ -40,7 +40,7 @@ if (1 != Oledrion\Utility::getModuleOption('pdf_catalog')) {
 }
 
 require_once XOOPS_ROOT_PATH.'/class/template.php';
-$details = isset($_POST['catalogFormat']) ? (int)$_POST['catalogFormat'] : 0;
+$details = \Xmf\Request::getInt('catalogFormat', 0, 'POST');
 $Tpl = new \XoopsTpl();
 $vatArray = $tbl_categories  = [];
 $vatArray = $vatHandler->getAllVats(new Oledrion\Parameters());

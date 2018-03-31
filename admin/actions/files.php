@@ -35,7 +35,7 @@ switch ($action) {
         $adminObject = \Xmf\Module\Admin::getInstance();
         $adminObject->displayNavigation('index.php?op=files');
 
-        $start = isset($_GET['start']) ? (int)$_GET['start'] : 0;
+        $start = \Xmf\Request::getInt('start', 0, 'GET');
         $form  = "<form method='post' action='$baseurl' name='frmadd' id='frmadd'><input type='hidden' name='op' id='op' value='files'><input type='hidden' name='action' id='action' value='add'><input type='submit' name='btngo' id='btngo' value='" . _AM_OLEDRION_ADD_ITEM . "'></form>";
         echo $form;
         //        Oledrion\Utility::htitle(_MI_OLEDRION_ADMENU11, 4);
@@ -87,7 +87,7 @@ switch ($action) {
         xoops_cp_header();
         if ('edit' === $action) {
             $title = _AM_OLEDRION_EDIT_FILE;
-            $id    = isset($_GET['id']) ? (int)$_GET['id'] : 0;
+            $id    = \Xmf\Request::getInt('id', 0, 'GET');
             if (empty($id)) {
                 Oledrion\Utility::redirect(_AM_OLEDRION_ERROR_1, $baseurl, 5);
             }
@@ -154,7 +154,7 @@ switch ($action) {
     case 'saveedit': // Sauvegarde d'un fichier attaché
         // ****************************************************************************************************************
         xoops_cp_header();
-        $id = isset($_POST['file_id']) ? (int)$_POST['file_id'] : 0;
+        $id = \Xmf\Request::getInt('file_id', 0, 'POST');
         if (!empty($id)) {
             $edit = true;
             $item = $filesHandler->get($id);
@@ -189,7 +189,7 @@ switch ($action) {
     case 'delete': // Suppression d'un fichier
         // ****************************************************************************************************************
         xoops_cp_header();
-        $id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
+        $id = \Xmf\Request::getInt('id', 0, 'GET');
         if (empty($id)) {
             Oledrion\Utility::redirect(_AM_OLEDRION_ERROR_1, $baseurl, 5);
         }

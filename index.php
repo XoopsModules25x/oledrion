@@ -30,7 +30,7 @@ require_once XOOPS_ROOT_PATH . '/header.php';
 // require_once OLEDRION_PATH . 'class/Registryfile.php';
 
 // Initialisations
-$start     = isset($_GET['start']) ? (int)$_GET['start'] : 0;
+$start     = \Xmf\Request::getInt('start', 0, 'GET');
 $limit     = Oledrion\Utility::getModuleOption('newproducts'); // Nombre maximum d'éléments à afficher
 $baseurl   = OLEDRION_URL . basename(__FILE__); // URL de ce script (sans son nom)
 $registry  = new Oledrion\Registryfile();

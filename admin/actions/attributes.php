@@ -70,7 +70,7 @@ switch ($action) {
 
         //        Oledrion\Utility::htitle(_AM_OLEDRION_ATTRIBUTES_LIST, 4);
 
-        $start    = isset($_GET['start']) ? (int)$_GET['start'] : 0;
+        $start    = \Xmf\Request::getInt('start', 0, 'GET');
         $criteria = new \CriteriaCompo();
         $criteria->add(new \Criteria('attribute_id', 0, '<>'));
 
@@ -223,7 +223,7 @@ switch ($action) {
     case 'copy': // Dupliquer un attribut
         // ****************************************************************************************************************
         xoops_cp_header();
-        $id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
+        $id = \Xmf\Request::getInt('id', 0, 'GET');
         if (empty($id)) {
             Oledrion\Utility::redirect(_AM_OLEDRION_ERROR_1, $baseurl, 5);
         }
@@ -244,7 +244,7 @@ switch ($action) {
     case 'delete': // Suppression d'un attribut
         // ****************************************************************************************************************
         xoops_cp_header();
-        $id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
+        $id = \Xmf\Request::getInt('id', 0, 'GET');
         if (empty($id)) {
             Oledrion\Utility::redirect(_AM_OLEDRION_ERROR_1, $baseurl, 5);
         }
@@ -305,7 +305,7 @@ switch ($action) {
 
         if ('edit' === $action) {
             $title = _AM_OLEDRION_EDIT_ATTRIBUTE;
-            $id    = isset($_GET['id']) ? (int)$_GET['id'] : 0;
+            $id    = \Xmf\Request::getInt('id', 0, 'GET');
             if (empty($id)) {
                 Oledrion\Utility::redirect(_AM_OLEDRION_ERROR_1, $baseurl, 5);
             }
@@ -424,7 +424,7 @@ switch ($action) {
     case 'saveedit': // Sauvegarde de l'option
         // ****************************************************************************************************************
         xoops_cp_header();
-        $id = isset($_POST['attribute_id']) ? (int)$_POST['attribute_id'] : 0;
+        $id = \Xmf\Request::getInt('attribute_id', 0, 'POST');
         if (!empty($id)) {
             $edit = true;
             $item = $attributesHandler->get($id);
@@ -437,7 +437,7 @@ switch ($action) {
         }
 
         $item->setVars($_POST);
-        $attribute_type = isset($_POST['attribute_type']) ? (int)$_POST['attribute_type'] : 0;
+        $attribute_type = \Xmf\Request::getInt('attribute_type', 0, 'POST');
         if (Constants::OLEDRION_ATTRIBUTE_SELECT == $attribute_type) { // Liste déroulante
             $item->setVar('attribute_option1', (int)$_POST['option2']);
             $item->setVar('attribute_option2', (int)$_POST['option3']);
@@ -445,8 +445,8 @@ switch ($action) {
             $item->setVar('attribute_option1', (int)$_POST['option1']);
         }
 
-        $default      = isset($_POST['default']) ? (int)$_POST['default'] : 0;
-        $optionsCount = isset($_POST['optionsCount']) ? (int)$_POST['optionsCount'] : 0;
+        $default      = \Xmf\Request::getInt('default', 0, 'POST');
+        $optionsCount = \Xmf\Request::getInt('optionsCount', 0, 'POST');
         $item->resetOptions();
         for ($i = 0; $i < $optionsCount; ++$i) {
             $name  = $value = $price = $stock = '';
@@ -480,7 +480,7 @@ switch ($action) {
         }
         error_reporting(0);
         @$xoopsLogger->activated = false;
-        $attribute_id = isset($_POST['attribute_id']) ? (int)$_POST['attribute_id'] : 0;
+        $attribute_id = \Xmf\Request::getInt('attribute_id', 0, 'POST');
         $content      = $class = '';
         $attribute    = null;
         $counter      = 0;
@@ -526,7 +526,7 @@ switch ($action) {
         if (isset($_POST['subaction'])) {
             switch (xoops_trim(strtolower($_POST['subaction']))) {
                 case 'delete': // Suppression d'une option de l'attribut
-                    $option = isset($_POST['option']) ? (int)$_POST['option'] : false;
+                    $option = \Xmf\Request::getInt('option', false, 'POST');
                     if (false !== $option) {
                         $attribute->deleteOption($option);
                     }
@@ -537,14 +537,14 @@ switch ($action) {
                     break;
 
                 case 'up': // Déplacement d'une option vers le haut
-                    $option = isset($_POST['option']) ? (int)$_POST['option'] : false;
+                    $option = \Xmf\Request::getInt('option', false, 'POST');
                     if (false !== $option) {
                         $attribute->moveOptionUp($option);
                     }
                     break;
 
                 case 'down': // Déplacement d'une option vers le haut
-                    $option = isset($_POST['option']) ? (int)$_POST['option'] : false;
+                    $option = \Xmf\Request::getInt('option', false, 'POST');
                     if (false !== $option) {
                         $attribute->moveOptionDown($option);
                     }

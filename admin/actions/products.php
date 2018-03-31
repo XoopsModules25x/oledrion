@@ -62,7 +62,7 @@ switch ($action) {
         $vats = [];
         $vats = $vatHandler->getAllVats(new Oledrion\Parameters());
 
-        $start = isset($_GET['start']) ? (int)$_GET['start'] : 0;
+        $start = \Xmf\Request::getInt('start', 0, 'GET');
 
         $filter_product_id    = $filter_product_cid = $filter_product_recommended = $filter_product_price = $filter_product_online = 0;
         $filter_product_title = $filter_product_sku = '';
@@ -328,7 +328,7 @@ switch ($action) {
 
         if ('edit' === $action) {
             $title = _AM_OLEDRION_EDIT_PRODUCT;
-            $id    = isset($_GET['id']) ? (int)$_GET['id'] : 0;
+            $id    = \Xmf\Request::getInt('id', 0, 'GET');
             if (empty($id)) {
                 Oledrion\Utility::redirect(_AM_OLEDRION_ERROR_1, $baseurl, 5);
             }
@@ -668,7 +668,7 @@ switch ($action) {
     case 'saveedit': // Sauvegarde des informations d'un produit
         // ****************************************************************************************************************
         xoops_cp_header();
-        $id = isset($_POST['product_id']) ? (int)$_POST['product_id'] : 0;
+        $id = \Xmf\Request::getInt('product_id', 0, 'POST');
         if ($id > 0) {
             $edit = true;
             $item = $productsHandler->get($id);
@@ -804,7 +804,7 @@ switch ($action) {
     case 'copy': // Copier un produit
         // ****************************************************************************************************************
         xoops_cp_header();
-        $id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
+        $id = \Xmf\Request::getInt('id', 0, 'GET');
         if (empty($id)) {
             Oledrion\Utility::redirect(_AM_OLEDRION_ERROR_1, $baseurl, 5);
         }
@@ -827,7 +827,7 @@ switch ($action) {
         // ****************************************************************************************************************
         xoops_cp_header();
 
-        $id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
+        $id = \Xmf\Request::getInt('id', 0, 'GET');
         if (0 == $id) {
             Oledrion\Utility::redirect(_AM_OLEDRION_ERROR_1, $baseurl, 5);
         }
@@ -842,7 +842,7 @@ switch ($action) {
     case 'delete': // Suppression d'un produit
         // ****************************************************************************************************************
         xoops_cp_header();
-        $id = isset($_POST['id']) ? (int)$_POST['id'] : 0;
+        $id = \Xmf\Request::getInt('id', 0, 'POST');
         if (0 == $id) {
             Oledrion\Utility::redirect(_AM_OLEDRION_ERROR_1, $baseurl, 5);
         }
@@ -905,7 +905,7 @@ switch ($action) {
         xoops_cp_header();
         global $xoopsUser;
 
-        $id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
+        $id = \Xmf\Request::getInt('id', 0, 'GET');
         if (empty($id)) {
             Oledrion\Utility::redirect(_AM_OLEDRION_ERROR_1, $baseurl, 5);
         }
@@ -957,7 +957,7 @@ switch ($action) {
     case 'relatedsave':
         // ******************************************************************************************
         xoops_cp_header();
-        $id   = isset($_POST['product_id']) ? (int)$_POST['product_id'] : 0;
+        $id   = \Xmf\Request::getInt('product_id', 0, 'POST');
         $item = $productsHandler->get($id);
         if (!is_object($item)) {
             Oledrion\Utility::redirect(_AM_OLEDRION_NOT_FOUND, $baseurl, 5);

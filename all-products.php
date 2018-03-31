@@ -37,7 +37,7 @@ $vatArray = $vatHandler->getAllVats(new Oledrion\Parameters());
 // Préférences du module
 $xoopsTpl->assign('mod_pref', $mod_pref);
 
-$start = isset($_GET['start']) ? (int)$_GET['start'] : 0;
+$start = \Xmf\Request::getInt('start', 0, 'GET');
 $limit = Oledrion\Utility::getModuleOption('perpage');
 
 // Lecture des produits

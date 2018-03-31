@@ -32,7 +32,7 @@ switch ($action) {
         $adminObject = \Xmf\Module\Admin::getInstance();
         $adminObject->displayNavigation('index.php?op=location');
 
-        $start    = isset($_GET['start']) ? (int)$_GET['start'] : 0;
+        $start    = \Xmf\Request::getInt('start', 0, 'GET');
         $location = [];
         $form     = "<form method='post' action='$baseurl' name='frmaddlocation' id='frmaddlocation'><input type='hidden' name='op' id='op' value='location'><input type='hidden' name='action' id='action' value='add'><input type='submit' name='btngo' id='btngo' value='"
                     . _AM_OLEDRION_ADD_ITEM
@@ -72,7 +72,7 @@ switch ($action) {
     case 'add':
     case 'edit':
         xoops_cp_header();
-        $id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
+        $id = \Xmf\Request::getInt('id', 0, 'GET');
         if ('edit' === $action) {
             $title = _AM_OLEDRION_LOCATION_EDIT;
             if (empty($id)) {
@@ -152,7 +152,7 @@ switch ($action) {
 
     case 'save':
         xoops_cp_header();
-        $id = isset($_POST['location_id']) ? (int)$_POST['location_id'] : 0;
+        $id = \Xmf\Request::getInt('location_id', 0, 'POST');
         if (!empty($id)) {
             $edit = true;
             $item = $locationHandler->get($id);
@@ -218,7 +218,7 @@ switch ($action) {
 
     case 'delete':
         xoops_cp_header();
-        $id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
+        $id = \Xmf\Request::getInt('id', 0, 'GET');
         if (0 == $id) {
             Oledrion\Utility::redirect(_AM_OLEDRION_ERROR_1, $baseurl, 5);
         }
@@ -234,7 +234,7 @@ switch ($action) {
     case 'confdelete':
 
         xoops_cp_header();
-        $id = isset($_POST['id']) ? (int)$_POST['id'] : 0;
+        $id = \Xmf\Request::getInt('id', 0, 'POST');
         if (empty($id)) {
             Oledrion\Utility::redirect(_AM_OLEDRION_ERROR_1, $baseurl, 5);
         }

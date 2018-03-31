@@ -25,7 +25,7 @@ use XoopsModules\Oledrion;
 
 require_once __DIR__ . '/header.php';
 $type       = isset($_GET['type']) ? strtolower($_GET['type']) : 'picture';
-$product_id = isset($_GET['product_id']) ? (int)$_GET['product_id'] : 0;
+$product_id = \Xmf\Request::getInt('product_id', 0, 'GET');
 if ($product_id > 0) {
     $product = null;
     $product = $productsHandler->get($product_id);
@@ -48,7 +48,7 @@ if ($product_id > 0) {
 
 switch ($type) {
     case 'attachment': // Un fichier attaché à un produit
-        $file_id = isset($_GET['file_id']) ? (int)$_GET['file_id'] : 0;
+        $file_id = \Xmf\Request::getInt('file_id', 0, 'GET');
         if (0 == $file_id) {
             exit(_OLEDRION_ERROR13);
         }

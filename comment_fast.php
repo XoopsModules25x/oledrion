@@ -17,7 +17,7 @@
  * @author      Hossein Azizabadi (AKA Voltan)
  */
 
-$productid      = isset($_GET['product_id']) ? (int)$_GET['product_id'] : 0;
+$productid      = \Xmf\Request::getInt('product_id', 0, 'GET');
 $com_replytitle = '';
 if ($product_id > 0) {
     require_once XOOPS_ROOT_PATH . '/modules/oledrion/include/common.php';

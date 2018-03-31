@@ -123,7 +123,7 @@ switch ($action) {
 
         if ('edit' === $action) {
             $title = _AM_OLEDRION_EDIT_CATEG;
-            $id    = isset($_POST['id']) ? (int)$_POST['id'] : 0;
+            $id    = \Xmf\Request::getInt('id', 0, 'POST');
             if (empty($id)) {
                 Oledrion\Utility::redirect(_AM_OLEDRION_ERROR_1, $baseurl, 5);
             }
@@ -205,7 +205,7 @@ switch ($action) {
     case 'saveedit': // Sauvegarde d'une catégorie
         // ****************************************************************************************************************
         xoops_cp_header();
-        $id = isset($_POST['cat_cid']) ? (int)$_POST['cat_cid'] : 0;
+        $id = \Xmf\Request::getInt('cat_cid', 0, 'POST');
         if (!empty($id)) {
             $edit = true;
             $item = $categoryHandler->get($id);
@@ -256,7 +256,7 @@ switch ($action) {
         // ****************************************************************************************************************
         xoops_cp_header();
         oledrion_adminMenu(3);
-        $id = isset($_POST['id']) ? (int)$_POST['id'] : 0;
+        $id = \Xmf\Request::getInt('id', 0, 'POST');
         if (0 == $id) {
             Oledrion\Utility::redirect(_AM_OLEDRION_ERROR_1, $baseurl, 5);
         }
@@ -273,7 +273,7 @@ switch ($action) {
     case 'confdelete': //Suppression effective d'une catégorie
         // ****************************************************************************************************************
         xoops_cp_header();
-        $id = isset($_POST['id']) ? (int)$_POST['id'] : 0;
+        $id = \Xmf\Request::getInt('id', 0, 'POST');
         if (empty($id)) {
             Oledrion\Utility::redirect(_AM_OLEDRION_ERROR_1, $baseurl, 5);
         }

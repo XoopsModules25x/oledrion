@@ -40,7 +40,7 @@ switch ($action) {
         echo $form;
         //        Oledrion\Utility::htitle(_MI_OLEDRION_ADMENU3, 4);
 
-        $start    = isset($_GET['start']) ? (int)$_GET['start'] : 0;
+        $start    = \Xmf\Request::getInt('start', 0, 'GET');
         $criteria = new \CriteriaCompo();
         $criteria->add(new \Criteria('manu_id', 0, '<>'));
 
@@ -88,7 +88,7 @@ switch ($action) {
         xoops_cp_header();
         if ('edit' === $action) {
             $title = _AM_OLEDRION_EDIT_MANUFACTURER;
-            $id    = isset($_GET['id']) ? (int)$_GET['id'] : 0;
+            $id    = \Xmf\Request::getInt('id', 0, 'GET');
             if (empty($id)) {
                 Oledrion\Utility::redirect(_AM_OLEDRION_ERROR_1, $baseurl, 5);
             }
@@ -149,7 +149,7 @@ switch ($action) {
     case 'saveedit': // Sauvegarde d'un fabricant
         // ****************************************************************************************************************
         xoops_cp_header();
-        $id = isset($_POST['manu_id']) ? (int)$_POST['manu_id'] : 0;
+        $id = \Xmf\Request::getInt('manu_id', 0, 'POST');
         if (!empty($id)) {
             $edit = true;
             $item = $manufacturerHandler->get($id);
@@ -196,7 +196,7 @@ switch ($action) {
     case 'delete': // Suppression d'un fabricant
         // ****************************************************************************************************************
         xoops_cp_header();
-        $id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
+        $id = \Xmf\Request::getInt('id', 0, 'GET');
         if (empty($id)) {
             Oledrion\Utility::redirect(_AM_OLEDRION_ERROR_1, $baseurl, 5);
         }

@@ -35,7 +35,7 @@ switch ($action) {
         $adminObject->displayNavigation('index.php?op=orders');
         //        Oledrion\Utility::htitle(_MI_OLEDRION_ADMENU5, 4);
 
-        $start   = isset($_GET['start']) ? (int)$_GET['start'] : 0;
+        $start   = \Xmf\Request::getInt('start', 0, 'GET');
         $filter3 = $totalOrder = 0;
         $filter3 = 1;
         if (isset($_POST['filter3'])) {
@@ -159,7 +159,7 @@ switch ($action) {
     case 'delete': // Suppression d'une commande
         // ****************************************************************************************************************
         xoops_cp_header();
-        $id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
+        $id = \Xmf\Request::getInt('id', 0, 'GET');
         if (0 == $id) {
             Oledrion\Utility::redirect(_AM_OLEDRION_ERROR_1, $baseurl, 5);
         }
@@ -174,7 +174,7 @@ switch ($action) {
     // ****************************************************************************************************************
     case 'remove': // Suppression effective d'une commande
         // ****************************************************************************************************************
-        $id = isset($_POST['id']) ? (int)$_POST['id'] : 0;
+        $id = \Xmf\Request::getInt('id', 0, 'POST');
         if (empty($id)) {
             Oledrion\Utility::redirect(_AM_OLEDRION_ERROR_1, $baseurl, 5);
         }
@@ -196,7 +196,7 @@ switch ($action) {
     case 'validate': // Validation d'une commande
         // ****************************************************************************************************************
         xoops_cp_header();
-        $id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
+        $id = \Xmf\Request::getInt('id', 0, 'GET');
         if (empty($id)) {
             Oledrion\Utility::redirect(_AM_OLEDRION_ERROR_1, $baseurl, 5);
         }
@@ -225,7 +225,7 @@ switch ($action) {
     case 'pack': // Validation d'une commande
         // ****************************************************************************************************************
         xoops_cp_header();
-        $id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
+        $id = \Xmf\Request::getInt('id', 0, 'GET');
         if (empty($id)) {
             Oledrion\Utility::redirect(_AM_OLEDRION_ERROR_1, $baseurl, 5);
         }
@@ -254,7 +254,7 @@ switch ($action) {
     case 'submit': // Validation d'une commande
         // ****************************************************************************************************************
         xoops_cp_header();
-        $id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
+        $id = \Xmf\Request::getInt('id', 0, 'GET');
         if (empty($id)) {
             Oledrion\Utility::redirect(_AM_OLEDRION_ERROR_1, $baseurl, 5);
         }
@@ -283,7 +283,7 @@ switch ($action) {
     case 'delivery': // Validation d'une commande
         // ****************************************************************************************************************
         xoops_cp_header();
-        $id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
+        $id = \Xmf\Request::getInt('id', 0, 'GET');
         if (empty($id)) {
             Oledrion\Utility::redirect(_AM_OLEDRION_ERROR_1, $baseurl, 5);
         }
@@ -344,7 +344,7 @@ switch ($action) {
         $adminObject = \Xmf\Module\Admin::getInstance();
         $adminObject->displayNavigation('index.php?op=orders');
         Oledrion\Utility::htitle(_MI_OLEDRION_ADMENU5, 4);
-        $id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
+        $id = \Xmf\Request::getInt('id', 0, 'GET');
         if (empty($id)) {
             Oledrion\Utility::redirect(_AM_OLEDRION_ERROR_1, $baseurl, 5);
         }
@@ -370,7 +370,7 @@ switch ($action) {
     case 'savetrack': // save track
         // ****************************************************************************************************************
         xoops_cp_header();
-        $id         = isset($_POST['cmd_id']) ? (int)$_POST['cmd_id'] : 0;
+        $id         = \Xmf\Request::getInt('cmd_id', 0, 'POST');
         $item       = $commandsHandler->get($id);
         $opRedirect = 'orders';
         if (!is_object($item)) {
@@ -397,7 +397,7 @@ switch ($action) {
         xoops_cp_header();
         error_reporting(0);
         @$xoopsLogger->activated = false;
-        $cmdId = isset($_GET['id']) ? (int)$_GET['id'] : 0;
+        $cmdId = \Xmf\Request::getInt('id', 0, 'GET');
         if (0 == $cmdId) {
             Oledrion\Utility::redirect(_AM_OLEDRION_ERROR_1, $baseurl, 5);
         }

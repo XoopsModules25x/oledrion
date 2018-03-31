@@ -33,7 +33,7 @@ switch ($action) {
         $adminObject = \Xmf\Module\Admin::getInstance();
         $adminObject->displayNavigation('index.php?op=vat');
 
-        $start = isset($_GET['start']) ? (int)$_GET['start'] : 0;
+        $start = \Xmf\Request::getInt('start', 0, 'GET');
         $vats  = [];
         $form  = "<form method='post' action='$baseurl' name='frmaddvat' id='frmaddvat'><input type='hidden' name='op' id='op' value='vat'><input type='hidden' name='action' id='action' value='add'><input type='hidden' name='action' id='action' value='add'><input type='submit' name='btngo' id='btngo' value='"
                  . _AM_OLEDRION_ADD_ITEM
@@ -70,7 +70,7 @@ switch ($action) {
 //        oledrion_adminMenu(2);
         if ('edit' === $action) {
             $title = _AM_OLEDRION_EDIT_VAT;
-            $id    = isset($_GET['id']) ? (int)$_GET['id'] : 0;
+            $id    = \Xmf\Request::getInt('id', 0, 'GET');
             if (empty($id)) {
                 Oledrion\Utility::redirect(_AM_OLEDRION_ERROR_1, $baseurl, 5);
             }
@@ -108,7 +108,7 @@ switch ($action) {
     case 'saveedit': // Sauvegarde d'une TVA
         // ****************************************************************************************************************
         xoops_cp_header();
-        $id = isset($_POST['vat_id']) ? (int)$_POST['vat_id'] : 0;
+        $id = \Xmf\Request::getInt('vat_id', 0, 'POST');
         if (!empty($id)) {
             $edit = true;
             $item = $vatHandler->get($id);
@@ -134,7 +134,7 @@ switch ($action) {
     case 'delete': // Suppression d'une TVA
         // ****************************************************************************************************************
         xoops_cp_header();
-        $id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
+        $id = \Xmf\Request::getInt('id', 0, 'GET');
         if (empty($id)) {
             Oledrion\Utility::redirect(_AM_OLEDRION_ERROR_1, $baseurl, 5);
         }

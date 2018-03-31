@@ -63,7 +63,7 @@ function listForm($op, $product_id = 0)
     if ('edit' === $op) {
         $title        = _OLEDRION_EDIT_LIST;
         $label_submit = _AM_OLEDRION_MODIFY;
-        $list_id      = isset($_GET['list_id']) ? (int)$_GET['list_id'] : 0;
+        $list_id      = \Xmf\Request::getInt('list_id', 0, 'GET');
         if (empty($list_id)) {
             Oledrion\Utility::redirect(_AM_OLEDRION_ERROR_21, $baseurl, 5);
         }
@@ -162,7 +162,7 @@ switch ($op) {
     case 'addProduct': // Ajout d'un produit à une liste *********************
         // ************************************************************************
         $xoopsTpl->assign('op', $op);
-        $product_id = isset($_GET['product_id']) ? (int)$_GET['product_id'] : 0;
+        $product_id = \Xmf\Request::getInt('product_id', 0, 'GET');
         if (0 == $product_id) {
             Oledrion\Utility::redirect(_OLEDRION_ERROR14, $baseurl, 4);
         }
@@ -210,7 +210,7 @@ switch ($op) {
     case 'addProductToList': // Ajout d'un produit à une liste, sélection de la liste
         // ************************************************************************
         $xoopsTpl->assign('op', $op);
-        $product_id = isset($_POST['product_id']) ? (int)$_POST['product_id'] : 0;
+        $product_id = \Xmf\Request::getInt('product_id', 0, 'POST');
         if (0 == $product_id) {
             Oledrion\Utility::redirect(_OLEDRION_ERROR14, $baseurl, 4);
         }
@@ -222,7 +222,7 @@ switch ($op) {
             Oledrion\Utility::redirect(_OLEDRION_ERROR1, $baseurl, 4);
         }
 
-        $list_id = isset($_POST['list_id']) ? (int)$_POST['list_id'] : 0;
+        $list_id = \Xmf\Request::getInt('list_id', 0, 'POST');
         if (0 == $list_id) { // Ajouter à une nouvelle liste
             $sform      = listForm('addList', $product_id);
             $title      = _OLEDRION_ADD_LIST;
@@ -260,7 +260,7 @@ switch ($op) {
     case 'delete': // Suppression d'une liste ********************************
         // ************************************************************************
         $xoopsTpl->assign('op', $op);
-        $list_id = isset($_GET['list_id']) ? (int)$_GET['list_id'] : 0;
+        $list_id = \Xmf\Request::getInt('list_id', 0, 'GET');
         if (0 == $list_id) {
             Oledrion\Utility::redirect(_OLEDRION_ERROR21, $baseurl, 4);
         }
@@ -278,7 +278,7 @@ switch ($op) {
     // ************************************************************************
     case 'reallyDelete': // Suppression effective d'une liste **************
         // ************************************************************************
-        $list_id = isset($_POST['list_id']) ? (int)$_POST['list_id'] : 0;
+        $list_id = \Xmf\Request::getInt('list_id', 0, 'POST');
         if (0 == $list_id) {
             Oledrion\Utility::redirect(_OLEDRION_ERROR21, $baseurl, 4);
         }
@@ -301,7 +301,7 @@ switch ($op) {
     // ************************************************************************
     case 'save': // Sauvegarde d'une liste *********************************
         // ************************************************************************
-        $list_id = isset($_POST['list_id']) ? (int)$_POST['list_id'] : 0;
+        $list_id = \Xmf\Request::getInt('list_id', 0, 'POST');
         if (!empty($list_id)) {
             // Vérification, est-ce que l'utilisateur courant est bien le propriétaire de cette liste ?
             if (! $listsHandler->isThisMyList($list_id)) {

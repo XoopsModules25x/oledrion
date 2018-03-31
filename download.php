@@ -27,7 +27,7 @@ require_once __DIR__ . '/header.php';
 error_reporting(0);
 @$xoopsLogger->activated = false;
 
-$download_id = isset($_GET['download_id']) ? $_GET['download_id'] : '';
+$download_id = \Xmf\Request::getString('download_id', '', 'GET');
 
 // TODO: Permettre au webmaster de réactiver un téléchargement
 

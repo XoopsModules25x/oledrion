@@ -35,7 +35,7 @@ $tbl_products         = $tbl_categories = $tbl_vendors = $tbl_users = $tbl_tmp_u
 $tbl_products_id      = $tbl_auteurs = $tbl_infos_auteurs = $tbl_tmp_auteurs = [];
 $tbl_tmp_related      = $tbl_related = $tbl_info_related_products = [];
 $tbl_related_products = [];
-$start                = isset($_GET['start']) ? (int)$_GET['start'] : 0;
+$start                = \Xmf\Request::getInt('start', 0, 'GET');
 $limit                = Oledrion\Utility::getModuleOption('perpage');
 $baseurl              = OLEDRION_URL . basename(__FILE__); // URL de ce script (sans son nom)
 $oledrion_Currency    = Oledrion\Currency::getInstance();

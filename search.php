@@ -234,7 +234,7 @@ if ((isset($_POST['op']) && 'go' === $_POST['op']) || isset($_GET['start'])) { /
             $sql = unserialize($_SESSION['criteria_oledrion']);
         }
     }
-    $start    = isset($_GET['start']) ? (int)$_GET['start'] : 0;
+    $start    = \Xmf\Request::getInt('start', 0, 'GET');
     $sqlCount = str_replace('b.product_id, b.product_title, b.product_submitted, b.product_submitter', 'Count(*) as cpt', $sql);
     $result   = $xoopsDB->query($sqlCount);
     $rowCount = $xoopsDB->fetchArray($result);

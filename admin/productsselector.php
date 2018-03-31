@@ -65,16 +65,16 @@ $categories = $categoryHandler->getAllCategories(new Oledrion\Parameters());
 $mytree               = new Oledrion\XoopsObjectTree($categories, 'cat_cid', 'cat_pid');
 $searchVendorSelected = $selectedCategory = $selectedSearchField = 0;
 
-$start         = isset($_REQUEST['start']) ? (int)$_REQUEST['start'] : 0;
-$mutipleSelect = isset($_REQUEST['mutipleSelect']) ? (int)$_REQUEST['mutipleSelect'] : 0;
-$callerName    = isset($_REQUEST['callerName']) ? $_REQUEST['callerName'] : '';
+$start         = \Xmf\Request::getInt('start', 0, 'REQUEST');
+$mutipleSelect = \Xmf\Request::getInt('mutipleSelect', 0, 'REQUEST');
+$callerName    = \Xmf\Request::getString('callerName', '', 'REQUEST');
 
 if (isset($_REQUEST['op']) && 'search' === $_REQUEST['op']) {
-    $searchField    = isset($_REQUEST['searchField']) ? $_REQUEST['searchField'] : '';
-    $searchCriteria = isset($_REQUEST['searchCriteria']) ? (int)$_REQUEST['searchCriteria'] : '';
+    $searchField    = \Xmf\Request::getString('searchField', '', 'REQUEST');
+    $searchCriteria = \Xmf\Request::getInt('searchCriteria', '', 'REQUEST');
     $searchText     = isset($_REQUEST['searchText']) ? trim($_REQUEST['searchText']) : '';
-    $searchVendor   = isset($_REQUEST['searchVendor']) ? (int)$_REQUEST['searchVendor'] : 0;
-    $product_cid    = isset($_REQUEST['product_cid']) ? (int)$_REQUEST['product_cid'] : 0;
+    $searchVendor   = \Xmf\Request::getInt('searchVendor', 0, 'REQUEST');
+    $product_cid    = \Xmf\Request::getInt('product_cid', 0, 'REQUEST');
 
     $selectedSearchField = $searchField;
     $xoopsTpl->assign('searchCriteriaSelected', $searchCriteria);

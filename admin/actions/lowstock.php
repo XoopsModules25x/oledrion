@@ -34,7 +34,7 @@ switch ($action) {
         $adminObject->displayNavigation('index.php?op=lowstock');
 
         //        Oledrion\Utility::htitle(_MI_OLEDRION_ADMENU9, 4);
-        $start    = isset($_GET['start']) ? (int)$_GET['start'] : 0;
+        $start    = \Xmf\Request::getInt('start', 0, 'GET');
         $criteria = new \CriteriaCompo();
         // Recherche des produits dont la quantité en stock est inférieure ou égale à la quantité d'alerte et ou la quantité d'alerte est supérieure à 0
         $itemsCount = $productsHandler->getLowStocksCount();

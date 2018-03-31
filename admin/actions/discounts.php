@@ -44,7 +44,7 @@ switch ($action) {
         $discounts  = [];
         $itemsCount = 0;
         $class      = '';
-        $start      = isset($_GET['start']) ? (int)$_GET['start'] : 0;
+        $start      = \Xmf\Request::getInt('start', 0, 'GET');
 
         $itemsCount = $discountsHandler->getCount(); // Recherche du nombre total de réductions
         if ($itemsCount > $limit) {
@@ -91,7 +91,7 @@ switch ($action) {
         //oledrion_adminMenu(7);
         if ('edit' === $action) {
             $title = _AM_OLEDRION_EDIT_DISCOUNT;
-            $id    = isset($_GET['id']) ? (int)$_GET['id'] : 0;
+            $id    = \Xmf\Request::getInt('id', 0, 'GET');
             if (empty($id)) {
                 Oledrion\Utility::redirect(_AM_OLEDRION_ERROR_1, $baseurl, 5);
             }
@@ -284,7 +284,7 @@ switch ($action) {
     case 'copy': // Duplication d'une réduction
         // ****************************************************************************************************************
         xoops_cp_header();
-        $id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
+        $id = \Xmf\Request::getInt('id', 0, 'GET');
         if (empty($id)) {
             Oledrion\Utility::redirect(_AM_OLEDRION_ERROR_1, $baseurl, 5);
         }
@@ -316,7 +316,7 @@ switch ($action) {
     case 'saveedit': // Enregistrement d'une réduction après modification ou ajout
         // ****************************************************************************************************************
         xoops_cp_header();
-        $id = isset($_POST['disc_id']) ? (int)$_POST['disc_id'] : 0;
+        $id = \Xmf\Request::getInt('disc_id', 0, 'POST');
         if (!empty($id)) {
             $edit = true;
             $item = $discountsHandler->get($id);
@@ -349,7 +349,7 @@ switch ($action) {
     case 'delete': // Suppression d'une réduction
         // ****************************************************************************************************************
         xoops_cp_header();
-        $id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
+        $id = \Xmf\Request::getInt('id', 0, 'GET');
         if (empty($id)) {
             Oledrion\Utility::redirect(_AM_OLEDRION_ERROR_1, $baseurl, 5);
         }
