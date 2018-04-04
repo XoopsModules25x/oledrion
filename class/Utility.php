@@ -957,7 +957,7 @@ class Utility extends \XoopsObject
         $keywords = str_replace('--', '-', $keywords);
         // Supprime un éventuel tiret à la fin de la chaine
         if ('-' == substr($keywords, strlen($keywords) - 1, 1)) {
-            $keywords = substr($keywords, 0, strlen($keywords) - 1);
+            $keywords = substr($keywords, 0, -1);
         }
 
         return $keywords;

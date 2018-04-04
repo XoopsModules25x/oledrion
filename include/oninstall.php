@@ -11,8 +11,6 @@
 
 /**
  * oledrion
-use XoopsModules\Oledrion;
-use XoopsModules\Oledrion\Common;
  *
  * @copyright   {@link https://xoops.org/ XOOPS Project}
  * @license     {@link http://www.fsf.org/copyleft/gpl.html GNU public license}
@@ -20,6 +18,9 @@ use XoopsModules\Oledrion\Common;
  * @param \XoopsModule $module
  * @return bool
  */
+
+use XoopsModules\Oledrion;
+use XoopsModules\Oledrion\Common;
 
 function xoops_module_pre_install_oledrion(\XoopsModule $module)
 {
@@ -57,10 +58,10 @@ function xoops_module_install_oledrion(\XoopsModule $module)
 
     /** @var Oledrion\Helper $helper */
     /** @var Oledrion\Utility $utility */
-    /** @var common\Configurator $configurator */
+    /** @var Oledrion\Common\Configurator $configurator */
     $helper       = Oledrion\Helper::getInstance();
     $utility      = new Oledrion\Utility();
-    $configurator = new common\Configurator();
+    $configurator = new Oledrion\Common\Configurator();
 
     // Load language files
     $helper->loadLanguage('admin');
@@ -70,13 +71,13 @@ function xoops_module_install_oledrion(\XoopsModule $module)
     $moduleId     = $module->getVar('mid');
     $moduleId2    = $helper->getModule()->mid();
     //$moduleName = $module->getVar('name');
-    $gpermHandler = xoops_getHandler('groupperm');
+    $grouppermHandler = xoops_getHandler('groupperm');
     // access rights ------------------------------------------
-    $gpermHandler->addRight($moduleDirName . '_approve', 1, XOOPS_GROUP_ADMIN, $moduleId);
-    $gpermHandler->addRight($moduleDirName . '_submit', 1, XOOPS_GROUP_ADMIN, $moduleId);
-    $gpermHandler->addRight($moduleDirName . '_view', 1, XOOPS_GROUP_ADMIN, $moduleId);
-    $gpermHandler->addRight($moduleDirName . '_view', 1, XOOPS_GROUP_USERS, $moduleId);
-    $gpermHandler->addRight($moduleDirName . '_view', 1, XOOPS_GROUP_ANONYMOUS, $moduleId);
+    $grouppermHandler->addRight($moduleDirName . '_approve', 1, XOOPS_GROUP_ADMIN, $moduleId);
+    $grouppermHandler->addRight($moduleDirName . '_submit', 1, XOOPS_GROUP_ADMIN, $moduleId);
+    $grouppermHandler->addRight($moduleDirName . '_view', 1, XOOPS_GROUP_ADMIN, $moduleId);
+    $grouppermHandler->addRight($moduleDirName . '_view', 1, XOOPS_GROUP_USERS, $moduleId);
+    $grouppermHandler->addRight($moduleDirName . '_view', 1, XOOPS_GROUP_ANONYMOUS, $moduleId);
 
     //  ---  CREATE FOLDERS ---------------
     if (count($configurator->uploadFolders) > 0) {

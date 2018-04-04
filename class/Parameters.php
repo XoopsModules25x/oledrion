@@ -102,7 +102,7 @@ class Parameters extends \ArrayObject
      * On lui passe les valeurs par défaut que l'on attend et la méthode les compare avec les valeurs actuelles
      * Si des valeurs manquent, elles sont ajoutées
      *
-     * @param  Parameters $defaultValues
+     * @param self $defaultValues
      * @return Parameters
      */
     public function extend(self $defaultValues)

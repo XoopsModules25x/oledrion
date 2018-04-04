@@ -2580,7 +2580,7 @@ class Soap_transport_http extends Nusoap_base
 
             // set response timeout
             $this->debug('set response timeout to ' . $response_timeout);
-            socket_set_timeout($this->fp, $response_timeout);
+            stream_set_timeout($this->fp, $response_timeout);
 
             $this->debug('socket connected');
 
@@ -2978,6 +2978,7 @@ class Soap_transport_http extends Nusoap_base
      * @param string $data The string to check.
      * @returns boolean Whether a skippable header was found.
      * @access  private
+     * @return bool
      */
     public function isSkippableCurlHeader(&$data)
     {
@@ -3010,6 +3011,7 @@ class Soap_transport_http extends Nusoap_base
      * @returns  string
      * @access   public
      * @deprecated
+     * @return string
      */
     public function decodeChunked($buffer, $lb)
     {
@@ -8403,9 +8405,9 @@ class Nusoap_client extends Nusoap_base
                         $paramArrayStr   .= "'$name' => \$$name, ";
                         $paramCommentStr .= "$type \$$name, ";
                     }
-                    $paramStr        = substr($paramStr, 0, strlen($paramStr) - 2);
-                    $paramArrayStr   = substr($paramArrayStr, 0, strlen($paramArrayStr) - 2);
-                    $paramCommentStr = substr($paramCommentStr, 0, strlen($paramCommentStr) - 2);
+                    $paramStr        = substr($paramStr, 0, -2);
+                    $paramArrayStr   = substr($paramArrayStr, 0, -2);
+                    $paramCommentStr = substr($paramCommentStr, 0, -2);
                 } else {
                     $paramStr        = '';
                     $paramArrayStr   = '';
