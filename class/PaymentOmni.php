@@ -62,7 +62,7 @@ class Payment
 
             // Process response
             if ($response->isSuccessful()) {
-                return "Thankyou for your payment";
+                return 'Thankyou for your payment';
             } elseif ($response->isRedirect()) {
 
                 // Redirect to offsite payment gateway

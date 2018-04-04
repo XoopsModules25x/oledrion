@@ -519,7 +519,7 @@ class Nusoap_base
         // if name has ns, add ns prefix to name
         $xmlns = '';
         if ($name_ns) {
-            $prefix = 'nu' . rand(1000, 9999);
+            $prefix = 'nu' . mt_rand(1000, 9999);
             $name   = $prefix . ':' . $name;
             $xmlns  .= " xmlns:$prefix=\"$name_ns\"";
         }
@@ -529,7 +529,7 @@ class Nusoap_base
             // w/o checking against typemap
             $type_prefix = 'xsd';
         } elseif ($type_ns) {
-            $type_prefix = 'ns' . rand(1000, 9999);
+            $type_prefix = 'ns' . mt_rand(1000, 9999);
             $xmlns       .= " xmlns:$type_prefix=\"$type_ns\"";
         }
         // serialize attributes if present
@@ -690,7 +690,7 @@ class Nusoap_base
                             if ('' !== $tt_ns && $tt_ns == $this->namespaces['xsd']) {
                                 $array_typename = 'xsd:' . $tt;
                             } elseif ($tt_ns) {
-                                $tt_prefix      = 'ns' . rand(1000, 9999);
+                                $tt_prefix      = 'ns' . mt_rand(1000, 9999);
                                 $array_typename = "$tt_prefix:$tt";
                                 $xmlns          .= " xmlns:$tt_prefix=\"$tt_ns\"";
                             } else {
@@ -6338,7 +6338,7 @@ class Wsdl extends Nusoap_base
                     $tt_prefix = $this->getPrefixFromNamespace('http://xml.apache.org/xml-soap');
                     if (!$tt_prefix) {
                         $this->debug('in serializeType: Add namespace for Apache SOAP type');
-                        $tt_prefix                    = 'ns' . rand(1000, 9999);
+                        $tt_prefix                    = 'ns' . mt_rand(1000, 9999);
                         $this->namespaces[$tt_prefix] = 'http://xml.apache.org/xml-soap';
                         // force this to be added to usedNamespaces
                         $tt_prefix = $this->getPrefixFromNamespace('http://xml.apache.org/xml-soap');
@@ -7797,7 +7797,7 @@ class Nusoap_client extends Nusoap_base
             $use       = $opData['input']['use'];
             // add ns to ns array
             if ('' !== $namespace && !isset($this->wsdl->namespaces[$namespace])) {
-                $nsPrefix                          = 'ns' . rand(1000, 9999);
+                $nsPrefix                          = 'ns' . mt_rand(1000, 9999);
                 $this->wsdl->namespaces[$nsPrefix] = $namespace;
             }
             $nsPrefix = $this->wsdl->getPrefixFromNamespace($namespace);
@@ -7838,7 +7838,7 @@ class Nusoap_client extends Nusoap_base
         } else {
             // no WSDL
             //$this->namespaces['ns1'] = $namespace;
-            $nsPrefix = 'ns' . rand(1000, 9999);
+            $nsPrefix = 'ns' . mt_rand(1000, 9999);
             // serialize
             $payload = '';
             if (is_string($params)) {
@@ -8325,7 +8325,7 @@ class Nusoap_client extends Nusoap_base
      */
     public function getProxy()
     {
-        $r       = rand();
+        $r       = mt_rand();
         $evalStr = $this->_getProxyClassCode($r);
         //$this->debug("proxy class: $evalStr");
         if ($this->getError()) {
@@ -8439,7 +8439,7 @@ class Nusoap_client extends Nusoap_base
      */
     public function getProxyClassCode()
     {
-        $r = rand();
+        $r = mt_rand();
 
         return $this->_getProxyClassCode($r);
     }
