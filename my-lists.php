@@ -37,12 +37,9 @@ if (0 == $uid) {
 
 $baseurl  = OLEDRION_URL . basename(__FILE__); // URL de ce script
 //$handlers = HandlerManager::getInstance();
-$op = 'default';
-if (isset($_GET['op'])) {
-    $op = $_GET['op'];
-} elseif (isset($_POST['op'])) {
-    $op = $_POST['op'];
-}
+
+$op    = \Xmf\Request::getCmd('op', 'default');
+
 $xoopsTpl->assign('baseurl', $baseurl);
 $helper->loadLanguage('modinfo');
 $helper->loadLanguage('admin');
@@ -342,7 +339,7 @@ switch ($op) {
         $res =  $listsHandler->insert($item);
         if ($res) {
             if (isset($_POST['product_id'])) {
-                $product_id = (int)$_POST['product_id'];
+                $product_id = \Xmf\Request::getInt('product_id', 0, 'POST');
                 if ($product_id > 0) {
                     $product = null;
                     $product = $productsHandler->get($product_id);

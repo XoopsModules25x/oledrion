@@ -63,7 +63,7 @@ class RelatedHandler extends OledrionPersistableObjectHandler
         $ret = [];
         if (is_array($ids)) {
             $criteria = new \Criteria('related_product_id', '(' . implode(',', $ids) . ')', 'IN');
-            $ret      =& $this->getObjects($criteria, true, true, '*', false);
+            $ret      = $this->getObjects($criteria, true, true, '*', false);
         }
 
         return $ret;

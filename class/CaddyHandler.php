@@ -360,7 +360,7 @@ class CaddyHandler extends OledrionPersistableObjectHandler
                 $number = $produit['number'];
                 $name   = 'qty_' . $number;
                 if (isset($_POST[$name])) {
-                    $valeur = (int)$_POST[$name];
+                    $valeur = \Xmf\Request::getInt($name, 0, 'POST');
                     if ($valeur > 0) {
                         $product_id = $produit['id'];
                         $product    = null;
@@ -400,7 +400,7 @@ class CaddyHandler extends OledrionPersistableObjectHandler
     {
         $ret     = [];
         $critere = new \Criteria('caddy_cmd_id', $caddy_cmd_id, '=');
-        $ret     =& $this->getObjects($critere);
+        $ret     = $this->getObjects($critere);
 
         return $ret;
     }
@@ -458,7 +458,7 @@ class CaddyHandler extends OledrionPersistableObjectHandler
         $ret     = null;
         $caddies = [];
         $critere = new \Criteria('caddy_pass', $caddy_pass, '=');
-        $caddies =& $this->getObjects($critere);
+        $caddies = $this->getObjects($critere);
         if (count($caddies) > 0) {
             $ret = $caddies[0];
         }

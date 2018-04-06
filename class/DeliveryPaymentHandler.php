@@ -49,7 +49,7 @@ class DeliveryPaymentHandler extends OledrionPersistableObjectHandler
         }
         $critere = new \CriteriaCompo();
         $critere->add(new \Criteria('dp_delivery', $parameters['delivery']));
-        $obj =& $this->getObjects($critere);
+        $obj = $this->getObjects($critere);
         if ($obj) {
             foreach ($obj as $root) {
                 $tab                              = [];

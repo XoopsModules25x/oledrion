@@ -38,11 +38,11 @@ switch ($action) {
         $start   = \Xmf\Request::getInt('start', 0, 'GET');
         $filter3 = $totalOrder = 0;
         $filter3 = 1;
-        if (isset($_POST['filter3'])) {
-            $filter3 = (int)$_POST['filter3'];
-        } elseif (isset($_SESSION['filter3'])) {
-            $filter3 = (int)$_SESSION['filter3'];
-        }
+        if (\Xmf\Request::hasVar('filter3', 'POST')) {
+            $filter3 = \Xmf\Request::getInt('filter3', 0, 'POST');
+        } elseif (\Xmf\Request::hasVar('filter3', 'SESSION')) {
+ $filter3 = \Xmf\Request::getInt('filter3', 0, 'SESSION');
+}
         $_SESSION['filter3'] = $filter3;
         $selected            = ['', '', '', '', '', ''];
         $conditions          = [
@@ -316,7 +316,7 @@ switch ($action) {
         $adminObject->displayNavigation('index.php?op=orders');
         Oledrion\Utility::htitle(_MI_OLEDRION_ADMENU5, 4);
 
-        $orderType      = (int)$_POST['cmdtype'];
+        $orderType      = \Xmf\Request::getInt('cmdtype', 0, 'POST');
         $exportFilter   = $_POST['exportfilter'];
         $exportFilename = OLEDRION_PATH . 'admin/exports/' . $exportFilter . '.php';
         if (file_exists($exportFilename)) {

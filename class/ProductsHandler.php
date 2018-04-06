@@ -81,7 +81,7 @@ class ProductsHandler extends OledrionPersistableObjectHandler
         $criteria->setStart($parameters['start']);
         $criteria->setSort($parameters['sort']);
         $criteria->setOrder($parameters['order']);
-        $data =& $this->getObjects($criteria, true);
+        $data = $this->getObjects($criteria, true);
 
         return $data;
     }
@@ -123,7 +123,7 @@ class ProductsHandler extends OledrionPersistableObjectHandler
         $criteria->setStart($parameters['start']);
         $criteria->setSort($parameters['sort']);
         $criteria->setOrder($parameters['order']);
-        $data =& $this->getObjects($criteria, true);
+        $data = $this->getObjects($criteria, true);
 
         return $data;
     }
@@ -165,7 +165,7 @@ class ProductsHandler extends OledrionPersistableObjectHandler
         $criteria->setStart($parameters['start']);
         $criteria->setSort($parameters['sort']);
         $criteria->setOrder($parameters['order']);
-        $data =& $this->getObjects($criteria, true);
+        $data = $this->getObjects($criteria, true);
 
         return $data;
     }
@@ -242,7 +242,7 @@ class ProductsHandler extends OledrionPersistableObjectHandler
         if ('' !== xoops_trim($parameters['order'])) {
             $criteria->setOrder($parameters['order']);
         }
-        $data =& $this->getObjects($criteria, true);
+        $data = $this->getObjects($criteria, true);
 
         return $data;
     }
@@ -315,7 +315,7 @@ class ProductsHandler extends OledrionPersistableObjectHandler
         $criteria->setLimit($parameters['limit']);
         $criteria->setStart($parameters['start']);
         $criteria->setSort('product_title');
-        $data =& $this->getObjects($criteria, true);
+        $data = $this->getObjects($criteria, true);
 
         return $data;
     }
@@ -463,7 +463,7 @@ class ProductsHandler extends OledrionPersistableObjectHandler
         $criteria->setStart($parameters['start']);
         $criteria->setSort($parameters['sort']);
         $criteria->setOrder($parameters['order']);
-        $data =& $this->getObjects($criteria, true);
+        $data = $this->getObjects($criteria, true);
 
         return $data;
     }
@@ -505,7 +505,7 @@ class ProductsHandler extends OledrionPersistableObjectHandler
         $criteria->setStart($parameters['start']);
         $criteria->setSort($parameters['sort']);
         $criteria->setOrder($parameters['order']);
-        $data =& $this->getObjects($criteria, true);
+        $data = $this->getObjects($criteria, true);
 
         return $data;
     }
@@ -675,7 +675,7 @@ class ProductsHandler extends OledrionPersistableObjectHandler
                 $criteria->add(new \Criteria('product_stock', 0, '>'));
             }
             $criteria->add(new \Criteria('product_id', '(' . implode(',', $ids) . ')', 'IN'));
-            $ret =& $this->getObjects($criteria, true, true, '*', false);
+            $ret = $this->getObjects($criteria, true, true, '*', false);
         }
 
         return $ret;

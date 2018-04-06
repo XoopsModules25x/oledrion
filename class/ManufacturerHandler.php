@@ -98,7 +98,7 @@ class ManufacturerHandler extends OledrionPersistableObjectHandler
         $ret = [];
         if (is_array($ids) && count($ids) > 0) {
             $criteria = new \Criteria('manu_id', '(' . implode(',', $ids) . ')', 'IN');
-            $ret      =& $this->getObjects($criteria, true, true, '*', false);
+            $ret      = $this->getObjects($criteria, true, true, '*', false);
         }
 
         return $ret;

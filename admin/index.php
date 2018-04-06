@@ -61,12 +61,14 @@ if (!defined('OLEDRION_ADMIN')) {
     define('OLEDRION_ADMIN', true);
 }
 
-$op = 'dashboard';
-if (isset($_POST['op'])) {
-    $op = filter_input(INPUT_POST, 'op', FILTER_SANITIZE_STRING);
-} elseif (isset($_GET['op'])) {
-    $op = filter_input(INPUT_GET, 'op', FILTER_SANITIZE_STRING);
-}
+//$op = 'dashboard';
+//if (isset($_POST['op'])) {
+//    $op = filter_input(INPUT_POST, 'op', FILTER_SANITIZE_STRING);
+//} elseif (isset($_GET['op'])) {
+//    $op = filter_input(INPUT_GET, 'op', FILTER_SANITIZE_STRING);
+//}
+$op    = \Xmf\Request::getCmd('op', 'dashboard');
+
 
 $action = 'default';
 if (isset($_POST['action'])) {

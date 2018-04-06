@@ -61,7 +61,7 @@ if ((isset($_POST['op']) && 'go' === $_POST['op']) || isset($_GET['start'])) { /
 
         // Recherche sur une catégorie
         if (isset($_POST['product_category'])) {
-            $cat_cid = (int)$_POST['product_category'];
+            $cat_cid = \Xmf\Request::getInt('product_category', 0, 'POST');
             if ($cat_cid > 0) {
                 $sql .= 'AND (b.product_cid = ' . $cat_cid . ')';
             }
@@ -87,7 +87,7 @@ if ((isset($_POST['op']) && 'go' === $_POST['op']) || isset($_GET['start'])) { /
 
         // Recherche sur les vendeurs
         if (isset($_POST['product_vendors'])) {
-            $vendor = (int)$_POST['product_vendors'];
+            $vendor = \Xmf\Request::getInt('product_vendors', 0, 'POST');
             if ($vendor > 0) {
                 $sql .= ' AND (product_vendor_id = ' . $vendor . ')';
             }
@@ -95,7 +95,7 @@ if ((isset($_POST['op']) && 'go' === $_POST['op']) || isset($_GET['start'])) { /
 
         // set from
         if (isset($_POST['product_from'])) {
-            $product_from = (int)$_POST['product_from'];
+            $product_from = \Xmf\Request::getInt('product_from', 0, 'POST');
             if ($product_from > 0) {
                 $sql .= ' AND (product_price > ' . $product_from . ')';
             }
@@ -103,7 +103,7 @@ if ((isset($_POST['op']) && 'go' === $_POST['op']) || isset($_GET['start'])) { /
 
         // set to
         if (isset($_POST['product_to'])) {
-            $product_to = (int)$_POST['product_to'];
+            $product_to = \Xmf\Request::getInt('product_to', 0, 'POST');
             if ($product_to > 0) {
                 $sql .= ' AND (product_price < ' . $product_to . ')';
             }
@@ -202,7 +202,7 @@ if ((isset($_POST['op']) && 'go' === $_POST['op']) || isset($_GET['start'])) { /
                 $count      = count($queries);
                 $cnt        = 0;
                 $sql        .= ' AND ';
-                $searchType = (int)$_POST['search_type'];
+                $searchType = \Xmf\Request::getInt('search_type', 0, 'POST');
                 $andor      = ' OR ';
                 foreach ($queries as $oneQuery) {
                     $sql .= '(';

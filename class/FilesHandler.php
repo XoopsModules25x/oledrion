@@ -112,7 +112,7 @@ class FilesHandler extends OledrionPersistableObjectHandler
     {
         $files    = [];
         $criteria = new \Criteria('file_product_id', $file_product_id, '=');
-        $files    =& $this->getObjects($criteria);
+        $files    = $this->getObjects($criteria);
         if (count($files) > 0) {
             foreach ($files as $file) {
                 $file->deleteAttachedFile();

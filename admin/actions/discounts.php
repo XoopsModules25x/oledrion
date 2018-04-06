@@ -329,7 +329,7 @@ switch ($action) {
         }
         $opRedirect = 'discounts';
         $item->setVars($_POST);
-        if (isset($_POST['disc_pediod']) && 1 == (int)$_POST['disc_pediod']) {
+        if (isset($_POST['disc_pediod']) && 1 == \Xmf\Request::getInt('disc_pediod', 0, 'POST')) {
             $item->setVar('disc_date_from', strtotime($_POST['disc_date_from']));
             $item->setVar('disc_date_to', strtotime($_POST['disc_date_to']));
         } else {

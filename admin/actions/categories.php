@@ -107,10 +107,10 @@ switch ($action) {
     // ****************************************************************************************************************
     case 'savechunks': // Save chunks order
         // ****************************************************************************************************************
-        oledrion_set_module_option('chunk1', (int)$_POST['chunk1']);
-        oledrion_set_module_option('chunk2', (int)$_POST['chunk2']);
-        oledrion_set_module_option('chunk3', (int)$_POST['chunk3']);
-        oledrion_set_module_option('chunk4', (int)$_POST['chunk4']);
+        oledrion_set_module_option('chunk1', \Xmf\Request::getInt('chunk1', 0, 'POST'));
+        oledrion_set_module_option('chunk2', \Xmf\Request::getInt('chunk2', 0, 'POST'));
+        oledrion_set_module_option('chunk3', \Xmf\Request::getInt('chunk3', 0, 'POST'));
+        oledrion_set_module_option('chunk4', \Xmf\Request::getInt('chunk4', 0, 'POST'));
         Oledrion\Utility::updateCache();
         Oledrion\Utility::redirect(_AM_OLEDRION_SAVE_OK, $baseurl . '?op=categories');
         break;
@@ -221,7 +221,7 @@ switch ($action) {
         $opRedirect = 'categories';
         $item->setVars($_POST);
 
-        if (isset($_POST['delpicture']) && 1 == (int)$_POST['delpicture']) {
+        if (isset($_POST['delpicture']) && 1 == \Xmf\Request::getInt('delpicture', 0, 'POST')) {
             $item->deletePicture();
         }
 

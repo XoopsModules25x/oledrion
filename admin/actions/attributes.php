@@ -80,10 +80,10 @@ switch ($action) {
         $newFilter = false;
 
         if (isset($_POST['filter_attribute_id'])) {
-            if (0 != (int)$_POST['filter_attribute_id']) {
-                $criteria->add(new \Criteria('attribute_id', (int)$_POST['filter_attribute_id']), '=');
+            if (0 != \Xmf\Request::getInt('filter_attribute_id', 0, 'POST')) {
+                $criteria->add(new \Criteria('attribute_id', \Xmf\Request::getInt('filter_attribute_id', 0, 'POST')), '=');
             }
-            $filter_attribute_id = (int)$_POST['filter_attribute_id'];
+            $filter_attribute_id = \Xmf\Request::getInt('filter_attribute_id', 0, 'POST');
             $newFilter           = true;
         }
         if (isset($_POST['filter_attribute_title']) && '' !== xoops_trim($_POST['filter_attribute_title'])) {
@@ -91,19 +91,19 @@ switch ($action) {
             $filter_attribute_title = $_POST['filter_attribute_title'];
             $newFilter              = true;
         }
-        if (isset($_POST['filter_attribute_product_id']) && 0 != (int)$_POST['filter_attribute_product_id']) {
-            $criteria->add(new \Criteria('attribute_product_id', (int)$_POST['filter_attribute_product_id']), '=');
-            $filter_attribute_product_id = (int)$_POST['filter_attribute_product_id'];
+        if (isset($_POST['filter_attribute_product_id']) && 0 != \Xmf\Request::getInt('filter_attribute_product_id', 0, 'POST')) {
+            $criteria->add(new \Criteria('attribute_product_id', \Xmf\Request::getInt('filter_attribute_product_id', 0, 'POST')), '=');
+            $filter_attribute_product_id = \Xmf\Request::getInt('filter_attribute_product_id', 0, 'POST');
             $newFilter                   = true;
         }
-        if (isset($_POST['filter_attribute_weight']) && 0 != (int)$_POST['filter_attribute_weight']) {
-            $criteria->add(new \Criteria('attribute_weight', (int)$_POST['filter_attribute_weight']), '=');
-            $filter_attribute_weight = (int)$_POST['filter_attribute_weight'];
+        if (isset($_POST['filter_attribute_weight']) && 0 != \Xmf\Request::getInt('filter_attribute_weight', 0, 'POST')) {
+            $criteria->add(new \Criteria('attribute_weight', \Xmf\Request::getInt('filter_attribute_weight', 0, 'POST')), '=');
+            $filter_attribute_weight = \Xmf\Request::getInt('filter_attribute_weight', 0, 'POST');
             $newFilter               = true;
         }
-        if (isset($_POST['filter_attribute_type']) && 0 != (int)$_POST['filter_attribute_type']) {
-            $criteria->add(new \Criteria('attribute_type', (int)$_POST['filter_attribute_type']), '=');
-            $filter_attribute_type = (int)$_POST['filter_attribute_type'];
+        if (isset($_POST['filter_attribute_type']) && 0 != \Xmf\Request::getInt('filter_attribute_type', 0, 'POST')) {
+            $criteria->add(new \Criteria('attribute_type', \Xmf\Request::getInt('filter_attribute_type', 0, 'POST')), '=');
+            $filter_attribute_type = \Xmf\Request::getInt('filter_attribute_type', 0, 'POST');
             $newFilter             = true;
         }
 
@@ -439,10 +439,10 @@ switch ($action) {
         $item->setVars($_POST);
         $attribute_type = \Xmf\Request::getInt('attribute_type', 0, 'POST');
         if (Constants::OLEDRION_ATTRIBUTE_SELECT == $attribute_type) { // Liste déroulante
-            $item->setVar('attribute_option1', (int)$_POST['option2']);
-            $item->setVar('attribute_option2', (int)$_POST['option3']);
+            $item->setVar('attribute_option1', \Xmf\Request::getInt('option2', 0, 'POST'));
+            $item->setVar('attribute_option2', \Xmf\Request::getInt('option3', 0, 'POST'));
         } else { // Bouton radio ou case à cocher
-            $item->setVar('attribute_option1', (int)$_POST['option1']);
+            $item->setVar('attribute_option1', \Xmf\Request::getInt('option1', 0, 'POST'));
         }
 
         $default      = \Xmf\Request::getInt('default', 0, 'POST');

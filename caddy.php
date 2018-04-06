@@ -38,18 +38,13 @@ if (Oledrion\Utility::getModuleOption('restrict_orders', false)) {
     $xoopsTpl->assign('restrict_orders_text', '');
 }
 
-$op = 'default';
-if (isset($_POST['op'])) {
-    $op = $_POST['op'];
-} elseif (isset($_GET['op'])) {
-    $op = $_GET['op'];
-}
+$op    = \Xmf\Request::getCmd('op', 'default');
 
 $productId = 0;
-if (isset($_POST['product_id'])) {
-    $productId = (int)$_POST['product_id'];
-} elseif (isset($_GET['product_id'])) {
-    $productId = (int)$_GET['product_id'];
+if (\Xmf\Request::hasVar('product_id', 'POST')) { 
+ $productId = \Xmf\Request::getInt('product_id', 0, 'POST');
+} elseif (\Xmf\Request::hasVar('product_id', 'GET')) { 
+ $productId = \Xmf\Request::getInt('product_id', 0, 'GET');
 }
 
 $xoopsTpl->assign('op', $op);

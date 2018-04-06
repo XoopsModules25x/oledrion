@@ -97,7 +97,7 @@ class GatewaysOptionsHandler extends OledrionPersistableObjectHandler
         $criteria = new \CriteriaCompo();
         $criteria->add(new \Criteria('option_gateway', $option_gateway, '='));
         $criteria->add(new \Criteria('option_name', $option_name, '='));
-        $ret =& $this->getObjects($criteria);
+        $ret = $this->getObjects($criteria);
         if (count($ret) > 0) {
             if ($unserialize) {
                 return unserialize($ret[0]->getVar('option_value', $format));
@@ -124,7 +124,7 @@ class GatewaysOptionsHandler extends OledrionPersistableObjectHandler
         $criteria = new \CriteriaCompo();
         $criteria->add(new \Criteria('option_gateway', $option_gateway, '='));
         $criteria->add(new \Criteria('option_name', $option_name, '='));
-        $ret =& $this->getObjects($criteria);
+        $ret = $this->getObjects($criteria);
         if (count($ret) > 0) {
             $option = $ret[0];
             if ($serialize) {

@@ -161,7 +161,7 @@ switch ($action) {
         }
         $opRedirect = 'delivery';
         $item->setVars($_POST);
-        if (isset($_POST['delpicture']) && 1 == (int)$_POST['delpicture']) {
+        if (isset($_POST['delpicture']) && 1 == \Xmf\Request::getInt('delpicture', 0, 'POST')) {
             $item->deletePicture();
         }
         $destname = '';

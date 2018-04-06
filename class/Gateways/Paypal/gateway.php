@@ -299,7 +299,7 @@ class Paypal extends Gateway
                     }
                     $montant = $_POST['mc_gross'];
                     if ($paypalok) {
-                        $ref      = (int)$_POST['custom']; // Numéro de la commande
+                        $ref      = \Xmf\Request::getInt('custom', 0, 'POST'); // Numéro de la commande
                         $commande = null;
                         $commande = $commandsHandler->get($ref);
                         if (is_object($commande)) {
@@ -311,7 +311,7 @@ class Paypal extends Gateway
                         }
                     } else {
                         if (isset($_POST['custom'])) {
-                            $ref      = (int)$_POST['custom'];
+                            $ref      = \Xmf\Request::getInt('custom', 0, 'POST');
                             $commande = null;
                             $commande = $commandsHandler->get($ref);
                             if (is_object($commande)) {

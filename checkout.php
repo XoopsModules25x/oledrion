@@ -43,12 +43,7 @@ if (1 == Oledrion\Utility::getModuleOption('restrict_orders', false) && 0 == $ui
     Oledrion\Utility::redirect(xoops_trim($text), 'index.php', 5);
 }
 // Get option
-$op = 'default';
-if (isset($_POST['op'])) {
-    $op = $_POST['op'];
-} elseif (isset($_GET['op'])) {
-    $op = $_GET['op'];
-}
+$op    = \Xmf\Request::getCmd('op', 'default');
 // Get action
 $action = 'default';
 if (isset($_POST['action'])) {
@@ -57,11 +52,10 @@ if (isset($_POST['action'])) {
     $action = $_GET['action'];
 }
 // Get commend id
-$commend_id = 0;
-if (isset($_POST['commend_id'])) {
-    $commend_id = (int)$_POST['commend_id'];
-} elseif (isset($_GET['commend_id'])) {
-    $commend_id = (int)$_GET['commend_id'];
+if (\Xmf\Request::hasVar('commend_id', 'POST')) {
+    $commend_id = \Xmf\Request::getInt('commend_id', 0, 'POST');
+} else {
+    $commend_id = \Xmf\Request::getInt('commend_id', 0, 'GET');
 }
 
 $xoopsTpl->assign('op', $op);
@@ -147,10 +141,9 @@ switch ($op) {
                 break;
 
             case 'packing':
-                $packing_id = 0;
-                if (isset($_POST['packing_id'])) {
-                    $packing_id = (int)$_POST['packing_id'];
-                }
+
+                $packing_id = \Xmf\Request::getInt('packing_id', 0, 'POST');
+
                 if (0 == $packing_id) {
                     Oledrion\Utility::redirect(_OLEDRION_ERROR20, OLEDRION_URL, 4);
                 }
@@ -180,10 +173,9 @@ switch ($op) {
                 break;
 
             case 'location':
-                $location_id = 0;
-                if (isset($_POST['location_id'])) {
-                    $location_id = (int)$_POST['location_id'];
-                }
+
+                $location_id = \Xmf\Request::getInt('location_id', 0, 'POST');
+
                 if (0 == $location_id) {
                     Oledrion\Utility::redirect(_OLEDRION_ERROR20, OLEDRION_URL, 4);
                 }
@@ -211,10 +203,9 @@ switch ($op) {
                 break;
 
             case 'delivery':
-                $delivery_id = 0;
-                if (isset($_POST['delivery_id'])) {
-                    $delivery_id = (int)$_POST['delivery_id'];
-                }
+
+                $delivery_id = \Xmf\Request::getInt('delivery_id', 0, 'POST');
+
                 if (0 == $delivery_id) {
                     Oledrion\Utility::redirect(_OLEDRION_ERROR20, OLEDRION_URL, 4);
                 }
@@ -258,10 +249,9 @@ switch ($op) {
                 break;
 
             case 'payment':
-                $payment_id = 0;
-                if (isset($_POST['payment_id'])) {
-                    $payment_id = (int)$_POST['payment_id'];
-                }
+
+                $payment_id = \Xmf\Request::getInt('payment_id', 0, 'POST');
+
                 if (0 == $payment_id) {
                     Oledrion\Utility::redirect(_OLEDRION_ERROR20, OLEDRION_URL, 4);
                 }
@@ -554,7 +544,7 @@ switch ($op) {
 
         // Enregistrement du panier
         $msgCommande = '';
-//        $handlers    = HandlerManager::getInstance();
+        //        $handlers    = HandlerManager::getInstance();
         foreach ($cartForTemplate as $line) {
             $panier = $caddyHandler->create(true);
             $panier->setVar('caddy_product_id', $line['product_id']);

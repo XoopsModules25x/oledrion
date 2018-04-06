@@ -187,8 +187,8 @@ switch ($op) {
         break;
     // Product output as json
     case 'product':
-        $start = (int)$_GET['start'];
-        $limit = (int)$_GET['limit'];
+        $start = \Xmf\Request::getInt('start', 0, 'GET');
+        $limit = \Xmf\Request::getInt('limit', 0, 'GET');
         if (isset($start) && '' !== $start) {
             $ret      = [];
             $criteria = new \CriteriaCompo();
@@ -222,7 +222,7 @@ switch ($op) {
         break;
     // Product output as json
     case 'category':
-        $start = (int)$_GET['start'];
+        $start = \Xmf\Request::getInt('start', 0, 'GET');
         if (isset($start) && '' !== $start) {
             $ret      = [];
             $criteria = new \CriteriaCompo();
@@ -248,7 +248,7 @@ switch ($op) {
 
     // Product output as json
     case 'price':
-        $product_id = (int)$_GET['product_id'];
+        $product_id = \Xmf\Request::getInt('product_id', 0, 'GET');
         $product    = $productsHandler->get($product_id);
         if (is_object($product)) {
             if ($product->getVar('product_online') && $product->getVar('product_stock') > 0) {
@@ -283,7 +283,7 @@ switch ($op) {
     // Ajax rate
     case 'rate':
         if (isset($_POST['product_id'])) {
-            $product_id = (int)$_POST['product_id'];
+            $product_id = \Xmf\Request::getInt('product_id', 0, 'POST');
             $product    = null;
             $product    = $productsHandler->get($product_id);
             if (is_object($product)
@@ -308,7 +308,7 @@ switch ($op) {
                     /* if ($_POST['rating'] == '--') {
                         Oledrion\Utility::redirect(_OLEDRION_NORATING, OLEDRION_URL . 'product.php?product_id=' . $product->getVar('product_id'), 4);
                     } */
-                    $rating = (int)$_POST['rating'];
+                    $rating = \Xmf\Request::getInt('rating', 0, 'POST');
                     /* if ($rating < 1 || $rating > 10) {
                         exit(_ERRORS);
                     } */

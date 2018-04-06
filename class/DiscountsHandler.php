@@ -73,7 +73,7 @@ class DiscountsHandler extends OledrionPersistableObjectHandler
             $critere2->add(new \Criteria('disc_date_to', time(), '<='));
             $critere->add($critere2);
 
-            $buffer =& $this->getObjects($critere);
+            $buffer = $this->getObjects($critere);
         }
 
         return $buffer;
@@ -100,7 +100,7 @@ class DiscountsHandler extends OledrionPersistableObjectHandler
             if (count($groups) > 0) {
                 $critere->add(new \Criteria('disc_group', '(' . implode(',', $groups) . ')', 'IN'));
             }
-            $buffer =& $this->getObjects($critere);
+            $buffer = $this->getObjects($critere);
         }
 
         return $buffer;
@@ -120,7 +120,7 @@ class DiscountsHandler extends OledrionPersistableObjectHandler
             $critere->add(new \Criteria('disc_on_what', Constants::OLEDRION_DISCOUNT_ON2, '='));
             $tblGroups = Oledrion\Utility::getCurrentMemberGroups();
             $critere->add(new \Criteria('disc_group', '(' . implode(',', $tblGroups) . ')', 'IN'));
-            $buffer =& $this->getObjects($critere);
+            $buffer = $this->getObjects($critere);
         }
 
         return $buffer;
@@ -140,7 +140,7 @@ class DiscountsHandler extends OledrionPersistableObjectHandler
             $critere->add(new \Criteria('disc_on_what', Constants::OLEDRION_DISCOUNT_ON4, '='));
             $tblGroups = Oledrion\Utility::getCurrentMemberGroups();
             $critere->add(new \Criteria('disc_group', '(' . implode(',', $tblGroups) . ')', 'IN'));
-            $buffer =& $this->getObjects($critere);
+            $buffer = $this->getObjects($critere);
         }
 
         return $buffer;
@@ -161,7 +161,7 @@ class DiscountsHandler extends OledrionPersistableObjectHandler
             $critere->add(new \Criteria('disc_shipping', Constants::OLEDRION_DISCOUNT_SHIPPING2, '='));
             $tblGroups = Oledrion\Utility::getCurrentMemberGroups();
             $critere->add(new \Criteria('disc_group', '(' . implode(',', $tblGroups) . ')', 'IN'));
-            $buffer =& $this->getObjects($critere);
+            $buffer = $this->getObjects($critere);
         }
 
         return $buffer;
@@ -181,7 +181,7 @@ class DiscountsHandler extends OledrionPersistableObjectHandler
             $critere->add(new \Criteria('disc_on_what', Constants::OLEDRION_DISCOUNT_ON1, '='));
             $tblGroups = Oledrion\Utility::getCurrentMemberGroups();
             $critere->add(new \Criteria('disc_group', '(' . implode(',', $tblGroups) . ')', 'IN'));
-            $buffer =& $this->getObjects($critere);
+            $buffer = $this->getObjects($critere);
         }
 
         return $buffer;

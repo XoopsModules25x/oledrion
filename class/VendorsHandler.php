@@ -66,7 +66,7 @@ class VendorsHandler extends OledrionPersistableObjectHandler
         $critere->setSort($parameters['sort']);
         $critere->setOrder($parameters['order']);
         $categories = [];
-        $categories =& $this->getObjects($critere, $parameters['idaskey']);
+        $categories = $this->getObjects($critere, $parameters['idaskey']);
 
         return $categories;
     }
@@ -106,7 +106,7 @@ class VendorsHandler extends OledrionPersistableObjectHandler
         $ret = [];
         if (is_array($ids) && count($ids) > 0) {
             $criteria = new \Criteria('vendor_id', '(' . implode(',', $ids) . ')', 'IN');
-            $ret      =& $this->getObjects($criteria, true, true, '*', false);
+            $ret      = $this->getObjects($criteria, true, true, '*', false);
         }
 
         return $ret;

@@ -91,7 +91,7 @@ switch ($action) {
         $footer     = \Xmf\Request::getString('footer', '', 'POST');
         $date1      = strtotime($_POST['date1']);
         $date2      = strtotime($_POST['date2']);
-        $cat_id     = (int)$_POST['cat_cid'];
+        $cat_id     = \Xmf\Request::getInt('cat_cid', 0, 'POST');
         $products   = $categories = [];
         $products   = $productsHandler->getProductsForNewsletter(new Oledrion\Parameters([
                                                                                                  'startingDate' => $date1,

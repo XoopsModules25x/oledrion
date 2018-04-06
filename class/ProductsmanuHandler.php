@@ -65,7 +65,7 @@ class ProductsmanuHandler extends OledrionPersistableObjectHandler
         $ret = [];
         if (is_array($ids)) {
             $criteria = new \Criteria('pm_product_id', '(' . implode(',', $ids) . ')', 'IN');
-            $ret      =& $this->getObjects($criteria, true, true, '*', false);
+            $ret      = $this->getObjects($criteria, true, true, '*', false);
         }
 
         return $ret;
@@ -85,7 +85,7 @@ class ProductsmanuHandler extends OledrionPersistableObjectHandler
         $criteria = new \Criteria('pm_manu_id', $pm_manu_id, '=');
         $criteria->setStart($start);
         $criteria->setLimit($limit);
-        $items =& $this->getObjects($criteria, false, false, 'pm_product_id', false);
+        $items = $this->getObjects($criteria, false, false, 'pm_product_id', false);
         if (count($items) > 0) {
             foreach ($items as $item) {
                 $ret[] = $item['pm_product_id'];

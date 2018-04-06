@@ -158,7 +158,7 @@ class OledrionPersistableObjectHandler extends \XoopsPersistableObjectHandler
         $ret = [];
         if (is_array($ids) && count($ids) > 0) {
             $criteria = new \Criteria($this->keyName, '(' . implode(',', $ids) . ')', 'IN');
-            $ret      =& $this->getObjects($criteria, true);
+            $ret      = $this->getObjects($criteria, true);
         }
 
         return $ret;
@@ -347,7 +347,7 @@ class OledrionPersistableObjectHandler extends \XoopsPersistableObjectHandler
         $critere->setStart($start);
         $critere->setSort($sort);
         $critere->setOrder($order);
-        $items =& $this->getObjects($critere, $idAsKey);
+        $items = $this->getObjects($critere, $idAsKey);
 
         return $items;
     }

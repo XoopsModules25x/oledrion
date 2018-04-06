@@ -66,7 +66,7 @@ class VatHandler extends OledrionPersistableObjectHandler
         $critere->setSort($parameters['sort']);
         $critere->setOrder($parameters['order']);
         $vats = [];
-        $vats =& $this->getObjects($critere, $parameters['idaskey']);
+        $vats = $this->getObjects($critere, $parameters['idaskey']);
 
         return $vats;
     }
@@ -100,7 +100,7 @@ class VatHandler extends OledrionPersistableObjectHandler
         $critere->setSort($parameters['sort']);
         $critere->setOrder($parameters['order']);
         $vats = [];
-        $vats =& $this->getObjects($critere, $parameters['idaskey']);
+        $vats = $this->getObjects($critere, $parameters['idaskey']);
 
         return $vats;
     }

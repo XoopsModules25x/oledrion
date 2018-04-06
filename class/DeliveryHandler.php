@@ -55,7 +55,7 @@ class DeliveryHandler extends OledrionPersistableObjectHandler
         $critere->setSort($parameters['sort']);
         $critere->setOrder($parameters['order']);
         $categories = [];
-        $categories =& $this->getObjects($critere);
+        $categories = $this->getObjects($critere);
 
         return $categories;
     }
@@ -82,7 +82,7 @@ class DeliveryHandler extends OledrionPersistableObjectHandler
         $critere->setStart($parameters['start']);
         $critere->setSort($parameters['sort']);
         $critere->setOrder($parameters['order']);
-        $obj =& $this->getObjects($critere);
+        $obj = $this->getObjects($critere);
         if ($obj) {
             foreach ($obj as $root) {
                 $tab = [];
@@ -121,7 +121,7 @@ class DeliveryHandler extends OledrionPersistableObjectHandler
         $critere = new \CriteriaCompo();
         $critere->add(new \Criteria('delivery_id', '(' . implode(',', $id) . ')', 'IN'));
         $critere->add(new \Criteria('delivery_online', 1));
-        $obj =& $this->getObjects($critere);
+        $obj = $this->getObjects($critere);
         if ($obj) {
             foreach ($obj as $root) {
                 $tab                              = [];

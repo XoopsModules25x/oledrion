@@ -31,13 +31,13 @@ $GLOBALS['current_category']             = -1;
 $GLOBALS['xoopsOption']['template_main'] = 'oledrion_list.tpl';
 require_once XOOPS_ROOT_PATH . '/header.php';
 
-if (isset($_GET['list_id'])) {
-    $list_id = (int)$_GET['list_id'];
+if (\Xmf\Request::hasVar('list_id', 'GET')) {
+    $list_id = \Xmf\Request::getInt('list_id', 0, 'GET');
 } else {
     Oledrion\Utility::redirect(_OLEDRION_ERROR21, 'index.php', 5);
 }
 //$handlers = HandlerManager::getInstance();
-$db = \XoopsDatabaseFactory::getDatabaseConnection();
+$db           = \XoopsDatabaseFactory::getDatabaseConnection();
 $listsHandler = new Oledrion\ListsHandler($db);
 
 // La liste existe ?
@@ -73,14 +73,14 @@ $listsHandler->incrementListViews($list);
 // Recherce des autres listes de cet utilisateur
 if ($listsHandler->getRecentListsCount(Constants::OLEDRION_LISTS_ALL_PUBLIC, Oledrion\Utility::getCurrentUserID()) > 1) {
     $otherUserLists = $listsHandler->getRecentLists(new Oledrion\Parameters([
-                                                                                              'start'    => 0,
-                                                                                              'limit'    => 0,
-                                                                                              'sort'     => 'list_date',
-                                                                                              'order'    => 'DESC',
-                                                                                              'idAsKey'  => true,
-                                                                                              'listType' => Constants::OLEDRION_LISTS_ALL_PUBLIC,
-                                                                                              'list_uid' => Oledrion\Utility::getCurrentUserID()
-                                                                                          ]));
+                                                                                'start'    => 0,
+                                                                                'limit'    => 0,
+                                                                                'sort'     => 'list_date',
+                                                                                'order'    => 'DESC',
+                                                                                'idAsKey'  => true,
+                                                                                'listType' => Constants::OLEDRION_LISTS_ALL_PUBLIC,
+                                                                                'list_uid' => Oledrion\Utility::getCurrentUserID()
+                                                                            ]));
     if (count($otherUserLists) > 0) {
         foreach ($otherUserLists as $oneOtherList) {
             $xoopsTpl->append('otherUserLists', $oneOtherList->toArray());

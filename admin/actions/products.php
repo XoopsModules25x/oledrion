@@ -72,24 +72,24 @@ switch ($action) {
         $criteria->add(new \Criteria('product_id', 0, '<>'));
 
         if (isset($_POST['filter_product_id'])) {
-            if (0 != (int)$_POST['filter_product_id']) {
-                $criteria->add(new \Criteria('product_id', (int)$_POST['filter_product_id']), '=');
+            if (0 != \Xmf\Request::getInt('filter_product_id', 0, 'POST')) {
+                $criteria->add(new \Criteria('product_id', \Xmf\Request::getInt('filter_product_id', 0, 'POST')), '=');
             }
-            $filter_product_id = (int)$_POST['filter_product_id'];
+            $filter_product_id = \Xmf\Request::getInt('filter_product_id', 0, 'POST');
             $newFilter         = true;
         }
-        if (isset($_POST['filter_product_cid']) && 0 != (int)$_POST['filter_product_cid']) {
-            $criteria->add(new \Criteria('product_cid', (int)$_POST['filter_product_cid']), '=');
-            $filter_product_cid = (int)$_POST['filter_product_cid'];
+        if (isset($_POST['filter_product_cid']) && 0 != \Xmf\Request::getInt('filter_product_cid', 0, 'POST')) {
+            $criteria->add(new \Criteria('product_cid', \Xmf\Request::getInt('filter_product_cid', 0, 'POST')), '=');
+            $filter_product_cid = \Xmf\Request::getInt('filter_product_cid', 0, 'POST');
             $newFilter          = true;
         }
-        if (isset($_POST['filter_product_recommended']) && 0 != (int)$_POST['filter_product_recommended']) {
-            if (1 == (int)$_POST['filter_product_recommended']) {
+        if (isset($_POST['filter_product_recommended']) && 0 != \Xmf\Request::getInt('filter_product_recommended', 0, 'POST')) {
+            if (1 == \Xmf\Request::getInt('filter_product_recommended', 0, 'POST')) {
                 $criteria->add(new \Criteria('product_recommended', '0000-00-00', '<>'));
             } else {
                 $criteria->add(new \Criteria('product_recommended', '0000-00-00', '='));
             }
-            $filter_product_recommended = (int)$_POST['filter_product_recommended'];
+            $filter_product_recommended = \Xmf\Request::getInt('filter_product_recommended', 0, 'POST');
             $newFilter                  = true;
         }
         if (isset($_POST['filter_product_title']) && '' !== xoops_trim($_POST['filter_product_title'])) {
@@ -102,14 +102,14 @@ switch ($action) {
             $filter_product_sku = $_POST['filter_product_sku'];
             $newFilter          = true;
         }
-        if (isset($_POST['filter_product_online']) && 0 != (int)$_POST['filter_product_online']) {
-            $criteria->add(new \Criteria('product_online', (int)$_POST['filter_product_online'] - 1, '='));
-            $filter_product_online = (int)$_POST['filter_product_online'];
+        if (isset($_POST['filter_product_online']) && 0 != \Xmf\Request::getInt('filter_product_online', 0, 'POST')) {
+            $criteria->add(new \Criteria('product_online', \Xmf\Request::getInt('filter_product_online', 0, 'POST') - 1, '='));
+            $filter_product_online = \Xmf\Request::getInt('filter_product_online', 0, 'POST');
             $newFilter             = true;
         }
-        if (isset($_POST['filter_product_price']) && 0 != (int)$_POST['filter_product_price']) {
-            $criteria->add(new \Criteria('product_price', (int)$_POST['filter_product_price']), '>=');
-            $filter_product_price = (int)$_POST['filter_product_price'];
+        if (isset($_POST['filter_product_price']) && 0 != \Xmf\Request::getInt('filter_product_price', 0, 'POST')) {
+            $criteria->add(new \Criteria('product_price', \Xmf\Request::getInt('filter_product_price', 0, 'POST')), '>=');
+            $filter_product_price = \Xmf\Request::getInt('filter_product_price', 0, 'POST');
             $newFilter            = true;
         }
         if (0 == $filter_product_id
@@ -278,7 +278,7 @@ switch ($action) {
         // ****************************************************************************************************************
         $opRedirect = '?op=products';
         if (isset($_GET['product_id'])) {
-            $product_id = (int)$_GET['product_id'];
+            $product_id = \Xmf\Request::getInt('product_id', 0, 'GET');
             $product    = null;
             $product    = $productsHandler->get($product_id);
             if (is_object($product)) {
@@ -301,7 +301,7 @@ switch ($action) {
         // ****************************************************************************************************************
         $opRedirect = '?op=products';
         if (isset($_GET['product_id'])) {
-            $product_id = (int)$_GET['product_id'];
+            $product_id = \Xmf\Request::getInt('product_id', 0, 'GET');
             $product    = null;
             $product    = $productsHandler->get($product_id);
             if (is_object($product)) {
@@ -687,15 +687,15 @@ switch ($action) {
         $item->setVar('product_submitted', strtotime($_POST['product_submitted']));
 
         // Suppression de l'image principale
-        if (isset($_POST['delpicture1']) && 1 == (int)$_POST['delpicture1']) {
+        if (isset($_POST['delpicture1']) && 1 == \Xmf\Request::getInt('delpicture1', 0, 'POST')) {
             $item->deletePicture();
         }
 
         // Suppression de la vignette
-        if (isset($_POST['delpicture2']) && 1 == (int)$_POST['delpicture2']) {
+        if (isset($_POST['delpicture2']) && 1 == \Xmf\Request::getInt('delpicture2', 0, 'POST')) {
             $item->deleteThumb();
         }
-        if (isset($_POST['delpicture3']) && 1 == (int)$_POST['delpicture3']) {
+        if (isset($_POST['delpicture3']) && 1 == \Xmf\Request::getInt('delpicture3', 0, 'POST')) {
             $item->deleteAttachment();
         }
 

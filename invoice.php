@@ -24,8 +24,8 @@ $GLOBALS['current_category'] = -1;
 
 $op = isset($_GET['op']) ? $_GET['op'] : 'default';
 
-if (isset($_GET['id'])) {
-    $cmdId = (int)$_GET['id'];
+if (\Xmf\Request::hasVar('id', 'GET')) {
+ $cmdId = \Xmf\Request::getInt('id', 0, 'GET');
 } else {
     Oledrion\Utility::redirect(_OLEDRION_ERROR11, 'index.php', 6);
 }

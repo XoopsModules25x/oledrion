@@ -30,11 +30,12 @@ require_once XOOPS_ROOT_PATH . '/header.php';
 require_once XOOPS_ROOT_PATH . '/class/pagenav.php';
 
 // Les tests **************************************************************************************
-if (isset($_GET['manu_id'])) {
-    $manu_id = (int)$_GET['manu_id'];
+if (\Xmf\Request::hasVar('manu_id', 'GET')) {
+    $manu_id = \Xmf\Request::getInt('manu_id', 0, 'GET');
 } else {
     Oledrion\Utility::redirect(_OLEDRION_ERROR7, 'index.php', 5);
 }
+
 $start = \Xmf\Request::getInt('start', 0, 'GET');
 
 // Le fabricant existe ?

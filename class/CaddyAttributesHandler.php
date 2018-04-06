@@ -65,7 +65,7 @@ class CaddyAttributesHandler extends OledrionPersistableObjectHandler
     {
 //        $handlers   = HandlerManager::getInstance();
         $attributes = $ret = [];
-        $attributes =& $this->getObjects(new \Criteria('ca_caddy_id', $ca_caddy_id, '='));
+        $attributes = $this->getObjects(new \Criteria('ca_caddy_id', $ca_caddy_id, '='));
         if (0 == count($attributes)) {
             return $ret;
         }
@@ -105,7 +105,7 @@ class CaddyAttributesHandler extends OledrionPersistableObjectHandler
     {
         $ret       = $ordersIds = [];
         $criteria  = new \Criteria('ca_attribute_id', $ca_attribute_id, '=');
-        $ordersIds =& $this->getObjects($criteria, false, true, 'ca_cmd_id', false);
+        $ordersIds = $this->getObjects($criteria, false, true, 'ca_cmd_id', false);
         foreach ($ordersIds as $order) {
             $ret[] = $order->ca_cmd_id;
         }

@@ -163,7 +163,7 @@ switch ($action) {
         $opRedirect = 'manufacturers';
         $item->setVars($_POST);
         for ($i = 1; $i <= 5; ++$i) {
-            if (isset($_POST['delpicture' . $i]) && 1 == (int)$_POST['delpicture' . $i]) {
+            if (isset($_POST['delpicture' . $i]) && 1 == \Xmf\Request::getInt('delpicture' . $i, 'POST')) {
                 $item->deletePicture($i);
             }
         }

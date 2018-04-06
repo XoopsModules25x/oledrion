@@ -50,7 +50,7 @@ class LocationDeliveryHandler extends OledrionPersistableObjectHandler
         }
         $critere = new \CriteriaCompo();
         $critere->add(new \Criteria('ld_location', $parameters['location']));
-        $obj =& $this->getObjects($critere);
+        $obj = $this->getObjects($critere);
         if ($obj) {
             foreach ($obj as $root) {
                 $tab                               = [];
@@ -74,7 +74,7 @@ class LocationDeliveryHandler extends OledrionPersistableObjectHandler
         $critere->add(new \Criteria('ld_delivery', $ld_delivery));
         $critere->add(new \Criteria('ld_location', $ld_location));
         $critere->setLimit(1);
-        $obj =& $this->getObjects($critere);
+        $obj = $this->getObjects($critere);
         if ($obj) {
             foreach ($obj as $root) {
                 $tab = [];

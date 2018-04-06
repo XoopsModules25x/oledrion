@@ -198,8 +198,8 @@ class Pec24 extends Gateway
         // Get from bank
         $authority = $_GET['au'];
         $status    = $_GET['rs'];
-        $cmd_id    = (int)$_GET['cmd_id'];
-        $cmd_total = (int)$_GET['cmd_total'];
+        $cmd_id    = \Xmf\Request::getInt('cmd_id', 0, 'GET');
+        $cmd_total = \Xmf\Request::getInt('cmd_total', 0, 'GET');
         // Set soap
         $url = $this->getdialogURL();
         if (extension_loaded('soap')) {

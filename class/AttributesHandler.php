@@ -110,7 +110,7 @@ class AttributesHandler extends OledrionPersistableObjectHandler
             $criteria->add(new \Criteria('attribute_id', '(' . implode(',', array_keys($attributesIds)) . ')', 'IN'));
         }
         $criteria->setSort('attribute_weight, attribute_title');    // L'ajout du titre dans le tri permet de trier même lorsque le poids n'est pas valorisé
-        $ret =& $this->getObjects($criteria);
+        $ret = $this->getObjects($criteria);
 
         return $ret;
     }

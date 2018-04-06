@@ -55,7 +55,7 @@ class PaymentHandler extends OledrionPersistableObjectHandler
         $critere->setSort($parameters['sort']);
         $critere->setOrder($parameters['order']);
         $categories = [];
-        $categories =& $this->getObjects($critere);
+        $categories = $this->getObjects($critere);
 
         return $categories;
     }
@@ -77,7 +77,7 @@ class PaymentHandler extends OledrionPersistableObjectHandler
         $critere = new \CriteriaCompo();
         $critere->add(new \Criteria('payment_id', '(' . implode(',', $id) . ')', 'IN'));
         $critere->add(new \Criteria('payment_online', 1));
-        $obj =& $this->getObjects($critere);
+        $obj = $this->getObjects($critere);
         if ($obj) {
             foreach ($obj as $root) {
                 $tab   = [];

@@ -29,8 +29,8 @@ require_once XOOPS_ROOT_PATH . '/class/tree.php';
 $product_id = 0;
 // Les tests **************************************************************************************
 // Recherche du n° de produit
-if (isset($_GET['product_id'])) {
-    $product_id = (int)$_GET['product_id'];
+if (\Xmf\Request::hasVar('product_id', 'GET')) {
+ $product_id = \Xmf\Request::getInt('product_id', 0, 'GET');
 } else {
     Oledrion\Utility::redirect(_OLEDRION_ERROR1, 'index.php', 5);
 }

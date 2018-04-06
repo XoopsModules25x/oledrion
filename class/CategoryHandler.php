@@ -67,7 +67,7 @@ class CategoryHandler extends OledrionPersistableObjectHandler
         $critere->setSort($parameters['sort']);
         $critere->setOrder($parameters['order']);
         $categories = [];
-        $categories =& $this->getObjects($critere, $parameters['idaskey']);
+        $categories = $this->getObjects($critere, $parameters['idaskey']);
 
         return $categories;
     }
@@ -175,7 +175,7 @@ class CategoryHandler extends OledrionPersistableObjectHandler
         $ret = [];
         if (is_array($ids) && count($ids) > 0) {
             $criteria = new \Criteria('cat_cid', '(' . implode(',', $ids) . ')', 'IN');
-            $ret      =& $this->getObjects($criteria, true, true, '*', false);
+            $ret      = $this->getObjects($criteria, true, true, '*', false);
         }
 
         return $ret;
@@ -191,7 +191,7 @@ class CategoryHandler extends OledrionPersistableObjectHandler
         $ret      = [];
         $criteria = new \Criteria('cat_pid', 0, '=');
         $criteria->setSort('cat_title');
-        $ret =& $this->getObjects($criteria);
+        $ret = $this->getObjects($criteria);
 
         return $ret;
     }
