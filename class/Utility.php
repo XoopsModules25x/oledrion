@@ -207,7 +207,7 @@ class Utility extends \XoopsObject
     public static function IP()
     {
         $proxy_ip = '';
-        if (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
+       if (\Xmf\Request::hasVar('HTTP_X_FORWARDED_FOR', 'SERVER')) {
             $proxy_ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
         } elseif (!empty($_SERVER['HTTP_X_FORWARDED'])) {
             $proxy_ip = $_SERVER['HTTP_X_FORWARDED'];
