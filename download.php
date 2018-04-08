@@ -45,14 +45,14 @@ if (!is_object($caddy)) {
 // Recherche du produit associé
 $product = null;
 $product = $productsHandler->get($caddy->getVar('caddy_product_id'));
-if (null == $product) {
+if (null === $product) {
     Oledrion\Utility::redirect(_OLEDRION_ERROR15, OLEDRION_URL, 5);
 }
 
 // On vérifie que la commande associée est payée
 $order = null;
 $order = $commandsHandler->get($caddy->getVar('caddy_cmd_id'));
-if (null == $order) {
+if (null === $order) {
     Oledrion\Utility::redirect(_OLEDRION_ERROR16, OLEDRION_URL, 5);
 }
 
