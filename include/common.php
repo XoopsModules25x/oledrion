@@ -20,8 +20,8 @@
 use XoopsModules\Oledrion;
 use XoopsModules\Oledrion\Plugins\Models;
 
-require_once __DIR__ . '/../preloads/autoloader.php';
-//require_once __DIR__ . '/../config.php';
+require_once  dirname(__DIR__) . '/preloads/autoloader.php';
+//require_once  dirname(__DIR__) . '/config.php';
 
 $moduleDirName      = basename(dirname(__DIR__));
 $moduleDirNameUpper = strtoupper($moduleDirName); //$capsDirName

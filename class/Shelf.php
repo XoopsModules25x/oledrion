@@ -25,8 +25,8 @@
 
 use XoopsModules\Oledrion;
 
-include __DIR__ . '/../preloads/autoloader.php';
-include __DIR__ . '/../include/common.php';
+include  dirname(__DIR__) . '/preloads/autoloader.php';
+include  dirname(__DIR__) . '/include/common.php';
 
 /**
  * Class Shelf

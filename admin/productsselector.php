@@ -22,8 +22,8 @@ use XoopsModules\Oledrion;
 /**
  * Sélecteur de produits
  */
-require_once __DIR__ . '/../../../include/cp_header.php';
-require_once __DIR__ . '/../include/common.php';
+require_once  dirname(dirname(dirname(__DIR__))) . '/include/cp_header.php';
+require_once  dirname(__DIR__) . '/include/common.php';
 require_once XOOPS_ROOT_PATH . '/class/template.php';
 // require_once OLEDRION_PATH . 'class/tree.php';
 

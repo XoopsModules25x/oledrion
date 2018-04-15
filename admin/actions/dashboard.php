@@ -33,7 +33,7 @@ switch ($action) {
         // ****************************************************************************************************************
         xoops_cp_header();
 
-        require_once __DIR__ . '/../../class/directorychecker.php';
+        require_once  dirname(dirname(__DIR__)) . '/class/directorychecker.php';
 
         //        Oledrion\Utility::htitle(_MI_OLEDRION_ADMENU10, 4);
         $adminObject = \Xmf\Module\Admin::getInstance();
@@ -102,7 +102,7 @@ switch ($action) {
 
         if ($helper->getConfig('displaySampleButton')) {
             xoops_loadLanguage('admin/modulesadmin', 'system');
-            require_once __DIR__ . '/../testdata/index.php';
+            require_once  dirname(__DIR__) . '/testdata/index.php';
 
             $adminObject->addItemButton(constant('CO_' . $moduleDirNameUpper . '_' . 'ADD_SAMPLEDATA'), '__DIR__ . /../../testdata/index.php?op=load', 'add');
 

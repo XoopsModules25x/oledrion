@@ -24,7 +24,7 @@ use XoopsModules\Oledrion;
  */
 function b_sitemap_oledrion()
 {
-    require_once __DIR__ . '/../oledrion/header.php';
+    require_once  dirname(__DIR__) . '/oledrion/header.php';
     global $sitemap_configs;
     $xoopsDB    = \XoopsDatabaseFactory::getDatabaseConnection();
     $table      = $xoopsDB->prefix('oledrion_cat');

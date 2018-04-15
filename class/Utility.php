@@ -1425,7 +1425,7 @@ class Utility extends \XoopsObject
             $vat_rate = $vats[$vat_id];
         } else {
 //            $handlers = \HandlerManager::getInstance();
-            require_once __DIR__ . '/../include/common.php';
+            require_once  dirname(__DIR__) . '/include/common.php';
             $vat      = $vatHandler->get($vat_id);
             if (is_object($vat)) {
                 $vat_rate      = $vat->getVar('vat_rate', 'e');

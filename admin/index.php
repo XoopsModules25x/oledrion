@@ -19,8 +19,8 @@
 
 use XoopsModules\Oledrion;
 
-require_once __DIR__ . '/../../../include/cp_header.php';
-require_once __DIR__ . '/../include/common.php';
+require_once  dirname(dirname(dirname(__DIR__))) . '/include/cp_header.php';
+require_once  dirname(__DIR__) . '/include/common.php';
 require_once __DIR__ . '/admin_header.php';
 
 require_once OLEDRION_PATH . 'admin/functions.php';

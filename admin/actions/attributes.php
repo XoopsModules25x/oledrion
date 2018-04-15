@@ -28,7 +28,7 @@ if (!defined('OLEDRION_ADMIN')) {
     exit();
 }
 
-//require_once __DIR__ . '/../../class/Attributes.php';
+//require_once  dirname(dirname(__DIR__)) . '/class/Attributes.php';
 
 global $baseurl; // Pour faire taire les warnings de Zend Studio
 $operation = 'attributes';

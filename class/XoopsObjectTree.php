@@ -21,7 +21,7 @@ use XoopsModules\Oledrion;
 
 defined('XOOPS_ROOT_PATH') || die('Restricted access');
 
-require_once __DIR__ . '/../../../class/tree.php';
+require_once  dirname(dirname(dirname(__DIR__))) . '/class/tree.php';
 
 /**
  * A tree structures with {@link XoopsObject}s as nodes

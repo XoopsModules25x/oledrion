@@ -146,7 +146,7 @@ class Reductions
     public function loadAllActiveRules()
     {
         global $xoopsDB;
-        require_once __DIR__ . '/../include/common.php';
+        require_once  dirname(__DIR__) . '/include/common.php';
         $critere  = new \CriteriaCompo();
         $critere1 = new \CriteriaCompo();
         $critere1->add(new \Criteria('disc_date_from', 0, '='));

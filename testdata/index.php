@@ -18,9 +18,9 @@
 use XoopsModules\Oledrion;
 use XoopsModules\Oledrion\Common;
 
-require_once __DIR__ . '/../../../mainfile.php';
+require_once  dirname(dirname(dirname(__DIR__))) . '/mainfile.php';
 
-include __DIR__ . '/../preloads/autoloader.php';
+include  dirname(__DIR__) . '/preloads/autoloader.php';
 
 $op = \Xmf\Request::getCmd('op', '');
 
@@ -147,7 +147,7 @@ function loadSampleData()
 
     //  ---  COPY test folder files ---------------
     if (count($configurator->copyTestFolders) > 0) {
-        //        $file = __DIR__ . '/../testdata/images/';
+        //        $file =  dirname(__DIR__) . '/testdata/images/';
         foreach (array_keys($configurator->copyTestFolders) as $i) {
             $src  = $configurator->copyTestFolders[$i][0];
             $dest = $configurator->copyTestFolders[$i][1];

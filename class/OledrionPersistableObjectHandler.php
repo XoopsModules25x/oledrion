@@ -46,7 +46,7 @@ class OledrionPersistableObjectHandler extends \XoopsPersistableObjectHandler
      */
     public function __construct(\XoopsDatabase $db, $tablename, $classname, $keyname, $idenfierName = '', $cacheOptions = null)
     {
-        //require_once __DIR__ . '/../include/common.php';
+        //require_once  dirname(__DIR__) . '/include/common.php';
         require_once XOOPS_ROOT_PATH . '/modules/oledrion/include/common.php';
         //        $this->XoopsObjectHandler($db);
         parent::__construct($db);
