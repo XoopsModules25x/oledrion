@@ -107,9 +107,9 @@ class OledrionOledrion_deliveryHandler extends Oledrion_XoopsPersistableObjectHa
 {
     /**
      * OledrionOledrion_deliveryHandler constructor.
-     * @param object $db
+     * @param XoopsDatabase|null $db
      */
-    public function __construct($db)
+    public function __construct(XoopsDatabase $db)
     { //                                        Table                   Classe              Id
         parent::__construct($db, 'oledrion_delivery', 'oledrion_delivery', 'delivery_id');
     }

@@ -17,7 +17,7 @@
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
  */
 
-require_once __DIR__ . '/../../mainfile.php';
+require_once dirname(dirname(__DIR__)) . '/mainfile.php';
 require_once __DIR__ . '/header.php';
 $com_itemid = isset($_GET['com_itemid']) ? (int)$_GET['com_itemid'] : 0;
 if ($com_itemid > 0) {

@@ -191,7 +191,6 @@ class Oledrion_paypal extends Oledrion_gateway
         if ($use_ipn == 1) {
             $ret['notify_url'] = OLEDRION_URL . 'gateway-notify.php'; // paypal-notify.php
         }
-
         return $ret;
     }
 
@@ -230,8 +229,11 @@ class Oledrion_paypal extends Oledrion_gateway
      * @param  string $gatewaysLogPath Le chemin d'accès complet au fichier log
      * @return void
      */
+
     public function gatewayNotify($gatewaysLogPath)
     {
+        global $xoopsConfig;
+        $executionStartTime = microtime(true);
         error_reporting(0);
         @$xoopsLogger->activated = false;
 
@@ -253,18 +255,19 @@ class Oledrion_paypal extends Oledrion_gateway
         $paypal_email = $this->handlers->h_oledrion_gateways_options->getGatewayOptionValue($gatewayName, 'paypal_email');
         $paypal_money = $this->handlers->h_oledrion_gateways_options->getGatewayOptionValue($gatewayName, 'paypal_money');
         $header       = '';
-        $header       .= "POST /cgi-bin/webscr HTTP/1.0\r\n";
+        $header       .= "POST /cgi-bin/webscr HTTP/1.1\r\n";
+        $header       .= "Host: $url\r\n";
         $header       .= "Content-Type: application/x-www-form-urlencoded\r\n";
         $header       .= 'Content-Length: ' . strlen($req) . "\r\n\r\n";
         $errno        = 0;
         $errstr       = '';
-        $fp           = fsockopen($url, 80, $errno, $errstr, 30);
+        $fp           = fsockopen("ssl://$url", 443, $errno, $errstr, 30);
         if ($fp) {
             fwrite($fp, "$header$req");
             while (!feof($fp)) {
                 $res = fgets($fp, 1024);
-                if (strcmp($res, 'VERIFIED') == 0) {
-                    $log      .= "VERIFIED\t";
+                if (strcmp(trim($res), 'VERIFIED') == 0) {
+                    $log      .= "PAYPAL VERIFIED\n";
                     $paypalok = true;
                     if (strtoupper($_POST['payment_status']) !== 'COMPLETED') {
                         $paypalok = false;
@@ -279,33 +282,92 @@ class Oledrion_paypal extends Oledrion_gateway
                         $paypalok = false;
                     }
                     $montant = $_POST['mc_gross'];
-                    if ($paypalok) {
-                        $ref      = (int)$_POST['custom']; // Numéro de la commande
-                        $commande = null;
-                        $commande = $this->handlers->h_oledrion_commands->get($ref);
-                        if (is_object($commande)) {
-                            if ($montant == $commande->getVar('cmd_total')) { // Commande vérifiée
-                                $this->handlers->h_oledrion_commands->validateOrder($commande); // Validation de la commande et mise à jour des stocks
+                    $pid     = pcntl_fork();
+                    switch ($pid) {
+                        case -1:    // pcntl_fork() failed
+                            die('could not fork');
+                            break;
+                        case 0:
+                            // In the new (child) process
+                            // At this point, all PayPal session variables collected, done Paypal session
+                            // Rest of transaction can be processed offline to decouple site load from Paypal transaction time
+                            // PayPal requires this session to return within 30 seconds, or will retry
+                            $PayPalEndTime = microtime(true);
+                            if ($paypalok) {
+                                $ref      = (int)$_POST['custom']; // Numéro de la commande
+                                $commande = null;
+                                $commande = $this->handlers->h_oledrion_commands->get($ref);
+                                if (is_object($commande)) {
+                                    if ($montant == $commande->getVar('cmd_total')) { // Commande vérifiée
+                                        $email_name = sprintf('%s/%d%s', OLEDRION_UPLOAD_PATH, $commande->getVar('cmd_id'), OLEDRION_CONFIRMATION_EMAIL_FILENAME_SUFFIX);
+                                        if (file_exists($email_name)) {
+                                            $this->handlers->h_oledrion_commands->validateOrder($commande); // Validation de la commande et mise à jour des stocks
+                                            $msg = array();
+                                            $msg = unserialize(file_get_contents($email_name));
+                                            // Add Transaction ID variable to email variables for templates
+                                            $msg['TRANSACTION_ID'] = $_POST['txn_id'];
+                                            // Send confirmation email to user 
+                                            $email_address = $commande->getVar('cmd_email');
+                                            OledrionUtility::sendEmailFromTpl('command_client.tpl', $email_address, sprintf(_OLEDRION_THANKYOU_CMD, $xoopsConfig['sitename']), $msg);
+                                            // Send mail to admin
+                                            OledrionUtility::sendEmailFromTpl('command_shop.tpl', OledrionUtility::getEmailsFromGroup(OledrionUtility::getModuleOption('grp_sold')), _OLEDRION_NEW_COMMAND, $msg);
+                                            unlink($email_name);
+                                            // TODO: add transaction ID to online user invoice
+                                            // TODO: update user database
+                                        } else {
+                                            $duplicate_ipn = 1;
+                                        }
+                                    } else {
+                                        $this->handlers->h_oledrion_commands->setFraudulentOrder($commande);
+                                    }
+                                } else {
+                                    $log .= "not_object\n";
+                                }
                             } else {
-                                $this->handlers->h_oledrion_commands->setFraudulentOrder($commande);
-                            }
-                        }
-                    } else {
-                        if (isset($_POST['custom'])) {
-                            $ref      = (int)$_POST['custom'];
-                            $commande = null;
-                            $commande = $this->handlers->h_oledrion_commands->get($ref);
-                            if (is_object($commande)) {
-                                switch (strtoupper($_POST['payment_status'])) {
-                                    case 'PENDING':
-                                        $this->handlers->h_oledrion_commands->setOrderPending($commande);
-                                        break;
-                                    case 'FAILED':
-                                        $this->handlers->h_oledrion_commands->setOrderFailed($commande);
-                                        break;
+                                $log .= "paypal not OK\n";
+                                if (isset($_POST['custom'])) {
+                                    $ref      = (int)$_POST['custom'];
+                                    $commande = null;
+                                    $commande = $this->handlers->h_oledrion_commands->get($ref);
+                                    if (is_object($commande)) {
+                                        switch (strtoupper($_POST['payment_status'])) {
+                                            case 'PENDING':
+                                                $this->handlers->h_oledrion_commands->setOrderPending($commande);
+                                                break;
+                                            case 'FAILED':
+                                                $this->handlers->h_oledrion_commands->setOrderFailed($commande);
+                                                break;
+                                        }
+                                    }
                                 }
                             }
-                        }
+                            // Ecriture dans le fichier log
+                            $logfp = fopen($gatewaysLogPath, 'a');
+                            if ($logfp) {
+                                if ($duplicate_ipn) {
+                                    fwrite($logfp, sprintf("Duplicate paypal IPN, order: %d\n", $commande->getVar('cmd_id')));
+                                } else {
+                                    fwrite($logfp, str_repeat('-', 120) . "\n");
+                                    fwrite($logfp, date('d/m/Y H:i:s') . "\n");
+                                    if (isset($_POST['txn_id'])) {
+                                        fwrite($logfp, 'Transaction : ' . $_POST['txn_id'] . "\n");
+                                    }
+                                    fwrite($logfp, 'Result : ' . $log . "\n");
+                                }
+                                $executionEndTime = microtime(true);
+                                $PayPalSeconds    = $PayPalEndTime - $executionStartTime;
+                                $TotalSeconds     = $executionEndTime - $executionStartTime;
+                                fwrite($logfp, "Paypal session took $PayPalSeconds, Total transaction took $TotalSeconds seconds.\n");
+                                fclose($logfp);
+                            }
+                            break;
+                        default:
+                            // In the main (parent) process in which the script is running
+                            // At this point, all PayPal session variables collected, done Paypal session
+                            // Rest of transaction can be proccessed offline to decouple Paypal transaction time from site load
+                            // PayPal requires this session to return within 30 seconds, or will retry
+                            return;
+                            break;
                     }
                 } else {
                     $log .= "$res\n";
@@ -313,19 +375,8 @@ class Oledrion_paypal extends Oledrion_gateway
             }
             fclose($fp);
         } else {
-            $log .= "Error with the fsockopen function, unable to open communication ' : ($errno) $errstr\n";
-        }
-
-        // Ecriture dans le fichier log
-        $fp = fopen($gatewaysLogPath, 'a');
-        if ($fp) {
-            fwrite($fp, str_repeat('-', 120) . "\n");
-            fwrite($fp, date('d/m/Y H:i:s') . "\n");
-            if (isset($_POST['txn_id'])) {
-                fwrite($fp, 'Transaction : ' . $_POST['txn_id'] . "\n");
-            }
-            fwrite($fp, 'Result : ' . $log . "\n");
-            fclose($fp);
+            $errtext = "Error with the fsockopen function, unable to open communication ' : ($errno) $errstr\n";
+            file_put_contents($gatewaysLogPath, $errtext, FILE_APPEND | LOCK_EX);
         }
     }
 }

@@ -2,6 +2,9 @@
 // defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
 //require_once('nusoap.php');
 
+/**
+ * Class Oledrion_pec24
+ */
 class Oledrion_pec24 extends Oledrion_gateway
 {
     /**
@@ -108,6 +111,9 @@ class Oledrion_pec24 extends Oledrion_gateway
         //return $res['authority'];
     }
 
+    /**
+     * @return mixed
+     */
     public function getParsianMid()
     {
         global $xoopsConfig;

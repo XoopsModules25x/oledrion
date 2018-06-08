@@ -318,8 +318,8 @@ define('_AM_OLEDRION_PERMSET', 'The permission has been set');
 define('_AM_OLEDRION_PERMNOTSET', 'The permission can not be set');
 
 define('_OLEDRION_CMD_STATE7', 'Option 7');
-define('_OLEDRION_CMD_STATE8', 'Option 7');
-define('_OLEDRION_CMD_STATE9', 'Option 7');
+define('_OLEDRION_CMD_STATE8', 'Option 8');
+define('_OLEDRION_CMD_STATE9', 'Option 9');
 define('_AM_OLEDRION_CONF_PACK', 'Confirmation pack');
 define('_AM_OLEDRION_CONF_SUBMIT', 'Confirmation Submit');
 define('_AM_OLEDRION_CONF_DELIVERY', 'Delivery');

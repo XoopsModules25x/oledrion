@@ -63,6 +63,11 @@ switch ($action) {
         $start = isset($_GET['start']) ? (int)$_GET['start'] : 0;
 
         $filter_product_id    = $filter_product_cid = $filter_product_recommended = $filter_product_price = $filter_product_online = 0;
+
+        // B.R. New
+        // TODO: Code Reviewers Are these filters neccessary? Not sure what they do.
+        $filter_skip_packing = $filter_skip_location = $filter_skip_delivery = 0;
+        // B.R. End
         $filter_product_title = $filter_product_sku = '';
 
         $newFilter = false;
@@ -110,13 +115,17 @@ switch ($action) {
             $filter_product_price = (int)$_POST['filter_product_price'];
             $newFilter            = true;
         }
+        // B.R. Added: $filter_skip_packing $filter_skip_location $filter_skip_delivery
         if ($filter_product_id == 0
             && $filter_product_cid == 0
             && $filter_product_recommended == 0
             && $filter_product_price == 0
             && $filter_product_online == 0
             && $filter_product_title == ''
-            && $filter_product_sku == '') {
+            && $filter_product_sku == ''
+            && $filter_skip_packing == 0
+            && $filter_skip_location == 0
+            && $filter_skip_delivery == 0) {
             $newFilter = true;
         }
 
@@ -129,6 +138,11 @@ switch ($action) {
             $filter_product_sku         = $_SESSION['filter_product_sku'];
             $filter_product_online      = $_SESSION['filter_product_online'];
             $filter_product_price       = $_SESSION['filter_product_price'];
+            // B.R. New
+            $filter_skip_packing  = $_SESSION['filter_skip_packing'];
+            $filter_skip_location = $_SESSION['filter_skip_location'];
+            $filter_skip_delivery = $_SESSION['filter_skip_delivery'];
+            // B.R. End
         }
 
         $_SESSION['oledrion_filter']            = serialize($criteria);
@@ -139,6 +153,11 @@ switch ($action) {
         $_SESSION['filter_product_sku']         = $filter_product_sku;
         $_SESSION['filter_product_online']      = $filter_product_online;
         $_SESSION['filter_product_price']       = $filter_product_price;
+        // B.R. New
+        $_SESSION['filter_skip_packing']  = $filter_skip_packing;
+        $_SESSION['filter_skip_location'] = $filter_skip_location;
+        $_SESSION['filter_skip_delivery'] = $filter_skip_delivery;
+        // B.R. End
 
         $itemsCount = $h_oledrion_products->getCount($criteria); // Recherche du nombre total de produits répondants aux critères
         OledrionUtility::htitle(_MI_OLEDRION_ADMENU4 . ' (' . $itemsCount . ')', 4);
@@ -157,6 +176,11 @@ switch ($action) {
         }
 
         $onlineSelect      = OledrionUtility::htmlSelect('filter_product_online', array(2 => _YES, 1 => _NO), $filter_product_online);
+        // B.R. New
+        $skipPackingSelect  = OledrionUtility::htmlSelect('filter_skip_packing', array(2 => _YES, 1 => _NO), $filter_skip_packing);
+        $skipLocationSelect = OledrionUtility::htmlSelect('filter_skip_location', array(2 => _YES, 1 => _NO), $filter_skip_location);
+        $skipDeliverySelect = OledrionUtility::htmlSelect('filter_skip_delivery', array(2 => _YES, 1 => _NO), $filter_skip_delivery);
+        // B.R. End
         $recommendedSelect = OledrionUtility::htmlSelect('filter_product_recommended', array(1 => _YES, 2 => _NO), $filter_product_recommended);
 
         $criteria->setLimit($limit);
@@ -198,6 +222,11 @@ switch ($action) {
         echo "<th align='center'>" . $selectCateg . "</th>\n";
         echo "<th align='center'><input type='text' size='25' name='filter_product_sku' id='filter_product_sku' value='$filter_product_sku'></th>\n";
         echo "<th align='center'>" . $onlineSelect . "</th>\n";
+        // B.R. Start
+        echo "<th align='center'>" . $skipPackingSelect . "</th>\n";
+        echo "<th align='center'>" . $skipLocationSelect . "</th>\n";
+        echo "<th align='center'>" . $skipDeliverySelect . "</th>\n";
+        // B.R. End
         echo "<th align='center'>" . $recommendedSelect . "</th>\n";
         echo "<th align='center'>&nbsp;</th>\n";
         echo "<th align='center'><input type='text' size='5' name='filter_product_price' id='filter_product_price' value='$filter_product_price'></th>\n";
@@ -220,6 +249,11 @@ switch ($action) {
             $actions[] = "<a href='$baseurl?op=products&action=copy&id=" . $id . "' title='" . _OLEDRION_DUPLICATE_PRODUCT . "'>" . $icones['copy'] . '</a>';
             $actions[] = "<a href='$baseurl?op=products&action=confdelete&id=" . $id . "' title='" . _OLEDRION_DELETE . "'>" . $icones['delete'] . '</a>';
             $online    = $item->getVar('product_online') == 1 ? _YES : _NO;
+            // B.R. New
+            $skipPacking  = $item->getVar('skip_packing') == 1 ? _YES : _NO;
+            $skipLocation = $item->getVar('skip_location') == 1 ? _YES : _NO;
+            $skipDelivery = $item->getVar('skip_delivery') == 1 ? _YES : _NO;
+            // B.R. End
             echo "<tr class='" . $class . "'>\n";
             if (isset($categories[$item->getVar('product_cid')])) {
                 $productCategory = $categories[$item->getVar('product_cid')]->getVar('cat_title');
@@ -342,6 +376,11 @@ switch ($action) {
             $title = _AM_OLEDRION_ADD_PRODUCT;
             $item  = $h_oledrion_products->create(true);
             $item->setVar('product_online', 1);
+            // B.R. Start
+            $item->setVar('skip_packing', 0);
+            $item->setVar('skip_location', 0);
+            $item->setVar('skip_delivery', 0);
+            // B.R. End
             if (OLEDRION_AUTO_FILL_MANUAL_DATE) {
                 $item->setVar('product_date', formatTimestamp(time(), 's'));
             }
@@ -364,6 +403,7 @@ switch ($action) {
         }
 
         $mytree = new XoopsObjectTree($categories, 'cat_cid', 'cat_pid');
+        $select_categ = $mytree->makeSelBox('product_cid', 'cat_title', '-', $item->getVar('product_cid'));
 
         $sform = new XoopsThemeForm($title, 'frmproduct', $baseurl);
         $sform->setExtra('enctype="multipart/form-data"');
@@ -391,6 +431,11 @@ switch ($action) {
             $select_categ = $mytree->makeSelBox('product_cid', 'cat_title', '-', $item->getVar('product_cid'));
             $sform->addElement(new XoopsFormLabel(_AM_OLEDRION_CATEG_HLP, $select_categ), true);
         }
+        // B.R. New
+        $sform->addElement(new XoopsFormRadioYN(_OLEDRION_SKIP_PACKING, 'skip_packing', $item->getVar('skip_packing')), true);
+        $sform->addElement(new XoopsFormRadioYN(_OLEDRION_SKIP_LOCATION, 'skip_location', $item->getVar('skip_location')), true);
+        $sform->addElement(new XoopsFormRadioYN(_OLEDRION_SKIP_DELIVERY, 'skip_delivery', $item->getVar('skip_delivery')), true);
+        // End New
 
         $deliveryTime = new XoopsFormText(_OLEDRION_DELIVERY_TIME, 'product_delivery_time', 5, 5, $item->getVar('product_delivery_time', 'e'));
         $deliveryTime->setDescription(_OLEDRION_IN_DAYS);
@@ -754,7 +799,7 @@ switch ($action) {
 
             $id = $item->getVar('product_id');
             // Notifications ******************************************************
-            if ($add === true) {
+            if (true === $add) {
                 //$plugins = Oledrion_plugins::getInstance();
                 //$plugins->fireAction(Oledrion_plugins::EVENT_ON_PRODUCT_CREATE, new Oledrion_parameters(array('product' => $item)));
             }

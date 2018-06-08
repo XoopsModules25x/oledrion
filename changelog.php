@@ -187,7 +187,7 @@ Version 1.61
 ************
 Version 1.6
 ************
-- Refactorisation du code pour utiliser la classe OledrionUtility au lieu des fonctions contenues dans include/functions.php
+- Refactorisation du code pour utiliser la classe oledrion_utils au lieu des fonctions contenues dans include/functions.php
 - Mise à jour de TCPDF
 - Remplacement des tous les book et livre par product et produit
 - Mise à jour du PersistableObjectHandler

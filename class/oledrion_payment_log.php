@@ -54,9 +54,9 @@ class OledrionOledrion_payment_logHandler extends Oledrion_XoopsPersistableObjec
 {
     /**
      * OledrionOledrion_payment_logHandler constructor.
-     * @param object $db
+     * @param XoopsDatabase|null $db
      */
-    public function __construct($db)
+    public function __construct(XoopsDatabase $db)
     { //                                       Table                         Classe                  Id
         parent::__construct($db, 'oledrion_payment_log', 'oledrion_payment_log', 'log_id');
     }

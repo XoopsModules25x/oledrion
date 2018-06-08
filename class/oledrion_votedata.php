@@ -52,9 +52,9 @@ class OledrionOledrion_votedataHandler extends Oledrion_XoopsPersistableObjectHa
 {
     /**
      * OledrionOledrion_votedataHandler constructor.
-     * @param object $db
+     * @param XoopsDatabase|null $db
      */
-    public function __construct($db)
+    public function __construct(XoopsDatabase $db)
     { //                                Table                   Classe           Id
         parent::__construct($db, 'oledrion_votedata', 'oledrion_votedata', 'vote_ratingid');
     }

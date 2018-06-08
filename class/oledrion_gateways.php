@@ -193,7 +193,7 @@ class Oledrion_gateways
      */
     public static function gatewayClassName($gatewayName)
     {
-        return 'oledrion_' . $gatewayName;
+        return 'Oledrion_' . $gatewayName;
     }
 
     /**
@@ -220,7 +220,7 @@ class Oledrion_gateways
      */
     public static function asGoodAncestor($gateway)
     {
-        if (get_parent_class($gateway) === 'oledrion_gateway') {
+        if (get_parent_class($gateway) === 'Oledrion_gateway') {
             return true;
         } else {
             return false;

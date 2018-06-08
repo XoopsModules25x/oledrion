@@ -471,7 +471,7 @@ class Oledrion_attributes extends Oledrion_Object
      * @return array
      * @since 2.3.2009.03.11
      */
-    public function getAttributeOptions($format = 's', $withFormatedPrices = false, oledrion_products $product = null)
+    public function getAttributeOptions($format = 's', $withFormatedPrices = false, Oledrion_products $product = null)
     {
         $ret     = array();
         $counter = 0;
@@ -625,7 +625,7 @@ class Oledrion_attributes extends Oledrion_Object
      * @return string                   Le contenu html
      * @since 2.3.2009.03.16
      */
-    public function render(oledrion_products $product)
+    public function render(Oledrion_products $product)
     {
         require_once XOOPS_ROOT_PATH . '/class/template.php';
         $template = new XoopsTpl();
@@ -721,9 +721,9 @@ class OledrionOledrion_attributesHandler extends Oledrion_XoopsPersistableObject
 {
     /**
      * OledrionOledrion_attributesHandler constructor.
-     * @param object $db
+     * @param XoopsDatabase|null $db
      */
-    public function __construct($db)
+    public function __construct(XoopsDatabase $db)
     {    //                             Table               Classe                  Id
         parent::__construct($db, 'oledrion_attributes', 'oledrion_attributes', 'attribute_id');
     }
@@ -787,7 +787,7 @@ class OledrionOledrion_attributesHandler extends Oledrion_XoopsPersistableObject
      * @return array                    Les options construites en html
      * @since 2.3.2009.03.16
      */
-    public function constructHtmlProductAttributes(oledrion_products $product, &$mandatoryFieldsCount = 0)
+    public function constructHtmlProductAttributes(Oledrion_products $product, &$mandatoryFieldsCount = 0)
     {
         $attributes = $ret = array();
         $attributes = $this->getProductsAttributesList($product->getVar('product_id'));
@@ -810,7 +810,7 @@ class OledrionOledrion_attributesHandler extends Oledrion_XoopsPersistableObject
      * @param  oledrion_products $product
      * @return float
      */
-    public function getInitialOptionsPrice(oledrion_products $product)
+    public function getInitialOptionsPrice(Oledrion_products $product)
     {
         $ret        = 0;
         $attributes = array();
@@ -830,7 +830,7 @@ class OledrionOledrion_attributesHandler extends Oledrion_XoopsPersistableObject
      * @internal param Oledrion_attributes $attribute L'attribute à cloner
      * @since    2.3.2009.03.16
      */
-    public function cloneAttribute(oledrion_attributes $originalAttribute)
+    public function cloneAttribute(Oledrion_attributes $originalAttribute)
     {
         $newAttribute =& $originalAttribute->xoopsClone();
         if (OLEDRION_DUPLICATED_PLACE === 'right') {
@@ -873,7 +873,7 @@ class OledrionOledrion_attributesHandler extends Oledrion_XoopsPersistableObject
      * @return boolean
      * @since 2.3.2009.03.17
      */
-    public function deleteAttribute(oledrion_attributes $attribute)
+    public function deleteAttribute(Oledrion_attributes $attribute)
     {
         return $this->delete($attribute, true);
         // TODO: Supprimer dans les attributs paniers
@@ -886,7 +886,7 @@ class OledrionOledrion_attributesHandler extends Oledrion_XoopsPersistableObject
      * @return integer
      * @since 2.3.2009.03.20
      */
-    public function getProductMandatoryAttributesCount(oledrion_products $product)
+    public function getProductMandatoryAttributesCount(Oledrion_products $product)
     {
         $criteria = new CriteriaCompo();
         $criteria->add(new Criteria('attribute_product_id', $product->getVar('attribute_product_id'), '='));
@@ -901,7 +901,7 @@ class OledrionOledrion_attributesHandler extends Oledrion_XoopsPersistableObject
      * @param  oledrion_products $product
      * @return array             objets des type oledrion_attributes
      */
-    public function getProductMandatoryFieldsList(oledrion_products $product)
+    public function getProductMandatoryFieldsList(Oledrion_products $product)
     {
         $criteria = new CriteriaCompo();
         $criteria->add(new Criteria('attribute_product_id', $product->getVar('attribute_product_id'), '='));

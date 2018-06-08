@@ -53,6 +53,21 @@ define('OLEDRION_DISCOUNT_SHIPPING_TYPE1', 1); // Les frais de port sont à paye
 define('OLEDRION_DISCOUNT_SHIPPING_TYPE2', 2); // Les frais de port sont totalement gratuits
 define('OLEDRION_DISCOUNT_SHIPPING_TYPE3', 3); // Les frais de port sont réduits de ...
 define('OLEDRION_DISCOUNT_SHIPPING_TYPE4', 4); // Les frais de port sont dégressifs
+
+define('OLEDRION_DISCOUNT_ON1', 1);
+define('OLEDRION_DISCOUNT_ON2', 2);
+define('OLEDRION_DISCOUNT_ON3', 3);
+define('OLEDRION_DISCOUNT_ON4', 4);
+define('OLEDRION_DISCOUNT_ON5', 5);
+define('OLEDRION_DISCOUNT_ON6', 6);
+
+define('OLEDRION_DISCOUNT_WHEN1', 1);
+define('OLEDRION_DISCOUNT_WHEN2', 2);
+define('OLEDRION_DISCOUNT_WHEN3', 3);
+define('OLEDRION_DISCOUNT_WHEN4', 4);
+
+define('OLEDRION_DISCOUNT_TYPE1', 1);
+
 // ********************************************************************************************************************
 
 /**
@@ -132,9 +147,9 @@ class OledrionOledrion_discountsHandler extends Oledrion_XoopsPersistableObjectH
 {
     /**
      * OledrionOledrion_discountsHandler constructor.
-     * @param object $db
+     * @param XoopsDatabase|null $db
      */
-    public function __construct($db)
+    public function __construct(XoopsDatabase $db)
     { //                        Table                   Classe              Id        Libellé
         parent::__construct($db, 'oledrion_discounts', 'oledrion_discounts', 'disc_id', 'disc_title');
     }
@@ -254,7 +269,7 @@ class OledrionOledrion_discountsHandler extends Oledrion_XoopsPersistableObjectH
         } else {
             $critere = new CriteriaCompo();
             $critere->add(new Criteria('disc_on_what', OLEDRION_DISCOUNT_ON5, '='));
-            $critere->add(new Criteria('disc_shipping', OLEDRION_DISCOUNT_SHIPPING2, '='));
+            $critere->add(new Criteria('disc_shipping', OLEDRION_DISCOUNT_SHIPPING_TYPE2, '='));
             $tblGroups = OledrionUtility::getCurrentMemberGroups();
             $critere->add(new Criteria('disc_group', '(' . implode(',', $tblGroups) . ')', 'IN'));
             $buffer = $this->getObjects($critere);

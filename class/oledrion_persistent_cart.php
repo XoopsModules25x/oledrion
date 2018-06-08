@@ -55,9 +55,9 @@ class OledrionOledrion_persistent_cartHandler extends Oledrion_XoopsPersistableO
 {
     /**
      * OledrionOledrion_persistent_cartHandler constructor.
-     * @param object $db
+     * @param XoopsDatabase|null $db
      */
-    public function __construct($db)
+    public function __construct(XoopsDatabase $db)
     { //                          Table                     Classe                        Id
         parent::__construct($db, 'oledrion_persistent_cart', 'oledrion_persistent_cart', 'persistent_id');
     }

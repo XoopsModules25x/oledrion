@@ -195,9 +195,9 @@ class OledrionOledrion_manufacturerHandler extends Oledrion_XoopsPersistableObje
 {
     /**
      * OledrionOledrion_manufacturerHandler constructor.
-     * @param object $db
+     * @param XoopsDatabase|null $db
      */
-    public function __construct($db)
+    public function __construct(XoopsDatabase $db)
     { //                            Table                   Classe               Id            Identifiant
         parent::__construct($db, 'oledrion_manufacturer', 'oledrion_manufacturer', 'manu_id', 'manu_commercialname');
     }
@@ -229,7 +229,7 @@ class OledrionOledrion_manufacturerHandler extends Oledrion_XoopsPersistableObje
      * @param  oledrion_manufacturer $manufacturer
      * @return boolean               Le résultat de la suppression
      */
-    public function deleteManufacturer(oledrion_manufacturer $manufacturer)
+    public function deleteManufacturer(Oledrion_manufacturer $manufacturer)
     {
         $manufacturer->deletePictures();
 

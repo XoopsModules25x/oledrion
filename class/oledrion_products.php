@@ -52,6 +52,11 @@ class Oledrion_products extends Oledrion_Object
         $this->initVar('product_thumb_url', XOBJ_DTYPE_TXTBOX, null, false);
         $this->initVar('product_submitter', XOBJ_DTYPE_INT, null, false);
         $this->initVar('product_online', XOBJ_DTYPE_INT, null, false);
+        // B.R. Start
+        $this->initVar('skip_packing', XOBJ_DTYPE_INT, null, false);
+        $this->initVar('skip_location', XOBJ_DTYPE_INT, null, false);
+        $this->initVar('skip_delivery', XOBJ_DTYPE_INT, null, false);
+        // B.R. End
         $this->initVar('product_date', XOBJ_DTYPE_TXTBOX, null, false);
         $this->initVar('product_submitted', XOBJ_DTYPE_INT, null, false);
         $this->initVar('product_hits', XOBJ_DTYPE_INT, null, false);
@@ -336,9 +341,9 @@ class Oledrion_products extends Oledrion_Object
     public function recommendedPicture()
     {
         if ($this->isRecommended()) {
-            return "<img src=\"" . OLEDRION_IMAGES_URL . "heart.png\" alt=\"" . _OLEDRION_IS_RECOMMENDED . "\">&nbsp;";
+            return "<img src=\"" . OLEDRION_IMAGES_URL . "heart.png\" alt=\"" . _OLEDRION_IS_RECOMMENDED . "\" >&nbsp;";
         } else {
-            return "<img src=\"" . OLEDRION_IMAGES_URL . "blank.gif\" alt=\"\">";
+            return "<img src=\"" . OLEDRION_IMAGES_URL . "blank.gif\" alt=\"\" >";
         }
     }
 
@@ -356,19 +361,28 @@ class Oledrion_products extends Oledrion_Object
         if ($product_id == 0 && $product_title == '') {
             $product_id    = $this->getVar('product_id');
             $product_title = $this->getVar('product_title', 'n');
+            // B.R. New
+            $product_url = $this->getVar('product_url3', 'n');
+            // End New
         }
-        if (OledrionUtility::getModuleOption('urlrewriting') == 1) { // On utilise l'url rewriting
-            if (!$shortVersion) {
-                $url = OLEDRION_URL . 'product-' . $product_id . OledrionUtility::makeSeoUrl($product_title) . '.html';
-            } else {
-                $url = 'product-' . $product_id . OledrionUtility::makeSeoUrl($product_title) . '.html';
+        // B.R. New
+        if (empty($product_url)) {
+            // End New
+            if (OledrionUtility::getModuleOption('urlrewriting') == 1) { // On utilise l'url rewriting
+                if (!$shortVersion) {
+                    $url = OLEDRION_URL . 'product-' . $product_id . OledrionUtility::makeSeoUrl($product_title) . '.html';
+                } else {
+                    $url = 'product-' . $product_id . OledrionUtility::makeSeoUrl($product_title) . '.html';
+                }
+            } else { // Pas d'utilisation de l'url rewriting
+                if (!$shortVersion) {
+                    $url = OLEDRION_URL . 'product.php?product_id=' . $product_id;
+                } else {
+                    $url = 'product.php?product_id=' . $product_id;
+                }
             }
-        } else { // Pas d'utilisation de l'url rewriting
-            if (!$shortVersion) {
-                $url = OLEDRION_URL . 'product.php?product_id=' . $product_id;
-            } else {
-                $url = 'product.php?product_id=' . $product_id;
-            }
+        } else {
+            $url = '../' . $product_url;
         }
 
         return $url;
@@ -525,9 +539,9 @@ class OledrionOledrion_productsHandler extends Oledrion_XoopsPersistableObjectHa
 {
     /**
      * OledrionOledrion_productsHandler constructor.
-     * @param object $db
+     * @param XoopsDatabase|null $db
      */
-    public function __construct($db)
+    public function __construct(XoopsDatabase $db)
     { //                            Table               Classe              Id          Libellé
         parent::__construct($db, 'oledrion_products', 'oledrion_products', 'product_id', 'product_title');
     }
@@ -1222,7 +1236,7 @@ class OledrionOledrion_productsHandler extends Oledrion_XoopsPersistableObjectHa
      * @param  object|Oledrion_products $originalProduct Le produit à cloner
      * @return mixed                    Soit l'objet représentant le nouveau produit soit false
      */
-    public function cloneProduct(oledrion_products $originalProduct)
+    public function cloneProduct(Oledrion_products $originalProduct)
     {
         global $h_oledrion_productsmanu, $h_oledrion_files, $h_oledrion_productsmanu, $h_oledrion_related, $oledrionHandlers;
         $newProduct =& $originalProduct->xoopsClone();
@@ -1372,7 +1386,7 @@ class OledrionOledrion_productsHandler extends Oledrion_XoopsPersistableObjectHa
         $itemsCount = $this->getCount($criteria);
         if ($itemsCount > OledrionUtility::getModuleOption('max_products')) { // Il faut créer notre propre sélecteur
             if ($parameters['multiple']) {
-                if ($jqueryIncluded == null) {
+                if (null === $jqueryIncluded) {
                     $jqueryIncluded = true;
                     global $xoTheme;
                     $xoTheme->addScript('browse.php?Frameworks/jquery/jquery.js');

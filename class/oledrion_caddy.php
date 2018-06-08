@@ -72,9 +72,9 @@ class OledrionOledrion_caddyHandler extends Oledrion_XoopsPersistableObjectHandl
 
     /**
      * OledrionOledrion_caddyHandler constructor.
-     * @param object $db
+     * @param XoopsDatabase|null $db
      */
-    public function __construct($db)
+    public function __construct(XoopsDatabase $db)
     { //                          Table             Classe          Id
         parent::__construct($db, 'oledrion_caddy', 'oledrion_caddy', 'caddy_id');
     }
@@ -507,7 +507,7 @@ class OledrionOledrion_caddyHandler extends Oledrion_XoopsPersistableObjectHandl
      * @param  oledrion_caddy $caddy
      * @return boolean        Le résultat de la mise à jour
      */
-    public function markCaddyAsNotDownloadableAnyMore(oledrion_caddy $caddy)
+    public function markCaddyAsNotDownloadableAnyMore(Oledrion_caddy $caddy)
     {
         $caddy->setVar('caddy_pass', '');
 

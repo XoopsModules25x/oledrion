@@ -20,8 +20,8 @@
 /**
  * Sélecteur de produits
  */
-require_once __DIR__ . '/../../../include/cp_header.php';
-require_once __DIR__ . '/../include/common.php';
+require_once dirname(dirname(dirname(__DIR__))) . '/include/cp_header.php';
+require_once dirname(__DIR__) . '/include/common.php';
 require_once XOOPS_ROOT_PATH . '/class/template.php';
 require_once OLEDRION_PATH . 'class/tree.php';
 
@@ -157,6 +157,7 @@ $xoopsTpl->assign('baseurl', OLEDRION_URL . 'admin/' . basename(__FILE__)); // U
 $xoopsTpl->assign('searchVendor', $vendors);
 $xoopsTpl->assign('searchCriteria', $searchCriterias);
 $xoopsTpl->assign('searchField', $searchFields);
+$xoopsTpl->assign('searchCategory', $categoriesSelect);
 $xoopsTpl->assign('searchFieldSelected', $selectedSearchField);
 
 echo $xoopsTpl->fetch('db:oledrion_productsselector.tpl');

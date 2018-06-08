@@ -124,9 +124,9 @@ class OledrionOledrion_filesHandler extends Oledrion_XoopsPersistableObjectHandl
 {
     /**
      * OledrionOledrion_filesHandler constructor.
-     * @param object $db
+     * @param XoopsDatabase|null $db
      */
-    public function __construct($db)
+    public function __construct(XoopsDatabase $db)
     { //                            Table           Classe          Id          Libellé
         parent::__construct($db, 'oledrion_files', 'oledrion_files', 'file_id', 'file_filename');
     }
@@ -137,7 +137,7 @@ class OledrionOledrion_filesHandler extends Oledrion_XoopsPersistableObjectHandl
      * @param  oledrion_files $file
      * @return boolean        Le résultat de la suppression
      */
-    public function deleteAttachedFile(oledrion_files $file)
+    public function deleteAttachedFile(Oledrion_files $file)
     {
         if ($file->fileExists()) {
             $file->deleteAttachedFile();

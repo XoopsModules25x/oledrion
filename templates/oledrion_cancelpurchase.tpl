@@ -6,6 +6,7 @@
     <div class="breadcrumb"><{$breadcrumb}></div>
     <!-- /Breadcrumb -->
     <h3><{$smarty.const._OLEDRION_ORDER_CANCEL}></h3>
-    <div class="shopurl"><a href="<{$smarty.const.OLEDRION_URL}>"><{$smarty.const._OLEDRION_CONTINUE_SHOPPING}></a>
+    <!-- <div class="shopurl"><a href="<{$smarty.const.OLEDRION_URL}>"><{$smarty.const._OLEDRION_CONTINUE_SHOPPING}></a> -->
+    <div class="shopurl"><a href="<{$smarty.const.XOOPS_URL}>"><{$smarty.const._OLEDRION_CONTINUE_SHOPPING}></a>
     </div>
 </div>

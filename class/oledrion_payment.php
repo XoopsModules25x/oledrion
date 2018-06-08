@@ -106,9 +106,9 @@ class OledrionOledrion_paymentHandler extends Oledrion_XoopsPersistableObjectHan
 {
     /**
      * OledrionOledrion_paymentHandler constructor.
-     * @param object $db
+     * @param XoopsDatabase|null $db
      */
-    public function __construct($db)
+    public function __construct(XoopsDatabase $db)
     { //                                       Table                    Classe              Id
         parent::__construct($db, 'oledrion_payment', 'oledrion_payment', 'payment_id');
     }

@@ -97,7 +97,7 @@ class Oledrion_XoopsPersistableObjectHandler extends XoopsObjectHandler
      */
     public function __construct(XoopsDatabase $db, $tablename, $classname, $keyname, $idenfierName = '', $cacheOptions = null)
     {
-        //require_once __DIR__ . '/../include/common.php';
+        //require_once dirname(__DIR__) . '/include/common.php';
         require_once XOOPS_ROOT_PATH . '/modules/oledrion/include/common.php';
         //        $this->XoopsObjectHandler($db);
         parent::__construct($db);
@@ -271,7 +271,7 @@ class Oledrion_XoopsPersistableObjectHandler extends XoopsObjectHandler
                 }
             } else {
                 if ($as_object) {
-                    if ($fields == '*') {
+                    if ($fields === '*') {
                         $ret[$myrow[$this->keyName]] = $obj;
                     } else {
                         $ret[] = $obj;
@@ -446,7 +446,7 @@ class Oledrion_XoopsPersistableObjectHandler extends XoopsObjectHandler
 
             return $ret;
         }
-        if ($groupby === false) {
+        if (false === $groupby) {
             list($count) = $this->db->fetchRow($result);
 
             //$Cache_Lite->save($count);
@@ -527,7 +527,7 @@ class Oledrion_XoopsPersistableObjectHandler extends XoopsObjectHandler
             $whereclause = $this->keyName . ' = ' . $obj->getVar($this->keyName);
         }
         $sql = 'DELETE FROM ' . $this->table . ' WHERE ' . $whereclause;
-        if (false != $force) {
+        if (false !== $force) {
             $result = $this->db->queryF($sql);
         } else {
             $result = $this->db->query($sql);
@@ -573,7 +573,7 @@ class Oledrion_XoopsPersistableObjectHandler extends XoopsObjectHandler
 
     public function insert(XoopsObject $obj, $force = false, $checkObject = true)
     {
-        if ($checkObject !== false) {
+        if (false !== $checkObject) {
             if (!is_object($obj)) {
                 trigger_error('Error, not object');
 
@@ -648,7 +648,7 @@ class Oledrion_XoopsPersistableObjectHandler extends XoopsObjectHandler
             $sql .= ' WHERE ' . $whereclause;
         }
 
-        if (false != $force) {
+        if (false !== $force) {
             $result = $this->db->queryF($sql);
         } else {
             $result = $this->db->query($sql);

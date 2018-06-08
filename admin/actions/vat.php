@@ -99,7 +99,7 @@ switch ($action) {
         $sform->addElement($button_tray);
         $sform =& OledrionUtility::formMarkRequiredFields($sform);
         $sform->display();
-        require_once __DIR__ . '/admin_footer.php';
+        require_once dirname(__DIR__) . '/admin_footer.php';
         break;
 
     // ****************************************************************************************************************

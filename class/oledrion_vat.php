@@ -63,9 +63,9 @@ class OledrionOledrion_vatHandler extends Oledrion_XoopsPersistableObjectHandler
 {
     /**
      * OledrionOledrion_vatHandler constructor.
-     * @param object $db
+     * @param XoopsDatabase|null $db
      */
-    public function __construct($db)
+    public function __construct(XoopsDatabase $db)
     { //                        Table           Classe          Id
         parent::__construct($db, 'oledrion_vat', 'oledrion_vat', 'vat_id');
     }
@@ -141,7 +141,7 @@ class OledrionOledrion_vatHandler extends Oledrion_XoopsPersistableObjectHandler
      * @param  oledrion_vat $vat
      * @return boolean      Le résultat de la suppressin
      */
-    public function deleteVat(oledrion_vat $vat)
+    public function deleteVat(Oledrion_vat $vat)
     {
         return $this->delete($vat, true);
     }

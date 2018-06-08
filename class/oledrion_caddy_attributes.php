@@ -20,7 +20,7 @@
 /**
  * Gestion des options (attributs) produits dans les commandes
  */
-require_once __DIR__ . '/classheader.php';
+require __DIR__ . '/classheader.php';
 
 /**
  * Class Oledrion_caddy_attributes
@@ -117,7 +117,7 @@ class Oledrion_caddy_attributes extends Oledrion_Object
      * @return array
      * @since 2.3.2009.03.23
      */
-    public function renderForInvoice(oledrion_products $product, $format = 's')
+    public function renderForInvoice(Oledrion_products $product, $format = 's')
     {
         $names = $prices = $ret = array();
         $names = $this->getOption('ca_attribute_names', $format);
@@ -150,9 +150,9 @@ class OledrionOledrion_caddy_attributesHandler extends Oledrion_XoopsPersistable
 {
     /**
      * OledrionOledrion_caddy_attributesHandler constructor.
-     * @param object $db
+     * @param XoopsDatabase|null $db
      */
-    public function __construct($db)
+    public function __construct(XoopsDatabase $db)
     { //                                Table                   Classe                      Id
         parent::__construct($db, 'oledrion_caddy_attributes', 'oledrion_caddy_attributes', 'ca_id');
     }
@@ -177,7 +177,7 @@ class OledrionOledrion_caddy_attributesHandler extends Oledrion_XoopsPersistable
      * @return array
      * @since 2.3.2009.03.23
      */
-    public function getFormatedAttributesForCaddy($ca_caddy_id, oledrion_products $product)
+    public function getFormatedAttributesForCaddy($ca_caddy_id, Oledrion_products $product)
     {
         $handlers   = OledrionHandler::getInstance();
         $attributes = $ret = array();

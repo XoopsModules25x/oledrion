@@ -51,9 +51,9 @@ class OledrionOledrion_productsmanuHandler extends Oledrion_XoopsPersistableObje
 {
     /**
      * OledrionOledrion_productsmanuHandler constructor.
-     * @param object $db
+     * @param XoopsDatabase|null $db
      */
-    public function __construct($db)
+    public function __construct(XoopsDatabase $db)
     { //                            Table                   Classe              Id
         parent::__construct($db, 'oledrion_productsmanu', 'oledrion_productsmanu', 'pm_id');
     }

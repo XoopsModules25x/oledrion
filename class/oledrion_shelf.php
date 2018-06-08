@@ -65,7 +65,7 @@ class Oledrion_shelf
      * Supprime un produit (et tout ce qui lui est relatif)
      * @param oledrion_products $product
      */
-    public function deleteProduct(oledrion_products $product)
+    public function deleteProduct(Oledrion_products $product)
     {
         global $xoopsModule;
         $id = $product->getVar('product_id');
@@ -146,7 +146,7 @@ class Oledrion_shelf
      * @param  oledrion_shelf_parameters $parameters Les paramètres de filtrage
      * @return array                     Tableau prêt à être utilisé dans les templates
      */
-    public function getProducts(oledrion_shelf_parameters $parameters)
+    public function getProducts(Oledrion_shelf_parameters $parameters)
     {
         global $vatArray;
         $parametersValues    = $parameters->getParameters();

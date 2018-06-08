@@ -16,5 +16,6 @@
             <h3><{$smarty.const._OLEDRION_GATEWAY_FAILED}></h3>
         <{/if}>
     </div>
-    <div class="pad2"><a href="<{$smarty.const.OLEDRION_URL}>"><{$smarty.const._OLEDRION_CONTINUE_SHOPPING}></a></div>
+    <!-- B.R. <div class="pad2"><a href="<{$smarty.const.OLEDRION_URL}>"><{$smarty.const._OLEDRION_CONTINUE_SHOPPING}></a></div> -->
+    <div class="pad2"><a href="<{$smarty.const.XOOPS_URL}>"><{$smarty.const._OLEDRION_CONTINUE_SHOPPING}></a></div>
 </div>

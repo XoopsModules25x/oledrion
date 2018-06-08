@@ -61,8 +61,8 @@ function b_oledrion_recent_lists_edit($options)
     include XOOPS_ROOT_PATH . '/modules/oledrion/include/common.php';
     $form           = '';
     $form           .= "<table border='0'>";
-    $form           .= '<tr><td>' . _MB_OLEDRION_LISTS_COUNT . "</td><td><input type='text' name='options[]' id='options' value='" . (int)$options[0] . "'></td></tr>";
-    $listTypes      = oledrion_lists::getTypesArray();
+    $form           .= '<tr><td>' . _MB_OLEDRION_LISTS_COUNT . "</td><td><input type='text' name='options[]' id='options' value='" . (int)$options[0] . "' ></td></tr>";
+    $listTypes      = Oledrion_lists::getTypesArray();
     $listTypeSelect = OledrionUtility::htmlSelect('options[]', $listTypes, (int)$options[1], false);
     $form           .= '<tr><td>' . _MB_OLEDRION_LISTS_TYPE . '</td><td>' . $listTypeSelect . '</td></tr>';
     $form           .= '</table>';

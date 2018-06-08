@@ -63,7 +63,8 @@ class OledrionUtility extends XoopsObject
                     file_put_contents($folder . '/index.html', '<script>history.go(-1);</script>');
                 }
             }
-        } catch (Exception $e) {
+        }
+        catch (Exception $e) {
             echo 'Caught exception: ', $e->getMessage(), "\n", '<br>';
         }
     }
@@ -289,8 +290,8 @@ class OledrionUtility extends XoopsObject
         $value = '',
         $width = '100%',
         $height = '400px',
-        $supplemental = ''
-    ) {
+        $supplemental = '')
+    {
         $editor                   = false;
         $editor_configs           = array();
         $editor_configs['name']   = $name;
@@ -1284,8 +1285,8 @@ class OledrionUtility extends XoopsObject
         $mimeTypes = null,
         $uploadMaxSize = null,
         $maxWidth = null,
-        $maxHeight = null
-    ) {
+        $maxHeight = null)
+    {
         require_once XOOPS_ROOT_PATH . '/class/uploader.php';
         global $destname;
         if (isset($_POST['xoops_upload_file'])) {
@@ -1343,8 +1344,8 @@ class OledrionUtility extends XoopsObject
         $param_width,
         $param_height,
         $keep_original = false,
-        $fit = 'inside'
-    ) {
+        $fit = 'inside')
+    {
         //        require_once OLEDRION_PATH . 'class/wideimage/WideImage.inc.php';
         $resize = true;
         if (OLEDRION_DONT_RESIZE_IF_SMALLER) {

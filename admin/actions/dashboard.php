@@ -29,7 +29,7 @@ switch ($action) {
         // ****************************************************************************************************************
         xoops_cp_header();
 
-        require_once __DIR__ . '/../../include/directorychecker.php';
+        require_once dirname(dirname(__DIR__)) . '/include/directorychecker.php';
 
         //        OledrionUtility::htitle(_MI_OLEDRION_ADMENU10, 4);
         $adminObject = \Xmf\Module\Admin::getInstance();

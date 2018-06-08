@@ -32,6 +32,9 @@
 
 use WideImage\WideImage;
 
+/**
+ * Class OledrionUtility
+ */
 class OledrionUtility
 {
     const MODULE_NAME = 'oledrion';
@@ -64,7 +67,7 @@ class OledrionUtility
     public static function getModuleOption($option, $withCache = true)
     {
         global $xoopsModuleConfig, $xoopsModule;
-        $repmodule = self::MODULE_NAME;
+        $repmodule = static::MODULE_NAME;
         static $options = array();
         if (is_array($options) && array_key_exists($option, $options) && $withCache) {
             return $options[$option];
@@ -99,7 +102,7 @@ class OledrionUtility
      *
      * @return boolean
      */
-    public function isX23()
+    public static function isX23()
     {
         $x23 = false;
         $xv  = str_replace('XOOPS ', '', XOOPS_VERSION);
@@ -143,8 +146,8 @@ class OledrionUtility
         $value = '',
         $width = '100%',
         $height = '400px',
-        $supplemental = ''
-    ) {
+        $supplemental = '')
+    {
         $editor                   = false;
         $editor_configs           = array();
         $editor_configs['name']   = $name;
@@ -154,9 +157,9 @@ class OledrionUtility
         $editor_configs['width']  = '100%';
         $editor_configs['height'] = '400px';
 
-        $editor_option = strtolower(self::getModuleOption('bl_form_options'));
+        $editor_option = strtolower(static::getModuleOption('bl_form_options'));
 
-        if (self::isX23()) {
+        if (static::isX23()) {
             $editor = new XoopsFormEditor($caption, $editor_option, $editor_configs);
 
             return $editor;
@@ -321,9 +324,9 @@ class OledrionUtility
         }
 
         $xoopsMailer->useMail();
-        $templateDir = XOOPS_ROOT_PATH . '/modules/' . self::MODULE_NAME . '/language/' . $xoopsConfig['language'] . '/mail_template';
+        $templateDir = XOOPS_ROOT_PATH . '/modules/' . static::MODULE_NAME . '/language/' . $xoopsConfig['language'] . '/mail_template';
         if (!is_dir($templateDir)) {
-            $templateDir = XOOPS_ROOT_PATH . '/modules/' . self::MODULE_NAME . '/language/english/mail_template';
+            $templateDir = XOOPS_ROOT_PATH . '/modules/' . static::MODULE_NAME . '/language/english/mail_template';
         }
         $xoopsMailer->setTemplateDir($templateDir);
         $xoopsMailer->setTemplate($tplName);
@@ -337,7 +340,8 @@ class OledrionUtility
         }
         $res = $xoopsMailer->send();
         unset($xoopsMailer);
-        $filename = XOOPS_UPLOAD_PATH . '/logmail_' . self::MODULE_NAME . '.php';
+        // B.R. $filename = XOOPS_UPLOAD_PATH . '/logmail_' . static::MODULE_NAME . '.php';
+        $filename = OLEDRION_UPLOAD_PATH . '/logmail_' . static::MODULE_NAME . '.php';
         if (!file_exists($filename)) {
             $fp = @fopen($filename, 'a');
             if ($fp) {
@@ -411,7 +415,7 @@ class OledrionUtility
      *
      * @return object The module
      */
-    protected function _getModule()
+    protected static function _getModule()
     {
         static $mymodule;
         if (!isset($mymodule)) {
@@ -435,7 +439,7 @@ class OledrionUtility
     {
         static $moduleName;
         if (!isset($moduleName)) {
-            $mymodule   = self::_getModule();
+            $mymodule   = static::_getModule();
             $moduleName = $mymodule->getVar('name');
         }
 
@@ -462,7 +466,7 @@ class OledrionUtility
      * @param  int $groupId Searched group
      * @return array Array of XoopsUsers
      */
-    public function getUsersFromGroup($groupId)
+    public static function getUsersFromGroup($groupId)
     {
         $users         = array();
         $memberHandler = xoops_getHandler('member');
@@ -481,7 +485,7 @@ class OledrionUtility
     public static function getEmailsFromGroup($groupId)
     {
         $ret   = array();
-        $users = self::getUsersFromGroup($groupId);
+        $users = static::getUsersFromGroup($groupId);
         foreach ($users as $user) {
             $ret[] = $user->getVar('email');
         }
@@ -578,9 +582,9 @@ class OledrionUtility
      *
      * @return boolean Yes = we need to add them, false = no
      */
-    public function needsAsterisk()
+    public static function needsAsterisk()
     {
-        if (self::isX23()) {
+        if (static::isX23()) {
             return false;
         }
         if (strpos(strtolower(XOOPS_VERSION), 'impresscms') !== false) {
@@ -603,9 +607,9 @@ class OledrionUtility
      * @return object The modified form
      * @internal param string $caracter The character to use to mark fields
      */
-    public static function &formMarkRequiredFields(&$sform)
+    public static function formMarkRequiredFields($sform)
     {
-        if (self::needsAsterisk()) {
+        if (static::needsAsterisk()) {
             $required = array();
             foreach ($sform->getRequired() as $item) {
                 $required[] = $item->_name;
@@ -643,10 +647,10 @@ class OledrionUtility
      * @param  boolean $trimName Do we need to create a "short" unique name ?
      * @return string  The unique filename to use (with its extension)
      */
-    public function createUploadName($folder, $fileName, $trimName = false)
+    public static function createUploadName($folder, $fileName, $trimName = false)
     {
         $workingfolder = $folder;
-        if (xoops_substr($workingfolder, strlen($workingfolder) - 1, 1) != '/') {
+        if (xoops_substr($workingfolder, strlen($workingfolder) - 1, 1) !== '/') {
             $workingfolder .= '/';
         }
         $ext  = basename($fileName);
@@ -678,7 +682,7 @@ class OledrionUtility
      * @param  string $chaine The string undecode
      * @return string The undecoded string
      */
-    public function unhtml($chaine)
+    public static function unhtml($chaine)
     {
         $search = $replace = array();
         $chaine = html_entity_decode($chaine);
@@ -954,7 +958,7 @@ class OledrionUtility
     {
         $s       = "ÀÁÂÃÄÅÒÓÔÕÖØÈÉÊËÇÌÍÎÏÙÚÛÜÑàáâãäåòóôõöøèéêëçìíîïùúûüÿñ '()";
         $r       = 'AAAAAAOOOOOOEEEECIIIIUUUUYNaaaaaaooooooeeeeciiiiuuuuyn----';
-        $content = self::unhtml($content); // First, remove html entities
+        $content = static::unhtml($content); // First, remove html entities
         $content = strtr($content, $s, $r);
         $content = strip_tags($content);
         $content = strtolower($content);
@@ -999,8 +1003,8 @@ class OledrionUtility
      */
     public static function createMetaKeywords($content)
     {
-        $keywordscount = self::getModuleOption('metagen_maxwords');
-        $keywordsorder = self::getModuleOption('metagen_order');
+        $keywordscount = static::getModuleOption('metagen_maxwords');
+        $keywordsorder = static::getModuleOption('metagen_order');
 
         $tmp = array();
         // Search for the "Minimum keyword length"
@@ -1093,8 +1097,8 @@ class OledrionUtility
                 break;
         }
         // Remove black listed words
-        if (xoops_trim(self::getModuleOption('metagen_blacklist')) != '') {
-            $metagen_blacklist = str_replace("\r", '', self::getModuleOption('metagen_blacklist'));
+        if (xoops_trim(static::getModuleOption('metagen_blacklist')) != '') {
+            $metagen_blacklist = str_replace("\r", '', static::getModuleOption('metagen_blacklist'));
             $metablack         = explode("\n", $metagen_blacklist);
             array_walk($metablack, 'trim');
             $keywords = array_diff($keywords, $metablack);
@@ -1138,8 +1142,8 @@ class OledrionUtility
         $mimeTypes = null,
         $uploadMaxSize = null,
         $maxWidth = null,
-        $maxHeight = null
-    ) {
+        $maxHeight = null)
+    {
         require_once XOOPS_ROOT_PATH . '/class/uploader.php';
         global $destname;
         if (isset($_POST['xoops_upload_file'])) {
@@ -1148,15 +1152,15 @@ class OledrionUtility
             $fldname = $_FILES[$_POST['xoops_upload_file'][$indice]];
             $fldname = get_magic_quotes_gpc() ? stripslashes($fldname['name']) : $fldname['name'];
             if (xoops_trim($fldname != '')) {
-                $destname = self::createUploadName($dstpath, $fldname, true);
+                $destname = static::createUploadName($dstpath, $fldname, true);
                 if ($mimeTypes === null) {
-                    $permittedtypes = explode("\n", str_replace("\r", '', self::getModuleOption('mimetypes')));
+                    $permittedtypes = explode("\n", str_replace("\r", '', static::getModuleOption('mimetypes')));
                     array_walk($permittedtypes, 'trim');
                 } else {
                     $permittedtypes = $mimeTypes;
                 }
                 if ($uploadMaxSize === null) {
-                    $uploadSize = self::getModuleOption('maxuploadsize');
+                    $uploadSize = static::getModuleOption('maxuploadsize');
                 } else {
                     $uploadSize = $uploadMaxSize;
                 }
@@ -1197,8 +1201,8 @@ class OledrionUtility
         $param_width,
         $param_height,
         $keep_original = false,
-        $fit = 'inside'
-    ) {
+        $fit = 'inside')
+    {
         //        require_once OLEDRION_PATH . 'class/wideimage/WideImage.inc.php';
         $resize = true;
         if (OLEDRION_DONT_RESIZE_IF_SMALLER) {
@@ -1272,8 +1276,8 @@ class OledrionUtility
         $breadcrumb        = '';
         $workingBreadcrumb = array();
         if (is_array($path)) {
-            $moduleName          = self::getModuleName();
-            $workingBreadcrumb[] = "<a href='" . OLEDRION_URL . "' title='" . self::makeHrefTitle($moduleName) . "'>" . $moduleName . '</a>';
+            $moduleName          = static::getModuleName();
+            $workingBreadcrumb[] = "<a href='" . OLEDRION_URL . "' title='" . static::makeHrefTitle($moduleName) . "'>" . $moduleName . '</a>';
             foreach ($path as $url => $title) {
                 $workingBreadcrumb[] = "<a href='" . $url . "'>" . $title . '</a>';
             }
@@ -1293,7 +1297,7 @@ class OledrionUtility
      * @param $string
      * @return string
      */
-    public function close_tags($string)
+    public static function close_tags($string)
     {
         // match opened tags
         if (preg_match_all('/<([a-z\:\-]+)[^\/]>/', $string, $start_tags)) {
@@ -1343,7 +1347,7 @@ class OledrionUtility
             if (!$break_words) {
                 $string = preg_replace('/\s+?(\S+)?$/', '', substr($string, 0, $length + 1));
                 $string = preg_replace('/<[^>]*$/', '', $string);
-                $string = self::close_tags($string);
+                $string = static::close_tags($string);
             }
 
             return $string . $etc;
@@ -1360,7 +1364,7 @@ class OledrionUtility
     public static function makeInfotips($text)
     {
         $ret      = '';
-        $infotips = self::getModuleOption('infotips');
+        $infotips = static::getModuleOption('infotips');
         if ($infotips > 0) {
             $myts = MyTextSanitizer::getInstance();
             $ret  = $myts->htmlSpecialChars(xoops_substr(strip_tags($text), 0, $infotips));
@@ -1571,7 +1575,7 @@ class OledrionUtility
     {
         static $buffer = array();
         if ($uid == 0) {
-            $uid = self::getCurrentUserID();
+            $uid = static::getCurrentUserID();
         }
 
         if (is_array($buffer) && count($buffer) > 0 && isset($buffer[$uid])) {
@@ -1600,7 +1604,7 @@ class OledrionUtility
         static $buffer = array();
         $retval = false;
         if ($uid == 0) {
-            $uid = self::getCurrentUserID();
+            $uid = static::getCurrentUserID();
         }
         if (is_array($buffer) && array_key_exists($group, $buffer)) {
             $retval = $buffer[$group];
@@ -1639,7 +1643,7 @@ class OledrionUtility
      */
     public function duplicateFile($path, $filename)
     {
-        $newName = self::createUploadName($path, $filename);
+        $newName = static::createUploadName($path, $filename);
         if (copy($path . '/' . $filename, $path . '/' . $newName)) {
             return $newName;
         } else {
@@ -1722,7 +1726,7 @@ class OledrionUtility
      * @return string
      * @since 2.3.2009.03.13
      */
-    public function htmlSelectOptions($array, $default = 0, $withNull = true)
+    public static function htmlSelectOptions($array, $default = 0, $withNull = true)
     {
         $ret      = array();
         $selected = '';
@@ -1758,7 +1762,7 @@ class OledrionUtility
     {
         $ret = '';
         $ret .= "<select name='" . $selectName . "' id='" . $selectName . "'>\n";
-        $ret .= self::htmlSelectOptions($array, $default, $withNull);
+        $ret .= static::htmlSelectOptions($array, $default, $withNull);
         $ret .= "</select>\n";
 
         return $ret;

@@ -156,11 +156,11 @@ class Oledrion_reductions
      * @param oledrion_products $product
      * @param integer           $quantity
      */
-    public function computePerCategories(oledrion_products $product, $quantity)
+    public function computePerCategories(Oledrion_products $product, $quantity)
     {
         // Nombre de produits par catégories
         if (isset($this->categoriesProductsCount[$product->product_cid])) {
-            $this->categoriesProductsCount[$product->product_cid] += 1;
+            ++$this->categoriesProductsCount[$product->product_cid];
         } else {
             $this->categoriesProductsCount[$product->product_cid] = 1;
         }
@@ -180,7 +180,7 @@ class Oledrion_reductions
      *
      * @param oledrion_products $product
      */
-    private function addAssociatedManufacturers(oledrion_products $product)
+    private function addAssociatedManufacturers(Oledrion_products $product)
     {
         if (!isset($this->associatedManufacturers[$product->product_id])) {
             $this->associatedManufacturers[$product->product_id] = $product->product_id;
@@ -194,7 +194,7 @@ class Oledrion_reductions
      * @param attray            $attributes
      * @since 2.3
      */
-    private function addAssociatedAttributes(oledrion_products $product, $attributes)
+    private function addAssociatedAttributes(Oledrion_products $product, $attributes)
     {
         if (!isset($this->associatedAttributesPerProduct[$product->product_id])) {
             $this->associatedAttributesPerProduct[$product->product_id] = $product->getProductsAttributesList($attributes);
@@ -206,7 +206,7 @@ class Oledrion_reductions
      *
      * @param oledrion_products $product
      */
-    private function addAssociatedVendors(oledrion_products $product)
+    private function addAssociatedVendors(Oledrion_products $product)
     {
         if (!isset($this->associatedVendors[$product->product_vendor_id])) {
             $this->associatedVendors[$product->product_vendor_id] = $product->product_vendor_id;
@@ -218,7 +218,7 @@ class Oledrion_reductions
      *
      * @param oledrion_products $product
      */
-    private function addAssociatedCategories(oledrion_products $product)
+    private function addAssociatedCategories(Oledrion_products $product)
     {
         if (!isset($this->associatedCategories[$product->product_cid])) {
             $this->associatedCategories[$product->product_cid] = $product->product_cid;
@@ -382,10 +382,12 @@ class Oledrion_reductions
      * @param float   $commandAmountTTC     Montant TTC de la commande
      * @param array   $discountsDescription Descriptions des remises GLOBALES appliquées (et pas les remises par produit !)
      * @param integer $discountsCount       Le nombre TOTAL de réductions appliquées (individuellement ou sur la globalité du panier)
-     *
+     *                                      B.R. @param array $checkoutAttributes
      * TODO: Passer les paramètres sous forme d'objet
      * @return bool
      */
+
+    // B.R. Added: $checkoutAttributes
     public function computeCart(
         &$cartForTemplate,
         &$emptyCart,
@@ -395,8 +397,9 @@ class Oledrion_reductions
         &$goOn,
         &$commandAmountTTC,
         &$discountsDescription,
-        &$discountsCount
-    ) {
+        &$discountsCount,
+        &$checkoutAttributes)
+    {
         $emptyCart      = false;
         $goOn           = '';
         $vats           = array();
@@ -448,6 +451,19 @@ class Oledrion_reductions
             }
             $totalPrice = 0.0;
             $reduction  = '';
+
+            // B.R. Start
+            // If any product in cart does not skip optional checkout step, need to perform
+            if ($cartProduct['product']->getVar('skip_packing', 'n') == 0) {
+                $checkoutAttributes['skip_packing'] = 0;
+            }
+            if ($cartProduct['product']->getVar('skip_location', 'n') == 0) {
+                $checkoutAttributes['skip_location'] = 0;
+            }
+            if ($cartProduct['product']->getVar('skip_delivery', 'n') == 0) {
+                $checkoutAttributes['skip_delivery'] = 0;
+            }
+            // B.R. End
 
             ++$cpt;
             if ($cpt == $caddyCount) {

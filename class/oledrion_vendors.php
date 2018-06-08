@@ -48,9 +48,9 @@ class OledrionOledrion_vendorsHandler extends Oledrion_XoopsPersistableObjectHan
 {
     /**
      * OledrionOledrion_vendorsHandler constructor.
-     * @param object $db
+     * @param XoopsDatabase|null $db
      */
-    public function __construct($db)
+    public function __construct(XoopsDatabase $db)
     { //                            Table               Classe          Id          Libellé
         parent::__construct($db, 'oledrion_vendors', 'oledrion_vendors', 'vendor_id', 'vendor_name');
     }
@@ -105,7 +105,7 @@ class OledrionOledrion_vendorsHandler extends Oledrion_XoopsPersistableObjectHan
      * @param  oledrion_vendors $vendor
      * @return boolean          Le résultat de la suppression
      */
-    public function deleteVendor(oledrion_vendors $vendor)
+    public function deleteVendor(Oledrion_vendors $vendor)
     {
         return $this->delete($vendor, true);
     }

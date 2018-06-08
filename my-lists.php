@@ -83,7 +83,7 @@ function listForm($op, $product_id = 0)
     $sform->addElement(new XoopsFormHidden('list_id', $item->getVar('list_id')));
     $sform->addElement(new XoopsFormText(_AM_OLEDRION_TITLE, 'list_title', 50, 255, $item->getVar('list_title', 'e')), true);
     //$sform->addElement(new XoopsFormText(_OLEDRION_LIST_PASSWORD, 'list_password', 50, 50, $item->getVar('list_password','e')), false);
-    $selectTypes = oledrion_lists::getTypesArray();
+    $selectTypes = Oledrion_lists::getTypesArray();
     $selectType  = new XoopsFormSelect(_OLEDRION_LIST_TYPE, 'list_type', $item->getVar('list_type', 'e'));
     $selectType->addOptionArray($selectTypes);
     $sform->addElement($selectType, true);

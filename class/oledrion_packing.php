@@ -110,9 +110,9 @@ class OledrionOledrion_packingHandler extends Oledrion_XoopsPersistableObjectHan
 {
     /**
      * OledrionOledrion_packingHandler constructor.
-     * @param object $db
+     * @param XoopsDatabase|null $db
      */
-    public function __construct($db)
+    public function __construct(XoopsDatabase $db)
     { //                                       Table                    Classe              Id
         parent::__construct($db, 'oledrion_packing', 'oledrion_packing', 'packing_id');
     }

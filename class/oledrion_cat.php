@@ -150,9 +150,9 @@ class OledrionOledrion_catHandler extends Oledrion_XoopsPersistableObjectHandler
 {
     /**
      * OledrionOledrion_catHandler constructor.
-     * @param object $db
+     * @param XoopsDatabase|null $db
      */
-    public function __construct($db)
+    public function __construct(XoopsDatabase $db)
     { //                        Table               Classe       Id       Libellé
         parent::__construct($db, 'oledrion_cat', 'oledrion_cat', 'cat_cid', 'cat_title');
     }
@@ -239,10 +239,10 @@ class OledrionOledrion_catHandler extends Oledrion_XoopsPersistableObjectHandler
     /**
      * Supprime une catégorie (et tout ce qui lui est relatif)
      *
-     * @param  oledrion_cat $category
+     * @param  Oledrion_cat $category
      * @return boolean      Le résultat de la suppression
      */
-    public function deleteCategory(oledrion_cat $category)
+    public function deleteCategory(Oledrion_cat $category)
     {
         global $xoopsModule;
         $category->deletePicture();
@@ -284,7 +284,7 @@ class OledrionOledrion_catHandler extends Oledrion_XoopsPersistableObjectHandler
      * Retourne des catégories selon leur ID
      *
      * @param  array $ids Les ID des catégories à retrouver
-     * @return array Objets de type oledrion_cat
+     * @return array Objets de type Oledrion_cat
      */
     public function getCategoriesFromIds($ids)
     {
@@ -300,7 +300,7 @@ class OledrionOledrion_catHandler extends Oledrion_XoopsPersistableObjectHandler
     /**
      * Retourne la liste des catégories mères (sous forme d'un tableau d'objets)
      *
-     * @return array Objets de type oledrion_cat
+     * @return array Objets de type Oledrion_cat
      */
     public function getMotherCategories()
     {
