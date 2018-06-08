@@ -102,7 +102,7 @@ switch ($action) {
 
         if ($helper->getConfig('displaySampleButton')) {
             xoops_loadLanguage('admin/modulesadmin', 'system');
-            require_once  dirname(__DIR__) . '/testdata/index.php';
+            require_once  dirname(dirname(__DIR__)) . '/testdata/index.php';
 
             $adminObject->addItemButton(constant('CO_' . $moduleDirNameUpper . '_' . 'ADD_SAMPLEDATA'), '__DIR__ . /../../testdata/index.php?op=load', 'add');
 

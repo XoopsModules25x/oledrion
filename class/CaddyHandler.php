@@ -24,7 +24,7 @@ use XoopsModules\Oledrion\Constants;
 /**
  * Gestion des caddy
  */
-require_once __DIR__ . '/classheader.php';
+// require_once __DIR__ . '/classheader.php';
 
 
 

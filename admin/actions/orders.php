@@ -44,7 +44,7 @@ switch ($action) {
  $filter3 = \Xmf\Request::getInt('filter3', 0, 'SESSION');
 }
         $_SESSION['filter3'] = $filter3;
-        $selected            = ['', '', '', '', '', ''];
+        $selected            = ['', '', '', '', '', '', '', '', ''];
         $conditions          = [
             Constants::OLEDRION_STATE_NOINFORMATION,
             Constants::OLEDRION_STATE_VALIDATED,
@@ -54,7 +54,7 @@ switch ($action) {
             Constants::OLEDRION_STATE_FRAUD,
             Constants::OLEDRION_STATE_PACKED,
             Constants::OLEDRION_STATE_SUBMITED,
-            Constants::OLEDRION_STATE_DELIVERYED
+            Constants::OLEDRION_STATE_DELIVERED
         ];
         $selected[$filter3]  = ' selected';
 

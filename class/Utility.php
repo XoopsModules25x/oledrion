@@ -160,7 +160,8 @@ class Utility extends \XoopsObject
         $height = '400px',
         $supplemental = ''
     ) {
-        $helper                   = Oledrion\Helper::getInstance();
+        /** @var Oledrion\Helper $helper */
+        $helper = Oledrion\Helper::getInstance();
         $editor                   = false;
         $editor_configs           = [];
         $editor_configs['name']   = $name;
@@ -628,7 +629,7 @@ class Utility extends \XoopsObject
         while ($true) {
             $ipbits = explode('.', $_SERVER['REMOTE_ADDR']);
             list($usec, $sec) = explode(' ', microtime());
-            $usec = (integer)($usec * 65536);
+            $usec = ($usec * 65536);
             $sec  = ((integer)$sec) & 0xFFFF;
 
             if ($trimName) {
@@ -1112,7 +1113,7 @@ class Utility extends \XoopsObject
         $maxWidth = null,
         $maxHeight = null
     ) {
-        require_once XOOPS_ROOT_PATH . '/class/uploader.php';
+//        require_once XOOPS_ROOT_PATH . '/class/uploader.php';
         global $destname;
         if (isset($_POST['xoops_upload_file'])) {
             require_once XOOPS_ROOT_PATH . '/class/uploader.php';
@@ -1636,6 +1637,7 @@ class Utility extends \XoopsObject
         if (false === strpos($languageFile, $defaultExtension)) {
             $languageFile .= $defaultExtension;
         }
+        /** @var Oledrion\Helper $helper */
         $helper = Oledrion\Helper::getInstance();
         $helper->loadLanguage($languageFile);
     }

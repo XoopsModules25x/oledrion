@@ -17,6 +17,7 @@
  * @author      Hossein Azizabadi (azizabadi@faragostaresh.com)
  */
 
+use Xmf\Request;
 use XoopsModules\Oledrion;
 
 /**
@@ -119,6 +120,7 @@ switch ($action) {
             unset($pictureTray, $deleteCheckbox);
         }
         $sform->addElement(new \XoopsFormFile(_AM_OLEDRION_PICTURE, 'attachedfile', Oledrion\Utility::getModuleOption('maxuploadsize')), false);
+
         $editor = Oledrion\Utility::getWysiwygForm(_AM_OLEDRION_DESCRIPTION, 'payment_description', $item->getVar('payment_description', 'e'), 15, 60, 'description_hidden');
         if ($editor) {
             $sform->addElement($editor, false);
@@ -161,18 +163,28 @@ switch ($action) {
         if (isset($_POST['delpicture']) && 1 == \Xmf\Request::getInt('delpicture', 0, 'POST')) {
             $item->deletePicture();
         }
-        $destname = '';
-        $res1     = Oledrion\Utility::uploadFile(0, OLEDRION_PICTURES_PATH);
-        if ($res1) {
-            if (Oledrion\Utility::getModuleOption('resize_others')) { // Eventuellement on redimensionne l'image
-                Oledrion\Utility::resizePicture(OLEDRION_PICTURES_PATH . '/' . $destname, OLEDRION_PICTURES_PATH . '/' . $destname, Oledrion\Utility::getModuleOption('images_width'), Oledrion\Utility::getModuleOption('images_height'), true);
+
+        $bingo1 = Request::getString('payment_image', '', 'POST');
+        $bingo2 = Request::getString('attachedfile', '', 'POST');
+
+        if (Request::hasVar('attachedfile', 'POST') && '' !== Request::getString('attachedfile', '', 'POST')) {
+
+            $destname = '';
+
+            $res1 = Oledrion\Utility::uploadFile(0, OLEDRION_PICTURES_PATH);
+            if ($res1) {
+                if (Oledrion\Utility::getModuleOption('resize_others')) { // Eventuellement on redimensionne l'image
+                    Oledrion\Utility::resizePicture(OLEDRION_PICTURES_PATH . '/' . $destname, OLEDRION_PICTURES_PATH . '/' . $destname, Oledrion\Utility::getModuleOption('images_width'), Oledrion\Utility::getModuleOption('images_height'), true);
+                }
+                $item->setVar('payment_image', basename($destname));
+            } else {
+                if (false !== $res1) {
+                    echo $res1;
+                }
             }
-            $item->setVar('payment_image', basename($destname));
-        } else {
-            if (false !== $res1) {
-                echo $res1;
-            }
+
         }
+
         $res = $paymentHandler->insert($item);
         if ($res) {
             Oledrion\Utility::updateCache();

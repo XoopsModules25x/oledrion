@@ -23,7 +23,7 @@ use XoopsModules\Oledrion;
 /**
  * Gestion des options des passerelles de paiement
  */
-require_once __DIR__ . '/classheader.php';
+// require_once __DIR__ . '/classheader.php';
 
 
 /**

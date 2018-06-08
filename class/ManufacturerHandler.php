@@ -23,7 +23,7 @@ use XoopsModules\Oledrion;
 /**
  * Gestion des fabricants
  */
-require_once __DIR__ . '/classheader.php';
+//require_once __DIR__ . '/classheader.php';
 
 
 /**

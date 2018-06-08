@@ -27,7 +27,7 @@ use XoopsModules\Oledrion;
  * enregistré en base de données (à condition que l'utilisateur soit connecté).
  * Si l'utilisateur quitte le site et revient plus tard, cela permet de recharger son panier.
  */
-require_once __DIR__ . '/classheader.php';
+// require_once __DIR__ . '/classheader.php';
 
 /**
  * Class PersistentCart

@@ -1476,7 +1476,7 @@ $modversion['config'][] = [
  * Make Sample button visible?
  */
 $modversion['config'][] = [
-    'name'        => 'showsamplebutton',
+    'name'        => 'displaySampleButton',
     'title'       => '_MI_OLEDRION_SHOW_SAMPLE_BUTTON',
     'description' => '_MI_OLEDRION_SHOW_SAMPLE_BUTTON_DESC',
     'formtype'    => 'yesno',

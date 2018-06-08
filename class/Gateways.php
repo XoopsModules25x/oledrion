@@ -196,7 +196,8 @@ class Gateways
      */
     public static function gatewayClassName($gatewayName)
     {
-        return 'oledrion_' . $gatewayName;
+//        return 'oledrion_' . $gatewayName;
+        return  $gatewayName;
     }
 
     /**

@@ -28,6 +28,12 @@ switch ($op) {
     case 'load':
         loadSampleData();
         break;
+    case 'save':
+        saveSampleData();
+        break;
+    case 'exportschema':
+        exportSchema();
+        break;
 }
 
 // XMF TableLoad for SAMPLE data
@@ -36,14 +42,27 @@ function loadSampleData()
 {
     $moduleDirName = basename(dirname(__DIR__));
     $moduleDirNameUpper = strtoupper($moduleDirName); //$capsDirName
-    $helper       = Oledrion\Helper::getInstance();
+    /** @var Oledrion\Helper $helper */
+    $helper = Oledrion\Helper::getInstance();
     $utility      = new Oledrion\Utility();
-    $configurator = new common\Configurator();
+    $configurator = new Common\Configurator();
     // Load language files
     $helper->loadLanguage('admin');
     $helper->loadLanguage('modinfo');
     $helper->loadLanguage('common');
 
+
+    $tables = ['manufacturer', 'products', 'productsmanu', 'caddy', 'cat', 'commands', 'vat',
+               'discounts', 'vendors', 'files', 'persistent_cart', 'lists', 'products_list', 'attributes',
+               'packing', 'location', 'delivery', 'payment', 'location_delivery', 'delivery_payment', ];
+
+    foreach ($tables as $table) {
+
+        $tabledata = \Xmf\Yaml::readWrapped($moduleDirName . '_' .$table . '.yml');
+        \Xmf\Database\TableLoad::truncateTable($moduleDirName . '_' . $table);
+        \Xmf\Database\TableLoad::loadTableFromArray($moduleDirName . '_' . $table, $tabledata);
+    }
+/*
     $oledrion_manufacturerData = \Xmf\Yaml::readWrapped('oledrion_manufacturer.yml');
     \Xmf\Database\TableLoad::truncateTable('oledrion_manufacturer');
     \Xmf\Database\TableLoad::loadTableFromArray($moduleDirName . '_manufacturer', $oledrion_manufacturerData);
@@ -143,7 +162,7 @@ function loadSampleData()
     //    $oledrion_payment_logData = \Xmf\Yaml::readWrapped('oledrion_payment_log.yml');
     //    \Xmf\Database\TableLoad::truncateTable('oledrion_payment_log');
     //    \Xmf\Database\TableLoad::loadTableFromArray($moduleDirName . '_payment_log', $oledrion_payment_logData);
-
+*/
 
     //  ---  COPY test folder files ---------------
     if (count($configurator->copyTestFolders) > 0) {
@@ -151,9 +170,42 @@ function loadSampleData()
         foreach (array_keys($configurator->copyTestFolders) as $i) {
             $src  = $configurator->copyTestFolders[$i][0];
             $dest = $configurator->copyTestFolders[$i][1];
-            $utility::xcopy($src, $dest);
+            $utility::rcopy($src, $dest);
         }
     }
     
     redirect_header('../admin/index.php', 0, constant('CO_' . $moduleDirNameUpper . '_SAMPLEDATA_SUCCESS'));
+}
+
+function saveSampleData()
+{
+    $moduleDirName      = basename(dirname(__DIR__));
+    $moduleDirNameUpper = strtoupper($moduleDirName);
+
+    $tables = ['customer', 'part', 'service', 'servpart', 'vehicle', 'workorder', 'workserv',];
+
+    foreach ($tables as $table) {
+        \Xmf\Database\TableLoad::saveTableToYamlFile($moduleDirName . '_' . $table, $table . '.yml');
+    }
+
+    redirect_header('../admin/index.php', 1, constant('CO_' . $moduleDirNameUpper . '_' . 'SAMPLEDATA_SUCCESS'));
+
+}
+
+function exportSchema()
+{
+
+    try {
+
+        $moduleDirName      = basename(dirname(__DIR__));
+        $moduleDirNameUpper = strtoupper($moduleDirName);
+
+        $migrate = new  Wfdownloads\Migrate($moduleDirName);
+        $migrate->saveCurrentSchema();
+
+        redirect_header('../admin/index.php', 1, constant('CO_' . $moduleDirNameUpper . '_' . 'EXPORT_SCHEMA_SUCCESS'));
+    }
+    catch (Exception $e) {
+        exit(constant('CO_' . $moduleDirNameUpper . '_' . 'EXPORT_SCHEMA_ERROR'));
+    }
 }

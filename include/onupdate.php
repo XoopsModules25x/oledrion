@@ -75,10 +75,10 @@ function xoops_module_update_oledrion(\XoopsModule $module, $previousVersion = n
 
     /** @var Oledrion\Helper $helper */
     /** @var Oledrion\Utility $utility */
-    /** @var common\Configurator $configurator */
+    /** @var Common\Configurator $configurator */
     $helper  = Oledrion\Helper::getInstance();
     $utility = new Oledrion\Utility();
-    $configurator = new common\Configurator();
+    $configurator = new Common\Configurator();
 
     $helper->loadLanguage('common');
 

@@ -70,6 +70,10 @@ if (!defined('OLEDRION_ATTACHED_FILES_URL')) {
     define('OLEDRION_PICTURES_URL', XOOPS_UPLOAD_URL . '/oledrion/images'); // WITHOUT Trailing slash
     define('OLEDRION_PICTURES_PATH', XOOPS_UPLOAD_PATH . '/oledrion/images'); // WITHOUT Trailing slash
 
+    // Define here where pictures are saved
+    define('OLEDRION_THUMBS_URL', XOOPS_UPLOAD_URL . '/oledrion/thumbs'); // WITHOUT Trailing slash
+    define('OLEDRION_THUMBS_PATH', XOOPS_UPLOAD_PATH . '/oledrion/thumbs'); // WITHOUT Trailing slash
+
     // Maximum length of product's summary for pages (in characters)
     define('OLEDRION_SUMMARY_MAXLENGTH', 150);
 

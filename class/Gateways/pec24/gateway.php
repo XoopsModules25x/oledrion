@@ -1,4 +1,4 @@
-<?php namespace XoopsModules\Oledrion\Gateways\pec24;
+<?php namespace XoopsModules\Oledrion\Gateways\Pec24;
 
 // defined('XOOPS_ROOT_PATH') || die('Restricted access');
 //require_once('nusoap.php');
@@ -26,7 +26,7 @@ class Pec24 extends Gateway
         $gateway['name']          = 'Parsian';
         $gateway['foldername']    = 'pec24';
         $gateway['version']       = '1.0';
-        $gateway['description']   = 'سيستم پرداخت الکترونيک بانک پارسیان';
+        $gateway['description']   = 'سيستم پرداخت الکترونيک بانک پارسیان'; //Parsian Electronic Banking System
         $gateway['author']        = 'Hossein Azizabadi';
         $gateway['credits']       = 'جسین عزیزآبادی';
         $gateway['releaseDate']   = 20121020;

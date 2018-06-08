@@ -24,7 +24,7 @@ use XoopsModules\Oledrion\Constants;
 /**
  * Gestion des commandes clients
  */
-require_once __DIR__ . '/classheader.php';
+// require_once __DIR__ . '/classheader.php';
 
 
 /**
@@ -238,7 +238,7 @@ class CommandsHandler extends OledrionPersistableObjectHandler
     public function deliveryOrder(Commands $order, $comment = '')
     {
         $retval = false;
-        $order->setVar('cmd_state', Constants::OLEDRION_STATE_DELIVERYED);
+        $order->setVar('cmd_state', Constants::OLEDRION_STATE_DELIVERED);
         $order->setVar('cmd_comment', $comment);
         $retval = $this->insert($order, true);
 

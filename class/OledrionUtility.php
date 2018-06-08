@@ -653,7 +653,7 @@ class OledrionUtility
         while ($true) {
             $ipbits = explode('.', $_SERVER['REMOTE_ADDR']);
             list($usec, $sec) = explode(' ', microtime());
-            $usec = (integer)($usec * 65536);
+            $usec = ($usec * 65536);
             $sec  = ((integer)$sec) & 0xFFFF;
 
             if ($trimName) {

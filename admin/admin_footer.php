@@ -19,6 +19,7 @@
 
 use XoopsModules\Oledrion;
 
+/** @var Oledrion\Helper $helper */
 $helper = Oledrion\Helper::getInstance();
 $helper->loadLanguage('admin');
 

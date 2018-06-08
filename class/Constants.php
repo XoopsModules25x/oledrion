@@ -14,7 +14,7 @@
  *
  * @category        Module
  * @package         xoopstube
- * @author          XOOPS Development Team <name@site.com> - <https://xoops.org>
+ * @author          XOOPS Development Team <https://xoops.org>
  * @copyright       {@link https://xoops.org/ XOOPS Project}
  * @license         GPL 2.0 or later
  * @link            https://xoops.org/
@@ -62,7 +62,7 @@ class Constants
     const OLEDRION_STATE_FRAUD = 5; // Fraude
     const OLEDRION_STATE_PACKED = 6;
     const OLEDRION_STATE_SUBMITED = 7;
-    const OLEDRION_STATE_DELIVERYED = 8;
+    const OLEDRION_STATE_DELIVERED = 8;
 
     // Les nouveaux define relatifs aux réductions ************************************************************************
     const OLEDRION_DISCOUNT_PRICE_TYPE0 = 0; // Réduction non définie

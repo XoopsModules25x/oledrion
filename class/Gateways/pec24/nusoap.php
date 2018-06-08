@@ -3685,20 +3685,20 @@ class Soap_transport_http extends Nusoap_base
                     continue;
                 }
                 $this->debug('check cookie for validity: ' . $cookie['name'] . '=' . $cookie['value']);
-                if (isset($cookie['expires']) && (!empty($cookie['expires']))) {
+                if (isset($cookie['expires']) && !empty($cookie['expires'])) {
                     if (strtotime($cookie['expires']) <= time()) {
                         $this->debug('cookie has expired');
                         continue;
                     }
                 }
-                if (isset($cookie['domain']) && (!empty($cookie['domain']))) {
+                if (isset($cookie['domain']) && !empty($cookie['domain'])) {
                     $domain = preg_quote($cookie['domain']);
                     if (!preg_match("'.*$domain$'i", $this->host)) {
                         $this->debug('cookie has different domain');
                         continue;
                     }
                 }
-                if (isset($cookie['path']) && (!empty($cookie['path']))) {
+                if (isset($cookie['path']) && !empty($cookie['path'])) {
                     $path = preg_quote($cookie['path']);
                     if (!preg_match("'^$path.*'i", $this->path)) {
                         $this->debug('cookie is for a different path');
@@ -6663,8 +6663,8 @@ class Wsdl extends Nusoap_base
                     }
                 }
                 // if user took advantage of a minOccurs=0, then only serialize named parameters
-                if (isset($optionals) && (!isset($xvalue[$eName]))
-                    && ((!isset($attrs['nillable']))
+                if (isset($optionals) && !isset($xvalue[$eName])
+                    && (!isset($attrs['nillable'])
                         || 'true' !== $attrs['nillable'])) {
                     if (isset($attrs['minOccurs']) && '0' <> $attrs['minOccurs']) {
                         $this->debug("apparent error: no value provided for element $eName with minOccurs=" . $attrs['minOccurs']);
@@ -7412,7 +7412,7 @@ class Nusoap_parser extends Nusoap_base
     public function decodeSimple($value, $type, $typens)
     {
         // TODO: use the namespace!
-        if ((!isset($type)) || 'string' === $type || 'long' === $type || 'unsignedLong' === $type) {
+        if (!isset($type) || 'string' === $type || 'long' === $type || 'unsignedLong' === $type) {
             return (string)$value;
         }
         if ('int' === $type || 'integer' === $type || 'short' === $type || 'byte' === $type) {
@@ -7516,7 +7516,7 @@ class Nusoap_parser extends Nusoap_base
                         if (isset($params[$this->message[$child_pos]['name']])) {
                             // de-serialize repeated element name into an array
                             if ((!is_array($params[$this->message[$child_pos]['name']]))
-                                || (!isset($params[$this->message[$child_pos]['name']][0]))) {
+                                || !isset($params[$this->message[$child_pos]['name']][0])) {
                                 $params[$this->message[$child_pos]['name']] = [$params[$this->message[$child_pos]['name']]];
                             }
                             $params[$this->message[$child_pos]['name']][] = $this->message[$child_pos]['result'];
@@ -8548,7 +8548,7 @@ class Nusoap_client extends Nusoap_base
                 $this->debug('Remove cookie that is not an array');
                 continue;
             }
-            if (isset($cookie['expires']) && (!empty($cookie['expires']))) {
+            if (isset($cookie['expires']) && !empty($cookie['expires'])) {
                 if (strtotime($cookie['expires']) > time()) {
                     $this->cookies[] = $cookie;
                 } else {
@@ -8590,7 +8590,7 @@ class Nusoap_client extends Nusoap_base
             if (!is_array($newCookie)) {
                 continue;
             }
-            if ((!isset($newCookie['name'])) || (!isset($newCookie['value']))) {
+            if (!isset($newCookie['name']) || !isset($newCookie['value'])) {
                 continue;
             }
             $newName = $newCookie['name'];

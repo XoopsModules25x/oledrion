@@ -25,6 +25,7 @@ $path = dirname(dirname(dirname(__DIR__)));
 require_once $path . '/include/cp_header.php';
 
 $moduleDirName = basename(dirname(__DIR__));
+/** @var Oledrion\Helper $helper */
 $helper = Oledrion\Helper::getInstance();
 $adminObject = \Xmf\Module\Admin::getInstance();
 

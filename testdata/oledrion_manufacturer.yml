@@ -2,8 +2,8 @@
 # oledrion_manufacturer
 -
   manu_id: 1
-  manu_name: "Lorem Ipsum1"
-  manu_commercialname: "Lorem1"
+  manu_name: "Big Gorilla"
+  manu_commercialname: "Gorilla"
   manu_email: ""
   manu_bio: "<p><span style=\"color: #828282; font-family: Arial, Helvetica, sans-serif; font-size: 12.6px; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: 20px; orphans: auto; text-align: justify; text-indent: 0px; text-transform: none; white-space: normal; widows: 1; word-spacing: 0px; -webkit-text-stroke-width: 0px; display: inline !important; float: none; background-color: #ffffff;\">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse mattis, nulla id pretium malesuada, dui est laoreet risus, ac rhoncus eros diam id odio.</span></p>"
   manu_url: "http://lorem.com"
@@ -14,8 +14,8 @@
   manu_photo5: "00000036ab85fc.jpg"
 -
   manu_id: 2
-  manu_name: "Lorem Ipsum2"
-  manu_commercialname: "Lorem2"
+  manu_name: "Acme Manufacturing"
+  manu_commercialname: "ACME"
   manu_email: ""
   manu_bio: "<p><span style=\"color: #828282; font-family: Arial, Helvetica, sans-serif; font-size: 12.6px; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: 20px; orphans: auto; text-align: justify; text-indent: 0px; text-transform: none; white-space: normal; widows: 1; word-spacing: 0px; -webkit-text-stroke-width: 0px; display: inline !important; float: none; background-color: #ffffff;\">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse mattis, nulla id pretium malesuada, dui est laoreet risus, ac rhoncus eros diam id odio.</span></p>"
   manu_url: "http://lorem.com"
@@ -26,8 +26,8 @@
   manu_photo5: "00000036ab85fc.jpg"
 -
   manu_id: 3
-  manu_name: "Lorem Ipsum3"
-  manu_commercialname: "Lorem3"
+  manu_name: "Big World Products"
+  manu_commercialname: "BigWorld"
   manu_email: ""
   manu_bio: "<p><span style=\"color: #828282; font-family: Arial, Helvetica, sans-serif; font-size: 12.6px; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: 20px; orphans: auto; text-align: justify; text-indent: 0px; text-transform: none; white-space: normal; widows: 1; word-spacing: 0px; -webkit-text-stroke-width: 0px; display: inline !important; float: none; background-color: #ffffff;\">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse mattis, nulla id pretium malesuada, dui est laoreet risus, ac rhoncus eros diam id odio.</span></p>"
   manu_url: "http://lorem.com"

@@ -24,7 +24,7 @@ use XoopsModules\Oledrion\Constants;
 /**
  * Gestion des réductions
  */
-require_once __DIR__ . '/classheader.php';
+// require_once __DIR__ . '/classheader.php';
 
 
 

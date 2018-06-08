@@ -24,7 +24,7 @@ use XoopsModules\Oledrion\Constants;
 /**
  * Gestion des options (attributs) produits dans les commandes
  */
-require_once __DIR__ . '/classheader.php';
+// require_once __DIR__ . '/classheader.php';
 
 /**
  * Class Caddy_attributes

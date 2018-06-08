@@ -19,8 +19,8 @@
 
 use XoopsModules\Oledrion;
 
-// require_once  dirname(__DIR__) . '/class/Helper.php';
 //require_once  dirname(__DIR__) . '/include/common.php';
+/** @var Oledrion\Helper $helper */
 $helper = Oledrion\Helper::getInstance();
 
 $pathIcon32 = \Xmf\Module\Admin::menuIconPath('');
