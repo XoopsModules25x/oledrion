@@ -22,8 +22,6 @@ use XoopsModules\Oledrion;
 
 // require_once __DIR__ . '/classheader.php';
 
-
-
 /**
  * Class LocationHandler
  */

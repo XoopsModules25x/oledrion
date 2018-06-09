@@ -94,18 +94,18 @@ switch ($action) {
         $cat_id     = \Xmf\Request::getInt('cat_cid', 0, 'POST');
         $products   = $categories = [];
         $products   = $productsHandler->getProductsForNewsletter(new Oledrion\Parameters([
-                                                                                                 'startingDate' => $date1,
-                                                                                                 'endingDate'   => $date2,
-                                                                                                 'category'     => $cat_id
-                                                                                             ]));
+                                                                                             'startingDate' => $date1,
+                                                                                             'endingDate'   => $date2,
+                                                                                             'category'     => $cat_id
+                                                                                         ]));
         $newsfile   = OLEDRION_NEWSLETTER_PATH;
         $categories = $categoryHandler->getAllCategories(new Oledrion\Parameters([
-                                                                                    'start'   => 0,
-                                                                                    'limit'   => 0,
-                                                                                    'sort'    => 'cat_title',
-                                                                                    'order'   => 'ASC',
-                                                                                    'idaskey' => true
-                                                                                ]));
+                                                                                     'start'   => 0,
+                                                                                     'limit'   => 0,
+                                                                                     'sort'    => 'cat_title',
+                                                                                     'order'   => 'ASC',
+                                                                                     'idaskey' => true
+                                                                                 ]));
         $vats       = $vatHandler->getAllVats(new Oledrion\Parameters());
 
         $fp = fopen($newsfile, 'w');

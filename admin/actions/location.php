@@ -40,19 +40,19 @@ switch ($action) {
         echo $form;
         //        Oledrion\Utility::htitle(_MI_OLEDRION_ADMENU19, 4);
         $location = $locationHandler->getAllLocation(new Oledrion\Parameters([
-                                                                                     'start' => $start,
-                                                                                     'limit' => $limit
-                                                                                 ]));
+                                                                                 'start' => $start,
+                                                                                 'limit' => $limit
+                                                                             ]));
         $class    = '';
         echo "<table width='100%' cellspacing='1' cellpadding='3' border='0' class='outer'>";
         echo "<tr><th align='center'>" . _AM_OLEDRION_ID . "</th><th align='center'>" . _AM_OLEDRION_LOCATION_TITLE . "</th><th align='center'>" . _AM_OLEDRION_LOCATION_TYPE . "</th><th align='center'>" . _OLEDRION_ONLINE . "</th><th align='center'>" . _AM_OLEDRION_ACTION . '</th></tr>';
         foreach ($location as $item) {
-            $id        = $item->getVar('location_id');
-            $class     = ('even' === $class) ? 'odd' : 'even';
-            $actions   = [];
-            $actions[] = "<a href='$baseurl?op=location&action=edit&id=" . $id . "' title='" . _OLEDRION_EDIT . "'>" . $icons['edit'] . '</a>';
-            $actions[] = "<a href='$baseurl?op=location&action=delete&id=" . $id . "' title='" . _OLEDRION_DELETE . "'" . $conf_msg . '>' . $icons['delete'] . '</a>';
-            $online    = 1 == $item->getVar('location_online') ? _YES : _NO;
+            $id            = $item->getVar('location_id');
+            $class         = ('even' === $class) ? 'odd' : 'even';
+            $actions       = [];
+            $actions[]     = "<a href='$baseurl?op=location&action=edit&id=" . $id . "' title='" . _OLEDRION_EDIT . "'>" . $icons['edit'] . '</a>';
+            $actions[]     = "<a href='$baseurl?op=location&action=delete&id=" . $id . "' title='" . _OLEDRION_DELETE . "'" . $conf_msg . '>' . $icons['delete'] . '</a>';
+            $online        = 1 == $item->getVar('location_online') ? _YES : _NO;
             $location_type = _AM_OLEDRION_LOCATION_LOCATION;
             if ('parent' === $item->getVar('location_type')) {
                 $location_type = _AM_OLEDRION_LOCATION_PARENT;
@@ -94,9 +94,9 @@ switch ($action) {
         }
         // Get delivery methods
         $deliveres = $deliveryHandler->getLocationDelivery(new Oledrion\Parameters([
-                                                                                           'limit'    => $limit,
-                                                                                           'location' => $id
-                                                                                       ]));
+                                                                                       'limit'    => $limit,
+                                                                                       'location' => $id
+                                                                                   ]));
         if (empty($deliveres)) {
             Oledrion\Utility::redirect(_AM_OLEDRION_LOCATION_DELIVERYADD, $baseurl, 5);
         }
@@ -167,9 +167,9 @@ switch ($action) {
         $post              = $_POST;
         $location_delivery = [];
         $deliveres         = $deliveryHandler->getLocationDelivery(new Oledrion\Parameters([
-                                                                                                   'limit'    => $limit,
-                                                                                                   'location' => $id
-                                                                                               ]));
+                                                                                               'limit'    => $limit,
+                                                                                               'location' => $id
+                                                                                           ]));
         foreach ($deliveres as $delivery) {
             if (isset($post[$delivery['delivery_id'] . '_ld_select'])) {
                 $location_delivery[$delivery['delivery_id']]['ld_location']      = $id;

@@ -1,4 +1,44 @@
-<h5>2.35  Alpha 1                  [2017-12-28]</h5>  Dev: Xoops 2.5.9, PHP 7.2.1
+<h5>2.35  Alpha 1                  [NOT RELEASED]</h5>  Dev: Xoops 2.5.9, PHP 7.2.6
+- added namespaces (mamba)
+- moved constants to a separate file (mamba)
+- moved Action and Filter classes to /class/plugins (mamba)
+- added sample data (mamba)
+
+
+<h5>2.34  Beta 6                      [NOT RELEASED]</h5>
+<hr>
+
+Tested with Xoops 2.5.7.1 (2.5.8 required)
+Updated Paypal Gateway:
+- use current protocols HTTP/1.1, ssl, port 443
+- send verification emails after payment cleared (previously before)
+- offload payment processing (after paypal confirm) to separate thread to decouple paypal transaction time from total transaction time (due to site load)
+- include transaction ID in verification emails
+- changed logname to gateway_log.php
+- fully tested using sandbox
+
+Do not send validation emails prior to payment verification. May want to re-visit and make config option for scenario's where payment is in escrow until shipped or received.
+Changed oledrion_thankyou.tpl and oledrion_cancelpurchase.tpl to links to point to main site URL (whatever is configured as home module, as opposed to OLEDRION_URL)
+Added per-product checkout state override flags (skip_packing, skip_location, skip_delivery) to skip corresponding checkout states to allow a mix of products, some of which may not require these checkout states.
+NOTE: have not yet tested creation of above flags @module install, used phpmydamin: tinyint(1), not NULL, default:0.
+Assume that "skip delivery" for all products in cart implies user information fields: first_name, phone_numbers and address are optional, else manditory at checkout. Collect minimum info for privacy reasons.
+Changed email log path from XOOPS_UPLOAD_PATH to OLEDRION_UPLOAD_PATH
+In user invoice (receipt, viewable on site), changed URL of product to be product_url3 (URL  3)from DB (referenced from /modules/, no leading slash), if exists, else original link of form: "$sitename/modules/oledrion/product-id..." (which does not exist unless product description  page created, needs to be created per product). Have not yet tested side-effects, altered basic function "getLink". Implemented since my products are described in publisher articles.
+Various bugs fixed. fgrep "B.R." in module dir or diff -rq this_module_dir release_module_dir to see changed files
+
+TODO / Suggestions:
+- Add admin hints when required config such as Packing, location, Delivery are missing which is confusing to users (no way to select, empty radio buttons)
+- SMS order notification incomplete. Currently sent before payment verification. Completely rework to add transaction ID (from gateway / paypal) and send after payment verification
+- Cannot select more than one gateway (#1). See "TODO" in gateway.php.
+- Bug(s) No images can be loaded, all configuration pages. Xoops version?
+- fix bug with selecting Picture for payment (admin). May be the wrong place to select picture, since it is used to represent gateway and should be a gateway property (ie; paypal image).
+- change templates (checkout) for "Select delivery method form" and "Select payment method form" so that radio button fields are one line each.
+- Add stub update DB (at payment verification) function which calls script sh/php for update other DB (such as licensing, access priveleges). Consider making gateway or payment config property.
+- Fix receipt email templates such that header and columns line up. Perhaps pretty html option?
+- Document this module (not me)
+
+
+<h5>2.34  Beta 5                      [NOT RELEASED]</h5>
 <hr>
 - moved all images, CSS, and JS files to /assets (mamba)
 - renamed .html Smarty templates to .tpl (mamba)
@@ -23,10 +63,6 @@
 - added install checks for PHP 5.5 and XOOPS 2.5.8 (mamba)
 - added auto-creation of upload folders (mamba)
 - moved functions to Utility class (mamba)
-- added namespaces (mamba)
-- moved constants to a separate file (mamba)
-- moved Action and Filter classes to /class/plugins (mamba)
-- added sample data (mamba)
 
 
 <h5>2.34  Beta 4                      [NOT RELEASED]</h5>

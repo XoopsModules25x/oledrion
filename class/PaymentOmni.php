@@ -26,20 +26,22 @@ class Payment
 {
     private $pay;
     private $card;
+
     public function setcard($value)
     {
         try {
-            $card = [
-                'number' => $value['card'],
+            $card  = [
+                'number'      => $value['card'],
                 'expiryMonth' => $value['expiremonth'],
-                'expiryYear' => $value['expireyear'],
-                'cvv' => $value['cvv']
+                'expiryYear'  => $value['expireyear'],
+                'cvv'         => $value['cvv']
             ];
             $ccard = new CreditCard($card);
             $ccard->validate();
             $this->card = $card;
             return true;
-        } catch (\Exception $ex) {
+        }
+        catch (\Exception $ex) {
             return $ex->getMessage();
         }
     }
@@ -52,13 +54,11 @@ class Payment
             $pay = Omnipay::create('Stripe');
             $pay->setApiKey('YOUR API KEY');
             // Send purchase request
-            $response = $pay->purchase(
-                [
-                    'amount' => $value['amount'],
-                    'currency' => $value['currency'],
-                    'card' => $this->card
-                ]
-            )->send();
+            $response = $pay->purchase([
+                                           'amount'   => $value['amount'],
+                                           'currency' => $value['currency'],
+                                           'card'     => $this->card
+                                       ])->send();
 
             // Process response
             if ($response->isSuccessful()) {
@@ -71,7 +71,8 @@ class Payment
                 // Payment failed
                 return $response->getMessage();
             }
-        } catch (\Exception $ex) {
+        }
+        catch (\Exception $ex) {
             return $ex->getMessage();
         }
     }

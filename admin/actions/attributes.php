@@ -57,7 +57,6 @@ switch ($action) {
 
         $adminObject = \Xmf\Module\Admin::getInstance();
 
-
         global $xoopsConfig;
         $productsIds = $products = $productsIdsForList = $productsForList = [];
         $class       = '';
@@ -340,17 +339,17 @@ switch ($action) {
         $products       = [];
         $products       = $productsHandler->getList();
         $productsSelect = $productsHandler->productSelector(new Oledrion\Parameters([
-                                                                                                              'caption'  => _AM_OLEDRION_ATTRIBUTE_PRODUCT,
-                                                                                                              'name'     => 'attribute_product_id',
-                                                                                                              'value'    => $item->getVar('attribute_product_id', 'e'),
-                                                                                                              'size'     => 1,
-                                                                                                              'multiple' => false,
-                                                                                                              'values'   => null,
-                                                                                                              'showAll'  => true,
-                                                                                                              'sort'     => 'product_title',
-                                                                                                              'order'    => 'ASC',
-                                                                                                              'formName' => 'frm' . $operation
-                                                                                                          ]));
+                                                                                        'caption'  => _AM_OLEDRION_ATTRIBUTE_PRODUCT,
+                                                                                        'name'     => 'attribute_product_id',
+                                                                                        'value'    => $item->getVar('attribute_product_id', 'e'),
+                                                                                        'size'     => 1,
+                                                                                        'multiple' => false,
+                                                                                        'values'   => null,
+                                                                                        'showAll'  => true,
+                                                                                        'sort'     => 'product_title',
+                                                                                        'order'    => 'ASC',
+                                                                                        'formName' => 'frm' . $operation
+                                                                                    ]));
         $sform->addElement($productsSelect);
 
         $sform->addElement(new \XoopsFormText(_AM_OLEDRION_WEIGHT, 'attribute_weight', 10, 10, $item->getVar('attribute_weight', 'e')), true);

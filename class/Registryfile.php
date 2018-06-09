@@ -32,7 +32,7 @@ class Registryfile
      *
      * @return Registryfile
      */
-    public function getInstance()
+    public static function getInstance()
     {
         static $instance;
         if (null === $instance) {

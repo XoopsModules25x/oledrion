@@ -34,19 +34,19 @@ function b_oledrion_random_lists_show($options)
     $limit    = (int)$options[0];
     $listType = (int)$options[1];
     $block    = [];
-//    $handlers = HandlerManager::getInstance();
-    $db      = \XoopsDatabaseFactory::getDatabaseConnection();
+    //    $handlers = HandlerManager::getInstance();
+    $db           = \XoopsDatabaseFactory::getDatabaseConnection();
     $listsHandler = new Oledrion\ListsHandler($db);
-    $items    = [];
+    $items        = [];
     //$items =  $listsHandler->getRecentLists(new Oledrion\Parameters(array('start' => $start, 'limit' => $limit, 'sort' => 'RAND()', 'order' => 'DESC', 'idAsKey' => true, 'listType' => $listType)));
-    $items =  $listsHandler->getRecentLists(new Oledrion\Parameters([
-                                                                                     'start'    => $start,
-                                                                                     'limit'    => $limit,
-                                                                                     'sort'     => 'RAND()',
-                                                                                     'order'    => 'DESC',
-                                                                                     'idAsKey'  => true,
-                                                                                     'listType' => Constants::OLEDRION_LISTS_ALL_PUBLIC
-                                                                                 ]));
+    $items = $listsHandler->getRecentLists(new Oledrion\Parameters([
+                                                                       'start'    => $start,
+                                                                       'limit'    => $limit,
+                                                                       'sort'     => 'RAND()',
+                                                                       'order'    => 'DESC',
+                                                                       'idAsKey'  => true,
+                                                                       'listType' => Constants::OLEDRION_LISTS_ALL_PUBLIC
+                                                                   ]));
     if (count($items) > 0) {
         foreach ($items as $item) {
             $block['random_lists'][] = $item->toArray();

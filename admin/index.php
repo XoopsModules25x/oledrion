@@ -19,8 +19,8 @@
 
 use XoopsModules\Oledrion;
 
-require_once  dirname(dirname(dirname(__DIR__))) . '/include/cp_header.php';
-require_once  dirname(__DIR__) . '/include/common.php';
+require_once dirname(dirname(dirname(__DIR__))) . '/include/cp_header.php';
+require_once dirname(__DIR__) . '/include/common.php';
 require_once __DIR__ . '/admin_header.php';
 
 require_once OLEDRION_PATH . 'admin/functions.php';
@@ -35,7 +35,7 @@ require_once XOOPS_ROOT_PATH . '/class/xoopslists.php';
 $limit             = Oledrion\Utility::getModuleOption('items_count'); // Nombre maximum d'�l�ments � afficher dans l'admin
 $baseurl           = OLEDRION_URL . 'admin/' . basename(__FILE__); // URL de ce script
 $conf_msg          = Oledrion\Utility::javascriptLinkConfirm(_AM_OLEDRION_CONF_DELITEM);
-$oledrion_Currency = Oledrion\Currency::getInstance();
+$oledrionCurrency = Oledrion\Currency::getInstance();
 $manual_meta       = Oledrion\Utility::getModuleOption('manual_meta');
 
 $helper->loadLanguage('modinfo');
@@ -67,8 +67,7 @@ if (!defined('OLEDRION_ADMIN')) {
 //} elseif (isset($_GET['op'])) {
 //    $op = filter_input(INPUT_GET, 'op', FILTER_SANITIZE_STRING);
 //}
-$op    = \Xmf\Request::getCmd('op', 'dashboard');
-
+$op = \Xmf\Request::getCmd('op', 'dashboard');
 
 $action = 'default';
 if (isset($_POST['action'])) {

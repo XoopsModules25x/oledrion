@@ -9,7 +9,6 @@
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 */
 
-
 use XoopsModules\Oledrion;
 
 /**
@@ -33,7 +32,7 @@ switch ($action) {
         // ****************************************************************************************************************
         xoops_cp_header();
 
-        require_once  dirname(dirname(__DIR__)) . '/class/directorychecker.php';
+        // require_once dirname(dirname(__DIR__)) . '/class/directorychecker.php';
 
         //        Oledrion\Utility::htitle(_MI_OLEDRION_ADMENU10, 4);
         $adminObject = \Xmf\Module\Admin::getInstance();
@@ -102,7 +101,7 @@ switch ($action) {
 
         if ($helper->getConfig('displaySampleButton')) {
             xoops_loadLanguage('admin/modulesadmin', 'system');
-            require_once  dirname(dirname(__DIR__)) . '/testdata/index.php';
+            require_once dirname(dirname(__DIR__)) . '/testdata/index.php';
 
             $adminObject->addItemButton(constant('CO_' . $moduleDirNameUpper . '_' . 'ADD_SAMPLEDATA'), '__DIR__ . /../../testdata/index.php?op=load', 'add');
 
@@ -136,7 +135,7 @@ switch ($action) {
             echo "<tr><th align='center'>" . _AM_OLEDRION_DATE . "</th><th align='center'>" . _AM_OLEDRION_ID . "</th><th align='center'>" . _OLEDRION_TOTAL . "</th></tr>\n";
             foreach ($tblTmp as $item) {
                 $date = formatTimestamp(strtotime($item->getVar('cmd_date')), 's');
-                echo "<tr><td align='center'>" . $date . "</td><td align='center'>" . $item->getVar('cmd_id') . "</td><td align='right'>" . $oledrion_Currency->amountForDisplay($item->getVar('cmd_total')) . '</td></tr>';
+                echo "<tr><td align='center'>" . $date . "</td><td align='center'>" . $item->getVar('cmd_id') . "</td><td align='right'>" . $oledrionCurrency->amountForDisplay($item->getVar('cmd_total')) . '</td></tr>';
             }
             echo '</table>';
 
@@ -174,9 +173,9 @@ switch ($action) {
             // produits les plus vus ************************************************
             $tblTmp = [];
             $tblTmp = $productsHandler->getMostViewedProducts(new Oledrion\Parameters([
-                                                                                              'start' => 0,
-                                                                                              'limit' => $itemsCount
-                                                                                          ]));
+                                                                                          'start' => 0,
+                                                                                          'limit' => $itemsCount
+                                                                                      ]));
             echo "</td><td valign='top' width='50%' align='center'><b>" . _MI_OLEDRION_BNAME2 . '</b>';
             echo "<table border='0' cellpadding='2' cellspacing='2' width='100%'>";
             echo "<tr><th align='center'>" . _OLEDRION_TITLE . "</th><th align='center'>" . _OLEDRION_HITS . "</th></tr>\n";

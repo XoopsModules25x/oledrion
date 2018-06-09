@@ -81,11 +81,11 @@ function b_oledrion_recomm_edit($options)
         $select0 = $mytree->makeSelectElement('options[]', 'cat_title', '-', $options[1], true, 0, '', _MB_OLEDRION_ALL_CATEGORIES);
         $select  = $select0->render();
     } else {
-        $select = $mytree->makeSelBox('options[]', 'cat_title', '-', $options[1], true);
+        $select = $mytree->makeSelBox('options[]', 'cat_title', '-', $options[1], _MB_OLEDRION_ALL_CATEGORIES);
     }
 
-    $form                  .= '<tr><td>' . _MB_OLEDRION_CATEGORY . '</td><td>' . $select . '</td></tr>';
-    $form                  .= '</table>';
+    $form .= '<tr><td>' . _MB_OLEDRION_CATEGORY . '</td><td>' . $select . '</td></tr>';
+    $form .= '</table>';
 
     return $form;
 }

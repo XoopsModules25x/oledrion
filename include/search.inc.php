@@ -37,7 +37,7 @@ function oledrion_search($queryarray, $andor, $limit, $offset, $userid)
 {
     global $xoopsDB;
     require_once __DIR__ . '/common.php';
-    require_once XOOPS_ROOT_PATH . '/modules/oledrion/class/Products.php';
+    //require_once XOOPS_ROOT_PATH . '/modules/oledrion/class/Products.php';
 
     // Recherche dans les produits
     $sql = 'SELECT product_id, product_title, product_submitted, product_submitter FROM ' . $xoopsDB->prefix('oledrion_products') . ' WHERE (product_online = 1)';
@@ -71,7 +71,7 @@ function oledrion_search($queryarray, $andor, $limit, $offset, $userid)
     if (is_array($queryarray)) {
         $count = count($queryarray);
     }
-    $more  = '';
+    $more = '';
     if ($count > 0) {
         $cnt  = 0;
         $sql  .= ' AND (';

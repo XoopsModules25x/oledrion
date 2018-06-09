@@ -17,6 +17,7 @@
  * @license     {@link http://www.fsf.org/copyleft/gpl.html GNU public license}
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
  */
+
 /**
  * Classe interne dont le but est de passer des paramètres à la classe oeldrion_shelf
  */

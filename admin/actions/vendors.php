@@ -42,9 +42,9 @@ switch ($action) {
         //        Oledrion\Utility::htitle(_MI_OLEDRION_ADMENU0, 4);
 
         $vendors = $vendorsHandler->getAllVendors(new Oledrion\Parameters([
-                                                                                  'start' => $start,
-                                                                                  'limit' => $limit
-                                                                              ]));
+                                                                              'start' => $start,
+                                                                              'limit' => $limit
+                                                                          ]));
         $class   = '';
         echo "<table width='100%' cellspacing='1' cellpadding='3' border='0' class='outer'>";
         echo "<tr><th align='center'>" . _AM_OLEDRION_ID . "</th><th align='center'>" . _OLEDRION_VENDOR . "</th><th align='center'>" . _AM_OLEDRION_ACTION . '</th></tr>';

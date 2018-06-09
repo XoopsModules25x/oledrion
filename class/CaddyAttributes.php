@@ -117,7 +117,7 @@ class CaddyAttributes extends OledrionObject
      * Retourne les informations formatées de l'attribut pour affichage dans la facture
      *
      * @param  Products $product Le produit concerné par l'attribut
-     * @param  string            $format
+     * @param  string   $format
      * @return array
      * @since 2.3.2009.03.23
      */
@@ -129,14 +129,14 @@ class CaddyAttributes extends OledrionObject
             $prices = $this->getOption('ca_attribute_prices', $format);
         }
 
-        $oledrion_Currency = Oledrion\Currency::getInstance();
+        $oledrionCurrency = Oledrion\Currency::getInstance();
         $counter           = 0;
         foreach ($names as $name) {
             $price = 0;
             if (Oledrion\Utility::getModuleOption('use_price')) {
                 if (isset($prices[$counter])) {
                     $price = Oledrion\Utility::getAmountWithVat((float)$prices[$counter], $product->getVar('product_vat_id'));
-                    $price = $oledrion_Currency->amountForDisplay($price);
+                    $price = $oledrionCurrency->amountForDisplay($price);
                 }
             }
             $ret[] = ['ca_attribute_name' => $name, 'ca_attribute_price_formated' => $price];

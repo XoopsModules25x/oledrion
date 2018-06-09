@@ -36,13 +36,13 @@ switch ($action) {
         //        Oledrion\Utility::htitle(_MI_OLEDRION_ADMENU5, 4);
 
         $start   = \Xmf\Request::getInt('start', 0, 'GET');
-        $filter3 = $totalOrder = 0;
+        $totalOrder = 0;
         $filter3 = 1;
         if (\Xmf\Request::hasVar('filter3', 'POST')) {
             $filter3 = \Xmf\Request::getInt('filter3', 0, 'POST');
         } elseif (\Xmf\Request::hasVar('filter3', 'SESSION')) {
- $filter3 = \Xmf\Request::getInt('filter3', 0, 'SESSION');
-}
+            $filter3 = \Xmf\Request::getInt('filter3', 0, 'SESSION');
+        }
         $_SESSION['filter3'] = $filter3;
         $selected            = ['', '', '', '', '', '', '', '', ''];
         $conditions          = [
@@ -93,10 +93,10 @@ switch ($action) {
         } else {
             echo '&nbsp;';
         }
-        $exportFormats = glob(OLEDRION_PATH . 'admin/exports/*.php');
+        $exportFormats = glob(OLEDRION_PATH . 'class/Exports/*.php');
         $formats       = [];
         foreach ($exportFormats as $format) {
-            if (false === strpos($format, 'export.php')) {
+            if (false === strpos($format, 'Export.php')) {
                 $exportName = basename(str_replace('.php', '', $format));
                 $formats[]  = '<option value="' . $exportName . '">' . $exportName . '</option>';
             }
@@ -137,9 +137,9 @@ switch ($action) {
                  . ' '
                  . $gift
                  . "</td><td align='center'>"
-                 . $oledrion_Currency->amountForDisplay($item->getVar('cmd_total', 'n'))
+                 . $oledrionCurrency->amountForDisplay($item->getVar('cmd_total', 'n'))
                  . ' / '
-                 . $oledrion_Currency->amountForDisplay($item->getVar('cmd_shipping'))
+                 . $oledrionCurrency->amountForDisplay($item->getVar('cmd_shipping'))
                  . "</td><td align='center'>"
                  . implode(' ', $actions)
                  . "</td>\n";
@@ -147,7 +147,7 @@ switch ($action) {
             $totalOrder += (float)$item->getVar('cmd_total', 'n');
         }
         $class = ('even' === $class) ? 'odd' : 'even';
-        echo "<tr class='$class'><td colspan='2' align='center'><b>" . _OLEDRION_TOTAL . "</b></td><td>&nbsp;</td><td align='right'><b>" . $oledrion_Currency->amountForDisplay($totalOrder) . '</b></td><td>&nbsp;</td></tr>';
+        echo "<tr class='$class'><td colspan='2' align='center'><b>" . _OLEDRION_TOTAL . "</b></td><td>&nbsp;</td><td align='right'><b>" . $oledrionCurrency->amountForDisplay($totalOrder) . '</b></td><td>&nbsp;</td></tr>';
         echo '</table>';
         if (isset($pagenav) && is_object($pagenav)) {
             echo "<div align='right'>" . $pagenav->renderNav() . '</div>';
@@ -209,7 +209,7 @@ switch ($action) {
                 if (Oledrion\Utility::getModuleOption('sms_validate')) {
                     $information['to']   = ltrim($item->getVar('cmd_mobile'), 0);
                     $information['text'] = Oledrion\Utility::getModuleOption('sms_validate_text');
-                    $sms                 = Sms::sendSms($information);
+                    $sms                 = \XoopsModules\Oledrion\Sms::sendSms($information);
                 }
                 //
                 Oledrion\Utility::redirect(_AM_OLEDRION_SAVE_OK, $baseurl . '?op=' . $opRedirect, 2);
@@ -238,7 +238,7 @@ switch ($action) {
                 if (Oledrion\Utility::getModuleOption('sms_validate')) {
                     $information['to']   = ltrim($item->getVar('cmd_mobile'), 0);
                     $information['text'] = Oledrion\Utility::getModuleOption('sms_pack_text');
-                    $sms                 = Sms::sendSms($information);
+                    $sms                 = \XoopsModules\Oledrion\Sms::sendSms($information);
                 }
                 //
                 Oledrion\Utility::redirect(_AM_OLEDRION_SAVE_OK, $baseurl . '?op=' . $opRedirect, 2);
@@ -267,7 +267,7 @@ switch ($action) {
                 if (Oledrion\Utility::getModuleOption('sms_validate')) {
                     $information['to']   = ltrim($item->getVar('cmd_mobile'), 0);
                     $information['text'] = Oledrion\Utility::getModuleOption('sms_submit_text');
-                    $sms                 = Sms::sendSms($information);
+                    $sms                 = \XoopsModules\Oledrion\Sms::sendSms($information);
                 }
                 //
                 Oledrion\Utility::redirect(_AM_OLEDRION_SAVE_OK, $baseurl . '?op=' . $opRedirect, 2);
@@ -296,7 +296,7 @@ switch ($action) {
                 if (Oledrion\Utility::getModuleOption('sms_validate')) {
                     $information['to']   = ltrim($item->getVar('cmd_mobile'), 0);
                     $information['text'] = Oledrion\Utility::getModuleOption('sms_delivery_text');
-                    $sms                 = Sms::sendSms($information);
+                    $sms                 = \XoopsModules\Oledrion\Sms::sendSms($information);
                 }
                 //
                 Oledrion\Utility::redirect(_AM_OLEDRION_SAVE_OK, $baseurl . '?op=' . $opRedirect, 2);
@@ -318,11 +318,11 @@ switch ($action) {
 
         $orderType      = \Xmf\Request::getInt('cmdtype', 0, 'POST');
         $exportFilter   = $_POST['exportfilter'];
-        $exportFilename = OLEDRION_PATH . 'admin/exports/' . $exportFilter . '.php';
+        $exportFilename = OLEDRION_PATH . 'class/Exports/' . $exportFilter . '.php';
         if (file_exists($exportFilename)) {
-            require_once OLEDRION_PATH . 'admin/exports/export.php';
-            require_once $exportFilename;
-            $className = 'Oledrion_' . $exportFilter . '_export';
+            //require_once OLEDRION_PATH . 'class/Exports/Export.php';
+            //require_once $exportFilename;
+            $className = '\\XoopsModules\Oledrion\Exports\\' . ucfirst($exportFilter) . 'Export';
             if (class_exists($className)) {
                 $export = new $className();
                 $export->setOrderType($orderType);
@@ -383,7 +383,7 @@ switch ($action) {
             if (Oledrion\Utility::getModuleOption('sms_track')) {
                 $information['to']   = ltrim($item->getVar('cmd_mobile'), 0);
                 $information['text'] = sprintf(Oledrion\Utility::getModuleOption('sms_track_text'), $_POST['cmd_track']);
-                $sms                 = Sms::sendSms($information);
+                $sms                 = \XoopsModules\Oledrion\Sms::sendSms($information);
             }
             Oledrion\Utility::redirect(_AM_OLEDRION_SAVE_OK, $baseurl . '?op=' . $opRedirect, 2);
         } else {
@@ -429,9 +429,9 @@ switch ($action) {
             $tmp[]                                                   = $item->getVar('pm_manu_id');
             $productsManufacturers[$item->getVar('pm_product_id')][] = $item;
         }
-        $manufacturers     = $manufacturerHandler->getManufacturersFromIds($tmp);
-//        $handlers          = HandlerManager::getInstance();
-        $oledrion_Currency = Oledrion\Currency::getInstance();
+        $manufacturers = $manufacturerHandler->getManufacturersFromIds($tmp);
+        //        $handlers          = HandlerManager::getInstance();
+        $oledrionCurrency = Oledrion\Currency::getInstance();
         // Informations sur la commande ***************************************************************************************
         foreach ($caddy as $itemCaddy) {
             $productForTemplate = $tblJoin = $productManufacturers = $productAttributes = [];
@@ -464,7 +464,7 @@ switch ($action) {
             } else {
                 $discount = 0;
             }
-            $productForTemplate['product_caddy']['caddy_price_t'] = $oledrion_Currency->amountForDisplay($discount);
+            $productForTemplate['product_caddy']['caddy_price_t'] = $oledrionCurrency->amountForDisplay($discount);
             $xoopsTpl->append('products', $productForTemplate);
             /*
                echo '<pre>';

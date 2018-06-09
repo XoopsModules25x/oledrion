@@ -62,9 +62,9 @@ class RssfitOledrion
         $ret = false;
         include XOOPS_ROOT_PATH . '/modules/oledrion/include/common.php';
         $items = $productsHandler->getRecentProducts(new Oledrion\Parameters([
-                                                                                     'start' => 0,
-                                                                                     'limit' => $this->grab
-                                                                                 ]));
+                                                                                 'start' => 0,
+                                                                                 'limit' => $this->grab
+                                                                             ]));
         $i     = 0;
 
         if (false !== $items && count($items) > 0) {

@@ -24,7 +24,7 @@ use XoopsModules\Oledrion\Common;
 
 function xoops_module_pre_install_oledrion(\XoopsModule $module)
 {
-    include  dirname(__DIR__) . '/preloads/autoloader.php';
+    include dirname(__DIR__) . '/preloads/autoloader.php';
     /** @var Oledrion\Utility $utility */
     $utility = new Oledrion\Utility();
 
@@ -32,9 +32,9 @@ function xoops_module_pre_install_oledrion(\XoopsModule $module)
     $xoopsSuccess = $utility::checkVerXoops($module);
 
     // check for minimum PHP version
-    $phpSuccess   = $utility::checkVerPhp($module);
+    $phpSuccess = $utility::checkVerPhp($module);
 
-    if (false !== $xoopsSuccess && false !==  $phpSuccess) {
+    if (false !== $xoopsSuccess && false !== $phpSuccess) {
         $moduleTables =& $module->getInfo('tables');
         foreach ($moduleTables as $table) {
             $GLOBALS['xoopsDB']->queryF('DROP TABLE IF EXISTS ' . $GLOBALS['xoopsDB']->prefix($table) . ';');
@@ -43,6 +43,7 @@ function xoops_module_pre_install_oledrion(\XoopsModule $module)
 
     return $xoopsSuccess && $phpSuccess;
 }
+
 /**
  *
  * Performs tasks required during installation of the module
@@ -52,7 +53,7 @@ function xoops_module_pre_install_oledrion(\XoopsModule $module)
  */
 function xoops_module_install_oledrion(\XoopsModule $module)
 {
-    include  dirname(__DIR__) . '/preloads/autoloader.php';
+    include dirname(__DIR__) . '/preloads/autoloader.php';
 
     $moduleDirName = basename(dirname(__DIR__));
 
@@ -68,8 +69,8 @@ function xoops_module_install_oledrion(\XoopsModule $module)
     $helper->loadLanguage('modinfo');
 
     // default Permission Settings ----------------------
-    $moduleId     = $module->getVar('mid');
-    $moduleId2    = $helper->getModule()->mid();
+    $moduleId  = $module->getVar('mid');
+    $moduleId2 = $helper->getModule()->mid();
     //$moduleName = $module->getVar('name');
     $grouppermHandler = xoops_getHandler('groupperm');
     // access rights ------------------------------------------
@@ -89,7 +90,7 @@ function xoops_module_install_oledrion(\XoopsModule $module)
 
     //  ---  COPY blank.png FILES ---------------
     if (count($configurator->copyBlankFiles) > 0) {
-        $file =  dirname(__DIR__) . '/assets/images/blank.png';
+        $file = dirname(__DIR__) . '/assets/images/blank.png';
         foreach (array_keys($configurator->copyBlankFiles) as $i) {
             $dest = $configurator->copyBlankFiles[$i] . '/blank.png';
             $utility::copyFile($file, $dest);
@@ -107,7 +108,6 @@ function xoops_module_install_oledrion(\XoopsModule $module)
         }
     }
     */
-
 
     //delete .html entries from the tpl table
     $sql = 'DELETE FROM ' . $GLOBALS['xoopsDB']->prefix('tplfile') . " WHERE `tpl_module` = '" . $module->getVar('dirname', 'n') . "' AND `tpl_file` LIKE '%.html%'";

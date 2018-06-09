@@ -25,7 +25,6 @@ use XoopsModules\Oledrion;
  */
 // require_once __DIR__ . '/classheader.php';
 
-
 /**
  * Class Commands
  */
@@ -91,10 +90,10 @@ class Commands extends OledrionObject
         require_once XOOPS_ROOT_PATH . '/class/xoopslists.php';
         $countries                           = [];
         $countries                           = \XoopsLists::getCountryList();
-        $oledrion_Currency                   = Oledrion\Currency::getInstance();
-        $ret['cmd_total_fordisplay']         = $oledrion_Currency->amountForDisplay($this->getVar('cmd_total')); // Montant TTC de la commande
-        $ret['cmd_shipping_fordisplay']      = $oledrion_Currency->amountForDisplay($this->getVar('cmd_shipping')); // Montant TTC des frais de port
-        $ret['cmd_packing_price_fordisplay'] = $oledrion_Currency->amountForDisplay($this->getVar('cmd_packing_price'));
+        $oledrionCurrency                   = Oledrion\Currency::getInstance();
+        $ret['cmd_total_fordisplay']         = $oledrionCurrency->amountForDisplay($this->getVar('cmd_total')); // Montant TTC de la commande
+        $ret['cmd_shipping_fordisplay']      = $oledrionCurrency->amountForDisplay($this->getVar('cmd_shipping')); // Montant TTC des frais de port
+        $ret['cmd_packing_price_fordisplay'] = $oledrionCurrency->amountForDisplay($this->getVar('cmd_packing_price'));
         $ret['cmd_text_fordisplay']          = nl2br($this->getVar('cmd_text')); // Liste des réductions accordées
         if (isset($countries[$this->getVar('cmd_country')])) { // Libellé du pays de l'acheteur
             $ret['cmd_country_label'] = $countries[$this->getVar('cmd_country')];

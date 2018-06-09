@@ -18,14 +18,13 @@
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
  */
 
+use XoopsModules\Oledrion;
+
 /**
  * Gestion des votes sur les produits
  */
 
-use XoopsModules\Oledrion;
-
 // require_once __DIR__ . '/classheader.php';
-
 
 /**
  * Class VotedataHandler

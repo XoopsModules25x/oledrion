@@ -42,10 +42,10 @@ class Configurator
      */
     public function __construct()
     {
-        $moduleDirName        = basename(dirname(__DIR__));
-        $capsDirName          = strtoupper($moduleDirName);
+        $moduleDirName = basename(dirname(__DIR__));
+        $capsDirName   = strtoupper($moduleDirName);
 
-        require_once  dirname(dirname(__DIR__)) . '/include/config.php';
+        require_once dirname(dirname(__DIR__)) . '/include/config.php';
         $config = getConfig();
 
         $this->name            = $config->name;

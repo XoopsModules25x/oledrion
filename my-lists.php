@@ -35,10 +35,10 @@ if (0 == $uid) {
     Oledrion\Utility::redirect(_OLEDRION_ERROR23, XOOPS_URL . '/register.php', 4);
 }
 
-$baseurl  = OLEDRION_URL . basename(__FILE__); // URL de ce script
+$baseurl = OLEDRION_URL . basename(__FILE__); // URL de ce script
 //$handlers = HandlerManager::getInstance();
 
-$op    = \Xmf\Request::getCmd('op', 'default');
+$op = \Xmf\Request::getCmd('op', 'default');
 
 $xoopsTpl->assign('baseurl', $baseurl);
 $helper->loadLanguage('modinfo');
@@ -54,7 +54,7 @@ function listForm($op, $product_id = 0)
 {
     global $baseurl;
 
-    $db      = \XoopsDatabaseFactory::getDatabaseConnection();
+    $db           = \XoopsDatabaseFactory::getDatabaseConnection();
     $listsHandler = new Oledrion\ListsHandler($db);
 
     if ('edit' === $op) {
@@ -65,12 +65,12 @@ function listForm($op, $product_id = 0)
             Oledrion\Utility::redirect(_AM_OLEDRION_ERROR_21, $baseurl, 5);
         }
         $item = null;
-        $item =  $listsHandler->get($list_id);
+        $item = $listsHandler->get($list_id);
         if (!is_object($item)) {
             Oledrion\Utility::redirect(_AM_OLEDRION_NOT_FOUND, $baseurl, 5);
         }
         // Vérification, est-ce que l'utilisateur courant est bien le propriétaire de cette liste ?
-        if (! $listsHandler->isThisMyList($list_id)) {
+        if (!$listsHandler->isThisMyList($list_id)) {
             Oledrion\Utility::redirect(_OLEDRION_ERROR25, $baseurl, 8);
         }
         $edit         = true;
@@ -78,7 +78,7 @@ function listForm($op, $product_id = 0)
     } else {
         $title        = _OLEDRION_ADD_LIST;
         $label_submit = _AM_OLEDRION_ADD;
-        $item         =  $listsHandler->create(true);
+        $item         = $listsHandler->create(true);
         $edit         = false;
     }
 
@@ -87,14 +87,14 @@ function listForm($op, $product_id = 0)
     $sform->addElement(new \XoopsFormHidden('list_id', $item->getVar('list_id')));
     $sform->addElement(new \XoopsFormText(_AM_OLEDRION_TITLE, 'list_title', 50, 255, $item->getVar('list_title', 'e')), true);
     //$sform->addElement(new \XoopsFormText(_OLEDRION_LIST_PASSWORD, 'list_password', 50, 50, $item->getVar('list_password','e')), false);
-    $selectTypes = Lists::getTypesArray();
+    $selectTypes = \XoopsModules\Oledrion\Lists::getTypesArray();
     $selectType  = new \XoopsFormSelect(_OLEDRION_LIST_TYPE, 'list_type', $item->getVar('list_type', 'e'));
     $selectType->addOptionArray($selectTypes);
     $sform->addElement($selectType, true);
     $sform->addElement(new \XoopsFormTextArea(_OLEDRION_DESCRIPTION, 'list_description', $item->getVar('list_description', 'e'), 7, 60), false);
     $listProducts = [];
     if ($edit) {
-        $listProducts =  $listsHandler->getListProducts($item);
+        $listProducts = $listsHandler->getListProducts($item);
         if (count($listProducts) > 0) {
             $productsTray = new \XoopsFormElementTray(_OLEDRION_PROD_IN_THIS_LIST, '<br>');
             $productsTray->addElement(new \XoopsFormLabel(_OLEDRION_CHECK_PRODUCTS), false);
@@ -136,14 +136,14 @@ switch ($op) {
         $start   = $limit = 0;
         $idAsKey = true;
         $lists   = $listsHandler->getRecentLists(new Oledrion\Parameters([
-                                                                                           'start'    => $start,
-                                                                                           'limit'    => $limit,
-                                                                                           'sort'     => 'list_title',
-                                                                                           'order'    => 'ASC',
-                                                                                           'idAsKey'  => $idAsKey,
-                                                                                           'listType' => Constants::OLEDRION_LISTS_ALL,
-                                                                                           'list_uid' => $uid
-                                                                                       ]));
+                                                                             'start'    => $start,
+                                                                             'limit'    => $limit,
+                                                                             'sort'     => 'list_title',
+                                                                             'order'    => 'ASC',
+                                                                             'idAsKey'  => $idAsKey,
+                                                                             'listType' => Constants::OLEDRION_LISTS_ALL,
+                                                                             'list_uid' => $uid
+                                                                         ]));
         if (count($lists) > 0) {
             foreach ($lists as $list) {
                 $xoopsTpl->append('lists', $list->toArray());
@@ -163,19 +163,19 @@ switch ($op) {
         if (0 == $product_id) {
             Oledrion\Utility::redirect(_OLEDRION_ERROR14, $baseurl, 4);
         }
-        $userListsCount =  $listsHandler->getRecentListsCount(Constants::OLEDRION_LISTS_ALL, $uid);
+        $userListsCount = $listsHandler->getRecentListsCount(Constants::OLEDRION_LISTS_ALL, $uid);
         $xoopsTpl->assign('userListsCount', $userListsCount);
         $xoopsTpl->assign('product_id', $product_id);
         if ($userListsCount > 0) {
-            $userLists =  $listsHandler->getRecentLists(new Oledrion\Parameters([
-                                                                                                 'start'    => 0,
-                                                                                                 'limit'    => 0,
-                                                                                                 'sort'     => 'list_title',
-                                                                                                 'order'    => 'ASC',
-                                                                                                 'idAsKey'  => true,
-                                                                                                 'listType' => Constants::OLEDRION_LISTS_ALL,
-                                                                                                 'list_uid' => $uid
-                                                                                             ]));
+            $userLists = $listsHandler->getRecentLists(new Oledrion\Parameters([
+                                                                                   'start'    => 0,
+                                                                                   'limit'    => 0,
+                                                                                   'sort'     => 'list_title',
+                                                                                   'order'    => 'ASC',
+                                                                                   'idAsKey'  => true,
+                                                                                   'listType' => Constants::OLEDRION_LISTS_ALL,
+                                                                                   'list_uid' => $uid
+                                                                               ]));
             foreach ($userLists as $list) {
                 $xoopsTpl->append('lists', $list->toArray());
             }
@@ -231,7 +231,7 @@ switch ($op) {
             $xoopsTpl->assign('form', $sform->render());
             $xoopsTpl->assign('op', 'addList');
         } else { // Ajouter à une liste existante
-            if (! $listsHandler->isThisMyList($list_id)) {
+            if (!$listsHandler->isThisMyList($list_id)) {
                 Oledrion\Utility::redirect(_OLEDRION_ERROR25, $baseurl, 8);
             }
             if ($productsListHandler->isProductAlreadyInList($list_id, $product_id)) {
@@ -240,7 +240,7 @@ switch ($op) {
                 $res = $productsListHandler->addProductToUserList($list_id, $product_id);
                 if ($res) {
                     $list = null;
-                    $list =  $listsHandler->get($list_id);
+                    $list = $listsHandler->get($list_id);
                     if (is_object($list)) {
                         $listsHandler->incrementListProductsCount($list);
                     }
@@ -262,10 +262,10 @@ switch ($op) {
             Oledrion\Utility::redirect(_OLEDRION_ERROR21, $baseurl, 4);
         }
         // Vérification, est-ce que l'utilisateur courant est bien le propriétaire de cette liste ?
-        if (! $listsHandler->isThisMyList($list_id)) {
+        if (!$listsHandler->isThisMyList($list_id)) {
             Oledrion\Utility::redirect(_OLEDRION_ERROR25, $baseurl, 8);
         }
-        $item =  $listsHandler->get($list_id);
+        $item = $listsHandler->get($list_id);
         if (!is_object($item)) {
             Oledrion\Utility::redirect(_AM_OLEDRION_NOT_FOUND, $baseurl, 5);
         }
@@ -280,10 +280,10 @@ switch ($op) {
             Oledrion\Utility::redirect(_OLEDRION_ERROR21, $baseurl, 4);
         }
         // Vérification, est-ce que l'utilisateur courant est bien le propriétaire de cette liste ?
-        if (! $listsHandler->isThisMyList($list_id)) {
+        if (!$listsHandler->isThisMyList($list_id)) {
             Oledrion\Utility::redirect(_OLEDRION_ERROR25, $baseurl, 8);
         }
-        $item =  $listsHandler->get($list_id);
+        $item = $listsHandler->get($list_id);
         if (!is_object($item)) {
             Oledrion\Utility::redirect(_AM_OLEDRION_NOT_FOUND, $baseurl, 5);
         }
@@ -301,18 +301,18 @@ switch ($op) {
         $list_id = \Xmf\Request::getInt('list_id', 0, 'POST');
         if (!empty($list_id)) {
             // Vérification, est-ce que l'utilisateur courant est bien le propriétaire de cette liste ?
-            if (! $listsHandler->isThisMyList($list_id)) {
+            if (!$listsHandler->isThisMyList($list_id)) {
                 Oledrion\Utility::redirect(_OLEDRION_ERROR25, $baseurl, 8);
             }
             $edit = true;
-            $item =  $listsHandler->get($list_id);
+            $item = $listsHandler->get($list_id);
             if (!is_object($item)) {
                 Oledrion\Utility::redirect(_AM_OLEDRION_NOT_FOUND, $baseurl, 5);
             }
             $item->unsetNew();
             $edit = true;
         } else {
-            $item =  $listsHandler->create(true);
+            $item = $listsHandler->create(true);
             $edit = false;
         }
         // Contrôle sur le titre
@@ -336,7 +336,7 @@ switch ($op) {
                 $productsListHandler->decrementListProductsCount($productsDeletedCount);
             }
         }
-        $res =  $listsHandler->insert($item);
+        $res = $listsHandler->insert($item);
         if ($res) {
             if (isset($_POST['product_id'])) {
                 $product_id = \Xmf\Request::getInt('product_id', 0, 'POST');

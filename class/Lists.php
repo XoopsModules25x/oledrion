@@ -17,16 +17,17 @@
  * @license     {@link http://www.fsf.org/copyleft/gpl.html GNU public license}
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
  */
+
 /**
  * Gestion des listes utilisateurs
  *
  * @since 2.3.2009.06.13
  */
+
 use XoopsModules\Oledrion;
 use XoopsModules\Oledrion\Constants;
 
 // require_once __DIR__ . '/classheader.php';
-
 
 /**
  * Class Lists
@@ -91,7 +92,7 @@ class Lists extends OledrionObject
      */
     public function getListTypeDescription()
     {
-        $description = $this->getTypesArray();
+        $description = static::getTypesArray();
 
         return $description[$this->list_type];
     }

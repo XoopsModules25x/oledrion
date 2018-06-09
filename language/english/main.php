@@ -196,7 +196,8 @@ define('_OLEDRION_COUNTRY', 'Country');
 define('_OLEDRION_PHONE', 'Phone number');
 define('_OLEDRION_INVOICE', 'Do you want an invoice?');
 define('_OLEDRION_COPY_COUNT', 'copy');
-define('_OLEDRION_THANKYOU_CMD', 'Thank you for your order on the website %s');
+// B.R. define('_OLEDRION_THANKYOU_CMD', 'Thank you for your order on the website %s');
+define('_OLEDRION_THANKYOU_CMD', 'Thank you for your purchase from %s');
 define('_OLEDRION_NEW_COMMAND', 'New purchase on the site');
 define('_OLEDRION_COMMAND', 'Command ');
 define('_OLEDRION_PAY_GATEWAY', 'Pay online');
@@ -321,3 +322,8 @@ define('_OLEDRION_TRACK', 'Tracking Code');
 define('_OLEDRION_GIFT', 'Gift Cards');
 define('_OLEDRION_PACK', 'Package');
 define('_OLEDRION_SUBMIT', 'Submit');
+
+// B.R. New
+define('_OLEDRION_SKIP_PACKING', 'Skip Packing step during checkout?');
+define('_OLEDRION_SKIP_LOCATION', 'Skip Location step during checkout?');
+define('_OLEDRION_SKIP_DELIVERY', 'Skip Delivery (shipping) step during checkout?');

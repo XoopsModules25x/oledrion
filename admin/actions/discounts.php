@@ -255,19 +255,19 @@ switch ($action) {
         $xoopsTpl->assign('disc_product_id_selected', $item->getVar('disc_product_id'));
 
         $productsSelect = $productsHandler->productSelector(new Oledrion\Parameters([
-                                                                                            'caption'     => _AM_OLEDRION_DISCOUNT_PRODUCT,
-                                                                                            'name'        => 'disc_product_id',
-                                                                                            'value'       => $item->getVar('disc_product_id'),
-                                                                                            'size'        => 1,
-                                                                                            'multiple'    => false,
-                                                                                            'values'      => null,
-                                                                                            'showAll'     => true,
-                                                                                            'sort'        => 'product_title',
-                                                                                            'order'       => 'ASC',
-                                                                                            'formName'    => 'frmdiscount',
-                                                                                            'description' => _AM_OLEDRION_DISCOUNT_HELP1,
-                                                                                            'withNull'    => _ALL
-                                                                                        ]));
+                                                                                        'caption'     => _AM_OLEDRION_DISCOUNT_PRODUCT,
+                                                                                        'name'        => 'disc_product_id',
+                                                                                        'value'       => $item->getVar('disc_product_id'),
+                                                                                        'size'        => 1,
+                                                                                        'multiple'    => false,
+                                                                                        'values'      => null,
+                                                                                        'showAll'     => true,
+                                                                                        'sort'        => 'product_title',
+                                                                                        'order'       => 'ASC',
+                                                                                        'formName'    => 'frmdiscount',
+                                                                                        'description' => _AM_OLEDRION_DISCOUNT_HELP1,
+                                                                                        'withNull'    => _ALL
+                                                                                    ]));
         $xoopsTpl->assign('disc_product_id', $productsSelect->render());
 
         $xoopsTpl->assign('discount', $discountForTemplate);

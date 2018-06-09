@@ -26,7 +26,6 @@ use XoopsModules\Oledrion;
 
 // require_once __DIR__ . '/classheader.php';
 
-
 /**
  * Class ProductsHandler
  */
@@ -565,7 +564,7 @@ class ProductsHandler extends OledrionPersistableObjectHandler
      * Augmente les quantités en stock d'un produit
      *
      * @param  Products $product  Objet produit
-     * @param  int               $quantity $quantity Quantité à rajouter
+     * @param  int      $quantity $quantity Quantité à rajouter
      * @return bool
      */
     public function increaseStock($product, $quantity = 1)
@@ -580,7 +579,7 @@ class ProductsHandler extends OledrionPersistableObjectHandler
      * Diminue les quantités en stock d'un produit
      *
      * @param  Products $product  Objet produit
-     * @param  int               $quantity $quantity Quantité à soustraire
+     * @param  int      $quantity $quantity Quantité à soustraire
      * @return bool
      */
     public function decreaseStock(&$product, $quantity = 1)

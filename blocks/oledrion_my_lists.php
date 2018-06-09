@@ -38,19 +38,19 @@ function b_oledrion_my_lists_show($options)
     }
     $listType = Constants::OLEDRION_LISTS_ALL;
     $block    = [];
-//    $handlers = HandlerManager::getInstance();
-    $db      = \XoopsDatabaseFactory::getDatabaseConnection();
+    //    $handlers = HandlerManager::getInstance();
+    $db           = \XoopsDatabaseFactory::getDatabaseConnection();
     $listsHandler = new Oledrion\ListsHandler($db);
-    $items    = [];
-    $items    =  $listsHandler->getRecentLists(new Oledrion\Parameters([
-                                                                                        'start'    => $start,
-                                                                                        'limit'    => $limit,
-                                                                                        'sort'     => 'list_date',
-                                                                                        'order'    => 'DESC',
-                                                                                        'idAsKey'  => true,
-                                                                                        'listType' => $listType,
-                                                                                        'list_uid' => $uid
-                                                                                    ]));
+    $items        = [];
+    $items        = $listsHandler->getRecentLists(new Oledrion\Parameters([
+                                                                              'start'    => $start,
+                                                                              'limit'    => $limit,
+                                                                              'sort'     => 'list_date',
+                                                                              'order'    => 'DESC',
+                                                                              'idAsKey'  => true,
+                                                                              'listType' => $listType,
+                                                                              'list_uid' => $uid
+                                                                          ]));
     if (count($items) > 0) {
         foreach ($items as $item) {
             $block['my_lists'][] = $item->toArray();

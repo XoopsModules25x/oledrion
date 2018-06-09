@@ -20,6 +20,7 @@
  * Version :
  * ****************************************************************************
  */
+
 use XoopsModules\Oledrion;
 use XoopsModules\Oledrion\Constants;
 
@@ -468,8 +469,8 @@ class Attributes extends OledrionObject
     /**
      * Retourne une liste combinée des options de l'attribut
      *
-     * @param  string            $format             Format dans lequel renvoyer les données
-     * @param  boolean           $withFormatedPrices Faut il retourner les prix formatés ?
+     * @param  string   $format             Format dans lequel renvoyer les données
+     * @param  boolean  $withFormatedPrices Faut il retourner les prix formatés ?
      * @param  Products $product            Le produit de travail
      * @return array
      * @since 2.3.2009.03.11
@@ -491,7 +492,7 @@ class Attributes extends OledrionObject
         }
 
         if ($withFormatedPrices) {
-            $oledrion_Currency = Oledrion\Currency::getInstance();
+            $oledrionCurrency = Oledrion\Currency::getInstance();
         }
         if (count($names) > 0) {
             foreach ($names as $key => $name) {
@@ -499,11 +500,11 @@ class Attributes extends OledrionObject
                 if (Oledrion\Utility::getModuleOption('use_price')) {
                     $price = $prices[$key];
                     if ($withFormatedPrices) {
-                        $priceFormated    = $oledrion_Currency->amountForDisplay($price);
+                        $priceFormated    = $oledrionCurrency->amountForDisplay($price);
                         $priceTtc         = Oledrion\Utility::getAmountWithVat($price, $vat_id);
-                        $priceTtcFormated = $oledrion_Currency->amountForDisplay($priceTtc);
+                        $priceTtcFormated = $oledrionCurrency->amountForDisplay($priceTtc);
                         $vat              = $priceTtc - $price;
-                        $vatFormated      = $oledrion_Currency->amountForDisplay($vat);
+                        $vatFormated      = $oledrionCurrency->amountForDisplay($vat);
                     }
                 }
                 if (Oledrion\Utility::getModuleOption('attributes_stocks')) {
@@ -631,8 +632,8 @@ class Attributes extends OledrionObject
     public function render(Products $product)
     {
         require_once XOOPS_ROOT_PATH . '/class/template.php';
-        $template = new \XoopsTpl();
-        $db                = \XoopsDatabaseFactory::getDatabaseConnection();
+        $template     = new \XoopsTpl();
+        $db           = \XoopsDatabaseFactory::getDatabaseConnection();
         $caddyHandler = new Oledrion\CaddyHandler($db);
 
         $options      = [];
@@ -642,8 +643,8 @@ class Attributes extends OledrionObject
         $option1      = $this->getVar('attribute_option1');
         $option2      = $this->getVar('attribute_option2');
 
-//        $handlers = HandlerManager::getInstance();
-        $isInCart =$caddyHandler->isInCart($product->getVar('product_id'));
+        //        $handlers = HandlerManager::getInstance();
+        $isInCart = $caddyHandler->isInCart($product->getVar('product_id'));
         if (false === $isInCart) {    // Le produit n'est pas dans le panier, on prend la valeur par défaut
             $defaultValue = [$this->getVar('attribute_default_value')];
         } else {    // Le produit est dans le panier, on va chercher les options qui sont sélectionnées
@@ -691,7 +692,7 @@ class Attributes extends OledrionObject
             case Constants::OLEDRION_ATTRIBUTE_CHECKBOX:      // Cases à cocher
                 $templateName = 'oledrion_attribute_checkbox.tpl';
                 $delimiter    = '';
-                $delimiter = '<br>';
+                $delimiter    = '<br>';
                 if (Constants::OLEDRION_ATTRIBUTE_CHECKBOX_WHITE_SPACE == $option1) {
                     $delimiter = ' ';
                 }
@@ -701,7 +702,7 @@ class Attributes extends OledrionObject
             case Constants::OLEDRION_ATTRIBUTE_RADIO:         // Boutons radio
                 $templateName = 'oledrion_attribute_radio.tpl';
                 $delimiter    = '';
-                $delimiter = '<br>';
+                $delimiter    = '<br>';
                 if (Constants::OLEDRION_ATTRIBUTE_CHECKBOX_WHITE_SPACE == $option1) {
                     $delimiter = ' ';
                 }

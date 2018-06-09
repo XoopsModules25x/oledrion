@@ -29,7 +29,7 @@ abstract class Gateway
 {
     protected $handlers;
     protected $gatewayInformation;
-    public $languageFilename;
+    public    $languageFilename;
 
     /**
      * Gateway constructor.
@@ -58,7 +58,7 @@ abstract class Gateway
      */
     private function getHandlers()
     {
-//        $this->handlers = HandlerManager::getInstance();
+        //        $this->handlers = HandlerManager::getInstance();
     }
 
     /**

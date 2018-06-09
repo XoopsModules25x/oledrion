@@ -1,4 +1,4 @@
-<?php
+<?php namespace XoopsModules\Oledrion\Exports;
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -22,7 +22,7 @@
  */
 // defined('XOOPS_ROOT_PATH') || die('Restricted access');
 
-abstract class Oledrion_export
+abstract class Export
 {
     protected $separator; // Fields separator
     protected $filename; // Filename of the exported file
@@ -35,7 +35,7 @@ abstract class Oledrion_export
     protected $handlers;
 
     /**
-     * Oledrion_export constructor.
+     * Export constructor.
      * @param string $parameters
      */
     public function __construct($parameters = '')
@@ -52,7 +52,7 @@ abstract class Oledrion_export
 
     private function getHandlers()
     {
-//        $this->handlers = HandlerManager::getInstance();
+        //        $this->handlers = HandlerManager::getInstance();
     }
 
     /**

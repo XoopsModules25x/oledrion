@@ -79,7 +79,7 @@ class Utility extends \XoopsObject
     public static function getModuleOption($option, $withCache = true)
     {
         global $xoopsModuleConfig, $xoopsModule;
-        $repmodule = self::MODULE_NAME;
+        $repmodule = static::MODULE_NAME;
         static $options = [];
         if (is_array($options) && array_key_exists($option, $options) && $withCache) {
             return $options[$option];
@@ -158,10 +158,10 @@ class Utility extends \XoopsObject
         $value = '',
         $width = '100%',
         $height = '400px',
-        $supplemental = ''
-    ) {
+        $supplemental = '')
+    {
         /** @var Oledrion\Helper $helper */
-        $helper = Oledrion\Helper::getInstance();
+        $helper                   = Oledrion\Helper::getInstance();
         $editor                   = false;
         $editor_configs           = [];
         $editor_configs['name']   = $name;
@@ -171,7 +171,7 @@ class Utility extends \XoopsObject
         $editor_configs['width']  = '100%';
         $editor_configs['height'] = '400px';
 
-        $editor_option = strtolower(self::getModuleOption('editorAdmin'));
+        $editor_option = strtolower(static::getModuleOption('editorAdmin'));
         //        $editor = new \XoopsFormEditor($caption, $editor_option, $editor_configs);
         //        public function __construct($caption, $name, $configs = null, $nohtml = false, $OnFailure = '')
 
@@ -208,7 +208,7 @@ class Utility extends \XoopsObject
     public static function IP()
     {
         $proxy_ip = '';
-       if (\Xmf\Request::hasVar('HTTP_X_FORWARDED_FOR', 'SERVER')) {
+        if (\Xmf\Request::hasVar('HTTP_X_FORWARDED_FOR', 'SERVER')) {
             $proxy_ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
         } elseif (!empty($_SERVER['HTTP_X_FORWARDED'])) {
             $proxy_ip = $_SERVER['HTTP_X_FORWARDED'];
@@ -294,9 +294,9 @@ class Utility extends \XoopsObject
         }
 
         $xoopsMailer->useMail();
-        $templateDir = XOOPS_ROOT_PATH . '/modules/' . self::MODULE_NAME . '/language/' . $xoopsConfig['language'] . '/mail_template';
+        $templateDir = XOOPS_ROOT_PATH . '/modules/' . static::MODULE_NAME . '/language/' . $xoopsConfig['language'] . '/mail_template';
         if (!is_dir($templateDir)) {
-            $templateDir = XOOPS_ROOT_PATH . '/modules/' . self::MODULE_NAME . '/language/english/mail_template';
+            $templateDir = XOOPS_ROOT_PATH . '/modules/' . static::MODULE_NAME . '/language/english/mail_template';
         }
         $xoopsMailer->setTemplateDir($templateDir);
         $xoopsMailer->setTemplate($tplName);
@@ -310,7 +310,8 @@ class Utility extends \XoopsObject
         }
         $res = $xoopsMailer->send();
         unset($xoopsMailer);
-        $filename = XOOPS_UPLOAD_PATH . '/logmail_' . self::MODULE_NAME . '.php';
+        // B.R. $filename = XOOPS_UPLOAD_PATH . '/logmail_' . static::MODULE_NAME . '.php';
+        $filename = OLEDRION_UPLOAD_PATH . '/logmail_' . static::MODULE_NAME . '.php';
         if (!file_exists($filename)) {
             $fp = @fopen($filename, 'a');
             if ($fp) {
@@ -454,7 +455,7 @@ class Utility extends \XoopsObject
     public static function getEmailsFromGroup($groupId)
     {
         $ret   = [];
-        $users = self::getUsersFromGroup($groupId);
+        $users = static::getUsersFromGroup($groupId);
         foreach ($users as $user) {
             $ret[] = $user->getVar('email');
         }
@@ -508,7 +509,7 @@ class Utility extends \XoopsObject
      */
     public static function SQLDateToHuman($date, $format = 'l')
     {
-        if ('0000-00-00' != $date && '' !== xoops_trim($date)) {
+        if ('0000-00-00' !== $date && '' !== xoops_trim($date)) {
             return formatTimestamp(strtotime($date), $format);
         } else {
             return '';
@@ -553,13 +554,13 @@ class Utility extends \XoopsObject
      */
     public static function needsAsterisk()
     {
-        if (self::isX23()) {
+        if (static::isX23()) {
             return false;
         }
-        if (false !== stripos(XOOPS_VERSION, 'impresscms')) {
+        if (false !== strpos(strtolower(XOOPS_VERSION), 'impresscms')) {
             return false;
         }
-        if (false === stripos(XOOPS_VERSION, 'legacy')) {
+        if (false === strpos(strtolower(XOOPS_VERSION), 'legacy')) {
             $xv = xoops_trim(str_replace('XOOPS ', '', XOOPS_VERSION));
             if ((int)substr($xv, 4, 2) >= 17) {
                 return false;
@@ -578,7 +579,7 @@ class Utility extends \XoopsObject
      */
     public static function &formMarkRequiredFields(&$sform)
     {
-        if (self::needsAsterisk()) {
+        if (static::needsAsterisk()) {
             $required = [];
             foreach ($sform->getRequired() as $item) {
                 $required[] = $item->_name;
@@ -927,7 +928,7 @@ class Utility extends \XoopsObject
     {
         $s       = "ÀÁÂÃÄÅÒÓÔÕÖØÈÉÊËÇÌÍÎÏÙÚÛÜÑàáâãäåòóôõöøèéêëçìíîïùúûüÿñ '()";
         $r       = 'AAAAAAOOOOOOEEEECIIIIUUUUYNaaaaaaooooooeeeeciiiiuuuuyn----';
-        $content = self::unhtml($content); // First, remove html entities
+        $content = static::unhtml($content); // First, remove html entities
         $content = strtr($content, $s, $r);
         $content = strip_tags($content);
         $content = strtolower($content);
@@ -972,8 +973,8 @@ class Utility extends \XoopsObject
      */
     public static function createMetaKeywords($content)
     {
-        $keywordscount = self::getModuleOption('metagen_maxwords');
-        $keywordsorder = self::getModuleOption('metagen_order');
+        $keywordscount = static::getModuleOption('metagen_maxwords');
+        $keywordsorder = static::getModuleOption('metagen_order');
 
         $tmp = [];
         // Search for the "Minimum keyword length"
@@ -1066,8 +1067,8 @@ class Utility extends \XoopsObject
                 break;
         }
         // Remove black listed words
-        if ('' !== xoops_trim(self::getModuleOption('metagen_blacklist'))) {
-            $metagen_blacklist = str_replace("\r", '', self::getModuleOption('metagen_blacklist'));
+        if ('' !== xoops_trim(static::getModuleOption('metagen_blacklist'))) {
+            $metagen_blacklist = str_replace("\r", '', static::getModuleOption('metagen_blacklist'));
             $metablack         = explode("\n", $metagen_blacklist);
             array_walk($metablack, 'trim');
             $keywords = array_diff($keywords, $metablack);
@@ -1111,9 +1112,9 @@ class Utility extends \XoopsObject
         $mimeTypes = null,
         $uploadMaxSize = null,
         $maxWidth = null,
-        $maxHeight = null
-    ) {
-//        require_once XOOPS_ROOT_PATH . '/class/uploader.php';
+        $maxHeight = null)
+    {
+        //        require_once XOOPS_ROOT_PATH . '/class/uploader.php';
         global $destname;
         if (isset($_POST['xoops_upload_file'])) {
             require_once XOOPS_ROOT_PATH . '/class/uploader.php';
@@ -1121,16 +1122,16 @@ class Utility extends \XoopsObject
             $fldname = $_FILES[$_POST['xoops_upload_file'][$indice]];
             $fldname = get_magic_quotes_gpc() ? stripslashes($fldname['name']) : $fldname['name'];
             if (xoops_trim('' !== $fldname)) {
-                $destname = self::createUploadName($dstpath, $fldname, true);
+                $destname = static::createUploadName($dstpath, $fldname, true);
                 if (null === $mimeTypes) {
-                    $permittedtypes = explode("\n", str_replace("\r", '', self::getModuleOption('mimetypes')));
+                    $permittedtypes = explode("\n", str_replace("\r", '', static::getModuleOption('mimetypes')));
                     array_walk($permittedtypes, 'trim');
                 } else {
                     $permittedtypes = $mimeTypes;
                 }
                 $uploadSize = $uploadMaxSize;
                 if (null === $uploadMaxSize) {
-                    $uploadSize = self::getModuleOption('maxuploadsize');
+                    $uploadSize = static::getModuleOption('maxuploadsize');
                 }
                 $uploader = new \XoopsMediaUploader($dstpath, $permittedtypes, $uploadSize, $maxWidth, $maxHeight);
                 //$uploader->allowUnknownTypes = true;
@@ -1169,8 +1170,8 @@ class Utility extends \XoopsObject
         $param_width,
         $param_height,
         $keep_original = false,
-        $fit = 'inside'
-    ) {
+        $fit = 'inside')
+    {
         //        require_once OLEDRION_PATH . 'class/wideimage/WideImage.inc.php';
         $resize = true;
         if (OLEDRION_DONT_RESIZE_IF_SMALLER) {
@@ -1244,8 +1245,8 @@ class Utility extends \XoopsObject
         $breadcrumb        = '';
         $workingBreadcrumb = [];
         if (is_array($path)) {
-            $moduleName          = self::getModuleName();
-            $workingBreadcrumb[] = "<a href='" . OLEDRION_URL . "' title='" . self::makeHrefTitle($moduleName) . "'>" . $moduleName . '</a>';
+            $moduleName          = static::getModuleName();
+            $workingBreadcrumb[] = "<a href='" . OLEDRION_URL . "' title='" . static::makeHrefTitle($moduleName) . "'>" . $moduleName . '</a>';
             foreach ($path as $url => $title) {
                 $workingBreadcrumb[] = "<a href='" . $url . "'>" . $title . '</a>';
             }
@@ -1315,7 +1316,7 @@ class Utility extends \XoopsObject
             if (!$break_words) {
                 $string = preg_replace('/\s+?(\S+)?$/', '', substr($string, 0, $length + 1));
                 $string = preg_replace('/<[^>]*$/', '', $string);
-                $string = self::close_tags($string);
+                $string = static::close_tags($string);
             }
 
             return $string . $etc;
@@ -1332,9 +1333,9 @@ class Utility extends \XoopsObject
     public static function makeInfotips($text)
     {
         $ret      = '';
-        $infotips = self::getModuleOption('infotips');
+        $infotips = static::getModuleOption('infotips');
         if ($infotips > 0) {
-            $myts = \MyTextSanitizer::getInstance();
+            $myts = MyTextSanitizer::getInstance();
             $ret  = $myts->htmlSpecialChars(xoops_substr(strip_tags($text), 0, $infotips));
         }
 
@@ -1348,7 +1349,7 @@ class Utility extends \XoopsObject
     public static function setCSS($url = '')
     {
         global $xoopsTpl, $xoTheme;
-        if ('' === $url) {
+        if ('' == $url) {
             $url = OLEDRION_URL . 'assets/css/oledrion.css';
         }
 
@@ -1389,10 +1390,10 @@ class Utility extends \XoopsObject
     {
         $ht                = (int)$ht;
         $vat               = (int)$vat;
-        $oledrion_Currency = Oledrion\Currency::getInstance();
+        $oledrionCurrency = Oledrion\Currency::getInstance();
         $ttc               = $ht * (1 + ($vat / 100));
         if (!$edit) {
-            return $oledrion_Currency->amountForDisplay($ttc, $format);
+            return $oledrionCurrency->amountForDisplay($ttc, $format);
         } else {
             return $ttc;
         }
@@ -1418,16 +1419,16 @@ class Utility extends \XoopsObject
      */
     public static function getAmountWithVat($product_price, $vat_id)
     {
-        $vat      = null;
+        $vat = null;
         static $vats = [];
-        $vat_rate = null;
-        $vatHandler =  new Oledrion\VatHandler(\XoopsDatabaseFactory::getDatabaseConnection());
+        $vat_rate   = null;
+        $vatHandler = new Oledrion\VatHandler(\XoopsDatabaseFactory::getDatabaseConnection());
         if (is_array($vats) && in_array($vat_id, $vats)) {
             $vat_rate = $vats[$vat_id];
         } else {
-//            $handlers = \HandlerManager::getInstance();
-            require_once  dirname(__DIR__) . '/include/common.php';
-            $vat      = $vatHandler->get($vat_id);
+            //            $handlers = \HandlerManager::getInstance();
+            require_once dirname(__DIR__) . '/include/common.php';
+            $vat = $vatHandler->get($vat_id);
             if (is_object($vat)) {
                 $vat_rate      = $vat->getVar('vat_rate', 'e');
                 $vats[$vat_id] = $vat_rate;
@@ -1543,11 +1544,11 @@ class Utility extends \XoopsObject
      * @param  int $uid
      * @return array Les ID des groupes auquel l'utilisateur courant appartient
      */
-    public static function getMemberGroups($uid = 0)
+    public function getMemberGroups($uid = 0)
     {
         static $buffer = [];
         if (0 == $uid) {
-            $uid = self::getCurrentUserID();
+            $uid = static::getCurrentUserID();
         }
 
         if (is_array($buffer) && count($buffer) > 0 && isset($buffer[$uid])) {
@@ -1576,7 +1577,7 @@ class Utility extends \XoopsObject
         static $buffer = [];
         $retval = false;
         if (0 == $uid) {
-            $uid = self::getCurrentUserID();
+            $uid = static::getCurrentUserID();
         }
         if (is_array($buffer) && array_key_exists($group, $buffer)) {
             $retval = $buffer[$group];
@@ -1615,7 +1616,7 @@ class Utility extends \XoopsObject
      */
     public static function duplicateFile($path, $filename)
     {
-        $newName = self::createUploadName($path, $filename);
+        $newName = static::createUploadName($path, $filename);
         if (copy($path . '/' . $filename, $path . '/' . $newName)) {
             return $newName;
         } else {
@@ -1732,7 +1733,7 @@ class Utility extends \XoopsObject
     {
         $ret = '';
         $ret .= "<select name='" . $selectName . "' id='" . $selectName . "'>\n";
-        $ret .= self::htmlSelectOptions($array, $default, $withNull);
+        $ret .= static::htmlSelectOptions($array, $default, $withNull);
         $ret .= "</select>\n";
 
         return $ret;

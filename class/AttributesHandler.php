@@ -49,7 +49,6 @@ define('OLEDRION_ATTRIBUTE_SELECT_VISIBLE_OPTIONS', 1);    // Valeur par défaut
 define('OLEDRION_ATTRIBUTE_SELECT_MULTIPLE', false);       // Valeur par défaut, sélecteur multiple ?
 */
 
-
 /**
  * Class OledrionOledrion_attributesHandler
  */
@@ -119,7 +118,7 @@ class AttributesHandler extends OledrionPersistableObjectHandler
      * Construction de la liste des attributs d'un produit
      *
      * @param  Products $product              Le produit concerné
-     * @param  integer           $mandatoryFieldsCount Retourne le nombre d'options requises
+     * @param  integer  $mandatoryFieldsCount Retourne le nombre d'options requises
      * @return array                    Les options construites en html
      * @since 2.3.2009.03.16
      */
@@ -257,14 +256,14 @@ class AttributesHandler extends OledrionPersistableObjectHandler
      */
     public function getProductOptionsPrice($choosenAttributes, $product_vat_id, &$descriptions = null)
     {
-        $db                = \XoopsDatabaseFactory::getDatabaseConnection();
+        $db         = \XoopsDatabaseFactory::getDatabaseConnection();
         $vatHandler = new Oledrion\VatHandler($db);
         static $vats = [];
         if (is_array($vats) && isset($vats[$product_vat_id])) {
             $vat_rate = $vats[$product_vat_id];
         } else {
             $vat = null;
-            $vat =$vatHandler->get($product_vat_id);
+            $vat = $vatHandler->get($product_vat_id);
             if (is_object($vat)) {
                 $vats[$product_vat_id] = $vat_rate = $vat->getVar('vat_rate', 'n');
             }
@@ -280,7 +279,7 @@ class AttributesHandler extends OledrionPersistableObjectHandler
         if (0 == count($attributes)) {
             return $ret;
         }
-        $oledrion_Currency = Oledrion\Currency::getInstance();
+        $oledrionCurrency = Oledrion\Currency::getInstance();
 
         foreach ($choosenAttributes as $userAttributeId => $userAttributeValues) {
             if (isset($attributes[$userAttributeId])) {
@@ -294,9 +293,9 @@ class AttributesHandler extends OledrionPersistableObjectHandler
                         $optionDescription     = $attribute->getOptionNameFromValue($optionName);
                         $vatAmount             = Oledrion\Utility::getVAT($price, $vat_rate);
                         $ttc                   = $price + $vatAmount;
-                        $vatAmountFormated     = $oledrion_Currency->amountForDisplay($vatAmount);
-                        $htFormated            = $oledrion_Currency->amountForDisplay($price);
-                        $ttcFormated           = $oledrion_Currency->amountForDisplay($ttc);
+                        $vatAmountFormated     = $oledrionCurrency->amountForDisplay($vatAmount);
+                        $htFormated            = $oledrionCurrency->amountForDisplay($price);
+                        $ttcFormated           = $oledrionCurrency->amountForDisplay($ttc);
                         $dataForDescriptions[] = [
                             'option_name'              => $optionDescription,
                             'option_value'             => $optionName,
@@ -315,9 +314,9 @@ class AttributesHandler extends OledrionPersistableObjectHandler
                     $optionDescription     = $attribute->getOptionNameFromValue($optionName);
                     $vatAmount             = Oledrion\Utility::getVAT($price, $vat_rate);
                     $ttc                   = $price + $vatAmount;
-                    $vatAmountFormated     = $oledrion_Currency->amountForDisplay($vatAmount);
-                    $htFormated            = $oledrion_Currency->amountForDisplay($price);
-                    $ttcFormated           = $oledrion_Currency->amountForDisplay($ttc);
+                    $vatAmountFormated     = $oledrionCurrency->amountForDisplay($vatAmount);
+                    $htFormated            = $oledrionCurrency->amountForDisplay($price);
+                    $ttcFormated           = $oledrionCurrency->amountForDisplay($ttc);
                     $dataForDescriptions[] = [
                         'option_name'              => $optionDescription,
                         'option_value'             => $optionName,

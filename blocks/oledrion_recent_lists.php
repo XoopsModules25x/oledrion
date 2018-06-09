@@ -34,19 +34,19 @@ function b_oledrion_recent_lists_show($options)
     $limit    = (int)$options[0];
     $listType = (int)$options[1];
     $block    = [];
-//    $handlers = HandlerManager::getInstance();
-    $db      = \XoopsDatabaseFactory::getDatabaseConnection();
+    //    $handlers = HandlerManager::getInstance();
+    $db           = \XoopsDatabaseFactory::getDatabaseConnection();
     $listsHandler = new Oledrion\ListsHandler($db);
-    $items    = [];
+    $items        = [];
     //$items = $handlers->h_oledrion_lists->getRecentLists(new Oledrion\Parameters(array('start' => $start, 'limit' => $limit, 'sort' => 'list_date', 'order' => 'DESC', 'idAsKey' => true, 'listType'  => $listType)));
-    $items =  $listsHandler->getRecentLists(new Oledrion\Parameters([
-                                                                                     'start'    => $start,
-                                                                                     'limit'    => $limit,
-                                                                                     'sort'     => 'list_date',
-                                                                                     'order'    => 'DESC',
-                                                                                     'idAsKey'  => true,
-                                                                                     'listType' => Constants::OLEDRION_LISTS_ALL_PUBLIC
-                                                                                 ]));
+    $items = $listsHandler->getRecentLists(new Oledrion\Parameters([
+                                                                       'start'    => $start,
+                                                                       'limit'    => $limit,
+                                                                       'sort'     => 'list_date',
+                                                                       'order'    => 'DESC',
+                                                                       'idAsKey'  => true,
+                                                                       'listType' => Constants::OLEDRION_LISTS_ALL_PUBLIC
+                                                                   ]));
     if (count($items) > 0) {
         foreach ($items as $item) {
             $block['recent_lists'][] = $item->toArray();

@@ -21,12 +21,9 @@ use XoopsModules\Oledrion;
 use XoopsModules\Oledrion\Common;
 
 if ((!defined('XOOPS_ROOT_PATH')) || !($GLOBALS['xoopsUser'] instanceof \XoopsUser)
-    || !$GLOBALS['xoopsUser']->IsAdmin()
-) {
+    || !$GLOBALS['xoopsUser']->IsAdmin()) {
     exit('Restricted access' . PHP_EOL);
 }
-
-
 
 /**
  * @param string $tablename
@@ -51,8 +48,8 @@ function xoops_module_pre_update_oledrion(\XoopsModule $module)
 {
     /** @var Oledrion\Helper $helper */
     /** @var Oledrion\Utility $utility */
-    $helper       = Oledrion\Helper::getInstance();
-    $utility      = new Oledrion\Utility();
+    $helper  = Oledrion\Helper::getInstance();
+    $utility = new Oledrion\Utility();
 
     $xoopsSuccess = $utility::checkVerXoops($module);
     $phpSuccess   = $utility::checkVerPhp($module);
@@ -63,21 +60,21 @@ function xoops_module_pre_update_oledrion(\XoopsModule $module)
  *
  * Performs tasks required during update of the module
  * @param \XoopsModule $module {@link XoopsModule}
- * @param null        $previousVersion
+ * @param null         $previousVersion
  *
  * @return bool true if update successful, false if not
  */
 
 function xoops_module_update_oledrion(\XoopsModule $module, $previousVersion = null)
 {
-    $moduleDirName = basename(dirname(__DIR__));
+    $moduleDirName      = basename(dirname(__DIR__));
     $moduleDirNameUpper = strtoupper($moduleDirName);
 
     /** @var Oledrion\Helper $helper */
     /** @var Oledrion\Utility $utility */
     /** @var Common\Configurator $configurator */
-    $helper  = Oledrion\Helper::getInstance();
-    $utility = new Oledrion\Utility();
+    $helper       = Oledrion\Helper::getInstance();
+    $utility      = new Oledrion\Utility();
     $configurator = new Common\Configurator();
 
     $helper->loadLanguage('common');
@@ -136,7 +133,7 @@ function xoops_module_update_oledrion(\XoopsModule $module, $previousVersion = n
 
         //  ---  COPY blank.png FILES ---------------
         if (count($configurator->copyBlankFiles) > 0) {
-            $file =  dirname(__DIR__) . '/assets/images/blank.png';
+            $file = dirname(__DIR__) . '/assets/images/blank.png';
             foreach (array_keys($configurator->copyBlankFiles) as $i) {
                 $dest = $configurator->copyBlankFiles[$i] . '/blank.png';
                 $utility::copyFile($file, $dest);

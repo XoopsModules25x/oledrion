@@ -30,7 +30,7 @@ $product_id = 0;
 // Les tests **************************************************************************************
 // Recherche du n° de produit
 if (\Xmf\Request::hasVar('product_id', 'GET')) {
- $product_id = \Xmf\Request::getInt('product_id', 0, 'GET');
+    $product_id = \Xmf\Request::getInt('product_id', 0, 'GET');
 } else {
     Oledrion\Utility::redirect(_OLEDRION_ERROR1, 'index.php', 5);
 }
@@ -60,11 +60,11 @@ if (0 == Oledrion\Utility::getModuleOption('nostock_display') && 0 == $product->
 
 // Fin des tests, si on est encore là c'est que tout est bon **************************************
 //$title = strip_tags($product->getVar('product_title')) . ' - ' . Oledrion\Utility::getModuleName();
-$title    = strip_tags($product->getVar('product_title'));
+$title = strip_tags($product->getVar('product_title'));
 //$handlers = HandlerManager::getInstance();
-$db      = \XoopsDatabaseFactory::getDatabaseConnection();
+$db           = \XoopsDatabaseFactory::getDatabaseConnection();
 $caddyHandler = new Oledrion\CaddyHandler($db);
-$op       = isset($_GET['op']) ? $_GET['op'] : 'default';
+$op           = isset($_GET['op']) ? $_GET['op'] : 'default';
 switch ($op) {
     // product Print
     case 'print':
@@ -416,13 +416,13 @@ switch ($op) {
         if ($count > 0) {
             $tblTmp = [];
             $tblTmp = $productsHandler->getRecentProducts(new Oledrion\Parameters([
-                                                                                          'start'    => 0,
-                                                                                          'limit'    => $count,
-                                                                                          'category' => 0,
-                                                                                          'sort'     => 'product_submitted DESC, product_title',
-                                                                                          'order'    => '',
-                                                                                          'excluded' => $product_id
-                                                                                      ]));
+                                                                                      'start'    => 0,
+                                                                                      'limit'    => $count,
+                                                                                      'category' => 0,
+                                                                                      'sort'     => 'product_submitted DESC, product_title',
+                                                                                      'order'    => '',
+                                                                                      'excluded' => $product_id
+                                                                                  ]));
             foreach ($tblTmp as $item) {
                 $product_price     = $item->getVar('product_price');
                 $product_price_ttc = Oledrion\Utility::getTTC($item->getVar('product_price'), 0);
@@ -471,13 +471,13 @@ switch ($op) {
         if ($count > 0) {
             $tblTmp = [];
             $tblTmp = $productsHandler->getRecentProducts(new Oledrion\Parameters([
-                                                                                          'start'    => 0,
-                                                                                          'limit'    => $count,
-                                                                                          'category' => $product->getVar('product_cid'),
-                                                                                          'sort'     => 'product_submitted DESC, product_title',
-                                                                                          'order'    => '',
-                                                                                          'excluded' => $product_id
-                                                                                      ]));
+                                                                                      'start'    => 0,
+                                                                                      'limit'    => $count,
+                                                                                      'category' => $product->getVar('product_cid'),
+                                                                                      'sort'     => 'product_submitted DESC, product_title',
+                                                                                      'order'    => '',
+                                                                                      'excluded' => $product_id
+                                                                                  ]));
             foreach ($tblTmp as $item) {
                 $product_price     = $item->getVar('product_price');
                 $product_price_ttc = Oledrion\Utility::getTTC($item->getVar('product_price'), 0);
@@ -561,11 +561,7 @@ switch ($op) {
         if (Oledrion\Utility::getModuleOption('manual_meta')) {
             $pageTitle       = '' === xoops_trim($product->getVar('product_metatitle')) ? $title : $product->getVar('product_metatitle');
             $metaDescription = '' !== xoops_trim($product->getVar('product_metadescription')) ? $product->getVar('product_metadescription') : $title;
-            $metaKeywords    = '' !== xoops_trim($product->getVar('product_metakeywords')) ? $product->getVar('product_metakeywords') : Oledrion\Utility::createMetaKeywords($product->getVar('product_title')
-                                                                                                                                                                                           . ' '
-                                                                                                                                                                                           . $product->getVar('product_summary')
-                                                                                                                                                                                           . ' '
-                                                                                                                                                                                           . $product->getVar('product_description'));
+            $metaKeywords    = '' !== xoops_trim($product->getVar('product_metakeywords')) ? $product->getVar('product_metakeywords') : Oledrion\Utility::createMetaKeywords($product->getVar('product_title') . ' ' . $product->getVar('product_summary') . ' ' . $product->getVar('product_description'));
             Oledrion\Utility::setMetas($pageTitle, $metaDescription, $metaKeywords);
         } else {
             Oledrion\Utility::setMetas($title, $title, Oledrion\Utility::createMetaKeywords($product->getVar('product_title') . ' ' . $product->getVar('product_summary') . ' ' . $product->getVar('product_description')));

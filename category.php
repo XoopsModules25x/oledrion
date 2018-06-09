@@ -16,6 +16,7 @@
  * @license     {@link http://www.fsf.org/copyleft/gpl.html GNU public license}
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
  */
+
 /**
  * Page des catégories
  * Principe :
@@ -83,8 +84,8 @@ if ((is_object($category) && 0 == $category->getVar('cat_pid')) || 0 == $cat_cid
             Oledrion\Utility::setMetas($pageTitle, $metaDescription, $metaKeywords);
         }
         $xoopsTpl->assign('breadcrumb', Oledrion\Utility::breadcrumb([
-                                                                        OLEDRION_URL . basename(__FILE__) => $category->getVar('cat_title')
-                                                                    ]));
+                                                                         OLEDRION_URL . basename(__FILE__) => $category->getVar('cat_title')
+                                                                     ]));
         if (OLEDRION_SHOW_SUB_CATEGORIES) {
             $count       = 1;
             $firstChilds = [];

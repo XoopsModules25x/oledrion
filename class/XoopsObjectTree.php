@@ -21,7 +21,7 @@ use XoopsModules\Oledrion;
 
 defined('XOOPS_ROOT_PATH') || die('Restricted access');
 
-require_once  dirname(dirname(dirname(__DIR__))) . '/class/tree.php';
+require_once dirname(dirname(dirname(__DIR__))) . '/class/tree.php';
 
 /**
  * A tree structures with {@link XoopsObject}s as nodes
@@ -76,8 +76,8 @@ class XoopsObjectTree extends \XoopsObjectTree
         $selected = '',
         $addEmptyOption = '',
         $key = 0,
-        $additional = ''
-    ) {
+        $additional = '')
+    {
         $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 1);
         trigger_error("makeSelBox() is deprecated since 2.5.9, please use makeSelectElement(), accessed from {$trace[0]['file']} line {$trace[0]['line']},");
 

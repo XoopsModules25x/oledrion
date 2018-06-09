@@ -10,7 +10,6 @@
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 */
 
-
 use XoopsModules\Oledrion;
 
 /**
@@ -36,13 +35,13 @@ class OledrionPersistableObjectHandler extends \XoopsPersistableObjectHandler
 
     /**
      * Constructor - called from child classes
-     * @param null|\XoopsDatabase $db             {@link XoopsDatabase}
+     * @param null|\XoopsDatabase $db            {@link XoopsDatabase}
      *                                           object
-     * @param string             $tablename      Name of database table
-     * @param string             $classname      Name of Class, this handler is managing
-     * @param string             $keyname        Name of the property, holding the key
-     * @param string             $idenfierName   Name of the property, holding the label
-     * @param array              $cacheOptions   Optional, options for the cache
+     * @param string              $tablename     Name of database table
+     * @param string              $classname     Name of Class, this handler is managing
+     * @param string              $keyname       Name of the property, holding the key
+     * @param string              $idenfierName  Name of the property, holding the label
+     * @param array               $cacheOptions  Optional, options for the cache
      */
     public function __construct(\XoopsDatabase $db, $tablename, $classname, $keyname, $idenfierName = '', $cacheOptions = null)
     {
@@ -92,15 +91,13 @@ class OledrionPersistableObjectHandler extends \XoopsPersistableObjectHandler
         return $id;
     }
 
-
-
     /**
      * Convert a database resultset to a returnable array
      *
      * @param \mysqli_result $result    database resultset
-     * @param boolean       $id_as_key - should NOT be used with joint keys
-     * @param boolean       $as_object
-     * @param string        $fields    Requested fields from the query
+     * @param boolean        $id_as_key - should NOT be used with joint keys
+     * @param boolean        $as_object
+     * @param string         $fields    Requested fields from the query
      *
      * @return array
      */
@@ -145,8 +142,6 @@ class OledrionPersistableObjectHandler extends \XoopsPersistableObjectHandler
         return $ret;
     }
 
-
-
     /**
      * Retourne des éléments selon leur ID
      *
@@ -164,11 +159,10 @@ class OledrionPersistableObjectHandler extends \XoopsPersistableObjectHandler
         return $ret;
     }
 
-
     /**
      * Retourne le total d'un champ
      *
-     * @param  string          $field    Le champ dont on veut calculer le total
+     * @param  string           $field    Le champ dont on veut calculer le total
      * @param  \CriteriaElement $criteria {@link CriteriaElement} to match
      * @return integer le total
      */
@@ -206,7 +200,6 @@ class OledrionPersistableObjectHandler extends \XoopsPersistableObjectHandler
         //  return $cacheData;
         // }
     }
-
 
     /**
      * Quickly insert a record like this $myobjectHandler->quickInsert('field1' => field1value, 'field2' => $field2value)
@@ -258,8 +251,6 @@ class OledrionPersistableObjectHandler extends \XoopsPersistableObjectHandler
         return false;
     }
 
-
-
     /**
      * Compare two objects and returns, in an array, the differences
      *
@@ -284,9 +275,9 @@ class OledrionPersistableObjectHandler extends \XoopsPersistableObjectHandler
     /**
      * Get distincted values of a field in the table
      *
-     * @param  string          $field    Field's name
+     * @param  string           $field    Field's name
      * @param  \CriteriaElement $criteria {@link CriteriaElement} conditions to be met
-     * @param  string          $format   Format in wich we want the datas
+     * @param  string           $format   Format in wich we want the datas
      * @return array  containing the distinct values
      */
     public function getDistincts($field, $criteria = null, $format = 's')

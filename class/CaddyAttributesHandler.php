@@ -25,15 +25,13 @@ use XoopsModules\Oledrion;
  */
 // require_once __DIR__ . '/classheader.php';
 
-
-
 /**
- * Class OledrionCaddy_attributesHandler
+ * Class CaddyAttributesHandler
  */
 class CaddyAttributesHandler extends OledrionPersistableObjectHandler
 {
     /**
-     * OledrionCaddy_attributesHandler constructor.
+     * CaddyAttributesHandler constructor.
      * @param \XoopsDatabase $db
      */
     public function __construct(\XoopsDatabase $db)
@@ -56,14 +54,14 @@ class CaddyAttributesHandler extends OledrionPersistableObjectHandler
     /**
      * Retourne la liste formatée des attributs liés à un caddy
      *
-     * @param  integer           $ca_caddy_id L'identifiant de caddy
+     * @param  integer  $ca_caddy_id L'identifiant de caddy
      * @param  Products $product     Le produit concerné par le caddy
      * @return array
      * @since 2.3.2009.03.23
      */
     public function getFormatedAttributesForCaddy($ca_caddy_id, Products $product)
     {
-//        $handlers   = HandlerManager::getInstance();
+        //        $handlers   = HandlerManager::getInstance();
         $attributes = $ret = [];
         $attributes = $this->getObjects(new \Criteria('ca_caddy_id', $ca_caddy_id, '='));
         if (0 == count($attributes)) {

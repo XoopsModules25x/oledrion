@@ -96,10 +96,10 @@ class Packing extends OledrionObject
      */
     public function toArray($format = 's')
     {
-        $oledrion_Currency               = Oledrion\Currency::getInstance();
+        $oledrionCurrency               = Oledrion\Currency::getInstance();
         $ret                             = [];
         $ret                             = parent::toArray($format);
-        $ret['packing_price_fordisplay'] = $oledrion_Currency->amountForDisplay($this->getVar('packing_price'));
+        $ret['packing_price_fordisplay'] = $oledrionCurrency->amountForDisplay($this->getVar('packing_price'));
         $ret['packing_image_url']        = $this->getPictureUrl();
 
         return $ret;

@@ -97,7 +97,10 @@ if (!defined('OLEDRION_ATTACHED_FILES_URL')) {
     define('OLEDRION_CSV_SEP', ';');
 
     // Gateway log's path (must be writable)
-    define('OLEDRION_GATEWAY_LOG_PATH', XOOPS_UPLOAD_PATH . '/oledrion/loggateway_oledrion.php');
+    // B.R. define('OLEDRION_GATEWAY_LOG_PATH', XOOPS_UPLOAD_PATH . '/oledrion/loggateway_oledrion.php');
+    define('OLEDRION_GATEWAY_LOG_PATH', XOOPS_UPLOAD_PATH . '/oledrion/gateway_log.php');
+    // B.R New: Filename of serialized confirmation email parameters
+    define('OLEDRION_CONFIRMATION_EMAIL_FILENAME_SUFFIX', '_conf_email.parms');
 
     // Do you want to show the list of main categories on the category page when user is on category.php (without specifying a category to see)
     define('OLEDRION_SHOW_MAIN_CATEGORIES', true);

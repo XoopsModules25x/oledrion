@@ -100,7 +100,7 @@ class Gateways
      */
     public static function getGatewayPath($gatewayName)
     {
-        return OLEDRION_CLASS_PATH . 'gateways' . '/' . $gatewayName; // Par exemple c:/inetpub/wwwroot/xoops/modules/oledrion/admin/gateways/paypal
+        return OLEDRION_CLASS_PATH . 'Gateways' . '/' . $gatewayName; // Par exemple c:/inetpub/wwwroot/xoops/modules/oledrion/class/Gateways/Paypal
     }
 
     /**
@@ -158,7 +158,7 @@ class Gateways
     {
         $gatewayPath = self::getGatewayPath($gatewayName);
 
-        return $gatewayPath . '/gateway.php';
+        return $gatewayPath . '/' . $gatewayName . '.php';
     }
 
     /**
@@ -196,8 +196,8 @@ class Gateways
      */
     public static function gatewayClassName($gatewayName)
     {
-//        return 'oledrion_' . $gatewayName;
-        return  $gatewayName;
+        //        return 'oledrion_' . $gatewayName;
+        return $gatewayName;
     }
 
     /**
@@ -224,7 +224,7 @@ class Gateways
      */
     public static function asGoodAncestor($gateway)
     {
-        if ('oledrion_gateway' === get_parent_class($gateway)) {
+        if ('Gateway' === get_parent_class($gateway)) {
             return true;
         } else {
             return false;

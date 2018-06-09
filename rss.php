@@ -38,7 +38,7 @@ $charset = 'utf-8';
 header('Content-Type:text/xml; charset=' . $charset);
 $tpl = new \XoopsTpl();
 
-$tpl->caching=2; // 1 = Cache global, 2 = Cache individuel (par template)
+$tpl->caching = 2; // 1 = Cache global, 2 = Cache individuel (par template)
 $tpl->xoops_setCacheTime(OLEDRION_RSS_CACHE); // Temps de cache en secondes
 
 if (!$tpl->is_cached('db:oledrion_rss.tpl', $cat_cid)) {
@@ -82,10 +82,10 @@ if (!$tpl->is_cached('db:oledrion_rss.tpl', $cat_cid)) {
     $tpl->assign('image_height', $height);
 
     $products = $productsHandler->getRecentProducts(new Oledrion\Parameters([
-                                                                                    'start'    => 0,
-                                                                                    'limit'    => $limit,
-                                                                                    'category' => $cat_cid
-                                                                                ]));
+                                                                                'start'    => 0,
+                                                                                'limit'    => $limit,
+                                                                                'category' => $cat_cid
+                                                                            ]));
     foreach ($products as $item) {
         $title       = htmlspecialchars($item->getVar('product_title'), ENT_QUOTES);
         $description = htmlspecialchars(strip_tags($item->getVar('product_summary')), ENT_QUOTES);

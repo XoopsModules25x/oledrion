@@ -21,12 +21,13 @@
 /**
  * Facade pour les produits
  */
+
 // defined('XOOPS_ROOT_PATH') || die('Restricted access');
 
 use XoopsModules\Oledrion;
 
-include  dirname(__DIR__) . '/preloads/autoloader.php';
-include  dirname(__DIR__) . '/include/common.php';
+include dirname(__DIR__) . '/preloads/autoloader.php';
+include dirname(__DIR__) . '/include/common.php';
 
 /**
  * Class Shelf

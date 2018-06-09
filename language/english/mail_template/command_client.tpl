@@ -4,6 +4,7 @@ This email informs you that your order will be processed as soon as possible,
 when the payment has been verified.
 
 Order number : {NUM_COMMANDE}
+Transaction ID : {TRANSACTION_ID}
 Information :
 First and last name : {NOM} {PRENOM}
 Address : {ADRESSE}

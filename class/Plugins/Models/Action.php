@@ -18,7 +18,6 @@
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
  */
 
-
 /**
  * Every action plugin must extend this class
  */

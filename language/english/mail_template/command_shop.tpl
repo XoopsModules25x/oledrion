@@ -4,7 +4,7 @@ This email informs you of a new order on the website.
 The user's IP was {IP}.
 
 - Order number : {NUM_COMMANDE}
-
+- Transaction ID : {TRANSACTION_ID}
 - Details on the client :
 First name and last name : {NOM} {PRENOM}
 Address : {ADRESSE}

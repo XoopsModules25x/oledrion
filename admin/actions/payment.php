@@ -41,20 +41,20 @@ switch ($action) {
         echo $form;
         //        Oledrion\Utility::htitle(_MI_OLEDRION_ADMENU21, 4);
         $payment = $paymentHandler->getAllPayment(new Oledrion\Parameters([
-                                                                                  'start' => $start,
-                                                                                  'limit' => $limit
-                                                                              ]));
+                                                                              'start' => $start,
+                                                                              'limit' => $limit
+                                                                          ]));
 
         $class = '';
         echo "<table width='100%' cellspacing='1' cellpadding='3' border='0' class='outer'>";
         echo "<tr><th align='center'>" . _AM_OLEDRION_ID . "</th><th align='center'>" . _AM_OLEDRION_PAYMENT_TITLE . "</th><th align='center'>" . _AM_OLEDRION_PAYMENT_TYPE . "</th><th align='center'>" . _AM_OLEDRION_PAYMENT_ONLINE . "</th><th align='center'>" . _AM_OLEDRION_ACTION . '</th></tr>';
         foreach ($payment as $item) {
-            $id        = $item->getVar('payment_id');
-            $class     = ('even' === $class) ? 'odd' : 'even';
-            $actions   = [];
-            $actions[] = "<a href='$baseurl?op=payment&action=edit&id=" . $id . "' title='" . _OLEDRION_EDIT . "'>" . $icons['edit'] . '</a>';
-            $actions[] = "<a href='$baseurl?op=payment&action=delete&id=" . $id . "' title='" . _OLEDRION_DELETE . "'" . $conf_msg . '>' . $icons['delete'] . '</a>';
-            $online    = 1 == $item->getVar('payment_online') ? _YES : _NO;
+            $id           = $item->getVar('payment_id');
+            $class        = ('even' === $class) ? 'odd' : 'even';
+            $actions      = [];
+            $actions[]    = "<a href='$baseurl?op=payment&action=edit&id=" . $id . "' title='" . _OLEDRION_EDIT . "'>" . $icons['edit'] . '</a>';
+            $actions[]    = "<a href='$baseurl?op=payment&action=delete&id=" . $id . "' title='" . _OLEDRION_DELETE . "'" . $conf_msg . '>' . $icons['delete'] . '</a>';
+            $online       = 1 == $item->getVar('payment_online') ? _YES : _NO;
             $payment_type = _AM_OLEDRION_PAYMENT_OFFLINE;
             if ('online' === $item->getVar('payment_type')) {
                 $payment_type = _AM_OLEDRION_PAYMENT_ONLINE . '( ' . $item->getVar('payment_gateway') . ' )';

@@ -34,11 +34,11 @@ function b_oledrion_category_lists_show($options)
     $block    = [];
 
     if (isset($GLOBALS['current_category']) && (int)$GLOBALS['current_category'] > 0) {
-//        $handlers = HandlerManager::getInstance();
-        $db      = \XoopsDatabaseFactory::getDatabaseConnection();
+        //        $handlers = HandlerManager::getInstance();
+        $db           = \XoopsDatabaseFactory::getDatabaseConnection();
         $listsHandler = new Oledrion\ListsHandler($db);
-        $items    = [];
-        $items    =  $listsHandler->listsFromCurrentCategory($GLOBALS['current_category'], $listType, $limit);
+        $items        = [];
+        $items        = $listsHandler->listsFromCurrentCategory($GLOBALS['current_category'], $listType, $limit);
         if (count($items) > 0) {
             foreach ($items as $item) {
                 $block['category_lists'][] = $item->toArray();

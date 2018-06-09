@@ -89,8 +89,8 @@ switch ($action) {
         $registry->savefile(Request::getText('welcome2', '', 'POST'), OLEDRION_TEXTFILE2);
         $registry->savefile(Request::getText('welcome3', '', 'POST'), OLEDRION_TEXTFILE3);
         $registry->savefile(Request::getText('welcome4', '', 'POST'), OLEDRION_TEXTFILE4);
-        $registry->savefile(Request::getText('welcome4', '', 'POST'), OLEDRION_TEXTFILE5);
-        $registry->savefile(Request::getText('welcome5', '', 'POST'), OLEDRION_TEXTFILE6);
+        $registry->savefile(Request::getText('welcome5', '', 'POST'), OLEDRION_TEXTFILE5);
+        $registry->savefile(Request::getText('welcome6', '', 'POST'), OLEDRION_TEXTFILE6);
         $registry->savefile(Request::getText('welcome7', '', 'POST'), OLEDRION_TEXTFILE7);
         Oledrion\Utility::updateCache();
         Oledrion\Utility::redirect(_AM_OLEDRION_SAVE_OK, $baseurl . '?op=texts', 2);

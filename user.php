@@ -17,7 +17,6 @@
  * @author      Hossein Azizabadi (azizabadi@faragostaresh.com)
  */
 
-
 use XoopsModules\Oledrion;
 
 require_once __DIR__ . '/header.php';
@@ -36,9 +35,9 @@ $criteria = new \CriteriaCompo();
 $criteria->add(new \Criteria('cmd_uid', $uid));
 $criteria->setSort('cmd_id');
 $criteria->setOrder('DESC');
-$db = \XoopsDatabaseFactory::getDatabaseConnection();
+$db              = \XoopsDatabaseFactory::getDatabaseConnection();
 $commandsHandler = new Oledrion\CommandsHandler($db);
-$orders = $commandsHandler->getObjects($criteria, false);
+$orders          = $commandsHandler->getObjects($criteria, false);
 if (!empty($orders)) {
     foreach ($orders as $item) {
         $command = $item->toArray();

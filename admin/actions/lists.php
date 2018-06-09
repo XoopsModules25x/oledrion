@@ -50,9 +50,9 @@ switch ($action) {
             $pagenav = new \XoopsPageNav($itemsCount, $limit, $start, 'start', 'op=' . $operation);
         }
         $items = $listsHandler->getRecentLists(new Oledrion\Parameters([
-                                                                                                 'start' => $start,
-                                                                                                 'limit' => $limit
-                                                                                             ]));
+                                                                           'start' => $start,
+                                                                           'limit' => $limit
+                                                                       ]));
         if (count($items) > 0) {
             $usersList = $listsHandler->getUsersFromLists($items);
         }

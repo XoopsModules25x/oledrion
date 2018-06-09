@@ -22,8 +22,8 @@ use XoopsModules\Oledrion;
 /**
  * Sélecteur de produits
  */
-require_once  dirname(dirname(dirname(__DIR__))) . '/include/cp_header.php';
-require_once  dirname(__DIR__) . '/include/common.php';
+require_once dirname(dirname(dirname(__DIR__))) . '/include/cp_header.php';
+require_once dirname(__DIR__) . '/include/common.php';
 require_once XOOPS_ROOT_PATH . '/class/template.php';
 // require_once OLEDRION_PATH . 'class/tree.php';
 
@@ -38,7 +38,7 @@ $ts       = \MyTextSanitizer::getInstance();
 $limit    = Oledrion\Utility::getModuleOption('items_count'); // Nombre maximum d'éléments à afficher dans l'admin
 
 //$oledrionHandlers = HandlerManager::getInstance();
-$searchFields     = [
+$searchFields    = [
     'product_title'       => _OLEDRION_TITLE,
     'product_summary'     => _OLEDRION_SUMMARY,
     'product_description' => _OLEDRION_DESCRIPTION,
@@ -46,22 +46,22 @@ $searchFields     = [
     'product_sku'         => _OLEDRION_NUMBER,
     'product_extraid'     => _OLEDRION_EXTRA_ID
 ];
-$searchCriterias  = [
+$searchCriterias = [
     XOOPS_MATCH_START   => _STARTSWITH,
     XOOPS_MATCH_END     => _ENDSWITH,
     XOOPS_MATCH_EQUAL   => _MATCHES,
     XOOPS_MATCH_CONTAIN => _CONTAINS
 ];
 
-$db = \XoopsDatabaseFactory::getDatabaseConnection();
-$vendorsHandler = new Oledrion\VendorsHandler($db);
+$db              = \XoopsDatabaseFactory::getDatabaseConnection();
+$vendorsHandler  = new Oledrion\VendorsHandler($db);
 $categoryHandler = new Oledrion\CategoryHandler($db);
-$vendors    = [];
-$vendors    = $vendorsHandler->getList();
-$vendors[0] = '---';
+$vendors         = [];
+$vendors         = $vendorsHandler->getList();
+$vendors[0]      = '---';
 sort($vendors);
 //$categories           = $oledrionHandlers->h_oledrion_cat->getAllCategories(new Oledrion\Parameters());
-$categories = $categoryHandler->getAllCategories(new Oledrion\Parameters());
+$categories           = $categoryHandler->getAllCategories(new Oledrion\Parameters());
 $mytree               = new Oledrion\XoopsObjectTree($categories, 'cat_cid', 'cat_pid');
 $searchVendorSelected = $selectedCategory = $selectedSearchField = 0;
 
@@ -163,6 +163,7 @@ $xoopsTpl->assign('baseurl', OLEDRION_URL . 'admin/' . basename(__FILE__)); // U
 $xoopsTpl->assign('searchVendor', $vendors);
 $xoopsTpl->assign('searchCriteria', $searchCriterias);
 $xoopsTpl->assign('searchField', $searchFields);
+$xoopsTpl->assign('searchCategory', $categoriesSelect);
 $xoopsTpl->assign('searchFieldSelected', $selectedSearchField);
 
 echo $xoopsTpl->fetch('db:oledrion_productsselector.tpl');

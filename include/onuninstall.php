@@ -32,15 +32,15 @@ function xoops_module_pre_uninstall_oledrion(\XoopsModule $module)
  */
 function xoops_module_uninstall_oledrion(\XoopsModule $module)
 {
-    include  dirname(__DIR__) . '/preloads/autoloader.php';
+    include dirname(__DIR__) . '/preloads/autoloader.php';
 
-    $moduleDirName = basename(dirname(__DIR__));
-    $moduleDirNameUpper   = strtoupper($moduleDirName); //$capsDirName
+    $moduleDirName      = basename(dirname(__DIR__));
+    $moduleDirNameUpper = strtoupper($moduleDirName); //$capsDirName
     /** @var Oledrion\Helper $helper */
     /** @var Oledrion\Utility $utility */
     $helper  = Oledrion\Helper::getInstance();
-    $utility     = new Oledrion\Utility();
-//    $configurator = new xoopstube\Common\Configurator();
+    $utility = new Oledrion\Utility();
+    //    $configurator = new xoopstube\Common\Configurator();
 
     // Load language files
     $helper->loadLanguage('admin');

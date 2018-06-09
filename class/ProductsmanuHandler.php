@@ -26,7 +26,6 @@ use XoopsModules\Oledrion;
 
 // require_once __DIR__ . '/classheader.php';
 
-
 /**
  * Class ProductsmanuHandler
  */
@@ -75,8 +74,8 @@ class ProductsmanuHandler extends OledrionPersistableObjectHandler
      * Retourne les identifiants des produits d'un fabricant
      *
      * @param  integer $pm_manu_id L'identifiant du fabricant
-     * @param  int    $start
-     * @param  int    $limit
+     * @param  int     $start
+     * @param  int     $limit
      * @return array  Les ID des produits
      */
     public function getProductsIdsFromManufacturer($pm_manu_id, $start = 0, $limit = 0)

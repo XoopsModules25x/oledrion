@@ -25,7 +25,7 @@ $GLOBALS['current_category'] = -1;
 $op = isset($_GET['op']) ? $_GET['op'] : 'default';
 
 if (\Xmf\Request::hasVar('id', 'GET')) {
- $cmdId = \Xmf\Request::getInt('id', 0, 'GET');
+    $cmdId = \Xmf\Request::getInt('id', 0, 'GET');
 } else {
     Oledrion\Utility::redirect(_OLEDRION_ERROR11, 'index.php', 6);
 }
@@ -93,7 +93,7 @@ switch ($op) {
         // Informations sur la commande ***************************************************************************************
         $xoopsTpl->assign('order', $order->toArray());
         $xoopsTpl->assign('ask_vatnumber', Oledrion\Utility::getModuleOption('ask_vatnumber'));
-//        $handlers = HandlerManager::getInstance();
+        //        $handlers = HandlerManager::getInstance();
 
         // Boucle sur le caddy ************************************************************************************************
         foreach ($caddy as $itemCaddy) {
@@ -136,7 +136,7 @@ switch ($op) {
         $xoopsTpl->assign('ask_vatnumber', Oledrion\Utility::getModuleOption('ask_vatnumber'));
         $xoopsTpl->assign('printurl', OLEDRION_URL . basename(__FILE__) . '?op=print&id=' . $order->getVar('cmd_id') . '&pass=' . $order->getVar('cmd_password'));
 
-//        $handlers = HandlerManager::getInstance();
+        //        $handlers = HandlerManager::getInstance();
 
         // Boucle sur le caddy ************************************************************************************************
         foreach ($caddy as $itemCaddy) {

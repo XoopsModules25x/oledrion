@@ -1,4 +1,4 @@
-<?php
+<?php namespace XoopsModules\Oledrion\Exports;
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -25,10 +25,10 @@ use XoopsModules\Oledrion\Constants;
  */
 // defined('XOOPS_ROOT_PATH') || die('Restricted access');
 
-class Oledrion_csv_export extends Oledrion_export
+class CsvExport extends Export
 {
     /**
-     * Oledrion_csv_export constructor.
+     * CsvExport constructor.
      * @param string $parameters
      */
     public function __construct($parameters = '')
@@ -49,11 +49,11 @@ class Oledrion_csv_export extends Oledrion_export
      */
     public function export()
     {
-        $db                = \XoopsDatabaseFactory::getDatabaseConnection();
-        $caddyHandler = new Oledrion\CaddyHandler($db);
+        $db              = \XoopsDatabaseFactory::getDatabaseConnection();
+        $caddyHandler    = new Oledrion\CaddyHandler($db);
         $commandsHandler = new Oledrion\CommandsHandler($db);
-        $file = $this->folder . '/' . $this->filename;
-        $fp   = fopen($file, 'w');
+        $file            = $this->folder . '/' . $this->filename;
+        $fp              = fopen($file, 'w');
         if (!$fp) {
             $this->success = false;
 

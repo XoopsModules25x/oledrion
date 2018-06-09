@@ -1,4 +1,4 @@
-<?php
+<?php namespace XoopsModules\Oledrion\Exports;
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -27,12 +27,12 @@ use XoopsModules\Oledrion\Constants;
 // defined('XOOPS_ROOT_PATH') || die('Restricted access');
 
 /**
- * Class Oledrion_dbase_export
+ * Class DbaseExport
  */
-class Oledrion_dbase_export extends Oledrion_export
+class DbaseExport extends Export
 {
     /**
-     * Oledrion_dbase_export constructor.
+     * DbaseExport constructor.
      * @param string $parameters
      */
     public function __construct($parameters = '')

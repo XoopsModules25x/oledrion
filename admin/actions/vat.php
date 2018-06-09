@@ -51,7 +51,7 @@ switch ($action) {
             $actions[] = "<a href='$baseurl?op=vat&action=edit&id=" . $id . "' title='" . _OLEDRION_EDIT . "'>" . $icons['edit'] . '</a>';
             $actions[] = "<a href='$baseurl?op=vat&action=delete&id=" . $id . "' title='" . _OLEDRION_DELETE . "'" . $conf_msg . '>' . $icons['delete'] . '</a>';
             echo "<tr class='" . $class . "'>\n";
-            echo "<td align='center'>" . $id . "</td><td align='center'>" . $oledrion_Currency->amountInCurrency($item->getVar('vat_rate')) . "</td><td align='center'>" . ucfirst($item->getVar('vat_country')) . "</td><td align='center'>" . implode(' ', $actions) . "</td>\n";
+            echo "<td align='center'>" . $id . "</td><td align='center'>" . $oledrionCurrency->amountInCurrency($item->getVar('vat_rate')) . "</td><td align='center'>" . ucfirst($item->getVar('vat_country')) . "</td><td align='center'>" . implode(' ', $actions) . "</td>\n";
             echo "<tr>\n";
         }
         $class = ('even' === $class) ? 'odd' : 'even';
@@ -66,8 +66,8 @@ switch ($action) {
     case 'add': // Ajout d'une TVA
     case 'edit': // Edition d'une TVA
         // ****************************************************************************************************************
-       xoops_cp_header();
-//        oledrion_adminMenu(2);
+        xoops_cp_header();
+        //        oledrion_adminMenu(2);
         if ('edit' === $action) {
             $title = _AM_OLEDRION_EDIT_VAT;
             $id    = \Xmf\Request::getInt('id', 0, 'GET');

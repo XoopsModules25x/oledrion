@@ -146,8 +146,8 @@ class OledrionUtility
         $value = '',
         $width = '100%',
         $height = '400px',
-        $supplemental = ''
-    ) {
+        $supplemental = '')
+    {
         $editor                   = false;
         $editor_configs           = [];
         $editor_configs['name']   = $name;
@@ -188,12 +188,12 @@ class OledrionUtility
                 if (is_readable(XOOPS_ROOT_PATH . '/class/xoopseditor/tinyeditor/formtinyeditortextarea.php')) {
                     require_once XOOPS_ROOT_PATH . '/class/xoopseditor/tinyeditor/formtinyeditortextarea.php';
                     $editor = new \XoopsFormTinyeditorTextArea([
-                                                                  'caption' => $caption,
-                                                                  'name'    => $name,
-                                                                  'value'   => $value,
-                                                                  'width'   => '100%',
-                                                                  'height'  => '400px'
-                                                              ]);
+                                                                   'caption' => $caption,
+                                                                   'name'    => $name,
+                                                                   'value'   => $value,
+                                                                   'width'   => '100%',
+                                                                   'height'  => '400px'
+                                                               ]);
                 }
                 break;
 
@@ -232,7 +232,7 @@ class OledrionUtility
     public static function IP()
     {
         $proxy_ip = '';
-       if (\Xmf\Request::hasVar('HTTP_X_FORWARDED_FOR', 'SERVER')) {
+        if (\Xmf\Request::hasVar('HTTP_X_FORWARDED_FOR', 'SERVER')) {
             $proxy_ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
         } elseif (!empty($_SERVER['HTTP_X_FORWARDED'])) {
             $proxy_ip = $_SERVER['HTTP_X_FORWARDED'];
@@ -1135,8 +1135,8 @@ class OledrionUtility
         $mimeTypes = null,
         $uploadMaxSize = null,
         $maxWidth = null,
-        $maxHeight = null
-    ) {
+        $maxHeight = null)
+    {
         require_once XOOPS_ROOT_PATH . '/class/uploader.php';
         global $destname;
         if (isset($_POST['xoops_upload_file'])) {
@@ -1193,8 +1193,8 @@ class OledrionUtility
         $param_width,
         $param_height,
         $keep_original = false,
-        $fit = 'inside'
-    ) {
+        $fit = 'inside')
+    {
         //        require_once OLEDRION_PATH . 'class/wideimage/WideImage.inc.php';
         $resize = true;
         if (OLEDRION_DONT_RESIZE_IF_SMALLER) {
@@ -1226,10 +1226,10 @@ class OledrionUtility
     /**
      * Déclenchement d'une alerte Xoops suite à un évènement
      *
-     * @param string       $category La catégorie de l'évènement
-     * @param integer      $itemId   L'ID de l'élément (trop général pour être décris précisément)
-     * @param mixed $event    L'évènement qui est déclencé
-     * @param mixed $tags     Les variables à passer au template
+     * @param string  $category La catégorie de l'évènement
+     * @param integer $itemId   L'ID de l'élément (trop général pour être décris précisément)
+     * @param mixed   $event    L'évènement qui est déclencé
+     * @param mixed   $tags     Les variables à passer au template
      */
     public static function notify($category, $itemId, $event, $tags)
     {
@@ -1411,10 +1411,10 @@ class OledrionUtility
      */
     public static function getTTC($ht, $vat, $edit = false, $format = 's')
     {
-        $oledrion_Currency = Oledrion\Currency::getInstance();
+        $oledrionCurrency = Oledrion\Currency::getInstance();
         $ttc               = $ht * (1 + ($vat / 100));
         if (!$edit) {
-            return $oledrion_Currency->amountForDisplay($ttc, $format);
+            return $oledrionCurrency->amountForDisplay($ttc, $format);
         } else {
             return $ttc;
         }
@@ -1445,11 +1445,11 @@ class OledrionUtility
         if (is_array($vats) && in_array($vat_id, $vats)) {
             $vat_rate = $vats[$vat_id];
         } else {
-//            $handlers = HandlerManager::getInstance();
-            $db = \XoopsDatabaseFactory::getDatabaseConnection();
+            //            $handlers = HandlerManager::getInstance();
+            $db         = \XoopsDatabaseFactory::getDatabaseConnection();
             $vatHandler = new Oledrion\VatHandler($db);
-            $vat      = null;
-            $vat      = $vatHandler->get($vat_id);
+            $vat        = null;
+            $vat        = $vatHandler->get($vat_id);
             if (is_object($vat)) {
                 $vat_rate      = $vat->getVar('vat_rate', 'e');
                 $vats[$vat_id] = $vat_rate;

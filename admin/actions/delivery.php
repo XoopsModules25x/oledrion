@@ -40,9 +40,9 @@ switch ($action) {
         echo $form;
         //        Oledrion\Utility::htitle(_MI_OLEDRION_ADMENU20, 4);
         $delivery = $deliveryHandler->getAllDelivery(new Oledrion\Parameters([
-                                                                                     'start' => $start,
-                                                                                     'limit' => $limit
-                                                                                 ]));
+                                                                                 'start' => $start,
+                                                                                 'limit' => $limit
+                                                                             ]));
 
         $class = '';
         echo "<table width='100%' cellspacing='1' cellpadding='3' border='0' class='outer'>";
@@ -161,7 +161,7 @@ switch ($action) {
         }
         $opRedirect = 'delivery';
         $item->setVars($_POST);
-        if (isset($_POST['delpicture']) && 1 == \Xmf\Request::getInt('delpicture', 0, 'POST')) {
+        if ( \Xmf\Request::hasVar('delpicture') && 1 == \Xmf\Request::getInt('delpicture', 0, 'POST')) {
             $item->deletePicture();
         }
         $destname = '';

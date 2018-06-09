@@ -52,8 +52,8 @@ class Vat extends OledrionObject
     {
         $ret                      = [];
         $ret                      = parent::toArray($format);
-        $oledrion_Currency        = Oledrion\Currency::getInstance();
-        $ret['vat_rate_formated'] = $oledrion_Currency->amountInCurrency((float)$this->getVar('vat_rate', 'e'));
+        $oledrionCurrency        = Oledrion\Currency::getInstance();
+        $ret['vat_rate_formated'] = $oledrionCurrency->amountInCurrency((float)$this->getVar('vat_rate', 'e'));
 
         return $ret;
     }

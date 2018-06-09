@@ -74,7 +74,7 @@ class NewelementsAction extends Models\Action
     {
         $product = $parameters['product'];
         if (1 == (int)$product->getVar('product_online')) {
-            $tags                    = [];
+            $tags = [];
             /** @var \XoopsNotificationHandler $notificationHandler */
             $notificationHandler     = xoops_getHandler('notification');
             $tags['PRODUCT_NAME']    = $product->getVar('product_title');
@@ -92,7 +92,7 @@ class NewelementsAction extends Models\Action
      */
     public function fireNewCategory($parameters)
     {
-        $category              = $parameters['category'];
+        $category = $parameters['category'];
         /** @var \XoopsNotificationHandler $notificationHandler */
         $notificationHandler   = xoops_getHandler('notification');
         $tags                  = [];

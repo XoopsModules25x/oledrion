@@ -26,8 +26,6 @@ use XoopsModules\Oledrion\Constants;
  */
 // require_once __DIR__ . '/classheader.php';
 
-
-
 /**
  * Class CaddyHandler
  */
@@ -419,8 +417,8 @@ class CaddyHandler extends OledrionPersistableObjectHandler
             $productsIds[] = $cart->getVar('caddy_product_id');
         }
         if (count($productsIds) > 0) {
-//            $handlers = HandlerManager::getInstance();
-            $ret      = $productsHandler->getProductsFromIDs($productsIds, true);
+            //            $handlers = HandlerManager::getInstance();
+            $ret = $productsHandler->getProductsFromIDs($productsIds, true);
         }
 
         return $ret;

@@ -18,14 +18,13 @@
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
  */
 
+use XoopsModules\Oledrion;
+
 /**
  * Gestion des catégories de produits
  */
 
-use XoopsModules\Oledrion;
-
 // require_once __DIR__ . '/classheader.php';
-
 
 /**
  * Class CategoryHandler
@@ -75,9 +74,9 @@ class CategoryHandler extends OledrionPersistableObjectHandler
     /**
      * Internal function to make an expanded view of categories via <li>
      *
-     * @param  string          $fieldName
-     * @param  string          $key
-     * @param  string          $ret
+     * @param  string                   $fieldName
+     * @param  string                   $key
+     * @param  string                   $ret
      * @param  Oledrion\XoopsObjectTree $tree
      * @return string
      */

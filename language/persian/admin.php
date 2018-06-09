@@ -113,7 +113,7 @@ define('_AM_OLEDRION_TOTAL_SHIPP', 'مجموع / ترابری');
 define('_AM_OLEDRION_NEWSLETTER_BETWEEN', 'انتخاب محصولات منتشر شده بین');
 define('_AM_OLEDRION_EXPORT_AND', ' و ');
 define('_AM_OLEDRION_IN_CATEGORY', 'در شاخه‌های زیر');
-define('_AM_OLEDRION_REMOVE_BR', 'تبدیل تگ html &lt;br> در یک خط جدید؟');
+define('_AM_OLEDRION_REMOVE_BR', 'تبدیل تگ html &lt;br&gt; در یک خط جدید؟');
 define('_AM_OLEDRION_NEWSLETTER_HTML_TAGS', 'حذف تگ‌های html؟');
 define('_AM_OLEDRION_NEWSLETTER_HEADER', 'بالا صفحه');
 define('_AM_OLEDRION_NEWSLETTER_FOOTER', 'پایین صفحه');

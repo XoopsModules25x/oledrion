@@ -20,6 +20,7 @@
 /**
  * Recherche dans les produits
  */
+
 use XoopsModules\Oledrion;
 
 require_once __DIR__ . '/header.php';

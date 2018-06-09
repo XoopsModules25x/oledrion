@@ -81,17 +81,17 @@ class HandlerManager
      */
     public function __get($name)
     {
-//        if (0 !== strpos($name, 'h_')) {
-//            return null;
-//        }
+        //        if (0 !== strpos($name, 'h_')) {
+        //            return null;
+        //        }
 
         if (!in_array(substr($name, 2), $this->handlersNames)) {
             return null;
         }
         if (!isset($this->handlersNames[$name])) {
-//            $this->handlers[$name] = xoops_getModuleHandler(substr($name, 2), OLEDRION_DIRNAME);
-            $db      = \XoopsDatabaseFactory::getDatabaseConnection();
-            $class = 'Oledrion\\' . $name;
+            //            $this->handlers[$name] = xoops_getModuleHandler(substr($name, 2), OLEDRION_DIRNAME);
+            $db                    = \XoopsDatabaseFactory::getDatabaseConnection();
+            $class                 = 'Oledrion\\' . $name;
             $this->handlers[$name] = new $class($db);
         }
 

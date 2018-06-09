@@ -28,7 +28,7 @@ use XoopsModules\Oledrion;
 require_once __DIR__ . '/header.php';
 error_reporting(0);
 @$xoopsLogger->activated = false;
-$db                = \XoopsDatabaseFactory::getDatabaseConnection();
+$db         = \XoopsDatabaseFactory::getDatabaseConnection();
 $vatHandler = new Oledrion\VatHandler($db);
 
 $op = \Xmf\Request::getString('op', '', 'POST');
@@ -45,10 +45,10 @@ switch ($op) {
         // ****************************************************************************************************************
         $product_id = \Xmf\Request::getInt('product_id', 0, 'POST');
         if (isset($_POST['formcontent']) && $product_id > 0) {
-            $data     = $data = $attributesIds = $attributes = $templateProduct = [];
-//            $handlers = HandlerManager::getInstance();
-            $product  = null;
-            $product  = $productsHandler->get($product_id);
+            $data = $data = $attributesIds = $attributes = $templateProduct = [];
+            //            $handlers = HandlerManager::getInstance();
+            $product = null;
+            $product = $productsHandler->get($product_id);
             if (!is_object($product)) {
                 return _OLEDRION_NA;
             }
@@ -106,15 +106,15 @@ switch ($op) {
             $vat             = $vatHandler->get($vat_id);
             $productPriceTTC = Oledrion\Utility::getAmountWithVat($productPrice, $vat_id);
 
-            $oledrion_Currency = Oledrion\Currency::getInstance();
+            $oledrionCurrency = Oledrion\Currency::getInstance();
 
             $templateProduct                                          = $product->toArray();
-            $templateProduct['product_final_price_ht_formated_long']  = $oledrion_Currency->amountForDisplay($productPrice, 'l');
-            $templateProduct['product_final_price_ttc_formated_long'] = $oledrion_Currency->amountForDisplay($productPriceTTC, 'l');
+            $templateProduct['product_final_price_ht_formated_long']  = $oledrionCurrency->amountForDisplay($productPrice, 'l');
+            $templateProduct['product_final_price_ttc_formated_long'] = $oledrionCurrency->amountForDisplay($productPriceTTC, 'l');
             if (is_object($vat)) {
                 $templateProduct['product_vat_rate'] = $vat->toArray();
             }
-            $templateProduct['product_vat_amount_formated_long'] = $oledrion_Currency->amountForDisplay($productPriceTTC - $productPrice, 'l');
+            $templateProduct['product_vat_amount_formated_long'] = $oledrionCurrency->amountForDisplay($productPriceTTC - $productPrice, 'l');
             $template->assign('product', $templateProduct);
             $return = $template->fetch('db:oledrion_product_price.tpl');
         }
@@ -324,7 +324,7 @@ switch ($op) {
                         //$finalrating = number_format($finalrating, 4);
 
                         $productsHandler->updateRating($product_id, $sumRating, $totalVotes);
-                    //$ratemessage = _OLEDRION_VOTEAPPRE . '<br>' . sprintf(_OLEDRION_THANKYOU, $xoopsConfig['sitename']);
+                        //$ratemessage = _OLEDRION_VOTEAPPRE . '<br>' . sprintf(_OLEDRION_THANKYOU, $xoopsConfig['sitename']);
                         //Oledrion\Utility::redirect($ratemessage, OLEDRION_URL . 'product.php?product_id=' . $product->getVar('product_id'), 2);
                     } else {
                         $return = false;
@@ -463,9 +463,9 @@ switch ($op) {
                     $msgCommande .= str_pad('', 10, ' ', STR_PAD_LEFT) . ' ';
                     $msgCommande .= str_pad($product->getVar('product_title'), 19, ' ', STR_PAD_LEFT) . ' ';
                     $msgCommande .= str_pad($product->getVar('product_qty'), 8, ' ', STR_PAD_LEFT) . ' ';
-                    $msgCommande .= str_pad($oledrion_Currency->amountForDisplay($product_price), 15, ' ', STR_PAD_LEFT) . ' ';+
+                    $msgCommande .= str_pad($oledrionCurrency->amountForDisplay($product_price), 15, ' ', STR_PAD_LEFT) . ' ';+
                     $msgCommande .= "\n";
-                    $msgCommande .= "\n\n" . _OLEDRION_TOTAL . " " . $oledrion_Currency->mountForDisplay($cmd_total) . "\n";
+                    $msgCommande .= "\n\n" . _OLEDRION_TOTAL . " " . $oledrionCurrency->mountForDisplay($cmd_total) . "\n";
                     $msg = array();
                     $msg['COMMANDE'] = $msgCommande;
                     $msg['NUM_COMMANDE'] = $commande->getVar('cmd_id');
@@ -493,7 +493,7 @@ switch ($op) {
                     if (Oledrion\Utility::getModuleOption('sms_checkout')) {
                         $information['to']   = ltrim($commande->getVar('cmd_mobile'), 0);
                         $information['text'] = Oledrion\Utility::getModuleOption('sms_checkout_text');
-                        $sms                 = Sms::sendSms($information);
+                        $sms                 = \XoopsModules\Oledrion\Sms::sendSms($information);
                     }
                 }
             } else {

@@ -32,7 +32,6 @@
  * work correctly if trying to upgrade if these values have been changed.
  *
  **/
-
 class Constants
 {
     // Les types d'option

@@ -95,7 +95,7 @@ $helper->loadLanguage('modinfo');
 $xoopsTpl->assign('global_advert', Oledrion\Utility::getModuleOption('advertisement'));
 // By voltan
 $breadcrumb = [ /*OLEDRION_URL.'whoswho.php' => _OLEDRION_MANUFACTURERS,*/
-                     OLEDRION_URL . basename(__FILE__) => $manufacturer->getVar('manu_name') . ' ' . $manufacturer->getVar('manu_commercialname')
+                OLEDRION_URL . basename(__FILE__) => $manufacturer->getVar('manu_name') . ' ' . $manufacturer->getVar('manu_commercialname')
 ];
 $xoopsTpl->assign('breadcrumb', Oledrion\Utility::breadcrumb($breadcrumb));
 

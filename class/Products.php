@@ -56,6 +56,11 @@ class Products extends OledrionObject
         $this->initVar('product_thumb_url', XOBJ_DTYPE_TXTBOX, null, false);
         $this->initVar('product_submitter', XOBJ_DTYPE_INT, null, false);
         $this->initVar('product_online', XOBJ_DTYPE_INT, null, false);
+        // B.R. Start
+        $this->initVar('skip_packing', XOBJ_DTYPE_INT, null, false);
+        $this->initVar('skip_location', XOBJ_DTYPE_INT, null, false);
+        $this->initVar('skip_delivery', XOBJ_DTYPE_INT, null, false);
+        // B.R. End
         $this->initVar('product_date', XOBJ_DTYPE_TXTBOX, null, false);
         $this->initVar('product_submitted', XOBJ_DTYPE_INT, null, false);
         $this->initVar('product_hits', XOBJ_DTYPE_INT, null, false);
@@ -280,7 +285,7 @@ class Products extends OledrionObject
     /**
      * Retourne le prix TTC du prix réduit du produit courant
      *
-     * @return \XoopsModules\Oledrion\floatval Le montant TTC du prix réduit
+     * @return float Le montant TTC du prix réduit
      */
     public function getDiscountTTC()
     {
@@ -290,7 +295,7 @@ class Products extends OledrionObject
     /**
      * Retourne le montant TTC du prix normal du produit
      *
-     * @return \XoopsModules\Oledrion\floatval
+     * @return float
      */
     public function getTTC()
     {
@@ -360,7 +365,13 @@ class Products extends OledrionObject
         if (0 == $product_id && '' === $product_title) {
             $product_id    = $this->getVar('product_id');
             $product_title = $this->getVar('product_title', 'n');
+            // B.R. New
+            $product_url = $this->getVar('product_url3', 'n');
+            // End New
         }
+        // B.R. New
+        if (empty($product_url)) {
+            // End New
         if (1 == Oledrion\Utility::getModuleOption('urlrewriting')) { // On utilise l'url rewriting
             if (!$shortVersion) {
                 $url = OLEDRION_URL . 'product-' . $product_id . Oledrion\Utility::makeSeoUrl($product_title) . '.html';
@@ -374,7 +385,11 @@ class Products extends OledrionObject
                 $url = 'product.php?product_id=' . $product_id;
             }
         }
-
+        // B.R. New
+        } else {
+            $url = '../' . $product_url;
+        }
+        // B.R. End New
         return $url;
     }
 
@@ -468,23 +483,23 @@ class Products extends OledrionObject
     {
         $ret               = [];
         $ret               = parent::toArray($format);
-        $oledrion_Currency = Oledrion\Currency::getInstance();
+        $oledrionCurrency = Oledrion\Currency::getInstance();
         $ttc               = $finalPriceTTC = $this->getTTC();
         $finalPriceHT      = (float)$this->getVar('product_price');
 
-        $ret['product_ecotaxe_formated'] = $oledrion_Currency->amountForDisplay($this->getVar('product_ecotaxe'));
+        $ret['product_ecotaxe_formated'] = $oledrionCurrency->amountForDisplay($this->getVar('product_ecotaxe'));
 
-        $ret['product_price_formated']          = $oledrion_Currency->amountForDisplay($this->getVar('product_price', 'e'));
-        $ret['product_shipping_price_formated'] = $oledrion_Currency->amountForDisplay($this->getVar('product_shipping_price', 'e'));
-        $ret['product_discount_price_formated'] = $oledrion_Currency->amountForDisplay($this->getVar('product_discount_price', 'e'));
-        $ret['product_price_ttc']               = $oledrion_Currency->amountForDisplay($ttc);
-        $ret['product_price_ttc_long']          = $oledrion_Currency->amountForDisplay($ttc, 'l');
+        $ret['product_price_formated']          = $oledrionCurrency->amountForDisplay($this->getVar('product_price', 'e'));
+        $ret['product_shipping_price_formated'] = $oledrionCurrency->amountForDisplay($this->getVar('product_shipping_price', 'e'));
+        $ret['product_discount_price_formated'] = $oledrionCurrency->amountForDisplay($this->getVar('product_discount_price', 'e'));
+        $ret['product_price_ttc']               = $oledrionCurrency->amountForDisplay($ttc);
+        $ret['product_price_ttc_long']          = $oledrionCurrency->amountForDisplay($ttc, 'l');
 
         if ((int)$this->getVar('product_discount_price') > 0) { //geeker
             $finalPriceTTC                          = $this->getDiscountTTC();
             $finalPriceHT                           = (float)$this->getVar('product_discount_price', 'e');
-            $ret['product_discount_price_ttc']      = $oledrion_Currency->amountForDisplay($this->getDiscountTTC());
-            $ret['product_discount_price_ttc_long'] = $oledrion_Currency->amountForDisplay($this->getDiscountTTC(), 'l');
+            $ret['product_discount_price_ttc']      = $oledrionCurrency->amountForDisplay($this->getDiscountTTC());
+            $ret['product_discount_price_ttc_long'] = $oledrionCurrency->amountForDisplay($this->getDiscountTTC(), 'l');
         } else {
             $ret['product_discount_price_ttc']      = '';
             $ret['product_discount_price_ttc_long'] = '';
@@ -494,24 +509,24 @@ class Products extends OledrionObject
         $ret['product_attributes_count'] = $attributesCount;
         if ($attributesCount > 0) {
             $optionsPrice                           = $this->getInitialOptionsPrice();
-            $ret['product_price_formated']          = $oledrion_Currency->amountForDisplay((float)$this->getVar('product_price', 'e') + $optionsPrice);
-            $ret['product_discount_price_formated'] = $oledrion_Currency->amountForDisplay((float)$this->getVar('product_discount_price', 'e') + $optionsPrice);
-            $ret['product_price_ttc']               = $oledrion_Currency->amountForDisplay($ttc + $optionsPrice);
-            $ret['product_price_ttc_long']          = $oledrion_Currency->amountForDisplay($ttc + $optionsPrice, 'l');
+            $ret['product_price_formated']          = $oledrionCurrency->amountForDisplay((float)$this->getVar('product_price', 'e') + $optionsPrice);
+            $ret['product_discount_price_formated'] = $oledrionCurrency->amountForDisplay((float)$this->getVar('product_discount_price', 'e') + $optionsPrice);
+            $ret['product_price_ttc']               = $oledrionCurrency->amountForDisplay($ttc + $optionsPrice);
+            $ret['product_price_ttc_long']          = $oledrionCurrency->amountForDisplay($ttc + $optionsPrice, 'l');
             if (0 != (int)$this->getVar('product_discount_price')) {
                 $finalPriceTTC                          = $this->getDiscountTTC() + $optionsPrice;
                 $finalPriceHT                           = (float)$this->getVar('product_discount_price', 'e') + $optionsPrice;
-                $ret['product_discount_price_ttc']      = $oledrion_Currency->amountForDisplay((float)$this->getDiscountTTC() + $optionsPrice);
-                $ret['product_discount_price_ttc_long'] = $oledrion_Currency->amountForDisplay((float)$this->getDiscountTTC() + $optionsPrice, 'l');
+                $ret['product_discount_price_ttc']      = $oledrionCurrency->amountForDisplay((float)$this->getDiscountTTC() + $optionsPrice);
+                $ret['product_discount_price_ttc_long'] = $oledrionCurrency->amountForDisplay((float)$this->getDiscountTTC() + $optionsPrice, 'l');
             }
         }
 
-        $ret['product_final_price_ht_formated_long']  = $oledrion_Currency->amountForDisplay($finalPriceHT, 'l');
+        $ret['product_final_price_ht_formated_long']  = $oledrionCurrency->amountForDisplay($finalPriceHT, 'l');
         $ret['product_final_price_ttc']               = $finalPriceTTC;
         $ret['product_final_price_ttc_javascript']    = Oledrion\Utility::formatFloatForDB($finalPriceTTC);
-        $ret['product_final_price_ttc_formated']      = $oledrion_Currency->amountForDisplay($finalPriceTTC);
-        $ret['product_final_price_ttc_formated_long'] = $oledrion_Currency->amountForDisplay($finalPriceTTC, 'l');
-        $ret['product_vat_amount_formated_long']      = $oledrion_Currency->amountForDisplay($finalPriceHT - $finalPriceTTC);
+        $ret['product_final_price_ttc_formated']      = $oledrionCurrency->amountForDisplay($finalPriceTTC);
+        $ret['product_final_price_ttc_formated_long'] = $oledrionCurrency->amountForDisplay($finalPriceTTC, 'l');
+        $ret['product_vat_amount_formated_long']      = $oledrionCurrency->amountForDisplay($finalPriceHT - $finalPriceTTC);
 
         $ret['product_tooltip']             = Oledrion\Utility::makeInfotips($this->getVar('product_description'));
         $ret['product_url_rewrited']        = $this->getLink();

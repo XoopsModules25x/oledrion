@@ -118,17 +118,17 @@ switch ($action) {
                 $sform->addElement($file_product_id_select, true);
         */
         $productsSelect = $productsHandler->productSelector(new Oledrion\Parameters([
-                                                                                            'caption'  => _OLEDRION_PRODUCT,
-                                                                                            'name'     => 'file_product_id',
-                                                                                            'value'    => $item->getVar('file_product_id', 'e'),
-                                                                                            'size'     => 1,
-                                                                                            'multiple' => false,
-                                                                                            'values'   => null,
-                                                                                            'showAll'  => true,
-                                                                                            'sort'     => 'product_title',
-                                                                                            'order'    => 'ASC',
-                                                                                            'formName' => 'frmaddfile'
-                                                                                        ]));
+                                                                                        'caption'  => _OLEDRION_PRODUCT,
+                                                                                        'name'     => 'file_product_id',
+                                                                                        'value'    => $item->getVar('file_product_id', 'e'),
+                                                                                        'size'     => 1,
+                                                                                        'multiple' => false,
+                                                                                        'values'   => null,
+                                                                                        'showAll'  => true,
+                                                                                        'sort'     => 'product_title',
+                                                                                        'order'    => 'ASC',
+                                                                                        'formName' => 'frmaddfile'
+                                                                                    ]));
         $sform->addElement($productsSelect, true);
 
         $sform->addElement(new \XoopsFormText(_AM_OLEDRION_DESCRIPTION, 'file_description', 50, 255, $item->getVar('file_description', 'e')), true);

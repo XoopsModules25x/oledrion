@@ -58,9 +58,9 @@ class Caddy extends OledrionObject
     {
         $ret                              = [];
         $ret                              = parent::toArray($format);
-        $oledrion_Currency                = Oledrion\Currency::getInstance();
-        $ret['caddy_price_fordisplay']    = $oledrion_Currency->amountForDisplay($this->getVar('caddy_price'));
-        $ret['caddy_shipping_fordisplay'] = $oledrion_Currency->amountForDisplay($this->getVar('caddy_shipping'));
+        $oledrionCurrency                = Oledrion\Currency::getInstance();
+        $ret['caddy_price_fordisplay']    = $oledrionCurrency->amountForDisplay($this->getVar('caddy_price'));
+        $ret['caddy_shipping_fordisplay'] = $oledrionCurrency->amountForDisplay($this->getVar('caddy_shipping'));
 
         return $ret;
     }

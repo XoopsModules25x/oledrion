@@ -27,7 +27,7 @@ $moduleDirName = basename(__DIR__);
 
 $modversion['version']       = 2.35;
 $modversion['module_status'] = 'Alpha 1';
-$modversion['release_date']  = '2017/11/22';
+$modversion['release_date']  = '2018/06/08';
 $modversion['name']          = _MI_OLEDRION_NAME;
 $modversion['description']   = _MI_OLEDRION_DESC;
 $modversion['author']        = 'Hervé Thouzard (http://www.herve-thouzard.com/)';
@@ -45,8 +45,6 @@ $modversion['dirname']       = basename(__DIR__);
 $modversion['onInstall']   = 'include/oninstall.php';
 $modversion['onUpdate']    = 'include/onupdate.php';
 $modversion['onUninstall'] = 'include/onuninstall.php';
-
-
 
 //icons
 //$modversion['dirmoduleadmin']      = '/Frameworks/moduleclasses/moduleadmin';
@@ -377,8 +375,8 @@ if (is_object($xoopsModule) && $xoopsModule->getVar('dirname') == $modversion['d
     && $xoopsModule->getVar('isactive')) {
     if (!isset($categoryHandler)) {
         //mb        $categoryHandler = xoops_getModuleHandler('oledrion_cat', 'oledrion');
-        $db      = \XoopsDatabaseFactory::getDatabaseConnection();
-        $categoryHandler =  new Oledrion\CategoryHandler($db);
+        $db              = \XoopsDatabaseFactory::getDatabaseConnection();
+        $categoryHandler = new Oledrion\CategoryHandler($db);
     }
     $categories = $categoryHandler->getMotherCategories();
     foreach ($categories as $category) {
@@ -474,25 +472,24 @@ $modversion['config'][] = [
 //    'default'     => 'dhtmltextarea',
 //];
 
-
 $modversion['config'][] = [
-    'name' => 'editorAdmin',
-    'title' => '_MI_OLEDRION_FORM_OPTIONS_ADMIN',
+    'name'        => 'editorAdmin',
+    'title'       => '_MI_OLEDRION_FORM_OPTIONS_ADMIN',
     'description' => '_MI_OLEDRION_FORM_OPTIONS_ADMIN_DESC',
-    'formtype' => 'select',
-    'valuetype' => 'text',
-    'options' => \XoopsLists::getDirListAsArray(XOOPS_ROOT_PATH . '/class/xoopseditor'),
-    'default' => 'tinymce'
+    'formtype'    => 'select',
+    'valuetype'   => 'text',
+    'options'     => \XoopsLists::getDirListAsArray(XOOPS_ROOT_PATH . '/class/xoopseditor'),
+    'default'     => 'tinymce'
 ];
 
 $modversion['config'][] = [
-    'name' => 'editorUser',
-    'title' => '_MI_OLEDRION_FORM_OPTIONS_USER',
+    'name'        => 'editorUser',
+    'title'       => '_MI_OLEDRION_FORM_OPTIONS_USER',
     'description' => '_MI_OLEDRION_FORM_OPTIONS_USER_DESC',
-    'formtype' => 'select',
-    'valuetype' => 'text',
-    'options' => \XoopsLists::getDirListAsArray(XOOPS_ROOT_PATH . '/class/xoopseditor'),
-    'default' => 'dhtmltextarea'
+    'formtype'    => 'select',
+    'valuetype'   => 'text',
+    'options'     => \XoopsLists::getDirListAsArray(XOOPS_ROOT_PATH . '/class/xoopseditor'),
+    'default'     => 'dhtmltextarea'
 ];
 
 /**

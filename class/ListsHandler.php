@@ -17,6 +17,7 @@
  * @license     {@link http://www.fsf.org/copyleft/gpl.html GNU public license}
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
  */
+
 /**
  * Gestion des listes utilisateurs
  *
@@ -27,7 +28,6 @@ use XoopsModules\Oledrion;
 use XoopsModules\Oledrion\Constants;
 
 // require_once __DIR__ . '/classheader.php';
-
 
 /**
  * Class ListsHandler
@@ -81,7 +81,7 @@ class ListsHandler extends OledrionPersistableObjectHandler
      * Décrémente le nombre de produits dans une liste
      *
      * @param  Lists $list
-     * @param  int            $value
+     * @param  int   $value
      * @return bool
      */
     public function decrementListProductsCount(Lists $list, $value = 1)
@@ -199,7 +199,7 @@ class ListsHandler extends OledrionPersistableObjectHandler
      */
     public function deleteList(Lists $list)
     {
-//        $handlers = HandlerManager::getInstance();
+        //        $handlers = HandlerManager::getInstance();
         $productsListHandler->deleteListProducts($list);
 
         return $this->delete($list, true);
@@ -213,11 +213,11 @@ class ListsHandler extends OledrionPersistableObjectHandler
      */
     public function getListProducts(Lists $list)
     {
-        $db = \XoopsDatabaseFactory::getDatabaseConnection();
+        $db                  = \XoopsDatabaseFactory::getDatabaseConnection();
         $productsListHandler = new Oledrion\ProductsListHandler($db);
-        $productsHandler = new Oledrion\ProductsHandler($db);
-        $productsInList = $ret = $productsIds = [];
-//        $handlers       = HandlerManager::getInstance();
+        $productsHandler     = new Oledrion\ProductsHandler($db);
+        $productsInList      = $ret = $productsIds = [];
+        //        $handlers       = HandlerManager::getInstance();
         $productsInList = $productsListHandler->getProductsFromList($list);
         if (0 == count($productsInList)) {
             return $ret;

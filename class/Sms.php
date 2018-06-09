@@ -26,7 +26,7 @@ use XoopsModules\Oledrion;
 $information = array();
 $information['to'] = '9365965795';
 $information['text'] = 'ewrewr we sdf sdfdsf sdfasda sd asd asd';
-$sms = Sms::sendSms($information);
+$sms = \XoopsModules\Oledrion\Sms::sendSms($information);
 */
 
 /**

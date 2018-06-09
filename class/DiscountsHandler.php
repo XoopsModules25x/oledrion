@@ -26,9 +26,6 @@ use XoopsModules\Oledrion\Constants;
  */
 // require_once __DIR__ . '/classheader.php';
 
-
-
-
 /**
  * Class DiscountsHandler
  */

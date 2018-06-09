@@ -22,7 +22,6 @@ use XoopsModules\Oledrion;
 
 // require_once __DIR__ . '/classheader.php';
 
-
 /**
  * Class DeliveryHandler
  */
@@ -33,7 +32,7 @@ class DeliveryHandler extends OledrionPersistableObjectHandler
      * @param \XoopsDatabase $db
      */
     public function __construct(\XoopsDatabase $db)
-    { //                                        Table                   Classe              Id
+    { //                            Table                   Classe              Id
         parent::__construct($db, 'oledrion_delivery', Delivery::class, 'delivery_id');
     }
 
@@ -110,7 +109,7 @@ class DeliveryHandler extends OledrionPersistableObjectHandler
     public function getThisLocationDelivery($location_id)
     {
         global $locationDeliveryHandler;
-        $oledrion_Currency = Oledrion\Currency::getInstance();
+        $oledrionCurrency = Oledrion\Currency::getInstance();
         $ret               = [];
         $parameters        = ['location' => $location_id];
         $location_delivery = $locationDeliveryHandler->getLocationDeliveryId($parameters);
@@ -127,7 +126,7 @@ class DeliveryHandler extends OledrionPersistableObjectHandler
                 $tab                              = [];
                 $tab                              = $root->toArray();
                 $tab['delivery_price']            = $location_delivery[$root->getVar('delivery_id')]['ld_price'];
-                $tab['delivery_price_fordisplay'] = $oledrion_Currency->amountForDisplay($tab['delivery_price']);
+                $tab['delivery_price_fordisplay'] = $oledrionCurrency->amountForDisplay($tab['delivery_price']);
                 $tab['delivery_time']             = $location_delivery[$root->getVar('delivery_id')]['ld_delivery_time'];
                 $ret[]                            = $tab;
             }

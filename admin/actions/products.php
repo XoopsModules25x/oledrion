@@ -38,12 +38,12 @@ switch ($action) {
 
         // Récupération des données uniques
         $categories = $categoryHandler->getAllCategories(new Oledrion\Parameters([
-                                                                                    'start'   => 0,
-                                                                                    'limit'   => 0,
-                                                                                    'sort'    => 'cat_title',
-                                                                                    'order'   => 'ASC',
-                                                                                    'idaskey' => true
-                                                                                ]));
+                                                                                     'start'   => 0,
+                                                                                     'limit'   => 0,
+                                                                                     'sort'    => 'cat_title',
+                                                                                     'order'   => 'ASC',
+                                                                                     'idaskey' => true
+                                                                                 ]));
 
         $form = "<form method='post' action='$baseurl' name='frmadddproduct' id='frmadddproduct'><input type='hidden' name='op' id='op' value='products'><input type='hidden' name='action' id='action' value='add'><input type='submit' name='btngo' id='btngo' value='"
                 . _AM_OLEDRION_ADD_ITEM
@@ -64,7 +64,11 @@ switch ($action) {
 
         $start = \Xmf\Request::getInt('start', 0, 'GET');
 
-        $filter_product_id    = $filter_product_cid = $filter_product_recommended = $filter_product_price = $filter_product_online = 0;
+        $filter_product_id = $filter_product_cid = $filter_product_recommended = $filter_product_price = $filter_product_online = 0;
+        // B.R. New
+        // TODO: Code Reviewers Are these filters neccessary? Not sure what they do.
+        $filter_skip_packing = $filter_skip_location = $filter_skip_delivery = 0;
+        // B.R. End
         $filter_product_title = $filter_product_sku = '';
 
         $newFilter = false;
@@ -112,13 +116,17 @@ switch ($action) {
             $filter_product_price = \Xmf\Request::getInt('filter_product_price', 0, 'POST');
             $newFilter            = true;
         }
+        // B.R. Added: $filter_skip_packing $filter_skip_location $filter_skip_delivery
         if (0 == $filter_product_id
             && 0 == $filter_product_cid
             && 0 == $filter_product_recommended
             && 0 == $filter_product_price
             && 0 == $filter_product_online
             && '' === $filter_product_title
-            && '' === $filter_product_sku) {
+            && '' === $filter_product_sku
+            && 0 == $filter_skip_packing
+            && 0 == $filter_skip_location
+            && 0 == $filter_skip_delivery) {
             $newFilter = true;
         }
 
@@ -131,6 +139,11 @@ switch ($action) {
             $filter_product_sku         = $_SESSION['filter_product_sku'];
             $filter_product_online      = $_SESSION['filter_product_online'];
             $filter_product_price       = $_SESSION['filter_product_price'];
+            // B.R. New
+            $filter_skip_packing  = $_SESSION['filter_skip_packing'];
+            $filter_skip_location = $_SESSION['filter_skip_location'];
+            $filter_skip_delivery = $_SESSION['filter_skip_delivery'];
+            // B.R. End
         }
 
         $_SESSION['oledrion_filter']            = serialize($criteria);
@@ -141,6 +154,11 @@ switch ($action) {
         $_SESSION['filter_product_sku']         = $filter_product_sku;
         $_SESSION['filter_product_online']      = $filter_product_online;
         $_SESSION['filter_product_price']       = $filter_product_price;
+        // B.R. New
+        $_SESSION['filter_skip_packing']  = $filter_skip_packing;
+        $_SESSION['filter_skip_location'] = $filter_skip_location;
+        $_SESSION['filter_skip_delivery'] = $filter_skip_delivery;
+        // B.R. End
 
         $itemsCount = $productsHandler->getCount($criteria); // Recherche du nombre total de produits répondants aux critères
         Oledrion\Utility::htitle(_MI_OLEDRION_ADMENU4 . ' (' . $itemsCount . ')', 4);
@@ -158,7 +176,12 @@ switch ($action) {
             $selectCateg = $mytree->makeSelBox('filter_product_cid', 'cat_title', '-', $filter_product_cid, '---', 0, "style='width: 170px; max-width: 170px;'");
         }
 
-        $onlineSelect      = Oledrion\Utility::htmlSelect('filter_product_online', [2 => _YES, 1 => _NO], $filter_product_online);
+        $onlineSelect = Oledrion\Utility::htmlSelect('filter_product_online', [2 => _YES, 1 => _NO], $filter_product_online);
+        // B.R. New
+        $skipPackingSelect  = Oledrion\Utility::htmlSelect('filter_skip_packing', [2 => _YES, 1 => _NO], $filter_skip_packing);
+        $skipLocationSelect = Oledrion\Utility::htmlSelect('filter_skip_location', [2 => _YES, 1 => _NO], $filter_skip_location);
+        $skipDeliverySelect = Oledrion\Utility::htmlSelect('filter_skip_delivery', [2 => _YES, 1 => _NO], $filter_skip_delivery);
+        // B.R. End
         $recommendedSelect = Oledrion\Utility::htmlSelect('filter_product_recommended', [1 => _YES, 2 => _NO], $filter_product_recommended);
 
         $criteria->setLimit($limit);
@@ -200,6 +223,11 @@ switch ($action) {
         echo "<th align='center'>" . $selectCateg . "</th>\n";
         echo "<th align='center'><input type='text' size='25' name='filter_product_sku' id='filter_product_sku' value='$filter_product_sku'></th>\n";
         echo "<th align='center'>" . $onlineSelect . "</th>\n";
+        // B.R. Start
+        echo "<th align='center'>" . $skipPackingSelect . "</th>\n";
+        echo "<th align='center'>" . $skipLocationSelect . "</th>\n";
+        echo "<th align='center'>" . $skipDeliverySelect . "</th>\n";
+        // B.R. End
         echo "<th align='center'>" . $recommendedSelect . "</th>\n";
         echo "<th align='center'>&nbsp;</th>\n";
         echo "<th align='center'><input type='text' size='5' name='filter_product_price' id='filter_product_price' value='$filter_product_price'></th>\n";
@@ -222,6 +250,11 @@ switch ($action) {
             $actions[] = "<a href='$baseurl?op=products&action=copy&id=" . $id . "' title='" . _OLEDRION_DUPLICATE_PRODUCT . "'>" . $icons['copy'] . '</a>';
             $actions[] = "<a href='$baseurl?op=products&action=confdelete&id=" . $id . "' title='" . _OLEDRION_DELETE . "'>" . $icons['delete'] . '</a>';
             $online    = 1 == $item->getVar('product_online') ? _YES : _NO;
+            // B.R. New
+            $skipPacking  = 1 == $item->getVar('skip_packing') ? _YES : _NO;
+            $skipLocation = 1 == $item->getVar('skip_location') ? _YES : _NO;
+            $skipDelivery = 1 == $item->getVar('skip_delivery') ? _YES : _NO;
+            // B.R. End
             echo "<tr class='" . $class . "'>\n";
             if (isset($categories[$item->getVar('product_cid')])) {
                 $productCategory = $categories[$item->getVar('product_cid')]->getVar('cat_title');
@@ -232,9 +265,9 @@ switch ($action) {
             }
             $productLink = "<a href='" . $item->getLink() . "' target='blank'>" . $item->getVar('product_title') . '</a>';
             if ((float)$item->getVar('product_discount_price') > 0) {
-                $priceLine = '<s>' . $oledrion_Currency->amountForDisplay($item->getVar('product_price')) . '</s>  ' . $oledrion_Currency->amountForDisplay($item->getVar('product_discount_price'));
+                $priceLine = '<s>' . $oledrionCurrency->amountForDisplay($item->getVar('product_price')) . '</s>  ' . $oledrionCurrency->amountForDisplay($item->getVar('product_discount_price'));
             } else {
-                $priceLine = $oledrion_Currency->amountForDisplay($item->getVar('product_price'));
+                $priceLine = $oledrionCurrency->amountForDisplay($item->getVar('product_price'));
             }
 
             echo "<td align='center'>"
@@ -344,6 +377,11 @@ switch ($action) {
             $title = _AM_OLEDRION_ADD_PRODUCT;
             $item  = $productsHandler->create(true);
             $item->setVar('product_online', 1);
+            // B.R. Start
+            $item->setVar('skip_packing', 0);
+            $item->setVar('skip_location', 0);
+            $item->setVar('skip_delivery', 0);
+            // B.R. End
             if (OLEDRION_AUTO_FILL_MANUAL_DATE) {
                 $item->setVar('product_date', formatTimestamp(time(), 's'));
             }
@@ -393,6 +431,11 @@ switch ($action) {
             $select_categ = $mytree->makeSelBox('product_cid', 'cat_title', '-', $item->getVar('product_cid'));
             $sform->addElement(new \XoopsFormLabel(_AM_OLEDRION_CATEG_HLP, $select_categ), true);
         }
+        // B.R. New
+        $sform->addElement(new XoopsFormRadioYN(_OLEDRION_SKIP_PACKING, 'skip_packing', $item->getVar('skip_packing')), true);
+        $sform->addElement(new XoopsFormRadioYN(_OLEDRION_SKIP_LOCATION, 'skip_location', $item->getVar('skip_location')), true);
+        $sform->addElement(new XoopsFormRadioYN(_OLEDRION_SKIP_DELIVERY, 'skip_delivery', $item->getVar('skip_delivery')), true);
+        // End New
 
         $deliveryTime = new \XoopsFormText(_OLEDRION_DELIVERY_TIME, 'product_delivery_time', 5, 5, $item->getVar('product_delivery_time', 'e'));
         $deliveryTime->setDescription(_OLEDRION_IN_DAYS);
@@ -495,17 +538,17 @@ switch ($action) {
             }
         }
         $productsSelect = $productsHandler->productSelector(new Oledrion\Parameters([
-                                                                                            'caption'  => _OLEDRION_RELATED_PRODUCTS,
-                                                                                            'name'     => 'relatedproducts',
-                                                                                            'value'    => $productRelated_d,
-                                                                                            'size'     => 5,
-                                                                                            'multiple' => true,
-                                                                                            'values'   => $productRelated_d,
-                                                                                            'showAll'  => true,
-                                                                                            'sort'     => 'product_title',
-                                                                                            'order'    => 'ASC',
-                                                                                            'formName' => 'frmproduct'
-                                                                                        ]));
+                                                                                        'caption'  => _OLEDRION_RELATED_PRODUCTS,
+                                                                                        'name'     => 'relatedproducts',
+                                                                                        'value'    => $productRelated_d,
+                                                                                        'size'     => 5,
+                                                                                        'multiple' => true,
+                                                                                        'values'   => $productRelated_d,
+                                                                                        'showAll'  => true,
+                                                                                        'sort'     => 'product_title',
+                                                                                        'order'    => 'ASC',
+                                                                                        'formName' => 'frmproduct'
+                                                                                    ]));
         $sform->addElement($productsSelect);
         // ********************************************************************
 
@@ -916,7 +959,7 @@ switch ($action) {
             Oledrion\Utility::redirect(_AM_OLEDRION_NOT_FOUND, $baseurl, 5);
         }
 
-//        $criteria = new \Criteria(/*'product_id', $item->getVar('product_id'), '<>'*/);
+        //        $criteria = new \Criteria(/*'product_id', $item->getVar('product_id'), '<>'*/);
         $criteria = new \Criteria('product_id', $item->getVar('product_id'), '<>');
         $criteria->setSort('product_title');
         $relatedProducts = $productsHandler->getObjects($criteria);

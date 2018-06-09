@@ -333,3 +333,9 @@ define('_OLEDRION_USER_STATE7', 'ارسال شده');
 define('_OLEDRION_USER_STATE8', 'تحویل شده');
 define('_OLEDRION_TRACK', 'کد رهگیری پستی');
 define('_OLEDRION_GIFT', 'کد کارت هدیه');
+
+// B.R. New
+define('_OLEDRION_SKIP_PACKING', 'Skip Packing step during checkout?');
+define('_OLEDRION_SKIP_LOCATION', 'Skip Location step during checkout?');
+define('_OLEDRION_SKIP_DELIVERY', 'Skip Delivery (shipping) step during checkout?');
+

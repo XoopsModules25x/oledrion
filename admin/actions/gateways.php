@@ -136,7 +136,7 @@ switch ($action) {
     case 'setDefaultGateway': // Choix de la passerelle de paiement par défaut
         // ****************************************************************************************************************
         xoops_cp_header();
-//        oledrion_adminMenu(12);
+        //        oledrion_adminMenu(12);
         $opRedirect = '?op=gateways';
         $gateway    = isset($_POST['gateway']) ? strtolower($_POST['gateway']) : '';
         $gateway    = Oledrion\Gateways::purifyGatewayName($gateway);

@@ -201,7 +201,7 @@ class Plugin
     /**
      * Déclenchement d'une action et appel des plugins liés
      *
-     * @param  string              $eventToFire L'action déclenchée
+     * @param  string     $eventToFire L'action déclenchée
      * @param  Parameters $parameters  Les paramètres à passer à chaque plugin
      * @return Plugin                     L'objet lui même pour chaîner
      */
@@ -236,7 +236,7 @@ class Plugin
     /**
      * Déclenchement d'un filtre et appel des plugins liés
      *
-     * @param  string              $eventToFire Le filtre appelé
+     * @param  string     $eventToFire Le filtre appelé
      * @param  Parameters $parameters  Les paramètres à passer à chaque plugin
      * @return Parameters|Plugin                     Le contenu de l'objet passé en paramètre
      */
