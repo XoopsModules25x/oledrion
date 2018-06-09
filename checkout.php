@@ -388,10 +388,10 @@ switch ($op) {
         // Check checkout level
         if (1 == $checkout_level) {
             Oledrion\Utility::redirect(_OLEDRION_FINAL_CHECKOUT, OLEDRION_URL . 'checkout.php?op=confirm&commend_id=' . $commend_id, 1);
-            // B.R. Start
+        // B.R. Start
         } elseif (1 == $checkoutAttributes['skip_packing']) {
             Oledrion\Utility::redirect(_OLEDRION_SELECT_LOCATION, OLEDRION_URL . 'checkout.php?op=location&commend_id=' . $commend_id, 1);
-            // B.R. End
+        // B.R. End
         } elseif (2 == $checkout_level) {
             Oledrion\Utility::redirect(_OLEDRION_SELECT_LOCATION, OLEDRION_URL . 'checkout.php?op=location&commend_id=' . $commend_id, 1);
         }
@@ -427,7 +427,7 @@ switch ($op) {
         // Check checkout level
         if (1 == $checkout_level) {
             Oledrion\Utility::redirect(_OLEDRION_FINAL_CHECKOUT, OLEDRION_URL . 'checkout.php?op=confirm&commend_id=' . $commend_id, 1);
-            // B.R. Start
+        // B.R. Start
         } elseif (1 == $checkoutAttributes['skip_location']) {
             //$commande = $h_oledrion_commands->get($commend_id);
             //Oledrion\Utility::redirect(_OLEDRION_SELECT_DELIVERY, OLEDRION_URL . 'checkout.php?op=delivery&commend_id=' . $commande->getVar('cmd_id'), 1);
@@ -486,7 +486,7 @@ switch ($op) {
         // Check checkout level
         if (1 == $checkout_level) {
             Oledrion\Utility::redirect(_OLEDRION_FINAL_CHECKOUT, OLEDRION_URL . 'checkout.php?op=confirm&commend_id=' . $commend_id, 1);
-            // B.R. Start
+        // B.R. Start
         } elseif (1 == $checkoutAttributes['skip_delivery']) {
             //$commande = $h_oledrion_commands->get($commend_id);
             //Oledrion\Utility::redirect(_OLEDRION_SELECT_PAYMENT, OLEDRION_URL . 'checkout.php?op=payment&commend_id=' . $commande->getVar('cmd_id'), 1);
@@ -537,7 +537,7 @@ switch ($op) {
             $delivery_id = 1;
         } else {
             // B.R. End
-        $delivery_id = $commande->getVar('cmd_delivery_id');
+            $delivery_id = $commande->getVar('cmd_delivery_id');
         }
         $payments    = $paymentHandler->getThisDeliveryPayment($delivery_id);
 

@@ -75,7 +75,6 @@ function loadSampleData()
     ];
 
     foreach ($tables as $table) {
-
         $tabledata = \Xmf\Yaml::readWrapped($moduleDirName . '_' . $table . '.yml');
         \Xmf\Database\TableLoad::truncateTable($moduleDirName . '_' . $table);
         \Xmf\Database\TableLoad::loadTableFromArray($moduleDirName . '_' . $table, $tabledata);
@@ -207,14 +206,11 @@ function saveSampleData()
     }
 
     redirect_header('../admin/index.php', 1, constant('CO_' . $moduleDirNameUpper . '_' . 'SAMPLEDATA_SUCCESS'));
-
 }
 
 function exportSchema()
 {
-
     try {
-
         $moduleDirName      = basename(dirname(__DIR__));
         $moduleDirNameUpper = strtoupper($moduleDirName);
 
@@ -222,8 +218,7 @@ function exportSchema()
         $migrate->saveCurrentSchema();
 
         redirect_header('../admin/index.php', 1, constant('CO_' . $moduleDirNameUpper . '_' . 'EXPORT_SCHEMA_SUCCESS'));
-    }
-    catch (Exception $e) {
+    } catch (Exception $e) {
         exit(constant('CO_' . $moduleDirNameUpper . '_' . 'EXPORT_SCHEMA_ERROR'));
     }
 }

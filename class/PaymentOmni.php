@@ -40,8 +40,7 @@ class Payment
             $ccard->validate();
             $this->card = $card;
             return true;
-        }
-        catch (\Exception $ex) {
+        } catch (\Exception $ex) {
             return $ex->getMessage();
         }
     }
@@ -71,8 +70,7 @@ class Payment
                 // Payment failed
                 return $response->getMessage();
             }
-        }
-        catch (\Exception $ex) {
+        } catch (\Exception $ex) {
             return $ex->getMessage();
         }
     }

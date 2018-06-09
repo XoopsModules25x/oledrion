@@ -158,8 +158,8 @@ class Utility extends \XoopsObject
         $value = '',
         $width = '100%',
         $height = '400px',
-        $supplemental = '')
-    {
+        $supplemental = ''
+    ) {
         /** @var Oledrion\Helper $helper */
         $helper                   = Oledrion\Helper::getInstance();
         $editor                   = false;
@@ -1112,8 +1112,8 @@ class Utility extends \XoopsObject
         $mimeTypes = null,
         $uploadMaxSize = null,
         $maxWidth = null,
-        $maxHeight = null)
-    {
+        $maxHeight = null
+    ) {
         //        require_once XOOPS_ROOT_PATH . '/class/uploader.php';
         global $destname;
         if (isset($_POST['xoops_upload_file'])) {
@@ -1170,8 +1170,8 @@ class Utility extends \XoopsObject
         $param_width,
         $param_height,
         $keep_original = false,
-        $fit = 'inside')
-    {
+        $fit = 'inside'
+    ) {
         //        require_once OLEDRION_PATH . 'class/wideimage/WideImage.inc.php';
         $resize = true;
         if (OLEDRION_DONT_RESIZE_IF_SMALLER) {

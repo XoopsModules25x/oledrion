@@ -424,7 +424,8 @@ class Reductions
         &$commandAmountTTC,
         &$discountsDescription,
         &$discountsCount,
-        &$checkoutAttributes)// B.R.
+        &$checkoutAttributes
+    )// B.R.
     {
         $emptyCart      = false;
         $goOn           = '';

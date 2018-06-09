@@ -315,32 +315,32 @@ class Paypal extends Gateway
                         $commande = $commandsHandler->get($ref);
                         if (is_object($commande)) {
                             if ($montant == $commande->getVar('cmd_total')) { // Commande vérifiée
-                                        $email_name = sprintf('%s/%d%s', OLEDRION_UPLOAD_PATH, $commande->getVar('cmd_id'), OLEDRION_CONFIRMATION_EMAIL_FILENAME_SUFFIX);
-                                        if (file_exists($email_name)) {
-                                $commandsHandler->validateOrder($commande); // Validation de la commande et mise à jour des stocks
-                                            $msg = [];
-                                            $msg = unserialize(file_get_contents($email_name));
-                                            // Add Transaction ID variable to email variables for templates
-                                            $msg['TRANSACTION_ID'] = $_POST['txn_id'];
-                                            // Send confirmation email to user 
-                                            $email_address = $commande->getVar('cmd_email');
-                                            Oledrion\Utility::sendEmailFromTpl('command_client.tpl', $email_address, sprintf(_OLEDRION_THANKYOU_CMD, $xoopsConfig['sitename']), $msg);
-                                            // Send mail to admin
-                                            Oledrion\Utility::sendEmailFromTpl('command_shop.tpl', Oledrion\Utility::getEmailsFromGroup(Oledrion\Utility::getModuleOption('grp_sold')), _OLEDRION_NEW_COMMAND, $msg);
-                                            unlink($email_name);
-                                            // TODO: add transaction ID to online user invoice
+                                $email_name = sprintf('%s/%d%s', OLEDRION_UPLOAD_PATH, $commande->getVar('cmd_id'), OLEDRION_CONFIRMATION_EMAIL_FILENAME_SUFFIX);
+                                if (file_exists($email_name)) {
+                                    $commandsHandler->validateOrder($commande); // Validation de la commande et mise à jour des stocks
+                                    $msg = [];
+                                    $msg = unserialize(file_get_contents($email_name));
+                                    // Add Transaction ID variable to email variables for templates
+                                    $msg['TRANSACTION_ID'] = $_POST['txn_id'];
+                                    // Send confirmation email to user
+                                    $email_address = $commande->getVar('cmd_email');
+                                    Oledrion\Utility::sendEmailFromTpl('command_client.tpl', $email_address, sprintf(_OLEDRION_THANKYOU_CMD, $xoopsConfig['sitename']), $msg);
+                                    // Send mail to admin
+                                    Oledrion\Utility::sendEmailFromTpl('command_shop.tpl', Oledrion\Utility::getEmailsFromGroup(Oledrion\Utility::getModuleOption('grp_sold')), _OLEDRION_NEW_COMMAND, $msg);
+                                    unlink($email_name);
+                                // TODO: add transaction ID to online user invoice
                                             // TODO: update user database
-                                        } else {
-                                            $duplicate_ipn = 1;
-                                        }
+                                } else {
+                                    $duplicate_ipn = 1;
+                                }
                             } else {
                                 $commandsHandler->setFraudulentOrder($commande);
                             }
-                                } else {
-                                    $log .= "not_object\n";
+                        } else {
+                            $log .= "not_object\n";
                         }
                     } else {
-                                $log .= "paypal not OK\n";
+                        $log .= "paypal not OK\n";
                         if (isset($_POST['custom'])) {
                             $ref      = \Xmf\Request::getInt('custom', 0, 'POST');
                             $commande = null;
@@ -362,12 +362,12 @@ class Paypal extends Gateway
                             if ($logfp) {
                                 if ($duplicate_ipn) {
                                     fwrite($logfp, sprintf("Duplicate paypal IPN, order: %d\n", $commande->getVar('cmd_id')));
-                } else {
+                                } else {
                                     fwrite($logfp, str_repeat('-', 120) . "\n");
                                     fwrite($logfp, date('d/m/Y H:i:s') . "\n");
                                     if (isset($_POST['txn_id'])) {
                                         fwrite($logfp, 'Transaction : ' . $_POST['txn_id'] . "\n");
-                }
+                                    }
                                     fwrite($logfp, 'Result : ' . $log . "\n");
                                 }
                                 $executionEndTime = microtime(true);
@@ -385,10 +385,9 @@ class Paypal extends Gateway
                             return;
                             break;
             }
-        } else {
+                } else {
                     $log .= "$res\n";
-        }
-
+                }
             }
             fclose($fp);
         } else {

@@ -324,7 +324,7 @@ switch ($op) {
                         //$finalrating = number_format($finalrating, 4);
 
                         $productsHandler->updateRating($product_id, $sumRating, $totalVotes);
-                        //$ratemessage = _OLEDRION_VOTEAPPRE . '<br>' . sprintf(_OLEDRION_THANKYOU, $xoopsConfig['sitename']);
+                    //$ratemessage = _OLEDRION_VOTEAPPRE . '<br>' . sprintf(_OLEDRION_THANKYOU, $xoopsConfig['sitename']);
                         //Oledrion\Utility::redirect($ratemessage, OLEDRION_URL . 'product.php?product_id=' . $product->getVar('product_id'), 2);
                     } else {
                         $return = false;

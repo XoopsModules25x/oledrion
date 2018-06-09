@@ -146,8 +146,8 @@ class OledrionUtility
         $value = '',
         $width = '100%',
         $height = '400px',
-        $supplemental = '')
-    {
+        $supplemental = ''
+    ) {
         $editor                   = false;
         $editor_configs           = [];
         $editor_configs['name']   = $name;
@@ -1135,8 +1135,8 @@ class OledrionUtility
         $mimeTypes = null,
         $uploadMaxSize = null,
         $maxWidth = null,
-        $maxHeight = null)
-    {
+        $maxHeight = null
+    ) {
         require_once XOOPS_ROOT_PATH . '/class/uploader.php';
         global $destname;
         if (isset($_POST['xoops_upload_file'])) {
@@ -1193,8 +1193,8 @@ class OledrionUtility
         $param_width,
         $param_height,
         $keep_original = false,
-        $fit = 'inside')
-    {
+        $fit = 'inside'
+    ) {
         //        require_once OLEDRION_PATH . 'class/wideimage/WideImage.inc.php';
         $resize = true;
         if (OLEDRION_DONT_RESIZE_IF_SMALLER) {

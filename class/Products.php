@@ -385,7 +385,7 @@ class Products extends OledrionObject
                 $url = 'product.php?product_id=' . $product_id;
             }
         }
-        // B.R. New
+            // B.R. New
         } else {
             $url = '../' . $product_url;
         }

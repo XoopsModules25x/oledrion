@@ -168,7 +168,6 @@ switch ($action) {
         $bingo2 = Request::getString('attachedfile', '', 'POST');
 
         if (Request::hasVar('attachedfile', 'POST') && '' !== Request::getString('attachedfile', '', 'POST')) {
-
             $destname = '';
 
             $res1 = Oledrion\Utility::uploadFile(0, OLEDRION_PICTURES_PATH);
@@ -182,7 +181,6 @@ switch ($action) {
                     echo $res1;
                 }
             }
-
         }
 
         $res = $paymentHandler->insert($item);

@@ -29,7 +29,7 @@ abstract class Gateway
 {
     protected $handlers;
     protected $gatewayInformation;
-    public    $languageFilename;
+    public $languageFilename;
 
     /**
      * Gateway constructor.
