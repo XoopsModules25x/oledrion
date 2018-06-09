@@ -58,7 +58,7 @@ $tbl_tmp               = [];
 $mytree                = new Oledrion\XoopsObjectTree($categories, 'cat_cid', 'cat_pid');
 $subCategoriesSearched = false;
 // Si on est sur une catégorie mère ou si on n'a pas spécifié de catégorie
-if ((is_object($category) && 0 == $category->getVar('cat_pid')) || 0 == $cat_cid) { // On affiche les 4 blocs
+if (0 == $cat_cid || (is_object($category) && 0 == $category->getVar('cat_pid'))) { // On affiche les 4 blocs
     $xoopsTpl->assign('case', 1);
 
     $tblChildsO = $tblChilds = [];

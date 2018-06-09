@@ -67,7 +67,7 @@ function b_oledrion_recentlysold_edit($options)
 
 /**
  * Bloc à la volée
- * @param  string $options
+ * @param  string|array $options
  * @return string
  */
 function b_oledrion_recentlysold_duplicatable($options)

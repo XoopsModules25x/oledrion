@@ -29,6 +29,8 @@ use XoopsModules\Oledrion\Constants;
 function b_oledrion_mostviewed_lists_show($options)
 {
     require XOOPS_ROOT_PATH . '/modules/oledrion/include/common.php';
+    /** @var \XoopsModules\Oledrion\Helper $helper */
+    $helper = \XoopsModules\Oledrion\Helper::getInstance();
     $helper->loadLanguage('main');
     $start    = 0;
     $limit    = (int)$options[0];

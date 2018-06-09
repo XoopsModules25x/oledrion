@@ -20,7 +20,7 @@
 /**
  * Affichage du contenu d'une liste
  *
- * @param integer list_id    Identifiant de la liste
+ * @param int list_id    Identifiant de la liste
  */
 
 use XoopsModules\Oledrion;

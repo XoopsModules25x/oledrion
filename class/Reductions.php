@@ -168,7 +168,7 @@ class Reductions
      * Calcul des quantités de produits par catégorie et du nombre de produits par catégorie
      *
      * @param Products $product
-     * @param integer  $quantity
+     * @param int      $quantity
      */
     public function computePerCategories(Products $product, $quantity)
     {
@@ -205,7 +205,7 @@ class Reductions
      * Recherche des attributs associés à chaque produit
      *
      * @param Products $product
-     * @param arrray   $attributes
+     * @param array   $attributes
      * @since 2.3
      */
     private function addAssociatedAttributes(Products $product, $attributes)
@@ -363,8 +363,8 @@ class Reductions
     /**
      * Calcul du montant HT auquel on applique un pourcentage de réduction
      *
-     * @param  float   $price    Le prix auquel appliquer la réduction
-     * @param  integer $discount Le pourcentage de réduction
+     * @param  float $price    Le prix auquel appliquer la réduction
+     * @param int    $discount Le pourcentage de réduction
      * @return float   Le montant réduit
      */
     private function getDiscountedPrice($price, $discount)
@@ -399,17 +399,17 @@ class Reductions
      *
      * En variable privé, le panier (dans $cart) contient la même chose + un objet 'oledrion_products' dans la clé 'product'
      *
-     * @param array   $cartForTemplate      Contenu du caddy à passer au template (en fait la liste des produits)
-     * @param         boolean               emptyCart Indique si le panier est vide ou pas
-     * @param float   $shippingAmount       Montant des frais de port
-     * @param float   $commandAmount        Montant HT de la commande
-     * @param float   $vatAmount            Montant de la TVA
-     * @param string  $goOn                 Adresse vers laquelle renvoyer le visiteur après qu'il ait ajouté un produit dans son panier (cela correspond en fait à la catégorie du dernier produit ajouté dans le panier)
-     * @param float   $commandAmountTTC     Montant TTC de la commande
-     * @param array   $discountsDescription Descriptions des remises GLOBALES appliquées (et pas les remises par produit !)
-     * @param integer $discountsCount       Le nombre TOTAL de réductions appliquées (individuellement ou sur la globalité du panier)
+     * @param array  $cartForTemplate       Contenu du caddy à passer au template (en fait la liste des produits)
+     * @param boolean               emptyCart Indique si le panier est vide ou pas
+     * @param float  $shippingAmount        Montant des frais de port
+     * @param float  $commandAmount         Montant HT de la commande
+     * @param float  $vatAmount             Montant de la TVA
+     * @param string $goOn                  Adresse vers laquelle renvoyer le visiteur après qu'il ait ajouté un produit dans son panier (cela correspond en fait à la catégorie du dernier produit ajouté dans le panier)
+     * @param float  $commandAmountTTC      Montant TTC de la commande
+     * @param array  $discountsDescription  Descriptions des remises GLOBALES appliquées (et pas les remises par produit !)
+     * @param int    $discountsCount        Le nombre TOTAL de réductions appliquées (individuellement ou sur la globalité du panier)
      *                                      B.R. @param array $checkoutAttributes
-     * TODO: Passer les paramètres sous forme d'objet
+     *                                      TODO: Passer les paramètres sous forme d'objet
      * @return bool
      */
 
@@ -424,8 +424,7 @@ class Reductions
         &$commandAmountTTC,
         &$discountsDescription,
         &$discountsCount,
-        &$checkoutAttributes
-    )// B.R.
+        &$checkoutAttributes)// B.R.
     {
         $emptyCart      = false;
         $goOn           = '';
@@ -452,11 +451,11 @@ class Reductions
         if (!isset($_POST['cmd_country']) || empty($_POST['cmd_country'])) {
             $_POST['cmd_country'] = OLEDRION_DEFAULT_COUNTRY;
         }
-        $db                = \XoopsDatabaseFactory::getDatabaseConnection();
-        $vatHandler        = new Oledrion\VatHandler($db);
-        $vats              = $vatHandler->getCountryVats($_POST['cmd_country']);
+        $db               = \XoopsDatabaseFactory::getDatabaseConnection();
+        $vatHandler       = new Oledrion\VatHandler($db);
+        $vats             = $vatHandler->getCountryVats($_POST['cmd_country']);
         $oledrionCurrency = Oledrion\Currency::getInstance();
-        $caddyCount        = count($this->cart);
+        $caddyCount       = count($this->cart);
 
         // Initialisation des totaux généraux (ht, tva et frais de port)
         $totalHT = $totalVAT = $totalShipping = 0.0;

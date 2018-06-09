@@ -35,7 +35,7 @@ include dirname(__DIR__) . '/include/common.php';
  */
 class Shelf
 {
-    private $handlers;
+//mb    private $handlers;
 
     /**
      * Shelf constructor.

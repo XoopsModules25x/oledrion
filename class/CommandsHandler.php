@@ -43,7 +43,7 @@ class CommandsHandler extends OledrionPersistableObjectHandler
     /**
      * Indique si c'est la première commande d'un client
      *
-     * @param  integer $uid Identifiant de l'utilisateur
+     * @param int $uid Identifiant de l'utilisateur
      * @return boolean Indique si c'est le cas ou pas
      */
     public function isFirstCommand($uid = 0)
@@ -62,8 +62,8 @@ class CommandsHandler extends OledrionPersistableObjectHandler
     /**
      * Indique si un produit a déajà été acheté par un utilisateur
      *
-     * @param  integer $uid       Identifiant de l'utilisateur
-     * @param  integer $productId Identifiant du produit
+     * @param int $uid       Identifiant de l'utilisateur
+     * @param int $productId Identifiant du produit
      * @return boolean Indique si c'est le cas ou pas
      */
     public function productAlreadyBought($uid = 0, $productId = 0)
@@ -381,7 +381,7 @@ class CommandsHandler extends OledrionPersistableObjectHandler
     /**
      * Retourne la dernière commande d'un utilisateur (si elle existe)
      *
-     * @param  integer $uid Identifiant de la commande
+     * @param int $uid Identifiant de la commande
      * @return null
      */
     public function getLastUserOrder($uid)

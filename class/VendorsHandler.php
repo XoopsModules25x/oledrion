@@ -73,7 +73,7 @@ class VendorsHandler extends OledrionPersistableObjectHandler
     /**
      * Retourne le nombre de produits associés à un vendeur
      *
-     * @param  integer $vendor_id L'ID du vendeur
+     * @param int $vendor_id L'ID du vendeur
      * @return integer Le nombre de produits du vendeur
      */
     public function getVendorProductsCount($vendor_id)

@@ -24,7 +24,7 @@ class Sms
      * @param  array $option
      * @return string
      */
-    public static function sendSms($information = [], $option = [])
+    public static function sendSms(array $information = [], $option = [])
     {
         $parameters             = [];
         $parameters['username'] = $option['username'];

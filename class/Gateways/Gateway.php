@@ -80,7 +80,7 @@ abstract class Gateway
     public function verifyIfGatewayLogExists($gatewaysLogPath)
     {
         if (!file_exists($gatewaysLogPath)) {
-            file_put_contents($gatewaysLogPath, '<?php exit(); ?>');
+            file_put_contents($gatewaysLogPath, '<?php exit(); ?>', LOCK_EX);
         }
     }
 
@@ -94,7 +94,7 @@ abstract class Gateway
     public function appendToLog($gatewaysLogPath, $text)
     {
         $this->verifyIfGatewayLogExists($gatewaysLogPath);
-        $fp = fopen($gatewaysLogPath, 'a');
+        $fp = fopen($gatewaysLogPath, 'ab');
         if ($fp) {
             fwrite($fp, str_repeat('-', 120) . "\n");
             fwrite($fp, date('d/m/Y H:i:s') . "\n");
@@ -137,7 +137,7 @@ abstract class Gateway
     /**
      * Returns the form to use before to redirect user to the gateway
      *
-     * @param  Commands $order Objects of type Commands
+     * @param  Oledrion\Commands $order Objects of type Commands
      * @return array  Key = element's name, Value = Element's value
      */
     abstract public function getCheckoutFormContent($order);

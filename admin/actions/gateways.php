@@ -42,7 +42,7 @@ switch ($action) {
         if (file_exists(OLEDRION_GATEWAY_LOG_PATH)) {
             echo "<a href='" . $baseurl . "?op=gateways&action=seelog'>" . _AM_OLEDRION_GATEWAYS_SEELOG . '</a><br>';
         }
-        $currentGateway = Gateways::getCurrentGateway();
+        $currentGateway = \XoopsModules\Oledrion\Gateways::getCurrentGateway();
         $class          = '';
         echo "<form method='post' action='" . $baseurl . "'><input type='hidden' name='op' id='op' value='gateways'><input type='hidden' name='action' id='action' value='setDefaultGateway'>";
         echo "<table width='100%' cellspacing='1' cellpadding='3' border='0' class='outer'>\n";

@@ -58,9 +58,9 @@ class FilesHandler extends OledrionPersistableObjectHandler
     /**
      * Retourne les fichiers attachés à un produit
      *
-     * @param  integer $file_product_id L'Id du produit
-     * @param  integer $start           Position de départ
-     * @param  integer $limit           Nombre maxi de produits à retourner
+     * @param int $file_product_id L'Id du produit
+     * @param int $start           Position de départ
+     * @param int $limit           Nombre maxi de produits à retourner
      * @return array   tableau d'objets de type Files
      */
     public function getProductFiles($file_product_id, $start = 0, $limit = 0)
@@ -75,7 +75,7 @@ class FilesHandler extends OledrionPersistableObjectHandler
     /**
      * Retourne le nombre de fichiers attachés à un produit qui sont des MP3
      *
-     * @param  integer $file_product_id L'Id du produit
+     * @param int $file_product_id L'Id du produit
      * @return integer le nombre de fichiers MP3
      */
     public function getProductMP3Count($file_product_id)
@@ -90,7 +90,7 @@ class FilesHandler extends OledrionPersistableObjectHandler
     /**
      * Retourne le nombre de fichiers attachés à un produit
      *
-     * @param  integer $file_product_id L'Id du produit
+     * @param int $file_product_id L'Id du produit
      * @return integer le nombre de fichiers
      */
     public function getProductFilesCount($file_product_id)
@@ -103,7 +103,7 @@ class FilesHandler extends OledrionPersistableObjectHandler
     /**
      * Supprime les fichiers attachés à un produit
      *
-     * @param  integer $file_product_id L'Id du produit
+     * @param int $file_product_id L'Id du produit
      * @return void
      */
     public function deleteProductFiles($file_product_id)

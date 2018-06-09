@@ -76,7 +76,7 @@ class ManufacturerHandler extends OledrionPersistableObjectHandler
     /**
      * Retourne le nombre de produits associés à un fabricant
      *
-     * @param  integer $manu_id L'identifiant du fabricant
+     * @param int $manu_id L'identifiant du fabricant
      * @return integer Le nombre de produis associés à un fabricant
      */
     public function getManufacturerProductsCount($manu_id)
@@ -106,9 +106,9 @@ class ManufacturerHandler extends OledrionPersistableObjectHandler
     /**
      * Retourne les produits d'un fabricant (note, ce code serait mieux dans une facade)
      *
-     * @param  integer $manu_id Le fabricant dont on veut récupérer les produits
-     * @param  integer $start   Position de départ
-     * @param  integer $limit   Nombre maximum d'enregistrements à renvoyer
+     * @param int $manu_id Le fabricant dont on veut récupérer les produits
+     * @param int $start   Position de départ
+     * @param int $limit   Nombre maximum d'enregistrements à renvoyer
      * @return array   Objects de type Products
      */
     public function getManufacturerProducts($manu_id, $start = 0, $limit = 0)

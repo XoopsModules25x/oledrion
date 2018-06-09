@@ -29,10 +29,10 @@ require_once XOOPS_ROOT_PATH . '/header.php';
 
 // On donne la possibilité à la passerelle d'annuler la commande
 $gateway = null;
-$gateway = Gateways::getGatewayObject();
+$gateway = \XoopsModules\Oledrion\Gateways::getGatewayObject();
 if (is_object($gateway) && method_exists($gateway, 'cancelOrder')) {
     if (!file_exists(OLEDRION_GATEWAY_LOG_PATH)) {
-        file_put_contents(OLEDRION_GATEWAY_LOG_PATH, '<?php exit(); ?>');
+        file_put_contents(OLEDRION_GATEWAY_LOG_PATH, '<?php exit(); ?>', LOCK_EX);
     }
     $gateway->cancelOrder(OLEDRION_GATEWAY_LOG_PATH);
     unset($gateway);

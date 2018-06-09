@@ -100,7 +100,7 @@ class CategoryHandler extends OledrionPersistableObjectHandler
      * Make a menu from the categories list
      *
      * @param  string  $fieldName Name of the member variable from the node objects that should be used as the title for the options.
-     * @param  integer $key       ID of the object to display as the root of select options
+     * @param int $key       ID of the object to display as the root of select options
      * @return string  HTML select box
      */
     public function getUlMenu($fieldName, $key = 0)
@@ -137,7 +137,7 @@ class CategoryHandler extends OledrionPersistableObjectHandler
     /**
      * Retourne le nombre de produits d'une ou de plusieurs catégories
      *
-     * @param  integer $cat_cid    L'identifiant de la catégorie dont on veut récupérer le nombre de produits
+     * @param int $cat_cid    L'identifiant de la catégorie dont on veut récupérer le nombre de produits
      * @param  boolean $withNested Faut il inclure les sous-catégories ?
      * @return integer Le nombre de produits
      */

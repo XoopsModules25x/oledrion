@@ -97,7 +97,7 @@ class Registryfile
         if (file_exists($fw)) {
             @unlink($fw);
         }
-        $fp = fopen($fw, 'w') || die('Error, impossible to create the file ' . $this->filename);
+        $fp = fopen($fw, 'wb') || die('Error, impossible to create the file ' . $this->filename);
         fwrite($fp, $content);
         fclose($fp);
 

@@ -56,7 +56,7 @@ class ProductsListHandler extends OledrionPersistableObjectHandler
     /**
      * Supprime un produit de toutes les listes
      *
-     * @param  integer $productlist_product_id
+     * @param int $productlist_product_id
      * @return bool
      */
     public function deleteProductFromLists($productlist_product_id)
@@ -78,8 +78,8 @@ class ProductsListHandler extends OledrionPersistableObjectHandler
     /**
      * Supprime un produit d'une liste
      *
-     * @param  integer $productlist_list_id
-     * @param  integer $productlist_product_id
+     * @param int $productlist_list_id
+     * @param int $productlist_product_id
      * @return bool
      */
     public function deleteProductFromList($productlist_list_id, $productlist_product_id)
@@ -95,7 +95,7 @@ class ProductsListHandler extends OledrionPersistableObjectHandler
      * Ajoute un produit à une liste utilisateur
      *
      * @param          $productlist_list_id
-     * @param  integer $productlist_product_id Id du produit
+     * @param int $productlist_product_id Id du produit
      * @return bool
      * @internal param int $productlist_id Id de la liste
      */
@@ -112,8 +112,8 @@ class ProductsListHandler extends OledrionPersistableObjectHandler
     /**
      * Indique si un produit se trouve déjà dans une liste
      *
-     * @param  integer $productlist_list_id
-     * @param  integer $productlist_product_id
+     * @param int $productlist_list_id
+     * @param int $productlist_product_id
      * @return bool
      */
     public function isProductAlreadyInList($productlist_list_id, $productlist_product_id)

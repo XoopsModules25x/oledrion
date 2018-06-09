@@ -354,7 +354,7 @@ class Products extends OledrionObject
     /**
      * Retourne le lien du produit courant en tenant compte de l'URL Rewriting
      *
-     * @param  integer $product_id    L'identifiant du produit
+     * @param int $product_id    L'identifiant du produit
      * @param  string  $product_title Le titre du produit
      * @param  boolean $shortVersion  Indique si on veut la version avec l'url complpète ou la version avec juste la page et le paramètre
      * @return string

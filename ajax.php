@@ -24,6 +24,7 @@
  */
 
 use XoopsModules\Oledrion;
+use XoopsModules\Oledrion\Constants;
 
 require_once __DIR__ . '/header.php';
 error_reporting(0);
@@ -44,10 +45,10 @@ switch ($op) {
     case 'updatePrice': // Mise à jour du prix du produit en fonction des attributs sélectionnés
         // ****************************************************************************************************************
         $product_id = \Xmf\Request::getInt('product_id', 0, 'POST');
+        $product = null;
         if (isset($_POST['formcontent']) && $product_id > 0) {
             $data = $data = $attributesIds = $attributes = $templateProduct = [];
             //            $handlers = HandlerManager::getInstance();
-            $product = null;
             $product = $productsHandler->get($product_id);
             if (!is_object($product)) {
                 return _OLEDRION_NA;
@@ -57,7 +58,7 @@ switch ($op) {
             }
             $vat_id = $product->getVar('product_vat_id');
 
-            if (0 != (int)$product->getVar('product_discount_price', '')) {
+            if (0 !== (int)$product->getVar('product_discount_price', '')) {
                 $productPrice = (float)$product->getVar('product_discount_price', 'e');
             } else {
                 $productPrice = (float)$product->getVar('product_price', 'e');
@@ -73,12 +74,12 @@ switch ($op) {
             foreach ($data as $key => $value) {
                 $attributesIds[] = Oledrion\Utility::getId($key);
             }
-            if (0 == count($attributesIds)) {
+            if (0 === count($attributesIds)) {
                 return _OLEDRION_NA;
             }
             // Puis les attributs
             $attributes = $attributesHandler->getItemsFromIds($attributesIds);
-            if (0 == count($attributes)) {
+            if (0 === count($attributes)) {
                 return _OLEDRION_NA;
             }
 
@@ -289,13 +290,13 @@ switch ($op) {
             if (is_object($product)
                 && $product->getVar('product_online')
                 && !Oledrion\Utility::getModuleOption('show_unpublished')
-                && $product->getVar('product_submitted') < time()
                 && Oledrion\Utility::getModuleOption('nostock_display')
+                && $product->getVar('product_submitted') < time()
                 && $product->getVar('product_stock')) {
                 $GLOBALS['current_category'] = -1;
                 $ratinguser                  = Oledrion\Utility::getCurrentUserID();
                 $canRate                     = true;
-                if (0 != $ratinguser) {
+                if (0 !== $ratinguser) {
                     if ($votedataHandler->hasUserAlreadyVoted($ratinguser, $product->getVar('product_id'))) {
                         $canRate = false;
                     }
@@ -312,7 +313,7 @@ switch ($op) {
                     /* if ($rating < 1 || $rating > 10) {
                         exit(_ERRORS);
                     } */
-                    if (1 == $rating || -1 == $rating) {
+                    if (1 === $rating || -1 === $rating) {
                         $result = $votedataHandler->createRating($product->getVar('product_id'), $ratinguser, $rating);
 
                         $totalVotes = 0;
@@ -393,7 +394,7 @@ switch ($op) {
                 $commande->setVar('cmd_uid', $uid);
                 $commande->setVar('cmd_date', date('Y-m-d'));
                 $commande->setVar('cmd_create', time());
-                $commande->setVar('cmd_state', OLEDRION_STATE_NOINFORMATION);
+                $commande->setVar('cmd_state', Constants::OLEDRION_STATE_NOINFORMATION);
                 $commande->setVar('cmd_ip', Oledrion\Utility::IP());
                 $commande->setVar('cmd_lastname', $cmd_lastname);
                 $commande->setVar('cmd_firstname', $cmd_firstname);

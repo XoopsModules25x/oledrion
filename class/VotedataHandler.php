@@ -43,9 +43,9 @@ class VotedataHandler extends OledrionPersistableObjectHandler
     /**
      * Renvoie le nombre total de votes pour un produit ainsi que la sommes des votes
      *
-     * @param  integer $product_id Identifiant du produit
-     * @param  integer $totalVotes Variable passée par référence et devant contenir le nombre total de votes du produit
-     * @param  integer $sumRating  Variable passée par référence et devant contenir le cumul des votes
+     * @param int $product_id Identifiant du produit
+     * @param int $totalVotes Variable passée par référence et devant contenir le nombre total de votes du produit
+     * @param int $sumRating  Variable passée par référence et devant contenir le cumul des votes
      * @return int Rien
      */
     public function getCountRecordSumRating($product_id, &$totalVotes, &$sumRating)
@@ -64,8 +64,8 @@ class VotedataHandler extends OledrionPersistableObjectHandler
     /**
      * Returns the (x) last votes
      *
-     * @param  integer $start Starting position
-     * @param  integer $limit count of items to return
+     * @param int $start Starting position
+     * @param int $limit count of items to return
      * @return array   Array of votedata objects
      */
     public function getLastVotes($start = 0, $limit = 0)
@@ -84,7 +84,7 @@ class VotedataHandler extends OledrionPersistableObjectHandler
     /**
      * Suppression des votes d'un produit
      *
-     * @param  integer $vote_product_id L'identifiant du produit
+     * @param int $vote_product_id L'identifiant du produit
      * @return bool résultat de la suppression
      */
     public function deleteProductRatings($vote_product_id)
@@ -97,8 +97,8 @@ class VotedataHandler extends OledrionPersistableObjectHandler
     /**
      * Indique si un utilisateur a déjà voté pour un produit
      *
-     * @param  integer $vote_uid        L'identifiant de l'utilisateur
-     * @param  integer $vote_product_id Le numéro du produit
+     * @param int $vote_uid        L'identifiant de l'utilisateur
+     * @param int $vote_product_id Le numéro du produit
      * @return boolean True s'il a déjà voté sinon False
      */
     public function hasUserAlreadyVoted($vote_uid, $vote_product_id)
@@ -121,7 +121,7 @@ class VotedataHandler extends OledrionPersistableObjectHandler
      * Indique si un utilisateur anonyme a déjà voté (d'après son adresse IP)
      *
      * @param  string  $ip              L'adresse IP
-     * @param  integer $vote_product_id Ld'identifiant du produit
+     * @param int $vote_product_id Ld'identifiant du produit
      * @return boolean
      */
     public function hasAnonymousAlreadyVoted($ip = '', $vote_product_id = 0)
@@ -147,9 +147,9 @@ class VotedataHandler extends OledrionPersistableObjectHandler
     /**
      * Crée un vote pour un produit
      *
-     * @param  integer $vote_product_id L'identifiant du produit
-     * @param  integer $vote_uid        L'identifiant de l'utilisateur
-     * @param  integer $vote_rating     Le vote
+     * @param int $vote_product_id L'identifiant du produit
+     * @param int $vote_uid        L'identifiant de l'utilisateur
+     * @param int $vote_rating     Le vote
      * @return bool résultat de la création du vote
      */
     public function createRating($vote_product_id, $vote_uid, $vote_rating)

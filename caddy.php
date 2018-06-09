@@ -31,7 +31,7 @@ require_once XOOPS_ROOT_PATH . '/header.php';
 $xoopsTpl->assign('mod_pref', $mod_pref); // Préférences du module
 
 if (Oledrion\Utility::getModuleOption('restrict_orders', false)) {
-    $registry = new Registryfile();
+    $registry = new Oledrion\Registryfile();
     $text     = $registry->getfile(OLEDRION_TEXTFILE5);
     $xoopsTpl->assign('restrict_orders_text', xoops_trim($text));
 } else {
@@ -86,7 +86,7 @@ function listCart()
     $xoopsTpl->assign('discountsDescription', $discountsDescription);                    // Liste des réductions accordées
     $showOrderButton   = true;
     $showRegistredOnly = false;
-    if (Oledrion\Utility::getModuleOption('restrict_orders', false) && 0 == $uid) {
+    if (0 == $uid && Oledrion\Utility::getModuleOption('restrict_orders', false)) {
         $showRegistredOnly = true;
         $showOrderButton   = false;
     }
@@ -123,7 +123,7 @@ switch ($op) {
     // ****************************************************************************************************************
     case 'addproduct': // Ajout d'un produit
         // ****************************************************************************************************************
-        if (0 == $productId) {
+        if (0 === $productId) {
             Oledrion\Utility::redirect(_OLEDRION_ERROR9, 'index.php', 4);
         }
         $product = null;
@@ -131,7 +131,7 @@ switch ($op) {
         if (!is_object($product)) {
             Oledrion\Utility::redirect(_OLEDRION_ERROR9, 'index.php', 4);
         }
-        if (0 == $product->getVar('product_online')) {
+        if (0 === $product->getVar('product_online')) {
             Oledrion\Utility::redirect(_OLEDRION_ERROR2, 'index.php', 4);
         }
 

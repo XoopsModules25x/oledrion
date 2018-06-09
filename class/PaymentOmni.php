@@ -22,11 +22,19 @@
 use Omnipay\Omnipay;
 use Omnipay\Common\CreditCard;
 
-class Payment
+/**
+ * Class Payment
+ * @package XoopsModules\Oledrion
+ */
+class PaymentOmni
 {
     private $pay;
     private $card;
 
+    /**
+     * @param $value
+     * @return bool|string
+     */
     public function setcard($value)
     {
         try {
@@ -45,6 +53,10 @@ class Payment
         }
     }
 
+    /**
+     * @param $value
+     * @return string
+     */
     public function makepayment($value)
     {
         try {

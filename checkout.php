@@ -22,6 +22,7 @@
  */
 
 use XoopsModules\Oledrion;
+use XoopsModules\Oledrion\Constants;
 
 require_once __DIR__ . '/header.php';
 $GLOBALS['current_category']             = -1;
@@ -109,7 +110,7 @@ switch ($op) {
                 $commande->setVar('cmd_uid', $uid);
                 $commande->setVar('cmd_date', date('Y-m-d'));
                 $commande->setVar('cmd_create', time());
-                $commande->setVar('cmd_state', OLEDRION_STATE_NOINFORMATION);
+                $commande->setVar('cmd_state', Constants::OLEDRION_STATE_NOINFORMATION);
                 $commande->setVar('cmd_ip', Oledrion\Utility::IP());
                 $commande->setVar('cmd_articles_count', count($cartForTemplate));
                 $commande->setVar('cmd_total', Oledrion\Utility::formatFloatForDB($commandAmountTTC));
@@ -139,7 +140,7 @@ switch ($op) {
                 $commandAmountTTC = $commandAmountTTC + $commandAmountVAT;
                 $commande         = $commandsHandler->get($commend_id);
                 $commande->setVars($_POST);
-                $commande->setVar('cmd_state', OLEDRION_STATE_NOINFORMATION);
+                $commande->setVar('cmd_state', Constants::OLEDRION_STATE_NOINFORMATION);
                 $commande->setVar('cmd_ip', Oledrion\Utility::IP());
                 $commande->setVar('cmd_articles_count', count($cartForTemplate));
                 $commande->setVar('cmd_total', Oledrion\Utility::formatFloatForDB($commandAmountTTC));
@@ -580,7 +581,7 @@ switch ($op) {
         }
         $commande->setVar('cmd_create', time());
         $commande->setVar('cmd_date', date('Y-m-d'));
-        $commande->setVar('cmd_state', OLEDRION_STATE_NOINFORMATION);
+        $commande->setVar('cmd_state', Constants::OLEDRION_STATE_NOINFORMATION);
         $commande->setVar('cmd_ip', Oledrion\Utility::IP());
         $commande->setVar('cmd_status', 1);
         $res = $commandsHandler->insert($commande, true);
@@ -695,7 +696,7 @@ switch ($op) {
                 $sform  = new \XoopsThemeForm(_OLEDRION_FINISH, 'payform', $payURL, 'post', true);
             } else {
                 // Set gateway
-                // B.R. $gateway = Gateways::getGatewayObject($payment['payment_gateway']);
+                // B.R. $gateway = \XoopsModules\Oledrion\Gateways::getGatewayObject($payment['payment_gateway']);
                 $gateway = \XoopsModules\Oledrion\Gateways::getGatewayObject($payment->getVar('payment_gateway'));
                 if (!is_object($gateway)) {
                     die(_OLEDRION_ERROR20);

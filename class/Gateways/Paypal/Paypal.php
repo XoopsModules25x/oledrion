@@ -358,7 +358,7 @@ class Paypal extends Gateway
                         }
                     }
                             // Ecriture dans le fichier log
-                            $logfp = fopen($gatewaysLogPath, 'a');
+                            $logfp = fopen($gatewaysLogPath, 'ab');
                             if ($logfp) {
                                 if ($duplicate_ipn) {
                                     fwrite($logfp, sprintf("Duplicate paypal IPN, order: %d\n", $commande->getVar('cmd_id')));

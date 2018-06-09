@@ -218,7 +218,7 @@ switch ($op) {
         $tbl_tmp       = $relatedHandler->getObjects($criteria);
 
         // S'il n'y a pas de produits relatifs et que la bonne option est activée, on recherche les produits relatfis "dans l'autre sens" (les cas où le produit courant est marqué comme produit relatif)
-        if (0 == count($tbl_tmp) && OLEDRION_RELATED_BOTH) {
+        if (0 === count($tbl_tmp) && OLEDRION_RELATED_BOTH) {
             unset($criteria);
             $tbl_tmp       = [];
             $criteria      = new \Criteria('related_product_related', $product->getVar('product_id'), '=');

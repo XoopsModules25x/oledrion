@@ -18,7 +18,6 @@ $patterns = [
     // first one must be module directory name
     'oledrion' => 'bouquins',
     'OLEDRION' => 'BOUQUINS',
-    'Oledrion' => 'Bouquins',
     'Oledrion' => 'Bouquins'
 ];
 
@@ -58,7 +57,9 @@ function cloneFileFolder($path)
 
     if (is_dir($path)) {
         // create new dir
-        mkdir($newPath);
+        if (!mkdir($newPath) && !is_dir($newPath)) {
+            throw new \RuntimeException(sprintf('Directory "%s" was not created', $newPath));
+        }
 
         // check all files in dir, and process it
         if ($handle = opendir($path)) {

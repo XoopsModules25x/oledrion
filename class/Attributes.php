@@ -225,7 +225,7 @@ class Attributes extends OledrionObject
     /**
      * Renseigne une option
      *
-     * @param  integer $optionNumber (de 0 à N)
+     * @param int $optionNumber (de 0 à N)
      * @param  string  $name         Valeur pour name
      * @param  string  $value        Valeur pour value
      * @param  string  $price        Valeur pour prix
@@ -241,7 +241,7 @@ class Attributes extends OledrionObject
         }
         $names  = $values = $prices = $stocks = [];
         $format = 'e';
-        $names  = $this->getOption('attribute_names', $format);
+        $names[]  = $this->getOption('attribute_names', $format);
         $values = $this->getOption('attribute_values', $format);
         if (Oledrion\Utility::getModuleOption('use_price')) {
             $prices = $this->getOption('attribute_prices', $format);
@@ -281,8 +281,8 @@ class Attributes extends OledrionObject
      * Echange deux contenus dans un tableau
      *
      * @param  array   $array
-     * @param  integer $from
-     * @param  integer $to
+     * @param int $from
+     * @param int $to
      * @return void
      * @since 2.3.2009.03.10
      */
@@ -296,15 +296,16 @@ class Attributes extends OledrionObject
     /**
      * Fonction interne chargée du déplacement d'une option soit vers le haut soit vers le bas
      *
-     * @param  integer $optionNumber
-     * @param  integer $upDown 1=Up, 2=Down
+     * @param int $optionNumber
+     * @param int $upDown 1=Up, 2=Down
      * @return boolean
      * @since 2.3.2009.03.10
      */
     private function moveOption($optionNumber, $upDown)
     {
+        $prices = $stocks = [];
         $optionNumber = (int)$optionNumber;
-        if (1 == $upDown) {    // Up
+        if (1 === $upDown) {    // Up
             $newPosition = $optionNumber - 1;
         } else {    // Down
             $newPosition = $optionNumber + 1;
@@ -352,7 +353,7 @@ class Attributes extends OledrionObject
     /**
      * Déplace une option vers le haut
      *
-     * @param  integer $optionNumber
+     * @param int $optionNumber
      * @return boolean
      * @since 2.3.2009.03.10
      */
@@ -364,7 +365,7 @@ class Attributes extends OledrionObject
     /**
      * Déplace une option vers le bas
      *
-     * @param  integer $optionNumber
+     * @param int $optionNumber
      * @return boolean
      * @since 2.3.2009.03.10
      */
@@ -376,7 +377,7 @@ class Attributes extends OledrionObject
     /**
      * Supprime une option de l'attribut
      *
-     * @param  integer $optionNumber (de 0 à n)
+     * @param int $optionNumber (de 0 à n)
      * @return boolean false si l'indice est hors borne sinon true
      * @since 2.3.2009.03.12
      */
@@ -479,6 +480,8 @@ class Attributes extends OledrionObject
     {
         $ret     = [];
         $counter = 0;
+        $oledrionCurrency = 0;
+        $vat_id = $vat = 0;
         if (null !== $product) {
             $vat_id = $product->getVar('product_vat_id');
         }
@@ -701,7 +704,7 @@ class Attributes extends OledrionObject
 
             case Constants::OLEDRION_ATTRIBUTE_RADIO:         // Boutons radio
                 $templateName = 'oledrion_attribute_radio.tpl';
-                $delimiter    = '';
+//                $delimiter    = '';
                 $delimiter    = '<br>';
                 if (Constants::OLEDRION_ATTRIBUTE_CHECKBOX_WHITE_SPACE == $option1) {
                     $delimiter = ' ';

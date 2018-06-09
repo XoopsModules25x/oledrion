@@ -25,10 +25,10 @@ class OledrionPersistableObjectHandler extends \XoopsPersistableObjectHandler
      *
      * @var string
      */
-    public $table;
-    public $keyName;
-    public $className;
-    public $identifierName;
+//    public $table;
+//    public $keyName;
+//    public $className;
+//    public $identifierName;
     public $cacheOptions = [];
 
     /**#@-*/
@@ -80,8 +80,8 @@ class OledrionPersistableObjectHandler extends \XoopsPersistableObjectHandler
      * Generates a unique ID for a Sql Query
      *
      * @param  string  $query The SQL query for which we want a unidque ID
-     * @param  integer $start Which record to start at
-     * @param  integer $limit Max number of objects to fetch
+     * @param int $start Which record to start at
+     * @param int $limit Max number of objects to fetch
      * @return string  An MD5 of the query
      */
     protected function _getIdForCache($query, $start, $limit)
@@ -316,8 +316,8 @@ class OledrionPersistableObjectHandler extends \XoopsPersistableObjectHandler
      *
      * @author Herve Thouzard - Instant Zero
      *
-     * @param  integer $start   Starting position
-     * @param  integer $limit   Maximum count of elements to return
+     * @param int $start   Starting position
+     * @param int $limit   Maximum count of elements to return
      * @param  string  $sort    Field to use for the sort
      * @param  string  $order   Sort order
      * @param  boolean $idAsKey Do we have to return an array whoses keys are the record's ID ?

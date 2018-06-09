@@ -184,11 +184,11 @@ switch ($action) {
 
         // ****
         $quantityConditions = [
-            Constants::OLEDRION_DISCOUNT_PRICE_QTY_COND1 => OLEDRION_DISCOUNT_PRICE_QTY_COND1_TEXT,
-            Constants::OLEDRION_DISCOUNT_PRICE_QTY_COND2 => OLEDRION_DISCOUNT_PRICE_QTY_COND2_TEXT,
-            Constants::OLEDRION_DISCOUNT_PRICE_QTY_COND3 => OLEDRION_DISCOUNT_PRICE_QTY_COND3_TEXT,
-            Constants::OLEDRION_DISCOUNT_PRICE_QTY_COND4 => OLEDRION_DISCOUNT_PRICE_QTY_COND4_TEXT,
-            Constants::OLEDRION_DISCOUNT_PRICE_QTY_COND5 => OLEDRION_DISCOUNT_PRICE_QTY_COND5_TEXT
+            Constants::OLEDRION_DISCOUNT_PRICE_QTY_COND1 => Constants::OLEDRION_DISCOUNT_PRICE_QTY_COND1_TEXT,
+            Constants::OLEDRION_DISCOUNT_PRICE_QTY_COND2 => Constants::OLEDRION_DISCOUNT_PRICE_QTY_COND2_TEXT,
+            Constants::OLEDRION_DISCOUNT_PRICE_QTY_COND3 => Constants::OLEDRION_DISCOUNT_PRICE_QTY_COND3_TEXT,
+            Constants::OLEDRION_DISCOUNT_PRICE_QTY_COND4 => Constants::OLEDRION_DISCOUNT_PRICE_QTY_COND4_TEXT,
+            Constants::OLEDRION_DISCOUNT_PRICE_QTY_COND5 => Constants::OLEDRION_DISCOUNT_PRICE_QTY_COND5_TEXT
         ];
         $xoopsTpl->assign('disc_price_case_qty_cond_options', $quantityConditions);
         $xoopsTpl->assign('disc_price_case_qty_cond_selected', $item->getVar('disc_price_case_qty_cond'));

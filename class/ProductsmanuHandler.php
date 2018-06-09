@@ -43,7 +43,7 @@ class ProductsmanuHandler extends OledrionPersistableObjectHandler
     /**
      * Retourne le nombre de produits associé à un fabricant
      *
-     * @param  integer $pm_manu_id L'identifiant du fabricant
+     * @param int $pm_manu_id L'identifiant du fabricant
      * @return integer Le nombre de fabricants
      */
     public function getManufacturerProductsCount($pm_manu_id)
@@ -73,7 +73,7 @@ class ProductsmanuHandler extends OledrionPersistableObjectHandler
     /**
      * Retourne les identifiants des produits d'un fabricant
      *
-     * @param  integer $pm_manu_id L'identifiant du fabricant
+     * @param int $pm_manu_id L'identifiant du fabricant
      * @param  int     $start
      * @param  int     $limit
      * @return array  Les ID des produits
@@ -97,7 +97,7 @@ class ProductsmanuHandler extends OledrionPersistableObjectHandler
     /**
      * Supprime un produit d'un fabricant
      *
-     * @param  integer $pm_product_id
+     * @param int $pm_product_id
      * @return boolean
      */
     public function removeManufacturerProduct($pm_product_id)

@@ -23,7 +23,7 @@ use XoopsModules\Oledrion\Constants;
 /**
  * Toutes les listes publiques
  *
- * @param integer $start Position de départ dans les listes
+ * @param int $start Position de départ dans les listes
  */
 require_once __DIR__ . '/header.php';
 $GLOBALS['current_category']             = -1;

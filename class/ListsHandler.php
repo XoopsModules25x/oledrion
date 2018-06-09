@@ -146,8 +146,8 @@ class ListsHandler extends OledrionPersistableObjectHandler
     /**
      * Retourne le nombre de listes d'un certain type
      *
-     * @param  integer $listType
-     * @param  integer $list_uid
+     * @param int $listType
+     * @param int $list_uid
      * @return integer
      */
     public function getRecentListsCount($listType = Constants::OLEDRION_LISTS_ALL, $list_uid = 0)
@@ -219,7 +219,7 @@ class ListsHandler extends OledrionPersistableObjectHandler
         $productsInList      = $ret = $productsIds = [];
         //        $handlers       = HandlerManager::getInstance();
         $productsInList = $productsListHandler->getProductsFromList($list);
-        if (0 == count($productsInList)) {
+        if (0 === count($productsInList)) {
             return $ret;
         }
         foreach ($productsInList as $product) {
@@ -235,8 +235,8 @@ class ListsHandler extends OledrionPersistableObjectHandler
     /**
      * Indique si une liste appartient bien à un utilisateur
      *
-     * @param  integer $list_id
-     * @param  integer $list_uid
+     * @param int $list_id
+     * @param int $list_uid
      * @return boolean
      */
     public function isThisMyList($list_id, $list_uid = 0)
@@ -259,8 +259,8 @@ class ListsHandler extends OledrionPersistableObjectHandler
     /**
      * Indique si un produit est dans une liste d'un utilisateur
      *
-     * @param  integer $productlist_product_id
-     * @param  integer $list_uid
+     * @param int $productlist_product_id
+     * @param int $list_uid
      * @return boolean
      */
     public function isProductInUserList($productlist_product_id, $list_uid = 0)
@@ -300,8 +300,8 @@ class ListsHandler extends OledrionPersistableObjectHandler
      * Retourne les x dernières listes qui contiennent des produits dans une certaine catégorie
      *
      * @param          $categoryId
-     * @param  integer $list_type Le type de liste
-     * @param  integer $limit     Le nombre maximum de listes à retourner
+     * @param int $list_type Le type de liste
+     * @param int $limit     Le nombre maximum de listes à retourner
      * @return array   Objets de type Lists, [clé] = id liste
      * @internal param int $cateGoryId L'identifiant de la catégorie
      */

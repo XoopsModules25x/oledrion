@@ -99,11 +99,11 @@ switch ($action) {
     case 'delete': // Suppression d'une liste
         // ****************************************************************************************************************
         xoops_cp_header();
+        $list = null;
         $id = \Xmf\Request::getInt('id', 0, 'GET');
         if (empty($id)) {
             Oledrion\Utility::redirect(_AM_OLEDRION_ERROR_1, $baseurl . '?op=' . $operation, 5);
         }
-        $list = null;
         $list = $listsHandler->get($id);
         if (!is_object($list)) {
             Oledrion\Utility::redirect(_AM_OLEDRION_NOT_FOUND, $baseurl . '?op=' . $operation, 5);

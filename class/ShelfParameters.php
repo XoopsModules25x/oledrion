@@ -81,7 +81,7 @@ class ShelfParameters
     /**
      * Positione la valeur de début
      *
-     * @param  integer $value
+     * @param int $value
      * @return ShelfParameters
      */
     public function setStart($value)
@@ -94,7 +94,7 @@ class ShelfParameters
     /**
      * Fixe le nombre maximum d'enregistrements à retourner
      *
-     * @param  integer $value
+     * @param int $value
      * @return ShelfParameters
      */
     public function setLimit($value)
@@ -107,7 +107,7 @@ class ShelfParameters
     /**
      * Fixe la catégorie à utiliser
      *
-     * @param  integer $value
+     * @param int $value
      * @return ShelfParameters
      */
     public function setCategory($value)

@@ -118,7 +118,7 @@ class VatHandler extends OledrionPersistableObjectHandler
     /**
      * Retourne le nombre de produits associés à une TVA
      *
-     * @param  integer $vat_id L'ID de la TVA
+     * @param int $vat_id L'ID de la TVA
      * @return integer Le nombre de produits
      */
     public function getVatProductsCount($vat_id)

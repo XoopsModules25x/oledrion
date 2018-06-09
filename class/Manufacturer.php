@@ -58,7 +58,7 @@ class Manufacturer extends OledrionObject
     /**
      * Retourne l'URL d'une des 5 images du fabricant courant
      *
-     * @param  integer $pictureNumber Le numéro (de 1 à 5) de l'image que l'on souhaite récupérer
+     * @param int $pictureNumber Le numéro (de 1 à 5) de l'image que l'on souhaite récupérer
      * @return mixed   L'URL    Soit l'url de l'image soit False si l'indice passé en paramètre n'est pas correct
      */
     public function getPictureUrl($pictureNumber)
@@ -74,7 +74,7 @@ class Manufacturer extends OledrionObject
     /**
      * Retourne le chemin de l'une des 5 images du fabricant courant
      *
-     * @param  integer $pictureNumber Le numéro (de 1 à 5) de l'image que l'on souhaite récupérer
+     * @param int $pictureNumber Le numéro (de 1 à 5) de l'image que l'on souhaite récupérer
      * @return string  Le chemin
      */
     public function getPicturePath($pictureNumber)
@@ -90,7 +90,7 @@ class Manufacturer extends OledrionObject
     /**
      * Indique si une des 5 images du fabricant existe
      *
-     * @param  integer $pictureNumber Le numéro (de 1 à 5) de l'image que l'on souhaite récupérer
+     * @param int $pictureNumber Le numéro (de 1 à 5) de l'image que l'on souhaite récupérer
      * @return boolean Vrai si l'image existe sinon faux
      */
     public function pictureExists($pictureNumber)
@@ -110,7 +110,7 @@ class Manufacturer extends OledrionObject
     /**
      * Supprime une des 5 images du fabricant
      *
-     * @param  integer $pictureNumber Le numéro (de 1 à 5) de l'image que l'on souhaite récupérer
+     * @param int $pictureNumber Le numéro (de 1 à 5) de l'image que l'on souhaite récupérer
      * @return void
      */
     public function deletePicture($pictureNumber)

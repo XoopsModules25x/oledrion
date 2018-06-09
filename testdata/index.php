@@ -210,11 +210,10 @@ function saveSampleData()
 
 function exportSchema()
 {
+    $moduleDirName      = basename(dirname(__DIR__));
+    $moduleDirNameUpper = strtoupper($moduleDirName);
     try {
-        $moduleDirName      = basename(dirname(__DIR__));
-        $moduleDirNameUpper = strtoupper($moduleDirName);
-
-        $migrate = new  Wfdownloads\Migrate($moduleDirName);
+        $migrate = new  Oledrion\Migrate($moduleDirName);
         $migrate->saveCurrentSchema();
 
         redirect_header('../admin/index.php', 1, constant('CO_' . $moduleDirNameUpper . '_' . 'EXPORT_SCHEMA_SUCCESS'));

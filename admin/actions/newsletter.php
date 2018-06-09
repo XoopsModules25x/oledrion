@@ -108,7 +108,7 @@ switch ($action) {
                                                                                  ]));
         $vats       = $vatHandler->getAllVats(new Oledrion\Parameters());
 
-        $fp = fopen($newsfile, 'w');
+        $fp = fopen($newsfile, 'wb');
         if (!$fp) {
             Oledrion\Utility::redirect(_AM_OLEDRION_ERROR_7, $baseurl . '?op=newsletter', 5);
         }

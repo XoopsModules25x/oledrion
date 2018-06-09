@@ -30,7 +30,7 @@ class CsvExport extends Export
 {
     /**
      * CsvExport constructor.
-     * @param string $parameters
+     * @param string|array $parameters
      */
     public function __construct($parameters = '')
     {
@@ -54,7 +54,7 @@ class CsvExport extends Export
         $caddyHandler    = new Oledrion\CaddyHandler($db);
         $commandsHandler = new Oledrion\CommandsHandler($db);
         $file            = $this->folder . '/' . $this->filename;
-        $fp              = fopen($file, 'w');
+        $fp              = fopen($file, 'wb');
         if (!$fp) {
             $this->success = false;
 
@@ -64,12 +64,12 @@ class CsvExport extends Export
         // Création de l'entête du fichier
         $list = $entete1 = $entete2 = [];
         $s    = $this->separator;
-        $cmd  = new Commands();
+        $cmd  = new Oledrion\Commands();
         foreach ($cmd->getVars() as $fieldName => $properties) {
             $entete1[] = $fieldName;
         }
         // Ajout des infos de caddy
-        $cart = new Caddy();
+        $cart = new Oledrion\Caddy();
         foreach ($cart->getVars() as $fieldName => $properties) {
             $entete2[] = $fieldName;
         }

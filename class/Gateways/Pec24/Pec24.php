@@ -102,10 +102,10 @@ class Pec24 extends Gateway
     {
         $url = $this->getdialogURL();
         if (extension_loaded('soap')) {
-            $soapclient = new Soapclient($url);
+            $soapclient = new \Soapclient($url);
         } else {
             require_once __DIR__ . '/nusoap.php';
-            $soapclient = new Soapclient($url, 'wsdl');
+            $soapclient = new \Soapclient($url, 'wsdl');
         }
         $params     = [
             'pin'         => $this->getParsianMid(),
@@ -150,7 +150,7 @@ class Pec24 extends Gateway
     /**
      * Returns the form to use before to redirect user to the gateway
      *
-     * @param  Commands $order Objects of type Commands
+     * @param  Oledrion\Commands $order Objects of type Commands
      * @return array  Key = element's name, Value = Element's value
      */
     public function getCheckoutFormContent($order)
@@ -203,10 +203,10 @@ class Pec24 extends Gateway
         // Set soap
         $url = $this->getdialogURL();
         if (extension_loaded('soap')) {
-            $soapclient = new SoapClient($url);
+            $soapclient = new \SoapClient($url);
         } else {
             require_once __DIR__ . '/nusoap.php';
-            $soapclient = new soapclient($url, 'wsdl');
+            $soapclient = new \SoapClient($url, 'wsdl');
         }
         // here we update our database
         $save_ok = 0;
@@ -281,7 +281,7 @@ class Pec24 extends Gateway
         }
 
         // Ecriture dans le fichier log
-        $fp = fopen($gatewaysLogPath, 'a');
+        $fp = fopen($gatewaysLogPath, 'ab');
         if ($fp) {
             fwrite($fp, str_repeat('-', 120) . "\n");
             fwrite($fp, date('d/m/Y H:i:s') . "\n");

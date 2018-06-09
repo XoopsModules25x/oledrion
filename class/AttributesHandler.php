@@ -66,7 +66,7 @@ class AttributesHandler extends OledrionPersistableObjectHandler
     /**
      * Supprime tous les attributs d'un produit
      *
-     * @param  integer $attribute_product_id
+     * @param int $attribute_product_id
      * @return boolean Le résultat de la suppression
      * @since 2.3.2009.03.16
      */
@@ -80,7 +80,7 @@ class AttributesHandler extends OledrionPersistableObjectHandler
     /**
      * Retourne le nombre total d'attributs d'un produit (qu'ils soient obligatoires ou pas)
      *
-     * @param  integer $attribute_product_id
+     * @param int $attribute_product_id
      * @return integer
      * @since 2.3.2009.03.16
      */
@@ -92,7 +92,7 @@ class AttributesHandler extends OledrionPersistableObjectHandler
     /**
      * Retourne la liste des attributs d'un produit
      *
-     * @param  integer $product_id Le produit concerné
+     * @param  int|array $product_id Le produit concerné
      * @param  null    $attributesIds
      * @return array
      */
@@ -118,7 +118,7 @@ class AttributesHandler extends OledrionPersistableObjectHandler
      * Construction de la liste des attributs d'un produit
      *
      * @param  Products $product              Le produit concerné
-     * @param  integer  $mandatoryFieldsCount Retourne le nombre d'options requises
+     * @param int  $mandatoryFieldsCount Retourne le nombre d'options requises
      * @return array                    Les options construites en html
      * @since 2.3.2009.03.16
      */
@@ -126,7 +126,7 @@ class AttributesHandler extends OledrionPersistableObjectHandler
     {
         $attributes = $ret = [];
         $attributes = $this->getProductsAttributesList($product->getVar('product_id'));
-        if (0 == count($attributes)) {
+        if (0 === count($attributes)) {
             return $ret;
         }
         foreach ($attributes as $attribute) {
@@ -249,7 +249,7 @@ class AttributesHandler extends OledrionPersistableObjectHandler
      * Calcul le prix HT des options sélectionnées pour un produit
      *
      * @param  array   $choosenAttributes [clé] = attribute_id, [value] = array(valueId1, valueId2 ...)
-     * @param  integer $product_vat_id    L'ID de TVA du produit
+     * @param int $product_vat_id    L'ID de TVA du produit
      * @param  array   $descriptions      Tableau valorisé par la méthode [clé] = Id attribut [valeur] = array('attribute_title', array('attribute_names', 'attribute_prices'))
      * @return float
      * @since 2.3.2009.03.21
@@ -258,6 +258,7 @@ class AttributesHandler extends OledrionPersistableObjectHandler
     {
         $db         = \XoopsDatabaseFactory::getDatabaseConnection();
         $vatHandler = new Oledrion\VatHandler($db);
+        $vat_rate = 0;
         static $vats = [];
         if (is_array($vats) && isset($vats[$product_vat_id])) {
             $vat_rate = $vats[$product_vat_id];
@@ -270,13 +271,13 @@ class AttributesHandler extends OledrionPersistableObjectHandler
         }
         $ret           = 0;
         $attributesIds = $attributes = [];
-        if (!is_array($choosenAttributes) || 0 == count($choosenAttributes)) {
+        if (!is_array($choosenAttributes) || 0 === count($choosenAttributes)) {
             return $ret;
         }
         $attributesIds = array_keys($choosenAttributes);
 
         $attributes = $this->getItemsFromIds($attributesIds);
-        if (0 == count($attributes)) {
+        if (0 === count($attributes)) {
             return $ret;
         }
         $oledrionCurrency = Oledrion\Currency::getInstance();

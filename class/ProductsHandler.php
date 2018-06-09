@@ -250,7 +250,7 @@ class ProductsHandler extends OledrionPersistableObjectHandler
      * Retourne le nombre total de produits récents (éventuellement dans une catégorie)
      *
      * @param  mixed   $category        Array ou Integer
-     * @param  integer $excludedProduct ID d'un produit à exclure
+     * @param int $excludedProduct ID d'un produit à exclure
      * @return integer
      */
     public function getRecentProductsCount($category = 0, $excludedProduct = 0)
@@ -375,7 +375,7 @@ class ProductsHandler extends OledrionPersistableObjectHandler
     /**
      * Mise à jour du compteur de lectures du produit
      *
-     * @param  integer $product_id L'identifiant du produit dont il faut mettre à jour le compteur de lectures
+     * @param int $product_id L'identifiant du produit dont il faut mettre à jour le compteur de lectures
      * @return boolean Le résultat de la mise à jour
      */
     public function addCounter($product_id)
@@ -389,9 +389,9 @@ class ProductsHandler extends OledrionPersistableObjectHandler
     /**
      * Mise à jour de la notation d'un produit
      *
-     * @param  integer $product_id Identifiant du produit
+     * @param int $product_id Identifiant du produit
      * @param  float   $rating     la notation
-     * @param  integer $votes      Le nombre de votes du produit
+     * @param int $votes      Le nombre de votes du produit
      * @return boolean Le résultat de la mise à jour
      */
     public function updateRating($product_id, $rating, $votes)
@@ -404,8 +404,8 @@ class ProductsHandler extends OledrionPersistableObjectHandler
     /**
      * Mise à jour du nombre de commentaires d'un produit
      *
-     * @param integer $product_id    Identifiant du produit
-     * @param integer $commentsCount Nombre total de commentaires
+     * @param int $product_id    Identifiant du produit
+     * @param int $commentsCount Nombre total de commentaires
      */
     public function updateCommentsCount($product_id, $commentsCount)
     {
@@ -512,8 +512,8 @@ class ProductsHandler extends OledrionPersistableObjectHandler
     /**
      * Retourne les produits dont les stocks sont bas
      *
-     * @param  integer $start Début des données
-     * @param  integer $limit Nombre maximum d'enregistrements à renvoyer
+     * @param int $start Début des données
+     * @param int $limit Nombre maximum d'enregistrements à renvoyer
      * @return array   Tableau de produits (sous la forme d'objets)
      */
     public function getLowStocks($start = 0, $limit = 0)
@@ -636,8 +636,8 @@ class ProductsHandler extends OledrionPersistableObjectHandler
     /**
      * Retourne la plus petite date de création d'un produit ainsi que la "plus grande" date de création d'un produit
      *
-     * @param  integer $minDate Date mini (parmètre de sortie)
-     * @param  integer $maxDate Date maxi (paramètre de sortie)
+     * @param int $minDate Date mini (parmètre de sortie)
+     * @param int $maxDate Date maxi (paramètre de sortie)
      * @return boolean Vrai si on a pu récupérer ces valeurs, faux sinon
      */
     public function getMinMaxPublishedDate(&$minDate, &$maxDate)
@@ -701,7 +701,7 @@ class ProductsHandler extends OledrionPersistableObjectHandler
     /**
      * Retourne le nombre de produits associés à un vendeur
      *
-     * @param  integer $product_vendor_id L'ID du vendeur
+     * @param int $product_vendor_id L'ID du vendeur
      * @return integer Le nombre de produits
      */
     public function getVendorProductsCount($product_vendor_id)
@@ -714,7 +714,7 @@ class ProductsHandler extends OledrionPersistableObjectHandler
     /**
      * Retourne le nombre de produits associés à une TVA
      *
-     * @param  integer $product_vat_id L'identifiant de la TVA
+     * @param int $product_vat_id L'identifiant de la TVA
      * @return integer Le nombre de produits
      */
     public function getVatProductsCount($product_vat_id)

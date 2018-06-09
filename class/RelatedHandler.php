@@ -43,7 +43,7 @@ class RelatedHandler extends OledrionPersistableObjectHandler
     /**
      * Supprime les produits relatifs rattachés à un produit
      *
-     * @param integer $related_product_id L'identifiant du produit pour lequel il faut faire la suppression
+     * @param int $related_product_id L'identifiant du produit pour lequel il faut faire la suppression
      */
     public function deleteProductRelatedProducts($related_product_id)
     {

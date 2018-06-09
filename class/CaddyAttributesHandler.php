@@ -42,7 +42,7 @@ class CaddyAttributesHandler extends OledrionPersistableObjectHandler
     /**
      * Retourne le nombre d'attributs liés à un caddy
      *
-     * @param  integer $ca_caddy_id L'ID du caddy concerné
+     * @param int $ca_caddy_id L'ID du caddy concerné
      * @return integer
      * @since 2.3.2009.03.23
      */
@@ -54,7 +54,7 @@ class CaddyAttributesHandler extends OledrionPersistableObjectHandler
     /**
      * Retourne la liste formatée des attributs liés à un caddy
      *
-     * @param  integer  $ca_caddy_id L'identifiant de caddy
+     * @param int  $ca_caddy_id L'identifiant de caddy
      * @param  Products $product     Le produit concerné par le caddy
      * @return array
      * @since 2.3.2009.03.23
@@ -64,7 +64,7 @@ class CaddyAttributesHandler extends OledrionPersistableObjectHandler
         //        $handlers   = HandlerManager::getInstance();
         $attributes = $ret = [];
         $attributes = $this->getObjects(new \Criteria('ca_caddy_id', $ca_caddy_id, '='));
-        if (0 == count($attributes)) {
+        if (0 === count($attributes)) {
             return $ret;
         }
         foreach ($attributes as $caddyAttribute) {
@@ -84,7 +84,7 @@ class CaddyAttributesHandler extends OledrionPersistableObjectHandler
     /**
      * Retourne le nombre de caddy attributs liés à un attribut
      *
-     * @param  integer $ca_attribute_id L'Identifiant de l'attribut concerné
+     * @param int $ca_attribute_id L'Identifiant de l'attribut concerné
      * @return integer
      * @since 2.3.2009.03.23
      */
@@ -96,7 +96,7 @@ class CaddyAttributesHandler extends OledrionPersistableObjectHandler
     /**
      * Retourne la liste des numéros de commandes "liés" à un attribut
      *
-     * @param  integer $ca_attribute_id
+     * @param int $ca_attribute_id
      * @return array
      */
     public function getCommandIdFromAttribute($ca_attribute_id)

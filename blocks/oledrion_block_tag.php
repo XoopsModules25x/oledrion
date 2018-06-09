@@ -21,6 +21,10 @@
 
 use XoopsModules\Oledrion;
 
+/**
+ * @param $options
+ * @return array
+ */
 function oledrion_tag_block_cloud_show($options)
 {
     require_once XOOPS_ROOT_PATH . '/modules/tag/blocks/block.php';

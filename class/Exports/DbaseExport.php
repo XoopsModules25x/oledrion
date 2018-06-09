@@ -34,7 +34,7 @@ class DbaseExport extends Export
 {
     /**
      * DbaseExport constructor.
-     * @param string $parameters
+     * @param string|array $parameters
      */
     public function __construct($parameters = '')
     {

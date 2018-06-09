@@ -33,10 +33,10 @@ $caddyHandler->emptyCart();
 
 // On donne la possibilité à la passerelle de traiter la commande
 $gateway = null;
-$gateway = Gateways::getGatewayObject();
+$gateway = \XoopsModules\Oledrion\Gateways::getGatewayObject();
 if (is_object($gateway) && method_exists($gateway, 'thankYou')) {
     if (!file_exists(OLEDRION_GATEWAY_LOG_PATH)) {
-        file_put_contents(OLEDRION_GATEWAY_LOG_PATH, '<?php exit(); ?>');
+        file_put_contents(OLEDRION_GATEWAY_LOG_PATH, '<?php exit(); ?>', LOCK_EX);
     }
     $gateway->thankYou(OLEDRION_GATEWAY_LOG_PATH);
     unset($gateway);

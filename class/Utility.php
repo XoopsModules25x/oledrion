@@ -283,7 +283,7 @@ class Utility extends \XoopsObject
                 return false;
             }
         } else {
-            if (0 == count($recipients)) {
+            if (0 === count($recipients)) {
                 return false;
             }
         }
@@ -313,13 +313,13 @@ class Utility extends \XoopsObject
         // B.R. $filename = XOOPS_UPLOAD_PATH . '/logmail_' . static::MODULE_NAME . '.php';
         $filename = OLEDRION_UPLOAD_PATH . '/logmail_' . static::MODULE_NAME . '.php';
         if (!file_exists($filename)) {
-            $fp = @fopen($filename, 'a');
+            $fp = @fopen($filename, 'ab');
             if ($fp) {
                 fwrite($fp, "<?php exit(); ?>\n");
                 fclose($fp);
             }
         }
-        $fp = @fopen($filename, 'a');
+        $fp = @fopen($filename, 'ab');
 
         if ($fp) {
             fwrite($fp, str_repeat('-', 120) . "\n");
@@ -519,7 +519,7 @@ class Utility extends \XoopsObject
     /**
      * Convert a timestamp to a Mysql date
      *
-     * @param  integer $timestamp The timestamp to use
+     * @param int $timestamp The timestamp to use
      * @return string  The date in the Mysql format
      */
     public static function timestampToMysqlDate($timestamp)
@@ -539,7 +539,7 @@ class Utility extends \XoopsObject
 
     /**
      * Convert a timestamp to a Mysql datetime form
-     * @param  integer $timestamp The timestamp to use
+     * @param int $timestamp The timestamp to use
      * @return string  The date and time in the Mysql format
      */
     public static function timestampToMysqlDateTime($timestamp)
@@ -601,7 +601,7 @@ class Utility extends \XoopsObject
      * Create an html heading (from h1 to h6)
      *
      * @param  string  $title The text to use
-     * @param  integer $level Level to return
+     * @param int $level Level to return
      * @return string  The heading
      */
     public static function htitle($title = '', $level = 1)
@@ -619,6 +619,7 @@ class Utility extends \XoopsObject
      */
     public static function createUploadName($folder, $fileName, $trimName = false)
     {
+        $uid = '';
         $workingfolder = $folder;
         if ('/' !== xoops_substr($workingfolder, strlen($workingfolder) - 1, 1)) {
             $workingfolder .= '/';
@@ -630,7 +631,7 @@ class Utility extends \XoopsObject
         while ($true) {
             $ipbits = explode('.', $_SERVER['REMOTE_ADDR']);
             list($usec, $sec) = explode(' ', microtime());
-            $usec = ($usec * 65536);
+            $usec *= 65536;
             $sec  = ((integer)$sec) & 0xFFFF;
 
             if ($trimName) {
@@ -920,7 +921,7 @@ class Utility extends \XoopsObject
      * Création d'une titre pour être utilisé par l'url rewriting
      *
      * @param  string  $content Le texte à utiliser pour créer l'url
-     * @param  integer $urw     La limite basse pour créer les mots
+     * @param int $urw     La limite basse pour créer les mots
      * @return string  Le texte à utiliser pour l'url
      *                          Note, some parts are from Solo's code
      */
@@ -935,7 +936,7 @@ class Utility extends \XoopsObject
         $content = htmlentities($content, ENT_QUOTES | ENT_HTML5); // TODO: Vérifier
         $content = preg_replace('/&([a-zA-Z])(uml|acute|grave|circ|tilde);/', '$1', $content);
         $content = html_entity_decode($content);
-        $content = preg_replace('/quot/i', ' ', $content);
+        $content = str_ireplace("quot", ' ', $content);
         $content = preg_replace("/'/i", ' ', $content);
         $content = preg_replace('/-/i', ' ', $content);
         $content = preg_replace('/[[:punct:]]/i', '', $content);
@@ -1098,7 +1099,7 @@ class Utility extends \XoopsObject
     /**
      * Fonction chargée de gérer l'upload
      *
-     * @param  integer $indice L'indice du fichier à télécharger
+     * @param int $indice L'indice du fichier à télécharger
      * @param  string  $dstpath
      * @param  null    $mimeTypes
      * @param  null    $uploadMaxSize
@@ -1158,8 +1159,8 @@ class Utility extends \XoopsObject
      *
      * @param  string  $src_path      Picture's source
      * @param  string  $dst_path      Picture's destination
-     * @param  integer $param_width   Maximum picture's width
-     * @param  integer $param_height  Maximum picture's height
+     * @param int $param_width   Maximum picture's width
+     * @param int $param_height  Maximum picture's height
      * @param  boolean $keep_original Do we have to keep the original picture ?
      * @param  string  $fit           Resize mode (see the wideImage library for more information)
      * @return bool
@@ -1204,9 +1205,9 @@ class Utility extends \XoopsObject
      * Déclenchement d'une alerte Xoops suite à un évènement
      *
      * @param string       $category La catégorie de l'évènement
-     * @param integer      $itemId   L'ID de l'élément (trop général pour être décris précisément)
-     * @param unknown_type $event    L'évènement qui est déclencé
-     * @param unknown_type $tags     Les variables à passer au template
+     * @param int      $itemId   L'ID de l'élément (trop général pour être décris précisément)
+     * @param mixed $event    L'évènement qui est déclencé
+     * @param mixed $tags     Les variables à passer au template
      */
     public static function notify($category, $itemId, $event, $tags)
     {
@@ -1219,7 +1220,7 @@ class Utility extends \XoopsObject
      * Ajoute des jours à une date et retourne la nouvelle date au format Date de Mysql
      *
      * @param  int     $duration
-     * @param  integer $startingDate Date de départ (timestamp)
+     * @param int $startingDate Date de départ (timestamp)
      * @return bool|string
      * @internal param int $durations Durée en jours
      */
@@ -1413,9 +1414,9 @@ class Utility extends \XoopsObject
     /**
      * Retourne le montant TTC
      *
-     * @param  floatval $product_price Le montant du produit
-     * @param  integer  $vat_id        Le numéro de TVA
-     * @return floatval Le montant TTC si on a trouvé sa TVA sinon
+     * @param  float $product_price Le montant du produit
+     * @param int  $vat_id        Le numéro de TVA
+     * @return float Le montant TTC si on a trouvé sa TVA sinon
      */
     public static function getAmountWithVat($product_price, $vat_id)
     {
@@ -1568,7 +1569,7 @@ class Utility extends \XoopsObject
     /**
      * Indique si l'utilisateur courant fait partie d'une groupe donné (avec gestion de cache)
      *
-     * @param  integer $group Groupe recherché
+     * @param int $group Groupe recherché
      * @param  int     $uid
      * @return bool    vrai si l'utilisateur fait partie du groupe, faux sinon
      */
@@ -1600,7 +1601,9 @@ class Utility extends \XoopsObject
     public static function prepareFolder($folder)
     {
         if (!is_dir($folder)) {
-            mkdir($folder, 0777);
+            if (!mkdir($folder, 0777) && !is_dir($folder)) {
+                throw new \RuntimeException(sprintf('Directory "%s" was not created', $folder));
+            }
             file_put_contents($folder . '/index.html', '<script>history.go(-1);</script>');
         }
         chmod($folder, 0777);

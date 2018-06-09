@@ -307,7 +307,7 @@ class OledrionUtility
                 return false;
             }
         } else {
-            if (0 == count($recipients)) {
+            if (0 === count($recipients)) {
                 return false;
             }
         }
@@ -336,13 +336,13 @@ class OledrionUtility
         unset($xoopsMailer);
         $filename = XOOPS_UPLOAD_PATH . '/logmail_' . self::MODULE_NAME . '.php';
         if (!file_exists($filename)) {
-            $fp = @fopen($filename, 'a');
+            $fp = @fopen($filename, 'ab');
             if ($fp) {
                 fwrite($fp, "<?php exit(); ?>\n");
                 fclose($fp);
             }
         }
-        $fp = @fopen($filename, 'a');
+        $fp = @fopen($filename, 'ab');
 
         if ($fp) {
             fwrite($fp, str_repeat('-', 120) . "\n");
@@ -542,7 +542,7 @@ class OledrionUtility
     /**
      * Convert a timestamp to a Mysql date
      *
-     * @param  integer $timestamp The timestamp to use
+     * @param int $timestamp The timestamp to use
      * @return string  The date in the Mysql format
      */
     public static function timestampToMysqlDate($timestamp)
@@ -562,7 +562,7 @@ class OledrionUtility
 
     /**
      * Convert a timestamp to a Mysql datetime form
-     * @param  integer $timestamp The timestamp to use
+     * @param int $timestamp The timestamp to use
      * @return string  The date and time in the Mysql format
      */
     public static function timestampToMysqlDateTime($timestamp)
@@ -624,7 +624,7 @@ class OledrionUtility
      * Create an html heading (from h1 to h6)
      *
      * @param  string  $title The text to use
-     * @param  integer $level Level to return
+     * @param int $level Level to return
      * @return string  The heading
      */
     public static function htitle($title = '', $level = 1)
@@ -943,7 +943,7 @@ class OledrionUtility
      * Création d'une titre pour être utilisé par l'url rewriting
      *
      * @param  string  $content Le texte à utiliser pour créer l'url
-     * @param  integer $urw     La limite basse pour créer les mots
+     * @param int $urw     La limite basse pour créer les mots
      * @return string  Le texte à utiliser pour l'url
      *                          Note, some parts are from Solo's code
      */
@@ -960,7 +960,7 @@ class OledrionUtility
         $content = html_entity_decode($content);
         $content = preg_replace('/quot/i', ' ', $content);
         $content = preg_replace("/'/i", ' ', $content);
-        $content = preg_replace('/-/i', ' ', $content);
+        $content = str_ireplace("-", ' ', $content);
         $content = preg_replace('/[[:punct:]]/i', '', $content);
 
         // Selon option mais attention au fichier .htaccess !
@@ -1121,7 +1121,7 @@ class OledrionUtility
     /**
      * Fonction chargée de gérer l'upload
      *
-     * @param  integer $indice L'indice du fichier à télécharger
+     * @param int $indice L'indice du fichier à télécharger
      * @param  string  $dstpath
      * @param  null    $mimeTypes
      * @param  null    $uploadMaxSize
@@ -1181,8 +1181,8 @@ class OledrionUtility
      *
      * @param  string  $src_path      Picture's source
      * @param  string  $dst_path      Picture's destination
-     * @param  integer $param_width   Maximum picture's width
-     * @param  integer $param_height  Maximum picture's height
+     * @param int $param_width   Maximum picture's width
+     * @param int $param_height  Maximum picture's height
      * @param  boolean $keep_original Do we have to keep the original picture ?
      * @param  string  $fit           Resize mode (see the wideImage library for more information)
      * @return bool
@@ -1227,7 +1227,7 @@ class OledrionUtility
      * Déclenchement d'une alerte Xoops suite à un évènement
      *
      * @param string  $category La catégorie de l'évènement
-     * @param integer $itemId   L'ID de l'élément (trop général pour être décris précisément)
+     * @param int $itemId   L'ID de l'élément (trop général pour être décris précisément)
      * @param mixed   $event    L'évènement qui est déclencé
      * @param mixed   $tags     Les variables à passer au template
      */
@@ -1242,7 +1242,7 @@ class OledrionUtility
      * Ajoute des jours à une date et retourne la nouvelle date au format Date de Mysql
      *
      * @param  int     $duration
-     * @param  integer $startingDate Date de départ (timestamp)
+     * @param int $startingDate Date de départ (timestamp)
      * @return bool|string
      * @internal param int $durations Durée en jours
      */
@@ -1434,9 +1434,9 @@ class OledrionUtility
     /**
      * Retourne le montant TTC
      *
-     * @param  floatval $product_price Le montant du produit
-     * @param  integer  $vat_id        Le numéro de TVA
-     * @return floatval Le montant TTC si on a trouvé sa TVA sinon
+     * @param  float $product_price Le montant du produit
+     * @param int  $vat_id        Le numéro de TVA
+     * @return float Le montant TTC si on a trouvé sa TVA sinon
      */
     public static function getAmountWithVat($product_price, $vat_id)
     {
@@ -1589,7 +1589,7 @@ class OledrionUtility
     /**
      * Indique si l'utilisateur courant fait partie d'une groupe donné (avec gestion de cache)
      *
-     * @param  integer $group Groupe recherché
+     * @param int $group Groupe recherché
      * @param  int     $uid
      * @return bool    vrai si l'utilisateur fait partie du groupe, faux sinon
      */
@@ -1621,7 +1621,9 @@ class OledrionUtility
     public static function prepareFolder($folder)
     {
         if (!is_dir($folder)) {
-            mkdir($folder, 0777);
+            if (!mkdir($folder, 0777) && !is_dir($folder)) {
+                throw new \RuntimeException(sprintf('Directory "%s" was not created', $folder));
+            }
             file_put_contents($folder . '/index.html', '<script>history.go(-1);</script>');
         }
         chmod($folder, 0777);

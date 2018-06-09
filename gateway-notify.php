@@ -26,12 +26,12 @@
 require_once __DIR__ . '/header.php';
 @error_reporting(0);
 @$xoopsLogger->activated = false;
-$gateway          = Gateways::getCurrentGateway();
+$gateway          = \XoopsModules\Oledrion\Gateways::getCurrentGateway();
 $temporaryGateway = null;
-$temporaryGateway = Gateways::getGatewayObject();
+$temporaryGateway = \XoopsModules\Oledrion\Gateways::getGatewayObject();
 if (is_object($temporaryGateway)) {
     if (!file_exists(OLEDRION_GATEWAY_LOG_PATH)) {
-        file_put_contents(OLEDRION_GATEWAY_LOG_PATH, '<?php exit(); ?>');
+        file_put_contents(OLEDRION_GATEWAY_LOG_PATH, '<?php exit(); ?>', LOCK_EX);
     }
     $user_log = $temporaryGateway->gatewayNotify(OLEDRION_GATEWAY_LOG_PATH);
     unset($temporaryGateway);

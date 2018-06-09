@@ -45,7 +45,7 @@ class CaddyHandler extends OledrionPersistableObjectHandler
     /**
      * Renvoie, si on en trouve un, un produit qui s'est bien vendu avec un produit particulier
      *
-     * @param  integer $caddy_product_id Identifiant du produit dont on recherche le jumeau
+     * @param  int $caddy_product_id Identifiant du produit dont on recherche le jumeau
      * @return integer Le n° du produit le plus vendu avec le produit en question
      */
     public function getBestWith($caddy_product_id)
@@ -67,10 +67,10 @@ class CaddyHandler extends OledrionPersistableObjectHandler
     /**
      * Renvoie la liste des produits les plus vendus toutes catégories confondues
      *
-     * @param  integer $start Début de la recherche
-     * @param  integer $limit Nombre maximum d'enregistrements à retourner
-     * @param  int     $product_cid
-     * @param  bool    $withQuantity
+     * @param int $start Début de la recherche
+     * @param int $limit Nombre maximum d'enregistrements à retourner
+     * @param int|array     $product_cid
+     * @param bool    $withQuantity
      * @return array   Les identifiants des X produits les plus vendus dans cette catégorie
      */
     public function getMostSoldProducts($start = 0, $limit = 0, $product_cid = 0, $withQuantity = false)
@@ -109,8 +109,8 @@ class CaddyHandler extends OledrionPersistableObjectHandler
     /**
      * Retourne la liste des ID de produits vendus récemment
      *
-     * @param  integer $start
-     * @param  integer $limit
+     * @param  int $start
+     * @param  int $limit
      * @return array
      * @since 2.3.2009.04.08
      */
@@ -192,8 +192,8 @@ class CaddyHandler extends OledrionPersistableObjectHandler
     /**
      * Ajout d'un produit au caddy
      *
-     * @param  integer $product_id Identifiant du produit
-     * @param  integer $quantity   Quantité à ajouter
+     * @param  int $product_id Identifiant du produit
+     * @param  int $quantity   Quantité à ajouter
      * @param  array   $attributes Les attributs du produit
      * @return void
      * @note : Structure du panier (tableau en session) :
@@ -247,7 +247,7 @@ class CaddyHandler extends OledrionPersistableObjectHandler
     /**
      * Inidique si un produit est dans le caddy
      *
-     * @param  integer $caddy_product_id Le numéro interne du produit dans la table Produits
+     * @param  int $caddy_product_id Le numéro interne du produit dans la table Produits
      * @return mixed   False si le produit n'est pas dans le caddy sinon son indice dans le caddy
      * @since 2.3.2009.03.15
      */
@@ -273,7 +273,7 @@ class CaddyHandler extends OledrionPersistableObjectHandler
     /**
      * Retourne les attributs d'un produit depuis le panier
      *
-     * @param  integer $caddy_product_id Le numéro interne du produit dans la table Produits
+     * @param  int $caddy_product_id Le numéro interne du produit dans la table Produits
      * @return mixed   False si le produit n'est pas dans le caddy sinon ses attributs sous la forme d'un tableau
      * @since 2.3.2009.03.15
      */
@@ -320,7 +320,7 @@ class CaddyHandler extends OledrionPersistableObjectHandler
     /**
      * Suppression d'un produit du caddy
      *
-     * @param integer $indice Indice de l'élément à supprimer
+     * @param int $indice Indice de l'élément à supprimer
      */
     public function deleteProduct($indice)
     {
@@ -391,7 +391,7 @@ class CaddyHandler extends OledrionPersistableObjectHandler
     /**
      * Renvoie les éléments constituants une commande
      *
-     * @param  integer $caddy_cmd_id Identifiant de la commande
+     * @param  int $caddy_cmd_id Identifiant de la commande
      * @return array   Tableau d'objets caddy
      */
     public function getCaddyFromCommand($caddy_cmd_id)
@@ -427,7 +427,7 @@ class CaddyHandler extends OledrionPersistableObjectHandler
     /**
      * Renvoie les ID de commandes pour un produit acheté
      *
-     * @param  integer $product_id Identifiant du produit
+     * @param  int $product_id Identifiant du produit
      * @return array   Les ID des commandes dans lesquelles ce produit a été commandé
      */
     public function getCommandIdFromProduct($product_id)
@@ -480,7 +480,7 @@ class CaddyHandler extends OledrionPersistableObjectHandler
     /**
      * Supprime les caddies associés à une commande
      *
-     * @param  integer $caddy_cmd_id
+     * @param  int $caddy_cmd_id
      * @return boolean
      */
     public function removeCartsFromOrderId($caddy_cmd_id)

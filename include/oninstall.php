@@ -22,6 +22,10 @@
 use XoopsModules\Oledrion;
 use XoopsModules\Oledrion\Common;
 
+/**
+ * @param \XoopsModule $module
+ * @return bool
+ */
 function xoops_module_pre_install_oledrion(\XoopsModule $module)
 {
     include dirname(__DIR__) . '/preloads/autoloader.php';

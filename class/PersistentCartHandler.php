@@ -66,7 +66,7 @@ class PersistentCartHandler extends OledrionPersistableObjectHandler
     /**
      * Purge des produits d'un utilisateur
      *
-     * @param  integer $persistent_uid L'identifiant de l'utilisateur
+     * @param int $persistent_uid L'identifiant de l'utilisateur
      * @return boolean Le résultat de la suppression
      */
     public function deleteAllUserProducts($persistent_uid = 0)
@@ -84,8 +84,8 @@ class PersistentCartHandler extends OledrionPersistableObjectHandler
     /**
      * Supprime UN produit d'un utilisateur
      *
-     * @param  integer $persistent_product_id L'identifiant du produit
-     * @param  integer $persistent_uid        L'identifiant de l'utilisateur
+     * @param int $persistent_product_id L'identifiant du produit
+     * @param int $persistent_uid        L'identifiant de l'utilisateur
      * @return boolean Le résultat de la suppression
      */
     public function deleteUserProduct($persistent_product_id, $persistent_uid = 0)
@@ -104,9 +104,9 @@ class PersistentCartHandler extends OledrionPersistableObjectHandler
     /**
      * Ajoute un produit au panier d'un utilisateur
      *
-     * @param  integer $persistent_product_id L'ID du produit
-     * @param  integer $persistent_qty        La quantité de produits
-     * @param  integer $persistent_uid        L'ID de l'utilisateur
+     * @param int $persistent_product_id L'ID du produit
+     * @param int $persistent_qty        La quantité de produits
+     * @param int $persistent_uid        L'ID de l'utilisateur
      * @return boolean Le résultat de l'ajout du produit
      */
     public function addUserProduct($persistent_product_id, $persistent_qty, $persistent_uid = 0)
@@ -127,9 +127,9 @@ class PersistentCartHandler extends OledrionPersistableObjectHandler
     /**
      * Mise à jour de la quantité de produit d'un utilisateur
      *
-     * @param  integer $persistent_product_id L'identifiant du produit
-     * @param  integer $persistent_qty        La quantité de produit
-     * @param  integer $persistent_uid        L'ID de l'utilisateur
+     * @param int $persistent_product_id L'identifiant du produit
+     * @param int $persistent_qty        La quantité de produit
+     * @param int $persistent_uid        L'ID de l'utilisateur
      * @return boolean Le résultat de la mise à jour
      */
     public function updateUserProductQuantity($persistent_product_id, $persistent_qty, $persistent_uid = 0)
@@ -148,7 +148,7 @@ class PersistentCartHandler extends OledrionPersistableObjectHandler
     /**
      * Indique s'il existe un panier pour un utilisateur
      *
-     * @param  integer $persistent_uid L'id de l'utilisateur
+     * @param int $persistent_uid L'id de l'utilisateur
      * @return boolean
      */
     public function isCartExists($persistent_uid = 0)
@@ -165,7 +165,7 @@ class PersistentCartHandler extends OledrionPersistableObjectHandler
     /**
      * Retourne les produits d'un utilisateur
      *
-     * @param  integer $persistent_uid L'ID de l'utilisateur
+     * @param int $persistent_uid L'ID de l'utilisateur
      * @return array   Tableaux d'objets de type PersistentCart
      */
     public function getUserProducts($persistent_uid = 0)

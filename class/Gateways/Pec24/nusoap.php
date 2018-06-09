@@ -2510,7 +2510,7 @@ class Soap_transport_http extends Nusoap_base
      * establish an HTTP connection
      *
      * @param  int     $connection_timeout
-     * @param  integer $response_timeout set response timeout in seconds
+     * @param int $response_timeout set response timeout in seconds
      * @return bool    true if connected, false if not
      * @internal param int $timeout set connection timeout in seconds
      * @access   private
@@ -2750,8 +2750,8 @@ class Soap_transport_http extends Nusoap_base
      * sends the SOAP request and gets the SOAP response via HTTP[S]
      *
      * @param  string  $data             message data
-     * @param  integer $timeout          set connection timeout in seconds
-     * @param  integer $response_timeout set response timeout in seconds
+     * @param int $timeout          set connection timeout in seconds
+     * @param int $response_timeout set response timeout in seconds
      * @param  array   $cookies          cookies to send
      * @return string  data
      * @access   public
@@ -2790,8 +2790,8 @@ class Soap_transport_http extends Nusoap_base
      * sends the SOAP request and gets the SOAP response via HTTPS using CURL
      *
      * @param  string  $data             message data
-     * @param  integer $timeout          set connection timeout in seconds
-     * @param  integer $response_timeout set response timeout in seconds
+     * @param int $timeout          set connection timeout in seconds
+     * @param int $response_timeout set response timeout in seconds
      * @param  array   $cookies          cookies to send
      * @return string  data
      * @access   public
@@ -3908,7 +3908,7 @@ class Nusoap_server extends Nusoap_base
         } elseif (isset($_SERVER['QUERY_STRING'])) {
             $qs = explode('&', $_SERVER['QUERY_STRING']);
             foreach ($qs as $v) {
-                if ('debug=' === substr($v, 0, 6)) {
+                if (0 === strpos($v, 'debug=')) {
                     $this->debug('In nusoap_server, set debug_flag=' . substr($v, 6) . ' based on query string #1');
                     $this->debug_flag = substr($v, 6);
                 }
@@ -3916,7 +3916,7 @@ class Nusoap_server extends Nusoap_base
         } elseif (isset($HTTP_SERVER_VARS['QUERY_STRING'])) {
             $qs = explode('&', $HTTP_SERVER_VARS['QUERY_STRING']);
             foreach ($qs as $v) {
-                if ('debug=' === substr($v, 0, 6)) {
+                if (0 === strpos($v, 'debug=')) {
                     $this->debug('In nusoap_server, set debug_flag=' . substr($v, 6) . ' based on query string #2');
                     $this->debug_flag = substr($v, 6);
                 }
@@ -3993,7 +3993,7 @@ class Nusoap_server extends Nusoap_base
                     } else {
                         $filename = substr($this->externalWSDLURL, $pos + 7);
                     }
-                    $fp = fopen($this->externalWSDLURL, 'r');
+                    $fp = fopen($this->externalWSDLURL, 'rb');
                     fpassthru($fp);
                 }
             } elseif ($this->wsdl) {
@@ -4065,7 +4065,7 @@ class Nusoap_server extends Nusoap_base
         } elseif (isset($_SERVER) && is_array($_SERVER)) {
             $this->debug('In parse_http_headers, use _SERVER');
             foreach ($_SERVER as $k => $v) {
-                if ('HTTP_' === substr($k, 0, 5)) {
+                if (0 === strpos($k, 'HTTP_')) {
                     $k = str_replace(' ', '-', strtolower(str_replace('_', ' ', substr($k, 5))));
                 } else {
                     $k = str_replace(' ', '-', strtolower(str_replace('_', ' ', $k)));
@@ -4098,7 +4098,7 @@ class Nusoap_server extends Nusoap_base
         } elseif (is_array($HTTP_SERVER_VARS)) {
             $this->debug('In parse_http_headers, use HTTP_SERVER_VARS');
             foreach ($HTTP_SERVER_VARS as $k => $v) {
-                if ('HTTP_' === substr($k, 0, 5)) {
+                if (0 === strpos($k, 'HTTP_')) {
                     $k = str_replace(' ', '-', strtolower(str_replace('_', ' ', substr($k, 5))));
                     $k = strtolower(substr($k, 5));
                 } else {
@@ -4281,7 +4281,7 @@ class Nusoap_server extends Nusoap_base
                 return;
             }
         } else {
-            $method_to_compare = ('4.' === substr(PHP_VERSION, 0, 2)) ? strtolower($method) : $method;
+            $method_to_compare = (0 === strpos(PHP_VERSION, '4.')) ? strtolower($method) : $method;
             if (!in_array($method_to_compare, get_class_methods($class))) {
                 $this->debug("in invoke_method, method '$this->methodname' not found in class '$class'!");
                 $this->result = 'fault: method not found';
@@ -4949,8 +4949,8 @@ class Wsdl extends Nusoap_base
      * @param bool|string $proxyport
      * @param bool|string $proxyusername
      * @param bool|string $proxypassword
-     * @param integer     $timeout          set the connection timeout
-     * @param integer     $response_timeout set the response timeout
+     * @param int     $timeout          set the connection timeout
+     * @param int     $response_timeout set the response timeout
      * @param array       $curl_options     user-specified cURL options
      * @param boolean     $use_curl         try to use cURL
      * @access public
@@ -5140,7 +5140,7 @@ class Wsdl extends Nusoap_base
                 $path = isset($wsdl_props['host']) ? ($wsdl_props['host'] . ':' . $wsdl_props['path']) : $wsdl_props['path'];
             }
             $this->debug('getting WSDL file ' . $path);
-            if ($fp = @fopen($path, 'r')) {
+            if ($fp = @fopen($path, 'rb')) {
                 $wsdl_string = '';
                 while ($data = fread($fp, 32768)) {
                     $wsdl_string .= $data;
@@ -5520,7 +5520,7 @@ class Wsdl extends Nusoap_base
                 }
             }
         }
-        if (0 == count($ops)) {
+        if (0 === count($ops)) {
             $this->debug("getOperations found no operations for port '$portName' bindingType $bindingType");
         }
 
@@ -5703,7 +5703,7 @@ class Wsdl extends Nusoap_base
             padding-top: 10px; padding-bottom: 10px;}
             .hidden {
             position: absolute; visibility: hidden; z-index: 200; left: 250px; top: 100px;
-            font-family: Arial, sans-serif; overflow: hidden; width: 600;
+            font-family: Arial, sans-serif; overflow: hidden; width: 600px;
             padding: 20px; font-size: 10px; background-color: #999999;
             layer-background-color:#FFFFFF; }
             a,a:active  { color: charcoal; font-weight: bold; }
@@ -5771,7 +5771,7 @@ class Wsdl extends Nusoap_base
             $b .= "<li><a href='#' onclick=\"popout();popup('$op')\">$op</a></li>";
             // create hidden div
             $b .= "<div id='$op' class='hidden'>
-                    <a href='#' onclick='popout()'><font color='#ffffff'>Close</font></a><br><br>";
+                    <a href='#' onclick='popout()'><span style='color: #ffffff; '>Close</span></a><br><br>";
             foreach ($data as $donnie => $marie) { // loop through opdata
                 if ('input' === $donnie || 'output' === $donnie) { // show input/output data
                     $b .= "<font color='white'>" . ucfirst($donnie) . ':</font><br>';
@@ -6016,7 +6016,7 @@ class Wsdl extends Nusoap_base
         // parameters, the parameters match wrapped.
         $this->debug("in parametersMatchWrapped: no elements type $ns:$uqType");
 
-        return 0 == count($parameters);
+        return 0 === count($parameters);
     }
 
     /**
@@ -7455,7 +7455,7 @@ class Nusoap_parser extends Nusoap_base
      * builds response structures for compound values (arrays/structs)
      * and scalars
      *
-     * @param  integer $pos position in node tree
+     * @param int $pos position in node tree
      * @return mixed   PHP value
      * @access   private
      */
@@ -7671,8 +7671,8 @@ class Nusoap_client extends Nusoap_base
      * @param bool|string $proxyport        optional
      * @param bool|string $proxyusername    optional
      * @param bool|string $proxypassword    optional
-     * @param integer     $timeout          set the connection timeout
-     * @param integer     $response_timeout set the response timeout
+     * @param int     $timeout          set the connection timeout
+     * @param int     $response_timeout set the response timeout
      * @param string      $portName         optional portName in WSDL document
      * @access   public
      */
@@ -8010,8 +8010,8 @@ class Nusoap_client extends Nusoap_base
      *
      * @param  string  $msg              a SOAPx4 soapmsg object
      * @param  string  $soapaction       SOAPAction value
-     * @param  integer $timeout          set connection timeout in seconds
-     * @param  integer $response_timeout set response timeout in seconds
+     * @param int $timeout          set connection timeout in seconds
+     * @param int $response_timeout set response timeout in seconds
      * @return mixed   native PHP types.
      * @access   private
      */
@@ -8536,7 +8536,7 @@ class Nusoap_client extends Nusoap_base
      */
     public function checkCookies()
     {
-        if (0 == count($this->cookies)) {
+        if (0 === count($this->cookies)) {
             return true;
         }
         $this->debug('checkCookie: check ' . count($this->cookies) . ' cookies');
@@ -8571,7 +8571,7 @@ class Nusoap_client extends Nusoap_base
      */
     public function UpdateCookies($cookies)
     {
-        if (0 == count($this->cookies)) {
+        if (0 === count($this->cookies)) {
             // no existing cookies: take whatever is new
             if (count($cookies) > 0) {
                 $this->debug('Setting new cookie(s)');
@@ -8580,7 +8580,7 @@ class Nusoap_client extends Nusoap_base
 
             return true;
         }
-        if (0 == count($cookies)) {
+        if (0 === count($cookies)) {
             // no new cookies: keep what we've got
             return true;
         }

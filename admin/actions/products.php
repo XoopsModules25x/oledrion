@@ -390,13 +390,13 @@ switch ($action) {
         }
 
         $categories = $categoryHandler->getAllCategories(new Oledrion\Parameters());
-        if (0 == count($categories)) {
+        if (0 === count($categories)) {
             Oledrion\Utility::redirect(_AM_OLEDRION_ERROR_8, $baseurl, 5);
         }
         // TVA
         $vats = $vatsForDisplay = [];
         $vats = $vatHandler->getAllVats(new Oledrion\Parameters());
-        if (0 == count($vats) && Oledrion\Utility::getModuleOption('use_price')) {
+        if (0 === count($vats) && Oledrion\Utility::getModuleOption('use_price')) {
             Oledrion\Utility::redirect(_AM_OLEDRION_ERROR_9, $baseurl, 5);
         }
         foreach ($vats as $onevat) {
@@ -892,7 +892,7 @@ switch ($action) {
         $opRedirect = 'products';
         $tblTmp     = [];
         $tblTmp     = $caddyHandler->getCommandIdFromProduct($id);
-        if (0 == count($tblTmp)) {
+        if (0 === count($tblTmp)) {
             $item = null;
             $item = $productsHandler->get($id);
             if (is_object($item)) {

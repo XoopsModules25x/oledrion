@@ -76,7 +76,6 @@ class Plugin
 
     /**
      * Priorités des plugins
-     * @var constant
      */
     const EVENT_PRIORITY_1 = 1; // Priorité la plus haute
     const EVENT_PRIORITY_2 = 2;
@@ -152,7 +151,7 @@ class Plugin
     /**
      * Vérifie que le fichier Php passé en paramètre contient bien une classe de filtre ou d'action et si c'est le cas, le charge dans la liste des plugins
      * @param  string  $fullPathName Chemin complet vers le fichier (répertoire + nom)
-     * @param  integer $type         Type de plugin recherché (action ou filtre)
+     * @param int $type         Type de plugin recherché (action ou filtre)
      * @param  string  $pluginFolder Le nom du répertoire dans lequel se trouve le fichier (le "dernier nom")
      * @return void
      */
@@ -182,7 +181,7 @@ class Plugin
      * Part à la recherche d'un type de plugin dans les répertoires
      *
      * @param  string  $path La racine
-     * @param  integer $type Le type de plugin recherché (action ou filtre)
+     * @param int $type Le type de plugin recherché (action ou filtre)
      * @return void
      */
     private function loadPluginsFiles($path, $type)
@@ -273,7 +272,7 @@ class Plugin
     /**
      * Indique si un plugin s'est détaché d'un évènement particulier
      *
-     * @param  integer $eventType
+     * @param int $eventType
      * @param  string  $eventToFire
      * @param  string  $fullPathName
      * @param  string  $className
@@ -295,7 +294,7 @@ class Plugin
     /**
      * Permet à un plugin de se détacher d'un évènement
      *
-     * @param  integer $eventType
+     * @param int $eventType
      * @param  string  $eventToFire
      * @param  string  $fullPathName
      * @param  string  $className

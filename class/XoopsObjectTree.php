@@ -35,11 +35,11 @@ class XoopsObjectTree extends \XoopsObjectTree
     /**
      * @access    private
      */
-    protected $parentId;
-    protected $myId;
-    protected $rootId;
-    protected $tree = [];
-    protected $objects;
+//    protected $parentId;
+//    protected $myId;
+//    protected $rootId;
+//    protected $tree = [];
+//    protected $objects;
 
     /**
      * Constructor
@@ -63,7 +63,7 @@ class XoopsObjectTree extends \XoopsObjectTree
      * @param  string      $prefix         String to indent deeper levels
      * @param  string      $selected       Value to display as selected
      * @param  bool|string $addEmptyOption Set TRUE to add an empty option with value "0" at the top of the hierarchy
-     * @param  integer     $key            ID of the object to display as the root of select options
+     * @param int     $key            ID of the object to display as the root of select options
      * @param  string      $additional
      * @return string      HTML select box
      *
@@ -155,7 +155,7 @@ class XoopsObjectTree extends \XoopsObjectTree
      *
      * @param  string  $fieldName Name of the member variable from the node objects that should be used as the title for the options.
      * @param  string  $prefix    String to indent deeper levels
-     * @param  integer $key       ID of the object to display as the root of select options
+     * @param int $key       ID of the object to display as the root of select options
      * @param  null    $empty
      * @return array   key = object ID, value = $fieldName
      */

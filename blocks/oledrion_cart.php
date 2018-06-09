@@ -22,7 +22,7 @@ use XoopsModules\Oledrion;
 /**
  * block to display items in cart
  *
- * @param  integer $options [0] Count of items to show (0 = no limit)
+ * @param int $options [0] Count of items to show (0 = no limit)
  * @return array   Block's content
  */
 function b_oledrion_cart_show($options)

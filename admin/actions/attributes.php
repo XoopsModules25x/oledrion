@@ -79,7 +79,7 @@ switch ($action) {
         $newFilter = false;
 
         if (isset($_POST['filter_attribute_id'])) {
-            if (0 != \Xmf\Request::getInt('filter_attribute_id', 0, 'POST')) {
+            if (0 !== \Xmf\Request::getInt('filter_attribute_id', 0, 'POST')) {
                 $criteria->add(new \Criteria('attribute_id', \Xmf\Request::getInt('filter_attribute_id', 0, 'POST')), '=');
             }
             $filter_attribute_id = \Xmf\Request::getInt('filter_attribute_id', 0, 'POST');
@@ -90,24 +90,24 @@ switch ($action) {
             $filter_attribute_title = $_POST['filter_attribute_title'];
             $newFilter              = true;
         }
-        if (isset($_POST['filter_attribute_product_id']) && 0 != \Xmf\Request::getInt('filter_attribute_product_id', 0, 'POST')) {
+        if (isset($_POST['filter_attribute_product_id']) && 0 !== \Xmf\Request::getInt('filter_attribute_product_id', 0, 'POST')) {
             $criteria->add(new \Criteria('attribute_product_id', \Xmf\Request::getInt('filter_attribute_product_id', 0, 'POST')), '=');
             $filter_attribute_product_id = \Xmf\Request::getInt('filter_attribute_product_id', 0, 'POST');
             $newFilter                   = true;
         }
-        if (isset($_POST['filter_attribute_weight']) && 0 != \Xmf\Request::getInt('filter_attribute_weight', 0, 'POST')) {
+        if (isset($_POST['filter_attribute_weight']) && 0 !== \Xmf\Request::getInt('filter_attribute_weight', 0, 'POST')) {
             $criteria->add(new \Criteria('attribute_weight', \Xmf\Request::getInt('filter_attribute_weight', 0, 'POST')), '=');
             $filter_attribute_weight = \Xmf\Request::getInt('filter_attribute_weight', 0, 'POST');
             $newFilter               = true;
         }
-        if (isset($_POST['filter_attribute_type']) && 0 != \Xmf\Request::getInt('filter_attribute_type', 0, 'POST')) {
+        if (isset($_POST['filter_attribute_type']) && 0 !== \Xmf\Request::getInt('filter_attribute_type', 0, 'POST')) {
             $criteria->add(new \Criteria('attribute_type', \Xmf\Request::getInt('filter_attribute_type', 0, 'POST')), '=');
             $filter_attribute_type = \Xmf\Request::getInt('filter_attribute_type', 0, 'POST');
             $newFilter             = true;
         }
 
-        if (0 == $filter_attribute_id && '' === $filter_attribute_title && 0 == $filter_attribute_weight
-            && 0 == $filter_attribute_type) {
+        if (0 === $filter_attribute_id && '' === $filter_attribute_title && 0 === $filter_attribute_weight
+            && 0 === $filter_attribute_type) {
             $newFilter = true;
         }
 

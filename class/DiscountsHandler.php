@@ -155,7 +155,7 @@ class DiscountsHandler extends OledrionPersistableObjectHandler
         } else {
             $critere = new \CriteriaCompo();
             $critere->add(new \Criteria('disc_on_what', Constants::OLEDRION_DISCOUNT_ON5, '='));
-            $critere->add(new \Criteria('disc_shipping', Constants::OLEDRION_DISCOUNT_SHIPPING2, '='));
+            $critere->add(new \Criteria('disc_shipping', Constants::OLEDRION_DISCOUNT_SHIPPING_TYPE2, '='));
             $tblGroups = Oledrion\Utility::getCurrentMemberGroups();
             $critere->add(new \Criteria('disc_group', '(' . implode(',', $tblGroups) . ')', 'IN'));
             $buffer = $this->getObjects($critere);
@@ -221,7 +221,7 @@ class DiscountsHandler extends OledrionPersistableObjectHandler
             foreach ($tblRules as $rule) {
                 switch ($rule->getVar('disc_when')) {
                     case Constants::OLEDRION_DISCOUNT_WHEN1: // Dans tous les cas
-                        if (OLEDRION_DISCOUNT_PRICE_TYPE1 == $rule->getVar('disc_percent_monney')) { // Réduction de x pourcent
+                        if (Constants::OLEDRION_DISCOUNT_PRICE_TYPE1 == $rule->getVar('disc_percent_monney')) { // Réduction de x pourcent
                             $montantHT = $this->getDiscountedPrice($montantHT, $rule->getVar('disc_amount'));
                             if ($montantHT < 0) {
                                 $montantHT = 0;
@@ -261,7 +261,7 @@ class DiscountsHandler extends OledrionPersistableObjectHandler
      *
      * @param float   $montantHT            Montant HT des produits
      * @param array   $discountsDescription Descriptions des réductions appliquées
-     * @param integer $productQty           Quantité commandée du produit
+     * @param int $productQty           Quantité commandée du produit
      */
     public function applyDiscountOnShipping(&$montantHT, &$discountsDescription, $productQty)
     {
@@ -363,7 +363,7 @@ class DiscountsHandler extends OledrionPersistableObjectHandler
      *
      * @param float   $montantHT            Montant HT des produits
      * @param array   $discountsDescription Descriptions des réductions appliquées
-     * @param integer $productQty           Quantité commandée du produit
+     * @param int $productQty           Quantité commandée du produit
      */
     public function applyDiscountOnAllProducts(&$montantHT, &$discountsDescription, $productQty)
     {
@@ -391,7 +391,7 @@ class DiscountsHandler extends OledrionPersistableObjectHandler
 
                     case Constants::OLEDRION_DISCOUNT_WHEN2: // Si c'est le premier achat de l'utilisateur sur le site
                         if ($commandsHandler->isFirstCommand($uid)) {
-                            if (OLEDRION_DISCOUNT_PRICE_TYPE1 == $rule->getVar('disc_percent_monney')) { // Réduction de x pourcent
+                            if (Constants::OLEDRION_DISCOUNT_PRICE_TYPE1 == $rule->getVar('disc_percent_monney')) { // Réduction de x pourcent
                                 $montantHT = $this->getDiscountedPrice($montantHT, $rule->getVar('disc_amount'));
                                 if ($montantHT < 0) {
                                     $montantHT = 0;
@@ -463,10 +463,10 @@ class DiscountsHandler extends OledrionPersistableObjectHandler
     /**
      * Recalcul du prix HT du produit en appliquant les réductions, s'il y a lieu
      *
-     * @param integer $productId            Identifiant du produit
+     * @param int $productId            Identifiant du produit
      * @param float   $prixHT               Prix HT du produit
      * @param array   $discountsDescription Descriptions des réductions appliquées
-     * @param integer $productQty           Quantité commandée du produit
+     * @param int $productQty           Quantité commandée du produit
      */
     public function applyDiscountOnEachProduct($productId, &$prixHT, &$discountsDescription, $productQty)
     {
@@ -583,7 +583,7 @@ class DiscountsHandler extends OledrionPersistableObjectHandler
     /**
      * Supprime les remises associées à un produit
      *
-     * @param  integer $disc_product_id
+     * @param int $disc_product_id
      * @return boolean
      */
     public function removeProductFromDiscounts($disc_product_id)

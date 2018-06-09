@@ -95,6 +95,7 @@ class Constants
     const OLEDRION_DISCOUNT_SHIPPING_TYPE2 = 2; // Les frais de port sont totalement gratuits
     const OLEDRION_DISCOUNT_SHIPPING_TYPE3 = 3; // Les frais de port sont réduits de ...
     const OLEDRION_DISCOUNT_SHIPPING_TYPE4 = 4; // Les frais de port sont dégressifs
+
     // ********************************************************************************************************************
 
     /**
@@ -105,4 +106,16 @@ class Constants
     const OLEDRION_LISTS_PRIVATE = 0;
     const OLEDRION_LISTS_WISH = 1;
     const OLEDRION_LISTS_RECOMMEND = 2;
+
+    const OLEDRION_DISCOUNT_ON1 = 1;
+    const OLEDRION_DISCOUNT_ON2 = 2;
+    const OLEDRION_DISCOUNT_ON3 = 3;
+    const OLEDRION_DISCOUNT_ON4 = 4;
+    const OLEDRION_DISCOUNT_ON5 = 5;
+
+    const OLEDRION_DISCOUNT_WHEN1 = 1;
+    const OLEDRION_DISCOUNT_WHEN2 = 2;
+    const OLEDRION_DISCOUNT_WHEN3 = 3;
+    const OLEDRION_DISCOUNT_WHEN4 = 4;
+    const OLEDRION_DISCOUNT_WHEN5 = 5;
 }

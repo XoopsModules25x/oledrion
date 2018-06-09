@@ -37,7 +37,7 @@ class Directorychecker
      *
      * @return bool|string
      */
-    public static function getDirectoryStatus($path, $mode = 0777, $languageConstants = [], $redirectFile)
+    public static function getDirectoryStatus($path, $mode = 0777, array $languageConstants = [], $redirectFile)
     {
         global $pathIcon16;
 
@@ -101,7 +101,7 @@ class Directorychecker
 
         */
 
-        return is_dir($target) || (self::createDirectory(dirname($target), $mode) and mkdir($target, $mode));
+        return is_dir($target) || (self::createDirectory(dirname($target), $mode) && !mkdir($target, $mode) && !is_dir($target));
     }
 
     /**

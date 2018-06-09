@@ -37,7 +37,7 @@ abstract class Export
 
     /**
      * Export constructor.
-     * @param string $parameters
+     * @param string|array $parameters
      */
     public function __construct($parameters = '')
     {
