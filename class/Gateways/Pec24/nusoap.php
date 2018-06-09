@@ -501,7 +501,7 @@ class Nusoap_base
         $this->appendDebug('value=' . $this->varDump($val));
         $this->appendDebug('attributes=' . $this->varDump($attributes));
 
-        if (is_object($val) && 'soapval' === get_class($val) && (!$soapval)) {
+        if (is_object($val) && $val instanceof \soapval && (!$soapval)) {
             $this->debug('serialize_val: serialize soapval');
             $xml = $val->serialize($use);
             $this->appendDebug($val->getDebug());
@@ -626,7 +626,7 @@ class Nusoap_base
                 break;
             case is_object($val):
                 $this->debug('serialize_val: serialize object');
-                if ('soapval' === get_class($val)) {
+                if ($val instanceof \soapval) {
                     $this->debug('serialize_val: serialize soapval object');
                     $pXml = $val->serialize($use);
                     $this->appendDebug($val->getDebug());
@@ -661,7 +661,7 @@ class Nusoap_base
                     $i = 0;
                     if (is_array($val) && count($val) > 0) {
                         foreach ($val as $v) {
-                            if (is_object($v) && 'soapval' === get_class($v)) {
+                            if (is_object($v) && $v instanceof \soapval) {
                                 $tt_ns = $v->type_ns;
                                 $tt    = $v->type;
                             } elseif (is_array($v)) {
@@ -796,7 +796,7 @@ class Nusoap_base
             if (is_array($headers)) {
                 $xml = '';
                 foreach ($headers as $k => $v) {
-                    if (is_object($v) && 'soapval' === get_class($v)) {
+                    if (is_object($v) && $v instanceof \soapval) {
                         $xml .= $this->serialize_val($v, false, false, false, false, false, $use);
                     } else {
                         $xml .= $this->serialize_val($v, $k, false, false, false, false, $use);
@@ -3926,7 +3926,7 @@ class Nusoap_server extends Nusoap_base
         // wsdl
         if ($wsdl) {
             $this->debug('In nusoap_server, WSDL is specified');
-            if (is_object($wsdl) && ('wsdl' === get_class($wsdl))) {
+            if (is_object($wsdl) && ($wsdl instanceof \wsdl)) {
                 $this->wsdl            = $wsdl;
                 $this->externalWSDLURL = $this->wsdl->wsdl;
                 $this->debug('Use existing wsdl instance from ' . $this->externalWSDLURL);
@@ -4376,7 +4376,7 @@ class Nusoap_server extends Nusoap_base
         $this->debug('Entering serialize_return methodname: ' . $this->methodname . ' methodURI: ' . $this->methodURI);
         // if fault
         if (isset($this->methodreturn) && is_object($this->methodreturn)
-            && (('soap_fault' === get_class($this->methodreturn))
+            && (($this->methodreturn instanceof \soap_fault)
                 || ('nusoap_fault' === get_class($this->methodreturn)))) {
             $this->debug('got a fault object from method');
             $this->fault = $this->methodreturn;
@@ -6240,7 +6240,7 @@ class Wsdl extends Nusoap_base
         }
 
         // if a soapval has been supplied, let its type override the WSDL
-        if (is_object($value) && 'soapval' === get_class($value)) {
+        if (is_object($value) && $value instanceof \soapval) {
             if ($value->type_ns) {
                 $type      = $value->type_ns . ':' . $value->type;
                 $forceType = true;
@@ -7702,7 +7702,7 @@ class Nusoap_client extends Nusoap_base
 
         // make values
         if ($wsdl) {
-            if (is_object($endpoint) && ('wsdl' === get_class($endpoint))) {
+            if (is_object($endpoint) && ($endpoint instanceof \wsdl)) {
                 $this->wsdl     = $endpoint;
                 $this->endpoint = $this->wsdl->wsdl;
                 $this->wsdlFile = $this->endpoint;

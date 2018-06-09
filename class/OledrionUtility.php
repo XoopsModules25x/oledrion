@@ -74,7 +74,7 @@ class OledrionUtility
         }
 
         $retval = false;
-        if (isset($xoopsModuleConfig)
+        if ($xoopsModuleConfig !== null
             && (is_object($xoopsModule) && $xoopsModule->getVar('dirname') == $repmodule
                 && $xoopsModule->getVar('isactive'))) {
             if (isset($xoopsModuleConfig[$option])) {
@@ -960,7 +960,7 @@ class OledrionUtility
         $content = html_entity_decode($content);
         $content = preg_replace('/quot/i', ' ', $content);
         $content = preg_replace("/'/i", ' ', $content);
-        $content = str_ireplace("-", ' ', $content);
+        $content = str_ireplace('-', ' ', $content);
         $content = preg_replace('/[[:punct:]]/i', '', $content);
 
         // Selon option mais attention au fichier .htaccess !

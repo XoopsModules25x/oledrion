@@ -557,10 +557,10 @@ class Utility extends \XoopsObject
         if (static::isX23()) {
             return false;
         }
-        if (false !== strpos(strtolower(XOOPS_VERSION), 'impresscms')) {
+        if (false !== stripos(XOOPS_VERSION, 'impresscms')) {
             return false;
         }
-        if (false === strpos(strtolower(XOOPS_VERSION), 'legacy')) {
+        if (false === stripos(XOOPS_VERSION, 'legacy')) {
             $xv = xoops_trim(str_replace('XOOPS ', '', XOOPS_VERSION));
             if ((int)substr($xv, 4, 2) >= 17) {
                 return false;
@@ -936,7 +936,7 @@ class Utility extends \XoopsObject
         $content = htmlentities($content, ENT_QUOTES | ENT_HTML5); // TODO: Vérifier
         $content = preg_replace('/&([a-zA-Z])(uml|acute|grave|circ|tilde);/', '$1', $content);
         $content = html_entity_decode($content);
-        $content = str_ireplace("quot", ' ', $content);
+        $content = str_ireplace('quot', ' ', $content);
         $content = preg_replace("/'/i", ' ', $content);
         $content = preg_replace('/-/i', ' ', $content);
         $content = preg_replace('/[[:punct:]]/i', '', $content);
@@ -1336,7 +1336,7 @@ class Utility extends \XoopsObject
         $ret      = '';
         $infotips = static::getModuleOption('infotips');
         if ($infotips > 0) {
-            $myts = MyTextSanitizer::getInstance();
+            $myts = \MyTextSanitizer::getInstance();
             $ret  = $myts->htmlSpecialChars(xoops_substr(strip_tags($text), 0, $infotips));
         }
 

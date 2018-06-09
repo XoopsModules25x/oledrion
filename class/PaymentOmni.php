@@ -37,13 +37,13 @@ class PaymentOmni
      */
     public function setcard($value)
     {
+        $card  = [
+            'number'      => $value['card'],
+            'expiryMonth' => $value['expiremonth'],
+            'expiryYear'  => $value['expireyear'],
+            'cvv'         => $value['cvv']
+        ];
         try {
-            $card  = [
-                'number'      => $value['card'],
-                'expiryMonth' => $value['expiremonth'],
-                'expiryYear'  => $value['expireyear'],
-                'cvv'         => $value['cvv']
-            ];
             $ccard = new CreditCard($card);
             $ccard->validate();
             $this->card = $card;

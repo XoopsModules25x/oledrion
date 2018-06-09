@@ -64,7 +64,7 @@ class Files extends OledrionObject
      */
     public function isMP3()
     {
-        return 'audio/mpeg' === strtolower($this->getVar('file_mimetype')) ? true : false;
+        return 'audio/mpeg' === strtolower($this->getVar('file_mimetype'));
     }
 
     /**

@@ -108,7 +108,7 @@ class Parameters extends \ArrayObject
     public function extend(self $defaultValues)
     {
         $result = new self;
-        $result = $this;
+//        $result = $this;
         foreach ($defaultValues as $key => $value) {
             if (!isset($result[$key])) {
                 $result[$key] = $value;
