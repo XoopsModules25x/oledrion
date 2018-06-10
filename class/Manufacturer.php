@@ -66,9 +66,9 @@ class Manufacturer extends OledrionObject
         $pictureNumber = (int)$pictureNumber;
         if ($pictureNumber > 0 && $pictureNumber < 6) {
             return OLEDRION_PICTURES_URL . '/' . $this->getVar('manu_photo' . $pictureNumber);
-        } else {
-            return false;
         }
+
+        return false;
     }
 
     /**
@@ -82,9 +82,9 @@ class Manufacturer extends OledrionObject
         $pictureNumber = (int)$pictureNumber;
         if ($pictureNumber > 0 && $pictureNumber < 6) {
             return OLEDRION_PICTURES_PATH . '/' . $this->getVar('manu_photo' . $pictureNumber);
-        } else {
-            return false;
         }
+
+        return false;
     }
 
     /**

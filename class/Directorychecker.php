@@ -123,13 +123,13 @@ $dircheck = isset($_GET['dircheck']) ? filter_input(INPUT_GET, 'dircheck', FILTE
 switch ($dircheck) {
     case 'createdir':
         $languageConstants = [];
-        if (isset($_GET['path'])) {
+        if (\Xmf\Request::hasVar('path', 'GET')) {
             $path = filter_input(INPUT_GET, 'path', FILTER_SANITIZE_STRING);
         }
-        if (isset($_GET['redirect'])) {
+        if (\Xmf\Request::hasVar('redirect', 'GET')) {
             $redirect = filter_input(INPUT_GET, 'redirect', FILTER_SANITIZE_STRING);
         }
-        if (isset($_GET['languageConstants'])) {
+        if (\Xmf\Request::hasVar('languageConstants', 'GET')) {
             $languageConstants = json_decode($_GET['languageConstants']);
         }
         $result = Directorychecker::createDirectory($path);
@@ -139,16 +139,16 @@ switch ($dircheck) {
         break;
     case 'setperm':
         $languageConstants = [];
-        if (isset($_GET['path'])) {
+        if (\Xmf\Request::hasVar('path', 'GET')) {
             $path = filter_input(INPUT_GET, 'path', FILTER_SANITIZE_STRING);
         }
-        if (isset($_GET['mode'])) {
+        if (\Xmf\Request::hasVar('mode', 'GET')) {
             $mode = filter_input(INPUT_GET, 'mode', FILTER_SANITIZE_STRING);
         }
-        if (isset($_GET['redirect'])) {
+        if (\Xmf\Request::hasVar('redirect', 'GET')) {
             $redirect = filter_input(INPUT_GET, 'redirect', FILTER_SANITIZE_STRING);
         }
-        if (isset($_GET['languageConstants'])) {
+        if (\Xmf\Request::hasVar('languageConstants', 'GET')) {
             $languageConstants = json_decode($_GET['languageConstants']);
         }
         $result = Directorychecker::setDirectoryPermissions($path, $mode);

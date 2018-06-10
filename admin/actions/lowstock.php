@@ -72,7 +72,7 @@ switch ($action) {
     case 'updatequantities': // Mise à jour des quantités des produits
         // ****************************************************************************************************************
         $names = [];
-        if (isset($_POST['names'])) {
+        if (\Xmf\Request::hasVar('names', 'POST')) {
             $names = explode('|', $_POST['names']);
             foreach ($names as $item) {
                 $name = 'qty_' . $item;

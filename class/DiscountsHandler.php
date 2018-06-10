@@ -60,18 +60,18 @@ class DiscountsHandler extends OledrionPersistableObjectHandler
         static $buffer = [];
         if (is_array($buffer) && count($buffer) > 0) {
             return $buffer;
-        } else {
-            $critere = new \CriteriaCompo();
-            $critere->add(new \Criteria('disc_date_from', 0, '='));
-            $critere->add(new \Criteria('disc_date_to', 0, '='), 'OR');
-
-            $critere2 = new \CriteriaCompo();
-            $critere2->add(new \Criteria('disc_date_from', time(), '>='));
-            $critere2->add(new \Criteria('disc_date_to', time(), '<='));
-            $critere->add($critere2);
-
-            $buffer = $this->getObjects($critere);
         }
+
+        $critere = new \CriteriaCompo();
+        $critere->add(new \Criteria('disc_date_from', 0, '='));
+        $critere->add(new \Criteria('disc_date_to', 0, '='), 'OR');
+
+        $critere2 = new \CriteriaCompo();
+        $critere2->add(new \Criteria('disc_date_from', time(), '>='));
+        $critere2->add(new \Criteria('disc_date_to', time(), '<='));
+        $critere->add($critere2);
+
+        $buffer = $this->getObjects($critere);
 
         return $buffer;
     }

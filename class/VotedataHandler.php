@@ -54,11 +54,11 @@ class VotedataHandler extends OledrionPersistableObjectHandler
         $result = $this->db->query($sql);
         if (!$result) {
             return 0;
-        } else {
-            $myrow      = $this->db->fetchArray($result);
-            $totalVotes = $myrow['cpt'];
-            $sumRating  = $myrow['sum_rating'];
         }
+
+        $myrow      = $this->db->fetchArray($result);
+        $totalVotes = $myrow['cpt'];
+        $sumRating  = $myrow['sum_rating'];
     }
 
     /**
@@ -112,9 +112,9 @@ class VotedataHandler extends OledrionPersistableObjectHandler
         $count = $this->getCount($criteria);
         if ($count > 0) {
             return true;
-        } else {
-            return false;
         }
+
+        return false;
     }
 
     /**
@@ -139,9 +139,9 @@ class VotedataHandler extends OledrionPersistableObjectHandler
         $count = $this->getCount($criteria);
         if ($count > 0) {
             return true;
-        } else {
-            return false;
         }
+
+        return false;
     }
 
     /**

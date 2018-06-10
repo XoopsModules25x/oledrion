@@ -49,10 +49,11 @@ function b_oledrion_recomm_show($options)
         $xoTheme->addStylesheet(OLEDRION_URL . 'assets/css/oledrion.css');
 
         return $block;
-    } else { // Pas de produits recommandés
-
-        return false;
     }
+
+    // Pas de produits recommandés
+
+    return false;
 }
 
 /**

@@ -172,7 +172,7 @@ class OledrionPersistableObjectHandler extends \XoopsPersistableObjectHandler
         //require_once __DIR__ . '/lite.php';
 
         $sql = 'SELECT Sum(' . $field . ') as cpt FROM ' . $this->table;
-        if (isset($criteria) && is_subclass_of($criteria, 'CriteriaElement')) {
+        if (null !== $criteria && is_subclass_of($criteria, 'CriteriaElement')) {
             $sql .= ' ' . $criteria->renderWhere();
             if ('' !== $criteria->groupby) {
                 $sql .= $criteria->getGroupby();
@@ -285,7 +285,7 @@ class OledrionPersistableObjectHandler extends \XoopsPersistableObjectHandler
         //require_once __DIR__ . '/lite.php';
         $limit = $start = 0;
         $sql   = 'SELECT ' . $this->keyName . ', ' . $field . ' FROM ' . $this->table;
-        if (isset($criteria) && is_subclass_of($criteria, 'CriteriaElement')) {
+        if (null !== $criteria && is_subclass_of($criteria, 'CriteriaElement')) {
             $sql   .= ' ' . $criteria->renderWhere();
             $limit = $criteria->getLimit();
             $start = $criteria->getStart();

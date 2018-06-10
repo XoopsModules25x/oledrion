@@ -326,7 +326,7 @@ switch ($action) {
             if (class_exists($className)) {
                 $export = new $className();
                 $export->setOrderType($orderType);
-                $result = $export->export();
+                $result = $export->doExport();
                 if (true === $result) {
                     echo "<a href='" . $export->getDownloadUrl() . "'>" . _AM_OLEDRION_EXPORT_READY . '</a>';
                 }
@@ -460,7 +460,7 @@ switch ($action) {
             $productForTemplate['product_caddy'] = $itemCaddy->toArray();
             if ($productForTemplate['product_final_price_ttc']) {
                 $discount = ($productForTemplate['product_caddy']['caddy_qte'] * $productForTemplate['product_final_price_ttc']) - ((int)$productForTemplate['product_caddy']['caddy_price']);
-                $discount = $discount / $productForTemplate['product_caddy']['caddy_qte'];
+                $discount /= $productForTemplate['product_caddy']['caddy_qte'];
             } else {
                 $discount = 0;
             }

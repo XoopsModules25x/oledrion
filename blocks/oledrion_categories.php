@@ -22,7 +22,7 @@ use XoopsModules\Oledrion;
 /**
  * Affiche le bloc des catégories en fonction de la catégorie en cours (fonctionne de paire avec les pages du module)
  * @param $options
- * @return array
+ * @return array|bool
  */
 function b_oledrion_category_show($options)
 {
@@ -82,7 +82,15 @@ function b_oledrion_category_show($options)
         if (isset($GLOBALS['current_category']) && -1 != $GLOBALS['current_category']) {
             $cat_cid = (int)$GLOBALS['current_category'];
         }
-        $htmlSelect          = $mytree->makeSelBox('cat_cid', 'cat_title', '-', $cat_cid, false, 0, $additional);
+    //$htmlSelect = $mytree->makeSelBox('cat_cid', 'cat_title', '-', $cat_cid, false, 0, $additional);
+        if (Oledrion\Utility::checkVerXoops($GLOBALS['xoopsModule'], '2.5.9')) {
+            $select0 = $mytree->makeSelectElement('cat_cid', 'cat_title', '-', $cat_cid, false, 0, '', $additional);
+            $htmlSelect  = $select0->render();
+        } else {
+        $htmlSelect = $mytree->makeSelBox('cat_cid', 'cat_title', '-', $cat_cid, false, 0, $additional);
+        }
+
+
         $block['htmlSelect'] = $htmlSelect;
     } else { // Affichage de toute l'arborescence, dépliée
         $block['block_option'] = 2;

@@ -112,7 +112,7 @@ switch ($action) {
 
     case 'fromproperty':
 
-        if (isset($_POST['product_property1'])) {
+        if (\Xmf\Request::hasVar('product_property1', 'POST')) {
             if (Oledrion\Utility::getModuleOption('product_property1') != $_POST['product_property1']) {
                 $criteria = new \CriteriaCompo();
                 $criteria->add($moduleIdCriteria);
@@ -132,7 +132,7 @@ switch ($action) {
             }
         }
 
-        if (isset($_POST['product_property1_title'])) {
+        if (\Xmf\Request::hasVar('product_property1_title', 'POST')) {
             if (Oledrion\Utility::getModuleOption('product_property1_title') != $_POST['product_property1_title']) {
                 $criteria = new \CriteriaCompo();
                 $criteria->add($moduleIdCriteria);
@@ -152,7 +152,7 @@ switch ($action) {
             }
         }
 
-        if (isset($_POST['product_property2'])) {
+        if (\Xmf\Request::hasVar('product_property2', 'POST')) {
             if (Oledrion\Utility::getModuleOption('product_property2') != $_POST['product_property2']) {
                 $criteria = new \CriteriaCompo();
                 $criteria->add($moduleIdCriteria);
@@ -172,7 +172,7 @@ switch ($action) {
             }
         }
 
-        if (isset($_POST['product_property2_title'])) {
+        if (\Xmf\Request::hasVar('product_property2_title', 'POST')) {
             if (Oledrion\Utility::getModuleOption('product_property2_title') != $_POST['product_property2_title']) {
                 $criteria = new \CriteriaCompo();
                 $criteria->add($moduleIdCriteria);
@@ -192,7 +192,7 @@ switch ($action) {
             }
         }
 
-        if (isset($_POST['product_property3'])) {
+        if (\Xmf\Request::hasVar('product_property3', 'POST')) {
             if (Oledrion\Utility::getModuleOption('product_property3') != $_POST['product_property3']) {
                 $criteria = new \CriteriaCompo();
                 $criteria->add($moduleIdCriteria);
@@ -212,7 +212,7 @@ switch ($action) {
             }
         }
 
-        if (isset($_POST['product_property3_title'])) {
+        if (\Xmf\Request::hasVar('product_property3_title', 'POST')) {
             if (Oledrion\Utility::getModuleOption('product_property3_title') != $_POST['product_property3_title']) {
                 $criteria = new \CriteriaCompo();
                 $criteria->add($moduleIdCriteria);
@@ -232,7 +232,7 @@ switch ($action) {
             }
         }
 
-        if (isset($_POST['product_property4'])) {
+        if (\Xmf\Request::hasVar('product_property4', 'POST')) {
             if (Oledrion\Utility::getModuleOption('product_property4') != $_POST['product_property4']) {
                 $criteria = new \CriteriaCompo();
                 $criteria->add($moduleIdCriteria);
@@ -252,7 +252,7 @@ switch ($action) {
             }
         }
 
-        if (isset($_POST['product_property4_title'])) {
+        if (\Xmf\Request::hasVar('product_property4_title', 'POST')) {
             if (Oledrion\Utility::getModuleOption('product_property4_title') != $_POST['product_property4_title']) {
                 $criteria = new \CriteriaCompo();
                 $criteria->add($moduleIdCriteria);
@@ -272,7 +272,7 @@ switch ($action) {
             }
         }
 
-        if (isset($_POST['product_property5'])) {
+        if (\Xmf\Request::hasVar('product_property5', 'POST')) {
             if (Oledrion\Utility::getModuleOption('product_property5') != $_POST['product_property5']) {
                 $criteria = new \CriteriaCompo();
                 $criteria->add($moduleIdCriteria);
@@ -292,7 +292,7 @@ switch ($action) {
             }
         }
 
-        if (isset($_POST['product_property5_title'])) {
+        if (\Xmf\Request::hasVar('product_property5_title', 'POST')) {
             if (Oledrion\Utility::getModuleOption('product_property5_title') != $_POST['product_property5_title']) {
                 $criteria = new \CriteriaCompo();
                 $criteria->add($moduleIdCriteria);
@@ -312,7 +312,7 @@ switch ($action) {
             }
         }
 
-        if (isset($_POST['product_property6'])) {
+        if (\Xmf\Request::hasVar('product_property6', 'POST')) {
             if (Oledrion\Utility::getModuleOption('product_property6') != $_POST['product_property6']) {
                 $criteria = new \CriteriaCompo();
                 $criteria->add($moduleIdCriteria);
@@ -332,7 +332,7 @@ switch ($action) {
             }
         }
 
-        if (isset($_POST['product_property6_title'])) {
+        if (\Xmf\Request::hasVar('product_property6_title', 'POST')) {
             if (Oledrion\Utility::getModuleOption('product_property6_title') != $_POST['product_property6_title']) {
                 $criteria = new \CriteriaCompo();
                 $criteria->add($moduleIdCriteria);
@@ -352,7 +352,7 @@ switch ($action) {
             }
         }
 
-        if (isset($_POST['product_property7'])) {
+        if (\Xmf\Request::hasVar('product_property7', 'POST')) {
             if (Oledrion\Utility::getModuleOption('product_property7') != $_POST['product_property7']) {
                 $criteria = new \CriteriaCompo();
                 $criteria->add($moduleIdCriteria);
@@ -372,7 +372,7 @@ switch ($action) {
             }
         }
 
-        if (isset($_POST['product_property7_title'])) {
+        if (\Xmf\Request::hasVar('product_property7_title', 'POST')) {
             if (Oledrion\Utility::getModuleOption('product_property7_title') != $_POST['product_property7_title']) {
                 $criteria = new \CriteriaCompo();
                 $criteria->add($moduleIdCriteria);
@@ -392,7 +392,7 @@ switch ($action) {
             }
         }
 
-        if (isset($_POST['product_property8'])) {
+        if (\Xmf\Request::hasVar('product_property8', 'POST')) {
             if (Oledrion\Utility::getModuleOption('product_property8') != $_POST['product_property8']) {
                 $criteria = new \CriteriaCompo();
                 $criteria->add($moduleIdCriteria);
@@ -412,7 +412,7 @@ switch ($action) {
             }
         }
 
-        if (isset($_POST['product_property8_title'])) {
+        if (\Xmf\Request::hasVar('product_property8_title', 'POST')) {
             if (Oledrion\Utility::getModuleOption('product_property8_title') != $_POST['product_property8_title']) {
                 $criteria = new \CriteriaCompo();
                 $criteria->add($moduleIdCriteria);
@@ -432,7 +432,7 @@ switch ($action) {
             }
         }
 
-        if (isset($_POST['product_property9'])) {
+        if (\Xmf\Request::hasVar('product_property9', 'POST')) {
             if (Oledrion\Utility::getModuleOption('product_property9') != $_POST['product_property9']) {
                 $criteria = new \CriteriaCompo();
                 $criteria->add($moduleIdCriteria);
@@ -452,7 +452,7 @@ switch ($action) {
             }
         }
 
-        if (isset($_POST['product_property9_title'])) {
+        if (\Xmf\Request::hasVar('product_property9_title', 'POST')) {
             if (Oledrion\Utility::getModuleOption('product_property9_title') != $_POST['product_property9_title']) {
                 $criteria = new \CriteriaCompo();
                 $criteria->add($moduleIdCriteria);
@@ -472,7 +472,7 @@ switch ($action) {
             }
         }
 
-        if (isset($_POST['product_property10'])) {
+        if (\Xmf\Request::hasVar('product_property10', 'POST')) {
             if (Oledrion\Utility::getModuleOption('product_property10') != $_POST['product_property10']) {
                 $criteria = new \CriteriaCompo();
                 $criteria->add($moduleIdCriteria);
@@ -492,7 +492,7 @@ switch ($action) {
             }
         }
 
-        if (isset($_POST['product_property10_title'])) {
+        if (\Xmf\Request::hasVar('product_property10_title', 'POST')) {
             if (Oledrion\Utility::getModuleOption('product_property10_title') != $_POST['product_property10_title']) {
                 $criteria = new \CriteriaCompo();
                 $criteria->add($moduleIdCriteria);

@@ -36,7 +36,7 @@ if (is_object($gateway) && method_exists($gateway, 'cancelOrder')) {
     }
     $gateway->cancelOrder(OLEDRION_GATEWAY_LOG_PATH);
     unset($gateway);
-} elseif (isset($_GET['id'])) {
+} elseif (\Xmf\Request::hasVar('id', 'GET')) {
     $order = null;
     $order = $commandsHandler->getOrderFromCancelPassword($_GET['id']);
     if (is_object($order)) {

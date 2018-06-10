@@ -43,9 +43,9 @@ function b_oledrion_recentlysold_show($options)
         $xoTheme->addStylesheet(OLEDRION_URL . 'assets/css/oledrion.css');
 
         return $block;
-    } else {
-        return false;
     }
+
+    return false;
 }
 
 /**
@@ -72,7 +72,9 @@ function b_oledrion_recentlysold_edit($options)
  */
 function b_oledrion_recentlysold_duplicatable($options)
 {
-    $options = explode('|', $options);
+    if (!is_array($options)) {
+        $options = explode('|', $options);
+    }
     $block   = b_oledrion_bestsales_show($options);
 
     $tpl = new \XoopsTpl();

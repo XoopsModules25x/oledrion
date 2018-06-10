@@ -74,7 +74,9 @@ class PaymentOmni
             // Process response
             if ($response->isSuccessful()) {
                 return 'Thankyou for your payment';
-            } elseif ($response->isRedirect()) {
+            }
+
+            if ($response->isRedirect()) {
 
                 // Redirect to offsite payment gateway
                 return $response->getMessage();

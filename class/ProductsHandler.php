@@ -345,15 +345,15 @@ class ProductsHandler extends OledrionPersistableObjectHandler
     /**
      * Récupération de l'ID et du titre d'une série de produits répondants à un critère
      *
-     * @param  \CriteriaElement $criteria critère de sélection
+     * @param  null|\CriteriaElement $criteria critère de sélection
      * @return array  Tableau dont la clé = ID produit et la valeur le titre du produit
      */
-    public function getIdTitle($criteria)
+    public function getIdTitle($criteria = null)
     {
         global $myts;
         $ret = [];
         $sql = 'SELECT product_id, product_title FROM ' . $this->table;
-        if (isset($criteria) && is_subclass_of($criteria, 'CriteriaElement')) {
+        if (null !== $criteria && is_subclass_of($criteria, 'CriteriaElement')) {
             $sql .= ' ' . $criteria->renderWhere();
             if ('' !== $criteria->getSort()) {
                 $sql .= ' ORDER BY ' . $criteria->getSort() . ' ' . $criteria->getOrder();
@@ -539,7 +539,7 @@ class ProductsHandler extends OledrionPersistableObjectHandler
     /**
      * Retourne le nombre de produits dont la quantité en stock est inférieure ou égale à la quantité d'alerte
      *
-     * @return integer Le nombre de produits concernés
+     * @return array|integer Le nombre de produits concernés
      */
     public function getLowStocksCount()
     {
@@ -605,9 +605,9 @@ class ProductsHandler extends OledrionPersistableObjectHandler
     {
         if ($product->getVar('product_stock') < $product->getVar('product_alert_stock')) {
             return true;
-        } else {
-            return false;
         }
+
+        return false;
     }
 
     /**
@@ -628,9 +628,9 @@ class ProductsHandler extends OledrionPersistableObjectHandler
             Oledrion\Utility::sendEmailFromTpl('shop_lowstock.tpl', Oledrion\Utility::getEmailsFromGroup(Oledrion\Utility::getModuleOption('stock_alert_email')), _OLEDRION_STOCK_ALERT, $msg);
 
             return true;
-        } else {
-            return false;
         }
+
+        return false;
     }
 
     /**
@@ -823,9 +823,9 @@ class ProductsHandler extends OledrionPersistableObjectHandler
             }
 
             return $newProduct;
-        } else {
-            return false;
         }
+
+        return false;
     }
 
     /**

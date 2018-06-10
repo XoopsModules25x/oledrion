@@ -30,7 +30,7 @@ if (\Xmf\Request::hasVar('id', 'GET')) {
     Oledrion\Utility::redirect(_OLEDRION_ERROR11, 'index.php', 6);
 }
 
-if (isset($_GET['pass'])) {
+if (\Xmf\Request::hasVar('pass', 'GET')) {
     $pass = $_GET['pass'];
 } else {
     if (!Oledrion\Utility::isAdmin()) {

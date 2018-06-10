@@ -51,7 +51,7 @@ class DbaseExport extends Export
      * Export des données
      * @return boolean Vrai si l'export a réussi sinon faux
      */
-    public function export()
+    public function doExport()
     {
         $def = [
             ['o_id', 'N', 10, 0],
@@ -182,9 +182,9 @@ class DbaseExport extends Export
     {
         if ($this->success) {
             return $this->url . '/' . $this->filename;
-        } else {
-            return false;
         }
+
+        return false;
     }
 
     /**

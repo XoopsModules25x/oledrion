@@ -53,10 +53,10 @@ $searchCriterias = [
     XOOPS_MATCH_CONTAIN => _CONTAINS
 ];
 
+$vendors         = [];
 $db              = \XoopsDatabaseFactory::getDatabaseConnection();
 $vendorsHandler  = new Oledrion\VendorsHandler($db);
 $categoryHandler = new Oledrion\CategoryHandler($db);
-$vendors         = [];
 $vendors         = $vendorsHandler->getList();
 $vendors[0]      = '---';
 sort($vendors);
@@ -69,9 +69,9 @@ $start         = \Xmf\Request::getInt('start', 0, 'REQUEST');
 $mutipleSelect = \Xmf\Request::getInt('mutipleSelect', 0, 'REQUEST');
 $callerName    = \Xmf\Request::getString('callerName', '', 'REQUEST');
 
-if (isset($_REQUEST['op']) && 'search' === $_REQUEST['op']) {
+if (\Xmf\Request::hasVar('op', 'REQUEST') && 'search' === $_REQUEST['op']) {
     $searchField    = \Xmf\Request::getString('searchField', '', 'REQUEST');
-    $searchCriteria = \Xmf\Request::getInt('searchCriteria', '', 'REQUEST');
+    $searchCriteria = \Xmf\Request::getString('searchCriteria', '', 'REQUEST');
     $searchText     = isset($_REQUEST['searchText']) ? trim($_REQUEST['searchText']) : '';
     $searchVendor   = \Xmf\Request::getInt('searchVendor', 0, 'REQUEST');
     $product_cid    = \Xmf\Request::getInt('product_cid', 0, 'REQUEST');
@@ -86,7 +86,7 @@ if (isset($_REQUEST['op']) && 'search' === $_REQUEST['op']) {
     $additionnalParameters['mutipleSelect']  = $mutipleSelect;
     $additionnalParameters['callerName']     = $callerName;
     $additionnalParameters['searchField']    = $searchField;
-    $additionnalParameters['searchField']    = $searchField;
+//    $additionnalParameters['searchField']    = $searchField;
     $additionnalParameters['searchCriteria'] = $searchCriteria;
     $additionnalParameters['searchText']     = $searchText;
     $additionnalParameters['searchVendor']   = $searchVendor;

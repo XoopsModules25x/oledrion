@@ -48,7 +48,7 @@ class CsvExport extends Export
      * Export des données
      * @return boolean Vrai si l'export a réussi sinon faux
      */
-    public function export()
+    public function doExport()
     {
         $db              = \XoopsDatabaseFactory::getDatabaseConnection();
         $caddyHandler    = new Oledrion\CaddyHandler($db);
@@ -117,9 +117,9 @@ class CsvExport extends Export
     {
         if ($this->success) {
             return $this->url . '/' . $this->filename;
-        } else {
-            return false;
         }
+
+        return false;
     }
 
     /**
@@ -129,8 +129,8 @@ class CsvExport extends Export
     {
         if ($this->success) {
             return $this->folder . '/' . $this->filename;
-        } else {
-            return false;
         }
+
+        return false;
     }
 }

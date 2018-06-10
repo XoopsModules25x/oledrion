@@ -23,7 +23,7 @@ use XoopsModules\Oledrion;
  * block to display items in cart
  *
  * @param int $options [0] Count of items to show (0 = no limit)
- * @return array   Block's content
+ * @return array|string   Block's content
  */
 function b_oledrion_cart_show($options)
 {
@@ -39,7 +39,7 @@ function b_oledrion_cart_show($options)
     $discountsDescription = [];
     // Calcul du montant total du caddy
     $reductions = new Oledrion\Reductions();
-    $reductions->computeCart($cartForTemplate, $emptyCart, $shippingAmount, $commandAmount, $vatAmount, $goOn, $commandAmountTTC, $discountsDescription, $discountsCount);
+    $reductions->computeCart($cartForTemplate, $emptyCart, $shippingAmount, $commandAmount, $vatAmount, $goOn, $commandAmountTTC, $discountsDescription, $discountsCount, $checkoutAttributes);
     $dec = Oledrion\Utility::getModuleOption('decimals_count');
     if ($emptyCart) {
         return '';

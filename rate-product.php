@@ -33,9 +33,9 @@ if (Oledrion\Utility::getModuleOption('rateproducts') == 0 ) {
     Oledrion\Utility::redirect(_OLEDRION_NORATE, 'index.php', 5);
 }
 // Recherche du n° du produit
-if (isset($_GET['product_id'])) {
+if (\Xmf\Request::hasVar('product_id', 'GET')) {
     $product_id = (int) $_GET['product_id'];
-} elseif (isset($_POST['product_id'])) {
+} elseif (\Xmf\Request::hasVar('product_id', 'POST')) {
     $product_id = (int) $_POST['product_id'];
 } else {
     Oledrion\Utility::redirect(_OLEDRION_ERROR1, 'index.php', 5);

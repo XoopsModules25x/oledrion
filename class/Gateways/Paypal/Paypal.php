@@ -159,9 +159,9 @@ class Paypal extends Gateway
         $test_mode              = (int)$gatewaysOptionsHandler->getGatewayOptionValue($this->gatewayInformation['foldername'], 'paypal_test');
         if (1 == $test_mode) {
             return 'https://www.sandbox.paypal.com/cgi-bin/webscr';
-        } else {
-            return 'https://www.paypal.com/cgi-bin/webscr';
         }
+
+        return 'https://www.paypal.com/cgi-bin/webscr';
     }
 
     /**
@@ -232,9 +232,9 @@ class Paypal extends Gateway
         $test_mode              = (int)$gatewaysOptionsHandler->getGatewayOptionValue($this->gatewayInformation['foldername'], 'paypal_test');
         if (1 == $test_mode) {
             return 'www.sandbox.paypal.com';
-        } else {
-            return 'www.paypal.com';
         }
+
+        return 'www.paypal.com';
     }
 
     /**
@@ -341,7 +341,7 @@ class Paypal extends Gateway
                         }
                     } else {
                         $log .= "paypal not OK\n";
-                        if (isset($_POST['custom'])) {
+                        if (\Xmf\Request::hasVar('custom', 'POST')) {
                             $ref      = \Xmf\Request::getInt('custom', 0, 'POST');
                             $commande = null;
                             $commande = $commandsHandler->get($ref);
@@ -365,7 +365,7 @@ class Paypal extends Gateway
                                 } else {
                                     fwrite($logfp, str_repeat('-', 120) . "\n");
                                     fwrite($logfp, date('d/m/Y H:i:s') . "\n");
-                                    if (isset($_POST['txn_id'])) {
+                                    if (\Xmf\Request::hasVar('txn_id', 'POST')) {
                                         fwrite($logfp, 'Transaction : ' . $_POST['txn_id'] . "\n");
                                     }
                                     fwrite($logfp, 'Result : ' . $log . "\n");
@@ -383,7 +383,7 @@ class Paypal extends Gateway
                             // Rest of transaction can be proccessed offline to decouple Paypal transaction time from site load
                             // PayPal requires this session to return within 30 seconds, or will retry
                             return;
-                            break;
+//                            break;
             }
                 } else {
                     $log .= "$res\n";

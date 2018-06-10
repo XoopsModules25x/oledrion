@@ -43,7 +43,7 @@ $operation = 'attributes';
  */
 function removeAttributInSession()
 {
-    if (isset($_SESSION['oledrion_attribute'])) {
+    if (\Xmf\Request::hasVar('oledrion_attribute', 'SESSION')) {
         $_SESSION['oledrion_attribute'] = null;
         unset($_SESSION['oledrion_attribute']);
     }
@@ -78,29 +78,29 @@ switch ($action) {
 
         $newFilter = false;
 
-        if (isset($_POST['filter_attribute_id'])) {
+        if (\Xmf\Request::hasVar('filter_attribute_id', 'POST')) {
             if (0 !== \Xmf\Request::getInt('filter_attribute_id', 0, 'POST')) {
                 $criteria->add(new \Criteria('attribute_id', \Xmf\Request::getInt('filter_attribute_id', 0, 'POST')), '=');
             }
             $filter_attribute_id = \Xmf\Request::getInt('filter_attribute_id', 0, 'POST');
             $newFilter           = true;
         }
-        if (isset($_POST['filter_attribute_title']) && '' !== xoops_trim($_POST['filter_attribute_title'])) {
+        if (\Xmf\Request::hasVar('filter_attribute_title', 'POST') && '' !== xoops_trim($_POST['filter_attribute_title'])) {
             $criteria->add(new \Criteria('attribute_title', '%' . $_POST['filter_attribute_title'] . '%', 'LIKE'));
             $filter_attribute_title = $_POST['filter_attribute_title'];
             $newFilter              = true;
         }
-        if (isset($_POST['filter_attribute_product_id']) && 0 !== \Xmf\Request::getInt('filter_attribute_product_id', 0, 'POST')) {
+        if (\Xmf\Request::hasVar('filter_attribute_product_id', 'POST') && 0 !== \Xmf\Request::getInt('filter_attribute_product_id', 0, 'POST')) {
             $criteria->add(new \Criteria('attribute_product_id', \Xmf\Request::getInt('filter_attribute_product_id', 0, 'POST')), '=');
             $filter_attribute_product_id = \Xmf\Request::getInt('filter_attribute_product_id', 0, 'POST');
             $newFilter                   = true;
         }
-        if (isset($_POST['filter_attribute_weight']) && 0 !== \Xmf\Request::getInt('filter_attribute_weight', 0, 'POST')) {
+        if (\Xmf\Request::hasVar('filter_attribute_weight', 'POST') && 0 !== \Xmf\Request::getInt('filter_attribute_weight', 0, 'POST')) {
             $criteria->add(new \Criteria('attribute_weight', \Xmf\Request::getInt('filter_attribute_weight', 0, 'POST')), '=');
             $filter_attribute_weight = \Xmf\Request::getInt('filter_attribute_weight', 0, 'POST');
             $newFilter               = true;
         }
-        if (isset($_POST['filter_attribute_type']) && 0 !== \Xmf\Request::getInt('filter_attribute_type', 0, 'POST')) {
+        if (\Xmf\Request::hasVar('filter_attribute_type', 'POST') && 0 !== \Xmf\Request::getInt('filter_attribute_type', 0, 'POST')) {
             $criteria->add(new \Criteria('attribute_type', \Xmf\Request::getInt('filter_attribute_type', 0, 'POST')), '=');
             $filter_attribute_type = \Xmf\Request::getInt('filter_attribute_type', 0, 'POST');
             $newFilter             = true;
@@ -448,15 +448,15 @@ switch ($action) {
         $optionsCount = \Xmf\Request::getInt('optionsCount', 0, 'POST');
         $item->resetOptions();
         for ($i = 0; $i < $optionsCount; ++$i) {
-            $name  = $value = $price = $stock = '';
-            $name  = isset($_POST['name' . $i]) ? $_POST['name' . $i] : '';
-            $value = isset($_POST['value' . $i]) ? $_POST['value' . $i] : '';
-            $price = isset($_POST['price' . $i]) ? $_POST['price' . $i] : '';
-            $stock = isset($_POST['stock' . $i]) ? $_POST['stock' . $i] : '';
-            $item->addOption($name, $value, $price, $stock);
-            if ($i == $default) {
-                $item->setVar('attribute_default_value', $value);
-            }
+                $name  = $value = $price = $stock = '';
+                $name  = \Xmf\Request::getString('name' . $i, '','POST') ;
+                $value = \Xmf\Request::getString('value' . $i, '', 'POST');
+                $price = \Xmf\Request::getString('price' . $i, '', 'POST');
+                $stock = \Xmf\Request::getString('stock' . $i, '', 'POST');
+                $item->addOption($name, $value, $price, $stock);
+                if ($i == $default) {
+                    $item->setVar('attribute_default_value', $value);
+                }
         }
 
         $res = $attributesHandler->insert($item);
@@ -502,7 +502,7 @@ switch ($action) {
             $attribute = unserialize($_SESSION['oledrion_attribute']);
         }
 
-        if (isset($_POST['formcontent'])) { // Traitement du contenu actuel
+        if (\Xmf\Request::hasVar('formcontent', 'POST')) { // Traitement du contenu actuel
             $data = [];
             parse_str(urldecode($_POST['formcontent']), $data);
             $optionsCount = isset($data['optionsCount']) ? (int)$data['optionsCount'] : 0;
@@ -522,11 +522,11 @@ switch ($action) {
             }
         }
 
-        if (isset($_POST['subaction'])) {
+        if (\Xmf\Request::hasVar('subaction', 'POST')) {
             switch (xoops_trim(strtolower($_POST['subaction']))) {
                 case 'delete': // Suppression d'une option de l'attribut
-                    $option = \Xmf\Request::getInt('option', false, 'POST');
-                    if (false !== $option) {
+                    $option = \Xmf\Request::getInt('option', 0, 'POST');
+                    if (0 !== $option) {
                         $attribute->deleteOption($option);
                     }
                     break;
@@ -536,15 +536,15 @@ switch ($action) {
                     break;
 
                 case 'up': // Déplacement d'une option vers le haut
-                    $option = \Xmf\Request::getInt('option', false, 'POST');
-                    if (false !== $option) {
+                    $option = \Xmf\Request::getInt('option', 0, 'POST');
+                    if (0 !== $option) {
                         $attribute->moveOptionUp($option);
                     }
                     break;
 
                 case 'down': // Déplacement d'une option vers le haut
-                    $option = \Xmf\Request::getInt('option', false, 'POST');
-                    if (false !== $option) {
+                    $option = \Xmf\Request::getInt('option', 0, 'POST');
+                    if (0 !== $option) {
                         $attribute->moveOptionDown($option);
                     }
                     break;

@@ -564,9 +564,9 @@ class Attributes extends OledrionObject
         $attributeTypeName = $this->getTypesList();
         if (isset($attributeTypeName[$this->getVar('attribute_type')])) {
             return $attributeTypeName[$this->getVar('attribute_type')];
-        } else {
-            return null;
         }
+
+        return null;
     }
 
     /**

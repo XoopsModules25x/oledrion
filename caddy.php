@@ -69,7 +69,7 @@ function listCart()
     $shippingAmount  = $commandAmount = $vatAmount = $commandAmountTTC = $discountsCount = $ecotaxeAmount = $discountAmount = $totalSavings = 0;
     $goOn            = '';
     $reductions      = new Oledrion\Reductions();
-    $reductions->computeCart($cartForTemplate, $emptyCart, $shippingAmount, $commandAmount, $vatAmount, $goOn, $commandAmountTTC, $discountsDescription, $discountsCount, $ecotaxeAmount, $discountAmount, $totalSavings);
+    $reductions->computeCart($cartForTemplate, $emptyCart, $shippingAmount, $commandAmount, $vatAmount, $goOn, $commandAmountTTC, $discountsDescription, $discountsCount, $checkoutAttributes, $ecotaxeAmount=null, $discountAmount = null, $totalSavings = null);
     $oledrionCurrency = Oledrion\Currency::getInstance();
     $xoopsTpl->assign('emptyCart', $emptyCart);                                            // Caddy Vide ?
     $xoopsTpl->assign('caddieProducts', $cartForTemplate);                                // Produits dans le caddy
@@ -84,6 +84,7 @@ function listCart()
     $xoopsTpl->assign('commandAmountTTC', $oledrionCurrency->amountForDisplay($commandAmountTTC));    // Montant TTC de la commande
     $xoopsTpl->assign('commandAmountTTC_long', $oledrionCurrency->amountForDisplay($commandAmountTTC, 'l'));    // Montant TTC de la commande
     $xoopsTpl->assign('discountsDescription', $discountsDescription);                    // Liste des réductions accordées
+    $xoopsTpl->assign('checkoutAttributes', $checkoutAttributes);
     $showOrderButton   = true;
     $showRegistredOnly = false;
     if (0 == $uid && Oledrion\Utility::getModuleOption('restrict_orders', false)) {

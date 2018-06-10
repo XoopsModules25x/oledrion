@@ -179,9 +179,9 @@ class AttributesHandler extends OledrionPersistableObjectHandler
         $res = $this->insert($newAttribute, true);
         if ($res) {
             return $newAttribute;
-        } else {
-            return false;
         }
+
+        return false;
     }
 
     /**

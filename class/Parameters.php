@@ -90,10 +90,11 @@ class Parameters extends \ArrayObject
             parent::offsetSet(strtolower($method[3]) . substr($method, 4), $args[0]);
 
             return $this;
-        } else { // Affichage de la valeur
-
-            return parent::offsetGet($method);
         }
+
+        // Affichage de la valeur
+
+        return parent::offsetGet($method);
     }
 
     /**

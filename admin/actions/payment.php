@@ -160,7 +160,7 @@ switch ($action) {
             $item->setVar('payment_gateway', Oledrion\Gateways::getDefaultGateway());
         }
 
-        if (isset($_POST['delpicture']) && 1 == \Xmf\Request::getInt('delpicture', 0, 'POST')) {
+        if (\Xmf\Request::hasVar('delpicture', 'POST') && 1 == \Xmf\Request::getInt('delpicture', 0, 'POST')) {
             $item->deletePicture();
         }
 

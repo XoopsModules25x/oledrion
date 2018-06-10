@@ -55,9 +55,9 @@ class Packing extends OledrionObject
     {
         if ('' !== xoops_trim($this->getVar('product_image_url'))) {
             return OLEDRION_PICTURES_URL . '/' . $this->getVar('packing_image');
-        } else {
-            return '';
         }
+
+        return '';
     }
 
     /**

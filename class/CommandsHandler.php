@@ -54,9 +54,9 @@ class CommandsHandler extends OledrionPersistableObjectHandler
         $critere = new \Criteria('cmd_uid', (int)$uid, '=');
         if ($this->getCount($critere) > 0) {
             return true;
-        } else {
-            return false;
         }
+
+        return false;
     }
 
     /**

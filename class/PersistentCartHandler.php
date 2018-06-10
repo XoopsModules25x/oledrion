@@ -166,7 +166,7 @@ class PersistentCartHandler extends OledrionPersistableObjectHandler
      * Retourne les produits d'un utilisateur
      *
      * @param int $persistent_uid L'ID de l'utilisateur
-     * @return array   Tableaux d'objets de type PersistentCart
+     * @return array|bool   Tableaux d'objets de type PersistentCart
      */
     public function getUserProducts($persistent_uid = 0)
     {

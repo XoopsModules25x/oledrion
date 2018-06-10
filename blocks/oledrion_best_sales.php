@@ -44,9 +44,9 @@ function b_oledrion_bestsales_show($options)
         $xoTheme->addStylesheet(OLEDRION_URL . 'assets/css/oledrion.css');
 
         return $block;
-    } else {
-        return false;
     }
+
+    return false;
 }
 
 /**

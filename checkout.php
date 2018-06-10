@@ -47,9 +47,9 @@ if (1 == Oledrion\Utility::getModuleOption('restrict_orders', false) && 0 == $ui
 $op = \Xmf\Request::getCmd('op', 'default');
 // Get action
 $action = 'default';
-if (isset($_POST['action'])) {
+if (\Xmf\Request::hasVar('action', 'POST')) {
     $action = $_POST['action'];
-} elseif (isset($_GET['action'])) {
+} elseif (\Xmf\Request::hasVar('action', 'GET')) {
     $action = $_GET['action'];
 }
 // Get commend id
@@ -102,7 +102,7 @@ switch ($op) {
 
         switch ($action) {
             case 'make':
-                $commandAmountTTC = $commandAmountTTC + $commandAmountVAT;
+                $commandAmountTTC += $commandAmountVAT;
                 $password         = md5(xoops_makepass());
                 $passwordCancel   = md5(xoops_makepass());
                 $commande         = $commandsHandler->create(true);
@@ -137,7 +137,7 @@ switch ($op) {
                 if (0 == $commend_id) {
                     Oledrion\Utility::redirect(_OLEDRION_ERROR20, OLEDRION_URL, 4);
                 }
-                $commandAmountTTC = $commandAmountTTC + $commandAmountVAT;
+                $commandAmountTTC += $commandAmountVAT;
                 $commande         = $commandsHandler->get($commend_id);
                 $commande->setVars($_POST);
                 $commande->setVar('cmd_state', Constants::OLEDRION_STATE_NOINFORMATION);
@@ -573,7 +573,7 @@ switch ($op) {
         }
         // B.R. listCart();
 
-        $commandAmountTTC = $commandAmountTTC + $commandAmountVAT;
+        $commandAmountTTC += $commandAmountVAT;
 
         $commande = $commandsHandler->get($commend_id);
         if (1 == $commande->getVar('cmd_status')) {

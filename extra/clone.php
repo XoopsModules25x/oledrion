@@ -62,8 +62,8 @@ function cloneFileFolder($path)
         }
 
         // check all files in dir, and process it
-        if ($handle = opendir($path)) {
-            while ($file = readdir($handle)) {
+        if (false !== ($handle = opendir($path))) {
+            while (false !== ($file = readdir($handle))) {
                 if ('.' !== $file && '..' !== $file) {
                     cloneFileFolder("$path/$file");
                 }

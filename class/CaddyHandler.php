@@ -59,9 +59,9 @@ class CaddyHandler extends OledrionPersistableObjectHandler
         $id    = $myrow['caddy_product_id'];
         if ($id != $caddy_product_id) {
             return $id;
-        } else {
-            return 0;
         }
+
+        return 0;
     }
 
     /**

@@ -98,8 +98,8 @@ class Currency
         }
         if ('s' !== $format) {
             return $monnaieLeft . $amount . $monnaieRight;
-        } else {
-            return $monnaieSleft . $amount . $monnaieSright;
         }
+
+        return $monnaieSleft . $amount . $monnaieSright;
     }
 }

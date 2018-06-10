@@ -186,9 +186,9 @@ class ListsHandler extends OledrionPersistableObjectHandler
         }
         if (count($usersList) > 0) {
             return Oledrion\Utility::getUsersFromIds($usersList);
-        } else {
-            return [];
         }
+
+        return [];
     }
 
     /**
@@ -251,9 +251,9 @@ class ListsHandler extends OledrionPersistableObjectHandler
         }
         if ($list->getVar('list_uid') == $list_uid) {
             return true;
-        } else {
-            return false;
         }
+
+        return false;
     }
 
     /**

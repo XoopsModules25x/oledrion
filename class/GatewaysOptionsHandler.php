@@ -100,9 +100,9 @@ class GatewaysOptionsHandler extends OledrionPersistableObjectHandler
         if (count($ret) > 0) {
             if ($unserialize) {
                 return unserialize($ret[0]->getVar('option_value', $format));
-            } else {
-                return $ret[0]->getVar('option_value', $format);
             }
+
+            return $ret[0]->getVar('option_value', $format);
         } else {
             return null;
         }
@@ -133,13 +133,14 @@ class GatewaysOptionsHandler extends OledrionPersistableObjectHandler
             }
 
             return $this->insert($option, true);
-        } else { // Option introuvable, on va la créer
-            $option = $this->create(true);
-            $option->setVar('option_gateway', $option_gateway);
-            $option->setVar('option_name', $option_name);
-            $option->setVar('option_value', $option_value);
-
-            return $this->insert($option, true);
         }
+
+        // Option introuvable, on va la créer
+        $option = $this->create(true);
+        $option->setVar('option_gateway', $option_gateway);
+        $option->setVar('option_name', $option_name);
+        $option->setVar('option_value', $option_value);
+
+        return $this->insert($option, true);
     }
 }

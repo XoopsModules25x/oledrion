@@ -156,7 +156,7 @@ switch ($action) {
         $disc_price_amount_on_checked1 = $disc_price_amount_on_checked2 = '';
         if (Constants::OLEDRION_DISCOUNT_PRICE_AMOUNT_ON_PRODUCT == $item->getVar('disc_price_amount_on')) {
             $disc_price_amount_on_checked1 = $checked;
-        } elseif (OLEDRION_DISCOUNT_PRICE_AMOUNT_ON_CART == $item->getVar('disc_price_amount_on')) {
+        } elseif (Constants::OLEDRION_DISCOUNT_PRICE_AMOUNT_ON_CART == $item->getVar('disc_price_amount_on')) {
             $disc_price_amount_on_checked2 = $checked;
         }
         $discountForTemplate['disc_price_amount_on_checked1'] = $disc_price_amount_on_checked1;
@@ -329,7 +329,7 @@ switch ($action) {
         }
         $opRedirect = 'discounts';
         $item->setVars($_POST);
-        if (isset($_POST['disc_pediod']) && 1 == \Xmf\Request::getInt('disc_pediod', 0, 'POST')) {
+        if (\Xmf\Request::hasVar('disc_pediod', 'POST') && 1 == \Xmf\Request::getInt('disc_pediod', 0, 'POST')) {
             $item->setVar('disc_date_from', strtotime($_POST['disc_date_from']));
             $item->setVar('disc_date_to', strtotime($_POST['disc_date_to']));
         } else {

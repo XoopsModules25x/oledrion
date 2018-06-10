@@ -46,7 +46,7 @@ switch ($op) {
         // ****************************************************************************************************************
         $product_id = \Xmf\Request::getInt('product_id', 0, 'POST');
         $product = null;
-        if (isset($_POST['formcontent']) && $product_id > 0) {
+        if (\Xmf\Request::hasVar('formcontent', 'POST') && $product_id > 0) {
             $data = $data = $attributesIds = $attributes = $templateProduct = [];
             //            $handlers = HandlerManager::getInstance();
             $product = $productsHandler->get($product_id);
@@ -283,7 +283,7 @@ switch ($op) {
 
     // Ajax rate
     case 'rate':
-        if (isset($_POST['product_id'])) {
+        if (\Xmf\Request::hasVar('product_id', 'POST')) {
             $product_id = \Xmf\Request::getInt('product_id', 0, 'POST');
             $product    = null;
             $product    = $productsHandler->get($product_id);
@@ -341,7 +341,7 @@ switch ($op) {
         $ret            = [];
         $ret['status']  = 0;
         $ret['message'] = 'error';
-        if (isset($_POST['product_id']) && is_numeric($_POST['product_id'])) {
+        if (\Xmf\Request::hasVar('product_id', 'POST') && is_numeric($_POST['product_id'])) {
             // Set from post
             $product_id    = \Xmf\Request::getString('product_id', '', 'POST');
             $cmd_lastname  = \Xmf\Request::getString('cmd_lastname', '', 'POST');

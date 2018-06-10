@@ -29,15 +29,16 @@
  *
  */
 
-// defined('XOOPS_ROOT_PATH') || die('Restricted access');
-
 use WideImage\WideImage;
 use Xmf\Request;
 use XoopsModules\Oledrion;
 use XoopsModules\Oledrion\Common;
 
+// defined('XOOPS_ROOT_PATH') || die('Restricted access');
+
+
 /**
- * Class OledrionUtility
+ * Class Oledrion\Utility
  */
 class Utility extends \XoopsObject
 {
@@ -86,7 +87,7 @@ class Utility extends \XoopsObject
         }
 
         $retval = false;
-        if (isset($xoopsModuleConfig)
+        if (null !== $xoopsModuleConfig
             && (is_object($xoopsModule) && $xoopsModule->getVar('dirname') == $repmodule
                 && $xoopsModule->getVar('isactive'))) {
             if (isset($xoopsModuleConfig[$option])) {
@@ -195,9 +196,9 @@ class Utility extends \XoopsObject
     {
         if (!$form) {
             return "onclick=\"javascript:return confirm('" . str_replace("'", ' ', $message) . "')\"";
-        } else {
-            return "onSubmit=\"javascript:return confirm('" . str_replace("'", ' ', $message) . "')\"";
         }
+
+        return "onSubmit=\"javascript:return confirm('" . str_replace("'", ' ', $message) . "')\"";
     }
 
     /**
@@ -247,14 +248,14 @@ class Utility extends \XoopsObject
     {
         global $xoTheme, $xoTheme, $xoopsTpl;
         $xoopsTpl->assign('xoops_pagetitle', $pageTitle);
-        if (isset($xoTheme) && is_object($xoTheme)) {
+        if (null !== $xoTheme && is_object($xoTheme)) {
             if (!empty($metaKeywords)) {
                 $xoTheme->addMeta('meta', 'keywords', $metaKeywords);
             }
             if (!empty($metaDescription)) {
                 $xoTheme->addMeta('meta', 'description', $metaDescription);
             }
-        } elseif (isset($xoopsTpl) && is_object($xoopsTpl)) { // Compatibility for old Xoops versions
+        } elseif (null !== $xoopsTpl && is_object($xoopsTpl)) { // Compatibility for old Xoops versions
             if (!empty($metaKeywords)) {
                 $xoopsTpl->assign('xoops_meta_keywords', $metaKeywords);
             }
@@ -388,9 +389,9 @@ class Utility extends \XoopsObject
     protected static function _getModule()
     {
         static $mymodule;
-        if (!isset($mymodule)) {
+        if (null === $mymodule) {
             global $xoopsModule;
-            if (isset($xoopsModule) && is_object($xoopsModule) && OLEDRION_DIRNAME == $xoopsModule->getVar('dirname')) {
+            if (null !== $xoopsModule && is_object($xoopsModule) && OLEDRION_DIRNAME == $xoopsModule->getVar('dirname')) {
                 $mymodule = $xoopsModule;
             } else {
                 $hModule  = xoops_getHandler('module');
@@ -408,7 +409,7 @@ class Utility extends \XoopsObject
     public static function getModuleName()
     {
         static $moduleName;
-        if (!isset($moduleName)) {
+        if (null === $moduleName) {
             $mymodule   = static::_getModule();
             $moduleName = $mymodule->getVar('name');
         }
@@ -474,7 +475,9 @@ class Utility extends \XoopsObject
         if (is_object($xoopsUser)) {
             if (in_array(XOOPS_GROUP_ADMIN, $xoopsUser->getGroups())) {
                 return true;
-            } elseif (isset($xoopsModule) && $xoopsUser->isAdmin($xoopsModule->getVar('mid'))) {
+            }
+
+            if (null !== $xoopsModule && $xoopsUser->isAdmin($xoopsModule->getVar('mid'))) {
                 return true;
             }
         }
@@ -511,9 +514,9 @@ class Utility extends \XoopsObject
     {
         if ('0000-00-00' !== $date && '' !== xoops_trim($date)) {
             return formatTimestamp(strtotime($date), $format);
-        } else {
-            return '';
         }
+
+        return '';
     }
 
     /**
@@ -979,7 +982,7 @@ class Utility extends \XoopsObject
 
         $tmp = [];
         // Search for the "Minimum keyword length"
-        if (isset($_SESSION['oledrion_keywords_limit'])) {
+        if (\Xmf\Request::hasVar('oledrion_keywords_limit', 'SESSION')) {
             $limit = $_SESSION['oledrion_keywords_limit'];
         } else {
             $configHandler                       = xoops_getHandler('config');
@@ -1083,28 +1086,28 @@ class Utility extends \XoopsObject
         $tmp = array_slice($tmp, 0, $keywordscount);
         if (count($tmp) > 0) {
             return implode(',', $tmp);
-        } else {
-            if (!isset($configHandler) || !is_object($configHandler)) {
-                $configHandler = xoops_getHandler('config');
-            }
-            $xoopsConfigMetaFooter = $configHandler->getConfigsByCat(XOOPS_CONF_METAFOOTER);
-            if (isset($xoopsConfigMetaFooter['meta_keywords'])) {
-                return $xoopsConfigMetaFooter['meta_keywords'];
-            } else {
-                return '';
-            }
         }
+
+        if (null === $configHandler || !is_object($configHandler)) {
+            $configHandler = xoops_getHandler('config');
+        }
+        $xoopsConfigMetaFooter = $configHandler->getConfigsByCat(XOOPS_CONF_METAFOOTER);
+        if (isset($xoopsConfigMetaFooter['meta_keywords'])) {
+            return $xoopsConfigMetaFooter['meta_keywords'];
+        }
+
+        return '';
     }
 
     /**
      * Fonction chargée de gérer l'upload
      *
-     * @param int $indice L'indice du fichier à télécharger
-     * @param  string  $dstpath
-     * @param  null    $mimeTypes
-     * @param  null    $uploadMaxSize
-     * @param  null    $maxWidth
-     * @param  null    $maxHeight
+     * @param int       $indice L'indice du fichier à télécharger
+     * @param  string   $dstpath
+     * @param  null     $mimeTypes
+     * @param  null|int $uploadMaxSize
+     * @param  null|int $maxWidth
+     * @param  null|int $maxHeight
      * @return mixed   True si l'upload s'est bien déroulé sinon le message d'erreur correspondant
      */
     public static function uploadFile(
@@ -1117,8 +1120,8 @@ class Utility extends \XoopsObject
     ) {
         //        require_once XOOPS_ROOT_PATH . '/class/uploader.php';
         global $destname;
-        if (isset($_POST['xoops_upload_file'])) {
-            require_once XOOPS_ROOT_PATH . '/class/uploader.php';
+        if (\Xmf\Request::hasVar('xoops_upload_file', 'POST')) {
+            require XOOPS_ROOT_PATH . '/class/uploader.php';
             $fldname = '';
             $fldname = $_FILES[$_POST['xoops_upload_file'][$indice]];
             $fldname = get_magic_quotes_gpc() ? stripslashes($fldname['name']) : $fldname['name'];
@@ -1140,9 +1143,9 @@ class Utility extends \XoopsObject
                 if ($uploader->fetchMedia($_POST['xoops_upload_file'][$indice])) {
                     if ($uploader->upload()) {
                         return true;
-                    } else {
-                        return _ERRORS . ' ' . htmlentities($uploader->getErrors(), ENT_QUOTES | ENT_HTML5);
                     }
+
+                    return _ERRORS . ' ' . htmlentities($uploader->getErrors(), ENT_QUOTES | ENT_HTML5);
                 } else {
                     return htmlentities($uploader->getErrors(), ENT_QUOTES | ENT_HTML5);
                 }
@@ -1321,9 +1324,9 @@ class Utility extends \XoopsObject
             }
 
             return $string . $etc;
-        } else {
-            return $string;
         }
+
+        return $string;
     }
 
     /**
@@ -1395,9 +1398,9 @@ class Utility extends \XoopsObject
         $ttc               = $ht * (1 + ($vat / 100));
         if (!$edit) {
             return $oledrionCurrency->amountForDisplay($ttc, $format);
-        } else {
-            return $ttc;
         }
+
+        return $ttc;
     }
 
     /**
@@ -1438,9 +1441,9 @@ class Utility extends \XoopsObject
 
         if (null !== $vat_rate) {
             return ((float)$product_price * (float)$vat_rate / 100) + (float)$product_price;
-        } else {
-            return $product_price;
         }
+
+        return $product_price;
     }
 
     /**
@@ -1480,13 +1483,13 @@ class Utility extends \XoopsObject
             finfo_close($finfo);
 
             return $mimetype;
-        } else {
-            if (function_exists('mime_content_type')) {
-                return mime_content_type($filename);
-            } else {
-                return '';
-            }
         }
+
+        if (function_exists('mime_content_type')) {
+            return mime_content_type($filename);
+        }
+
+        return '';
     }
 
     /**
@@ -1554,13 +1557,13 @@ class Utility extends \XoopsObject
 
         if (is_array($buffer) && count($buffer) > 0 && isset($buffer[$uid])) {
             return $buffer[$uid];
+        }
+
+        if ($uid > 0) {
+            $memberHandler = xoops_getHandler('member');
+            $buffer[$uid]  = $memberHandler->getGroupsByUser($uid, false); // Renvoie un tableau d'ID (de groupes)
         } else {
-            if ($uid > 0) {
-                $memberHandler = xoops_getHandler('member');
-                $buffer[$uid]  = $memberHandler->getGroupsByUser($uid, false); // Renvoie un tableau d'ID (de groupes)
-            } else {
-                $buffer[$uid] = [XOOPS_GROUP_ANONYMOUS];
-            }
+            $buffer[$uid] = [XOOPS_GROUP_ANONYMOUS];
         }
 
         return $buffer[$uid];
@@ -1622,9 +1625,9 @@ class Utility extends \XoopsObject
         $newName = static::createUploadName($path, $filename);
         if (copy($path . '/' . $filename, $path . '/' . $newName)) {
             return $newName;
-        } else {
-            return false;
         }
+
+        return false;
     }
 
     /**
@@ -1755,9 +1758,9 @@ class Utility extends \XoopsObject
         $pos = strrpos($string, $separator);
         if (false === $pos) {
             return $string;
-        } else {
-            return (int)substr($string, $pos + 1);
         }
+
+        return (int)substr($string, $pos + 1);
     }
 
     /**
@@ -1773,9 +1776,9 @@ class Utility extends \XoopsObject
         $pos = strrpos($string, $separator);
         if (false === $pos) {
             return $string;
-        } else {
-            return substr($string, 0, $pos);
         }
+
+        return substr($string, 0, $pos);
     }
 
     /**

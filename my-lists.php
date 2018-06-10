@@ -48,7 +48,7 @@ $breadcrumb = '';
 /**
  * @param                        $op
  * @param  int                   $product_id
- * @return XoopsThemeForm
+ * @return \XoopsThemeForm
  */
 function listForm($op, $product_id = 0)
 {
@@ -62,7 +62,7 @@ function listForm($op, $product_id = 0)
         $label_submit = _AM_OLEDRION_MODIFY;
         $list_id      = \Xmf\Request::getInt('list_id', 0, 'GET');
         if (empty($list_id)) {
-            Oledrion\Utility::redirect(_AM_OLEDRION_ERROR_21, $baseurl, 5);
+            Oledrion\Utility::redirect(_AM_OLEDRION_ERROR_12, $baseurl, 5);
         }
         $item = null;
         $item = $listsHandler->get($list_id);
@@ -324,7 +324,7 @@ switch ($op) {
             $item->setVar('list_date', time());
             $item->setVar('list_uid', $uid);
         }
-        if (isset($_POST['productsList'])) {
+        if (\Xmf\Request::hasVar('productsList', 'POST')) {
             $productsDeletedCount = 0;
             foreach ($_POST['productsList'] as $productId) {
                 $res = $productsListHandler->deleteProductFromList($list_id, (int)$productId);
@@ -338,7 +338,7 @@ switch ($op) {
         }
         $res = $listsHandler->insert($item);
         if ($res) {
-            if (isset($_POST['product_id'])) {
+            if (\Xmf\Request::hasVar('product_id', 'POST')) {
                 $product_id = \Xmf\Request::getInt('product_id', 0, 'POST');
                 if ($product_id > 0) {
                     $product = null;

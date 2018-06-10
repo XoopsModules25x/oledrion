@@ -172,9 +172,9 @@ class Gateways
         $gatewayClassPath = self::getGatewayFullClassPath($gatewayName);
         if (file_exists($gatewayClassPath)) {
             return true;
-        } else {
-            return false;
         }
+
+        return false;
     }
 
     /**
@@ -211,9 +211,9 @@ class Gateways
         $gatewayClassName = self::gatewayClassName($gatewayName);
         if (class_exists($gatewayClassName)) {
             return true;
-        } else {
-            return false;
         }
+
+        return false;
     }
 
     /**
@@ -226,9 +226,9 @@ class Gateways
     {
         if ('Gateway' === get_parent_class($gateway)) {
             return true;
-        } else {
-            return false;
         }
+
+        return false;
     }
 
     /**
@@ -242,9 +242,9 @@ class Gateways
         $installedGateways = self::getInstalledGatewaysList();
         if (!in_array($gatewayName, $installedGateways)) {
             return false;
-        } else {
-            return true;
         }
+
+        return true;
     }
 
     /**

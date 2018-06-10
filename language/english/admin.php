@@ -306,9 +306,9 @@ define('_AM_OLEDRION_IMPORT_DATA_TEXT', 'If you want import test information cli
 define('_AM_OLEDRION_IMPORT_CONF', 'Do you want import test information?');
 
 //directories
-define('_AM_OLEDRION_AVAILABLE', "<span style='color : green;'>Available. </span>");
-define('_AM_OLEDRION_NOTAVAILABLE', "<span style='color : red;'>is not available. </span>");
-define('_AM_OLEDRION_NOTWRITABLE', "<span style='color : red;'>" . ' should have permission ( %1$d ), but it has ( %2$d )' . '</span>');
+define('_AM_OLEDRION_AVAILABLE', "<span style='color : #008000;'>Available. </span>");
+define('_AM_OLEDRION_NOTAVAILABLE', "<span style='color : #ff0000;'>is not available. </span>");
+define('_AM_OLEDRION_NOTWRITABLE', "<span style='color : #ff0000;'>" . ' should have permission ( %1$d ), but it has ( %2$d )' . '</span>');
 define('_AM_OLEDRION_CREATETHEDIR', 'Create it');
 define('_AM_OLEDRION_SETMPERM', 'Set the permission');
 

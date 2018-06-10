@@ -62,17 +62,17 @@ if (!defined('OLEDRION_ADMIN')) {
 }
 
 //$op = 'dashboard';
-//if (isset($_POST['op'])) {
+//if (\Xmf\Request::hasVar('op', 'POST')) {
 //    $op = filter_input(INPUT_POST, 'op', FILTER_SANITIZE_STRING);
-//} elseif (isset($_GET['op'])) {
+//} elseif (\Xmf\Request::hasVar('op', 'GET')) {
 //    $op = filter_input(INPUT_GET, 'op', FILTER_SANITIZE_STRING);
 //}
 $op = \Xmf\Request::getCmd('op', 'dashboard');
 
 $action = 'default';
-if (isset($_POST['action'])) {
+if (\Xmf\Request::hasVar('action', 'POST')) {
     $action = filter_input(INPUT_POST, 'action', FILTER_SANITIZE_STRING);
-} elseif (isset($_GET['action'])) {
+} elseif (\Xmf\Request::hasVar('action', 'GET')) {
     $action = filter_input(INPUT_GET, 'action', FILTER_SANITIZE_STRING);
 }
 

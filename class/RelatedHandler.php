@@ -81,10 +81,10 @@ class RelatedHandler extends OledrionPersistableObjectHandler
     {
         if ($percent > 100) {
             return false;
-        } else {
-            $sql = 'UPDATE ' . $this->table . ' SET `related_product_percent` = ' . (int)$percent . ' WHERE (related_product_id = ' . (int)$id . ') AND (related_product_related = ' . (int)$related . ')';
-
-            return $this->db->queryF($sql);
         }
+
+        $sql = 'UPDATE ' . $this->table . ' SET `related_product_percent` = ' . (int)$percent . ' WHERE (related_product_id = ' . (int)$id . ') AND (related_product_related = ' . (int)$related . ')';
+
+        return $this->db->queryF($sql);
     }
 }

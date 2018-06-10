@@ -76,9 +76,9 @@ class Registryfile
 
         if (file_exists($fw)) {
             return file_get_contents($fw);
-        } else {
-            return '';
         }
+
+        return '';
     }
 
     /**

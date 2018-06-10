@@ -107,12 +107,12 @@ switch ($op) {
         //$xoTheme->addScript('browse.php?Frameworks/jquery/plugins/jquery.lightbox.js');
         //$xoTheme->addStylesheet(XOOPS_URL . '/modules/system/css/lightbox.css');
 
-        if (isset($_GET['stock']) && 'add' === $_GET['stock']
+        if (\Xmf\Request::hasVar('stock', 'GET') && 'add' === $_GET['stock']
             && Oledrion\Utility::isMemberOfGroup(Oledrion\Utility::getModuleOption('grp_qty'))) {
             $productsHandler->increaseStock($product);
         }
 
-        if (isset($_GET['stock']) && 'substract' === $_GET['stock']
+        if (\Xmf\Request::hasVar('stock', 'GET') && 'substract' === $_GET['stock']
             && Oledrion\Utility::isMemberOfGroup(Oledrion\Utility::getModuleOption('grp_qty'))) {
             $productsHandler->decreaseStock($product);
             $productsHandler->verifyLowStock($product);

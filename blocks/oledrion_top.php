@@ -44,10 +44,11 @@ function b_oledrion_top_show($options)
         $xoTheme->addStylesheet(OLEDRION_URL . 'assets/css/oledrion.css');
 
         return $block;
-    } else { // La liste des produits est introuvable (on ne trouve pas les produits vendus dans le stock des produits)
-
-        return false;
     }
+
+    // La liste des produits est introuvable (on ne trouve pas les produits vendus dans le stock des produits)
+
+    return false;
 }
 
 /**
@@ -70,7 +71,15 @@ function b_oledrion_top_edit($options)
     $form                  .= "<table border='0'>";
     $form                  .= '<tr><td>' . _MB_OLEDRION_PRODUCTS_CNT . "</td><td><input type='text' name='options[]' id='options' value='" . $options[0] . "'></td></tr>";
     //$form .= '<tr><td>'._MB_OLEDRION_SORT_ORDER."</td><td><input type='radio' name='options[]' id='options[]' value='0' ".$checkeds[0].">"._MB_OLEDRION_SORT_1." <input type='radio' name='options[]' id='options[]' value='1' ".$checkeds[1].">"._MB_OLEDRION_SORT_2.'</td></tr>';
-    $select = $mytree->makeSelBox('options[]', 'cat_title', '-', $options[1], _MB_OLEDRION_ALL_CATEGORIES);
+    //$select = $mytree->makeSelBox('options[]', 'cat_title', '-', $options[1], _MB_OLEDRION_ALL_CATEGORIES);
+    if (Oledrion\Utility::checkVerXoops($GLOBALS['xoopsModule'], '2.5.9')) {
+        $select0 = $mytree->makeSelectElement('options[]', 'cat_title', '-', $options[1], true, 0, '', _MB_OLEDRION_ALL_CATEGORIES);
+        $select  = $select0->render();
+    } else {
+        $select = $mytree->makeSelBox('options[]', 'cat_title', '-', $options[1], _MB_OLEDRION_ALL_CATEGORIES);
+    }
+
+
     $form   .= '<tr><td>' . _MB_OLEDRION_CATEGORY . '</td><td>' . $select . '</td></tr>';
     $form   .= '</table>';
 

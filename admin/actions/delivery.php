@@ -187,7 +187,7 @@ switch ($action) {
             $criteria->add(new \Criteria('dp_delivery', $delivery_id, '='));
             $deliveryPaymentHandler->deleteAll($criteria);
         }
-        if (isset($_POST['payments'])) {
+        if (\Xmf\Request::hasVar('payments', 'POST')) {
             foreach ($_POST['payments'] as $id2) {
                 $item2 = $deliveryPaymentHandler->create(true);
                 $item2->setVar('dp_delivery', $delivery_id);

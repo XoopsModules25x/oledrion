@@ -90,10 +90,10 @@ abstract class Export
 
     /**
      * Export orders according to all the options
-     * @return true if export was successful or false
+     * @return bool true if export was successful or false
      *
      */
-    abstract public function export();
+    abstract public function doExport();
 
     abstract public function getDownloadUrl();
 

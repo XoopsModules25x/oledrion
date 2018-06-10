@@ -123,8 +123,8 @@ class ProductsListHandler extends OledrionPersistableObjectHandler
         $criteria->add(new \Criteria('productlist_product_id', $productlist_product_id, '='));
         if ($this->getCount($criteria) > 0) {
             return true;
-        } else {
-            return false;
         }
+
+        return false;
     }
 }

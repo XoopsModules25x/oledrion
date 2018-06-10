@@ -137,9 +137,9 @@ class Products extends OledrionObject
     {
         if ('' !== xoops_trim($this->getVar('product_image_url'))) {
             return OLEDRION_PICTURES_URL . '/' . $this->getVar('product_image_url');
-        } else {
-            return '';
         }
+
+        return '';
     }
 
     /**
@@ -151,9 +151,9 @@ class Products extends OledrionObject
     {
         if ('' !== xoops_trim($this->getVar('product_image_url'))) {
             return OLEDRION_PICTURES_PATH . '/' . $this->getVar('product_image_url');
-        } else {
-            return '';
         }
+
+        return '';
     }
 
     /**
@@ -165,9 +165,9 @@ class Products extends OledrionObject
     {
         if ('' !== xoops_trim($this->getVar('product_thumb_url'))) {
             return OLEDRION_PICTURES_URL . '/' . $this->getVar('product_thumb_url');
-        } else {
-            return '';
         }
+
+        return '';
     }
 
     /**
@@ -179,9 +179,9 @@ class Products extends OledrionObject
     {
         if ('' !== xoops_trim($this->getVar('product_thumb_url'))) {
             return OLEDRION_PICTURES_PATH . '/' . $this->getVar('product_thumb_url');
-        } else {
-            return '';
         }
+
+        return '';
     }
 
     /**
@@ -312,9 +312,9 @@ class Products extends OledrionObject
     {
         if ('0000-00-00' != $this->getVar('product_recommended')) {
             return $withDescription ? _YES : true;
-        } else {
-            return $withDescription ? _NO : false;
         }
+
+        return $withDescription ? _NO : false;
     }
 
     /**
@@ -346,9 +346,9 @@ class Products extends OledrionObject
     {
         if ($this->isRecommended()) {
             return '<img src="' . OLEDRION_IMAGES_URL . 'heart.png" alt="' . _OLEDRION_IS_RECOMMENDED . '">&nbsp;';
-        } else {
-            return '<img src="' . OLEDRION_IMAGES_URL . 'blank.gif" alt="">';
         }
+
+        return '<img src="' . OLEDRION_IMAGES_URL . 'blank.gif" alt="">';
     }
 
     /**
@@ -468,9 +468,9 @@ class Products extends OledrionObject
         $time = time() - (60 * 60 * 24 * 10);
         if ($this->getVar('product_submitted') > $time) {
             return 1;
-        } else {
-            return 0;
         }
+
+        return 0;
     }
 
     /**

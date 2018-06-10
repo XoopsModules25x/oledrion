@@ -42,9 +42,9 @@ function oledrion_get_configHandler()
     if (!is_object($configHandler)) {
         trigger_error('Error, unable to get and handler on the Config object');
         exit;
-    } else {
-        return $configHandler;
     }
+
+    return $configHandler;
 }
 
 /**

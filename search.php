@@ -61,7 +61,7 @@ if ((isset($_POST['op']) && 'go' === $_POST['op']) || isset($_GET['start'])) { /
         $sql .= ') ';
 
         // Recherche sur une catégorie
-        if (isset($_POST['product_category'])) {
+        if (\Xmf\Request::hasVar('product_category', 'POST')) {
             $cat_cid = \Xmf\Request::getInt('product_category', 0, 'POST');
             if ($cat_cid > 0) {
                 $sql .= 'AND (b.product_cid = ' . $cat_cid . ')';
@@ -69,7 +69,7 @@ if ((isset($_POST['op']) && 'go' === $_POST['op']) || isset($_GET['start'])) { /
         }
 
         // Recherche sur les fabricants
-        if (isset($_POST['product_manufacturers'])) {
+        if (\Xmf\Request::hasVar('product_manufacturers', 'POST')) {
             $submittedManufacturers = null;
             $submittedManufacturers = $_POST['product_manufacturers'];
             if (is_array($submittedManufacturers) && 0 == (int)$submittedManufacturers[0]) {
@@ -87,7 +87,7 @@ if ((isset($_POST['op']) && 'go' === $_POST['op']) || isset($_GET['start'])) { /
         }
 
         // Recherche sur les vendeurs
-        if (isset($_POST['product_vendors'])) {
+        if (\Xmf\Request::hasVar('product_vendors', 'POST')) {
             $vendor = \Xmf\Request::getInt('product_vendors', 0, 'POST');
             if ($vendor > 0) {
                 $sql .= ' AND (product_vendor_id = ' . $vendor . ')';
@@ -95,7 +95,7 @@ if ((isset($_POST['op']) && 'go' === $_POST['op']) || isset($_GET['start'])) { /
         }
 
         // set from
-        if (isset($_POST['product_from'])) {
+        if (\Xmf\Request::hasVar('product_from', 'POST')) {
             $product_from = \Xmf\Request::getInt('product_from', 0, 'POST');
             if ($product_from > 0) {
                 $sql .= ' AND (product_price > ' . $product_from . ')';
@@ -103,7 +103,7 @@ if ((isset($_POST['op']) && 'go' === $_POST['op']) || isset($_GET['start'])) { /
         }
 
         // set to
-        if (isset($_POST['product_to'])) {
+        if (\Xmf\Request::hasVar('product_to', 'POST')) {
             $product_to = \Xmf\Request::getInt('product_to', 0, 'POST');
             if ($product_to > 0) {
                 $sql .= ' AND (product_price < ' . $product_to . ')';
@@ -116,68 +116,68 @@ if ((isset($_POST['op']) && 'go' === $_POST['op']) || isset($_GET['start'])) { /
             $sql .= ' AND (product_stock = 0)';
         }
 
-        if (isset($_POST['product_property1'])) {
+        if (\Xmf\Request::hasVar('product_property1', 'POST')) {
             if ($_POST['product_property1']) {
                 $sql .= ' AND (b.product_property1 = "' . $_POST['product_property1'] . '")';
             }
         }
 
-        if (isset($_POST['product_property2'])) {
+        if (\Xmf\Request::hasVar('product_property2', 'POST')) {
             if ($_POST['product_property2']) {
                 $sql .= ' AND (b.product_property2 = "' . $_POST['product_property2'] . '")';
             }
         }
 
-        if (isset($_POST['product_property3'])) {
+        if (\Xmf\Request::hasVar('product_property3', 'POST')) {
             if ($_POST['product_property3']) {
                 $sql .= ' AND (b.product_property3 = "' . $_POST['product_property3'] . '")';
             }
         }
 
-        if (isset($_POST['product_property4'])) {
+        if (\Xmf\Request::hasVar('product_property4', 'POST')) {
             if ($_POST['product_property4']) {
                 $sql .= ' AND (b.product_property4 = "' . $_POST['product_property4'] . '")';
             }
         }
 
-        if (isset($_POST['product_property5'])) {
+        if (\Xmf\Request::hasVar('product_property5', 'POST')) {
             if ($_POST['product_property5']) {
                 $sql .= ' AND (b.product_property5 = "' . $_POST['product_property5'] . '")';
             }
         }
 
-        if (isset($_POST['product_property6'])) {
+        if (\Xmf\Request::hasVar('product_property6', 'POST')) {
             if ($_POST['product_property6']) {
                 $sql .= ' AND (b.product_property6 = "' . $_POST['product_property6'] . '")';
             }
         }
 
-        if (isset($_POST['product_property7'])) {
+        if (\Xmf\Request::hasVar('product_property7', 'POST')) {
             if ($_POST['product_property7']) {
                 $sql .= ' AND (b.product_property7 = "' . $_POST['product_property7'] . '")';
             }
         }
 
-        if (isset($_POST['product_property8'])) {
+        if (\Xmf\Request::hasVar('product_property8', 'POST')) {
             if ($_POST['product_property8']) {
                 $sql .= ' AND (b.product_property8 = "' . $_POST['product_property8'] . '")';
             }
         }
 
-        if (isset($_POST['product_property9'])) {
+        if (\Xmf\Request::hasVar('product_property9', 'POST')) {
             if ($_POST['product_property9']) {
                 $sql .= ' AND (b.product_property9 = "' . $_POST['product_property9'] . '")';
             }
         }
 
-        if (isset($_POST['product_property10'])) {
+        if (\Xmf\Request::hasVar('product_property10', 'POST')) {
             if ($_POST['product_property10']) {
                 $sql .= ' AND (b.product_property10 = "' . $_POST['product_property10'] . '")';
             }
         }
 
         // Recherche sur du texte
-        if (isset($_POST['product_text']) && '' !== xoops_trim($_POST['product_text'])) {
+        if (\Xmf\Request::hasVar('product_text', 'POST') && '' !== xoops_trim($_POST['product_text'])) {
             $temp_queries = $queries = [];
             $temp_queries = preg_split('/[\s,]+/', $_POST['product_text']);
 
@@ -231,7 +231,7 @@ if ((isset($_POST['op']) && 'go' === $_POST['op']) || isset($_GET['start'])) { /
         }
         $_SESSION['criteria_oledrion'] = serialize($sql);
     } else { // $_GET['start'] est en place, on a cliqué sur un chevron pour aller voir les autres pages, il faut travailler à partir des informations de la session
-        if (isset($_SESSION['criteria_oledrion'])) {
+        if (\Xmf\Request::hasVar('criteria_oledrion', 'SESSION')) {
             $sql = unserialize($_SESSION['criteria_oledrion']);
         }
     }
