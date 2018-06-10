@@ -451,7 +451,6 @@ class Reductions
         if (!isset($_POST['cmd_country']) || empty($_POST['cmd_country'])) {
             $_POST['cmd_country'] = OLEDRION_DEFAULT_COUNTRY;
         }
-        $db               = \XoopsDatabaseFactory::getDatabaseConnection();
         $vatHandler       = new Oledrion\VatHandler($db);
         $vats             = $vatHandler->getCountryVats($_POST['cmd_country']);
         $oledrionCurrency = Oledrion\Currency::getInstance();
