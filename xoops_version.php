@@ -701,7 +701,8 @@ $modversion['config'][] = [
     'description' => '',
     'formtype'    => 'line_break',
     'valuetype'   => 'textbox',
-    'default'     => 'head',
+    'default'     => 'odd',
+    'category'    => 'group_header'
 ];
 
 /**
@@ -764,7 +765,8 @@ $modversion['config'][] = [
     'description' => '',
     'formtype'    => 'line_break',
     'valuetype'   => 'textbox',
-    'default'     => 'head',
+    'default'     => 'odd',
+    'category'    => 'group_header'
 ];
 
 /**
@@ -845,7 +847,8 @@ $modversion['config'][] = [
     'description' => '',
     'formtype'    => 'line_break',
     'valuetype'   => 'textbox',
-    'default'     => 'head',
+    'default'     => 'odd',
+    'category'    => 'group_header'
 ];
 
 $modversion['config'][] = [
@@ -1006,7 +1009,8 @@ $modversion['config'][] = [
     'description' => '',
     'formtype'    => 'line_break',
     'valuetype'   => 'textbox',
-    'default'     => 'head',
+    'default'     => 'odd',
+    'category'    => 'group_header'
 ];
 
 /**
@@ -1099,7 +1103,8 @@ $modversion['config'][] = [
     'description' => '',
     'formtype'    => 'line_break',
     'valuetype'   => 'textbox',
-    'default'     => 'head',
+    'default'     => 'odd',
+    'category'    => 'group_header'
 ];
 
 $modversion['config'][] = [
@@ -1243,7 +1248,8 @@ $modversion['config'][] = [
     'description' => '',
     'formtype'    => 'line_break',
     'valuetype'   => 'textbox',
-    'default'     => 'head',
+    'default'     => 'odd',
+    'category'    => 'group_header'
 ];
 
 /**
@@ -1349,7 +1355,8 @@ $modversion['config'][] = [
     'description' => '',
     'formtype'    => 'line_break',
     'valuetype'   => 'textbox',
-    'default'     => 'head',
+    'default'     => 'odd',
+    'category'    => 'group_header'
 ];
 
 $modversion['config'][] = [
@@ -1466,7 +1473,8 @@ $modversion['config'][] = [
     'description' => '',
     'formtype'    => 'line_break',
     'valuetype'   => 'textbox',
-    'default'     => 'head',
+    'default'     => 'odd',
+    'category'    => 'group_header'
 ];
 
 /**

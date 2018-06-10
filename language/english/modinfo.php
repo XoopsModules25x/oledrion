@@ -18,7 +18,7 @@
  */
 
 // The name of this module
-define('_MI_OLEDRION_NAME', 'My Shop');
+define('_MI_OLEDRION_NAME', 'eCommerce');
 
 // A brief description of this module
 define('_MI_OLEDRION_DESC', 'Creates an online shop to display and sell products.');
@@ -286,14 +286,14 @@ define('_MI_OLEDRION_ADMINGROUPS', 'Groups than have access to all admin parts')
 define('_MI_OLEDRION_ADMINGROUPS_DSC', 'Other groups just have access to seleted parts');
 define('_MI_OLEDRION_ADMINGROUPS_PARTS', 'Set just allowed parts for access by selected group');
 
-define('_MI_OLEDRION_BREAK_COMMENT_NOTIFICATION', 'Comments and Notifications');
-define('_MI_OLEDRION_BREAK_SEARCH', 'Search');
-define('_MI_OLEDRION_BREAK_IMAGE', 'Image');
-define('_MI_OLEDRION_BREAK_CHECKOUT', 'Checkout');
-define('_MI_OLEDRION_BREAK_VIEW', 'View');
-define('_MI_OLEDRION_BREAK_MONEY', 'Money');
-define('_MI_OLEDRION_BREAK_META', 'Meta');
-define('_MI_OLEDRION_BREAK_SMS', 'SMS');
+define('_MI_OLEDRION_BREAK_COMMENT_NOTIFICATION', '<span style="color: #FF0000; font-size: Small;  font-weight: bold;">--- Comments and Notifications ---</span> ');
+define('_MI_OLEDRION_BREAK_SEARCH', '<span style="color: #FF0000; font-size: Small;  font-weight: bold;">--- Search ---</span> ');
+define('_MI_OLEDRION_BREAK_IMAGE', '<span style="color: #FF0000; font-size: Small;  font-weight: bold;">--- Image ---</span> ');
+define('_MI_OLEDRION_BREAK_CHECKOUT', '<span style="color: #FF0000; font-size: Small;  font-weight: bold;">--- Checkout ---</span> ');
+define('_MI_OLEDRION_BREAK_VIEW', '<span style="color: #FF0000; font-size: Small;  font-weight: bold;">--- View ---</span> ');
+define('_MI_OLEDRION_BREAK_MONEY', '<span style="color: #FF0000; font-size: Small;  font-weight: bold;">--- Money ---</span> ');
+define('_MI_OLEDRION_BREAK_META', '<span style="color: #FF0000; font-size: Small;  font-weight: bold;">--- Meta ---</span> ');
+define('_MI_OLEDRION_BREAK_SMS', '<span style="color: #FF0000; font-size: Small;  font-weight: bold;">--- SMS ---</span> ');
 
 define('_MI_OLEDRION_SMS_PACK', 'SMS Pack');
 define('_MI_OLEDRION_SMS_PACK_TEXT', 'SMS Pack Description');
