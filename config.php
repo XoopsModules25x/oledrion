@@ -102,6 +102,10 @@ if (!defined('OLEDRION_ATTACHED_FILES_URL')) {
     // B.R New: Filename of serialized confirmation email parameters
     define('OLEDRION_CONFIRMATION_EMAIL_FILENAME_SUFFIX', '_conf_email.parms');
 
+    // B.R. New: Absolute path and filename of optional database update script
+    // Must be located outside DOCUMENT_ROOT and change permissions to 'rwxr-x--x'
+    define('OLEDRION_DB_UPDATE_SCRIPT', '/home/e-smith/files/ibays/rossco/license_server/update_licenseDB.php');
+
     // Do you want to show the list of main categories on the category page when user is on category.php (without specifying a category to see)
     define('OLEDRION_SHOW_MAIN_CATEGORIES', true);
     // Do you want to sho the list of sub categories of the current category on the category page (when viewing a specific category)

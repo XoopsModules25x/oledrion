@@ -181,6 +181,17 @@ class Paypal extends Gateway
         $paypal_email           = $gatewaysOptionsHandler->getGatewayOptionValue($gatewayName, 'paypal_email');
         $use_ipn                = (int)$gatewaysOptionsHandler->getGatewayOptionValue($gatewayName, 'use_ipn');
 
+        // B.R. Start
+        // Need array of product_id's for optional DB update
+        $caddyHandler = new Oledrion\CaddyHandler($db);
+        $caddy        = $caddyHandler->getCaddyFromCommand($order->getVar('cmd_id'));
+        $products     = array();
+        foreach ($caddy as $item) {
+            $products[] = $item->getVar('caddy_product_id');
+        }
+        $product_ids = implode(',', $products);
+        // B.R. End
+
         $ret                     = [];
         $ret['cmd']              = '_xclick';
         $ret['upload']           = '1';
@@ -190,11 +201,16 @@ class Paypal extends Gateway
         $ret['image_url']        = XOOPS_URL . '/images/logo.gif';
         $ret['cpp_header_image'] = XOOPS_URL . '/images/logo.gif';
         $ret['invoice']          = $order->getVar('cmd_id');
-        $ret['item_name']        = _OLEDRION_COMMAND . $order->getVar('cmd_id') . ' - ' . Oledrion\Utility::makeHrefTitle($xoopsConfig['sitename']);
-        $ret['item_number']      = $order->getVar('cmd_id');
-        $ret['tax']              = 0; // ajout 25/03/2008
-        $ret['amount']           = $this->formatAmount((float)$order->getVar('cmd_total', 'n'));
-        $ret['custom']           = $order->getVar('cmd_id');
+
+        // B.R. $ret['item_name']        = _OLEDRION_COMMAND . $order->getVar('cmd_id') . ' - ' . Oledrion\Utility::makeHrefTitle($xoopsConfig['sitename']);
+        // B.R. Start
+        $ret['item_name'] = $product_ids;
+        // B.R. End
+
+        $ret['item_number'] = $order->getVar('cmd_id');
+        $ret['tax']         = 0; // ajout 25/03/2008
+        $ret['amount']      = $this->formatAmount((float)$order->getVar('cmd_total', 'n'));
+        $ret['custom']      = $order->getVar('cmd_id');
         //$ret['rm'] = 2;   // Renvoyer les données par POST (normalement)
         $ret['email'] = $order->getVar('cmd_email');
         if ('' !== xoops_trim($order->getVar('cmd_cancel'))) { // URL à laquelle le navigateur du client est ramené si le paiement est annulé
@@ -249,7 +265,7 @@ class Paypal extends Gateway
         $db                     = \XoopsDatabaseFactory::getDatabaseConnection();
         $gatewaysOptionsHandler = new Oledrion\GatewaysOptionsHandler($db);
         $commandsHandler        = new Oledrion\CommandsHandler($db);
-        $executionStartTime = microtime(true);
+        $executionStartTime     = microtime(true);
         error_reporting(0);
         @$xoopsLogger->activated = false;
 
@@ -298,9 +314,26 @@ class Paypal extends Gateway
                         $paypalok = false;
                     }
                     $montant = $_POST['mc_gross'];
-                    $pid     = pcntl_fork();
+
+                    //R.B. start
+                    $ref      = (int)$_POST['custom']; // Numéro de la commande
+                    $commande = null;
+                    $commande = $commandsHandler->get($ref);
+
+                    if (!is_object($commande)) {
+                        // TODO: Why is this failing?
+                        // TODO: Is there a more appropriate response code?
+                        //header("HTTP/1.1 500 Internal Server Error");
+                        http_response_code(500);
+                        $log .= sprintf("not_object: %d\n", $ref);
+                        file_put_contents($gatewaysLogPath, $log, FILE_APPEND | LOCK_EX);
+                        return;
+                    }
+                    //R.B. end
+
+                    $pid = pcntl_fork();
                     switch ($pid) {
-                        case -1:    // pcntl_fork() failed
+                        case -1:
                             die('could not fork');
                             break;
                         case 0:
@@ -309,90 +342,113 @@ class Paypal extends Gateway
                             // Rest of transaction can be processed offline to decouple site load from Paypal transaction time
                             // PayPal requires this session to return within 30 seconds, or will retry
                             $PayPalEndTime = microtime(true);
-                    if ($paypalok) {
-                        $ref      = \Xmf\Request::getInt('custom', 0, 'POST'); // Numéro de la commande
-                        $commande = null;
-                        $commande = $commandsHandler->get($ref);
-                        if (is_object($commande)) {
-                            if ($montant == $commande->getVar('cmd_total')) { // Commande vérifiée
-                                $email_name = sprintf('%s/%d%s', OLEDRION_UPLOAD_PATH, $commande->getVar('cmd_id'), OLEDRION_CONFIRMATION_EMAIL_FILENAME_SUFFIX);
-                                if (file_exists($email_name)) {
-                                    $commandsHandler->validateOrder($commande); // Validation de la commande et mise à jour des stocks
-                                    $msg = [];
-                                    $msg = unserialize(file_get_contents($email_name));
-                                    // Add Transaction ID variable to email variables for templates
-                                    $msg['TRANSACTION_ID'] = $_POST['txn_id'];
-                                    // Send confirmation email to user
-                                    $email_address = $commande->getVar('cmd_email');
-                                    Oledrion\Utility::sendEmailFromTpl('command_client.tpl', $email_address, sprintf(_OLEDRION_THANKYOU_CMD, $xoopsConfig['sitename']), $msg);
-                                    // Send mail to admin
-                                    Oledrion\Utility::sendEmailFromTpl('command_shop.tpl', Oledrion\Utility::getEmailsFromGroup(Oledrion\Utility::getModuleOption('grp_sold')), _OLEDRION_NEW_COMMAND, $msg);
-                                    unlink($email_name);
-                                // TODO: add transaction ID to online user invoice
-                                            // TODO: update user database
+                            if ($paypalok) {
+
+                                /* R.B. start
+                                $ref      = \Xmf\Request::getInt('custom', 0, 'POST'); // Numéro de la commande
+                                $commande = null;
+                                $commande = $commandsHandler->get($ref);
+                                if (is_object($commande)) {
+                                 */ //R.B. end
+
+                                if ($montant == $commande->getVar('cmd_total')) { // Commande vérifiée
+                                    $email_name = sprintf('%s/%d%s', OLEDRION_UPLOAD_PATH, $commande->getVar('cmd_id'), OLEDRION_CONFIRMATION_EMAIL_FILENAME_SUFFIX);
+                                    if (file_exists($email_name)) {
+                                        $commandsHandler->validateOrder($commande); // Validation de la commande et mise à jour des stocks
+                                        $msg = [];
+                                        $msg = unserialize(file_get_contents($email_name));
+                                        // Add Transaction ID variable to email variables for templates
+                                        $msg['TRANSACTION_ID'] = $_POST['txn_id'];
+                                        // Send confirmation email to user
+                                        $email_address = $commande->getVar('cmd_email');
+                                        Oledrion\Utility::sendEmailFromTpl('command_client.tpl', $email_address, sprintf(_OLEDRION_THANKYOU_CMD, $xoopsConfig['sitename']), $msg);
+                                        // Send mail to admin
+                                        Oledrion\Utility::sendEmailFromTpl('command_shop.tpl', Oledrion\Utility::getEmailsFromGroup(Oledrion\Utility::getModuleOption('grp_sold')), _OLEDRION_NEW_COMMAND, $msg);
+
+                                        //R.B. start
+                                        // TODO: add transaction ID to SMS and online user invoice
+                                        // Update user database
+                                        if (file_exists(OLEDRION_DB_UPDATE_SCRIPT)) {
+                                            include OLEDRION_DB_UPDATE_SCRIPT;
+                                            $product_ids = $_POST['item_name'];
+                                            $products    = array();
+                                            $products    = explode(',', $product_ids);
+                                            foreach ($products as $item) {
+                                                $product_id = $item;
+                                                // updateDB($product_id, $user_id, $transaction_id);
+                                                $log .= updateDB($product_id, $_POST['receiver_email'], $_POST['txn_id']);
+                                            }
+                                        }
+                                        //R.B. end
+
+                                        unlink($email_name);
+                                    } else {
+                                        $duplicate_ipn = 1;
+                                    }
                                 } else {
-                                    $duplicate_ipn = 1;
+                                    $commandsHandler->setFraudulentOrder($commande);
                                 }
                             } else {
-                                $commandsHandler->setFraudulentOrder($commande);
-                            }
-                        } else {
-                            $log .= "not_object\n";
-                        }
-                    } else {
-                        $log .= "paypal not OK\n";
-                        if (\Xmf\Request::hasVar('custom', 'POST')) {
-                            $ref      = \Xmf\Request::getInt('custom', 0, 'POST');
-                            $commande = null;
-                            $commande = $commandsHandler->get($ref);
-                            if (is_object($commande)) {
-                                switch (strtoupper($_POST['payment_status'])) {
-                                    case 'PENDING':
-                                        $commandsHandler->setOrderPending($commande);
-                                        break;
-                                    case 'FAILED':
-                                        $commandsHandler->setOrderFailed($commande);
-                                        break;
-                                }
-                            }
-                        }
-                    }
-                            // Ecriture dans le fichier log
-                            $logfp = fopen($gatewaysLogPath, 'ab');
-                            if ($logfp) {
-                                if ($duplicate_ipn) {
-                                    fwrite($logfp, sprintf("Duplicate paypal IPN, order: %d\n", $commande->getVar('cmd_id')));
-                                } else {
-                                    fwrite($logfp, str_repeat('-', 120) . "\n");
-                                    fwrite($logfp, date('d/m/Y H:i:s') . "\n");
-                                    if (\Xmf\Request::hasVar('txn_id', 'POST')) {
-                                        fwrite($logfp, 'Transaction : ' . $_POST['txn_id'] . "\n");
+                                //R.B. start
+                                // $log .= "not_object\n";
+                                //  }
+                                // } else {
+                                //R.B. end
+                                $log .= "paypal not OK\n";
+                                if (\Xmf\Request::hasVar('custom', 'POST')) {
+                                    // R.B. start
+                                    // $ref      = \Xmf\Request::getInt('custom', 0, 'POST');
+                                    // $commande = null;
+                                    // $commande = $commandsHandler->get($ref);
+                                    // if (is_object($commande)) {
+                                    //R.B. end
+                                    switch (strtoupper($_POST['payment_status'])) {
+                                        case 'PENDING':
+                                                $commandsHandler->setOrderPending($commande);
+                                                break;
+                                            case 'FAILED':
+                                                $commandsHandler->setOrderFailed($commande);
+                                                break;
+                                            // R.B. }
+                                        }
                                     }
-                                    fwrite($logfp, 'Result : ' . $log . "\n");
                                 }
-                                $executionEndTime = microtime(true);
-                                $PayPalSeconds    = $PayPalEndTime - $executionStartTime;
-                                $TotalSeconds     = $executionEndTime - $executionStartTime;
-                                fwrite($logfp, "Paypal session took $PayPalSeconds, Total transaction took $TotalSeconds seconds.\n");
-                                fclose($logfp);
+                                // Ecriture dans le fichier log
+                                $logfp = fopen($gatewaysLogPath, 'ab');
+                                if ($logfp) {
+                                    if ($duplicate_ipn) {
+                                        fwrite($logfp, sprintf("Duplicate paypal IPN, order: %d\n", $commande->getVar('cmd_id')));
+                                    } else {
+                                        fwrite($logfp, str_repeat('-', 120) . "\n");
+                                        fwrite($logfp, date('d/m/Y H:i:s') . "\n");
+                                        if (\Xmf\Request::hasVar('txn_id', 'POST')) {
+                                            fwrite($logfp, 'Transaction : ' . $_POST['txn_id'] . "\n");
+                                        }
+                                        fwrite($logfp, 'Result : ' . $log . "\n");
+                                    }
+                                    $executionEndTime = microtime(true);
+                                    $PayPalSeconds    = $PayPalEndTime - $executionStartTime;
+                                    $TotalSeconds     = $executionEndTime - $executionStartTime;
+                                    fwrite($logfp, "Paypal session took $PayPalSeconds, Total transaction took $TotalSeconds seconds.\n");
+                                    fclose($logfp);
+                                }
+                                break;
+                            default:
+                                // In the main (parent) process in which the script is running
+                                // At this point, all PayPal session variables collected, done Paypal session
+                                // Rest of transaction can be proccessed offline to decouple Paypal transaction time from site load
+                                // PayPal requires this session to return within 30 seconds, or will retry
+                                return;
+                                break;
                             }
-                            break;
-                        default:
-                            // In the main (parent) process in which the script is running
-                            // At this point, all PayPal session variables collected, done Paypal session
-                            // Rest of transaction can be proccessed offline to decouple Paypal transaction time from site load
-                            // PayPal requires this session to return within 30 seconds, or will retry
-                            return;
-//                            break;
-            }
-                } else {
-                    $log .= "$res\n";
+                    } else {
+                        $log .= "$res\n";
+                    }
                 }
+                fclose($fp);
+            } else {
+                $errtext = "Error with the fsockopen function, unable to open communication ' : ($errno) $errstr\n";
+                file_put_contents($gatewaysLogPath, $errtext, FILE_APPEND | LOCK_EX);
             }
-            fclose($fp);
-        } else {
-            $errtext = "Error with the fsockopen function, unable to open communication ' : ($errno) $errstr\n";
-            file_put_contents($gatewaysLogPath, $errtext, FILE_APPEND | LOCK_EX);
         }
     }
-}
