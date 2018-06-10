@@ -185,7 +185,7 @@ class Paypal extends Gateway
         // Need array of product_id's for optional DB update
         $caddyHandler = new Oledrion\CaddyHandler($db);
         $caddy        = $caddyHandler->getCaddyFromCommand($order->getVar('cmd_id'));
-        $products     = array();
+        $products     = [];
         foreach ($caddy as $item) {
             $products[] = $item->getVar('caddy_product_id');
         }
@@ -371,7 +371,7 @@ class Paypal extends Gateway
                                         if (file_exists(OLEDRION_DB_UPDATE_SCRIPT)) {
                                             include OLEDRION_DB_UPDATE_SCRIPT;
                                             $product_ids = $_POST['item_name'];
-                                            $products    = array();
+                                            $products    = [];
                                             $products    = explode(',', $product_ids);
                                             foreach ($products as $item) {
                                                 $product_id = $item;
@@ -404,51 +404,51 @@ class Paypal extends Gateway
                                     //R.B. end
                                     switch (strtoupper($_POST['payment_status'])) {
                                         case 'PENDING':
-                                                $commandsHandler->setOrderPending($commande);
-                                                break;
-                                            case 'FAILED':
-                                                $commandsHandler->setOrderFailed($commande);
-                                                break;
-                                            // R.B. }
-                                        }
+                                            $commandsHandler->setOrderPending($commande);
+                                            break;
+                                        case 'FAILED':
+                                            $commandsHandler->setOrderFailed($commande);
+                                            break;
+                                        // R.B. }
                                     }
                                 }
-                                // Ecriture dans le fichier log
-                                $logfp = fopen($gatewaysLogPath, 'ab');
-                                if ($logfp) {
-                                    if ($duplicate_ipn) {
-                                        fwrite($logfp, sprintf("Duplicate paypal IPN, order: %d\n", $commande->getVar('cmd_id')));
-                                    } else {
-                                        fwrite($logfp, str_repeat('-', 120) . "\n");
-                                        fwrite($logfp, date('d/m/Y H:i:s') . "\n");
-                                        if (\Xmf\Request::hasVar('txn_id', 'POST')) {
-                                            fwrite($logfp, 'Transaction : ' . $_POST['txn_id'] . "\n");
-                                        }
-                                        fwrite($logfp, 'Result : ' . $log . "\n");
-                                    }
-                                    $executionEndTime = microtime(true);
-                                    $PayPalSeconds    = $PayPalEndTime - $executionStartTime;
-                                    $TotalSeconds     = $executionEndTime - $executionStartTime;
-                                    fwrite($logfp, "Paypal session took $PayPalSeconds, Total transaction took $TotalSeconds seconds.\n");
-                                    fclose($logfp);
-                                }
-                                break;
-                            default:
-                                // In the main (parent) process in which the script is running
-                                // At this point, all PayPal session variables collected, done Paypal session
-                                // Rest of transaction can be proccessed offline to decouple Paypal transaction time from site load
-                                // PayPal requires this session to return within 30 seconds, or will retry
-                                return;
-                                break;
                             }
-                    } else {
-                        $log .= "$res\n";
+                            // Ecriture dans le fichier log
+                            $logfp = fopen($gatewaysLogPath, 'ab');
+                            if ($logfp) {
+                                if ($duplicate_ipn) {
+                                    fwrite($logfp, sprintf("Duplicate paypal IPN, order: %d\n", $commande->getVar('cmd_id')));
+                                } else {
+                                    fwrite($logfp, str_repeat('-', 120) . "\n");
+                                    fwrite($logfp, date('d/m/Y H:i:s') . "\n");
+                                    if (\Xmf\Request::hasVar('txn_id', 'POST')) {
+                                        fwrite($logfp, 'Transaction : ' . $_POST['txn_id'] . "\n");
+                                    }
+                                    fwrite($logfp, 'Result : ' . $log . "\n");
+                                }
+                                $executionEndTime = microtime(true);
+                                $PayPalSeconds    = $PayPalEndTime - $executionStartTime;
+                                $TotalSeconds     = $executionEndTime - $executionStartTime;
+                                fwrite($logfp, "Paypal session took $PayPalSeconds, Total transaction took $TotalSeconds seconds.\n");
+                                fclose($logfp);
+                            }
+                            break;
+                        default:
+                            // In the main (parent) process in which the script is running
+                            // At this point, all PayPal session variables collected, done Paypal session
+                            // Rest of transaction can be proccessed offline to decouple Paypal transaction time from site load
+                            // PayPal requires this session to return within 30 seconds, or will retry
+                            return;
+                            break;
                     }
+                } else {
+                    $log .= "$res\n";
                 }
-                fclose($fp);
-            } else {
-                $errtext = "Error with the fsockopen function, unable to open communication ' : ($errno) $errstr\n";
-                file_put_contents($gatewaysLogPath, $errtext, FILE_APPEND | LOCK_EX);
             }
+            fclose($fp);
+        } else {
+            $errtext = "Error with the fsockopen function, unable to open communication ' : ($errno) $errstr\n";
+            file_put_contents($gatewaysLogPath, $errtext, FILE_APPEND | LOCK_EX);
         }
     }
+}
