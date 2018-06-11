@@ -157,7 +157,7 @@ class Paypal extends Gateway
         $db                     = \XoopsDatabaseFactory::getDatabaseConnection();
         $gatewaysOptionsHandler = new Oledrion\GatewaysOptionsHandler($db);
         $test_mode              = (int)$gatewaysOptionsHandler->getGatewayOptionValue($this->gatewayInformation['foldername'], 'paypal_test');
-        if (1 == $test_mode) {
+        if (1 === $test_mode) {
             return 'https://www.sandbox.paypal.com/cgi-bin/webscr';
         }
 
@@ -216,7 +216,7 @@ class Paypal extends Gateway
         if ('' !== xoops_trim($order->getVar('cmd_cancel'))) { // URL à laquelle le navigateur du client est ramené si le paiement est annulé
             $ret['cancel_return'] = OLEDRION_URL . 'cancel-payment.php?id=' . $order->getVar('cmd_cancel');
         }
-        if (1 == $use_ipn) {
+        if (1 === $use_ipn) {
             $ret['notify_url'] = OLEDRION_URL . 'gateway-notify.php'; // paypal-notify.php
         }
 
@@ -246,7 +246,7 @@ class Paypal extends Gateway
         $db                     = \XoopsDatabaseFactory::getDatabaseConnection();
         $gatewaysOptionsHandler = new Oledrion\GatewaysOptionsHandler($db);
         $test_mode              = (int)$gatewaysOptionsHandler->getGatewayOptionValue($this->gatewayInformation['foldername'], 'paypal_test');
-        if (1 == $test_mode) {
+        if (1 === $test_mode) {
             return 'www.sandbox.paypal.com';
         }
 
@@ -298,7 +298,7 @@ class Paypal extends Gateway
             fwrite($fp, "$header$req");
             while (!feof($fp)) {
                 $res = fgets($fp, 1024);
-                if (0 == strcmp(trim($res), 'VERIFIED')) {
+                if (0 === strcmp(trim($res), 'VERIFIED')) {
                     $log      .= "PAYPAL VERIFIED\n";
                     $paypalok = true;
                     if ('COMPLETED' !== strtoupper($_POST['payment_status'])) {

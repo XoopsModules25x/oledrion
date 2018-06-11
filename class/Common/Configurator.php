@@ -20,6 +20,8 @@
  *
  */
 
+use XoopsModules\Oledrion;
+
 //require_once  dirname(dirname(__DIR__)) . '/include/common.php';
 
 /**
@@ -57,5 +59,6 @@ class Configurator
         $this->oldFiles        = $config->oldFiles;
         $this->oldFolders      = $config->oldFolders;
         $this->modCopyright    = $config->modCopyright;
+
     }
 }

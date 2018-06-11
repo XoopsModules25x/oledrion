@@ -15,15 +15,19 @@
  * @copyright   XOOPS Project (https://xoops.org)
  * @license     http://www.fsf.org/copyleft/gpl.html GNU public license
  * @author      lucio <lucio.rota@gmail.com>
- * @package     xxxxx
+ * @package     Oledrion
  *
  * Example:
- * $breadcrumb = new PedigreeBreadcrumb();
+ * $breadcrumb = new Common\Breadcrumb();
  * $breadcrumb->addLink( 'bread 1', 'index1.php' );
  * $breadcrumb->addLink( 'bread 2', '' );
  * $breadcrumb->addLink( 'bread 3', 'index3.php' );
  * echo $breadcrumb->render();
  */
+
+use XoopsModules\Oledrion;
+use XoopsModules\Oledrion\Common;
+
 defined('XOOPS_ROOT_PATH') || die('XOOPS Root Path not defined');
 
 /**
@@ -57,7 +61,7 @@ class Breadcrumb
     }
 
     /**
-     * Render Pedigree BreadCrumb
+     * Render BreadCrumb
      *
      */
     public function render()
