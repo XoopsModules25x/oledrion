@@ -626,8 +626,8 @@ class Nusoap_base
             case (is_array($val) || $type):
                 // detect if struct or array
                 $array_types = [];
-                $tt_ns = $tt = '';
-                $valueType = $this->isArraySimpleOrStruct($val);
+                $tt_ns       = $tt = '';
+                $valueType   = $this->isArraySimpleOrStruct($val);
                 if ('arraySimple' === $valueType || preg_match('/^ArrayOf/', $type)) {
                     $this->debug('serialize_val: serialize array');
                     $i = 0;
@@ -730,7 +730,7 @@ class Nusoap_base
      * Serializes a message
      *
      * @param  string $body          the XML of the SOAP body
-     * @param mixed  $headers       optional string of XML with SOAP header content, or array of Soapval objects for SOAP headers, or associative array
+     * @param mixed   $headers       optional string of XML with SOAP header content, or array of Soapval objects for SOAP headers, or associative array
      * @param  array  $namespaces    optional the namespaces used in generating the body and headers
      * @param  string $style         optional (rpc|document)
      * @param  string $use           optional (encoded|literal)
@@ -1285,7 +1285,7 @@ class Nusoap_xmlschema extends Nusoap_base
 
     /**
      * Gets a type name for an unnamed type
-     * @param    string  $ename  Element name
+     * @param    string $ename Element name
      * @return string A type name for an unnamed type
      */
     private function CreateTypeName($ename)
@@ -1309,9 +1309,9 @@ class Nusoap_xmlschema extends Nusoap_base
     {
         // position in the total number of elements, starting from 0
         $eAttrs = [];
-        $aname = '';
-        $pos   = $this->position++;
-        $depth = $this->depth++;
+        $aname  = '';
+        $pos    = $this->position++;
+        $depth  = $this->depth++;
         // set self as current value for this depth
         $this->depth_array[$depth] = $pos;
         $this->message[$pos]       = ['cdata' => ''];
@@ -1364,7 +1364,7 @@ class Nusoap_xmlschema extends Nusoap_base
         // find status, register data
         switch ($name) {
             case 'all':
-           // (optional) compositor content for a complexType
+                // (optional) compositor content for a complexType
             case 'choice':
             case 'group':
             case 'sequence':
@@ -1377,7 +1377,7 @@ class Nusoap_xmlschema extends Nusoap_base
 
                 break;
             case 'attribute':
-            // complexType attribute
+                // complexType attribute
                 //$this->xdebug("parsing attribute $attrs[name] $attrs[ref] of value: ".$attrs['http://schemas.xmlsoap.org/wsdl/:arrayType']);
                 $this->xdebug('parsing attribute:');
                 $this->appendDebug($this->varDump($attrs));
@@ -1432,7 +1432,7 @@ class Nusoap_xmlschema extends Nusoap_base
 
                 break;
             case 'complexContent':
-            // (optional) content for a complexType
+                // (optional) content for a complexType
                 $this->xdebug("do nothing for element $name");
 
                 break;
@@ -1536,7 +1536,7 @@ class Nusoap_xmlschema extends Nusoap_base
 
                 break;
             case 'enumeration':
-            //	restriction value list member
+                //	restriction value list member
                 $this->xdebug('enumeration ' . $attrs['value']);
                 if ($this->currentSimpleType) {
                     $this->simpleTypes[$this->currentSimpleType]['enumeration'][] = $attrs['value'];
@@ -1546,7 +1546,7 @@ class Nusoap_xmlschema extends Nusoap_base
 
                 break;
             case 'extension':
-            // simpleContent or complexContent type extension
+                // simpleContent or complexContent type extension
                 $this->xdebug('extension ' . $attrs['base']);
                 if ($this->currentComplexType) {
                     $ns = $this->getPrefix($attrs['base']);
@@ -1583,12 +1583,12 @@ class Nusoap_xmlschema extends Nusoap_base
 
                 break;
             case 'list':
-            // simpleType value list
+                // simpleType value list
                 $this->xdebug("do nothing for element $name");
 
                 break;
             case 'restriction':
-            // simpleType, simpleContent or complexContent value restriction
+                // simpleType, simpleContent or complexContent value restriction
                 $this->xdebug('restriction ' . $attrs['base']);
                 if ($this->currentSimpleType) {
                     $this->simpleTypes[$this->currentSimpleType]['type'] = $attrs['base'];
@@ -1615,7 +1615,7 @@ class Nusoap_xmlschema extends Nusoap_base
 
                 break;
             case 'simpleContent':
-            // (optional) content for a complexType
+                // (optional) content for a complexType
                 if ($this->currentComplexType) {
                     // This should *always* be
                     $this->complexTypes[$this->currentComplexType]['simpleContent'] = 'true';
@@ -1643,7 +1643,7 @@ class Nusoap_xmlschema extends Nusoap_base
 
                 break;
             case 'union':
-            // simpleType type list
+                // simpleType type list
                 $this->xdebug("do nothing for element $name");
 
                 break;
@@ -1755,7 +1755,7 @@ class Nusoap_xmlschema extends Nusoap_base
                             $contentStr .= " $a=\"" . $this->contractQName($v) . '"';
                         } elseif ('http://schemas.xmlsoap.org/wsdl/:arrayType' === $a) {
                             $this->usedNamespaces['wsdl'] = $this->namespaces['wsdl'];
-                            $contentStr .= ' Wsdl:arrayType="' . $this->contractQName($v) . '"';
+                            $contentStr                   .= ' Wsdl:arrayType="' . $this->contractQName($v) . '"';
                         } else {
                             $contentStr .= " $a=\"$v\"";
                         }
@@ -2158,7 +2158,6 @@ class XMLSchema extends Nusoap_xmlschema
 {
 }
 
-
 /**
  * For creating serializable abstractions of native PHP types.  This class
  * allows element name/namespace, XSD type, and XML attributes to be
@@ -2291,7 +2290,7 @@ class Soap_transport_http extends Nusoap_base
     public $password             = '';
     public $authtype             = '';
     public $digestRequest        = [];
-    public $certRequest          = [];    
+    public $certRequest          = [];
     // keys must be cainfofile (optional), sslcertfile, sslkeyfile, passphrase, certpassword (optional), verifypeer (optional), verifyhost (optional)
     // cainfofile: certificate authority file, e.g. '$pathToPemFiles/rootca.pem'
     // sslcertfile: SSL certificate file, e.g. '$pathToPemFiles/mycert.pem'
@@ -4718,7 +4717,7 @@ class Nusoap_server extends Nusoap_base
             $schemaTargetNamespace = $namespace;
         }
 
-        $this->wsdl = new Wsdl();
+        $this->wsdl                     = new Wsdl();
         $this->wsdl->serviceName        = $serviceName;
         $this->wsdl->endpoint           = $endpoint;
         $this->wsdl->namespaces['tns']  = $namespace;
@@ -8151,7 +8150,7 @@ class Nusoap_client extends Nusoap_base
         // instantiate proxy object
         eval("\$proxy = new Nusoap_proxy_$r('');");
         // transfer current Wsdl data to the proxy thereby avoiding parsing the Wsdl twice
-        $proxy->endpointType = 'Wsdl';
+        $proxy->endpointType     = 'Wsdl';
         $proxy->wsdlFile         = $this->wsdlFile;
         $proxy->wsdl             = $this->wsdl;
         $proxy->operations       = $this->operations;
@@ -8398,7 +8397,7 @@ class Nusoap_client extends Nusoap_base
                 continue;
             }
             $newName = $newCookie['name'];
-            $found = false;
+            $found   = false;
             for ($i = 0, $iMax = count($this->cookies); $i < $iMax; ++$i) {
                 $cookie = $this->cookies[$i];
                 if (!is_array($cookie)) {

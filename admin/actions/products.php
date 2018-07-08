@@ -119,8 +119,7 @@ switch ($action) {
         }
         // B.R. Added: $filter_skip_packing $filter_skip_location $filter_skip_delivery
         if (0 == $filter_product_id && 0 == $filter_product_cid && 0 == $filter_product_recommended && 0 == $filter_product_price && 0 == $filter_product_online && '' === $filter_product_title && '' === $filter_product_sku && 0 == $filter_skip_packing && 0 == $filter_skip_location
-            && 0
-               == $filter_skip_delivery) {
+            && 0 == $filter_skip_delivery) {
             $newFilter = true;
         }
 

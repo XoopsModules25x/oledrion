@@ -219,10 +219,10 @@ function exportSchema()
 
     try {
         // TODO set exportSchema
-//        $migrate = new Oledrion\Migrate($moduleDirName);
-//        $migrate->saveCurrentSchema();
-//
-//        redirect_header('../admin/index.php', 1, constant('CO_' . $moduleDirNameUpper . '_' . 'EXPORT_SCHEMA_SUCCESS'));
+        //        $migrate = new Oledrion\Migrate($moduleDirName);
+        //        $migrate->saveCurrentSchema();
+        //
+        //        redirect_header('../admin/index.php', 1, constant('CO_' . $moduleDirNameUpper . '_' . 'EXPORT_SCHEMA_SUCCESS'));
     }
     catch (\Throwable $e) {
         exit(constant('CO_' . $moduleDirNameUpper . '_' . 'EXPORT_SCHEMA_ERROR'));

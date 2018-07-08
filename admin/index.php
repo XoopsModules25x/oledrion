@@ -61,9 +61,8 @@ if (!defined('OLEDRION_ADMIN')) {
     define('OLEDRION_ADMIN', true);
 }
 
-$op = \Xmf\Request::getCmd('op', 'dashboard');
+$op     = \Xmf\Request::getCmd('op', 'dashboard');
 $action = \Xmf\Request::getCmd('action', 'default');
-
 
 // Check admin have access to this page
 $part = Oledrion\Utility::getModuleOption('admin_groups_part');

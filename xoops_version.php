@@ -25,31 +25,22 @@ require_once __DIR__ . '/preloads/autoloader.php';
 
 $moduleDirName = basename(__DIR__);
 
-$modversion['version']       = 2.35;
-$modversion['module_status'] = 'Alpha 1';
-$modversion['release_date']  = '2018/06/08';
-$modversion['name']          = _MI_OLEDRION_NAME;
-$modversion['description']   = _MI_OLEDRION_DESC;
-$modversion['author']        = 'Hervé Thouzard (http://www.herve-thouzard.com/)';
-$modversion['credits']       = 'Don Curioso, Voltan, Bezoops, Mariane Antoun, Defkon1, Feichtl, Carlos Pérez, JardaR, Wishcraft, Mamba, and all the other';
-$modversion['help']          = 'page=help';
-$modversion['license']       = 'GNU GPL 2.0';
-$modversion['license_url']   = 'www.gnu.org/licenses/gpl-2.0.html/';
-$modversion['official']      = 0; //1 indicates supported by XOOPS Dev Team, 0 means 3rd party supported
-$modversion['image']         = 'assets/images/logoModule.png';
-$modversion['dirname']       = basename(__DIR__);
-// Modules scripts
-//$modversion['onInstall'] = 'include/functions_install.php';
-//$modversion['onUpdate']  = 'include/functions_update.php';
-
-$modversion['onInstall']   = 'include/oninstall.php';
-$modversion['onUpdate']    = 'include/onupdate.php';
-$modversion['onUninstall'] = 'include/onuninstall.php';
-
-//icons
-//$modversion['dirmoduleadmin']      = '/Frameworks/moduleclasses/moduleadmin';
-//$modversion['icons16']             = '../../Frameworks/moduleclasses/icons/16';
-//$modversion['icons32']             = '../../Frameworks/moduleclasses/icons/32';
+$modversion['version']             = 2.35;
+$modversion['module_status']       = 'Beta  1';
+$modversion['release_date']        = '2018/07/08';
+$modversion['name']                = _MI_OLEDRION_NAME;
+$modversion['description']         = _MI_OLEDRION_DESC;
+$modversion['author']              = 'Hervé Thouzard (http://www.herve-thouzard.com/)';
+$modversion['credits']             = 'Don Curioso, Voltan, Bezoops, Mariane Antoun, Defkon1, Feichtl, Carlos Pérez, JardaR, Wishcraft, Mamba, and all the other';
+$modversion['help']                = 'page=help';
+$modversion['license']             = 'GNU GPL 2.0';
+$modversion['license_url']         = 'www.gnu.org/licenses/gpl-2.0.html/';
+$modversion['official']            = 0; //1 indicates supported by XOOPS Dev Team, 0 means 3rd party supported
+$modversion['image']               = 'assets/images/logoModule.png';
+$modversion['dirname']             = basename(__DIR__);
+$modversion['onInstall']           = 'include/oninstall.php';
+$modversion['onUpdate']            = 'include/onupdate.php';
+$modversion['onUninstall']         = 'include/onuninstall.php';
 $modversion['modicons16']          = 'assets/images/icons/16';
 $modversion['modicons32']          = 'assets/images/icons/32';
 $modversion['module_website_url']  = 'www.xoops.org';

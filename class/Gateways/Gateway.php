@@ -163,9 +163,9 @@ abstract class Gateway
         global $xoopsConfig;
         $gatewayName  = ucfirst($this->gatewayInformation['foldername']);
         $fullFilePath = OLEDRION_GATEWAY_PATH . $gatewayName; // c:/inetpub/wwwroot/xoops3/modules/oledrion/admin/gateways/passerelle
-//        /** @var Oledrion\Helper $helper */
-//        $helper = Oledrion\Helper::getInstance();
-//        $helper->loadLanguage('main');
+        //        /** @var Oledrion\Helper $helper */
+        //        $helper = Oledrion\Helper::getInstance();
+        //        $helper->loadLanguage('main');
 
         if (file_exists($fullFilePath . '/language/' . $xoopsConfig['language'] . '/main.php')) {
             return $fullFilePath . '/language/' . $xoopsConfig['language'] . '/main.php';
