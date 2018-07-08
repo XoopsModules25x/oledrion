@@ -1,4 +1,6 @@
-<?php namespace XoopsModules\Oledrion;
+<?php
+
+namespace XoopsModules\Oledrion;
 
 /*
  You may not change or alter any portion of this comment or credits
@@ -19,12 +21,11 @@
  *              based on: https://www.startutorial.com/articles/view/a-quick-guide-on-integration-omnipay-on-php-projects
  */
 
-use Omnipay\Omnipay;
 use Omnipay\Common\CreditCard;
+use Omnipay\Omnipay;
 
 /**
  * Class Payment
- * @package XoopsModules\Oledrion
  */
 class PaymentOmni
 {
@@ -37,18 +38,21 @@ class PaymentOmni
      */
     public function setcard($value)
     {
-        $card  = [
+        $card = [
             'number'      => $value['card'],
             'expiryMonth' => $value['expiremonth'],
             'expiryYear'  => $value['expireyear'],
-            'cvv'         => $value['cvv']
+            'cvv'         => $value['cvv'],
         ];
+
         try {
             $ccard = new CreditCard($card);
             $ccard->validate();
             $this->card = $card;
+
             return true;
-        } catch (\Exception $ex) {
+        }
+        catch (\Throwable $ex) {
             return $ex->getMessage();
         }
     }
@@ -60,7 +64,6 @@ class PaymentOmni
     public function makepayment($value)
     {
         try {
-
             // Setup payment Gateway
             $pay = Omnipay::create('Stripe');
             $pay->setApiKey('YOUR API KEY');
@@ -68,7 +71,7 @@ class PaymentOmni
             $response = $pay->purchase([
                                            'amount'   => $value['amount'],
                                            'currency' => $value['currency'],
-                                           'card'     => $this->card
+                                           'card'     => $this->card,
                                        ])->send();
 
             // Process response
@@ -77,14 +80,13 @@ class PaymentOmni
             }
 
             if ($response->isRedirect()) {
-
                 // Redirect to offsite payment gateway
                 return $response->getMessage();
-            } else {
-                // Payment failed
-                return $response->getMessage();
             }
-        } catch (\Exception $ex) {
+            // Payment failed
+            return $response->getMessage();
+        }
+        catch (\Throwable $ex) {
             return $ex->getMessage();
         }
     }

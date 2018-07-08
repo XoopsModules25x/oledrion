@@ -1,4 +1,6 @@
-<?php namespace XoopsModules\Oledrion;
+<?php
+
+namespace XoopsModules\Oledrion;
 
 /**
  * XOOPS tree class
@@ -12,13 +14,9 @@
  *
  * @copyright       (c) 2000-2016 XOOPS Project (www.xoops.org)
  * @license             GNU GPL 2 (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package             kernel
  * @since               2.0.0
  * @author              Kazumi Ono (http://www.myweb.ne.jp/, http://jp.xoops.org/)
  */
-
-use XoopsModules\Oledrion;
-
 defined('XOOPS_ROOT_PATH') || die('Restricted access');
 
 require_once dirname(dirname(dirname(__DIR__))) . '/class/tree.php';
@@ -26,20 +24,21 @@ require_once dirname(dirname(dirname(__DIR__))) . '/class/tree.php';
 /**
  * A tree structures with {@link XoopsObject}s as nodes
  *
- * @package          kernel
- * @subpackage       core
  * @author           Kazumi Ono     <onokazu@xoops.org>
  */
 class XoopsObjectTree extends \XoopsObjectTree
 {
     /**
-     * @access    private
+     * @param mixed      $objectArr
+     * @param mixed      $myId
+     * @param mixed      $parentId
+     * @param null|mixed $rootId
      */
-//    protected $parentId;
-//    protected $myId;
-//    protected $rootId;
-//    protected $tree = [];
-//    protected $objects;
+    //    protected $parentId;
+    //    protected $myId;
+    //    protected $rootId;
+    //    protected $tree = [];
+    //    protected $objects;
 
     /**
      * Constructor
@@ -63,7 +62,7 @@ class XoopsObjectTree extends \XoopsObjectTree
      * @param  string      $prefix         String to indent deeper levels
      * @param  string      $selected       Value to display as selected
      * @param  bool|string $addEmptyOption Set TRUE to add an empty option with value "0" at the top of the hierarchy
-     * @param int     $key            ID of the object to display as the root of select options
+     * @param int          $key            ID of the object to display as the root of select options
      * @param  string      $additional
      * @return string      HTML select box
      *
@@ -76,8 +75,8 @@ class XoopsObjectTree extends \XoopsObjectTree
         $selected = '',
         $addEmptyOption = '',
         $key = 0,
-        $additional = ''
-    ) {
+        $additional = '')
+    {
         $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 1);
         trigger_error("makeSelBox() is deprecated since 2.5.9, please use makeSelectElement(), accessed from {$trace[0]['file']} line {$trace[0]['line']},");
 
@@ -153,10 +152,10 @@ class XoopsObjectTree extends \XoopsObjectTree
     /**
      * Identical function as makeSelBox but returns an array
      *
-     * @param  string  $fieldName Name of the member variable from the node objects that should be used as the title for the options.
-     * @param  string  $prefix    String to indent deeper levels
-     * @param int $key       ID of the object to display as the root of select options
-     * @param  null    $empty
+     * @param  string $fieldName Name of the member variable from the node objects that should be used as the title for the options.
+     * @param  string $prefix    String to indent deeper levels
+     * @param int     $key       ID of the object to display as the root of select options
+     * @param  null   $empty
      * @return array   key = object ID, value = $fieldName
      */
     public function makeTreeAsArray($fieldName, $prefix = '-', $key = 0, $empty = null)

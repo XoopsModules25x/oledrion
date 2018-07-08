@@ -1,4 +1,6 @@
-<?php namespace XoopsModules\Oledrion;
+<?php
+
+namespace XoopsModules\Oledrion;
 
 /*
  You may not change or alter any portion of this comment or credits
@@ -31,8 +33,6 @@ class Packing extends OledrionObject
      * constructor
      *
      * normally, this is called from child classes only
-     *
-     * @access public
      */
     public function __construct()
     {
@@ -63,13 +63,12 @@ class Packing extends OledrionObject
     /**
      * Indique si l'image de la catégorie existe
      *
-     * @return boolean Vrai si l'image existe sinon faux
+     * @return bool Vrai si l'image existe sinon faux
      */
     public function pictureExists()
     {
         $return = false;
-        if ('' !== xoops_trim($this->getVar('packing_image'))
-            && file_exists(OLEDRION_PICTURES_PATH . '/' . $this->getVar('packing_image'))) {
+        if ('' !== xoops_trim($this->getVar('packing_image')) && file_exists(OLEDRION_PICTURES_PATH . '/' . $this->getVar('packing_image'))) {
             $return = true;
         }
 
@@ -78,7 +77,6 @@ class Packing extends OledrionObject
 
     /**
      * Supprime l'image associée à une catégorie
-     * @return void
      */
     public function deletePicture()
     {
@@ -96,7 +94,7 @@ class Packing extends OledrionObject
      */
     public function toArray($format = 's')
     {
-        $oledrionCurrency               = Oledrion\Currency::getInstance();
+        $oledrionCurrency                = Oledrion\Currency::getInstance();
         $ret                             = [];
         $ret                             = parent::toArray($format);
         $ret['packing_price_fordisplay'] = $oledrionCurrency->amountForDisplay($this->getVar('packing_price'));

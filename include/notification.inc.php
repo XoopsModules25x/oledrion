@@ -19,7 +19,6 @@
  * @param $item_id
  * @return mixed
  */
-
 function oledrion_notify_iteminfo($category, $item_id)
 {
     global $xoopsModule, $xoopsModuleConfig;

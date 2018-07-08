@@ -20,7 +20,6 @@
  */
 
 use XoopsModules\Oledrion;
-use XoopsModules\Oledrion\Common;
 
 /**
  * @param \XoopsModule $module
@@ -28,7 +27,7 @@ use XoopsModules\Oledrion\Common;
  */
 function xoops_module_pre_install_oledrion(\XoopsModule $module)
 {
-    include dirname(__DIR__) . '/preloads/autoloader.php';
+    require_once dirname(__DIR__) . '/preloads/autoloader.php';
     /** @var Oledrion\Utility $utility */
     $utility = new Oledrion\Utility();
 
@@ -39,7 +38,7 @@ function xoops_module_pre_install_oledrion(\XoopsModule $module)
     $phpSuccess = $utility::checkVerPhp($module);
 
     if (false !== $xoopsSuccess && false !== $phpSuccess) {
-        $moduleTables =& $module->getInfo('tables');
+        $moduleTables = &$module->getInfo('tables');
         foreach ($moduleTables as $table) {
             $GLOBALS['xoopsDB']->queryF('DROP TABLE IF EXISTS ' . $GLOBALS['xoopsDB']->prefix($table) . ';');
         }
@@ -49,7 +48,6 @@ function xoops_module_pre_install_oledrion(\XoopsModule $module)
 }
 
 /**
- *
  * Performs tasks required during installation of the module
  * @param \XoopsModule $module {@link XoopsModule}
  *
@@ -57,7 +55,7 @@ function xoops_module_pre_install_oledrion(\XoopsModule $module)
  */
 function xoops_module_install_oledrion(\XoopsModule $module)
 {
-    include dirname(__DIR__) . '/preloads/autoloader.php';
+    require_once dirname(__DIR__) . '/preloads/autoloader.php';
 
     $moduleDirName = basename(dirname(__DIR__));
 

@@ -24,7 +24,7 @@ require_once dirname(__DIR__) . '/preloads/autoloader.php';
 //require_once  dirname(__DIR__) . '/config.php';
 
 $moduleDirName      = basename(dirname(__DIR__));
-$moduleDirNameUpper = strtoupper($moduleDirName); //$capsDirName
+$moduleDirNameUpper = mb_strtoupper($moduleDirName); //$capsDirName
 
 /** @var \XoopsDatabase $db */
 /** @var Oledrion\Helper $helper */
@@ -73,7 +73,7 @@ if (!defined($moduleDirNameUpper . '_CONSTANTS_DEFINED')) {
     //    define('OLEDRION_ADMIN_PATH', OLEDRION_PATH . 'admin' . '/');
 
     // Set gateways path
-    define('OLEDRION_GATEWAY_PATH', XOOPS_ROOT_PATH . '/modules/' . $moduleDirName . '/class/gateways' . '/');
+    define('OLEDRION_GATEWAY_PATH', XOOPS_ROOT_PATH . '/modules/' . $moduleDirName . '/class/Gateways' . '/');
 
     // Set plugin URL and PATH
     //    define('OLEDRION_PLUGINS_PATH', OLEDRION_PATH . 'plugins/');
@@ -265,7 +265,7 @@ $icons = [
     'delivery' => "<img src='" . OLEDRION_IMAGES_URL . "delivery.png' alt='" . _OLEDRION_DELIVERY . "' align='middle'>",
     'package'  => "<img src='" . OLEDRION_IMAGES_URL . "package.png' alt='" . _OLEDRION_PACK . "' align='middle'>",
     'submit'   => "<img src='" . OLEDRION_IMAGES_URL . "submit.png' alt='" . _OLEDRION_SUBMIT . "' align='middle'>",
-    'track'    => "<img src='" . OLEDRION_IMAGES_URL . "track.png' alt='" . _OLEDRION_TRACK . "' align='middle'>"
+    'track'    => "<img src='" . OLEDRION_IMAGES_URL . "track.png' alt='" . _OLEDRION_TRACK . "' align='middle'>",
 ];
 
 // Loading some preferences
@@ -290,7 +290,6 @@ $mod_pref = [
     'use_price'       => $helper->getConfig('use_price'),
     'restrict_orders' => $helper->getConfig('restrict_orders'),
     'isAdmin'         => $helper->isUserAdmin(),
-
 ];
 
 $pathIcon16 = \Xmf\Module\Admin::iconUrl('', 16);

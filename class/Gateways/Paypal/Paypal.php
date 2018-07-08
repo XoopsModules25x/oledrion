@@ -1,4 +1,6 @@
-<?php namespace XoopsModules\Oledrion\Gateways\Paypal;
+<?php
+
+namespace XoopsModules\Oledrion\Gateways\Paypal;
 
 /*
  You may not change or alter any portion of this comment or credits
@@ -37,15 +39,13 @@ class Paypal extends Gateway
     }
 
     /**
-     * Retourne des informations sur la passerelle de paiement
-     *
-     * @return void
+     * Returns information about the payment gateway
      */
     public function setGatewayInformation()
     {
         $gateway                  = [];
         $gateway['name']          = 'Paypal';
-        $gateway['foldername']    = 'Paypal';
+        $gateway['foldername']    = 'paypal';
         $gateway['version']       = '1.1';
         $gateway['description']   = 'PayPal is the safer, easier way to pay and get paid online';
         $gateway['author']        = 'Instant Zero (http://www.herve-thouzard.com/)';
@@ -55,14 +55,14 @@ class Paypal extends Gateway
     }
 
     /**
-     * Retourne le formulaire utilisé pour paramétrer la passerelle de paiement
+     * Returns the form used to set up the payment gateway
      *
      * @param $postUrl
      * @return \XoopsThemeForm
      */
     public function getParametersForm($postUrl)
     {
-        require $this->getGatewayLanguageFile();
+        require_once $this->getGatewayLanguageFile();
         $db                     = \XoopsDatabaseFactory::getDatabaseConnection();
         $gatewaysOptionsHandler = new Oledrion\GatewaysOptionsHandler($db);
 
@@ -70,12 +70,12 @@ class Paypal extends Gateway
         // You must specify the gateway folder's name
         $sform->addElement(new \XoopsFormHidden('gateway', $this->gatewayInformation['foldername']));
 
-        // Adresse email Paypal du compte marchand
+        // Paypal email address of the merchant account
         $paypal_email = new \XoopsFormText(_OLEDRION_PAYPAL_EMAIL, 'paypal_email', 50, 255, $gatewaysOptionsHandler->getGatewayOptionValue($this->gatewayInformation['foldername'], 'paypal_email'));
         $paypal_email->setDescription(_OLEDRION_PAYPAL_EMAILDSC);
         $sform->addElement($paypal_email, true);
 
-        // Libellé de la monnaie pour Paypal
+        // Denomination of currency for Paypal
         $paypal_money = new \XoopsFormSelect(_OLEDRION_PAYPAL_MONEY_P, 'paypal_money', $gatewaysOptionsHandler->getGatewayOptionValue($this->gatewayInformation['foldername'], 'paypal_money'));
         $paypal_money->addOptionArray([
                                           'AUD' => 'Australian Dollar',
@@ -93,15 +93,15 @@ class Paypal extends Gateway
                                           'PLN' => 'Polish Zloty',
                                           'SEK' => 'Swedish Krona',
                                           'SGD' => 'Singapore Dollar',
-                                          'USD' => 'U.S. Dollar'
+                                          'USD' => 'U.S. Dollar',
                                       ]);
         $sform->addElement($paypal_money, true);
 
-        // Paypal en mode test ?
+        // Paypal in test mode ?
         $paypal_test = new \XoopsFormRadioYN(_OLEDRION_PAYPAL_TEST, 'paypal_test', $gatewaysOptionsHandler->getGatewayOptionValue($this->gatewayInformation['foldername'], 'paypal_test'));
         $sform->addElement($paypal_test, true);
 
-        // Forcé à vrai ...
+        // Forced to true ...
         $sform->addElement(new \XoopsFormHidden('use_ipn', 1));
 
         $button_tray = new \XoopsFormElementTray('', '');
@@ -113,17 +113,17 @@ class Paypal extends Gateway
     }
 
     /**
-     * Sauvegarde des paramètres de la passerelle de paiement
+     * Backing up payment gateway settings
      *
-     * @param  array $data Les données du formulaire
-     * @return boolean Le résultat de l'enregistrement des données
+     * @param  array $data The data of the form
+     * @return bool The result of the data recording
      */
     public function saveParametersForm($data)
     {
         $db                     = \XoopsDatabaseFactory::getDatabaseConnection();
         $gatewaysOptionsHandler = new Oledrion\GatewaysOptionsHandler($db);
         $parameters             = ['paypal_email', 'paypal_money', 'paypal_test', 'use_ipn'];
-        // On commence par supprimer les valeurs actuelles
+        // We start by deleting the current values
         $gatewayName = $this->gatewayInformation['foldername'];
         $gatewaysOptionsHandler->deleteGatewayOptions($gatewayName);
         foreach ($parameters as $parameter) {
@@ -136,7 +136,7 @@ class Paypal extends Gateway
     }
 
     /**
-     * Formate le montant au format Paypal
+     * Formats the amount in Paypal format
      * @param $amount
      * @return string
      */
@@ -146,7 +146,7 @@ class Paypal extends Gateway
     }
 
     /**
-     * Retourne l'url vers laquelle rediriger l'utilisateur pour le paiement en ligne
+     * Returns the url to which to redirect the user for online payment
      *
      * @param $cmd_total
      * @param $cmd_id
@@ -165,15 +165,15 @@ class Paypal extends Gateway
     }
 
     /**
-     * Retourne les éléments à ajouter au formulaire en tant que zones cachées
+     * Returns the elements to add to the form as hidden areas
      *
-     * @param array $order La commande client
+     * @param array $order The sales order
      * @param       array
      * @return array
      */
     public function getCheckoutFormContent($order)
     {
-        global $xoopsConfig;
+        //        global $xoopsConfig;
         $db                     = \XoopsDatabaseFactory::getDatabaseConnection();
         $gatewaysOptionsHandler = new Oledrion\GatewaysOptionsHandler($db);
         $gatewayName            = $this->gatewayInformation['foldername'];
@@ -197,7 +197,7 @@ class Paypal extends Gateway
         $ret['upload']           = '1';
         $ret['currency_code']    = $paypal_money;
         $ret['business']         = $paypal_email;
-        $ret['return']           = OLEDRION_URL . 'thankyou.php'; // Page (générique) de remerciement après paiement
+        $ret['return']           = OLEDRION_URL . 'thankyou.php'; // (Generic) thank you page after payment
         $ret['image_url']        = XOOPS_URL . '/images/logo.gif';
         $ret['cpp_header_image'] = XOOPS_URL . '/images/logo.gif';
         $ret['invoice']          = $order->getVar('cmd_id');
@@ -208,12 +208,13 @@ class Paypal extends Gateway
         // B.R. End
 
         $ret['item_number'] = $order->getVar('cmd_id');
-        $ret['tax']         = 0; // ajout 25/03/2008
+        $ret['tax']         = 0; // added 25/03/2008
         $ret['amount']      = $this->formatAmount((float)$order->getVar('cmd_total', 'n'));
         $ret['custom']      = $order->getVar('cmd_id');
-        //$ret['rm'] = 2;   // Renvoyer les données par POST (normalement)
+        //$ret['rm'] = 2;   // Resend data by POST (normally)
         $ret['email'] = $order->getVar('cmd_email');
-        if ('' !== xoops_trim($order->getVar('cmd_cancel'))) { // URL à laquelle le navigateur du client est ramené si le paiement est annulé
+        if ('' !== xoops_trim($order->getVar('cmd_cancel'))) {
+            // URL to which the client's browser is brought back if the payment is canceled
             $ret['cancel_return'] = OLEDRION_URL . 'cancel-payment.php?id=' . $order->getVar('cmd_cancel');
         }
         if (1 === $use_ipn) {
@@ -224,7 +225,7 @@ class Paypal extends Gateway
     }
 
     /**
-     * Retourne la liste des pays à utiliser dans le formulaire de saisie des informations client (checkout.php)
+     * Returns the list of countries to use in the customer information entry form (checkout.php)
      *
      * @return array
      */
@@ -236,12 +237,12 @@ class Paypal extends Gateway
     }
 
     /**
-     * Utilisée lors du dialog avec Paypal dans le cas de l'utilisation de l'IPN
-     * Note : Spécifique Paypal
+     * Used during the dialog with Paypal in the case of the use of the IPN
+     * Note : Specific Paypal
      *
-     * @return string L'URL chez Paypal à appeler pour obtenir des informations
+     * @return string The URL at Paypal to call for information
      */
-    private function getdialogURL()
+    private function getDialogURL()
     {
         $db                     = \XoopsDatabaseFactory::getDatabaseConnection();
         $gatewaysOptionsHandler = new Oledrion\GatewaysOptionsHandler($db);
@@ -254,11 +255,10 @@ class Paypal extends Gateway
     }
 
     /**
-     * Dialogue avec la passerelle de paiement pour indiquer l'état de la commande
-     * L'appellant se charge de vérifier que le fichier log existe
+     * Dialogue with the payment gateway to indicate the status of the order
+     * The caller is responsible for checking that the log file exists
      *
-     * @param  string $gatewaysLogPath Le chemin d'accès complet au fichier log
-     * @return void
+     * @param  string $gatewaysLogPath The full path to the log file
      */
     public function gatewayNotify($gatewaysLogPath)
     {
@@ -282,7 +282,7 @@ class Paypal extends Gateway
             }
             $req .= "&$key=$value";
         }
-        $url          = $this->getdialogURL();
+        $url          = $this->getDialogURL();
         $gatewayName  = $this->gatewayInformation['foldername'];
         $paypal_email = $gatewaysOptionsHandler->getGatewayOptionValue($gatewayName, 'paypal_email');
         $paypal_money = $gatewaysOptionsHandler->getGatewayOptionValue($gatewayName, 'paypal_money');
@@ -290,7 +290,7 @@ class Paypal extends Gateway
         $header       .= "POST /cgi-bin/webscr HTTP/1.1\r\n";
         $header       .= "Host: $url\r\n";
         $header       .= "Content-Type: application/x-www-form-urlencoded\r\n";
-        $header       .= 'Content-Length: ' . strlen($req) . "\r\n\r\n";
+        $header       .= 'Content-Length: ' . mb_strlen($req) . "\r\n\r\n";
         $errno        = 0;
         $errstr       = '';
         $fp           = fsockopen("ssl://$url", 443, $errno, $errstr, 30);
@@ -301,13 +301,13 @@ class Paypal extends Gateway
                 if (0 === strcmp(trim($res), 'VERIFIED')) {
                     $log      .= "PAYPAL VERIFIED\n";
                     $paypalok = true;
-                    if ('COMPLETED' !== strtoupper($_POST['payment_status'])) {
+                    if ('COMPLETED' !== mb_strtoupper($_POST['payment_status'])) {
                         $paypalok = false;
                     }
-                    if (strtoupper($_POST['receiver_email']) != strtoupper($paypal_email)) {
+                    if (mb_strtoupper($_POST['receiver_email']) != mb_strtoupper($paypal_email)) {
                         $paypalok = false;
                     }
-                    if (strtoupper($_POST['mc_currency']) != strtoupper($paypal_money)) {
+                    if (mb_strtoupper($_POST['mc_currency']) != mb_strtoupper($paypal_money)) {
                         $paypalok = false;
                     }
                     if (!$_POST['custom']) {
@@ -316,7 +316,7 @@ class Paypal extends Gateway
                     $montant = $_POST['mc_gross'];
 
                     //R.B. start
-                    $ref      = (int)$_POST['custom']; // Numéro de la commande
+                    $ref      = (int)$_POST['custom']; // Order number
                     $commande = null;
                     $commande = $commandsHandler->get($ref);
 
@@ -327,10 +327,10 @@ class Paypal extends Gateway
                         http_response_code(500);
                         $log .= sprintf("not_object: %d\n", $ref);
                         file_put_contents($gatewaysLogPath, $log, FILE_APPEND | LOCK_EX);
+
                         return;
                     }
                     //R.B. end
-
                     $pid = pcntl_fork();
                     switch ($pid) {
                         case -1:
@@ -338,23 +338,24 @@ class Paypal extends Gateway
                             break;
                         case 0:
                             // In the new (child) process
+
                             // At this point, all PayPal session variables collected, done Paypal session
                             // Rest of transaction can be processed offline to decouple site load from Paypal transaction time
                             // PayPal requires this session to return within 30 seconds, or will retry
                             $PayPalEndTime = microtime(true);
                             if ($paypalok) {
-
                                 /* R.B. start
-                                $ref      = \Xmf\Request::getInt('custom', 0, 'POST'); // Numéro de la commande
-                                $commande = null;
-                                $commande = $commandsHandler->get($ref);
-                                if (is_object($commande)) {
-                                 */ //R.B. end
+                                                                $ref      = \Xmf\Request::getInt('custom', 0, 'POST'); // Numéro de la commande
+                                                                $commande = null;
+                                                                $commande = $commandsHandler->get($ref);
+                                                                if (is_object($commande)) {
+                                                                 */ //R.B. end
 
-                                if ($montant == $commande->getVar('cmd_total')) { // Commande vérifiée
+                                if ($montant == $commande->getVar('cmd_total')) {
+                                    // Verified order
                                     $email_name = sprintf('%s/%d%s', OLEDRION_UPLOAD_PATH, $commande->getVar('cmd_id'), OLEDRION_CONFIRMATION_EMAIL_FILENAME_SUFFIX);
                                     if (file_exists($email_name)) {
-                                        $commandsHandler->validateOrder($commande); // Validation de la commande et mise à jour des stocks
+                                        $commandsHandler->validateOrder($commande); // Validation of the order and inventory update
                                         $msg = [];
                                         $msg = unserialize(file_get_contents($email_name));
                                         // Add Transaction ID variable to email variables for templates
@@ -402,7 +403,7 @@ class Paypal extends Gateway
                                     // $commande = $commandsHandler->get($ref);
                                     // if (is_object($commande)) {
                                     //R.B. end
-                                    switch (strtoupper($_POST['payment_status'])) {
+                                    switch (mb_strtoupper($_POST['payment_status'])) {
                                         case 'PENDING':
                                             $commandsHandler->setOrderPending($commande);
                                             break;
@@ -413,7 +414,7 @@ class Paypal extends Gateway
                                     }
                                 }
                             }
-                            // Ecriture dans le fichier log
+                            // Write to the log file
                             $logfp = fopen($gatewaysLogPath, 'ab');
                             if ($logfp) {
                                 if ($duplicate_ipn) {
@@ -432,12 +433,15 @@ class Paypal extends Gateway
                                 fwrite($logfp, "Paypal session took $PayPalSeconds, Total transaction took $TotalSeconds seconds.\n");
                                 fclose($logfp);
                             }
+
                             break;
                         default:
                             // In the main (parent) process in which the script is running
+
                             // At this point, all PayPal session variables collected, done Paypal session
                             // Rest of transaction can be proccessed offline to decouple Paypal transaction time from site load
                             // PayPal requires this session to return within 30 seconds, or will retry
+
                             return;
                             break;
                     }

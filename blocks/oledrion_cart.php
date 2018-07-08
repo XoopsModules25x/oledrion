@@ -28,7 +28,7 @@ use XoopsModules\Oledrion;
 function b_oledrion_cart_show($options)
 {
     global $mod_pref, $xoopsConfig;
-    include XOOPS_ROOT_PATH . '/modules/oledrion/include/common.php';
+    require_once XOOPS_ROOT_PATH . '/modules/oledrion/include/common.php';
     $productsCount = (int)$options[0];
 
     $cartForTemplate      = $block = [];
@@ -66,7 +66,7 @@ function b_oledrion_cart_show($options)
 function b_oledrion_cart_edit($options)
 {
     global $xoopsConfig;
-    include XOOPS_ROOT_PATH . '/modules/oledrion/include/common.php';
+    require_once XOOPS_ROOT_PATH . '/modules/oledrion/include/common.php';
     $form = '';
     $form .= "<table border='0'>";
     $form .= '<tr><td>' . _MB_OLEDRION_MAX_ITEMS . "</td><td><input type='text' name='options[]' id='options' value='" . $options[0] . "'></td></tr>";

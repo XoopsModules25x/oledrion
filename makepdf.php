@@ -20,7 +20,6 @@
  * Impression du catalogue au format PDF
  */
 
-use Xmf\Request;
 use XoopsModules\Oledrion;
 
 //use tecnickcom\TCPDF;
@@ -95,7 +94,7 @@ $doc_subject  = _OLEDRION_CATALOG;
 $doc_keywords = 'Instant Zero';
 
 //require_once OLEDRION_PATH.'pdf/config/lang/'._LANGCODE.'.php';
-//require OLEDRION_PATH.'pdf/tcpdf.php';
+//require_once OLEDRION_PATH.'pdf/tcpdf.php';
 require_once XOOPS_ROOT_PATH . '/class/libraries/vendor/tecnickcom/tcpdf/tcpdf.php';
 
 //create new PDF document (document units are set by default to millimeters)

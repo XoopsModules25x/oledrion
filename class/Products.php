@@ -1,4 +1,6 @@
-<?php namespace XoopsModules\Oledrion;
+<?php
+
+namespace XoopsModules\Oledrion;
 
 /*
  You may not change or alter any portion of this comment or credits
@@ -35,8 +37,6 @@ class Products extends OledrionObject
      * constructor
      *
      * normally, this is called from child classes only
-     *
-     * @access public
      */
     public function __construct()
     {
@@ -103,7 +103,7 @@ class Products extends OledrionObject
     /**
      * Indique si le produit courant est visible (périmé, encore en stock, en ligne etc)
      *
-     * @return boolean
+     * @return bool
      * @since 2.3.2009.03.17
      */
     public function isProductVisible()
@@ -187,13 +187,12 @@ class Products extends OledrionObject
     /**
      * Indique si l'image du produit existe
      *
-     * @return boolean Vrai si l'image existe sinon faux
+     * @return bool Vrai si l'image existe sinon faux
      */
     public function pictureExists()
     {
         $return = false;
-        if ('' !== xoops_trim($this->getVar('product_image_url'))
-            && file_exists(OLEDRION_PICTURES_PATH . '/' . $this->getVar('product_image_url'))) {
+        if ('' !== xoops_trim($this->getVar('product_image_url')) && file_exists(OLEDRION_PICTURES_PATH . '/' . $this->getVar('product_image_url'))) {
             $return = true;
         }
 
@@ -203,13 +202,12 @@ class Products extends OledrionObject
     /**
      * Indique si la vignette du produit existe
      *
-     * @return boolean Vrai si l'image existe sinon faux
+     * @return bool Vrai si l'image existe sinon faux
      */
     public function thumbExists()
     {
         $return = false;
-        if ('' !== xoops_trim($this->getVar('product_thumb_url'))
-            && file_exists(OLEDRION_PICTURES_PATH . '/' . $this->getVar('product_thumb_url'))) {
+        if ('' !== xoops_trim($this->getVar('product_thumb_url')) && file_exists(OLEDRION_PICTURES_PATH . '/' . $this->getVar('product_thumb_url'))) {
             $return = true;
         }
 
@@ -218,8 +216,6 @@ class Products extends OledrionObject
 
     /**
      * Supprime l'image associée à un produit
-     *
-     * @return void
      */
     public function deletePicture()
     {
@@ -232,13 +228,12 @@ class Products extends OledrionObject
     /**
      * Indique si le fichier attaché à un produit existe
      *
-     * @return boolean
+     * @return bool
      */
     public function attachmentExists()
     {
         $return = false;
-        if ('' !== xoops_trim($this->getVar('product_attachment'))
-            && file_exists(OLEDRION_ATTACHED_FILES_PATH . '/' . $this->getVar('product_attachment'))) {
+        if ('' !== xoops_trim($this->getVar('product_attachment')) && file_exists(OLEDRION_ATTACHED_FILES_PATH . '/' . $this->getVar('product_attachment'))) {
             $return = true;
         }
 
@@ -247,8 +242,6 @@ class Products extends OledrionObject
 
     /**
      * Supprime le fichier attaché
-     *
-     * @return void
      */
     public function deleteAttachment()
     {
@@ -260,8 +253,6 @@ class Products extends OledrionObject
 
     /**
      * Supprime la miniature associée à un produit
-     *
-     * @return void
      */
     public function deleteThumb()
     {
@@ -273,8 +264,6 @@ class Products extends OledrionObject
 
     /**
      * Supprime les 2 images (raccourcis)
-     *
-     * @return void
      */
     public function deletePictures()
     {
@@ -319,8 +308,6 @@ class Products extends OledrionObject
 
     /**
      * Place le produit courant dans l'état "recommandé"
-     *
-     * @return void
      */
     public function setRecommended()
     {
@@ -329,8 +316,6 @@ class Products extends OledrionObject
 
     /**
      * Enlève "l'attribut" recommandé d'un produit
-     *
-     * @return void
      */
     public function unsetRecommended()
     {
@@ -354,9 +339,9 @@ class Products extends OledrionObject
     /**
      * Retourne le lien du produit courant en tenant compte de l'URL Rewriting
      *
-     * @param int $product_id    L'identifiant du produit
-     * @param  string  $product_title Le titre du produit
-     * @param  boolean $shortVersion  Indique si on veut la version avec l'url complpète ou la version avec juste la page et le paramètre
+     * @param int     $product_id    L'identifiant du produit
+     * @param  string $product_title Le titre du produit
+     * @param  bool   $shortVersion  Indique si on veut la version avec l'url complpète ou la version avec juste la page et le paramètre
      * @return string
      */
     public function getLink($product_id = 0, $product_title = '', $shortVersion = false)
@@ -372,19 +357,21 @@ class Products extends OledrionObject
         // B.R. New
         if (empty($product_url)) {
             // End New
-        if (1 == Oledrion\Utility::getModuleOption('urlrewriting')) { // On utilise l'url rewriting
-            if (!$shortVersion) {
-                $url = OLEDRION_URL . 'product-' . $product_id . Oledrion\Utility::makeSeoUrl($product_title) . '.html';
+            if (1 == Oledrion\Utility::getModuleOption('urlrewriting')) {
+                // On utilise l'url rewriting
+                if (!$shortVersion) {
+                    $url = OLEDRION_URL . 'product-' . $product_id . Oledrion\Utility::makeSeoUrl($product_title) . '.html';
+                } else {
+                    $url = 'product-' . $product_id . Oledrion\Utility::makeSeoUrl($product_title) . '.html';
+                }
             } else {
-                $url = 'product-' . $product_id . Oledrion\Utility::makeSeoUrl($product_title) . '.html';
+                // Pas d'utilisation de l'url rewriting
+                if (!$shortVersion) {
+                    $url = OLEDRION_URL . 'product.php?product_id=' . $product_id;
+                } else {
+                    $url = 'product.php?product_id=' . $product_id;
+                }
             }
-        } else { // Pas d'utilisation de l'url rewriting
-            if (!$shortVersion) {
-                $url = OLEDRION_URL . 'product.php?product_id=' . $product_id;
-            } else {
-                $url = 'product.php?product_id=' . $product_id;
-            }
-        }
             // B.R. New
         } else {
             $url = '../' . $product_url;
@@ -396,13 +383,14 @@ class Products extends OledrionObject
     /**
      * Retourne le nombre d'attributs du produit courant
      *
-     * @return integer
+     * @return int
      * @since 2.3.2009.03.19
      */
     public function productAttributesCount()
     {
         $db                = \XoopsDatabaseFactory::getDatabaseConnection();
         $attributesHandler = new Oledrion\AttributesHandler($db);
+
         return $attributesHandler->getProductAttributesCount($this->getVar('product_id'));
     }
 
@@ -411,13 +399,14 @@ class Products extends OledrionObject
      *
      * @note  : La fonction est "doublée", elle se trouve içi et dans la classe des attributs pour des raisons de facilité (et de logique)
      *
-     * @return integer
+     * @return int
      * @since 2.3.2009.03.20
      */
     public function getProductMandatoryAttributesCount()
     {
         $db                = \XoopsDatabaseFactory::getDatabaseConnection();
         $attributesHandler = new Oledrion\AttributesHandler($db);
+
         return $attributesHandler->getProductMandatoryAttributesCount($this);
     }
 
@@ -431,6 +420,7 @@ class Products extends OledrionObject
     {
         $db                = \XoopsDatabaseFactory::getDatabaseConnection();
         $attributesHandler = new Oledrion\AttributesHandler($db);
+
         return $attributesHandler->getProductMandatoryFieldsList($this);
     }
 
@@ -445,6 +435,7 @@ class Products extends OledrionObject
     {
         $db                = \XoopsDatabaseFactory::getDatabaseConnection();
         $attributesHandler = new Oledrion\AttributesHandler($db);
+
         return $attributesHandler->getProductsAttributesList($this->getVar('product_id'), $attributesIds);
     }
 
@@ -457,11 +448,12 @@ class Products extends OledrionObject
     {
         $db                = \XoopsDatabaseFactory::getDatabaseConnection();
         $attributesHandler = new Oledrion\AttributesHandler($db);
+
         return $attributesHandler->getInitialOptionsPrice($this);
     }
 
     /**
-     *
+     * @return int
      */
     public function isNewProduct()
     {
@@ -481,11 +473,11 @@ class Products extends OledrionObject
      */
     public function toArray($format = 's')
     {
-        $ret               = [];
-        $ret               = parent::toArray($format);
+        $ret              = [];
+        $ret              = parent::toArray($format);
         $oledrionCurrency = Oledrion\Currency::getInstance();
-        $ttc               = $finalPriceTTC = $this->getTTC();
-        $finalPriceHT      = (float)$this->getVar('product_price');
+        $ttc              = $finalPriceTTC = $this->getTTC();
+        $finalPriceHT     = (float)$this->getVar('product_price');
 
         $ret['product_ecotaxe_formated'] = $oledrionCurrency->amountForDisplay($this->getVar('product_ecotaxe'));
 
@@ -495,7 +487,8 @@ class Products extends OledrionObject
         $ret['product_price_ttc']               = $oledrionCurrency->amountForDisplay($ttc);
         $ret['product_price_ttc_long']          = $oledrionCurrency->amountForDisplay($ttc, 'l');
 
-        if ((int)$this->getVar('product_discount_price') > 0) { //geeker
+        if ((int)$this->getVar('product_discount_price') > 0) {
+            //geeker
             $finalPriceTTC                          = $this->getDiscountTTC();
             $finalPriceHT                           = (float)$this->getVar('product_discount_price', 'e');
             $ret['product_discount_price_ttc']      = $oledrionCurrency->amountForDisplay($this->getDiscountTTC());

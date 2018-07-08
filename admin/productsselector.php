@@ -44,13 +44,13 @@ $searchFields    = [
     'product_description' => _OLEDRION_DESCRIPTION,
     'product_id'          => _AM_OLEDRION_ID,
     'product_sku'         => _OLEDRION_NUMBER,
-    'product_extraid'     => _OLEDRION_EXTRA_ID
+    'product_extraid'     => _OLEDRION_EXTRA_ID,
 ];
 $searchCriterias = [
     XOOPS_MATCH_START   => _STARTSWITH,
     XOOPS_MATCH_END     => _ENDSWITH,
     XOOPS_MATCH_EQUAL   => _MATCHES,
-    XOOPS_MATCH_CONTAIN => _CONTAINS
+    XOOPS_MATCH_CONTAIN => _CONTAINS,
 ];
 
 $vendors         = [];
@@ -82,11 +82,11 @@ if (\Xmf\Request::hasVar('op', 'REQUEST') && 'search' === $_REQUEST['op']) {
     $selectedCategory      = $product_cid;
     $additionnalParameters = [];
 
-    $additionnalParameters['op']             = 'search';
-    $additionnalParameters['mutipleSelect']  = $mutipleSelect;
-    $additionnalParameters['callerName']     = $callerName;
-    $additionnalParameters['searchField']    = $searchField;
-//    $additionnalParameters['searchField']    = $searchField;
+    $additionnalParameters['op']            = 'search';
+    $additionnalParameters['mutipleSelect'] = $mutipleSelect;
+    $additionnalParameters['callerName']    = $callerName;
+    $additionnalParameters['searchField']   = $searchField;
+    //    $additionnalParameters['searchField']    = $searchField;
     $additionnalParameters['searchCriteria'] = $searchCriteria;
     $additionnalParameters['searchText']     = $searchText;
     $additionnalParameters['searchVendor']   = $searchVendor;
@@ -98,16 +98,24 @@ if (\Xmf\Request::hasVar('op', 'REQUEST') && 'search' === $_REQUEST['op']) {
         if (array_key_exists($searchField, $searchFields)) {
             switch ($searchCriteria) {
                 case XOOPS_MATCH_START:
+
                     $criteria->add(new \Criteria($searchField, $searchText . '%', 'LIKE'));
+
                     break;
                 case XOOPS_MATCH_END:
+
                     $criteria->add(new \Criteria($searchField, '%' . $searchText, 'LIKE'));
+
                     break;
                 case XOOPS_MATCH_EQUAL:
+
                     $criteria->add(new \Criteria($searchField, $searchText, '='));
+
                     break;
                 case XOOPS_MATCH_CONTAIN:
+
                     $criteria->add(new \Criteria($searchField, '%' . $searchText . '%', 'LIKE'));
+
                     break;
             }
         }
@@ -123,7 +131,7 @@ if (\Xmf\Request::hasVar('op', 'REQUEST') && 'search' === $_REQUEST['op']) {
     $xoopsTpl->assign('productsCount', $itemsCount);
     if ($itemsCount > $limit) {
         require_once XOOPS_ROOT_PATH . '/class/pagenav.php';
-        $pagenav = new \XoopsPageNav($itemsCount, $limit, $start, 'start', http_build_query($additionnalParameters));
+        $pagenav = new \XoopsPageNav($itemsCount, $limit, $start, 'start', http_build_query($additionnalParameters, null, '&'));
         $xoopsTpl->assign('pagenav', $pagenav->renderNav());
     }
     $criteria->setStart($start);

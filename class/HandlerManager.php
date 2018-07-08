@@ -1,4 +1,6 @@
-<?php namespace XoopsModules\Oledrion;
+<?php
+
+namespace XoopsModules\Oledrion;
 
 /*
  You may not change or alter any portion of this comment or credits
@@ -57,7 +59,7 @@ class HandlerManager
         'oledrion_payment',
         'oledrion_location_delivery',
         'oledrion_delivery_payment',
-        'oledrion_payment_log'
+        'oledrion_payment_log',
     ];
 
     /**
@@ -71,7 +73,7 @@ class HandlerManager
      *
      * @var array
      */
-    public $handlers = null;
+    public $handlers;
 
     /**
      * Méthode chargée de renvoyer les handlers de données en les chargeant à la volée
@@ -85,7 +87,7 @@ class HandlerManager
         //            return null;
         //        }
 
-        if (!in_array(substr($name, 2), $this->handlersNames)) {
+        if (!in_array(mb_substr($name, 2), $this->handlersNames, true)) {
             return null;
         }
         if (!isset($this->handlersNames[$name])) {

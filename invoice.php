@@ -88,6 +88,7 @@ $manufacturers = $manufacturerHandler->getManufacturersFromIds($tmp);
 
 switch ($op) {
     case 'print':
+
         require_once XOOPS_ROOT_PATH . '/header.php';
 
         // Informations sur la commande ***************************************************************************************
@@ -121,10 +122,12 @@ switch ($op) {
         }
         // Display print page
         echo $xoopsTpl->fetch(OLEDRION_PATH . '/templates/oledrion_bill_print.tpl');
-        break;
 
+        break;
     case 'default':
+
     default:
+
         /**
          * Visualisation d'une facture à l'écran
          */
@@ -168,5 +171,6 @@ switch ($op) {
         $title = _OLEDRION_BILL . ' - ' . Oledrion\Utility::getModuleName();
         Oledrion\Utility::setMetas($title, $title);
         require_once XOOPS_ROOT_PATH . '/footer.php';
+
         break;
 }

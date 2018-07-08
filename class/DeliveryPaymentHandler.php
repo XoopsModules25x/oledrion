@@ -1,4 +1,6 @@
-<?php namespace XoopsModules\Oledrion;
+<?php
+
+namespace XoopsModules\Oledrion;
 
 /*
  You may not change or alter any portion of this comment or credits
@@ -31,8 +33,9 @@ class DeliveryPaymentHandler extends OledrionPersistableObjectHandler
      * DeliveryPaymentHandler constructor.
      * @param \XoopsDatabase $db
      */
-    public function __construct(\XoopsDatabase $db)
-    { //                                          Table                           Classe                    Id
+    public function __construct(\XoopsDatabase $db = null)
+    {
+        //                                          Table                           Classe                    Id
         parent::__construct($db, 'oledrion_delivery_payment', DeliveryPayment::class, 'dp_id');
     }
 

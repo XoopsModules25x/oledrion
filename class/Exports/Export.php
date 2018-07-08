@@ -1,4 +1,6 @@
-<?php namespace XoopsModules\Oledrion\Exports;
+<?php
+
+namespace XoopsModules\Oledrion\Exports;
 
 /*
  You may not change or alter any portion of this comment or credits
@@ -91,7 +93,6 @@ abstract class Export
     /**
      * Export orders according to all the options
      * @return bool true if export was successful or false
-     *
      */
     abstract public function doExport();
 

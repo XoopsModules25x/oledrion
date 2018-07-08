@@ -130,6 +130,7 @@ function listForm($op, $product_id = 0)
 switch ($op) {
     // ************************************************************************
     case 'default': // Liste de toutes les listes de l'utilisateur ************
+
         // ************************************************************************
         $xoopsTpl->assign('op', $op);
         $lists   = [];
@@ -142,7 +143,7 @@ switch ($op) {
                                                                              'order'    => 'ASC',
                                                                              'idAsKey'  => $idAsKey,
                                                                              'listType' => Constants::OLEDRION_LISTS_ALL,
-                                                                             'list_uid' => $uid
+                                                                             'list_uid' => $uid,
                                                                          ]));
         if (count($lists) > 0) {
             foreach ($lists as $list) {
@@ -151,12 +152,13 @@ switch ($op) {
         }
         $breadcrumb = [
             OLEDRION_URL . 'all-lists.php'    => _MI_OLEDRION_SMNAME11,
-            OLEDRION_URL . basename(__FILE__) => _MI_OLEDRION_SMNAME10
+            OLEDRION_URL . basename(__FILE__) => _MI_OLEDRION_SMNAME10,
         ];
-        break;
 
+        break;
     // ************************************************************************
     case 'addProduct': // Ajout d'un produit à une liste *********************
+
         // ************************************************************************
         $xoopsTpl->assign('op', $op);
         $product_id = \Xmf\Request::getInt('product_id', 0, 'GET');
@@ -174,7 +176,7 @@ switch ($op) {
                                                                                    'order'    => 'ASC',
                                                                                    'idAsKey'  => true,
                                                                                    'listType' => Constants::OLEDRION_LISTS_ALL,
-                                                                                   'list_uid' => $uid
+                                                                                   'list_uid' => $uid,
                                                                                ]));
             foreach ($userLists as $list) {
                 $xoopsTpl->append('lists', $list->toArray());
@@ -182,7 +184,7 @@ switch ($op) {
             $breadcrumb = [
                 OLEDRION_URL . 'all-lists.php'    => _MI_OLEDRION_SMNAME11,
                 OLEDRION_URL . basename(__FILE__) => _MI_OLEDRION_SMNAME10,
-                OLEDRION_URL                      => _OLEDRION_ADD_PRODUCT_LIST
+                OLEDRION_URL                      => _OLEDRION_ADD_PRODUCT_LIST,
             ];
             $product    = null;
             $product    = $productsHandler->get($product_id);
@@ -197,14 +199,15 @@ switch ($op) {
             $breadcrumb = [
                 OLEDRION_URL . 'all-lists.php'    => _MI_OLEDRION_SMNAME11,
                 OLEDRION_URL . basename(__FILE__) => _MI_OLEDRION_SMNAME10,
-                OLEDRION_URL                      => $title
+                OLEDRION_URL                      => $title,
             ];
             $xoopsTpl->assign('form', $sform->render());
         }
-        break;
 
+        break;
     // ************************************************************************
     case 'addProductToList': // Ajout d'un produit à une liste, sélection de la liste
+
         // ************************************************************************
         $xoopsTpl->assign('op', $op);
         $product_id = \Xmf\Request::getInt('product_id', 0, 'POST');
@@ -220,17 +223,19 @@ switch ($op) {
         }
 
         $list_id = \Xmf\Request::getInt('list_id', 0, 'POST');
-        if (0 == $list_id) { // Ajouter à une nouvelle liste
+        if (0 == $list_id) {
+            // Ajouter à une nouvelle liste
             $sform      = listForm('addList', $product_id);
             $title      = _OLEDRION_ADD_LIST;
             $breadcrumb = [
                 OLEDRION_URL . 'all-lists.php'    => _MI_OLEDRION_SMNAME11,
                 OLEDRION_URL . basename(__FILE__) => _MI_OLEDRION_SMNAME10,
-                OLEDRION_URL                      => $title
+                OLEDRION_URL                      => $title,
             ];
             $xoopsTpl->assign('form', $sform->render());
             $xoopsTpl->assign('op', 'addList');
-        } else { // Ajouter à une liste existante
+        } else {
+            // Ajouter à une liste existante
             if (!$listsHandler->isThisMyList($list_id)) {
                 Oledrion\Utility::redirect(_OLEDRION_ERROR25, $baseurl, 8);
             }
@@ -251,10 +256,11 @@ switch ($op) {
                 }
             }
         }
-        break;
 
+        break;
     // ************************************************************************
     case 'delete': // Suppression d'une liste ********************************
+
         // ************************************************************************
         $xoopsTpl->assign('op', $op);
         $list_id = \Xmf\Request::getInt('list_id', 0, 'GET');
@@ -270,10 +276,11 @@ switch ($op) {
             Oledrion\Utility::redirect(_AM_OLEDRION_NOT_FOUND, $baseurl, 5);
         }
         xoops_confirm(['op' => 'reallyDelete', 'list_id' => $list_id], $baseurl, _OLEDRION_DELETE_LIST . '<br>' . $item->getVar('list_title'));
-        break;
 
+        break;
     // ************************************************************************
     case 'reallyDelete': // Suppression effective d'une liste **************
+
         // ************************************************************************
         $list_id = \Xmf\Request::getInt('list_id', 0, 'POST');
         if (0 == $list_id) {
@@ -293,10 +300,11 @@ switch ($op) {
         } else {
             Oledrion\Utility::redirect(_AM_OLEDRION_SAVE_PB, $baseurl, 5);
         }
-        break;
 
+        break;
     // ************************************************************************
     case 'save': // Sauvegarde d'une liste *********************************
+
         // ************************************************************************
         $list_id = \Xmf\Request::getInt('list_id', 0, 'POST');
         if (!empty($list_id)) {
@@ -343,10 +351,11 @@ switch ($op) {
                 if ($product_id > 0) {
                     $product = null;
                     $product = $productsHandler->get($product_id);
-                    if (is_object($product)
-                        && $product->isProductVisible()) { // On peut ajouter le produit à cette nouvelle liste
+                    if (is_object($product) && $product->isProductVisible()) {
+                        // On peut ajouter le produit à cette nouvelle liste
                         $res = $productsListHandler->addProductToUserList($item->getVar('list_id'), $product_id);
-                        if ($res) { // Mise à jour du nombre de produits de la liste
+                        if ($res) {
+                            // Mise à jour du nombre de produits de la liste
                             $listsHandler->incrementListProductsCount($item);
                             Oledrion\Utility::updateCache();
                             Oledrion\Utility::redirect(_AM_OLEDRION_SAVE_OK, $product->getLink(), 2);
@@ -359,11 +368,13 @@ switch ($op) {
         } else {
             Oledrion\Utility::redirect(_AM_OLEDRION_SAVE_PB, $baseurl, 5);
         }
-        break;
 
+        break;
     // ************************************************************************
     case 'edit': // Edition d'une liste ***************************************
+
     case 'addList': // Ajout d'une liste **************************************
+
         // ************************************************************************
         $xoopsTpl->assign('op', $op);
         $sform = listForm($op, 0);
@@ -374,10 +385,11 @@ switch ($op) {
         $breadcrumb = [
             OLEDRION_URL . 'all-lists.php'    => _MI_OLEDRION_SMNAME11,
             OLEDRION_URL . basename(__FILE__) => _MI_OLEDRION_SMNAME10,
-            OLEDRION_URL                      => $title
+            OLEDRION_URL                      => $title,
         ];
 
         $xoopsTpl->assign('form', $sform->render());
+
         break;
 }
 

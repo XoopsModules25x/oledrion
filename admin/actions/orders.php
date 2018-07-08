@@ -29,15 +29,16 @@ if (!defined('OLEDRION_ADMIN')) {
 switch ($action) {
     // ****************************************************************************************************************
     case 'default': // Gestion des commandes
+
         // ****************************************************************************************************************
         xoops_cp_header();
         $adminObject = \Xmf\Module\Admin::getInstance();
         $adminObject->displayNavigation('index.php?op=orders');
         //        Oledrion\Utility::htitle(_MI_OLEDRION_ADMENU5, 4);
 
-        $start   = \Xmf\Request::getInt('start', 0, 'GET');
+        $start      = \Xmf\Request::getInt('start', 0, 'GET');
         $totalOrder = 0;
-        $filter3 = 1;
+        $filter3    = 1;
         if (\Xmf\Request::hasVar('filter3', 'POST')) {
             $filter3 = \Xmf\Request::getInt('filter3', 0, 'POST');
         } elseif (\Xmf\Request::hasVar('filter3', 'SESSION')) {
@@ -54,7 +55,7 @@ switch ($action) {
             Constants::OLEDRION_STATE_FRAUD,
             Constants::OLEDRION_STATE_PACKED,
             Constants::OLEDRION_STATE_SUBMITED,
-            Constants::OLEDRION_STATE_DELIVERED
+            Constants::OLEDRION_STATE_DELIVERED,
         ];
         $selected[$filter3]  = ' selected';
 
@@ -96,7 +97,7 @@ switch ($action) {
         $exportFormats = glob(OLEDRION_PATH . 'class/Exports/*.php');
         $formats       = [];
         foreach ($exportFormats as $format) {
-            if (false === strpos($format, 'Export.php')) {
+            if (false === mb_strpos($format, 'Export.php')) {
                 $exportName = basename(str_replace('.php', '', $format));
                 $formats[]  = '<option value="' . $exportName . '">' . $exportName . '</option>';
             }
@@ -153,10 +154,11 @@ switch ($action) {
             echo "<div align='right'>" . $pagenav->renderNav() . '</div>';
         }
         require_once OLEDRION_ADMIN_PATH . 'admin_footer.php';
-        break;
 
+        break;
     // ****************************************************************************************************************
     case 'delete': // Suppression d'une commande
+
         // ****************************************************************************************************************
         xoops_cp_header();
         $id = \Xmf\Request::getInt('id', 0, 'GET');
@@ -169,10 +171,11 @@ switch ($action) {
         } else {
             Oledrion\Utility::redirect(_AM_OLEDRION_NOT_FOUND, $baseurl . '?op=' . $opRedirect, 5);
         }
-        break;
 
+        break;
     // ****************************************************************************************************************
     case 'remove': // Suppression effective d'une commande
+
         // ****************************************************************************************************************
         $id = \Xmf\Request::getInt('id', 0, 'POST');
         if (empty($id)) {
@@ -190,10 +193,11 @@ switch ($action) {
         } else {
             Oledrion\Utility::redirect(_AM_OLEDRION_NOT_FOUND, $baseurl . '?op=' . $opRedirect, 5);
         }
-        break;
 
+        break;
     // ****************************************************************************************************************
     case 'validate': // Validation d'une commande
+
         // ****************************************************************************************************************
         xoops_cp_header();
         $id = \Xmf\Request::getInt('id', 0, 'GET');
@@ -211,7 +215,7 @@ switch ($action) {
                     $information['text'] = Oledrion\Utility::getModuleOption('sms_validate_text');
                     $sms                 = \XoopsModules\Oledrion\Sms::sendSms($information);
                 }
-                //
+
                 Oledrion\Utility::redirect(_AM_OLEDRION_SAVE_OK, $baseurl . '?op=' . $opRedirect, 2);
             } else {
                 Oledrion\Utility::redirect(_AM_OLEDRION_SAVE_PB, $baseurl . '?op=' . $opRedirect, 5);
@@ -219,10 +223,11 @@ switch ($action) {
         } else {
             Oledrion\Utility::redirect(_AM_OLEDRION_NOT_FOUND, $baseurl . '?op=' . $opRedirect, 5);
         }
-        break;
 
+        break;
     // ****************************************************************************************************************
     case 'pack': // Validation d'une commande
+
         // ****************************************************************************************************************
         xoops_cp_header();
         $id = \Xmf\Request::getInt('id', 0, 'GET');
@@ -240,7 +245,7 @@ switch ($action) {
                     $information['text'] = Oledrion\Utility::getModuleOption('sms_pack_text');
                     $sms                 = \XoopsModules\Oledrion\Sms::sendSms($information);
                 }
-                //
+
                 Oledrion\Utility::redirect(_AM_OLEDRION_SAVE_OK, $baseurl . '?op=' . $opRedirect, 2);
             } else {
                 Oledrion\Utility::redirect(_AM_OLEDRION_SAVE_PB, $baseurl . '?op=' . $opRedirect, 5);
@@ -248,10 +253,11 @@ switch ($action) {
         } else {
             Oledrion\Utility::redirect(_AM_OLEDRION_NOT_FOUND, $baseurl . '?op=' . $opRedirect, 5);
         }
-        break;
 
+        break;
     // ****************************************************************************************************************
     case 'submit': // Validation d'une commande
+
         // ****************************************************************************************************************
         xoops_cp_header();
         $id = \Xmf\Request::getInt('id', 0, 'GET');
@@ -269,7 +275,7 @@ switch ($action) {
                     $information['text'] = Oledrion\Utility::getModuleOption('sms_submit_text');
                     $sms                 = \XoopsModules\Oledrion\Sms::sendSms($information);
                 }
-                //
+
                 Oledrion\Utility::redirect(_AM_OLEDRION_SAVE_OK, $baseurl . '?op=' . $opRedirect, 2);
             } else {
                 Oledrion\Utility::redirect(_AM_OLEDRION_SAVE_PB, $baseurl . '?op=' . $opRedirect, 5);
@@ -277,10 +283,11 @@ switch ($action) {
         } else {
             Oledrion\Utility::redirect(_AM_OLEDRION_NOT_FOUND, $baseurl . '?op=' . $opRedirect, 5);
         }
-        break;
 
+        break;
     // ****************************************************************************************************************
     case 'delivery': // Validation d'une commande
+
         // ****************************************************************************************************************
         xoops_cp_header();
         $id = \Xmf\Request::getInt('id', 0, 'GET');
@@ -298,7 +305,7 @@ switch ($action) {
                     $information['text'] = Oledrion\Utility::getModuleOption('sms_delivery_text');
                     $sms                 = \XoopsModules\Oledrion\Sms::sendSms($information);
                 }
-                //
+
                 Oledrion\Utility::redirect(_AM_OLEDRION_SAVE_OK, $baseurl . '?op=' . $opRedirect, 2);
             } else {
                 Oledrion\Utility::redirect(_AM_OLEDRION_SAVE_PB, $baseurl . '?op=' . $opRedirect, 5);
@@ -306,10 +313,11 @@ switch ($action) {
         } else {
             Oledrion\Utility::redirect(_AM_OLEDRION_NOT_FOUND, $baseurl . '?op=' . $opRedirect, 5);
         }
-        break;
 
+        break;
     // ****************************************************************************************************************
     case 'export': // Export des commandes au format CSV
+
         // ****************************************************************************************************************
         xoops_cp_header();
         $adminObject = \Xmf\Module\Admin::getInstance();
@@ -335,10 +343,11 @@ switch ($action) {
             Oledrion\Utility::redirect(_AM_OLEDRION_ERROR_11);
         }
         require_once OLEDRION_ADMIN_PATH . 'admin_footer.php';
-        break;
 
+        break;
     // ****************************************************************************************************************
     case 'track': // track
+
         // ****************************************************************************************************************
         xoops_cp_header();
         $adminObject = \Xmf\Module\Admin::getInstance();
@@ -364,10 +373,11 @@ switch ($action) {
         $sform->display();
 
         require_once OLEDRION_ADMIN_PATH . 'admin_footer.php';
-        break;
 
+        break;
     // ****************************************************************************************************************
     case 'savetrack': // save track
+
         // ****************************************************************************************************************
         xoops_cp_header();
         $id         = \Xmf\Request::getInt('cmd_id', 0, 'POST');
@@ -389,10 +399,11 @@ switch ($action) {
         } else {
             Oledrion\Utility::redirect(_AM_OLEDRION_SAVE_PB, $baseurl . '?op=' . $opRedirect, 5);
         }
-        break;
 
+        break;
     // ****************************************************************************************************************
     case 'print': // Print invoice
+
         // ****************************************************************************************************************
         xoops_cp_header();
         error_reporting(0);
@@ -476,6 +487,7 @@ switch ($action) {
         $xoopsTpl->assign('order', $order);
         // Call template file
         $xoopsTpl->display(XOOPS_ROOT_PATH . '/modules/oledrion/templates/admin/oledrion_order_print.tpl');
+
         exit();
         xoops_cp_footer();
         break;

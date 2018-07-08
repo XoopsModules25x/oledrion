@@ -29,6 +29,7 @@ if (!defined('OLEDRION_ADMIN')) {
 switch ($action) {
     // ****************************************************************************************************************
     case 'default': // Gestion des produits
+
         // ****************************************************************************************************************
         xoops_cp_header();
         $adminObject = \Xmf\Module\Admin::getInstance();
@@ -42,7 +43,7 @@ switch ($action) {
                                                                                      'limit'   => 0,
                                                                                      'sort'    => 'cat_title',
                                                                                      'order'   => 'ASC',
-                                                                                     'idaskey' => true
+                                                                                     'idaskey' => true,
                                                                                  ]));
 
         $form = "<form method='post' action='$baseurl' name='frmadddproduct' id='frmadddproduct'><input type='hidden' name='op' id='op' value='products'><input type='hidden' name='action' id='action' value='add'><input type='submit' name='btngo' id='btngo' value='"
@@ -117,16 +118,9 @@ switch ($action) {
             $newFilter            = true;
         }
         // B.R. Added: $filter_skip_packing $filter_skip_location $filter_skip_delivery
-        if (0 == $filter_product_id
-            && 0 == $filter_product_cid
-            && 0 == $filter_product_recommended
-            && 0 == $filter_product_price
-            && 0 == $filter_product_online
-            && '' === $filter_product_title
-            && '' === $filter_product_sku
-            && 0 == $filter_skip_packing
-            && 0 == $filter_skip_location
-            && 0 == $filter_skip_delivery) {
+        if (0 == $filter_product_id && 0 == $filter_product_cid && 0 == $filter_product_recommended && 0 == $filter_product_price && 0 == $filter_product_online && '' === $filter_product_title && '' === $filter_product_sku && 0 == $filter_skip_packing && 0 == $filter_skip_location
+            && 0
+               == $filter_skip_delivery) {
             $newFilter = true;
         }
 
@@ -236,9 +230,11 @@ switch ($action) {
             $class       = ('even' === $class) ? 'odd' : 'even';
             $id          = $item->getVar('product_id');
             $recommended = '';
-            if ($item->isRecommended()) { // Si le produit est recommandé, on affiche le lien qui permet d'arrêter de le recommander
+            if ($item->isRecommended()) {
+                // Si le produit est recommandé, on affiche le lien qui permet d'arrêter de le recommander
                 $recommended = "<a href='" . $baseurl . '?op=products&action=unrecommend&product_id=' . $id . "' title='" . _AM_OLEDRION_DONOTRECOMMEND_IT . "'><img alt='" . _AM_OLEDRION_DONOTRECOMMEND_IT . "' src='" . OLEDRION_IMAGES_URL . "heart_delete.png' alt=''></a>";
-            } else { // Sinon on affiche le lien qui permet de le recommander
+            } else {
+                // Sinon on affiche le lien qui permet de le recommander
                 $recommended = "<a href='" . $baseurl . '?op=products&action=recommend&product_id=' . $id . "' title='" . _AM_OLEDRION_RECOMMEND_IT . "'><img alt='" . _AM_OLEDRION_RECOMMEND_IT . "' src='" . OLEDRION_IMAGES_URL . "heart_add.png' alt=''></a>";
             }
 
@@ -304,10 +300,11 @@ switch ($action) {
             echo "<div align='right'>" . $pagenav->renderNav() . '</div>';
         }
         //require_once OLEDRION_ADMIN_PATH . 'admin_footer.php';
-        break;
 
+        break;
     // ****************************************************************************************************************
     case 'unrecommend': // Arrêter de recommander un produit
+
         // ****************************************************************************************************************
         $opRedirect = '?op=products';
         if (\Xmf\Request::hasVar('product_id', 'GET')) {
@@ -327,10 +324,11 @@ switch ($action) {
         } else {
             Oledrion\Utility::redirect(_AM_OLEDRION_ERROR_1, $baseurl . $opRedirect, 4);
         }
-        break;
 
+        break;
     // ****************************************************************************************************************
     case 'recommend': // Recommander un produit
+
         // ****************************************************************************************************************
         $opRedirect = '?op=products';
         if (\Xmf\Request::hasVar('product_id', 'GET')) {
@@ -350,11 +348,13 @@ switch ($action) {
         } else {
             Oledrion\Utility::redirect(_AM_OLEDRION_ERROR_1, $baseurl . $opRedirect, 4);
         }
-        break;
 
+        break;
     // ****************************************************************************************************************
     case 'add': // Ajout d'un produit
+
     case 'edit': // Edition d'un produit
+
         // ****************************************************************************************************************
         xoops_cp_header();
         global $xoopsUser;
@@ -470,7 +470,8 @@ switch ($action) {
         }
         $sform->addElement(new \XoopsFormFile(_AM_OLEDRION_IMAGE1_CHANGE, 'attachedfile1', Oledrion\Utility::getModuleOption('maxuploadsize')), false);
 
-        if (!Oledrion\Utility::getModuleOption('create_thumbs')) { // L'utilisateur se charge de créer la vignette lui même
+        if (!Oledrion\Utility::getModuleOption('create_thumbs')) {
+            // L'utilisateur se charge de créer la vignette lui même
             if ('edit' === $action && $item->thumbExists()) {
                 $pictureTray = new \XoopsFormElementTray(_AM_OLEDRION_IMAGE2_HELP, '<br>');
                 $pictureTray->addElement(new \XoopsFormLabel('', "<img src='" . $item->getThumbUrl() . "' alt='' border='0'>"));
@@ -547,7 +548,7 @@ switch ($action) {
                                                                                         'showAll'  => true,
                                                                                         'sort'     => 'product_title',
                                                                                         'order'    => 'ASC',
-                                                                                        'formName' => 'frmproduct'
+                                                                                        'formName' => 'frmproduct',
                                                                                     ]));
         $sform->addElement($productsSelect);
         // ********************************************************************
@@ -593,8 +594,7 @@ switch ($action) {
             $sform->addElement(new \XoopsFormText(_AM_OLEDRION_META_PAGETITLE, 'product_metatitle', 50, 255, $item->getVar('product_metatitle', 'e')), false);
         }
         // Fichier attaché
-        if ('edit' === $action && '' !== trim($item->getVar('product_attachment'))
-            && file_exists(XOOPS_UPLOAD_PATH . '/' . trim($item->getVar('product_attachment')))) {
+        if ('edit' === $action && '' !== trim($item->getVar('product_attachment')) && file_exists(XOOPS_UPLOAD_PATH . '/' . trim($item->getVar('product_attachment')))) {
             $pictureTray = new \XoopsFormElementTray(_OLEDRION_ATTACHED_FILE, '<br>');
             $pictureTray->addElement(new \XoopsFormLabel('', "<a href='" . XOOPS_UPLOAD_URL . '/' . $item->getVar('product_attachment') . "' target='_blank'>" . XOOPS_UPLOAD_URL . '/' . $item->getVar('product_attachment') . '</a>'));
             $deleteCheckbox = new \XoopsFormCheckBox('', 'delpicture3');
@@ -705,10 +705,11 @@ switch ($action) {
         $sform = Oledrion\Utility::formMarkRequiredFields($sform);
         $sform->display();
         require_once OLEDRION_ADMIN_PATH . 'admin_footer.php';
-        break;
 
+        break;
     // ****************************************************************************************************************
     case 'saveedit': // Sauvegarde des informations d'un produit
+
         // ****************************************************************************************************************
         xoops_cp_header();
         $id = \Xmf\Request::getInt('product_id', 0, 'POST');
@@ -748,7 +749,8 @@ switch ($action) {
         $res1        = Oledrion\Utility::uploadFile(0, OLEDRION_PICTURES_PATH);
         if (true === $res1) {
             $mainPicture = $destname;
-            if (Oledrion\Utility::getModuleOption('resize_main')) { // On redimensionne l'image principale
+            if (Oledrion\Utility::getModuleOption('resize_main')) {
+                // On redimensionne l'image principale
                 Oledrion\Utility::resizePicture(OLEDRION_PICTURES_PATH . '/' . $destname, OLEDRION_PICTURES_PATH . '/' . $destname, Oledrion\Utility::getModuleOption('images_width'), Oledrion\Utility::getModuleOption('images_height'), true);
             }
             $item->setVar('product_image_url', basename($destname));
@@ -760,7 +762,8 @@ switch ($action) {
 
         $indiceAttached = 2;
         // Upload de la vignette
-        if (!Oledrion\Utility::getModuleOption('create_thumbs')) { // L'utilisateur se charge de créer la vignette lui-même
+        if (!Oledrion\Utility::getModuleOption('create_thumbs')) {
+            // L'utilisateur se charge de créer la vignette lui-même
             $destname = '';
             $res2     = Oledrion\Utility::uploadFile(1, OLEDRION_PICTURES_PATH);
             if (true === $res2) {
@@ -770,7 +773,8 @@ switch ($action) {
                     echo $res2;
                 }
             }
-        } else { // Il faut créer la vignette pour l'utilisateur
+        } else {
+            // Il faut créer la vignette pour l'utilisateur
             $indiceAttached = 1;
             if ('' !== xoops_trim($mainPicture)) {
                 $thumbName = OLEDRION_THUMBS_PREFIX . $mainPicture;
@@ -841,10 +845,11 @@ switch ($action) {
         } else {
             Oledrion\Utility::redirect(_AM_OLEDRION_SAVE_PB, $baseurl . '?op=' . $opRedirect, 5);
         }
-        break;
 
+        break;
     // ****************************************************************************************************************
     case 'copy': // Copier un produit
+
         // ****************************************************************************************************************
         xoops_cp_header();
         $id = \Xmf\Request::getInt('id', 0, 'GET');
@@ -863,10 +868,11 @@ switch ($action) {
                 Oledrion\Utility::redirect(_AM_OLEDRION_SAVE_PB, $baseurl . '?op=' . $opRedirect, 5);
             }
         }
-        break;
 
+        break;
     // ****************************************************************************************************************
     case 'confdelete': // Confirmation de la suppression d'un produit
+
         // ****************************************************************************************************************
         xoops_cp_header();
 
@@ -879,10 +885,11 @@ switch ($action) {
             Oledrion\Utility::redirect(_AM_OLEDRION_NOT_FOUND, $baseurl, 5);
         }
         xoops_confirm(['op' => 'products', 'action' => 'delete', 'id' => $id], 'index.php', _AM_OLEDRION_CONF_DELITEM . '<br>' . $item->getVar('product_title'));
-        break;
 
+        break;
     // ****************************************************************************************************************
     case 'delete': // Suppression d'un produit
+
         // ****************************************************************************************************************
         xoops_cp_header();
         $id = \Xmf\Request::getInt('id', 0, 'POST');
@@ -940,11 +947,12 @@ switch ($action) {
             echo '</table>';
             require_once OLEDRION_ADMIN_PATH . 'admin_footer.php';
         }
-        break;
 
+        break;
     // **********************************************************************************************
     case 'related':
         // ******************************************************************************************
+
         xoops_cp_header();
         global $xoopsUser;
 
@@ -994,11 +1002,12 @@ switch ($action) {
         $sform->display();
 
         require_once OLEDRION_ADMIN_PATH . 'admin_footer.php';
-        break;
 
+        break;
     // **********************************************************************************************
     case 'relatedsave':
         // ******************************************************************************************
+
         xoops_cp_header();
         $id   = \Xmf\Request::getInt('product_id', 0, 'POST');
         $item = $productsHandler->get($id);
@@ -1014,5 +1023,6 @@ switch ($action) {
 
         $opRedirect = 'products';
         Oledrion\Utility::redirect(_AM_OLEDRION_SAVE_OK, $baseurl . '?op=' . $opRedirect, 5);
+
         break;
 }

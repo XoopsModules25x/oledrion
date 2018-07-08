@@ -1,10 +1,11 @@
-<?php namespace XoopsModules\Oledrion\Gateways\Pec24;
+<?php
+
+namespace XoopsModules\Oledrion\Gateways\Pec24;
 
 // defined('XOOPS_ROOT_PATH') || die('Restricted access');
-//require_once('nusoap.php');
+//require('nusoap.php');
 
 use XoopsModules\Oledrion;
-use XoopsModules\Oledrion\Constants;
 use XoopsModules\Oledrion\Gateways\Gateway;
 
 /**
@@ -67,12 +68,12 @@ class Pec24 extends Gateway
      * It's up to you to verify data and eventually to complain about uncomplete or missing data
      *
      * @param  array $data Receives $_POST
-     * @return boolean True if you succeed to save data else false
+     * @return bool True if you succeed to save data else false
      */
     public function saveParametersForm($data)
     {
         if ('' !== xoops_trim($this->languageFilename) && file_exists($this->languageFilename)) {
-            require $this->languageFilename;
+            require_once $this->languageFilename;
         }
         $db                     = \XoopsDatabaseFactory::getDatabaseConnection();
         $gatewaysOptionsHandler = new Oledrion\GatewaysOptionsHandler($db);
@@ -100,7 +101,7 @@ class Pec24 extends Gateway
      */
     public function getAuthority($cmd_total, $cmd_id)
     {
-        $url = $this->getdialogURL();
+        $url = $this->getDialogURL();
         if (extension_loaded('soap')) {
             $soapclient = new \Soapclient($url);
         } else {
@@ -113,7 +114,7 @@ class Pec24 extends Gateway
             'orderId'     => (int)$cmd_id,
             'callbackUrl' => OLEDRION_URL . 'gateway-notify.php?cmd_id=' . (int)$cmd_id . '&cmd_total=' . (int)$this->formatAmount($cmd_total),
             'authority'   => 0,
-            'status'      => 1
+            'status'      => 1,
         ];
         $sendParams = [$params];
         //$res = $soapclient->call('PinPaymentRequest', $sendParams);
@@ -168,7 +169,6 @@ class Pec24 extends Gateway
 
     /**
      * Returns the list of countries codes used by the gateways
-     *
      */
     public function getCountriesList()
     {
@@ -180,7 +180,7 @@ class Pec24 extends Gateway
     /**
      * @return string
      */
-    private function getdialogURL()
+    private function getDialogURL()
     {
         return 'https://www.pecco24.com:27635/pecpaymentgateway/eshopservice.asmx?wsdl';
     }
@@ -189,7 +189,7 @@ class Pec24 extends Gateway
      * This method is in charge to dialog with the gateway to verify the payment's statuts
      *
      * @param  string $gatewaysLogPath The full path (and name) to the log file
-     * @return void
+     * @return string
      */
     public function gatewayNotify($gatewaysLogPath)
     {
@@ -201,7 +201,7 @@ class Pec24 extends Gateway
         $cmd_id    = \Xmf\Request::getInt('cmd_id', 0, 'GET');
         $cmd_total = \Xmf\Request::getInt('cmd_total', 0, 'GET');
         // Set soap
-        $url = $this->getdialogURL();
+        $url = $this->getDialogURL();
         if (extension_loaded('soap')) {
             $soapclient = new \SoapClient($url);
         } else {
@@ -231,7 +231,7 @@ class Pec24 extends Gateway
                 $params     = [
                     'pin'       => $this->getParsianMid(),
                     'authority' => $authority,
-                    'status'    => $status
+                    'status'    => $status,
                 ];
                 $sendParams = [$params];
                 $res        = $soapclient->call('PinPaymentEnquiry', $sendParams);

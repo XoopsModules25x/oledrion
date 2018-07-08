@@ -50,9 +50,11 @@ function b_sitemap_oledrion()
     while (false !== (list($catid, $name) = $xoopsDB->fetchRow($result))) {
         $sitemap['parent'][$i]['id']    = $catid;
         $sitemap['parent'][$i]['title'] = $myts->htmlSpecialChars($name);
-        if (1 == Oledrion\Utility::getModuleOption('urlrewriting')) { // On utilise l'url rewriting
+        if (1 == Oledrion\Utility::getModuleOption('urlrewriting')) {
+            // On utilise l'url rewriting
             $url = 'category' . '-' . (int)$catid . Oledrion\Utility::makeSeoUrl($name) . '.html';
-        } else { // Pas d'utilisation de l'url rewriting
+        } else {
+            // Pas d'utilisation de l'url rewriting
             $url = 'category.php?cat_cid=' . (int)$catid;
         }
         $sitemap['parent'][$i]['url'] = $url;
@@ -61,13 +63,15 @@ function b_sitemap_oledrion()
             $j         = 0;
             $child_ary = $mytree->getChildTreeArray($catid, $order);
             foreach ($child_ary as $child) {
-                $count                                       = strlen($child['prefix']) + 1;
+                $count                                       = mb_strlen($child['prefix']) + 1;
                 $sitemap['parent'][$i]['child'][$j]['id']    = $child[$id_name];
                 $sitemap['parent'][$i]['child'][$j]['title'] = $myts->htmlSpecialChars($child[$title_name]);
                 $sitemap['parent'][$i]['child'][$j]['image'] = (($count > 3) ? 4 : $count);
-                if (1 == Oledrion\Utility::getModuleOption('urlrewriting')) { // On utilise l'url rewriting
+                if (1 == Oledrion\Utility::getModuleOption('urlrewriting')) {
+                    // On utilise l'url rewriting
                     $url = 'category' . '-' . (int)$child[$id_name] . Oledrion\Utility::makeSeoUrl($child[$title_name]) . '.html';
-                } else { // Pas d'utilisation de l'url rewriting
+                } else {
+                    // Pas d'utilisation de l'url rewriting
                     $url = 'category.php?cat_cid=' . (int)$child[$id_name];
                 }
                 $sitemap['parent'][$i]['child'][$j]['url'] = $url;

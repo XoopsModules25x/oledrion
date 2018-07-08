@@ -20,12 +20,10 @@
 /**
  * Various parameters for the module
  */
-
 $moduleDirName = basename(__DIR__);
 
 // Location of attached files (url and physical path on your disk)
 if (!defined('OLEDRION_ATTACHED_FILES_URL')) {
-
     // Define oledrion dirname
     define('OLEDRION_DIRNAME', $moduleDirName);
 
@@ -46,7 +44,8 @@ if (!defined('OLEDRION_ATTACHED_FILES_URL')) {
     define('OLEDRION_ADMIN_PATH', OLEDRION_PATH . 'admin' . '/');
 
     // Set gateways path
-    define('OLEDRION_GATEWAY_PATH', OLEDRION_ADMIN_PATH . 'gateways' . '/');
+//    define('OLEDRION_GATEWAY_PATH', OLEDRION_ADMIN_PATH . 'gateways' . '/');
+    define('OLEDRION_GATEWAY_PATH', XOOPS_ROOT_PATH . '/modules/' . $moduleDirName . '/class/Gateways' . '/');
 
     // Set plugin URL and PATH
     define('OLEDRION_PLUGINS_PATH', OLEDRION_PATH . 'class/plugins/');

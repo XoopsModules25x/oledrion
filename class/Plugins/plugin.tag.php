@@ -19,7 +19,7 @@
  */
 function oledrion_tag_iteminfo(&$items)
 {
-    include XOOPS_ROOT_PATH . '/modules/oledrion/include/common.php';
+    require_once XOOPS_ROOT_PATH . '/modules/oledrion/include/common.php';
     $items_id = [];
     foreach (array_keys($items) as $cat_id) {
         foreach (array_keys($items[$cat_id]) as $item_id) {
@@ -37,7 +37,7 @@ function oledrion_tag_iteminfo(&$items)
                 'link'    => $item_obj->getLink(0, '', true),
                 'time'    => $item_obj->getVar('product_submitted'),
                 'tags'    => '', // optional
-                'content' => ''
+                'content' => '',
             ];
         }
     }
@@ -57,7 +57,7 @@ function oledrion_tag_synchronization($mid)
     $where1              = '1=1';
 
     /* clear tag-item links */
-    if ($linkHandler->mysql_major_version() >= 4):
+    if ($linkHandler->mysql_major_version() >= 4) :
         $sql = "    DELETE FROM {$linkHandler->table}"
                . '   WHERE '
                . "       tag_modid = {$mid}"
@@ -67,7 +67,8 @@ function oledrion_tag_synchronization($mid)
                . "               FROM {$itemHandler_table} "
                . "               WHERE $where"
                . '           ) '
-               . '       )'; else:
+               . '       )';
+    else :
         $sql = "    DELETE {$linkHandler->table} FROM {$linkHandler->table}"
                . "   LEFT JOIN {$itemHandler_table} AS aa ON {$linkHandler->table}.tag_itemid = aa.{$itemHandler_keyName} "
                . '   WHERE '

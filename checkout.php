@@ -38,7 +38,7 @@ $uid = Oledrion\Utility::getCurrentUserID();
 // Get checkout level
 $checkout_level = Oledrion\Utility::getModuleOption('checkout_level');
 // Passage de commandes réservé aux utilisateurs enregistrés
-if (1 == Oledrion\Utility::getModuleOption('restrict_orders', false) && 0 == $uid) {
+if (0 == $uid && 1 == Oledrion\Utility::getModuleOption('restrict_orders', false)) {
     $registry = new Oledrion\Registryfile();
     $text     = $registry->getfile(OLEDRION_TEXTFILE5);
     Oledrion\Utility::redirect(xoops_trim($text), 'index.php', 5);
@@ -84,7 +84,7 @@ function listCart()
 }
 
 $oledrionCurrency = Oledrion\Currency::getInstance();
-$countries         = Oledrion\Utility::getCountriesList();
+$countries        = Oledrion\Utility::getCountriesList();
 
 // B.R. New
 listCart();
@@ -92,6 +92,7 @@ listCart();
 
 switch ($op) {
     case 'save':
+
         if (empty($_POST)) {
             Oledrion\Utility::redirect(_OLEDRION_ERROR20, OLEDRION_URL, 4);
         }
@@ -102,6 +103,7 @@ switch ($op) {
 
         switch ($action) {
             case 'make':
+
                 $commandAmountTTC += $commandAmountVAT;
                 $password         = md5(xoops_makepass());
                 $passwordCancel   = md5(xoops_makepass());
@@ -131,9 +133,10 @@ switch ($op) {
                 } else {
                     Oledrion\Utility::redirect(_OLEDRION_SELECT_PACKING, OLEDRION_URL . 'checkout.php?op=packing&commend_id=' . $commande->getVar('cmd_id'), 1);
                 }
-                break;
 
+                break;
             case 'find':
+
                 if (0 == $commend_id) {
                     Oledrion\Utility::redirect(_OLEDRION_ERROR20, OLEDRION_URL, 4);
                 }
@@ -152,8 +155,8 @@ switch ($op) {
                     Oledrion\Utility::redirect(_OLEDRION_ERROR10, OLEDRION_URL, 6);
                 }
                 Oledrion\Utility::redirect(_OLEDRION_SELECT_PACKING, OLEDRION_URL . 'checkout.php?op=packing&commend_id=' . $commande->getVar('cmd_id'), 1);
-                break;
 
+                break;
             case 'packing':
 
                 $packing_id = \Xmf\Request::getInt('packing_id', 0, 'POST');
@@ -184,8 +187,8 @@ switch ($op) {
                     Oledrion\Utility::redirect(_OLEDRION_ERROR10, OLEDRION_URL, 6);
                 }
                 Oledrion\Utility::redirect(_OLEDRION_SELECT_LOCATION, OLEDRION_URL . 'checkout.php?op=location&commend_id=' . $commande->getVar('cmd_id'), 1);
-                break;
 
+                break;
             case 'location':
 
                 $location_id = \Xmf\Request::getInt('location_id', 0, 'POST');
@@ -214,8 +217,8 @@ switch ($op) {
                 } else {
                     Oledrion\Utility::redirect(_OLEDRION_SELECT_DELIVERY, OLEDRION_URL . 'checkout.php?op=delivery&commend_id=' . $commande->getVar('cmd_id'), 1);
                 }
-                break;
 
+                break;
             case 'delivery':
 
                 $delivery_id = \Xmf\Request::getInt('delivery_id', 0, 'POST');
@@ -237,19 +240,24 @@ switch ($op) {
                 $shipping_price_op = Oledrion\Utility::getModuleOption('checkout_shipping', false);
                 switch ($shipping_price_op) {
                     case 1:
+
                         $shipping_price = $shippingAmount + $delivery['delivery_price'];
-                        break;
 
+                        break;
                     case 2:
+
                         $shipping_price = $shippingAmount;
-                        break;
 
+                        break;
                     case 3:
-                        $shipping_price = $delivery['delivery_price'];
-                        break;
 
+                        $shipping_price = $delivery['delivery_price'];
+
+                        break;
                     case 4:
+
                         $shipping_price = 0;
+
                         break;
                 }
                 $commande->setVar('cmd_delivery', $delivery['delivery_title']);
@@ -260,8 +268,8 @@ switch ($op) {
                     Oledrion\Utility::redirect(_OLEDRION_ERROR10, OLEDRION_URL, 6);
                 }
                 Oledrion\Utility::redirect(_OLEDRION_SELECT_PAYMENT, OLEDRION_URL . 'checkout.php?op=payment&commend_id=' . $commande->getVar('cmd_id'), 1);
-                break;
 
+                break;
             case 'payment':
 
                 $payment_id = \Xmf\Request::getInt('payment_id', 0, 'POST');
@@ -285,14 +293,15 @@ switch ($op) {
                     Oledrion\Utility::redirect(_OLEDRION_ERROR10, OLEDRION_URL, 6);
                 }
                 Oledrion\Utility::redirect(_OLEDRION_FINAL_CHECKOUT, OLEDRION_URL . 'checkout.php?op=confirm&commend_id=' . $commande->getVar('cmd_id'), 1);
+
                 break;
         }
 
         break;
-
     // ****************************************************************************************************************
     case 'default':
         // Présentation du formulaire
+
         // ****************************************************************************************************************
         if ($caddyHandler->isCartEmpty()) {
             Oledrion\Utility::redirect(_OLEDRION_CART_IS_EMPTY, OLEDRION_URL, 4);
@@ -329,7 +338,7 @@ switch ($op) {
         }
         $sform->addElement(new \XoopsFormLabel(_OLEDRION_TOTAL, $oledrionCurrency->amountForDisplay($commandAmountTTC)));
         // By voltan
-        if (in_array(Oledrion\Utility::getModuleOption('checkout_shipping'), [1, 2]) && $shippingAmount > 0) {
+        if ($shippingAmount > 0 && in_array(Oledrion\Utility::getModuleOption('checkout_shipping'), [1, 2], true)) {
             $sform->addElement(new \XoopsFormLabel(_OLEDRION_SHIPPING_PRICE, $oledrionCurrency->amountForDisplay($shippingAmount)));
         }
         $sform->addElement(new \XoopsFormText(_OLEDRION_LASTNAME, 'cmd_lastname', 50, 255, $commande->getVar('cmd_lastname', 'e')), true);
@@ -377,9 +386,10 @@ switch ($op) {
         $sform->addElement($button_tray);
         $sform = Oledrion\Utility::formMarkRequiredFields($sform);
         $xoopsTpl->assign('form', $sform->render());
-        break;
 
+        break;
     case 'packing':
+
         if ($caddyHandler->isCartEmpty()) {
             Oledrion\Utility::redirect(_OLEDRION_CART_IS_EMPTY, OLEDRION_URL, 4);
         }
@@ -389,10 +399,10 @@ switch ($op) {
         // Check checkout level
         if (1 == $checkout_level) {
             Oledrion\Utility::redirect(_OLEDRION_FINAL_CHECKOUT, OLEDRION_URL . 'checkout.php?op=confirm&commend_id=' . $commend_id, 1);
-        // B.R. Start
+            // B.R. Start
         } elseif (1 == $checkoutAttributes['skip_packing']) {
             Oledrion\Utility::redirect(_OLEDRION_SELECT_LOCATION, OLEDRION_URL . 'checkout.php?op=location&commend_id=' . $commend_id, 1);
-        // B.R. End
+            // B.R. End
         } elseif (2 == $checkout_level) {
             Oledrion\Utility::redirect(_OLEDRION_SELECT_LOCATION, OLEDRION_URL . 'checkout.php?op=location&commend_id=' . $commend_id, 1);
         }
@@ -416,9 +426,10 @@ switch ($op) {
         $registry = new Oledrion\Registryfile();
         $text     = $registry->getfile(OLEDRION_TEXTFILE6);
         $xoopsTpl->assign('text', xoops_trim($text));
-        break;
 
+        break;
     case 'location':
+
         if ($caddyHandler->isCartEmpty()) {
             Oledrion\Utility::redirect(_OLEDRION_CART_IS_EMPTY, OLEDRION_URL, 4);
         }
@@ -428,7 +439,7 @@ switch ($op) {
         // Check checkout level
         if (1 == $checkout_level) {
             Oledrion\Utility::redirect(_OLEDRION_FINAL_CHECKOUT, OLEDRION_URL . 'checkout.php?op=confirm&commend_id=' . $commend_id, 1);
-        // B.R. Start
+            // B.R. Start
         } elseif (1 == $checkoutAttributes['skip_location']) {
             //$commande = $h_oledrion_commands->get($commend_id);
             //Oledrion\Utility::redirect(_OLEDRION_SELECT_DELIVERY, OLEDRION_URL . 'checkout.php?op=delivery&commend_id=' . $commande->getVar('cmd_id'), 1);
@@ -438,6 +449,7 @@ switch ($op) {
         // B.R. listCart();
         switch ($action) {
             case 'default':
+
                 $sform = new \XoopsThemeForm(_OLEDRION_LOCATION_FORM, 'informationfrm', OLEDRION_URL . 'checkout.php', 'post', true);
                 $sform->addElement(new \XoopsFormHidden('op', 'save'));
                 $sform->addElement(new \XoopsFormHidden('action', 'location'));
@@ -451,9 +463,10 @@ switch ($op) {
                 $sform->addElement(new \XoopsFormButton('', 'post', _OLEDRION_SAVE_NEXT, 'submit'));
                 $sform = Oledrion\Utility::formMarkRequiredFields($sform);
                 $xoopsTpl->assign('form', $sform->render());
-                break;
 
+                break;
             case 'select':
+
                 $commande = $commandsHandler->get($commend_id);
                 $sform    = new \XoopsThemeForm(_OLEDRION_LOCATION_FORM, 'informationfrm', OLEDRION_URL . 'checkout.php', 'post', true);
                 $sform->addElement(new \XoopsFormHidden('op', 'save'));
@@ -468,6 +481,7 @@ switch ($op) {
                 $sform->addElement(new \XoopsFormButton('', 'post', _OLEDRION_SAVE_NEXT, 'submit'));
                 $sform = Oledrion\Utility::formMarkRequiredFields($sform);
                 $xoopsTpl->assign('form', $sform->render());
+
                 break;
         }
 
@@ -475,9 +489,10 @@ switch ($op) {
         $registry = new Oledrion\Registryfile();
         $text     = $registry->getfile(OLEDRION_TEXTFILE6);
         $xoopsTpl->assign('text', xoops_trim($text));
-        break;
 
+        break;
     case 'delivery':
+
         if ($caddyHandler->isCartEmpty()) {
             Oledrion\Utility::redirect(_OLEDRION_CART_IS_EMPTY, OLEDRION_URL, 4);
         }
@@ -487,7 +502,7 @@ switch ($op) {
         // Check checkout level
         if (1 == $checkout_level) {
             Oledrion\Utility::redirect(_OLEDRION_FINAL_CHECKOUT, OLEDRION_URL . 'checkout.php?op=confirm&commend_id=' . $commend_id, 1);
-        // B.R. Start
+            // B.R. Start
         } elseif (1 == $checkoutAttributes['skip_delivery']) {
             //$commande = $h_oledrion_commands->get($commend_id);
             //Oledrion\Utility::redirect(_OLEDRION_SELECT_PAYMENT, OLEDRION_URL . 'checkout.php?op=payment&commend_id=' . $commande->getVar('cmd_id'), 1);
@@ -516,9 +531,10 @@ switch ($op) {
         $registry = new Oledrion\Registryfile();
         $text     = $registry->getfile(OLEDRION_TEXTFILE6);
         $xoopsTpl->assign('text', xoops_trim($text));
-        break;
 
+        break;
     case 'payment':
+
         if ($caddyHandler->isCartEmpty()) {
             Oledrion\Utility::redirect(_OLEDRION_CART_IS_EMPTY, OLEDRION_URL, 4);
         }
@@ -531,7 +547,7 @@ switch ($op) {
         }
         // B.R. listCart();
         // B.R. Start
-        $commande    = $commandsHandler->get($commend_id);
+        $commande = $commandsHandler->get($commend_id);
         if (1 == $checkoutAttributes['skip_delivery']) {
             // Assumes first deliery method is free shipping (else, why skip?)
             // TODO: Consider pre-configuring free shipping as #1
@@ -540,7 +556,7 @@ switch ($op) {
             // B.R. End
             $delivery_id = $commande->getVar('cmd_delivery_id');
         }
-        $payments    = $paymentHandler->getThisDeliveryPayment($delivery_id);
+        $payments = $paymentHandler->getThisDeliveryPayment($delivery_id);
 
         $sform = new \XoopsThemeForm(_OLEDRION_PAYMENT_FORM, 'informationfrm', OLEDRION_URL . 'checkout.php', 'post', true);
         $sform->addElement(new \XoopsFormHidden('op', 'save'));
@@ -559,11 +575,12 @@ switch ($op) {
         $registry = new Oledrion\Registryfile();
         $text     = $registry->getfile(OLEDRION_TEXTFILE6);
         $xoopsTpl->assign('text', xoops_trim($text));
-        break;
 
+        break;
     // ****************************************************************************************************************
     case 'confirm':
         // Validation finale avant envoi sur la passerelle de paiement (ou arrêt)
+
         // ****************************************************************************************************************
         if ($caddyHandler->isCartEmpty()) {
             Oledrion\Utility::redirect(_OLEDRION_CART_IS_EMPTY, OLEDRION_URL, 4);
@@ -689,7 +706,7 @@ switch ($op) {
             $payment    = $h_oledrion_payment->get($payment_id);
             // End new
             // B.R. if (!isset($payment) || $payment['payment_type'] === 'offline' || $commandAmountTTC == 0) {
-            if (!isset($payment) || 'offline' === $payment->getVar('payment_type') || 0 == $commandAmountTTC) {
+            if (0 == $commandAmountTTC || !isset($payment) || 'offline' === $payment->getVar('payment_type')) {
                 $text = $registry->getfile(OLEDRION_TEXTFILE4);
                 $xoopsTpl->append('text', '<br>' . xoops_trim($text));
                 $payURL = OLEDRION_URL . 'invoice.php?id=' . $commande->getVar('cmd_id') . '&pass=' . $commande->getVar('cmd_password');
@@ -761,7 +778,7 @@ switch ($op) {
         }
         $button_tray = new \XoopsFormElementTray('', '');
         //B.R. if (!isset($payment) || $payment['payment_type'] === 'offline' || $commandAmountTTC == 0 || $checkout_level == 1 ) {
-        if (!isset($payment) || 'offline' === $payment->getVar('payment_type') || 0 == $commandAmountTTC || 1 == $checkout_level) {
+        if (0 == $commandAmountTTC || !isset($payment) || 'offline' === $payment->getVar('payment_type') || 1 == $checkout_level) {
             $submit_btn = new \XoopsFormButton('', 'post', _OLEDRION_FINISH, 'submit');
         } else {
             $submit_btn = new \XoopsFormButton('', 'post', _OLEDRION_PAY_GATEWAY, 'submit');
@@ -776,6 +793,7 @@ switch ($op) {
             $information['text'] = Oledrion\Utility::getModuleOption('sms_checkout_text');
             $sms                 = \XoopsModules\Oledrion\Sms::sendSms($information);
         }
+
         break;
 }
 

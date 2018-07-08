@@ -76,7 +76,7 @@ $parameters = new Oledrion\Parameters([
                                           'fileContent'  => $fileContent,
                                           'product'      => $product,
                                           'order'        => $order,
-                                          'fullFilename' => $file
+                                          'fullFilename' => $file,
                                       ]);
 $parameters = $plugins->fireFilter(Oledrion\Plugin::EVENT_ON_PRODUCT_DOWNLOAD, $parameters);
 if ('' !== trim($parameters['fileContent'])) {

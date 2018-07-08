@@ -1,4 +1,6 @@
-<?php namespace XoopsModules\Oledrion;
+<?php
+
+namespace XoopsModules\Oledrion;
 
 /*
  You may not change or alter any portion of this comment or credits
@@ -19,7 +21,6 @@
  */
 
 use XoopsModules\Oledrion;
-use XoopsModules\Oledrion\Constants;
 
 /**
  * Gestion des réductions
@@ -35,8 +36,9 @@ class DiscountsHandler extends OledrionPersistableObjectHandler
      * DiscountsHandler constructor.
      * @param \XoopsDatabase $db
      */
-    public function __construct(\XoopsDatabase $db)
-    { //                        Table                   Classe              Id        Libellé
+    public function __construct(\XoopsDatabase $db = null)
+    {
+        //                        Table                   Classe              Id        Libellé
         parent::__construct($db, 'oledrion_discounts', Discounts::class, 'disc_id', 'disc_title');
     }
 
@@ -77,7 +79,6 @@ class DiscountsHandler extends OledrionPersistableObjectHandler
     }
 
     /**
-     *
      * @deprecated
      */
 
@@ -199,7 +200,7 @@ class DiscountsHandler extends OledrionPersistableObjectHandler
             foreach ($tblRules as $rule) {
                 if ($commandAmount > (float)$rule->getVar('disc_if_amount')) {
                     $discountsDescription[] = $rule->getVar('disc_description');
-                    $montantShipping        = 0;
+                    $montantShipping        = 0.0;
                 }
             }
         }
@@ -221,35 +222,42 @@ class DiscountsHandler extends OledrionPersistableObjectHandler
             foreach ($tblRules as $rule) {
                 switch ($rule->getVar('disc_when')) {
                     case Constants::OLEDRION_DISCOUNT_WHEN1: // Dans tous les cas
-                        if (Constants::OLEDRION_DISCOUNT_PRICE_TYPE1 == $rule->getVar('disc_percent_monney')) { // Réduction de x pourcent
+
+                        if (Constants::OLEDRION_DISCOUNT_PRICE_TYPE1 == $rule->getVar('disc_percent_monney')) {
+                            // Réduction de x pourcent
                             $montantHT = $this->getDiscountedPrice($montantHT, $rule->getVar('disc_amount'));
                             if ($montantHT < 0) {
-                                $montantHT = 0;
+                                $montantHT = 0.0;
                             }
-                        } else { // Réduction de x euros
+                        } else {
+                            // Réduction de x euros
                             $montantHT -= $rule->getVar('disc_amount');
                             if ($montantHT < 0) {
-                                $montantHT = 0;
+                                $montantHT = 0.0;
                             }
                         }
                         $discountsDescription[] = $rule->getVar('disc_description');
-                        break;
 
+                        break;
                     case Constants::OLEDRION_DISCOUNT_WHEN2: // Si c'est le premier achat de l'utilisateur sur le site
+
                         if ($commandsHandler->isFirstCommand($uid)) {
-                            if (Constants::OLEDRION_DISCOUNT_PRICE_TYPE1 == $rule->getVar('disc_percent_monney')) { // Réduction de x pourcent
+                            if (Constants::OLEDRION_DISCOUNT_PRICE_TYPE1 == $rule->getVar('disc_percent_monney')) {
+                                // Réduction de x pourcent
                                 $montantHT = $this->getDiscountedPrice($montantHT, $rule->getVar('disc_amount'));
                                 if ($montantHT < 0) {
-                                    $montantHT = 0;
+                                    $montantHT = 0.0;
                                 }
-                            } else { // Réduction de x euros
+                            } else {
+                                // Réduction de x euros
                                 $montantHT -= $rule->getVar('disc_amount');
                                 if ($montantHT < 0) {
-                                    $montantHT = 0;
+                                    $montantHT = 0.0;
                                 }
                             }
                             $discountsDescription[] = $rule->getVar('disc_description');
                         }
+
                         break;
                 }
             }
@@ -259,9 +267,9 @@ class DiscountsHandler extends OledrionPersistableObjectHandler
     /**
      * Réductions à appliquer sur les frais de port de chaque produit
      *
-     * @param float   $montantHT            Montant HT des produits
-     * @param array   $discountsDescription Descriptions des réductions appliquées
-     * @param int $productQty           Quantité commandée du produit
+     * @param float $montantHT            Montant HT des produits
+     * @param array $discountsDescription Descriptions des réductions appliquées
+     * @param int   $productQty           Quantité commandée du produit
      */
     public function applyDiscountOnShipping(&$montantHT, &$discountsDescription, $productQty)
     {
@@ -273,85 +281,100 @@ class DiscountsHandler extends OledrionPersistableObjectHandler
             foreach ($tblRules as $rule) {
                 switch ($rule->getVar('disc_when')) {
                     case Constants::OLEDRION_DISCOUNT_WHEN1: // Dans tous les cas
-                        if (Constants::OLEDRION_DISCOUNT_PRICE_TYPE1 == $rule->getVar('disc_percent_monney')) { // Réduction de x pourcent
+
+                        if (Constants::OLEDRION_DISCOUNT_PRICE_TYPE1 == $rule->getVar('disc_percent_monney')) {
+                            // Réduction de x pourcent
                             $montantHT = $this->getDiscountedPrice($montantHT, $rule->getVar('disc_amount'));
                             if ($montantHT < 0) {
-                                $montantHT = 0;
+                                $montantHT = 0.0;
                             }
-                        } else { // Réduction de x euros
+                        } else {
+                            // Réduction de x euros
                             $montantHT -= $rule->getVar('disc_amount');
                             if ($montantHT < 0) {
-                                $montantHT = 0;
+                                $montantHT = 0.0;
                             }
                         }
                         $discountsDescription[] = $rule->getVar('disc_description');
-                        break;
 
+                        break;
                     case Constants::OLEDRION_DISCOUNT_WHEN2: // Si c'est le premier achat de l'utilisateur sur le site
+
                         if ($commandsHandler->isFirstCommand($uid)) {
-                            if (Constants::OLEDRION_DISCOUNT_PRICE_TYPE1 == $rule->getVar('disc_percent_monney')) { // Réduction de x pourcent
+                            if (Constants::OLEDRION_DISCOUNT_PRICE_TYPE1 == $rule->getVar('disc_percent_monney')) {
+                                // Réduction de x pourcent
                                 $montantHT = $this->getDiscountedPrice($montantHT, $rule->getVar('disc_amount'));
                                 if ($montantHT < 0) {
-                                    $montantHT = 0;
+                                    $montantHT = 0.0;
                                 }
-                            } else { // Réduction de x euros
+                            } else {
+                                // Réduction de x euros
                                 $montantHT -= $rule->getVar('disc_amount');
                                 if ($montantHT < 0) {
-                                    $montantHT = 0;
+                                    $montantHT = 0.0;
                                 }
                             }
                             $discountsDescription[] = $rule->getVar('disc_description');
                         }
-                        break;
 
+                        break;
                     case Constants::OLEDRION_DISCOUNT_WHEN4: // Si la quantité est =, >, >=, <, <= à ...
+
                         $qtyDiscount = false;
                         switch ($rule->getVar('disc_qty_criteria')) {
                             case 0: // =
+
                                 if ($productQty == $rule->getVar('disc_qty_value')) {
                                     $qtyDiscount = true;
                                 }
-                                break;
 
+                                break;
                             case 1: // >
+
                                 if ($productQty > $rule->getVar('disc_qty_value')) {
                                     $qtyDiscount = true;
                                 }
-                                break;
 
+                                break;
                             case 2: // >=
+
                                 if ($productQty >= $rule->getVar('disc_qty_value')) {
                                     $qtyDiscount = true;
                                 }
-                                break;
 
+                                break;
                             case 3: // <
+
                                 if ($productQty < $rule->getVar('disc_qty_value')) {
                                     $qtyDiscount = true;
                                 }
-                                break;
 
+                                break;
                             case 4: // <=
+
                                 if ($productQty <= $rule->getVar('disc_qty_value')) {
                                     $qtyDiscount = true;
                                 }
-                                break;
 
+                                break;
                         }
                         if ($qtyDiscount) {
-                            if (Constants::OLEDRION_DISCOUNT_PRICE_TYPE1 == $rule->getVar('disc_percent_monney')) { // Réduction de x pourcents
+                            if (Constants::OLEDRION_DISCOUNT_PRICE_TYPE1 == $rule->getVar('disc_percent_monney')) {
+                                // Réduction de x pourcents
                                 $montantHT = $this->getDiscountedPrice($montantHT, $rule->getVar('disc_amount'));
                                 if ($montantHT < 0) {
-                                    $montantHT = 0;
+                                    $montantHT = 0.0;
                                 }
-                            } else { // Réduction de x euros
+                            } else {
+                                // Réduction de x euros
                                 $montantHT -= $rule->getVar('disc_amount');
                                 if ($montantHT < 0) {
-                                    $montantHT = 0;
+                                    $montantHT = 0.0;
                                 }
                             }
                             $discountsDescription[] = $rule->getVar('disc_description');
                         }
+
                         break;
                 }
             }
@@ -361,9 +384,9 @@ class DiscountsHandler extends OledrionPersistableObjectHandler
     /**
      * Réductions à appliquer sur le montant HT de TOUS les produits
      *
-     * @param float   $montantHT            Montant HT des produits
-     * @param array   $discountsDescription Descriptions des réductions appliquées
-     * @param int $productQty           Quantité commandée du produit
+     * @param float $montantHT            Montant HT des produits
+     * @param array $discountsDescription Descriptions des réductions appliquées
+     * @param int   $productQty           Quantité commandée du produit
      */
     public function applyDiscountOnAllProducts(&$montantHT, &$discountsDescription, $productQty)
     {
@@ -375,85 +398,100 @@ class DiscountsHandler extends OledrionPersistableObjectHandler
             foreach ($tblRules as $rule) {
                 switch ($rule->getVar('disc_when')) {
                     case Constants::OLEDRION_DISCOUNT_WHEN1: // Dans tous les cas
-                        if (Constants::OLEDRION_DISCOUNT_PRICE_TYPE1 == $rule->getVar('disc_percent_monney')) { // Réduction de x pourcent
+
+                        if (Constants::OLEDRION_DISCOUNT_PRICE_TYPE1 == $rule->getVar('disc_percent_monney')) {
+                            // Réduction de x pourcent
                             $montantHT = $this->getDiscountedPrice($montantHT, $rule->getVar('disc_amount'));
                             if ($montantHT < 0) {
-                                $montantHT = 0;
+                                $montantHT = 0.0;
                             }
-                        } else { // Réduction de x euros
+                        } else {
+                            // Réduction de x euros
                             $montantHT -= $rule->getVar('disc_amount');
                             if ($montantHT < 0) {
-                                $montantHT = 0;
+                                $montantHT = 0.0;
                             }
                         }
                         $discountsDescription[] = $rule->getVar('disc_description');
-                        break;
 
+                        break;
                     case Constants::OLEDRION_DISCOUNT_WHEN2: // Si c'est le premier achat de l'utilisateur sur le site
+
                         if ($commandsHandler->isFirstCommand($uid)) {
-                            if (Constants::OLEDRION_DISCOUNT_PRICE_TYPE1 == $rule->getVar('disc_percent_monney')) { // Réduction de x pourcent
+                            if (Constants::OLEDRION_DISCOUNT_PRICE_TYPE1 == $rule->getVar('disc_percent_monney')) {
+                                // Réduction de x pourcent
                                 $montantHT = $this->getDiscountedPrice($montantHT, $rule->getVar('disc_amount'));
                                 if ($montantHT < 0) {
-                                    $montantHT = 0;
+                                    $montantHT = 0.0;
                                 }
-                            } else { // Réduction de x euros
+                            } else {
+                                // Réduction de x euros
                                 $montantHT -= $rule->getVar('disc_amount');
                                 if ($montantHT < 0) {
-                                    $montantHT = 0;
+                                    $montantHT = 0.0;
                                 }
                             }
                             $discountsDescription[] = $rule->getVar('disc_description');
                         }
-                        break;
 
+                        break;
                     case Constants::OLEDRION_DISCOUNT_WHEN4: // Si la quantité est =, >, >=, <, <= à ...
+
                         $qtyDiscount = false;
                         switch ($rule->getVar('disc_qty_criteria')) {
                             case 0: // =
+
                                 if ($productQty == $rule->getVar('disc_qty_value')) {
                                     $qtyDiscount = true;
                                 }
-                                break;
 
+                                break;
                             case 1: // >
+
                                 if ($productQty > $rule->getVar('disc_qty_value')) {
                                     $qtyDiscount = true;
                                 }
-                                break;
 
+                                break;
                             case 2: // >=
+
                                 if ($productQty >= $rule->getVar('disc_qty_value')) {
                                     $qtyDiscount = true;
                                 }
-                                break;
 
+                                break;
                             case 3: // <
+
                                 if ($productQty < $rule->getVar('disc_qty_value')) {
                                     $qtyDiscount = true;
                                 }
-                                break;
 
+                                break;
                             case 4: // <=
+
                                 if ($productQty <= $rule->getVar('disc_qty_value')) {
                                     $qtyDiscount = true;
                                 }
-                                break;
 
+                                break;
                         }
                         if ($qtyDiscount) {
-                            if (Constants::OLEDRION_DISCOUNT_PRICE_TYPE1 == $rule->getVar('disc_percent_monney')) { // Réduction de x pourcent
+                            if (Constants::OLEDRION_DISCOUNT_PRICE_TYPE1 == $rule->getVar('disc_percent_monney')) {
+                                // Réduction de x pourcent
                                 $montantHT = $this->getDiscountedPrice($montantHT, $rule->getVar('disc_amount'));
                                 if ($montantHT < 0) {
-                                    $montantHT = 0;
+                                    $montantHT = 0.0;
                                 }
-                            } else { // Réduction de x euros
+                            } else {
+                                // Réduction de x euros
                                 $montantHT -= $rule->getVar('disc_amount');
                                 if ($montantHT < 0) {
-                                    $montantHT = 0;
+                                    $montantHT = 0.0;
                                 }
                             }
                             $discountsDescription[] = $rule->getVar('disc_description');
                         }
+
                         break;
                 }
             }
@@ -463,10 +501,10 @@ class DiscountsHandler extends OledrionPersistableObjectHandler
     /**
      * Recalcul du prix HT du produit en appliquant les réductions, s'il y a lieu
      *
-     * @param int $productId            Identifiant du produit
-     * @param float   $prixHT               Prix HT du produit
-     * @param array   $discountsDescription Descriptions des réductions appliquées
-     * @param int $productQty           Quantité commandée du produit
+     * @param int   $productId            Identifiant du produit
+     * @param float $prixHT               Prix HT du produit
+     * @param array $discountsDescription Descriptions des réductions appliquées
+     * @param int   $productQty           Quantité commandée du produit
      */
     public function applyDiscountOnEachProduct($productId, &$prixHT, &$discountsDescription, $productQty)
     {
@@ -478,102 +516,120 @@ class DiscountsHandler extends OledrionPersistableObjectHandler
             foreach ($rules as $rule) {
                 switch ($rule->getVar('disc_when')) {
                     case Constants::OLEDRION_DISCOUNT_WHEN1: // Dans tous les cas
-                        if (Constants::OLEDRION_DISCOUNT_PRICE_TYPE1 == $rule->getVar('disc_percent_monney')) { // Réduction de x pourcent
+
+                        if (Constants::OLEDRION_DISCOUNT_PRICE_TYPE1 == $rule->getVar('disc_percent_monney')) {
+                            // Réduction de x pourcent
                             $prixHT = $this->getDiscountedPrice($prixHT, $rule->getVar('disc_amount'));
                             if ($prixHT < 0) {
-                                $prixHT = 0;
+                                $prixHT = 0.0;
                             }
-                        } else { // Réduction de x euros
+                        } else {
+                            // Réduction de x euros
                             $prixHT -= $rule->getVar('disc_amount');
                             if ($prixHT < 0) {
-                                $prixHT = 0;
+                                $prixHT = 0.0;
                             }
                         }
                         $discountsDescription[] = $rule->getVar('disc_description');
-                        break;
 
+                        break;
                     case Constants::OLEDRION_DISCOUNT_WHEN2: // Si c'est le premier achat de l'utilisateur sur le site
+
                         if ($commandsHandler->isFirstCommand($uid)) {
-                            if (Constants::OLEDRION_DISCOUNT_PRICE_TYPE1 == $rule->getVar('disc_percent_monney')) { // Réduction de x pourcent
+                            if (Constants::OLEDRION_DISCOUNT_PRICE_TYPE1 == $rule->getVar('disc_percent_monney')) {
+                                // Réduction de x pourcent
                                 $prixHT = $this->getDiscountedPrice($prixHT, $rule->getVar('disc_amount'));
                                 if ($prixHT < 0) {
-                                    $prixHT = 0;
+                                    $prixHT = 0.0;
                                 }
-                            } else { // Réduction de x euros
+                            } else {
+                                // Réduction de x euros
                                 $prixHT -= $rule->getVar('disc_amount');
                                 if ($prixHT < 0) {
-                                    $prixHT = 0;
+                                    $prixHT = 0.0;
                                 }
                             }
                             $discountsDescription[] = $rule->getVar('disc_description');
                         }
-                        break;
 
+                        break;
                     case Constants::OLEDRION_DISCOUNT_WHEN3: // Si le produit n'a jamais été acheté
+
                         if (!$commandsHandler->productAlreadyBought($uid, $productId)) {
-                            if (Constants::OLEDRION_DISCOUNT_PRICE_TYPE1 == $rule->getVar('disc_percent_monney')) { // Réduction de x pourcent
+                            if (Constants::OLEDRION_DISCOUNT_PRICE_TYPE1 == $rule->getVar('disc_percent_monney')) {
+                                // Réduction de x pourcent
                                 $prixHT = $this->getDiscountedPrice($prixHT, $rule->getVar('disc_amount'));
                                 if ($prixHT < 0) {
-                                    $prixHT = 0;
+                                    $prixHT = 0.0;
                                 }
-                            } else { // Réduction de x euros
+                            } else {
+                                // Réduction de x euros
                                 $prixHT -= $rule->getVar('disc_amount');
                                 if ($prixHT < 0) {
-                                    $prixHT = 0;
+                                    $prixHT = 0.0;
                                 }
                             }
                             $discountsDescription[] = $rule->getVar('disc_description');
                         }
-                        break;
 
+                        break;
                     case Constants::OLEDRION_DISCOUNT_WHEN4: // Si la quantité est =, >, >=, <, <= à ...
+
                         $qtyDiscount = false;
                         switch ($rule->getVar('disc_qty_criteria')) {
                             case 0: // =
+
                                 if ($productQty == $rule->getVar('disc_qty_value')) {
                                     $qtyDiscount = true;
                                 }
-                                break;
 
+                                break;
                             case 1: // >
+
                                 if ($productQty > $rule->getVar('disc_qty_value')) {
                                     $qtyDiscount = true;
                                 }
-                                break;
 
+                                break;
                             case 2: // >=
+
                                 if ($productQty >= $rule->getVar('disc_qty_value')) {
                                     $qtyDiscount = true;
                                 }
-                                break;
 
+                                break;
                             case 3: // <
+
                                 if ($productQty < $rule->getVar('disc_qty_value')) {
                                     $qtyDiscount = true;
                                 }
-                                break;
 
+                                break;
                             case 4: // <=
+
                                 if ($productQty <= $rule->getVar('disc_qty_value')) {
                                     $qtyDiscount = true;
                                 }
-                                break;
 
+                                break;
                         }
                         if ($qtyDiscount) {
-                            if (Constants::OLEDRION_DISCOUNT_PRICE_TYPE1 == $rule->getVar('disc_percent_monney')) { // Réduction de x pourcent
+                            if (Constants::OLEDRION_DISCOUNT_PRICE_TYPE1 == $rule->getVar('disc_percent_monney')) {
+                                // Réduction de x pourcent
                                 $prixHT = $this->getDiscountedPrice($prixHT, $rule->getVar('disc_amount'));
                                 if ($prixHT < 0) {
-                                    $prixHT = 0;
+                                    $prixHT = 0.0;
                                 }
-                            } else { // Réduction de x euros
+                            } else {
+                                // Réduction de x euros
                                 $prixHT -= $rule->getVar('disc_amount');
                                 if ($prixHT < 0) {
-                                    $prixHT = 0;
+                                    $prixHT = 0.0;
                                 }
                             }
                             $discountsDescription[] = $rule->getVar('disc_description');
                         }
+
                         break;
                 }
             }
@@ -584,7 +640,7 @@ class DiscountsHandler extends OledrionPersistableObjectHandler
      * Supprime les remises associées à un produit
      *
      * @param int $disc_product_id
-     * @return boolean
+     * @return bool
      */
     public function removeProductFromDiscounts($disc_product_id)
     {

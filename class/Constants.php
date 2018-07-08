@@ -1,4 +1,6 @@
-<?php namespace XoopsModules\Oledrion;
+<?php
+
+namespace XoopsModules\Oledrion;
 
 /*
  You may not change or alter any portion of this comment or credits
@@ -13,7 +15,6 @@
  * Module: oledrion
  *
  * @category        Module
- * @package         xoopstube
  * @author          XOOPS Development Team <https://xoops.org>
  * @copyright       {@link https://xoops.org/ XOOPS Project}
  * @license         GPL 2.0 or later
@@ -23,7 +24,6 @@
 //use XoopsModules\Oledrion;
 
 /**
- *
  * Class to define Oledrion module constant values. These constants are
  * used to make the code easier to read and to keep values in central
  * location if they need to be changed.  These should not normally need

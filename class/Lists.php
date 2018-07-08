@@ -1,4 +1,6 @@
-<?php namespace XoopsModules\Oledrion;
+<?php
+
+namespace XoopsModules\Oledrion;
 
 /*
  You may not change or alter any portion of this comment or credits
@@ -25,7 +27,6 @@
  */
 
 use XoopsModules\Oledrion;
-use XoopsModules\Oledrion\Constants;
 
 // require_once __DIR__ . '/classheader.php';
 
@@ -38,8 +39,6 @@ class Lists extends OledrionObject
      * constructor
      *
      * normally, this is called from child classes only
-     *
-     * @access public
      */
     public function __construct()
     {
@@ -57,7 +56,7 @@ class Lists extends OledrionObject
     /**
      * Indique si la liste courante est accessible de l'utilisateur courant
      *
-     * @return boolean
+     * @return bool
      */
     public function isSuitableForCurrentUser()
     {
@@ -81,7 +80,7 @@ class Lists extends OledrionObject
         return [
             Constants::OLEDRION_LISTS_PRIVATE   => _OLEDRION_LIST_PRIVATE,
             Constants::OLEDRION_LISTS_WISH      => _OLEDRION_LIST_PUBLIC_WISH_LIST,
-            Constants::OLEDRION_LISTS_RECOMMEND => _OLEDRION_LIST_PUBLIC_RECOMMENDED_LIST
+            Constants::OLEDRION_LISTS_RECOMMEND => _OLEDRION_LIST_PUBLIC_RECOMMENDED_LIST,
         ];
     }
 
@@ -105,9 +104,11 @@ class Lists extends OledrionObject
     public function getLink()
     {
         $url = '';
-        if (1 == Oledrion\Utility::getModuleOption('urlrewriting')) { // On utilise l'url rewriting
+        if (1 == Oledrion\Utility::getModuleOption('urlrewriting')) {
+            // On utilise l'url rewriting
             $url = OLEDRION_URL . 'list-' . $this->getVar('list_id') . Oledrion\Utility::makeSeoUrl($this->getVar('list_title', 'n')) . '.html';
-        } else { // Pas d'utilisation de l'url rewriting
+        } else {
+            // Pas d'utilisation de l'url rewriting
             $url = OLEDRION_URL . 'list.php?list_id=' . $this->getVar('list_id');
         }
 

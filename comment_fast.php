@@ -16,7 +16,6 @@
  * @license     {@link http://www.fsf.org/copyleft/gpl.html GNU public license}
  * @author      Hossein Azizabadi (AKA Voltan)
  */
-
 $productid      = \Xmf\Request::getInt('product_id', 0, 'GET');
 $com_replytitle = '';
 if ($product_id > 0) {

@@ -1,4 +1,6 @@
-<?php namespace XoopsModules\Oledrion;
+<?php
+
+namespace XoopsModules\Oledrion;
 
 /*
  You may not change or alter any portion of this comment or credits
@@ -31,8 +33,9 @@ class LocationHandler extends OledrionPersistableObjectHandler
      * LocationHandler constructor.
      * @param \XoopsDatabase $db
      */
-    public function __construct(\XoopsDatabase $db)
-    { //                                        Table                   Classe              Id
+    public function __construct(\XoopsDatabase $db = null)
+    {
+        //                                        Table                   Classe              Id
         parent::__construct($db, 'oledrion_location', Location::class, 'location_id');
     }
 
@@ -46,7 +49,7 @@ class LocationHandler extends OledrionPersistableObjectHandler
                                                                       'start' => 0,
                                                                       'limit' => 0,
                                                                       'sort'  => 'location_id',
-                                                                      'order' => 'ASC'
+                                                                      'order' => 'ASC',
                                                                   ]));
         $critere    = new \Criteria('location_id', 0, '<>');
         $critere->setLimit($parameters['limit']);
@@ -69,7 +72,7 @@ class LocationHandler extends OledrionPersistableObjectHandler
                                                                       'start' => 0,
                                                                       'limit' => 0,
                                                                       'sort'  => 'location_id',
-                                                                      'order' => 'ASC'
+                                                                      'order' => 'ASC',
                                                                   ]));
         $critere    = new \CriteriaCompo();
         $critere->add(new \Criteria('location_type', 'parent'));

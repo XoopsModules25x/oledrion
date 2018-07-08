@@ -28,7 +28,7 @@ use XoopsModules\Oledrion\Constants;
  */
 function b_oledrion_random_lists_show($options)
 {
-    require XOOPS_ROOT_PATH . '/modules/oledrion/include/common.php';
+    require_once XOOPS_ROOT_PATH . '/modules/oledrion/include/common.php';
     $helper->loadLanguage('main');
     $start    = 0;
     $limit    = (int)$options[0];
@@ -45,7 +45,7 @@ function b_oledrion_random_lists_show($options)
                                                                        'sort'     => 'RAND()',
                                                                        'order'    => 'DESC',
                                                                        'idAsKey'  => true,
-                                                                       'listType' => Constants::OLEDRION_LISTS_ALL_PUBLIC
+                                                                       'listType' => Constants::OLEDRION_LISTS_ALL_PUBLIC,
                                                                    ]));
     if (count($items) > 0) {
         foreach ($items as $item) {
@@ -64,7 +64,7 @@ function b_oledrion_random_lists_show($options)
  */
 function b_oledrion_random_lists_edit($options)
 {
-    include XOOPS_ROOT_PATH . '/modules/oledrion/include/common.php';
+    require_once XOOPS_ROOT_PATH . '/modules/oledrion/include/common.php';
     $form           = '';
     $form           .= "<table border='0'>";
     $form           .= '<tr><td>' . _MB_OLEDRION_LISTS_COUNT . "</td><td><input type='text' name='options[]' id='options' value='" . (int)$options[0] . "'></td></tr>";

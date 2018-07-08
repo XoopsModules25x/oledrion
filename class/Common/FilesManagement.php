@@ -1,4 +1,6 @@
-<?php namespace XoopsModules\Oledrion\Common;
+<?php
+
+namespace XoopsModules\Oledrion\Common;
 
 /*
  You may not change or alter any portion of this comment or credits
@@ -22,7 +24,6 @@ trait FilesManagement
      *
      * @param string $folder The full path of the directory to check
      *
-     * @return void
      * @throws \RuntimeException
      */
     public static function createFolder($folder)
@@ -36,7 +37,7 @@ trait FilesManagement
                 file_put_contents($folder . '/index.html', '<script>history.go(-1);</script>');
             }
         }
-        catch (\Exception $e) {
+        catch (\Throwable $e) {
             echo 'Caught exception: ', $e->getMessage(), '<br>';
         }
     }
@@ -58,7 +59,7 @@ trait FilesManagement
     public static function recurseCopy($src, $dst)
     {
         $dir = opendir($src);
-//        @mkdir($dst);
+        //        @mkdir($dst);
         if (!@mkdir($dst) && !is_dir($dst)) {
             throw new \RuntimeException('The directory ' . $dst . ' could not be created.');
         }
@@ -79,9 +80,8 @@ trait FilesManagement
      * @author      Aidan Lister <aidan@php.net>
      * @version     1.0.1
      * @link        http://aidanlister.com/2004/04/recursively-copying-directories-in-php/
-     * @param       string $source      Source path
-     * @param       string $dest        Destination path
-     * @param       int    $permissions New folder creation permissions
+     * @param       string $source Source path
+     * @param       string $dest   Destination path
      * @return      bool     Returns true on success, false on failure
      */
     public static function xcopy($source, $dest)
@@ -97,8 +97,8 @@ trait FilesManagement
         }
 
         // Make destination directory
-        if (!is_dir($dest)) {
-            mkdir($dest);
+        if (!is_dir($dest) && !mkdir($dest) && !is_dir($dest)) {
+            throw new \RuntimeException(sprintf('Directory "%s" was not created', $dest));
         }
 
         // Loop through the folder
@@ -115,11 +115,11 @@ trait FilesManagement
             // Clean up
             $dir->close();
         }
+
         return true;
     }
 
     /**
-     *
      * Remove files and (sub)directories
      *
      * @param string $src source directory to delete
@@ -164,11 +164,11 @@ trait FilesManagement
             // input is not a valid directory
             $success = false;
         }
+
         return $success;
     }
 
     /**
-     *
      * Recursively remove directory
      *
      * @todo currently won't remove directories with hidden files, should it?
@@ -286,6 +286,7 @@ trait FilesManagement
                 self::rcopy($fObj->getPathname(), "{$dest}/" . $fObj->getFilename());
             }
         }
+
         return true;
     }
 }

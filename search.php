@@ -40,7 +40,8 @@ $categories    = $categoryHandler->getAllCategories(new Oledrion\Parameters());
 $vendors       = $vendorsHandler->getAllVendors(new Oledrion\Parameters());
 $manufacturers = $manufacturerHandler->getItems(0, 0, 'manu_name', 'ASC', false);
 
-if ((isset($_POST['op']) && 'go' === $_POST['op']) || isset($_GET['start'])) { // Recherche des résultats
+if ((isset($_POST['op']) && 'go' === $_POST['op']) || isset($_GET['start'])) {
+    // Recherche des résultats
     $xoopsTpl->assign('search_results', true);
     $xoopsTpl->assign('global_advert', Oledrion\Utility::getModuleOption('advertisement'));
     $xoopsTpl->assign('breadcrumb', Oledrion\Utility::breadcrumb([OLEDRION_URL . basename(__FILE__) => _OLEDRION_SEARCHRESULTS]));
@@ -52,10 +53,12 @@ if ((isset($_POST['op']) && 'go' === $_POST['op']) || isset($_GET['start'])) { /
                . ' b, '
                . $xoopsDB->prefix('oledrion_productsmanu')
                . ' a WHERE (b.product_id = a.pm_product_id AND b.product_online = 1) ';
-        if (0 == Oledrion\Utility::getModuleOption('show_unpublished')) { // Ne pas afficher les produits qui ne sont pas publiés
+        if (0 == Oledrion\Utility::getModuleOption('show_unpublished')) {
+            // Ne pas afficher les produits qui ne sont pas publiés
             $sql .= ' AND b.product_submitted <= ' . time();
         }
-        if (0 == Oledrion\Utility::getModuleOption('nostock_display')) { // Se limiter aux seuls produits encore en stock
+        if (0 == Oledrion\Utility::getModuleOption('nostock_display')) {
+            // Se limiter aux seuls produits encore en stock
             $sql .= ' AND b.product_stock > 0';
         }
         $sql .= ') ';
@@ -209,16 +212,24 @@ if ((isset($_POST['op']) && 'go' === $_POST['op']) || isset($_GET['start'])) { /
                     $sql .= '(';
                     switch ($searchType) {
                         case 0: // Commence par
+
                             $cond = " LIKE '" . $oneQuery . "%' ";
+
                             break;
                         case 1: // Finit par
+
                             $cond = " LIKE '%" . $oneQuery . "' ";
+
                             break;
                         case 2: // Correspond à
+
                             $cond = " = '" . $oneQuery . "' ";
+
                             break;
                         case 3: // Contient
+
                             $cond = " LIKE '%" . $oneQuery . "%' ";
+
                             break;
                     }
                     $sql .= implode($cond, $fields) . $cond . ')';
@@ -230,7 +241,8 @@ if ((isset($_POST['op']) && 'go' === $_POST['op']) || isset($_GET['start'])) { /
             }
         }
         $_SESSION['criteria_oledrion'] = serialize($sql);
-    } else { // $_GET['start'] est en place, on a cliqué sur un chevron pour aller voir les autres pages, il faut travailler à partir des informations de la session
+    } else {
+        // $_GET['start'] est en place, on a cliqué sur un chevron pour aller voir les autres pages, il faut travailler à partir des informations de la session
         if (\Xmf\Request::hasVar('criteria_oledrion', 'SESSION')) {
             $sql = unserialize($_SESSION['criteria_oledrion']);
         }

@@ -1,4 +1,6 @@
-<?php namespace XoopsModules\Oledrion;
+<?php
+
+namespace XoopsModules\Oledrion;
 
 /*
  You may not change or alter any portion of this comment or credits
@@ -31,8 +33,9 @@ class PaymentHandler extends OledrionPersistableObjectHandler
      * PaymentHandler constructor.
      * @param \XoopsDatabase $db
      */
-    public function __construct(\XoopsDatabase $db)
-    { //                                       Table                    Classe              Id
+    public function __construct(\XoopsDatabase $db = null)
+    {
+        //                                       Table                    Classe              Id
         parent::__construct($db, 'oledrion_payment', Payment::class, 'payment_id');
     }
 
@@ -46,7 +49,7 @@ class PaymentHandler extends OledrionPersistableObjectHandler
                                                                       'start' => 0,
                                                                       'limit' => 0,
                                                                       'sort'  => 'payment_id',
-                                                                      'order' => 'ASC'
+                                                                      'order' => 'ASC',
                                                                   ]));
         $critere    = new \Criteria('payment_id', 0, '<>');
         $critere->setLimit($parameters['limit']);

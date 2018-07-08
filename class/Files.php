@@ -1,4 +1,6 @@
-<?php namespace XoopsModules\Oledrion;
+<?php
+
+namespace XoopsModules\Oledrion;
 
 /*
  You may not change or alter any portion of this comment or credits
@@ -35,8 +37,6 @@ class Files extends OledrionObject
      * constructor
      *
      * normally, this is called from child classes only
-     *
-     * @access public
      */
     public function __construct()
     {
@@ -60,16 +60,16 @@ class Files extends OledrionObject
 
     /**
      * Indique si le fichier courant est un fichier MP3
-     * @return boolean
+     * @return bool
      */
     public function isMP3()
     {
-        return 'audio/mpeg' === strtolower($this->getVar('file_mimetype'));
+        return 'audio/mpeg' === mb_strtolower($this->getVar('file_mimetype'));
     }
 
     /**
      * Indique si le fichier attaché existe physiquement sur le site
-     * @return boolean
+     * @return bool
      */
     public function fileExists()
     {

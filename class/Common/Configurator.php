@@ -1,4 +1,6 @@
-<?php namespace XoopsModules\Oledrion\Common;
+<?php
+
+namespace XoopsModules\Oledrion\Common;
 
 /*
  You may not change or alter any portion of this comment or credits
@@ -9,20 +11,17 @@
  but WITHOUT ANY WARRANTY; without even the implied warranty of
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  */
+
 /**
  * Configurator Class
  *
  * @copyright   XOOPS Project (https://xoops.org)
  * @license     http://www.fsf.org/copyleft/gpl.html GNU public license
  * @author      XOOPS Development Team
- * @package     Publisher
  * @since       1.05
- *
  */
 
-use XoopsModules\Oledrion;
-
-//require_once  dirname(dirname(__DIR__)) . '/include/common.php';
+//require_once dirname(dirname(__DIR__)) . '/include/common.php';
 
 /**
  * Class Configurator
@@ -44,8 +43,8 @@ class Configurator
      */
     public function __construct()
     {
-        $moduleDirName = basename(dirname(__DIR__));
-        $capsDirName   = strtoupper($moduleDirName);
+        $moduleDirName = basename(dirname(dirname(__DIR__)));
+        $capsDirName   = mb_strtoupper($moduleDirName);
 
         require_once dirname(dirname(__DIR__)) . '/include/config.php';
         $config = getConfig();
@@ -59,6 +58,5 @@ class Configurator
         $this->oldFiles        = $config->oldFiles;
         $this->oldFolders      = $config->oldFolders;
         $this->modCopyright    = $config->modCopyright;
-
     }
 }

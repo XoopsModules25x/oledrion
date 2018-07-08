@@ -1,4 +1,6 @@
-<?php namespace XoopsModules\Oledrion;
+<?php
+
+namespace XoopsModules\Oledrion;
 
 /*
  You may not change or alter any portion of this comment or credits
@@ -23,7 +25,6 @@
  *
  * @copyright          Hervé Thouzard (http://www.herve-thouzard.com/)
  * @license            http://www.fsf.org/copyleft/gpl.html GNU public license
- * @package            oledrion
  * @author             Hervé Thouzard (http://www.herve-thouzard.com/)
  *
  * Example :
@@ -48,14 +49,12 @@
  *
  * // Set the default values
  * $newParameters = $param->extend(new Oledrion\Parameters(array('sort' => 'firstName', 'start' => 0, 'limit' => 15, 'showAll' => true)));
- *
  */
 
 use XoopsModules\Oledrion;
 
 /**
  * Class Parameters
- * @package XoopsModules\Oledrion
  */
 class Parameters extends \ArrayObject
 {
@@ -86,8 +85,8 @@ class Parameters extends \ArrayObject
      */
     public function __call($method, $args)
     {
-        if (0 === strpos($method, 'set')) {
-            parent::offsetSet(strtolower($method[3]) . substr($method, 4), $args[0]);
+        if (0 === mb_strpos($method, 'set')) {
+            parent::offsetSet(mb_strtolower($method[3]) . mb_substr($method, 4), $args[0]);
 
             return $this;
         }
@@ -108,8 +107,8 @@ class Parameters extends \ArrayObject
      */
     public function extend(self $defaultValues)
     {
-        $result = new self;
-//        $result = $this;
+        $result = new self();
+        //        $result = $this;
         foreach ($defaultValues as $key => $value) {
             if (!isset($result[$key])) {
                 $result[$key] = $value;

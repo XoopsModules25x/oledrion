@@ -28,6 +28,7 @@ if (!defined('OLEDRION_ADMIN')) {
 
 switch ($action) {
     case 'default':
+
         xoops_cp_header();
         $adminObject = \Xmf\Module\Admin::getInstance();
         $adminObject->displayNavigation('index.php?op=delivery');
@@ -41,7 +42,7 @@ switch ($action) {
         //        Oledrion\Utility::htitle(_MI_OLEDRION_ADMENU20, 4);
         $delivery = $deliveryHandler->getAllDelivery(new Oledrion\Parameters([
                                                                                  'start' => $start,
-                                                                                 'limit' => $limit
+                                                                                 'limit' => $limit,
                                                                              ]));
 
         $class = '';
@@ -64,10 +65,12 @@ switch ($action) {
         echo "</tr>\n";
         echo '</table>';
         require_once OLEDRION_ADMIN_PATH . 'admin_footer.php';
-        break;
 
+        break;
     case 'add':
+
     case 'edit':
+
         xoops_cp_header();
         if ('edit' === $action) {
             $title = _AM_OLEDRION_DELIVERY_EDIT;
@@ -144,9 +147,10 @@ switch ($action) {
         $sform = Oledrion\Utility::formMarkRequiredFields($sform);
         $sform->display();
         require_once OLEDRION_ADMIN_PATH . 'admin_footer.php';
-        break;
 
+        break;
     case 'save':
+
         xoops_cp_header();
         $id = \Xmf\Request::getInt('delivery_id', 0, 'POST');
         if (!empty($id)) {
@@ -167,7 +171,8 @@ switch ($action) {
         $destname = '';
         $res1     = Oledrion\Utility::uploadFile(0, OLEDRION_PICTURES_PATH);
         if ($res1) {
-            if (Oledrion\Utility::getModuleOption('resize_others')) { // Eventuellement on redimensionne l'image
+            if (Oledrion\Utility::getModuleOption('resize_others')) {
+                // Eventuellement on redimensionne l'image
                 Oledrion\Utility::resizePicture(OLEDRION_PICTURES_PATH . '/' . $destname, OLEDRION_PICTURES_PATH . '/' . $destname, Oledrion\Utility::getModuleOption('images_width'), Oledrion\Utility::getModuleOption('images_height'), true);
             }
             $item->setVar('delivery_image', basename($destname));
@@ -202,9 +207,10 @@ switch ($action) {
         } else {
             Oledrion\Utility::redirect(_AM_OLEDRION_SAVE_PB, $baseurl . '?op=' . $opRedirect, 5);
         }
-        break;
 
+        break;
     case 'delete':
+
         xoops_cp_header();
         $id = \Xmf\Request::getInt('id', 0, 'GET');
         if (0 == $id) {
@@ -217,8 +223,8 @@ switch ($action) {
         }
         $msg = sprintf(_AM_OLEDRION_CONF_DEL_ITEM, $delivery->getVar('delivery_title'));
         xoops_confirm(['op' => 'delivery', 'action' => 'confdelete', 'id' => $id], 'index.php', $msg);
-        break;
 
+        break;
     case 'confdelete':
 
         xoops_cp_header();
@@ -246,5 +252,6 @@ switch ($action) {
         } else {
             Oledrion\Utility::redirect(_AM_OLEDRION_NOT_FOUND, $baseurl . '?op=' . $opRedirect, 5);
         }
+
         break;
 }

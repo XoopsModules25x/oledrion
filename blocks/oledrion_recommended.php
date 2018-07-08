@@ -28,7 +28,7 @@ function b_oledrion_recomm_show($options)
 {
     // '10|0';  // Voir 10 produits, pour toutes les catégories ou une catégorie particulière
     global $xoopsConfig, $xoTheme;
-    include XOOPS_ROOT_PATH . '/modules/oledrion/include/common.php';
+    require_once XOOPS_ROOT_PATH . '/modules/oledrion/include/common.php';
     $products   = $block = [];
     $start      = 0;
     $limit      = $options[0];
@@ -37,7 +37,8 @@ function b_oledrion_recomm_show($options)
     $shelfParameters->resetDefaultValues()->setProductsType('recommended')->setStart($start)->setLimit($limit)->setSort('product_recommended')->setOrder('DESC')->setCategory($categoyrId);
     $products = $shelf->getProducts($shelfParameters);
 
-    if ($productsHandler->getRecommendedCount() > $limit) { // Il y a plus de produits recommandés dans la BDD que dans le bloc, on affiche donc un lien vers la page des produits recommandés
+    if ($productsHandler->getRecommendedCount() > $limit) {
+        // Il y a plus de produits recommandés dans la BDD que dans le bloc, on affiche donc un lien vers la page des produits recommandés
         $block['showMore'] = true;
     }
     if (isset($products['lastTitle'])) {
@@ -65,7 +66,7 @@ function b_oledrion_recomm_edit($options)
 {
     // '10|0';  // Voir 10 produits, pour toutes les catégories
     global $xoopsConfig;
-    include XOOPS_ROOT_PATH . '/modules/oledrion/include/common.php';
+    require_once XOOPS_ROOT_PATH . '/modules/oledrion/include/common.php';
     // require_once OLEDRION_PATH . 'class/tree.php';
     $tblCategories         = [];
     $tblCategories         = $categoryHandler->getAllCategories(new Oledrion\Parameters());

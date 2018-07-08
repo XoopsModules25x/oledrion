@@ -28,7 +28,7 @@ function b_oledrion_random_show($options)
 {
     // '10|0|0';    // Voir 10 produits, pour toutes les catégories ou une catégorie particulière, et pour ce mois-ci ou pour tout le temps ?
     global $xoopsConfig, $xoTheme;
-    include XOOPS_ROOT_PATH . '/modules/oledrion/include/common.php';
+    require_once XOOPS_ROOT_PATH . '/modules/oledrion/include/common.php';
     $products      = $block = [];
     $start         = 0;
     $limit         = $options[0];
@@ -61,7 +61,7 @@ function b_oledrion_random_edit($options)
 {
     // '10|0|0';    // Voir 10 produits, pour toutes les catégories, pour ce mois-ci ou pour toute la période
     global $xoopsConfig;
-    include XOOPS_ROOT_PATH . '/modules/oledrion/include/common.php';
+    require_once XOOPS_ROOT_PATH . '/modules/oledrion/include/common.php';
     // require_once OLEDRION_PATH . 'class/tree.php';
     $tblCategories         = [];
     $tblCategories         = $categoryHandler->getAllCategories(new Oledrion\Parameters());
@@ -71,7 +71,7 @@ function b_oledrion_random_edit($options)
     $checkeds[$options[1]] = 'checked';
     $form                  .= "<table border='0'>";
     $form                  .= '<tr><td>' . _MB_OLEDRION_PRODUCTS_CNT . "</td><td><input type='text' name='options[]' id='options' value='" . $options[0] . "'></td></tr>";
-     //$select = $mytree->makeSelBox('options[]', 'cat_title', '-', $options[1], _MB_OLEDRION_ALL_CATEGORIES);
+    //$select = $mytree->makeSelBox('options[]', 'cat_title', '-', $options[1], _MB_OLEDRION_ALL_CATEGORIES);
     if (Oledrion\Utility::checkVerXoops($GLOBALS['xoopsModule'], '2.5.9')) {
         $select0 = $mytree->makeSelectElement('options[]', 'cat_title', '-', $options[1], true, 0, '', _MB_OLEDRION_ALL_CATEGORIES);
         $select  = $select0->render();
@@ -79,7 +79,7 @@ function b_oledrion_random_edit($options)
         $select = $mytree->makeSelBox('options[]', 'cat_title', '-', $options[1], _MB_OLEDRION_ALL_CATEGORIES);
     }
 
-    $form                  .= '<tr><td>' . _MB_OLEDRION_CATEGORY . '</td><td>' . $select . '</td></tr>';
+    $form .= '<tr><td>' . _MB_OLEDRION_CATEGORY . '</td><td>' . $select . '</td></tr>';
 
     $checked              = ['', ''];
     $checked[$options[2]] = 'checked';

@@ -58,7 +58,8 @@ $tbl_tmp               = [];
 $mytree                = new Oledrion\XoopsObjectTree($categories, 'cat_cid', 'cat_pid');
 $subCategoriesSearched = false;
 // Si on est sur une catégorie mère ou si on n'a pas spécifié de catégorie
-if (0 == $cat_cid || (is_object($category) && 0 == $category->getVar('cat_pid'))) { // On affiche les 4 blocs
+if (0 == $cat_cid || (is_object($category) && 0 == $category->getVar('cat_pid'))) {
+    // On affiche les 4 blocs
     $xoopsTpl->assign('case', 1);
 
     $tblChildsO = $tblChilds = [];
@@ -72,7 +73,8 @@ if (0 == $cat_cid || (is_object($category) && 0 == $category->getVar('cat_pid'))
         }
     }
 
-    if (is_object($category)) { // On est sur une catégorie particulière
+    if (is_object($category)) {
+        // On est sur une catégorie particulière
         $xoopsTpl->assign('category', $category->toArray());
         $title = _OLEDRION_CATEGORYC . ' ' . $category->getVar('cat_title') . ' - ' . Oledrion\Utility::getModuleName();
         if (!Oledrion\Utility::getModuleOption('manual_meta')) {
@@ -84,7 +86,7 @@ if (0 == $cat_cid || (is_object($category) && 0 == $category->getVar('cat_pid'))
             Oledrion\Utility::setMetas($pageTitle, $metaDescription, $metaKeywords);
         }
         $xoopsTpl->assign('breadcrumb', Oledrion\Utility::breadcrumb([
-                                                                         OLEDRION_URL . basename(__FILE__) => $category->getVar('cat_title')
+                                                                         OLEDRION_URL . basename(__FILE__) => $category->getVar('cat_title'),
                                                                      ]));
         if (OLEDRION_SHOW_SUB_CATEGORIES) {
             $count       = 1;
@@ -99,7 +101,8 @@ if (0 == $cat_cid || (is_object($category) && 0 == $category->getVar('cat_pid'))
             }
             $subCategoriesSearched = true;
         }
-    } else { // page d'accueil des catégories
+    } else {
+        // page d'accueil des catégories
         $title = _OLEDRION_CATEGORIES . ' - ' . Oledrion\Utility::getModuleName();
         Oledrion\Utility::setMetas($title, $title);
         $xoopsTpl->assign('breadcrumb', Oledrion\Utility::breadcrumb([OLEDRION_URL . basename(__FILE__) => _OLEDRION_CATEGORIES]));
@@ -122,7 +125,8 @@ if (0 == $cat_cid || (is_object($category) && 0 == $category->getVar('cat_pid'))
     $chunk3 = Oledrion\Utility::getModuleOption('chunk3'); // Produits les plus vus
     $chunk4 = Oledrion\Utility::getModuleOption('chunk4'); // Produits les mieux notés
 
-    if ($chunk1 > 0) { // Produits les plus récents (dans cette catégorie ou dans toutes les catégories)
+    if ($chunk1 > 0) {
+        // Produits les plus récents (dans cette catégorie ou dans toutes les catégories)
         $products = [];
         $shelfParameters->resetDefaultValues()->setProductsType('recent')->setCategory($tblChilds)->setStart($start)->setLimit($limit)->setSort('product_id DESC, product_title');
         $products = $shelf->getProducts($shelfParameters);
@@ -135,7 +139,8 @@ if (0 == $cat_cid || (is_object($category) && 0 == $category->getVar('cat_pid'))
         }
     }
 
-    if ($chunk2 > 0) { // Produits les plus achetés (dans cette catégorie ou dans toutes les catégories)
+    if ($chunk2 > 0) {
+        // Produits les plus achetés (dans cette catégorie ou dans toutes les catégories)
         $products = [];
         $shelfParameters->resetDefaultValues()->setProductsType('mostsold')->setStart($start)->setLimit($limit)->setSort('product_id DESC, product_title')->setCategory($tblChilds);
         $products = $shelf->getProducts($shelfParameters);
@@ -148,7 +153,8 @@ if (0 == $cat_cid || (is_object($category) && 0 == $category->getVar('cat_pid'))
         }
     }
 
-    if ($chunk3 > 0) { // Produits les plus vus
+    if ($chunk3 > 0) {
+        // Produits les plus vus
         $products = [];
         $shelfParameters->resetDefaultValues()->setProductsType('mostviewed')->setStart($start)->setLimit($limit)->setSort('product_hits')->setOrder('DESC')->setCategory($tblChilds);
         $products = $shelf->getProducts($shelfParameters);
@@ -161,7 +167,8 @@ if (0 == $cat_cid || (is_object($category) && 0 == $category->getVar('cat_pid'))
         }
     }
 
-    if ($chunk4 > 0) { // Produits les mieux notés
+    if ($chunk4 > 0) {
+        // Produits les mieux notés
         $products = [];
         $shelfParameters->resetDefaultValues()->setProductsType('bestrated')->setStart($start)->setLimit($limit)->setSort('product_rating')->setOrder('DESC')->setCategory($tblChilds);
         $products = $shelf->getProducts($shelfParameters);
@@ -175,8 +182,8 @@ if (0 == $cat_cid || (is_object($category) && 0 == $category->getVar('cat_pid'))
     }
 }
 
-if (is_object($category)
-    && $cat_cid > 0) { // On est sur une catégorie définie donc on affiche les produits de cette catégorie
+if (is_object($category) && $cat_cid > 0) {
+    // On est sur une catégorie définie donc on affiche les produits de cette catégorie
     $xoopsTpl->assign('case', 2);
     $xoopsTpl->assign('category', $category->toArray());
     if (OLEDRION_SHOW_SUB_CATEGORIES && !$subCategoriesSearched) {
@@ -206,12 +213,12 @@ if (is_object($category)
     }
 
     // Breadcrumb *********************************************************************************
-    $ancestors = $mytree->getAllParent($cat_cid);
-    $ancestors = array_reverse($ancestors);
+    $ancestors = array_reverse($mytree->getAllParent($cat_cid));
     $tbl_tmp[] = "<a href='" . OLEDRION_URL . "index.php' title='" . Oledrion\Utility::makeHrefTitle(Oledrion\Utility::getModuleName()) . "'>" . Oledrion\Utility::getModuleName() . '</a>';
     foreach ($ancestors as $item) {
         $tbl_tmp[] = "<a href='" . $item->getLink() . "' title='" . Oledrion\Utility::makeHrefTitle($item->getVar('cat_title')) . "'>" . $item->getVar('cat_title') . '</a>';
     }
+
     // Ajout de la catégorie courante
     $tbl_tmp[]  = "<a href='" . $category->getLink() . "' title='" . Oledrion\Utility::makeHrefTitle($category->getVar('cat_title')) . "'>" . $category->getVar('cat_title') . '</a>';
     $breadcrumb = implode(' &raquo; ', $tbl_tmp);

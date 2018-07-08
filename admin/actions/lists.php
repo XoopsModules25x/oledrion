@@ -33,6 +33,7 @@ $operation = 'lists';
 switch ($action) {
     // ****************************************************************************************************************
     case 'default': // Liste des listes
+
         // ****************************************************************************************************************
         xoops_cp_header();
         $adminObject = \Xmf\Module\Admin::getInstance();
@@ -51,7 +52,7 @@ switch ($action) {
         }
         $items = $listsHandler->getRecentLists(new Oledrion\Parameters([
                                                                            'start' => $start,
-                                                                           'limit' => $limit
+                                                                           'limit' => $limit,
                                                                        ]));
         if (count($items) > 0) {
             $usersList = $listsHandler->getUsersFromLists($items);
@@ -93,14 +94,15 @@ switch ($action) {
             echo "<div align='right'>" . $pagenav->renderNav() . '</div>';
         }
         require_once OLEDRION_ADMIN_PATH . 'admin_footer.php';
-        break;
 
+        break;
     // ****************************************************************************************************************
     case 'delete': // Suppression d'une liste
+
         // ****************************************************************************************************************
         xoops_cp_header();
         $list = null;
-        $id = \Xmf\Request::getInt('id', 0, 'GET');
+        $id   = \Xmf\Request::getInt('id', 0, 'GET');
         if (empty($id)) {
             Oledrion\Utility::redirect(_AM_OLEDRION_ERROR_1, $baseurl . '?op=' . $operation, 5);
         }
@@ -114,5 +116,6 @@ switch ($action) {
         } else {
             Oledrion\Utility::redirect(_AM_OLEDRION_SAVE_PB, $baseurl . '?op=' . $operation, 5);
         }
+
         break;
 }

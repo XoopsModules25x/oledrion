@@ -79,7 +79,7 @@ if ($listsHandler->getRecentListsCount(Constants::OLEDRION_LISTS_ALL_PUBLIC, Ole
                                                                                 'order'    => 'DESC',
                                                                                 'idAsKey'  => true,
                                                                                 'listType' => Constants::OLEDRION_LISTS_ALL_PUBLIC,
-                                                                                'list_uid' => Oledrion\Utility::getCurrentUserID()
+                                                                                'list_uid' => Oledrion\Utility::getCurrentUserID(),
                                                                             ]));
     if (count($otherUserLists) > 0) {
         foreach ($otherUserLists as $oneOtherList) {
@@ -94,7 +94,7 @@ $helper->loadLanguage('modinfo');
 
 $breadcrumb = [
     OLEDRION_URL . 'all-lists.php'    => _MI_OLEDRION_SMNAME11,
-    OLEDRION_URL . basename(__FILE__) => $list->getVar('list_title')
+    OLEDRION_URL . basename(__FILE__) => $list->getVar('list_title'),
 ];
 $xoopsTpl->assign('breadcrumb', Oledrion\Utility::breadcrumb($breadcrumb));
 

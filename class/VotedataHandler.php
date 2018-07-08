@@ -1,4 +1,6 @@
-<?php namespace XoopsModules\Oledrion;
+<?php
+
+namespace XoopsModules\Oledrion;
 
 /*
  You may not change or alter any portion of this comment or credits
@@ -35,8 +37,9 @@ class VotedataHandler extends OledrionPersistableObjectHandler
      * VotedataHandler constructor.
      * @param \XoopsDatabase $db
      */
-    public function __construct(\XoopsDatabase $db)
-    { //                                Table                   Classe           Id
+    public function __construct(\XoopsDatabase $db = null)
+    {
+        //                                Table                   Classe           Id
         parent::__construct($db, 'oledrion_votedata', Votedata::class, 'vote_ratingid');
     }
 
@@ -99,7 +102,7 @@ class VotedataHandler extends OledrionPersistableObjectHandler
      *
      * @param int $vote_uid        L'identifiant de l'utilisateur
      * @param int $vote_product_id Le numéro du produit
-     * @return boolean True s'il a déjà voté sinon False
+     * @return bool True s'il a déjà voté sinon False
      */
     public function hasUserAlreadyVoted($vote_uid, $vote_product_id)
     {
@@ -110,19 +113,15 @@ class VotedataHandler extends OledrionPersistableObjectHandler
         $criteria->add(new \Criteria('vote_product_id', $vote_product_id, '='));
         $criteria->add(new \Criteria('vote_uid', $vote_uid, '='));
         $count = $this->getCount($criteria);
-        if ($count > 0) {
-            return true;
-        }
-
-        return false;
+        return $count > 0;
     }
 
     /**
      * Indique si un utilisateur anonyme a déjà voté (d'après son adresse IP)
      *
-     * @param  string  $ip              L'adresse IP
-     * @param int $vote_product_id Ld'identifiant du produit
-     * @return boolean
+     * @param  string $ip              L'adresse IP
+     * @param int     $vote_product_id Ld'identifiant du produit
+     * @return bool
      */
     public function hasAnonymousAlreadyVoted($ip = '', $vote_product_id = 0)
     {
@@ -137,11 +136,7 @@ class VotedataHandler extends OledrionPersistableObjectHandler
         $criteria->add(new \Criteria('vote_ratinghostname', $ip, '='));
         $criteria->add(new \Criteria('vote_ratingtimestamp', $yesterday, '>'));
         $count = $this->getCount($criteria);
-        if ($count > 0) {
-            return true;
-        }
-
-        return false;
+        return $count > 0;
     }
 
     /**

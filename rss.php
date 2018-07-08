@@ -84,7 +84,7 @@ if (!$tpl->is_cached('db:oledrion_rss.tpl', $cat_cid)) {
     $products = $productsHandler->getRecentProducts(new Oledrion\Parameters([
                                                                                 'start'    => 0,
                                                                                 'limit'    => $limit,
-                                                                                'category' => $cat_cid
+                                                                                'category' => $cat_cid,
                                                                             ]));
     foreach ($products as $item) {
         $title       = htmlspecialchars($item->getVar('product_title'), ENT_QUOTES);
@@ -95,7 +95,7 @@ if (!$tpl->is_cached('db:oledrion_rss.tpl', $cat_cid)) {
             'link'        => $link,
             'guid'        => $link,
             'pubdate'     => formatTimestamp($item->getVar('product_submitted'), 'rss'),
-            'description' => xoops_utf8_encode($description)
+            'description' => xoops_utf8_encode($description),
         ]);
     }
 }

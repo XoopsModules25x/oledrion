@@ -31,17 +31,17 @@ require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
 require_once XOOPS_ROOT_PATH . '/class/xoopslists.php';
 //require_once OLEDRION_PATH . 'class/tree.php';
 
-// Lecture de certains param�tres de l'application ********************************************************************
-$limit             = Oledrion\Utility::getModuleOption('items_count'); // Nombre maximum d'�l�ments � afficher dans l'admin
-$baseurl           = OLEDRION_URL . 'admin/' . basename(__FILE__); // URL de ce script
-$conf_msg          = Oledrion\Utility::javascriptLinkConfirm(_AM_OLEDRION_CONF_DELITEM);
+// Reading some parameters of the application ********************************************************************
+$limit            = Oledrion\Utility::getModuleOption('items_count'); // Maximum number of items to display in the admin
+$baseurl          = OLEDRION_URL . 'admin/' . basename(__FILE__); // URL de ce script
+$conf_msg         = Oledrion\Utility::javascriptLinkConfirm(_AM_OLEDRION_CONF_DELITEM);
 $oledrionCurrency = Oledrion\Currency::getInstance();
-$manual_meta       = Oledrion\Utility::getModuleOption('manual_meta');
+$manual_meta      = Oledrion\Utility::getModuleOption('manual_meta');
 
 $helper->loadLanguage('modinfo');
 $helper->loadLanguage('main');
 
-// V�rification de l'existance du r�pertoire de cache
+// Verifying the Existence of the Cache Directory
 Oledrion\Utility::prepareFolder(OLEDRION_UPLOAD_PATH);
 Oledrion\Utility::prepareFolder(OLEDRION_ATTACHED_FILES_PATH);
 Oledrion\Utility::prepareFolder(OLEDRION_PICTURES_PATH);
@@ -49,7 +49,7 @@ Oledrion\Utility::prepareFolder(OLEDRION_CSV_PATH);
 Oledrion\Utility::prepareFolder(OLEDRION_CACHE_PATH);
 Oledrion\Utility::prepareFolder(OLEDRION_TEXT_PATH);
 
-// Est-ce que le r�pertoire du cache est ouvert en �criture ?
+// Is the cache directory open for writing? ?
 if (!is_writable(OLEDRION_CACHE_PATH)) {
     exit('Your cache folder, ' . OLEDRION_CACHE_PATH . ' is not writable !');
 }
@@ -61,25 +61,14 @@ if (!defined('OLEDRION_ADMIN')) {
     define('OLEDRION_ADMIN', true);
 }
 
-//$op = 'dashboard';
-//if (\Xmf\Request::hasVar('op', 'POST')) {
-//    $op = filter_input(INPUT_POST, 'op', FILTER_SANITIZE_STRING);
-//} elseif (\Xmf\Request::hasVar('op', 'GET')) {
-//    $op = filter_input(INPUT_GET, 'op', FILTER_SANITIZE_STRING);
-//}
 $op = \Xmf\Request::getCmd('op', 'dashboard');
+$action = \Xmf\Request::getCmd('action', 'default');
 
-$action = 'default';
-if (\Xmf\Request::hasVar('action', 'POST')) {
-    $action = filter_input(INPUT_POST, 'action', FILTER_SANITIZE_STRING);
-} elseif (\Xmf\Request::hasVar('action', 'GET')) {
-    $action = filter_input(INPUT_GET, 'action', FILTER_SANITIZE_STRING);
-}
 
 // Check admin have access to this page
 $part = Oledrion\Utility::getModuleOption('admin_groups_part');
 $part = explode('|', $part);
-if (!in_array($op, $part)) {
+if (!in_array($op, $part, true)) {
     $group  = $xoopsUser->getGroups();
     $groups = Oledrion\Utility::getModuleOption('admin_groups');
     if (count(array_intersect($group, $groups)) <= 0) {
@@ -90,7 +79,7 @@ if (!in_array($op, $part)) {
 $op        = str_replace('..', '', $op);
 $controler = OLEDRION_ADMIN_PATH . 'actions/' . $op . '.php';
 if (file_exists($controler)) {
-    require $controler;
+    require_once $controler;
 }
 
 //xoops_cp_footer();

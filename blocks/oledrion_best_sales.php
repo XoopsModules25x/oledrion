@@ -28,7 +28,7 @@ function b_oledrion_bestsales_show($options)
 {
     // '10|0';  // Voir 10 produits, pour toutes les catégories ou une catégorie particulière
     global $xoopsConfig, $xoTheme;
-    include XOOPS_ROOT_PATH . '/modules/oledrion/include/common.php';
+    require_once XOOPS_ROOT_PATH . '/modules/oledrion/include/common.php';
     $categoryId = $options[1];
     $start      = 0;
     $limit      = $options[0];
@@ -57,7 +57,7 @@ function b_oledrion_bestsales_show($options)
 function b_oledrion_bestsales_edit($options)
 {
     // '10|0';  // Voir 10 produits, pour toutes les catégories
-    require XOOPS_ROOT_PATH . '/modules/oledrion/include/common.php';
+    require_once XOOPS_ROOT_PATH . '/modules/oledrion/include/common.php';
     // require_once OLEDRION_PATH . 'class/tree.php';
     $categories            = [];
     $categories            = $categoryHandler->getAllCategories(new Oledrion\Parameters());

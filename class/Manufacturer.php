@@ -1,4 +1,6 @@
-<?php namespace XoopsModules\Oledrion;
+<?php
+
+namespace XoopsModules\Oledrion;
 
 /*
  You may not change or alter any portion of this comment or credits
@@ -35,8 +37,6 @@ class Manufacturer extends OledrionObject
      * constructor
      *
      * normally, this is called from child classes only
-     *
-     * @access public
      */
     public function __construct()
     {
@@ -91,15 +91,14 @@ class Manufacturer extends OledrionObject
      * Indique si une des 5 images du fabricant existe
      *
      * @param int $pictureNumber Le numéro (de 1 à 5) de l'image que l'on souhaite récupérer
-     * @return boolean Vrai si l'image existe sinon faux
+     * @return bool Vrai si l'image existe sinon faux
      */
     public function pictureExists($pictureNumber)
     {
         $pictureNumber = (int)$pictureNumber;
         $return        = false;
         if ($pictureNumber > 0 && $pictureNumber < 6) {
-            if ('' !== xoops_trim($this->getVar('manu_photo' . $pictureNumber))
-                && file_exists(OLEDRION_PICTURES_PATH . '/' . $this->getVar('manu_photo' . $pictureNumber))) {
+            if ('' !== xoops_trim($this->getVar('manu_photo' . $pictureNumber)) && file_exists(OLEDRION_PICTURES_PATH . '/' . $this->getVar('manu_photo' . $pictureNumber))) {
                 $return = true;
             }
         }
@@ -111,7 +110,6 @@ class Manufacturer extends OledrionObject
      * Supprime une des 5 images du fabricant
      *
      * @param int $pictureNumber Le numéro (de 1 à 5) de l'image que l'on souhaite récupérer
-     * @return void
      */
     public function deletePicture($pictureNumber)
     {
@@ -126,7 +124,6 @@ class Manufacturer extends OledrionObject
 
     /**
      * Supprime toutes les images du fabricant (raccourcis)
-     * @return void
      */
     public function deletePictures()
     {
@@ -143,9 +140,11 @@ class Manufacturer extends OledrionObject
     public function getLink()
     {
         $url = '';
-        if (1 == Oledrion\Utility::getModuleOption('urlrewriting')) { // On utilise l'url rewriting
+        if (1 == Oledrion\Utility::getModuleOption('urlrewriting')) {
+            // On utilise l'url rewriting
             $url = OLEDRION_URL . 'manufacturer-' . $this->getVar('manu_id') . Oledrion\Utility::makeSeoUrl($this->getVar('manu_commercialname', 'n') . ' ' . $this->getVar('manu_name')) . '.html';
-        } else { // Pas d'utilisation de l'url rewriting
+        } else {
+            // Pas d'utilisation de l'url rewriting
             $url = OLEDRION_URL . 'manufacturer.php?manu_id=' . $this->getVar('manu_id');
         }
 
@@ -168,7 +167,7 @@ class Manufacturer extends OledrionObject
      */
     public function getInitial()
     {
-        return strtoupper($this->getVar('manu_name')[0]);
+        return mb_strtoupper($this->getVar('manu_name')[0]);
     }
 
     /**

@@ -1,4 +1,6 @@
-<?php namespace XoopsModules\Oledrion;
+<?php
+
+namespace XoopsModules\Oledrion;
 
 /*
  You may not change or alter any portion of this comment or credits
@@ -34,8 +36,9 @@ class ManufacturerHandler extends OledrionPersistableObjectHandler
      * ManufacturerHandler constructor.
      * @param \XoopsDatabase $db
      */
-    public function __construct(\XoopsDatabase $db)
-    { //                            Table                   Classe               Id            Identifiant
+    public function __construct(\XoopsDatabase $db = null)
+    {
+        //                            Table                   Classe               Id            Identifiant
         parent::__construct($db, 'oledrion_manufacturer', Manufacturer::class, 'manu_id', 'manu_commercialname');
     }
 
@@ -64,7 +67,7 @@ class ManufacturerHandler extends OledrionPersistableObjectHandler
      * Supprime un fabricant et tout ce qui est relatif
      *
      * @param  Manufacturer $manufacturer
-     * @return boolean               Le résultat de la suppression
+     * @return bool               Le résultat de la suppression
      */
     public function deleteManufacturer(Manufacturer $manufacturer)
     {
@@ -77,7 +80,7 @@ class ManufacturerHandler extends OledrionPersistableObjectHandler
      * Retourne le nombre de produits associés à un fabricant
      *
      * @param int $manu_id L'identifiant du fabricant
-     * @return integer Le nombre de produis associés à un fabricant
+     * @return int Le nombre de produis associés à un fabricant
      */
     public function getManufacturerProductsCount($manu_id)
     {

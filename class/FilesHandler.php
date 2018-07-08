@@ -1,4 +1,6 @@
-<?php namespace XoopsModules\Oledrion;
+<?php
+
+namespace XoopsModules\Oledrion;
 
 /*
  You may not change or alter any portion of this comment or credits
@@ -35,8 +37,9 @@ class FilesHandler extends OledrionPersistableObjectHandler
      * FilesHandler constructor.
      * @param \XoopsDatabase $db
      */
-    public function __construct(\XoopsDatabase $db)
-    { //                            Table           Classe          Id          Libellé
+    public function __construct(\XoopsDatabase $db = null)
+    {
+        //                            Table           Classe          Id          Libellé
         parent::__construct($db, 'oledrion_files', Files::class, 'file_id', 'file_filename');
     }
 
@@ -44,7 +47,7 @@ class FilesHandler extends OledrionPersistableObjectHandler
      * Supprime un fichier (son fichier joint ET l'enregistrement dans la base de données)
      *
      * @param  Files $file
-     * @return boolean        Le résultat de la suppression
+     * @return bool        Le résultat de la suppression
      */
     public function deleteAttachedFile(Files $file)
     {
@@ -76,7 +79,7 @@ class FilesHandler extends OledrionPersistableObjectHandler
      * Retourne le nombre de fichiers attachés à un produit qui sont des MP3
      *
      * @param int $file_product_id L'Id du produit
-     * @return integer le nombre de fichiers MP3
+     * @return int le nombre de fichiers MP3
      */
     public function getProductMP3Count($file_product_id)
     {
@@ -91,7 +94,7 @@ class FilesHandler extends OledrionPersistableObjectHandler
      * Retourne le nombre de fichiers attachés à un produit
      *
      * @param int $file_product_id L'Id du produit
-     * @return integer le nombre de fichiers
+     * @return int le nombre de fichiers
      */
     public function getProductFilesCount($file_product_id)
     {
@@ -104,7 +107,6 @@ class FilesHandler extends OledrionPersistableObjectHandler
      * Supprime les fichiers attachés à un produit
      *
      * @param int $file_product_id L'Id du produit
-     * @return void
      */
     public function deleteProductFiles($file_product_id)
     {

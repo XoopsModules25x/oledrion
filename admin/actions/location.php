@@ -28,6 +28,7 @@ if (!defined('OLEDRION_ADMIN')) {
 
 switch ($action) {
     case 'default':
+
         xoops_cp_header();
         $adminObject = \Xmf\Module\Admin::getInstance();
         $adminObject->displayNavigation('index.php?op=location');
@@ -41,7 +42,7 @@ switch ($action) {
         //        Oledrion\Utility::htitle(_MI_OLEDRION_ADMENU19, 4);
         $location = $locationHandler->getAllLocation(new Oledrion\Parameters([
                                                                                  'start' => $start,
-                                                                                 'limit' => $limit
+                                                                                 'limit' => $limit,
                                                                              ]));
         $class    = '';
         echo "<table width='100%' cellspacing='1' cellpadding='3' border='0' class='outer'>";
@@ -67,10 +68,12 @@ switch ($action) {
         echo "</tr>\n";
         echo '</table>';
         require_once OLEDRION_ADMIN_PATH . 'admin_footer.php';
-        break;
 
+        break;
     case 'add':
+
     case 'edit':
+
         xoops_cp_header();
         $id = \Xmf\Request::getInt('id', 0, 'GET');
         if ('edit' === $action) {
@@ -95,7 +98,7 @@ switch ($action) {
         // Get delivery methods
         $deliveres = $deliveryHandler->getLocationDelivery(new Oledrion\Parameters([
                                                                                        'limit'    => $limit,
-                                                                                       'location' => $id
+                                                                                       'location' => $id,
                                                                                    ]));
         if (empty($deliveres)) {
             Oledrion\Utility::redirect(_AM_OLEDRION_LOCATION_DELIVERYADD, $baseurl, 5);
@@ -148,9 +151,10 @@ switch ($action) {
         $sform = Oledrion\Utility::formMarkRequiredFields($sform);
         $sform->display();
         require_once OLEDRION_ADMIN_PATH . 'admin_footer.php';
-        break;
 
+        break;
     case 'save':
+
         xoops_cp_header();
         $id = \Xmf\Request::getInt('location_id', 0, 'POST');
         if (!empty($id)) {
@@ -168,7 +172,7 @@ switch ($action) {
         $location_delivery = [];
         $deliveres         = $deliveryHandler->getLocationDelivery(new Oledrion\Parameters([
                                                                                                'limit'    => $limit,
-                                                                                               'location' => $id
+                                                                                               'location' => $id,
                                                                                            ]));
         foreach ($deliveres as $delivery) {
             if (isset($post[$delivery['delivery_id'] . '_ld_select'])) {
@@ -214,9 +218,10 @@ switch ($action) {
         }
 
         require_once OLEDRION_ADMIN_PATH . 'admin_footer.php';
-        break;
 
+        break;
     case 'delete':
+
         xoops_cp_header();
         $id = \Xmf\Request::getInt('id', 0, 'GET');
         if (0 == $id) {
@@ -229,8 +234,8 @@ switch ($action) {
         }
         $msg = sprintf(_AM_OLEDRION_CONF_DEL_ITEM, $location->getVar('location_title'));
         xoops_confirm(['op' => 'location', 'action' => 'confdelete', 'id' => $id], 'index.php', $msg);
-        break;
 
+        break;
     case 'confdelete':
 
         xoops_cp_header();
@@ -258,5 +263,6 @@ switch ($action) {
         } else {
             Oledrion\Utility::redirect(_AM_OLEDRION_NOT_FOUND, $baseurl . '?op=' . $opRedirect, 5);
         }
+
         break;
 }

@@ -1,4 +1,6 @@
-<?php namespace XoopsModules\Oledrion\Exports;
+<?php
+
+namespace XoopsModules\Oledrion\Exports;
 
 /*
  You may not change or alter any portion of this comment or credits
@@ -46,7 +48,7 @@ class CsvExport extends Export
 
     /**
      * Export des données
-     * @return boolean Vrai si l'export a réussi sinon faux
+     * @return bool Vrai si l'export a réussi sinon faux
      */
     public function doExport()
     {

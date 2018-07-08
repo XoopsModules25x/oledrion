@@ -16,7 +16,6 @@
  * @license     {@link http://www.fsf.org/copyleft/gpl.html GNU public license}
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
  */
-
 define('_AM_OLEDRION_COUNTRY', 'کشور');
 define('_AM_OLEDRION_GO_TO_MODULE', 'برو به ماژول');
 define('_AM_OLEDRION_PREFERENCES', 'تنظیمات');

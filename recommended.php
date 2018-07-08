@@ -38,7 +38,7 @@ $tbl_related_products = [];
 $start                = \Xmf\Request::getInt('start', 0, 'GET');
 $limit                = Oledrion\Utility::getModuleOption('perpage');
 $baseurl              = OLEDRION_URL . basename(__FILE__); // URL de ce script (sans son nom)
-$oledrionCurrency    = Oledrion\Currency::getInstance();
+$oledrionCurrency     = Oledrion\Currency::getInstance();
 
 $registry = new Oledrion\Registryfile();
 

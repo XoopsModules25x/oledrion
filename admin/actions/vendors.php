@@ -28,6 +28,7 @@ if (!defined('OLEDRION_ADMIN')) {
 switch ($action) {
     // ****************************************************************************************************************
     case 'default': // Gestion des vendeurs
+
         // ****************************************************************************************************************
         xoops_cp_header();
         $adminObject = \Xmf\Module\Admin::getInstance();
@@ -43,7 +44,7 @@ switch ($action) {
 
         $vendors = $vendorsHandler->getAllVendors(new Oledrion\Parameters([
                                                                               'start' => $start,
-                                                                              'limit' => $limit
+                                                                              'limit' => $limit,
                                                                           ]));
         $class   = '';
         echo "<table width='100%' cellspacing='1' cellpadding='3' border='0' class='outer'>";
@@ -65,11 +66,13 @@ switch ($action) {
         echo '</table>';
 
         require_once OLEDRION_ADMIN_PATH . 'admin_footer.php';
-        break;
 
+        break;
     // ****************************************************************************************************************
     case 'add': // Ajout d'un vendeur
+
     case 'edit': // Edition d'un vendeur
+
         // ****************************************************************************************************************
         xoops_cp_header();
         if ('edit' === $action) {
@@ -105,10 +108,11 @@ switch ($action) {
         $sform = Oledrion\Utility::formMarkRequiredFields($sform);
         $sform->display();
         require_once OLEDRION_ADMIN_PATH . 'admin_footer.php';
-        break;
 
+        break;
     // ****************************************************************************************************************
     case 'saveedit': // Sauvegarde d'un vendeur (édition et ajout)
+
         // ****************************************************************************************************************
         xoops_cp_header();
         $id = \Xmf\Request::getInt('vendor_id', 0, 'POST');
@@ -131,10 +135,11 @@ switch ($action) {
         } else {
             Oledrion\Utility::redirect(_AM_OLEDRION_SAVE_PB, $baseurl . '?op=' . $opRedirect, 5);
         }
-        break;
 
+        break;
     // ****************************************************************************************************************
     case 'delete': // Suppression d'un vendeur
+
         // ****************************************************************************************************************
         xoops_cp_header();
         $id = \Xmf\Request::getInt('id', 0, 'GET');
@@ -161,5 +166,6 @@ switch ($action) {
         } else {
             Oledrion\Utility::redirect(_AM_OLEDRION_ERROR_6, $baseurl . '?op=' . $opRedirect, 5);
         }
+
         break;
 }

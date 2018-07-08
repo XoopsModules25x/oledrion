@@ -22,13 +22,13 @@ use XoopsModules\Oledrion;
 /**
  * Actions relatives au Dashboard (affichage et suppression d'un vote)
  */
-
 if (!defined('OLEDRION_ADMIN')) {
     exit();
 }
 switch ($action) {
     // ****************************************************************************************************************
     case 'default': // Affichage du dashboard
+
         // ****************************************************************************************************************
         xoops_cp_header();
 
@@ -70,7 +70,7 @@ switch ($action) {
             _AM_OLEDRION_DIRCREATED,
             _AM_OLEDRION_DIRNOTCREATED,
             _AM_OLEDRION_PERMSET,
-            _AM_OLEDRION_PERMNOTSET
+            _AM_OLEDRION_PERMNOTSET,
         ];
 
         //$path =  $helper->getConfig('uploaddir') . '/';
@@ -174,7 +174,7 @@ switch ($action) {
             $tblTmp = [];
             $tblTmp = $productsHandler->getMostViewedProducts(new Oledrion\Parameters([
                                                                                           'start' => 0,
-                                                                                          'limit' => $itemsCount
+                                                                                          'limit' => $itemsCount,
                                                                                       ]));
             echo "</td><td valign='top' width='50%' align='center'><b>" . _MI_OLEDRION_BNAME2 . '</b>';
             echo "<table border='0' cellpadding='2' cellspacing='2' width='100%'>";
@@ -212,10 +212,11 @@ switch ($action) {
         }
 
         require_once OLEDRION_ADMIN_PATH . 'admin_footer.php';
-        break;
 
+        break;
     // ****************************************************************************************************************
     case 'deleterating': // Delete a rating
+
         // ****************************************************************************************************************
         $id = \Xmf\Request::getInt('id', 0, 'GET');
         if (empty($id)) {
@@ -229,7 +230,8 @@ switch ($action) {
                 $product_id = $item->getVar('vote_product_id');
                 $product    = null;
                 $product    = $productsHandler->get($product_id);
-                if (is_object($product)) { // Update Product's rating
+                if (is_object($product)) {
+                    // Update Product's rating
                     $totalVotes = $sumRating = $ret = $finalrating = 0;
                     $ret        = $votedataHandler->getCountRecordSumRating($product->getVar('product_id'), $totalVotes, $sumRating);
                     if ($totalVotes > 0) {
@@ -245,5 +247,6 @@ switch ($action) {
         } else {
             Oledrion\Utility::redirect(_AM_OLEDRION_NOT_FOUND, $baseurl . '?op=' . $opRedirect, 5);
         }
+
         break;
 }

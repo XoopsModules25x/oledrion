@@ -1,4 +1,6 @@
-<?php namespace XoopsModules\Oledrion;
+<?php
+
+namespace XoopsModules\Oledrion;
 
 /*
  You may not change or alter any portion of this comment or credits
@@ -38,8 +40,9 @@ class PersistentCartHandler extends OledrionPersistableObjectHandler
      * PersistentCartHandler constructor.
      * @param \XoopsDatabase $db
      */
-    public function __construct(\XoopsDatabase $db)
-    { //                          Table                     Classe                        Id
+    public function __construct(\XoopsDatabase $db = null)
+    {
+        //                          Table                     Classe                        Id
         parent::__construct($db, 'oledrion_persistent_cart', PersistentCart::class, 'persistent_id');
     }
 
@@ -47,7 +50,7 @@ class PersistentCartHandler extends OledrionPersistableObjectHandler
      * Supprime un produit des paniers enregistrés
      *
      * @param  mixed $persistent_product_id L'ID du produit à supprimer ou un tableau d'identifiants à supprimer
-     * @return boolean
+     * @return bool
      */
     public function deleteProductForAllCarts($persistent_product_id)
     {
@@ -67,7 +70,7 @@ class PersistentCartHandler extends OledrionPersistableObjectHandler
      * Purge des produits d'un utilisateur
      *
      * @param int $persistent_uid L'identifiant de l'utilisateur
-     * @return boolean Le résultat de la suppression
+     * @return bool Le résultat de la suppression
      */
     public function deleteAllUserProducts($persistent_uid = 0)
     {
@@ -86,7 +89,7 @@ class PersistentCartHandler extends OledrionPersistableObjectHandler
      *
      * @param int $persistent_product_id L'identifiant du produit
      * @param int $persistent_uid        L'identifiant de l'utilisateur
-     * @return boolean Le résultat de la suppression
+     * @return bool Le résultat de la suppression
      */
     public function deleteUserProduct($persistent_product_id, $persistent_uid = 0)
     {
@@ -107,7 +110,7 @@ class PersistentCartHandler extends OledrionPersistableObjectHandler
      * @param int $persistent_product_id L'ID du produit
      * @param int $persistent_qty        La quantité de produits
      * @param int $persistent_uid        L'ID de l'utilisateur
-     * @return boolean Le résultat de l'ajout du produit
+     * @return bool Le résultat de l'ajout du produit
      */
     public function addUserProduct($persistent_product_id, $persistent_qty, $persistent_uid = 0)
     {
@@ -130,7 +133,7 @@ class PersistentCartHandler extends OledrionPersistableObjectHandler
      * @param int $persistent_product_id L'identifiant du produit
      * @param int $persistent_qty        La quantité de produit
      * @param int $persistent_uid        L'ID de l'utilisateur
-     * @return boolean Le résultat de la mise à jour
+     * @return bool Le résultat de la mise à jour
      */
     public function updateUserProductQuantity($persistent_product_id, $persistent_qty, $persistent_uid = 0)
     {
@@ -149,7 +152,7 @@ class PersistentCartHandler extends OledrionPersistableObjectHandler
      * Indique s'il existe un panier pour un utilisateur
      *
      * @param int $persistent_uid L'id de l'utilisateur
-     * @return boolean
+     * @return bool
      */
     public function isCartExists($persistent_uid = 0)
     {

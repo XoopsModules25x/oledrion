@@ -30,7 +30,6 @@ $configHandler    = xoops_getHandler('config');
 $moduleIdCriteria = new \Criteria('conf_modid', $xoopsModule->getVar('mid'));
 
 switch ($action) {
-
     case 'default':
 
         xoops_cp_header();
@@ -109,7 +108,6 @@ switch ($action) {
         require_once OLEDRION_ADMIN_PATH . 'admin_footer.php';
 
         break;
-
     case 'fromproperty':
 
         if (\Xmf\Request::hasVar('product_property1', 'POST')) {
@@ -125,7 +123,7 @@ switch ($action) {
                     'conf_name'      => 'product_property1',
                     'conf_value'     => $_POST['product_property1'],
                     'conf_formtype'  => 'hidden',
-                    'conf_valuetype' => 'text'
+                    'conf_valuetype' => 'text',
                 ];
                 $config->setVars($configValue);
                 $configHandler->insertConfig($config);
@@ -145,7 +143,7 @@ switch ($action) {
                     'conf_name'      => 'product_property1_title',
                     'conf_value'     => $_POST['product_property1_title'],
                     'conf_formtype'  => 'hidden',
-                    'conf_valuetype' => 'text'
+                    'conf_valuetype' => 'text',
                 ];
                 $config->setVars($configValue);
                 $configHandler->insertConfig($config);
@@ -165,7 +163,7 @@ switch ($action) {
                     'conf_name'      => 'product_property2',
                     'conf_value'     => $_POST['product_property2'],
                     'conf_formtype'  => 'hidden',
-                    'conf_valuetype' => 'text'
+                    'conf_valuetype' => 'text',
                 ];
                 $config->setVars($configValue);
                 $configHandler->insertConfig($config);
@@ -185,7 +183,7 @@ switch ($action) {
                     'conf_name'      => 'product_property2_title',
                     'conf_value'     => $_POST['product_property2_title'],
                     'conf_formtype'  => 'hidden',
-                    'conf_valuetype' => 'text'
+                    'conf_valuetype' => 'text',
                 ];
                 $config->setVars($configValue);
                 $configHandler->insertConfig($config);
@@ -205,7 +203,7 @@ switch ($action) {
                     'conf_name'      => 'product_property3',
                     'conf_value'     => $_POST['product_property3'],
                     'conf_formtype'  => 'hidden',
-                    'conf_valuetype' => 'text'
+                    'conf_valuetype' => 'text',
                 ];
                 $config->setVars($configValue);
                 $configHandler->insertConfig($config);
@@ -225,7 +223,7 @@ switch ($action) {
                     'conf_name'      => 'product_property3_title',
                     'conf_value'     => $_POST['product_property3_title'],
                     'conf_formtype'  => 'hidden',
-                    'conf_valuetype' => 'text'
+                    'conf_valuetype' => 'text',
                 ];
                 $config->setVars($configValue);
                 $configHandler->insertConfig($config);
@@ -245,7 +243,7 @@ switch ($action) {
                     'conf_name'      => 'product_property4',
                     'conf_value'     => $_POST['product_property4'],
                     'conf_formtype'  => 'hidden',
-                    'conf_valuetype' => 'text'
+                    'conf_valuetype' => 'text',
                 ];
                 $config->setVars($configValue);
                 $configHandler->insertConfig($config);
@@ -265,7 +263,7 @@ switch ($action) {
                     'conf_name'      => 'product_property4_title',
                     'conf_value'     => $_POST['product_property4_title'],
                     'conf_formtype'  => 'hidden',
-                    'conf_valuetype' => 'text'
+                    'conf_valuetype' => 'text',
                 ];
                 $config->setVars($configValue);
                 $configHandler->insertConfig($config);
@@ -285,7 +283,7 @@ switch ($action) {
                     'conf_name'      => 'product_property5',
                     'conf_value'     => $_POST['product_property5'],
                     'conf_formtype'  => 'hidden',
-                    'conf_valuetype' => 'text'
+                    'conf_valuetype' => 'text',
                 ];
                 $config->setVars($configValue);
                 $configHandler->insertConfig($config);
@@ -305,7 +303,7 @@ switch ($action) {
                     'conf_name'      => 'product_property5_title',
                     'conf_value'     => $_POST['product_property5_title'],
                     'conf_formtype'  => 'hidden',
-                    'conf_valuetype' => 'text'
+                    'conf_valuetype' => 'text',
                 ];
                 $config->setVars($configValue);
                 $configHandler->insertConfig($config);
@@ -325,7 +323,7 @@ switch ($action) {
                     'conf_name'      => 'product_property6',
                     'conf_value'     => $_POST['product_property6'],
                     'conf_formtype'  => 'hidden',
-                    'conf_valuetype' => 'text'
+                    'conf_valuetype' => 'text',
                 ];
                 $config->setVars($configValue);
                 $configHandler->insertConfig($config);
@@ -345,7 +343,7 @@ switch ($action) {
                     'conf_name'      => 'product_property6_title',
                     'conf_value'     => $_POST['product_property6_title'],
                     'conf_formtype'  => 'hidden',
-                    'conf_valuetype' => 'text'
+                    'conf_valuetype' => 'text',
                 ];
                 $config->setVars($configValue);
                 $configHandler->insertConfig($config);
@@ -365,7 +363,7 @@ switch ($action) {
                     'conf_name'      => 'product_property7',
                     'conf_value'     => $_POST['product_property7'],
                     'conf_formtype'  => 'hidden',
-                    'conf_valuetype' => 'text'
+                    'conf_valuetype' => 'text',
                 ];
                 $config->setVars($configValue);
                 $configHandler->insertConfig($config);
@@ -385,7 +383,7 @@ switch ($action) {
                     'conf_name'      => 'product_property7_title',
                     'conf_value'     => $_POST['product_property7_title'],
                     'conf_formtype'  => 'hidden',
-                    'conf_valuetype' => 'text'
+                    'conf_valuetype' => 'text',
                 ];
                 $config->setVars($configValue);
                 $configHandler->insertConfig($config);
@@ -405,7 +403,7 @@ switch ($action) {
                     'conf_name'      => 'product_property8',
                     'conf_value'     => $_POST['product_property8'],
                     'conf_formtype'  => 'hidden',
-                    'conf_valuetype' => 'text'
+                    'conf_valuetype' => 'text',
                 ];
                 $config->setVars($configValue);
                 $configHandler->insertConfig($config);
@@ -425,7 +423,7 @@ switch ($action) {
                     'conf_name'      => 'product_property8_title',
                     'conf_value'     => $_POST['product_property8_title'],
                     'conf_formtype'  => 'hidden',
-                    'conf_valuetype' => 'text'
+                    'conf_valuetype' => 'text',
                 ];
                 $config->setVars($configValue);
                 $configHandler->insertConfig($config);
@@ -445,7 +443,7 @@ switch ($action) {
                     'conf_name'      => 'product_property9',
                     'conf_value'     => $_POST['product_property9'],
                     'conf_formtype'  => 'hidden',
-                    'conf_valuetype' => 'text'
+                    'conf_valuetype' => 'text',
                 ];
                 $config->setVars($configValue);
                 $configHandler->insertConfig($config);
@@ -465,7 +463,7 @@ switch ($action) {
                     'conf_name'      => 'product_property9_title',
                     'conf_value'     => $_POST['product_property9_title'],
                     'conf_formtype'  => 'hidden',
-                    'conf_valuetype' => 'text'
+                    'conf_valuetype' => 'text',
                 ];
                 $config->setVars($configValue);
                 $configHandler->insertConfig($config);
@@ -485,7 +483,7 @@ switch ($action) {
                     'conf_name'      => 'product_property10',
                     'conf_value'     => $_POST['product_property10'],
                     'conf_formtype'  => 'hidden',
-                    'conf_valuetype' => 'text'
+                    'conf_valuetype' => 'text',
                 ];
                 $config->setVars($configValue);
                 $configHandler->insertConfig($config);
@@ -505,7 +503,7 @@ switch ($action) {
                     'conf_name'      => 'product_property10_title',
                     'conf_value'     => $_POST['product_property10_title'],
                     'conf_formtype'  => 'hidden',
-                    'conf_valuetype' => 'text'
+                    'conf_valuetype' => 'text',
                 ];
                 $config->setVars($configValue);
                 $configHandler->insertConfig($config);
@@ -514,5 +512,6 @@ switch ($action) {
 
         Oledrion\Utility::updateCache();
         Oledrion\Utility::redirect(_AM_OLEDRION_SAVE_OK, $baseurl . '?op=property', 2);
+
         break;
 }

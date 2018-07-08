@@ -28,6 +28,7 @@ if (!defined('OLEDRION_ADMIN')) {
 switch ($action) {
     // ****************************************************************************************************************
     case 'default': // Création de la newsletter
+
         // ****************************************************************************************************************
         xoops_cp_header();
         $adminObject = \Xmf\Module\Admin::getInstance();
@@ -69,10 +70,11 @@ switch ($action) {
         $sform = Oledrion\Utility::formMarkRequiredFields($sform);
         $sform->display();
         require_once OLEDRION_ADMIN_PATH . 'admin_footer.php';
-        break;
 
+        break;
     // ****************************************************************************************************************
     case 'launch': // Création effective de la newsletter
+
         // ****************************************************************************************************************
         xoops_cp_header();
         $adminObject = \Xmf\Module\Admin::getInstance();
@@ -96,7 +98,7 @@ switch ($action) {
         $products   = $productsHandler->getProductsForNewsletter(new Oledrion\Parameters([
                                                                                              'startingDate' => $date1,
                                                                                              'endingDate'   => $date2,
-                                                                                             'category'     => $cat_id
+                                                                                             'category'     => $cat_id,
                                                                                          ]));
         $newsfile   = OLEDRION_NEWSLETTER_PATH;
         $categories = $categoryHandler->getAllCategories(new Oledrion\Parameters([
@@ -104,7 +106,7 @@ switch ($action) {
                                                                                      'limit'   => 0,
                                                                                      'sort'    => 'cat_title',
                                                                                      'order'   => 'ASC',
-                                                                                     'idaskey' => true
+                                                                                     'idaskey' => true,
                                                                                  ]));
         $vats       = $vatHandler->getAllVats(new Oledrion\Parameters());
 
@@ -151,7 +153,7 @@ switch ($action) {
                 '%product_weight%',
                 '%product_unitmeasure2%',
                 '%product_download_url%',
-                '%product_length%'
+                '%product_length%',
             ];
             $replace = [
                 $item->getVar('product_title'),
@@ -174,7 +176,7 @@ switch ($action) {
                 $item->getVar('product_weight'),
                 $item->getVar('product_unitmeasure2'),
                 $item->getVar('product_download_url'),
-                $item->getVar('product_length')
+                $item->getVar('product_length'),
             ];
             $content = str_replace($search, $replace, $content);
             if ($removeBr) {
@@ -192,5 +194,6 @@ switch ($action) {
         $newsfile = OLEDRION_NEWSLETTER_URL;
         echo "<a href='$newsfile' target='_blank'>" . _AM_OLEDRION_NEWSLETTER_READY . '</a>';
         require_once OLEDRION_ADMIN_PATH . 'admin_footer.php';
+
         break;
 }

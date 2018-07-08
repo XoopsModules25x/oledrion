@@ -55,39 +55,49 @@ if (!empty($orders)) {
         $command['cmd_url'] = OLEDRION_URL . 'invoice.php?id=' . $command['cmd_id'] . '&pass=' . $command['cmd_password'];
         switch ($command['cmd_state']) {
             case 0:
+
                 $command['cmd_state_title'] = _OLEDRION_USER_STATE0;
-                break;
 
+                break;
             case 1:
+
                 $command['cmd_state_title'] = _OLEDRION_USER_STATE1;
-                break;
 
+                break;
             case 2:
+
                 $command['cmd_state_title'] = _OLEDRION_USER_STATE2;
-                break;
 
+                break;
             case 3:
+
                 $command['cmd_state_title'] = _OLEDRION_USER_STATE3;
-                break;
 
+                break;
             case 4:
+
                 $command['cmd_state_title'] = _OLEDRION_USER_STATE4;
-                break;
 
+                break;
             case 5:
+
                 $command['cmd_state_title'] = _OLEDRION_USER_STATE5;
-                break;
 
+                break;
             case 6:
+
                 $command['cmd_state_title'] = _OLEDRION_USER_STATE6;
-                break;
 
+                break;
             case 7:
-                $command['cmd_state_title'] = _OLEDRION_USER_STATE7;
-                break;
 
+                $command['cmd_state_title'] = _OLEDRION_USER_STATE7;
+
+                break;
             case 8:
+
                 $command['cmd_state_title'] = _OLEDRION_USER_STATE8;
+
                 break;
         }
         $list[] = $command;

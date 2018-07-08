@@ -28,7 +28,7 @@ function b_oledrion_ajax_search_show($options)
 {
     global $xoopsConfig, $xoTheme;
 
-    include XOOPS_ROOT_PATH . '/modules/oledrion/include/common.php';
+    require_once XOOPS_ROOT_PATH . '/modules/oledrion/include/common.php';
 
     if (1 == $options[0]) {
         $xoTheme->addScript('browse.php?Frameworks/jquery/jquery.js');

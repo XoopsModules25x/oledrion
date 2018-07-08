@@ -30,6 +30,7 @@ $opRedirect = 'files';
 switch ($action) {
     // ****************************************************************************************************************
     case 'default': // Gestion des fichiers attachés
+
         // ****************************************************************************************************************
         xoops_cp_header();
         $adminObject = \Xmf\Module\Admin::getInstance();
@@ -78,11 +79,13 @@ switch ($action) {
             echo "<div align='right'>" . $pagenav->renderNav() . '</div>';
         }
         require_once OLEDRION_ADMIN_PATH . 'admin_footer.php';
-        break;
 
+        break;
     // ****************************************************************************************************************
     case 'add': // Ajout d'un fichier
+
     case 'edit': // Edition d'un fichier
+
         // ****************************************************************************************************************
         xoops_cp_header();
         if ('edit' === $action) {
@@ -127,7 +130,7 @@ switch ($action) {
                                                                                         'showAll'  => true,
                                                                                         'sort'     => 'product_title',
                                                                                         'order'    => 'ASC',
-                                                                                        'formName' => 'frmaddfile'
+                                                                                        'formName' => 'frmaddfile',
                                                                                     ]));
         $sform->addElement($productsSelect, true);
 
@@ -148,10 +151,11 @@ switch ($action) {
         $sform = Oledrion\Utility::formMarkRequiredFields($sform);
         $sform->display();
         require_once OLEDRION_ADMIN_PATH . 'admin_footer.php';
-        break;
 
+        break;
     // ****************************************************************************************************************
     case 'saveedit': // Sauvegarde d'un fichier attaché
+
         // ****************************************************************************************************************
         xoops_cp_header();
         $id = \Xmf\Request::getInt('file_id', 0, 'POST');
@@ -183,10 +187,11 @@ switch ($action) {
         } else {
             Oledrion\Utility::redirect(_AM_OLEDRION_SAVE_PB, $baseurl . '?op=' . $opRedirect, 5);
         }
-        break;
 
+        break;
     // ****************************************************************************************************************
     case 'delete': // Suppression d'un fichier
+
         // ****************************************************************************************************************
         xoops_cp_header();
         $id = \Xmf\Request::getInt('id', 0, 'GET');
@@ -206,5 +211,6 @@ switch ($action) {
         } else {
             Oledrion\Utility::redirect(_AM_OLEDRION_NOT_FOUND, $baseurl . '?op=' . $opRedirect, 5);
         }
+
         break;
 }

@@ -36,20 +36,20 @@ $start = \Xmf\Request::getInt('start', 0, 'GET');
 $limit = Oledrion\Utility::getModuleOption('perpage');
 
 if ($limit > 0) {
+    $items = [];
     //    $handlers   = HandlerManager::getInstance();
     $itemsCount = $listsHandler->getRecentListsCount(Constants::OLEDRION_LISTS_ALL_PUBLIC);
     if ($itemsCount > $limit) {
         $pagenav = new \XoopsPageNav($itemsCount, $limit, $start, 'start');
         $xoopsTpl->assign('pagenav', $pagenav->renderNav());
     }
-    $items = [];
     $items = $listsHandler->getRecentLists(new Oledrion\Parameters([
                                                                        'start'    => $start,
                                                                        'limit'    => $limit,
                                                                        'sort'     => 'list_date',
                                                                        'order'    => 'DESC',
                                                                        'idAsKey'  => true,
-                                                                       'listType' => Constants::OLEDRION_LISTS_ALL_PUBLIC
+                                                                       'listType' => Constants::OLEDRION_LISTS_ALL_PUBLIC,
                                                                    ]));
     if (count($items) > 0) {
         foreach ($items as $item) {

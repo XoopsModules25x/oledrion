@@ -1,4 +1,6 @@
-<?php namespace XoopsModules\Oledrion;
+<?php
+
+namespace XoopsModules\Oledrion;
 
 /*
  You may not change or alter any portion of this comment or credits
@@ -34,8 +36,9 @@ class VatHandler extends OledrionPersistableObjectHandler
      * VatHandler constructor.
      * @param \XoopsDatabase $db
      */
-    public function __construct(\XoopsDatabase $db)
-    { //                        Table           Classe          Id
+    public function __construct(\XoopsDatabase $db = null)
+    {
+        //                        Table           Classe          Id
         parent::__construct($db, 'oledrion_vat', Vat::class, 'vat_id');
     }
 
@@ -57,7 +60,7 @@ class VatHandler extends OledrionPersistableObjectHandler
                                                                       'limit'   => 0,
                                                                       'sort'    => 'vat_id',
                                                                       'order'   => 'ASC',
-                                                                      'idaskey' => true
+                                                                      'idaskey' => true,
                                                                   ]));
         $critere    = new \Criteria('vat_id', 0, '<>');
         $critere->setLimit($parameters['limit']);
@@ -88,7 +91,7 @@ class VatHandler extends OledrionPersistableObjectHandler
                                                   'limit'   => 0,
                                                   'sort'    => 'vat_id',
                                                   'order'   => 'ASC',
-                                                  'idaskey' => true
+                                                  'idaskey' => true,
                                               ]);
         $critere    = new \CriteriaCompo();
         if (!empty($country)) {
@@ -108,7 +111,7 @@ class VatHandler extends OledrionPersistableObjectHandler
      * Suppression d'une TVA
      *
      * @param  Vat $vat
-     * @return boolean      Le résultat de la suppressin
+     * @return bool      Le résultat de la suppressin
      */
     public function deleteVat(Vat $vat)
     {
@@ -119,7 +122,7 @@ class VatHandler extends OledrionPersistableObjectHandler
      * Retourne le nombre de produits associés à une TVA
      *
      * @param int $vat_id L'ID de la TVA
-     * @return integer Le nombre de produits
+     * @return int Le nombre de produits
      */
     public function getVatProductsCount($vat_id)
     {

@@ -1,4 +1,6 @@
-<?php namespace XoopsModules\Oledrion\Gateways;
+<?php
+
+namespace XoopsModules\Oledrion\Gateways;
 
 /*
  You may not change or alter any portion of this comment or credits
@@ -29,7 +31,7 @@ abstract class Gateway
 {
     protected $handlers;
     protected $gatewayInformation;
-    public $languageFilename;
+    public    $languageFilename;
 
     /**
      * Gateway constructor.
@@ -54,7 +56,6 @@ abstract class Gateway
 
     /**
      * Loads the module's handler
-     *
      */
     private function getHandlers()
     {
@@ -75,7 +76,6 @@ abstract class Gateway
      * Verifies if the gateway log exists and create it if it does not
      *
      * @param  string $gatewaysLogPath The full path (and name) to the gateway's log file
-     * @return void
      */
     public function verifyIfGatewayLogExists($gatewaysLogPath)
     {
@@ -89,7 +89,6 @@ abstract class Gateway
      *
      * @param  string $gatewaysLogPath Le chemin d'accès complet (et le nom) au fichier log
      * @param  string $text            Le texte à écrire
-     * @return void
      */
     public function appendToLog($gatewaysLogPath, $text)
     {
@@ -122,7 +121,7 @@ abstract class Gateway
      * It's up to you to verify data and eventually to complain about uncomplete or missing data
      *
      * @param  array $data Receives $_POST
-     * @return boolean True if you succeed to save data else false
+     * @return bool True if you succeed to save data else false
      */
     abstract public function saveParametersForm($data);
 
@@ -144,7 +143,6 @@ abstract class Gateway
 
     /**
      * Returns the list of countries codes used by the gateways
-     *
      */
     abstract public function getCountriesList();
 
@@ -152,7 +150,6 @@ abstract class Gateway
      * This method is in charge to dialog with the gateway to verify the payment's statuts
      *
      * @param  string $gatewaysLogPath The full path (and name) to the log file
-     * @return void
      */
     abstract public function gatewayNotify($gatewaysLogPath);
 
@@ -164,10 +161,16 @@ abstract class Gateway
     public function getGatewayLanguageFile()
     {
         global $xoopsConfig;
-        $gatewayName  = $this->gatewayInformation['foldername'];
+        $gatewayName  = ucfirst($this->gatewayInformation['foldername']);
         $fullFilePath = OLEDRION_GATEWAY_PATH . $gatewayName; // c:/inetpub/wwwroot/xoops3/modules/oledrion/admin/gateways/passerelle
-        /** @var Oledrion\Helper $helper */
-        $helper = Oledrion\Helper::getInstance();
-        $helper->loadLanguage('newsletter');
+//        /** @var Oledrion\Helper $helper */
+//        $helper = Oledrion\Helper::getInstance();
+//        $helper->loadLanguage('main');
+
+        if (file_exists($fullFilePath . '/language/' . $xoopsConfig['language'] . '/main.php')) {
+            return $fullFilePath . '/language/' . $xoopsConfig['language'] . '/main.php';
+        }
+
+        return $fullFilePath . '/language/english/main.php';
     }
 }

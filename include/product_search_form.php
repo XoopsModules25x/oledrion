@@ -64,13 +64,11 @@ if (Oledrion\Utility::getModuleOption('search_vendors')) {
     $sform->addElement($languageSelect, false);
 }
 
-//
 if (Oledrion\Utility::getModuleOption('search_price')) {
     $sform->addElement(new \XoopsFormText(_OLEDRION_FROM, 'product_from', 10, 10, ''), false);
     $sform->addElement(new \XoopsFormText(_OLEDRION_TO, 'product_to', 10, 10, ''), false);
 }
 
-//
 if (Oledrion\Utility::getModuleOption('search_stocks')) {
     $stockselect = new \XoopsFormSelect(_OLEDRION_QUANTITYS, 'product_stock', 1);
     $stockselect->addOption(1, _OLEDRION_QUANTITYALL);
@@ -79,7 +77,6 @@ if (Oledrion\Utility::getModuleOption('search_stocks')) {
     $sform->addElement($stockselect, false);
 }
 
-//
 if (Oledrion\Utility::getModuleOption('search_property1') && Oledrion\Utility::getModuleOption('product_property1')) {
     $property1select = new \XoopsFormSelect(Oledrion\Utility::getModuleOption('product_property1_title'), 'product_property1', '');
     $property1Array  = explode('|', Oledrion\Utility::getModuleOption('product_property1'));
@@ -89,7 +86,6 @@ if (Oledrion\Utility::getModuleOption('search_property1') && Oledrion\Utility::g
     $sform->addElement($property1select, false);
 }
 
-//
 if (Oledrion\Utility::getModuleOption('search_property2') && Oledrion\Utility::getModuleOption('product_property2')) {
     $property2select = new \XoopsFormSelect(Oledrion\Utility::getModuleOption('product_property2_title'), 'product_property2', '');
     $property2Array  = explode('|', Oledrion\Utility::getModuleOption('product_property2'));
@@ -99,7 +95,6 @@ if (Oledrion\Utility::getModuleOption('search_property2') && Oledrion\Utility::g
     $sform->addElement($property2select, false);
 }
 
-//
 if (Oledrion\Utility::getModuleOption('search_property3') && Oledrion\Utility::getModuleOption('product_property3')) {
     $property3select = new \XoopsFormSelect(Oledrion\Utility::getModuleOption('product_property3_title'), 'product_property3', '');
     $property3Array  = explode('|', Oledrion\Utility::getModuleOption('product_property3'));
@@ -109,7 +104,6 @@ if (Oledrion\Utility::getModuleOption('search_property3') && Oledrion\Utility::g
     $sform->addElement($property3select, false);
 }
 
-//
 if (Oledrion\Utility::getModuleOption('search_property4') && Oledrion\Utility::getModuleOption('product_property4')) {
     $property4select = new \XoopsFormSelect(Oledrion\Utility::getModuleOption('product_property4_title'), 'product_property4', '');
     $property4Array  = explode('|', Oledrion\Utility::getModuleOption('product_property4'));
@@ -119,7 +113,6 @@ if (Oledrion\Utility::getModuleOption('search_property4') && Oledrion\Utility::g
     $sform->addElement($property4select, false);
 }
 
-//
 if (Oledrion\Utility::getModuleOption('search_property5') && Oledrion\Utility::getModuleOption('product_property5')) {
     $property5select = new \XoopsFormSelect(Oledrion\Utility::getModuleOption('product_property5_title'), 'product_property5', '');
     $property5Array  = explode('|', Oledrion\Utility::getModuleOption('product_property5'));
@@ -129,7 +122,6 @@ if (Oledrion\Utility::getModuleOption('search_property5') && Oledrion\Utility::g
     $sform->addElement($property5select, false);
 }
 
-//
 if (Oledrion\Utility::getModuleOption('search_property6') && Oledrion\Utility::getModuleOption('product_property6')) {
     $property6select = new \XoopsFormSelect(Oledrion\Utility::getModuleOption('product_property6_title'), 'product_property6', '');
     $property6Array  = explode('|', Oledrion\Utility::getModuleOption('product_property6'));
@@ -139,7 +131,6 @@ if (Oledrion\Utility::getModuleOption('search_property6') && Oledrion\Utility::g
     $sform->addElement($property6select, false);
 }
 
-//
 if (Oledrion\Utility::getModuleOption('search_property7') && Oledrion\Utility::getModuleOption('product_property7')) {
     $property7select = new \XoopsFormSelect(Oledrion\Utility::getModuleOption('product_property7_title'), 'product_property7', '');
     $property7Array  = explode('|', Oledrion\Utility::getModuleOption('product_property7'));
@@ -149,7 +140,6 @@ if (Oledrion\Utility::getModuleOption('search_property7') && Oledrion\Utility::g
     $sform->addElement($property7select, false);
 }
 
-//
 if (Oledrion\Utility::getModuleOption('search_property8') && Oledrion\Utility::getModuleOption('product_property8')) {
     $property8select = new \XoopsFormSelect(Oledrion\Utility::getModuleOption('product_property8_title'), 'product_property8', '');
     $property8Array  = explode('|', Oledrion\Utility::getModuleOption('product_property8'));
@@ -159,7 +149,6 @@ if (Oledrion\Utility::getModuleOption('search_property8') && Oledrion\Utility::g
     $sform->addElement($property8select, false);
 }
 
-//
 if (Oledrion\Utility::getModuleOption('search_property9') && Oledrion\Utility::getModuleOption('product_property9')) {
     $property9select = new \XoopsFormSelect(Oledrion\Utility::getModuleOption('product_property9_title'), 'product_property9', '');
     $property9Array  = explode('|', Oledrion\Utility::getModuleOption('product_property9'));
@@ -169,7 +158,6 @@ if (Oledrion\Utility::getModuleOption('search_property9') && Oledrion\Utility::g
     $sform->addElement($property9select, false);
 }
 
-//
 if (Oledrion\Utility::getModuleOption('search_property10') && Oledrion\Utility::getModuleOption('product_property10')) {
     $property10select = new \XoopsFormSelect(Oledrion\Utility::getModuleOption('product_property10_title'), 'product_property10', '');
     $property10Array  = explode('|', Oledrion\Utility::getModuleOption('product_property10'));

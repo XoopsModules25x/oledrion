@@ -1,4 +1,6 @@
-<?php namespace XoopsModules\Oledrion\Plugins\Actions\Newelements;
+<?php
+
+namespace XoopsModules\Oledrion\Plugins\Actions\Newelements;
 
 /*
  You may not change or alter any portion of this comment or credits
@@ -26,7 +28,7 @@ use XoopsModules\Oledrion\Plugins\Models;
  *
  * @since 2.31
  */
-class NewelementsAction extends Models\Action
+class Plugins extends Models\Action
 {
     /**
      * Returns the list of events processed by the plugin
@@ -51,14 +53,14 @@ class NewelementsAction extends Models\Action
             Oledrion\Plugin::EVENT_PRIORITY_1,
             basename(__FILE__),
             __CLASS__,
-            'fireNewProduct'
+            'fireNewProduct',
         ];
         $events[] = [
             Oledrion\Plugin::EVENT_ON_CATEGORY_CREATE,
             Oledrion\Plugin::EVENT_PRIORITY_1,
             basename(__FILE__),
             __CLASS__,
-            'fireNewCategory'
+            'fireNewCategory',
         ];
 
         return $events;

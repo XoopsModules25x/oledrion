@@ -16,7 +16,6 @@
  * @license     {@link http://www.fsf.org/copyleft/gpl.html GNU public license}
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
  */
-
 define('_MB_OLEDRION_DISP', 'نمایش');
 define('_MB_OLEDRION_LINKS', 'لینک‌ها');
 define('_MB_OLEDRION_CHARS', 'طول عنوان');

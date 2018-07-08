@@ -28,6 +28,7 @@ if (!defined('OLEDRION_ADMIN')) {
 switch ($action) {
     // ****************************************************************************************************************
     case 'default': // Stock bas
+
         // ****************************************************************************************************************
         xoops_cp_header();
         $adminObject = \Xmf\Module\Admin::getInstance();
@@ -66,10 +67,11 @@ switch ($action) {
             echo "<div align='right'>" . $pagenav->renderNav() . '</div>';
         }
         require_once OLEDRION_ADMIN_PATH . 'admin_footer.php';
-        break;
 
+        break;
     // ****************************************************************************************************************
     case 'updatequantities': // Mise à jour des quantités des produits
+
         // ****************************************************************************************************************
         $names = [];
         if (\Xmf\Request::hasVar('names', 'POST')) {
@@ -88,6 +90,6 @@ switch ($action) {
             }
         }
         Oledrion\Utility::redirect(_AM_OLEDRION_SAVE_OK, $baseurl . '?op=lowstock', 2);
-        break;
 
+        break;
 }

@@ -1,4 +1,6 @@
-<?php namespace XoopsModules\Oledrion;
+<?php
+
+namespace XoopsModules\Oledrion;
 
 /*
  You may not change or alter any portion of this comment or credits
@@ -31,8 +33,9 @@ class PackingHandler extends OledrionPersistableObjectHandler
      * PackingHandler constructor.
      * @param \XoopsDatabase $db
      */
-    public function __construct(\XoopsDatabase $db)
-    { //                                       Table                    Classe              Id
+    public function __construct(\XoopsDatabase $db = null)
+    {
+        //                                       Table                    Classe              Id
         parent::__construct($db, 'oledrion_packing', Packing::class, 'packing_id');
     }
 
@@ -46,7 +49,7 @@ class PackingHandler extends OledrionPersistableObjectHandler
                                                                       'start' => 0,
                                                                       'limit' => 0,
                                                                       'sort'  => 'packing_id',
-                                                                      'order' => 'ASC'
+                                                                      'order' => 'ASC',
                                                                   ]));
         $critere    = new \Criteria('packing_id', 0, '<>');
         $critere->setLimit($parameters['limit']);

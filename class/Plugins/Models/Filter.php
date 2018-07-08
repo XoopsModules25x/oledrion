@@ -1,4 +1,6 @@
-<?php namespace XoopsModules\Oledrion\Plugins\Models;
+<?php
+
+namespace XoopsModules\Oledrion\Plugins\Models;
 
 /*
  You may not change or alter any portion of this comment or credits

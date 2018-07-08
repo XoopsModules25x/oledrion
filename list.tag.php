@@ -17,4 +17,4 @@
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
  */
 require_once __DIR__ . '/header.php';
-require XOOPS_ROOT_PATH . '/modules/tag/list.tag.php';
+require_once XOOPS_ROOT_PATH . '/modules/tag/list.tag.php';

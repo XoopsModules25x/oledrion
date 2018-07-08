@@ -1,4 +1,6 @@
-<?php namespace XoopsModules\Oledrion;
+<?php
+
+namespace XoopsModules\Oledrion;
 
 /*
  You may not change or alter any portion of this comment or credits
@@ -25,7 +27,6 @@
  */
 
 use XoopsModules\Oledrion;
-use XoopsModules\Oledrion\Constants;
 
 // require_once __DIR__ . '/classheader.php';
 
@@ -38,8 +39,9 @@ class ListsHandler extends OledrionPersistableObjectHandler
      * ListsHandler constructor.
      * @param \XoopsDatabase $db
      */
-    public function __construct(\XoopsDatabase $db)
-    { //                            Table               Classe           Id       Identifiant
+    public function __construct(\XoopsDatabase $db = null)
+    {
+        //                            Table               Classe           Id       Identifiant
         parent::__construct($db, 'oledrion_lists', Lists::class, 'list_id', 'list_title');
     }
 
@@ -47,7 +49,7 @@ class ListsHandler extends OledrionPersistableObjectHandler
      * Incrémente le compteur de vues d'une liste
      *
      * @param  Lists $list
-     * @return boolean
+     * @return bool
      */
     public function incrementListViews(Lists $list)
     {
@@ -65,7 +67,7 @@ class ListsHandler extends OledrionPersistableObjectHandler
      * Incrémente le nombre de produits dans une liste
      *
      * @param  Lists $list
-     * @return boolean
+     * @return bool
      */
     public function incrementListProductsCount(Lists $list)
     {
@@ -117,19 +119,25 @@ class ListsHandler extends OledrionPersistableObjectHandler
                                                                       'order'    => 'DESC',
                                                                       'idAsKey'  => true,
                                                                       'listType' => Constants::OLEDRION_LISTS_ALL,
-                                                                      'list_uid' => 0
+                                                                      'list_uid' => 0,
                                                                   ]));
         $criteria   = new \CriteriaCompo();
         switch ($parameters['listType']) {
             case Constants::OLEDRION_LISTS_ALL:
+
                 $criteria->add(new \Criteria('list_id', 0, '<>'));
+
                 break;
             case Constants::OLEDRION_LISTS_ALL_PUBLIC:
+
                 $criteria->add(new \Criteria('list_type', Constants::OLEDRION_LISTS_WISH, '='));
                 $criteria->add(new \Criteria('list_type', Constants::OLEDRION_LISTS_RECOMMEND, '='), 'OR');
+
                 break;
             default:
+
                 $criteria->add(new \Criteria('list_type', $parameters['listType'], '='));
+
                 break;
         }
         if ($parameters['list_uid'] > 0) {
@@ -148,21 +156,27 @@ class ListsHandler extends OledrionPersistableObjectHandler
      *
      * @param int $listType
      * @param int $list_uid
-     * @return integer
+     * @return int
      */
     public function getRecentListsCount($listType = Constants::OLEDRION_LISTS_ALL, $list_uid = 0)
     {
         $criteria = new \CriteriaCompo();
         switch ($listType) {
             case Constants::OLEDRION_LISTS_ALL:
+
                 $criteria->add(new \Criteria('list_id', 0, '<>'));
+
                 break;
             case Constants::OLEDRION_LISTS_ALL_PUBLIC:
+
                 $criteria->add(new \Criteria('list_type', Constants::OLEDRION_LISTS_WISH, '='));
                 $criteria->add(new \Criteria('list_type', Constants::OLEDRION_LISTS_RECOMMEND, '='), 'OR');
+
                 break;
             default:
+
                 $criteria->add(new \Criteria('list_type', $listType, '='));
+
                 break;
         }
         if ($list_uid > 0) {
@@ -195,7 +209,7 @@ class ListsHandler extends OledrionPersistableObjectHandler
      * Suppression d'une liste (et des produits qui lui sont rattachés)
      *
      * @param  Lists $list
-     * @return boolean
+     * @return bool
      */
     public function deleteList(Lists $list)
     {
@@ -237,7 +251,7 @@ class ListsHandler extends OledrionPersistableObjectHandler
      *
      * @param int $list_id
      * @param int $list_uid
-     * @return boolean
+     * @return bool
      */
     public function isThisMyList($list_id, $list_uid = 0)
     {
@@ -261,7 +275,7 @@ class ListsHandler extends OledrionPersistableObjectHandler
      *
      * @param int $productlist_product_id
      * @param int $list_uid
-     * @return boolean
+     * @return bool
      */
     public function isProductInUserList($productlist_product_id, $list_uid = 0)
     {
@@ -300,8 +314,8 @@ class ListsHandler extends OledrionPersistableObjectHandler
      * Retourne les x dernières listes qui contiennent des produits dans une certaine catégorie
      *
      * @param          $categoryId
-     * @param int $list_type Le type de liste
-     * @param int $limit     Le nombre maximum de listes à retourner
+     * @param int      $list_type Le type de liste
+     * @param int      $limit     Le nombre maximum de listes à retourner
      * @return array   Objets de type Lists, [clé] = id liste
      * @internal param int $cateGoryId L'identifiant de la catégorie
      */

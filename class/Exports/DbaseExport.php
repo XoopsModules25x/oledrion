@@ -1,4 +1,6 @@
-<?php namespace XoopsModules\Oledrion\Exports;
+<?php
+
+namespace XoopsModules\Oledrion\Exports;
 
 /*
  You may not change or alter any portion of this comment or credits
@@ -49,7 +51,7 @@ class DbaseExport extends Export
 
     /**
      * Export des données
-     * @return boolean Vrai si l'export a réussi sinon faux
+     * @return bool Vrai si l'export a réussi sinon faux
      */
     public function doExport()
     {
@@ -80,7 +82,7 @@ class DbaseExport extends Export
             ['c_price', 'N', 10, 2],
             ['c_o_id', 'N', 10, 0],
             ['c_shipping', 'N', 10, 2],
-            ['c_pass', 'C', 155]
+            ['c_pass', 'C', 155],
         ];
         /*
            * Correspondances
@@ -164,7 +166,7 @@ class DbaseExport extends Export
                     $cart->getVar('caddy_price'),
                     $cart->getVar('caddy_cmd_id'),
                     $cart->getVar('caddy_shipping'),
-                    $cart->getVar('caddy_pass')
+                    $cart->getVar('caddy_pass'),
                 ]);
             }
         }
@@ -194,8 +196,8 @@ class DbaseExport extends Export
     {
         if ($this->success) {
             return $this->folder . DIRECTORY_SEPARATOR . $this->filename;
-        } else {
-            return false;
         }
+
+        return false;
     }
 }

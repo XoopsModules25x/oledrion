@@ -30,6 +30,7 @@ if (!defined('OLEDRION_ADMIN')) {
 switch ($action) {
     // ****************************************************************************************************************
     case 'default': // Liste des catégories
+
         // ****************************************************************************************************************
         xoops_cp_header();
         $adminObject = \Xmf\Module\Admin::getInstance();
@@ -102,10 +103,11 @@ switch ($action) {
         $sform = Oledrion\Utility::formMarkRequiredFields($sform);
         $sform->display();
         require_once OLEDRION_ADMIN_PATH . 'admin_footer.php';
-        break;
 
+        break;
     // ****************************************************************************************************************
     case 'savechunks': // Save chunks order
+
         // ****************************************************************************************************************
         oledrion_set_module_option('chunk1', \Xmf\Request::getInt('chunk1', 0, 'POST'));
         oledrion_set_module_option('chunk2', \Xmf\Request::getInt('chunk2', 0, 'POST'));
@@ -113,11 +115,13 @@ switch ($action) {
         oledrion_set_module_option('chunk4', \Xmf\Request::getInt('chunk4', 0, 'POST'));
         Oledrion\Utility::updateCache();
         Oledrion\Utility::redirect(_AM_OLEDRION_SAVE_OK, $baseurl . '?op=categories');
-        break;
 
+        break;
     // ****************************************************************************************************************
     case 'add': // Ajout d'une catégorie
+
     case 'edit': // Edition d'une catégorie
+
         // ****************************************************************************************************************
         xoops_cp_header();
 
@@ -199,10 +203,11 @@ switch ($action) {
         $sform = Oledrion\Utility::formMarkRequiredFields($sform);
         $sform->display();
         require_once OLEDRION_ADMIN_PATH . 'admin_footer.php';
-        break;
 
+        break;
     // ****************************************************************************************************************
     case 'saveedit': // Sauvegarde d'une catégorie
+
         // ****************************************************************************************************************
         xoops_cp_header();
         $id = \Xmf\Request::getInt('cat_cid', 0, 'POST');
@@ -228,7 +233,8 @@ switch ($action) {
         $destname = '';
         $res1     = Oledrion\Utility::uploadFile(0, OLEDRION_PICTURES_PATH);
         if (true === $res1) {
-            if (Oledrion\Utility::getModuleOption('resize_others')) { // Eventuellement on redimensionne l'image
+            if (Oledrion\Utility::getModuleOption('resize_others')) {
+                // Eventuellement on redimensionne l'image
                 Oledrion\Utility::resizePicture(OLEDRION_PICTURES_PATH . '/' . $destname, OLEDRION_PICTURES_PATH . '/' . $destname, Oledrion\Utility::getModuleOption('images_width'), Oledrion\Utility::getModuleOption('images_height'), true);
             }
             $item->setVar('cat_imgurl', basename($destname));
@@ -249,10 +255,11 @@ switch ($action) {
         } else {
             Oledrion\Utility::redirect(_AM_OLEDRION_SAVE_PB, $baseurl . '?op=' . $opRedirect, 5);
         }
-        break;
 
+        break;
     // ****************************************************************************************************************
     case 'delete': // Suppression d'une catégorie
+
         // ****************************************************************************************************************
         xoops_cp_header();
         oledrion_adminMenu(3);
@@ -267,10 +274,11 @@ switch ($action) {
         }
         $msg = sprintf(_AM_OLEDRION_CONF_DEL_CATEG, $category->getVar('cat_title'));
         xoops_confirm(['op' => 'categories', 'action' => 'confdelete', 'id' => $id], 'index.php', $msg);
-        break;
 
+        break;
     // ****************************************************************************************************************
     case 'confdelete': //Suppression effective d'une catégorie
+
         // ****************************************************************************************************************
         xoops_cp_header();
         $id = \Xmf\Request::getInt('id', 0, 'POST');
@@ -297,5 +305,6 @@ switch ($action) {
         } else {
             Oledrion\Utility::redirect(_AM_OLEDRION_ERROR_4, $baseurl . '?op=' . $opRedirect, 5);
         }
+
         break;
 }

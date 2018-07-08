@@ -1,4 +1,6 @@
-<?php namespace XoopsModules\Oledrion;
+<?php
+
+namespace XoopsModules\Oledrion;
 
 /*
  You may not change or alter any portion of this comment or credits
@@ -37,8 +39,9 @@ class ProductsListHandler extends OledrionPersistableObjectHandler
      * ProductsListHandler constructor.
      * @param \XoopsDatabase $db
      */
-    public function __construct(\XoopsDatabase $db)
-    { //                            Table                       Classe                  Id
+    public function __construct(\XoopsDatabase $db = null)
+    {
+        //                            Table                       Classe                  Id
         parent::__construct($db, 'oledrion_products_list', ProductsList::class, 'productlist_id');
     }
 
@@ -46,7 +49,7 @@ class ProductsListHandler extends OledrionPersistableObjectHandler
      * Supprime les produits liés à une liste
      *
      * @param  Lists $list
-     * @return boolean
+     * @return bool
      */
     public function deleteListProducts(Lists $list)
     {
@@ -95,7 +98,7 @@ class ProductsListHandler extends OledrionPersistableObjectHandler
      * Ajoute un produit à une liste utilisateur
      *
      * @param          $productlist_list_id
-     * @param int $productlist_product_id Id du produit
+     * @param int      $productlist_product_id Id du produit
      * @return bool
      * @internal param int $productlist_id Id de la liste
      */
@@ -121,10 +124,6 @@ class ProductsListHandler extends OledrionPersistableObjectHandler
         $criteria = new \CriteriaCompo();
         $criteria->add(new \Criteria('productlist_list_id', $productlist_list_id, '='));
         $criteria->add(new \Criteria('productlist_product_id', $productlist_product_id, '='));
-        if ($this->getCount($criteria) > 0) {
-            return true;
-        }
-
-        return false;
+        return $this->getCount($criteria) > 0;
     }
 }

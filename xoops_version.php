@@ -19,7 +19,7 @@
 
 use XoopsModules\Oledrion;
 
-include __DIR__ . '/preloads/autoloader.php';
+require_once __DIR__ . '/preloads/autoloader.php';
 
 // defined('XOOPS_ROOT_PATH') || die('Restricted access');
 
@@ -312,7 +312,7 @@ $modversion['blocks'][] = [
     'show_func'   => 'oledrion_tag_block_cloud_show',
     'edit_func'   => 'oledrion_tag_block_cloud_edit',
     'options'     => '100|0|150|80',
-    'template'    => 'oledrion_tag_block_cloud.tpl'
+    'template'    => 'oledrion_tag_block_cloud.tpl',
 ];
 
 /*
@@ -328,7 +328,7 @@ $modversion['blocks'][] = [
     'show_func'   => 'oledrion_tag_block_top_show',
     'edit_func'   => 'oledrion_tag_block_top_edit',
     'options'     => '50|30|c',
-    'template'    => 'oledrion_tag_block_top.tpl'
+    'template'    => 'oledrion_tag_block_top.tpl',
 ];
 
 // Menu
@@ -371,8 +371,7 @@ $modversion['sub'][$cptm]['url']  = 'all-lists.php';
 
 // Adding parent categories in submenu ********************************************************
 global $xoopsModule;
-if (is_object($xoopsModule) && $xoopsModule->getVar('dirname') == $modversion['dirname']
-    && $xoopsModule->getVar('isactive')) {
+if ($xoopsModule->getVar('isactive') && is_object($xoopsModule) && $xoopsModule->getVar('dirname') == $modversion['dirname']) {
     if (!isset($categoryHandler)) {
         //mb        $categoryHandler = xoops_getModuleHandler('oledrion_cat', 'oledrion');
         $db              = \XoopsDatabaseFactory::getDatabaseConnection();
@@ -449,7 +448,6 @@ xoops_load('xoopslists');
 /**
  * Do you want to use URL rewriting ?
  */
-
 $modversion['config'][] = [
     'name'        => 'urlrewriting',
     'title'       => '_MI_OLEDRION_URL_REWR',
@@ -479,7 +477,7 @@ $modversion['config'][] = [
     'formtype'    => 'select',
     'valuetype'   => 'text',
     'options'     => \XoopsLists::getDirListAsArray(XOOPS_ROOT_PATH . '/class/xoopseditor'),
-    'default'     => 'tinymce'
+    'default'     => 'tinymce',
 ];
 
 $modversion['config'][] = [
@@ -489,7 +487,7 @@ $modversion['config'][] = [
     'formtype'    => 'select',
     'valuetype'   => 'text',
     'options'     => \XoopsLists::getDirListAsArray(XOOPS_ROOT_PATH . '/class/xoopseditor'),
-    'default'     => 'dhtmltextarea'
+    'default'     => 'dhtmltextarea',
 ];
 
 /**
@@ -509,7 +507,6 @@ $modversion['config'][] = [
 /**
  * MAX Filesize Upload in kilo bytes
  */
-
 $modversion['config'][] = [
     'name'        => 'maxuploadsize',
     'title'       => '_MI_OLEDRION_UPLOADFILESIZE',
@@ -522,7 +519,6 @@ $modversion['config'][] = [
 /**
  * Do you want to enable your visitors to rate products ?
  */
-
 $modversion['config'][] = [
     'name'        => 'rateproducts',
     'title'       => '_MI_OLEDRION_RATE',
@@ -702,7 +698,7 @@ $modversion['config'][] = [
     'formtype'    => 'line_break',
     'valuetype'   => 'textbox',
     'default'     => 'odd',
-    'category'    => 'group_header'
+    'category'    => 'group_header',
 ];
 
 /**
@@ -743,13 +739,12 @@ $modversion['config'][] = [
         '_MI_OLEDRION_OPT241' => 0,
         '_MI_OLEDRION_OPT242' => 1,
         '_MI_OLEDRION_OPT243' => 2,
-    ]
+    ],
 ];
 
 /**
  * METAGEN - Black list
  */
-
 $modversion['config'][] = [
     'name'        => 'metagen_blacklist',
     'title'       => '_MI_OLEDRION_OPT25',
@@ -766,7 +761,7 @@ $modversion['config'][] = [
     'formtype'    => 'line_break',
     'valuetype'   => 'textbox',
     'default'     => 'odd',
-    'category'    => 'group_header'
+    'category'    => 'group_header',
 ];
 
 /**
@@ -848,7 +843,7 @@ $modversion['config'][] = [
     'formtype'    => 'line_break',
     'valuetype'   => 'textbox',
     'default'     => 'odd',
-    'category'    => 'group_header'
+    'category'    => 'group_header',
 ];
 
 $modversion['config'][] = [
@@ -1010,7 +1005,7 @@ $modversion['config'][] = [
     'formtype'    => 'line_break',
     'valuetype'   => 'textbox',
     'default'     => 'odd',
-    'category'    => 'group_header'
+    'category'    => 'group_header',
 ];
 
 /**
@@ -1104,7 +1099,7 @@ $modversion['config'][] = [
     'formtype'    => 'line_break',
     'valuetype'   => 'textbox',
     'default'     => 'odd',
-    'category'    => 'group_header'
+    'category'    => 'group_header',
 ];
 
 $modversion['config'][] = [
@@ -1249,7 +1244,7 @@ $modversion['config'][] = [
     'formtype'    => 'line_break',
     'valuetype'   => 'textbox',
     'default'     => 'odd',
-    'category'    => 'group_header'
+    'category'    => 'group_header',
 ];
 
 /**
@@ -1298,8 +1293,8 @@ $modversion['config'][] = [
     'options'     => [
         '_MI_OLEDRION_CHECKOUT_LEVEL_1' => 1,
         '_MI_OLEDRION_CHECKOUT_LEVEL_2' => 2,
-        '_MI_OLEDRION_CHECKOUT_LEVEL_3' => 3
-    ]
+        '_MI_OLEDRION_CHECKOUT_LEVEL_3' => 3,
+    ],
 ];
 
 $modversion['config'][] = [
@@ -1323,7 +1318,7 @@ $modversion['config'][] = [
         '_MI_OLEDRION_CHECKOUT_SHIPPING_2' => 2,
         '_MI_OLEDRION_CHECKOUT_SHIPPING_3' => 3,
         '_MI_OLEDRION_CHECKOUT_SHIPPING_4' => 4,
-    ]
+    ],
 ];
 
 /**
@@ -1356,7 +1351,7 @@ $modversion['config'][] = [
     'formtype'    => 'line_break',
     'valuetype'   => 'textbox',
     'default'     => 'odd',
-    'category'    => 'group_header'
+    'category'    => 'group_header',
 ];
 
 $modversion['config'][] = [
@@ -1474,7 +1469,7 @@ $modversion['config'][] = [
     'formtype'    => 'line_break',
     'valuetype'   => 'textbox',
     'default'     => 'odd',
-    'category'    => 'group_header'
+    'category'    => 'group_header',
 ];
 
 /**
@@ -1535,7 +1530,7 @@ $modversion['config'][] = [
     'description' => '',
     'formtype'    => 'hidden',
     'valuetype'   => 'text',
-    'default'     => 'paypal',
+    'default'     => 'Paypal',
 ];
 
 $modversion['config'][] = [
@@ -1723,7 +1718,7 @@ $modversion['notification']['category'][1]['subscribe_from'] = [
     'category.php',
     'product.php',
     'categories-map.php',
-    'all-products.php'
+    'all-products.php',
 ];
 
 $modversion['notification']['event'][1]['name']          = 'new_category';

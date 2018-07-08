@@ -1,4 +1,6 @@
-<?php namespace XoopsModules\Oledrion;
+<?php
+
+namespace XoopsModules\Oledrion;
 
 /*
  You may not change or alter any portion of this comment or credits
@@ -35,8 +37,9 @@ class CategoryHandler extends OledrionPersistableObjectHandler
      * CategoryHandler constructor.
      * @param \XoopsDatabase $db
      */
-    public function __construct(\XoopsDatabase $db)
-    { //                        Table               Classe       Id       Libellé
+    public function __construct(\XoopsDatabase $db = null)
+    {
+        //                        Table               Classe       Id       Libellé
         parent::__construct($db, 'oledrion_cat', Category::class, 'cat_cid', 'cat_title');
     }
 
@@ -58,7 +61,7 @@ class CategoryHandler extends OledrionPersistableObjectHandler
                                                                       'limit'   => 0,
                                                                       'sort'    => 'cat_title',
                                                                       'order'   => 'ASC',
-                                                                      'idaskey' => true
+                                                                      'idaskey' => true,
                                                                   ]));
         $critere    = new \Criteria('cat_cid', 0, '<>');
         $critere->setLimit($parameters['limit']);
@@ -99,8 +102,8 @@ class CategoryHandler extends OledrionPersistableObjectHandler
     /**
      * Make a menu from the categories list
      *
-     * @param  string  $fieldName Name of the member variable from the node objects that should be used as the title for the options.
-     * @param int $key       ID of the object to display as the root of select options
+     * @param  string $fieldName Name of the member variable from the node objects that should be used as the title for the options.
+     * @param int     $key       ID of the object to display as the root of select options
      * @return string  HTML select box
      */
     public function getUlMenu($fieldName, $key = 0)
@@ -113,7 +116,7 @@ class CategoryHandler extends OledrionPersistableObjectHandler
         $ret = '';
         $this->_makeLi($fieldName, $key, $ret, $tree);
         if ('' !== xoops_trim($ret)) {
-            $ret = substr($ret, 0, -6);
+            $ret = mb_substr($ret, 0, -6);
         }
 
         return $ret;
@@ -123,7 +126,7 @@ class CategoryHandler extends OledrionPersistableObjectHandler
      * Supprime une catégorie (et tout ce qui lui est relatif)
      *
      * @param  Category $category
-     * @return boolean      Le résultat de la suppression
+     * @return bool      Le résultat de la suppression
      */
     public function deleteCategory(Category $category)
     {
@@ -137,9 +140,9 @@ class CategoryHandler extends OledrionPersistableObjectHandler
     /**
      * Retourne le nombre de produits d'une ou de plusieurs catégories
      *
-     * @param int $cat_cid    L'identifiant de la catégorie dont on veut récupérer le nombre de produits
-     * @param  boolean $withNested Faut il inclure les sous-catégories ?
-     * @return integer Le nombre de produits
+     * @param int   $cat_cid    L'identifiant de la catégorie dont on veut récupérer le nombre de produits
+     * @param  bool $withNested Faut il inclure les sous-catégories ?
+     * @return int Le nombre de produits
      */
     public function getCategoryProductsCount($cat_cid, $withNested = true)
     {
@@ -147,7 +150,8 @@ class CategoryHandler extends OledrionPersistableObjectHandler
         $childsIDs   = [];
         $childsIDs[] = $cat_cid;
 
-        if ($withNested) { // Recherche des sous catégories de cette catégorie
+        if ($withNested) {
+            // Recherche des sous catégories de cette catégorie
             $items = $childs = [];
             require_once XOOPS_ROOT_PATH . '/class/tree.php';
             $items  = $this->getAllCategories(new Oledrion\Parameters());

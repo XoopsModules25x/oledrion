@@ -1,4 +1,6 @@
-<?php namespace XoopsModules\Oledrion;
+<?php
+
+namespace XoopsModules\Oledrion;
 
 /*
  You may not change or alter any portion of this comment or credits
@@ -35,8 +37,6 @@ class Category extends OledrionObject
      * constructor
      *
      * normally, this is called from child classes only
-     *
-     * @access public
      */
     public function __construct()
     {
@@ -75,13 +75,12 @@ class Category extends OledrionObject
     /**
      * Indique si l'image de la catégorie existe
      *
-     * @return boolean Vrai si l'image existe sinon faux
+     * @return bool Vrai si l'image existe sinon faux
      */
     public function pictureExists()
     {
         $return = false;
-        if ('' !== xoops_trim($this->getVar('cat_imgurl'))
-            && file_exists(OLEDRION_PICTURES_PATH . '/' . $this->getVar('cat_imgurl'))) {
+        if ('' !== xoops_trim($this->getVar('cat_imgurl')) && file_exists(OLEDRION_PICTURES_PATH . '/' . $this->getVar('cat_imgurl'))) {
             $return = true;
         }
 
@@ -90,7 +89,6 @@ class Category extends OledrionObject
 
     /**
      * Supprime l'image associée à une catégorie
-     * @return void
      */
     public function deletePicture()
     {
@@ -109,9 +107,11 @@ class Category extends OledrionObject
     {
         require_once XOOPS_ROOT_PATH . '/modules/oledrion/include/common.php';
         $url = '';
-        if (1 == Oledrion\Utility::getModuleOption('urlrewriting')) { // On utilise l'url rewriting
+        if (1 == Oledrion\Utility::getModuleOption('urlrewriting')) {
+            // On utilise l'url rewriting
             $url = OLEDRION_URL . 'category-' . $this->getVar('cat_cid') . Oledrion\Utility::makeSeoUrl($this->getVar('cat_title', 'n')) . '.html';
-        } else { // Pas d'utilisation de l'url rewriting
+        } else {
+            // Pas d'utilisation de l'url rewriting
             $url = OLEDRION_URL . 'category.php?cat_cid=' . $this->getVar('cat_cid');
         }
 

@@ -1,4 +1,6 @@
-<?php namespace XoopsModules\Oledrion;
+<?php
+
+namespace XoopsModules\Oledrion;
 
 /*
  You may not change or alter any portion of this comment or credits
@@ -31,12 +33,10 @@ $sms = \XoopsModules\Oledrion\Sms::sendSms($information);
 
 /**
  * Class Sms
- * @package XoopsModules\Oledrion
  */
 class Sms
 {
     /**
-     *
      * @return string
      */
     public static function getSmsGateway()

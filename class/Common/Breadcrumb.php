@@ -1,4 +1,6 @@
-<?php namespace XoopsModules\Oledrion\Common;
+<?php
+
+namespace XoopsModules\Oledrion\Common;
 
 /*
  You may not change or alter any portion of this comment or credits
@@ -9,25 +11,14 @@
  but WITHOUT ANY WARRANTY; without even the implied warranty of
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  */
+
 /**
  * Breadcrumb Class
  *
  * @copyright   XOOPS Project (https://xoops.org)
  * @license     http://www.fsf.org/copyleft/gpl.html GNU public license
  * @author      lucio <lucio.rota@gmail.com>
- * @package     Oledrion
- *
- * Example:
- * $breadcrumb = new Common\Breadcrumb();
- * $breadcrumb->addLink( 'bread 1', 'index1.php' );
- * $breadcrumb->addLink( 'bread 2', '' );
- * $breadcrumb->addLink( 'bread 3', 'index3.php' );
- * echo $breadcrumb->render();
  */
-
-use XoopsModules\Oledrion;
-use XoopsModules\Oledrion\Common;
-
 defined('XOOPS_ROOT_PATH') || die('XOOPS Root Path not defined');
 
 /**
@@ -35,15 +26,12 @@ defined('XOOPS_ROOT_PATH') || die('XOOPS Root Path not defined');
  */
 class Breadcrumb
 {
-    public $dirname;
+    public  $dirname;
     private $bread = [];
 
-    /**
-     *
-     */
     public function __construct()
     {
-        $this->dirname = basename(dirname(__DIR__));
+        $this->dirname = basename(dirname(dirname(__DIR__)));
     }
 
     /**
@@ -56,13 +44,12 @@ class Breadcrumb
     {
         $this->bread[] = [
             'link'  => $link,
-            'title' => $title
+            'title' => $title,
         ];
     }
 
     /**
      * Render BreadCrumb
-     *
      */
     public function render()
     {

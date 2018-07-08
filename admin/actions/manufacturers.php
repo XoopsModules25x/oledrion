@@ -28,6 +28,7 @@ if (!defined('OLEDRION_ADMIN')) {
 switch ($action) {
     // ****************************************************************************************************************
     case 'default': // Liste des fabricants
+
         // ****************************************************************************************************************
         xoops_cp_header();
         $adminObject = \Xmf\Module\Admin::getInstance();
@@ -79,11 +80,13 @@ switch ($action) {
             echo "<div align='right'>" . $pagenav->renderNav() . '</div>';
         }
         require_once OLEDRION_ADMIN_PATH . 'admin_footer.php';
-        break;
 
+        break;
     // ****************************************************************************************************************
     case 'add': // Ajout d'un fabricant
+
     case 'edit': // Edition d'un fabricant
+
         // ****************************************************************************************************************
         xoops_cp_header();
         if ('edit' === $action) {
@@ -143,10 +146,11 @@ switch ($action) {
         $sform = Oledrion\Utility::formMarkRequiredFields($sform);
         $sform->display();
         require_once OLEDRION_ADMIN_PATH . 'admin_footer.php';
-        break;
 
+        break;
     // ****************************************************************************************************************
     case 'saveedit': // Sauvegarde d'un fabricant
+
         // ****************************************************************************************************************
         xoops_cp_header();
         $id = \Xmf\Request::getInt('manu_id', 0, 'POST');
@@ -172,7 +176,8 @@ switch ($action) {
         for ($i = 1; $i <= 5; ++$i) {
             $res1 = Oledrion\Utility::uploadFile($i - 1, OLEDRION_PICTURES_PATH);
             if (true === $res1) {
-                if (Oledrion\Utility::getModuleOption('resize_others')) { // Eventuellement on redimensionne l'image
+                if (Oledrion\Utility::getModuleOption('resize_others')) {
+                    // Eventuellement on redimensionne l'image
                     Oledrion\Utility::resizePicture(OLEDRION_PICTURES_PATH . '/' . $destname, OLEDRION_PICTURES_PATH . 'l' . $destname, Oledrion\Utility::getModuleOption('images_width'), Oledrion\Utility::getModuleOption('images_height'), true);
                 }
                 $item->setVar('manu_photo' . $i, basename($destname));
@@ -190,10 +195,11 @@ switch ($action) {
         } else {
             Oledrion\Utility::redirect(_AM_OLEDRION_SAVE_PB, $baseurl . '?op=' . $opRedirect, 5);
         }
-        break;
 
+        break;
     // ****************************************************************************************************************
     case 'delete': // Suppression d'un fabricant
+
         // ****************************************************************************************************************
         xoops_cp_header();
         $id = \Xmf\Request::getInt('id', 0, 'GET');
@@ -220,5 +226,6 @@ switch ($action) {
         } else {
             Oledrion\Utility::redirect(_AM_OLEDRION_ERROR_5, $baseurl . '?op=' . $opRedirect, 5);
         }
+
         break;
 }

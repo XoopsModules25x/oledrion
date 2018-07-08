@@ -1,4 +1,6 @@
-<?php namespace XoopsModules\Oledrion;
+<?php
+
+namespace XoopsModules\Oledrion;
 
 /*
  You may not change or alter any portion of this comment or credits
@@ -21,21 +23,17 @@
 /**
  * A set of useful and common functions
  *
- * @package       oledrion
  * @author        Hervé Thouzard - Instant Zero (http://xoops.instant-zero.com)
  * @copyright (c) Instant Zero
  *
  * Note: You should be able to use it without the need to instanciate it.
- *
  */
 
 use WideImage\WideImage;
 use Xmf\Request;
 use XoopsModules\Oledrion;
-use XoopsModules\Oledrion\Common;
 
 // defined('XOOPS_ROOT_PATH') || die('Restricted access');
-
 
 /**
  * Class Oledrion\Utility
@@ -73,8 +71,8 @@ class Utility extends \XoopsObject
     /**
      * Returns a module's option (with cache)
      *
-     * @param  string  $option    module option's name
-     * @param  boolean $withCache Do we have to use some cache ?
+     * @param  string $option    module option's name
+     * @param  bool   $withCache Do we have to use some cache ?
      * @return mixed   option's value
      */
     public static function getModuleOption($option, $withCache = true)
@@ -86,10 +84,8 @@ class Utility extends \XoopsObject
             return $options[$option];
         }
 
-        $retval = false;
-        if (null !== $xoopsModuleConfig
-            && (is_object($xoopsModule) && $xoopsModule->getVar('dirname') == $repmodule
-                && $xoopsModule->getVar('isactive'))) {
+        $retval = null;
+        if (null !== $xoopsModuleConfig && (is_object($xoopsModule) && $xoopsModule->getVar('dirname') == $repmodule && $xoopsModule->getVar('isactive'))) {
             if (isset($xoopsModuleConfig[$option])) {
                 $retval = $xoopsModuleConfig[$option];
             }
@@ -113,13 +109,13 @@ class Utility extends \XoopsObject
     /**
      * Is Xoops 2.3.x ?
      *
-     * @return boolean
+     * @return bool
      */
     public static function isX23()
     {
         $x23 = false;
         $xv  = str_replace('XOOPS ', '', XOOPS_VERSION);
-        if ((int)substr($xv, 2, 1) >= 3) {
+        if ((int)mb_substr($xv, 2, 1) >= 3) {
             $x23 = true;
         }
 
@@ -129,13 +125,13 @@ class Utility extends \XoopsObject
     /**
      * Is Xoops 2.0.x ?
      *
-     * @return boolean
+     * @return bool
      */
     public static function isX20()
     {
         $x20 = false;
         $xv  = str_replace('XOOPS ', '', XOOPS_VERSION);
-        if ('0' == substr($xv, 2, 1)) {
+        if ('0' == mb_substr($xv, 2, 1)) {
             $x20 = true;
         }
 
@@ -159,8 +155,8 @@ class Utility extends \XoopsObject
         $value = '',
         $width = '100%',
         $height = '400px',
-        $supplemental = ''
-    ) {
+        $supplemental = '')
+    {
         /** @var Oledrion\Helper $helper */
         $helper                   = Oledrion\Helper::getInstance();
         $editor                   = false;
@@ -172,7 +168,7 @@ class Utility extends \XoopsObject
         $editor_configs['width']  = '100%';
         $editor_configs['height'] = '400px';
 
-        $editor_option = strtolower(static::getModuleOption('editorAdmin'));
+        $editor_option = mb_strtolower(static::getModuleOption('editorAdmin'));
         //        $editor = new \XoopsFormEditor($caption, $editor_option, $editor_configs);
         //        public function __construct($caption, $name, $configs = null, $nohtml = false, $OnFailure = '')
 
@@ -188,8 +184,8 @@ class Utility extends \XoopsObject
     /**
      * Create (in a link) a javascript confirmation's box
      *
-     * @param  string  $message Message to display
-     * @param  boolean $form    Is this a confirmation for a form ?
+     * @param  string $message Message to display
+     * @param  bool   $form    Is this a confirmation for a form ?
      * @return string  the javascript code to insert in the link (or in the form)
      */
     public static function javascriptLinkConfirm($message, $form = false)
@@ -242,7 +238,6 @@ class Utility extends \XoopsObject
      * @param  string $pageTitle       Page's Title
      * @param  string $metaDescription Page's meta description
      * @param  string $metaKeywords    Page's meta keywords
-     * @return void
      */
     public static function setMetas($pageTitle = '', $metaDescription = '', $metaKeywords = '')
     {
@@ -255,7 +250,8 @@ class Utility extends \XoopsObject
             if (!empty($metaDescription)) {
                 $xoTheme->addMeta('meta', 'description', $metaDescription);
             }
-        } elseif (null !== $xoopsTpl && is_object($xoopsTpl)) { // Compatibility for old Xoops versions
+        } elseif (null !== $xoopsTpl && is_object($xoopsTpl)) {
+            // Compatibility for old Xoops versions
             if (!empty($metaKeywords)) {
                 $xoopsTpl->assign('xoops_meta_keywords', $metaKeywords);
             }
@@ -353,12 +349,13 @@ class Utility extends \XoopsObject
         $tpllist        = $tplfileHandler->find(null, null, null, $folder);
         xoops_template_clear_module_cache($xoopsModule->getVar('mid')); // Clear module's blocks cache
 
-        foreach ($tpllist as $onetemplate) { // Remove cache for each page.
+        foreach ($tpllist as $onetemplate) {
+            // Remove cache for each page.
             if ('module' === $onetemplate->getVar('tpl_type')) {
                 //  Note, I've been testing all the other methods (like the one of Smarty) and none of them run, that's why I have used this code
                 $files_del = [];
                 $files_del = glob(XOOPS_CACHE_PATH . '/*' . $onetemplate->getVar('tpl_file') . '*');
-                if (count($files_del) > 0 && is_array($files_del)) {
+                if (is_array($files_del) && count($files_del) > 0) {
                     foreach ($files_del as $one_file) {
                         if (is_file($one_file)) {
                             unlink($one_file);
@@ -374,7 +371,7 @@ class Utility extends \XoopsObject
      *
      * @param string $message message to display
      * @param string $url     The place where to go
-     * @param        integer  timeout Time to wait before to redirect
+     * @param mixed  $time
      */
     public static function redirect($message = '', $url = 'index.php', $time = 2)
     {
@@ -473,7 +470,7 @@ class Utility extends \XoopsObject
     {
         global $xoopsUser, $xoopsModule;
         if (is_object($xoopsUser)) {
-            if (in_array(XOOPS_GROUP_ADMIN, $xoopsUser->getGroups())) {
+            if (in_array(XOOPS_GROUP_ADMIN, $xoopsUser->getGroups(), true)) {
                 return true;
             }
 
@@ -553,19 +550,19 @@ class Utility extends \XoopsObject
     /**
      * This function indicates if the current Xoops version needs to add asterisks to required fields in forms
      *
-     * @return boolean Yes = we need to add them, false = no
+     * @return bool Yes = we need to add them, false = no
      */
     public static function needsAsterisk()
     {
         if (static::isX23()) {
             return false;
         }
-        if (false !== stripos(XOOPS_VERSION, 'impresscms')) {
+        if (false !== mb_stripos(XOOPS_VERSION, 'impresscms')) {
             return false;
         }
-        if (false === stripos(XOOPS_VERSION, 'legacy')) {
+        if (false === mb_stripos(XOOPS_VERSION, 'legacy')) {
             $xv = xoops_trim(str_replace('XOOPS ', '', XOOPS_VERSION));
-            if ((int)substr($xv, 4, 2) >= 17) {
+            if ((int)mb_substr($xv, 4, 2) >= 17) {
                 return false;
             }
         }
@@ -578,7 +575,7 @@ class Utility extends \XoopsObject
      *
      * @param  \XoopsForm $sform The form to modify
      * @return \XoopsForm The modified form
-     * @internal param string $caracter The character to use to mark fields
+     * @internal param string $character The character to use to mark fields
      */
     public static function &formMarkRequiredFields(&$sform)
     {
@@ -590,9 +587,9 @@ class Utility extends \XoopsObject
             $elements = [];
             $elements = $sform->getElements();
             $cnt      = count($elements);
-            for ($i = 0; $i < $cnt; ++$i) {
-                if (is_object($elements[$i]) && in_array($elements[$i]->_name, $required)) {
-                    $elements[$i]->_caption .= ' *';
+            foreach ($elements as $i => $iValue) {
+                if (is_object($elements[$i]) && in_array($iValue->_name, $required, true)) {
+                    $iValue->_caption .= ' *';
                 }
             }
         }
@@ -603,8 +600,8 @@ class Utility extends \XoopsObject
     /**
      * Create an html heading (from h1 to h6)
      *
-     * @param  string  $title The text to use
-     * @param int $level Level to return
+     * @param  string $title The text to use
+     * @param int     $level Level to return
      * @return string  The heading
      */
     public static function htitle($title = '', $level = 1)
@@ -615,16 +612,16 @@ class Utility extends \XoopsObject
     /**
      * Create a unique upload filename
      *
-     * @param  string  $folder   The folder where the file will be saved
-     * @param  string  $fileName Original filename (coming from the user)
-     * @param  boolean $trimName Do we need to create a "short" unique name ?
+     * @param  string $folder   The folder where the file will be saved
+     * @param  string $fileName Original filename (coming from the user)
+     * @param  bool   $trimName Do we need to create a "short" unique name ?
      * @return string  The unique filename to use (with its extension)
      */
     public static function createUploadName($folder, $fileName, $trimName = false)
     {
-        $uid = '';
+        $uid           = '';
         $workingfolder = $folder;
-        if ('/' !== xoops_substr($workingfolder, strlen($workingfolder) - 1, 1)) {
+        if ('/' !== xoops_substr($workingfolder, mb_strlen($workingfolder) - 1, 1)) {
             $workingfolder .= '/';
         }
         $ext  = basename($fileName);
@@ -635,7 +632,7 @@ class Utility extends \XoopsObject
             $ipbits = explode('.', $_SERVER['REMOTE_ADDR']);
             list($usec, $sec) = explode(' ', microtime());
             $usec *= 65536;
-            $sec  = ((integer)$sec) & 0xFFFF;
+            $sec  = ((int)$sec) & 0xFFFF;
 
             if ($trimName) {
                 $uid = sprintf('%06x%04x%04x', ($ipbits[0] << 24) | ($ipbits[1] << 16) | ($ipbits[2] << 8) | $ipbits[3], $sec, $usec);
@@ -923,8 +920,8 @@ class Utility extends \XoopsObject
     /**
      * Création d'une titre pour être utilisé par l'url rewriting
      *
-     * @param  string  $content Le texte à utiliser pour créer l'url
-     * @param int $urw     La limite basse pour créer les mots
+     * @param  string $content  Le texte à utiliser pour créer l'url
+     * @param int     $urw      La limite basse pour créer les mots
      * @return string  Le texte à utiliser pour l'url
      *                          Note, some parts are from Solo's code
      */
@@ -935,7 +932,7 @@ class Utility extends \XoopsObject
         $content = static::unhtml($content); // First, remove html entities
         $content = strtr($content, $s, $r);
         $content = strip_tags($content);
-        $content = strtolower($content);
+        $content = mb_strtolower($content);
         $content = htmlentities($content, ENT_QUOTES | ENT_HTML5); // TODO: Vérifier
         $content = preg_replace('/&([a-zA-Z])(uml|acute|grave|circ|tilde);/', '$1', $content);
         $content = html_entity_decode($content);
@@ -951,7 +948,7 @@ class Utility extends \XoopsObject
         $words    = explode(' ', $content);
         $keywords = '';
         foreach ($words as $word) {
-            if (strlen($word) >= $urw) {
+            if (mb_strlen($word) >= $urw) {
                 $keywords .= '-' . trim($word);
             }
         }
@@ -962,8 +959,8 @@ class Utility extends \XoopsObject
         $keywords = str_replace('---', '-', $keywords);
         $keywords = str_replace('--', '-', $keywords);
         // Supprime un éventuel tiret à la fin de la chaine
-        if ('-' == substr($keywords, strlen($keywords) - 1, 1)) {
-            $keywords = substr($keywords, 0, -1);
+        if ('-' == mb_substr($keywords, mb_strlen($keywords) - 1, 1)) {
+            $keywords = mb_substr($keywords, 0, -1);
         }
 
         return $keywords;
@@ -994,7 +991,7 @@ class Utility extends \XoopsObject
         $content         = str_replace('<br>', ' ', $content);
         $content         = $myts->undoHtmlSpecialChars($content);
         $content         = strip_tags($content);
-        $content         = strtolower($content);
+        $content         = mb_strtolower($content);
         $search_pattern  = [
             '&nbsp;',
             "\t",
@@ -1022,7 +1019,7 @@ class Utility extends \XoopsObject
             '-',
             '_',
             '\\',
-            '*'
+            '*',
         ];
         $replace_pattern = [
             ' ',
@@ -1051,23 +1048,29 @@ class Utility extends \XoopsObject
             '',
             '',
             '',
-            ''
+            '',
         ];
         $content         = str_replace($search_pattern, $replace_pattern, $content);
         $keywords        = explode(' ', $content);
         switch ($keywordsorder) {
             case 0: // Ordre d'apparition dans le texte
+
                 $keywords = array_unique($keywords);
+
                 break;
             case 1: // Ordre de fréquence des mots
+
                 $keywords = array_count_values($keywords);
                 asort($keywords);
                 $keywords = array_keys($keywords);
+
                 break;
             case 2: // Ordre inverse de la fréquence des mots
+
                 $keywords = array_count_values($keywords);
                 arsort($keywords);
                 $keywords = array_keys($keywords);
+
                 break;
         }
         // Remove black listed words
@@ -1079,7 +1082,7 @@ class Utility extends \XoopsObject
         }
 
         foreach ($keywords as $keyword) {
-            if (strlen($keyword) >= $limit && !is_numeric($keyword)) {
+            if (!is_numeric($keyword) && mb_strlen($keyword) >= $limit) {
                 $tmp[] = $keyword;
             }
         }
@@ -1116,12 +1119,12 @@ class Utility extends \XoopsObject
         $mimeTypes = null,
         $uploadMaxSize = null,
         $maxWidth = null,
-        $maxHeight = null
-    ) {
+        $maxHeight = null)
+    {
         //        require_once XOOPS_ROOT_PATH . '/class/uploader.php';
         global $destname;
         if (\Xmf\Request::hasVar('xoops_upload_file', 'POST')) {
-            require XOOPS_ROOT_PATH . '/class/uploader.php';
+            require_once XOOPS_ROOT_PATH . '/class/uploader.php';
             $fldname = '';
             $fldname = $_FILES[$_POST['xoops_upload_file'][$indice]];
             $fldname = get_magic_quotes_gpc() ? stripslashes($fldname['name']) : $fldname['name'];
@@ -1146,26 +1149,26 @@ class Utility extends \XoopsObject
                     }
 
                     return _ERRORS . ' ' . htmlentities($uploader->getErrors(), ENT_QUOTES | ENT_HTML5);
-                } else {
-                    return htmlentities($uploader->getErrors(), ENT_QUOTES | ENT_HTML5);
                 }
-            } else {
-                return false;
+
+                return htmlentities($uploader->getErrors(), ENT_QUOTES | ENT_HTML5);
             }
-        } else {
+
             return false;
         }
+
+        return false;
     }
 
     /**
      * Resize a Picture to some given dimensions (using the wideImage library)
      *
-     * @param  string  $src_path      Picture's source
-     * @param  string  $dst_path      Picture's destination
-     * @param int $param_width   Maximum picture's width
-     * @param int $param_height  Maximum picture's height
-     * @param  boolean $keep_original Do we have to keep the original picture ?
-     * @param  string  $fit           Resize mode (see the wideImage library for more information)
+     * @param  string $src_path      Picture's source
+     * @param  string $dst_path      Picture's destination
+     * @param int     $param_width   Maximum picture's width
+     * @param int     $param_height  Maximum picture's height
+     * @param  bool   $keep_original Do we have to keep the original picture ?
+     * @param  string $fit           Resize mode (see the wideImage library for more information)
      * @return bool
      */
     public static function resizePicture(
@@ -1174,8 +1177,8 @@ class Utility extends \XoopsObject
         $param_width,
         $param_height,
         $keep_original = false,
-        $fit = 'inside'
-    ) {
+        $fit = 'inside')
+    {
         //        require_once OLEDRION_PATH . 'class/wideimage/WideImage.inc.php';
         $resize = true;
         if (OLEDRION_DONT_RESIZE_IF_SMALLER) {
@@ -1207,10 +1210,10 @@ class Utility extends \XoopsObject
     /**
      * Déclenchement d'une alerte Xoops suite à un évènement
      *
-     * @param string       $category La catégorie de l'évènement
-     * @param int      $itemId   L'ID de l'élément (trop général pour être décris précisément)
-     * @param mixed $event    L'évènement qui est déclencé
-     * @param mixed $tags     Les variables à passer au template
+     * @param string $category La catégorie de l'évènement
+     * @param int    $itemId   L'ID de l'élément (trop général pour être décris précisément)
+     * @param mixed  $event    L'évènement qui est déclencé
+     * @param mixed  $tags     Les variables à passer au template
      */
     public static function notify($category, $itemId, $event, $tags)
     {
@@ -1222,8 +1225,8 @@ class Utility extends \XoopsObject
     /**
      * Ajoute des jours à une date et retourne la nouvelle date au format Date de Mysql
      *
-     * @param  int     $duration
-     * @param int $startingDate Date de départ (timestamp)
+     * @param  int $duration
+     * @param int  $startingDate Date de départ (timestamp)
      * @return bool|string
      * @internal param int $durations Durée en jours
      */
@@ -1255,7 +1258,7 @@ class Utility extends \XoopsObject
                 $workingBreadcrumb[] = "<a href='" . $url . "'>" . $title . '</a>';
             }
             $cnt = count($workingBreadcrumb);
-            for ($i = 0; $i < $cnt; ++$i) {
+            foreach ($workingBreadcrumb as $i => $iValue) {
                 if ($i == $cnt - 1) {
                     $workingBreadcrumb[$i] = strip_tags($workingBreadcrumb[$i]);
                 }
@@ -1282,7 +1285,7 @@ class Utility extends \XoopsObject
                 $end_tags      = $end_tags[1];
 
                 foreach ($start_tags as $key => $val) {
-                    $posb = array_search($val, $end_tags);
+                    $posb = array_search($val, $end_tags, true);
                     if (is_int($posb)) {
                         unset($end_tags[$posb]);
                     } else {
@@ -1315,10 +1318,10 @@ class Utility extends \XoopsObject
             return '';
         }
 
-        if (strlen($string) > $length) {
-            $length -= strlen($etc);
+        if (mb_strlen($string) > $length) {
+            $length -= mb_strlen($etc);
             if (!$break_words) {
-                $string = preg_replace('/\s+?(\S+)?$/', '', substr($string, 0, $length + 1));
+                $string = preg_replace('/\s+?(\S+)?$/', '', mb_substr($string, 0, $length + 1));
                 $string = preg_replace('/<[^>]*$/', '', $string);
                 $string = static::close_tags($string);
             }
@@ -1384,18 +1387,18 @@ class Utility extends \XoopsObject
     /**
      * Calcul du TTC à partir du HT et de la TVA
      *
-     * @param int      $ht     Montant HT
-     * @param int      $vat    Taux de TVA
-     * @param  boolean $edit   Si faux alors le montant est formaté pour affichage sinon il reste tel quel
-     * @param  string  $format Format d'affichage du résultat (long ou court)
+     * @param int     $ht     Montant HT
+     * @param int     $vat    Taux de TVA
+     * @param  bool   $edit   Si faux alors le montant est formaté pour affichage sinon il reste tel quel
+     * @param  string $format Format d'affichage du résultat (long ou court)
      * @return mixed   Soit une chaine soit un flottant
      */
     public static function getTTC($ht = 0, $vat = 0, $edit = false, $format = 's')
     {
-        $ht                = (int)$ht;
-        $vat               = (int)$vat;
+        $ht               = (int)$ht;
+        $vat              = (int)$vat;
         $oledrionCurrency = Oledrion\Currency::getInstance();
-        $ttc               = $ht * (1 + ($vat / 100));
+        $ttc              = $ht * (1 + ($vat / 100));
         if (!$edit) {
             return $oledrionCurrency->amountForDisplay($ttc, $format);
         }
@@ -1418,7 +1421,7 @@ class Utility extends \XoopsObject
      * Retourne le montant TTC
      *
      * @param  float $product_price Le montant du produit
-     * @param int  $vat_id        Le numéro de TVA
+     * @param int    $vat_id        Le numéro de TVA
      * @return float Le montant TTC si on a trouvé sa TVA sinon
      */
     public static function getAmountWithVat($product_price, $vat_id)
@@ -1427,7 +1430,7 @@ class Utility extends \XoopsObject
         static $vats = [];
         $vat_rate   = null;
         $vatHandler = new Oledrion\VatHandler(\XoopsDatabaseFactory::getDatabaseConnection());
-        if (is_array($vats) && in_array($vat_id, $vats)) {
+        if (is_array($vats) && in_array($vat_id, $vats, true)) {
             $vat_rate = $vats[$vat_id];
         } else {
             //            $handlers = \HandlerManager::getInstance();
@@ -1454,8 +1457,8 @@ class Utility extends \XoopsObject
     public static function postIt($datastream, $url)
     {
         $url     = preg_replace('@^http://@i', '', $url);
-        $host    = substr($url, 0, strpos($url, '/'));
-        $uri     = strstr($url, '/');
+        $host    = mb_substr($url, 0, mb_strpos($url, '/'));
+        $uri     = mb_strstr($url, '/');
         $reqbody = '';
         foreach ($datastream as $key => $val) {
             if (!empty($reqbody)) {
@@ -1463,7 +1466,7 @@ class Utility extends \XoopsObject
             }
             $reqbody .= $key . '=' . urlencode($val);
         }
-        $contentlength = strlen($reqbody);
+        $contentlength = mb_strlen($reqbody);
         $reqheader     = "POST $uri HTTP/1.1\r\n" . "Host: $host\n" . "Content-Type: application/x-www-form-urlencoded\r\n" . "Content-Length: $contentlength\r\n\r\n" . "$reqbody\r\n";
 
         return $reqheader;
@@ -1533,7 +1536,7 @@ class Utility extends \XoopsObject
 
     /**
      * Retourne l'ID de l'utilisateur courant (s'il est connecté)
-     * @return integer L'uid ou 0
+     * @return int L'uid ou 0
      */
     public static function getCurrentUserID()
     {
@@ -1572,8 +1575,8 @@ class Utility extends \XoopsObject
     /**
      * Indique si l'utilisateur courant fait partie d'une groupe donné (avec gestion de cache)
      *
-     * @param int $group Groupe recherché
-     * @param  int     $uid
+     * @param int  $group Groupe recherché
+     * @param  int $uid
      * @return bool    vrai si l'utilisateur fait partie du groupe, faux sinon
      */
     public static function isMemberOfGroup($group = 0, $uid = 0)
@@ -1588,7 +1591,7 @@ class Utility extends \XoopsObject
         } else {
             $memberHandler  = xoops_getHandler('member');
             $groups         = $memberHandler->getGroupsByUser($uid, false); // Renvoie un tableau d'ID (de groupes)
-            $retval         = in_array($group, $groups);
+            $retval         = in_array($group, $groups, true);
             $buffer[$group] = $retval;
         }
 
@@ -1599,7 +1602,6 @@ class Utility extends \XoopsObject
      * Fonction chargée de vérifier qu'un répertoire existe, qu'on peut écrire dedans et création d'un fichier index.html
      *
      * @param  string $folder Le chemin complet du répertoire à vérifier
-     * @return void
      */
     public static function prepareFolder($folder)
     {
@@ -1641,7 +1643,7 @@ class Utility extends \XoopsObject
     {
         global $xoopsConfig;
         $root = OLEDRION_PATH;
-        if (false === strpos($languageFile, $defaultExtension)) {
+        if (false === mb_strpos($languageFile, $defaultExtension)) {
             $languageFile .= $defaultExtension;
         }
         /** @var Oledrion\Helper $helper */
@@ -1652,7 +1654,7 @@ class Utility extends \XoopsObject
     /**
      * Formatage d'un floattant pour la base de données
      *
-     * @param float    Le montant à formater
+     * @param mixed $amount
      * @return string le montant formaté
      * @since 2.2.2009.02.25
      */
@@ -1683,7 +1685,8 @@ class Utility extends \XoopsObject
             $rootUrl = OLEDRION_URL;
             if (file_exists($root . 'language/' . $xoopsConfig['language'] . '/' . $javascriptFile)) {
                 $fileToCall = $rootUrl . 'language/' . $xoopsConfig['language'] . '/' . $javascriptFile;
-            } else { // Fallback
+            } else {
+                // Fallback
                 $fileToCall = $rootUrl . 'language/english/' . $javascriptFile;
             }
         } else {
@@ -1728,10 +1731,10 @@ class Utility extends \XoopsObject
     /**
      * Creates an html select
      *
-     * @param  string  $selectName Selector's name
-     * @param  array   $array      Options
-     * @param  mixed   $default    Default's value
-     * @param  boolean $withNull   Do we include a null option ?
+     * @param  string $selectName Selector's name
+     * @param  array  $array      Options
+     * @param  mixed  $default    Default's value
+     * @param  bool   $withNull   Do we include a null option ?
      * @return string
      * @since 2.3.2009.03.13
      */
@@ -1755,12 +1758,12 @@ class Utility extends \XoopsObject
      */
     public static function getId($string, $separator = '_')
     {
-        $pos = strrpos($string, $separator);
+        $pos = mb_strrpos($string, $separator);
         if (false === $pos) {
             return $string;
         }
 
-        return (int)substr($string, $pos + 1);
+        return (int)mb_substr($string, $pos + 1);
     }
 
     /**
@@ -1773,24 +1776,23 @@ class Utility extends \XoopsObject
      */
     public static function getName($string, $separator = '_')
     {
-        $pos = strrpos($string, $separator);
+        $pos = mb_strrpos($string, $separator);
         if (false === $pos) {
             return $string;
         }
 
-        return substr($string, 0, $pos);
+        return mb_substr($string, 0, $pos);
     }
 
     /**
      * Renvoie un montant nul si le montant est négatif
      *
      * @param  float $amount
-     * @return void
      */
     public static function doNotAcceptNegativeAmounts(&$amount)
     {
         if ($amount < 0) {
-            $amount = 0;
+            $amount = 0.0;
         }
     }
 
@@ -1809,7 +1811,6 @@ class Utility extends \XoopsObject
     /**
      * Verify that a mysql table exists
      *
-     * @package       Oledrion
      * @author        Instant Zero (http://xoops.instant-zero.com)
      * @copyright (c) Instant Zero
      * @param $tablename
@@ -1826,7 +1827,6 @@ class Utility extends \XoopsObject
     /**
      * Verify that a field exists inside a mysql table
      *
-     * @package       Oledrion
      * @author        Instant Zero (http://xoops.instant-zero.com)
      * @copyright (c) Instant Zero
      * @param $fieldname
@@ -1855,13 +1855,13 @@ class Utility extends \XoopsObject
         if ($result) {
             return $xoopsDB->fetchArray($result);
         }
+
         return '';
     }
 
     /**
      * Add a field to a mysql table
      *
-     * @package       Oledrion
      * @author        Instant Zero (http://xoops.instant-zero.com)
      * @copyright (c) Instant Zero
      * @param $field
@@ -1872,6 +1872,7 @@ class Utility extends \XoopsObject
     {
         global $xoopsDB;
         $result = $xoopsDB->queryF("ALTER TABLE $table ADD $field;");
+
         return $result;
     }
 

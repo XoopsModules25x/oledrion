@@ -1,4 +1,6 @@
-<?php namespace XoopsModules\Oledrion;
+<?php
+
+namespace XoopsModules\Oledrion;
 
 /*
  You may not change or alter any portion of this comment or credits
@@ -31,8 +33,6 @@ class Payment extends OledrionObject
      * constructor
      *
      * normally, this is called from child classes only
-     *
-     * @access public
      */
     public function __construct()
     {
@@ -61,13 +61,12 @@ class Payment extends OledrionObject
     /**
      * Indique si l'image de la catégorie existe
      *
-     * @return boolean Vrai si l'image existe sinon faux
+     * @return bool Vrai si l'image existe sinon faux
      */
     public function pictureExists()
     {
         $return = false;
-        if ('' !== xoops_trim($this->getVar('payment_image'))
-            && file_exists(OLEDRION_PICTURES_PATH . '/' . $this->getVar('payment_image'))) {
+        if ('' !== xoops_trim($this->getVar('payment_image')) && file_exists(OLEDRION_PICTURES_PATH . '/' . $this->getVar('payment_image'))) {
             $return = true;
         }
 
@@ -76,7 +75,6 @@ class Payment extends OledrionObject
 
     /**
      * Supprime l'image associée à une catégorie
-     * @return void
      */
     public function deletePicture()
     {

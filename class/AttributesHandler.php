@@ -1,4 +1,6 @@
-<?php namespace XoopsModules\Oledrion;
+<?php
+
+namespace XoopsModules\Oledrion;
 
 /**
  * ****************************************************************************
@@ -14,7 +16,6 @@
  *
  * @copyright       Hervé Thouzard (http://www.herve-thouzard.com/)
  * @license         http://www.fsf.org/copyleft/gpl.html GNU public license
- * @package         oledrion
  * @author          Hervé Thouzard (http://www.herve-thouzard.com/)
  *
  * Version :
@@ -58,8 +59,9 @@ class AttributesHandler extends OledrionPersistableObjectHandler
      * OledrionOledrion_attributesHandler constructor.
      * @param \XoopsDatabase $db
      */
-    public function __construct(\XoopsDatabase $db)
-    {    //                             Table               Classe                  Id
+    public function __construct(\XoopsDatabase $db = null)
+    {
+        //                             Table               Classe                  Id
         parent::__construct($db, 'oledrion_attributes', Attributes::class, 'attribute_id');
     }
 
@@ -67,7 +69,7 @@ class AttributesHandler extends OledrionPersistableObjectHandler
      * Supprime tous les attributs d'un produit
      *
      * @param int $attribute_product_id
-     * @return boolean Le résultat de la suppression
+     * @return bool Le résultat de la suppression
      * @since 2.3.2009.03.16
      */
     public function deleteProductAttributes($attribute_product_id)
@@ -81,7 +83,7 @@ class AttributesHandler extends OledrionPersistableObjectHandler
      * Retourne le nombre total d'attributs d'un produit (qu'ils soient obligatoires ou pas)
      *
      * @param int $attribute_product_id
-     * @return integer
+     * @return int
      * @since 2.3.2009.03.16
      */
     public function getProductAttributesCount($attribute_product_id)
@@ -93,7 +95,7 @@ class AttributesHandler extends OledrionPersistableObjectHandler
      * Retourne la liste des attributs d'un produit
      *
      * @param  int|array $product_id Le produit concerné
-     * @param  null    $attributesIds
+     * @param  null      $attributesIds
      * @return array
      */
     public function getProductsAttributesList($product_id, $attributesIds = null)
@@ -118,7 +120,7 @@ class AttributesHandler extends OledrionPersistableObjectHandler
      * Construction de la liste des attributs d'un produit
      *
      * @param  Products $product              Le produit concerné
-     * @param int  $mandatoryFieldsCount Retourne le nombre d'options requises
+     * @param int       $mandatoryFieldsCount Retourne le nombre d'options requises
      * @return array                    Les options construites en html
      * @since 2.3.2009.03.16
      */
@@ -205,7 +207,7 @@ class AttributesHandler extends OledrionPersistableObjectHandler
      * Suppression d'un attribut (et de ce qui y est rattaché)
      *
      * @param  Attributes $attribute
-     * @return boolean
+     * @return bool
      * @since 2.3.2009.03.17
      */
     public function deleteAttribute(Attributes $attribute)
@@ -218,7 +220,7 @@ class AttributesHandler extends OledrionPersistableObjectHandler
      * Retourne le nombre d'attributs obligatoires d'un produit
      *
      * @param  Products $product
-     * @return integer
+     * @return int
      * @since 2.3.2009.03.20
      */
     public function getProductMandatoryAttributesCount(Products $product)
@@ -248,9 +250,9 @@ class AttributesHandler extends OledrionPersistableObjectHandler
     /**
      * Calcul le prix HT des options sélectionnées pour un produit
      *
-     * @param  array   $choosenAttributes [clé] = attribute_id, [value] = array(valueId1, valueId2 ...)
-     * @param int $product_vat_id    L'ID de TVA du produit
-     * @param  array   $descriptions      Tableau valorisé par la méthode [clé] = Id attribut [valeur] = array('attribute_title', array('attribute_names', 'attribute_prices'))
+     * @param  array $choosenAttributes [clé] = attribute_id, [value] = array(valueId1, valueId2 ...)
+     * @param int    $product_vat_id    L'ID de TVA du produit
+     * @param  array $descriptions      Tableau valorisé par la méthode [clé] = Id attribut [valeur] = array('attribute_title', array('attribute_names', 'attribute_prices'))
      * @return float
      * @since 2.3.2009.03.21
      */
@@ -258,7 +260,7 @@ class AttributesHandler extends OledrionPersistableObjectHandler
     {
         $db         = \XoopsDatabaseFactory::getDatabaseConnection();
         $vatHandler = new Oledrion\VatHandler($db);
-        $vat_rate = 0;
+        $vat_rate   = 0;
         static $vats = [];
         if (is_array($vats) && isset($vats[$product_vat_id])) {
             $vat_rate = $vats[$product_vat_id];
@@ -284,6 +286,7 @@ class AttributesHandler extends OledrionPersistableObjectHandler
 
         foreach ($choosenAttributes as $userAttributeId => $userAttributeValues) {
             if (isset($attributes[$userAttributeId])) {
+                /** @var \XoopsModules\Oledrion\Attributes $attribute */
                 $attribute           = $attributes[$userAttributeId];
                 $dataForDescriptions = [];
                 $optionDescription   = '';
@@ -305,7 +308,7 @@ class AttributesHandler extends OledrionPersistableObjectHandler
                             'option_ttc'               => $ttc,
                             'option_price_ht_formated' => $htFormated,
                             'option_vat_formated'      => $vatAmountFormated,
-                            'option_ttc_formated'      => $ttcFormated
+                            'option_ttc_formated'      => $ttcFormated,
                         ];
                         $ret                   += $price;    // Total de toutes les options
                     }
@@ -326,14 +329,14 @@ class AttributesHandler extends OledrionPersistableObjectHandler
                         'option_ttc'               => $ttc,
                         'option_price_ht_formated' => $htFormated,
                         'option_vat_formated'      => $vatAmountFormated,
-                        'option_ttc_formated'      => $ttcFormated
+                        'option_ttc_formated'      => $ttcFormated,
                     ];
                     $ret                   += $price;    // Total de toutes les options
                 }
                 if (is_array($descriptions)) {
                     $descriptions[$attribute->getVar('attribute_id')] = [
                         'attribute_title'   => $attribute->getVar('attribute_title'),
-                        'attribute_options' => $dataForDescriptions
+                        'attribute_options' => $dataForDescriptions,
                     ];
                 }
             }

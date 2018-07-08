@@ -69,7 +69,7 @@ function listCart()
     $shippingAmount  = $commandAmount = $vatAmount = $commandAmountTTC = $discountsCount = $ecotaxeAmount = $discountAmount = $totalSavings = 0;
     $goOn            = '';
     $reductions      = new Oledrion\Reductions();
-    $reductions->computeCart($cartForTemplate, $emptyCart, $shippingAmount, $commandAmount, $vatAmount, $goOn, $commandAmountTTC, $discountsDescription, $discountsCount, $checkoutAttributes, $ecotaxeAmount=null, $discountAmount = null, $totalSavings = null);
+    $reductions->computeCart($cartForTemplate, $emptyCart, $shippingAmount, $commandAmount, $vatAmount, $goOn, $commandAmountTTC, $discountsDescription, $discountsCount, $checkoutAttributes, $ecotaxeAmount = null, $discountAmount = null, $totalSavings = null);
     $oledrionCurrency = Oledrion\Currency::getInstance();
     $xoopsTpl->assign('emptyCart', $emptyCart);                                            // Caddy Vide ?
     $xoopsTpl->assign('caddieProducts', $cartForTemplate);                                // Produits dans le caddy
@@ -101,33 +101,38 @@ function listCart()
 switch ($op) {
     // ****************************************************************************************************************
     case 'update': // Recalcul des quantités
+
         // ****************************************************************************************************************
         $caddyHandler->updateQuantites();
         listCart();
-        break;
 
+        break;
     // ****************************************************************************************************************
     case 'reload': // Chargement du dernier panier enregistré
+
         // ****************************************************************************************************************
         $caddyHandler->reloadPersistentCart();
         listCart();
-        break;
 
+        break;
     // ****************************************************************************************************************
     case 'delete': // Suppression d'un élément
+
         // ****************************************************************************************************************
         $productId--;
         $caddyHandler->deleteProduct($productId);
         listCart();
-        break;
 
+        break;
     // ****************************************************************************************************************
     case 'addproduct': // Ajout d'un produit
+
         // ****************************************************************************************************************
         if (0 === $productId) {
             Oledrion\Utility::redirect(_OLEDRION_ERROR9, 'index.php', 4);
         }
         $product = null;
+        /** @var \XoopsModules\Oledrion\Products $product */
         $product = $productsHandler->get($productId);
         if (!is_object($product)) {
             Oledrion\Utility::redirect(_OLEDRION_ERROR9, 'index.php', 4);
@@ -139,7 +144,8 @@ switch ($op) {
         if ($product->getVar('product_stock') - 1 >= 0) {
             // Options
             $userAttributes = [];
-            if ($product->productAttributesCount() > 0) { // Si le produit a des attributs
+            if ($product->productAttributesCount() > 0) {
+                // Si le produit a des attributs
                 $productAttributes = [];
                 // On commence par vérifier que les attributs obligatoires sont renseignés
                 // It starts by checking if mandatory attributes are filled
@@ -164,7 +170,8 @@ switch ($op) {
                     $nameInForm = $attribute->getAttributeNameInForm();
                     if (isset($_POST[$nameInForm])) {
                         $userAttributes[$attribute->attribute_id] = $_POST[$nameInForm];
-                    } else { // On va chercher sa valeur par défaut
+                    } else {
+                        // On va chercher sa valeur par défaut
                         if ($attribute->hasDefaultValue()) {
                             $userAttributes[$attribute->attribute_id] = $attribute->getAttributeDefaultValue();
                         }
@@ -182,19 +189,22 @@ switch ($op) {
             Oledrion\Utility::redirect(_OLEDRION_PROBLEM_QTY, 'index.php', 5); // Plus de stock !
         }
         listCart();
-        break;
 
+        break;
     // ****************************************************************************************************************
     case 'empty': // Suppression du contenu du caddy
+
         // ****************************************************************************************************************
         $caddyHandler->emptyCart();
         listCart();
-        break;
 
+        break;
     // ****************************************************************************************************************
     case 'default': // Action par défaut
+
         // ****************************************************************************************************************
         listCart();
+
         break;
 }
 
@@ -203,7 +213,8 @@ if (file_exists(OLEDRION_PATH . 'language/' . $xoopsConfig['language'] . '/image
     $step1 = OLEDRION_URL . 'language/' . $xoopsConfig['language'] . '/image/step1.png';
     $step2 = OLEDRION_URL . 'language/' . $xoopsConfig['language'] . '/image/step2.png';
     $step3 = OLEDRION_URL . 'language/' . $xoopsConfig['language'] . '/image/step3.png';
-} else { // Fallback
+} else {
+    // Fallback
     $step1 = OLEDRION_URL . 'language/english/image/step1.png';
     $step2 = OLEDRION_URL . 'language/english/image/step2.png';
     $step3 = OLEDRION_URL . 'language/english/image/step3.png';

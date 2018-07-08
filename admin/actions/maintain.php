@@ -20,7 +20,6 @@
 use XoopsModules\Oledrion;
 
 /**
- *
  * Check is admin
  */
 if (!defined('OLEDRION_ADMIN')) {
@@ -29,13 +28,15 @@ if (!defined('OLEDRION_ADMIN')) {
 
 switch ($action) {
     case 'default':
+
         xoops_cp_header();
         xoops_confirm(['op' => 'maintain', 'action' => 'confirm'], 'index.php', _AM_OLEDRION_CONF_MAINTAIN);
-        break;
 
+        break;
     case 'confirm':
+
         xoops_cp_header();
-        require OLEDRION_PATH . 'xoops_version.php';
+        require_once OLEDRION_PATH . 'xoops_version.php';
         $tables = [];
         foreach ($modversion['tables'] as $table) {
             $tables[] = $xoopsDB->prefix($table);
@@ -49,9 +50,10 @@ switch ($action) {
         Oledrion\Utility::updateCache();
         $productsHandler->forceCacheClean();
         Oledrion\Utility::redirect(_AM_OLEDRION_SAVE_OK, $baseurl, 2);
-        break;
 
+        break;
     case 'import':
+
         xoops_cp_header();
         $categories = $categoryHandler->getCategoriesCount();
         if (0 == $categories) {
@@ -59,9 +61,10 @@ switch ($action) {
         } else {
             Oledrion\Utility::redirect(_AM_OLEDRION_SAVE_OK, $baseurl, 2);
         }
-        break;
 
+        break;
     case 'doimport':
+
         xoops_cp_header();
         $categories = $categoryHandler->getCategoriesCount();
         if (0 == $categories) {
@@ -86,7 +89,7 @@ switch ($action) {
                 'product_price'     => '100',
                 'product_summary'   => 'Test test test test test test test test test test test test test test test test test',
                 'product_vat_id'    => 1,
-                'product_stock'     => 100
+                'product_stock'     => 100,
             ];
             $product       = $productsHandler->create(true);
             $product->setVars($product_array);
@@ -108,5 +111,6 @@ switch ($action) {
             $res = $vendorsHandler->insert($vendor);
         }
         Oledrion\Utility::redirect(_AM_OLEDRION_SAVE_OK, $baseurl, 2);
+
         break;
 }

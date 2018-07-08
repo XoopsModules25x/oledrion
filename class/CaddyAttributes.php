@@ -1,4 +1,6 @@
-<?php namespace XoopsModules\Oledrion;
+<?php
+
+namespace XoopsModules\Oledrion;
 
 /*
  You may not change or alter any portion of this comment or credits
@@ -19,7 +21,6 @@
  */
 
 use XoopsModules\Oledrion;
-use XoopsModules\Oledrion\Constants;
 
 /**
  * Gestion des options (attributs) produits dans les commandes
@@ -35,8 +36,6 @@ class CaddyAttributes extends OledrionObject
      * constructor
      *
      * normally, this is called from child classes only
-     *
-     * @access public
      */
     public function __construct()
     {
@@ -73,7 +72,7 @@ class CaddyAttributes extends OledrionObject
      * @param  string $name
      * @param  string $value
      * @param  string $price
-     * @return boolean
+     * @return bool
      * @since 2.3.2009.03.16
      */
     private function appendOption($name, $value, $price = '')
@@ -105,7 +104,7 @@ class CaddyAttributes extends OledrionObject
      * @param  string $name
      * @param  string $value
      * @param  string $price
-     * @return boolean
+     * @return bool
      * @since 2.3.2009.03.16
      */
     public function addOption($name, $value, $price = '')
@@ -130,7 +129,7 @@ class CaddyAttributes extends OledrionObject
         }
 
         $oledrionCurrency = Oledrion\Currency::getInstance();
-        $counter           = 0;
+        $counter          = 0;
         foreach ($names as $name) {
             $price = 0;
             if (Oledrion\Utility::getModuleOption('use_price')) {

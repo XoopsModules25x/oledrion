@@ -1,4 +1,6 @@
-<?php namespace XoopsModules\Oledrion;
+<?php
+
+namespace XoopsModules\Oledrion;
 
 /*
  You may not change or alter any portion of this comment or credits
@@ -44,7 +46,6 @@ class OledrionObject extends \XoopsObject
      *
      * @param  string $key   Le nom du champ à traiter
      * @param  mixed  $value La valeur à lui attribuer
-     * @return void
      */
     public function __set($key, $value)
     {

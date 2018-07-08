@@ -1,4 +1,6 @@
-<?php namespace XoopsModules\Oledrion;
+<?php
+
+namespace XoopsModules\Oledrion;
 
 /*
  You may not change or alter any portion of this comment or credits
@@ -93,7 +95,7 @@ class Plugin
      */
     private $pluginsClassName = [
         self::PLUGIN_ACTION => 'oledrion_action',
-        self::PLUGIN_FILTER => 'oledrion_filter'
+        self::PLUGIN_FILTER => 'oledrion_filter',
     ];
 
     /**
@@ -130,7 +132,6 @@ class Plugin
 
     /**
      * Chargement des 2 types de plugins
-     *
      */
     private function __construct()
     {
@@ -140,7 +141,6 @@ class Plugin
 
     /**
      * Chargement des plugins (actions et filtres)
-     * @return void
      */
     public function loadPlugins()
     {
@@ -150,15 +150,14 @@ class Plugin
 
     /**
      * Vérifie que le fichier Php passé en paramètre contient bien une classe de filtre ou d'action et si c'est le cas, le charge dans la liste des plugins
-     * @param  string  $fullPathName Chemin complet vers le fichier (répertoire + nom)
-     * @param int $type         Type de plugin recherché (action ou filtre)
-     * @param  string  $pluginFolder Le nom du répertoire dans lequel se trouve le fichier (le "dernier nom")
-     * @return void
+     * @param  string $fullPathName Chemin complet vers le fichier (répertoire + nom)
+     * @param int     $type         Type de plugin recherché (action ou filtre)
+     * @param  string $pluginFolder Le nom du répertoire dans lequel se trouve le fichier (le "dernier nom")
      */
     private function loadClass($fullPathName, $type, $pluginFolder)
     {
         require_once $fullPathName;
-        $className = strtolower($pluginFolder) . $this->pluginsTypeLabel[$type];
+        $className = mb_strtolower($pluginFolder) . $this->pluginsTypeLabel[$type];
         if (class_exists($className) && get_parent_class($className) == $this->pluginsClassName[$type]) {
             // TODO: Vérifier que l'évènement n'est pas déjà en mémoire
             $events = call_user_func([$className, self::PLUGIN_DESCRIBE_METHOD]);
@@ -171,7 +170,7 @@ class Plugin
                 $this->events[$type][$eventName][$eventPriority][] = [
                     'fullPathName' => $fileToInclude,
                     'className'    => $classToCall,
-                    'method'       => $methodToCall
+                    'method'       => $methodToCall,
                 ];
             }
         }
@@ -180,9 +179,8 @@ class Plugin
     /**
      * Part à la recherche d'un type de plugin dans les répertoires
      *
-     * @param  string  $path La racine
-     * @param int $type Le type de plugin recherché (action ou filtre)
-     * @return void
+     * @param  string $path La racine
+     * @param int     $type Le type de plugin recherché (action ou filtre)
      */
     private function loadPluginsFiles($path, $type)
     {
@@ -219,7 +217,7 @@ class Plugin
                 }
                 require_once $event['fullPathName'];
                 if (!class_exists($event['className'])) {
-                    $class = new $event['className'];
+                    $class = new $event['className']();
                 }
                 if (!method_exists($event['className'], $event['method'])) {
                     continue;
@@ -233,20 +231,20 @@ class Plugin
     }
 
     /**
-     * Déclenchement d'un filtre et appel des plugins liés
+     * Triggering a filter and calling linked plugins
      *
-     * @param  string     $eventToFire Le filtre appelé
-     * @param  Parameters $parameters  Les paramètres à passer à chaque plugin
-     * @return Parameters|Plugin                     Le contenu de l'objet passé en paramètre
+     * @param  string          $eventToFire The called filter
+     * @param  Parameters|null $parameters  The parameters to be passed to each plugin
+     * @return Parameters|Plugin            The content of the object passed as parameter
      */
-    public function fireFilter($eventToFire, Parameters $parameters)
+    public function fireFilter($eventToFire, Parameters $parameters = null)
     {
         if (!isset($this->events[self::PLUGIN_FILTER][$eventToFire])) {
             trigger_error(sprintf(_OLEDRION_PLUGINS_ERROR_1, $eventToFire));
 
             return $this;
         }
-        ksort($this->events[self::PLUGIN_FILTER][$eventToFire]); // Tri par priorité
+        ksort($this->events[self::PLUGIN_FILTER][$eventToFire]); // Sort by priority
         foreach ($this->events[self::PLUGIN_FILTER][$eventToFire] as $priority => $events) {
             foreach ($events as $event) {
                 if ($this->isUnplug(self::PLUGIN_FILTER, $eventToFire, $event['fullPathName'], $event['className'], $event['method'])) {
@@ -254,7 +252,7 @@ class Plugin
                 }
                 require_once $event['fullPathName'];
                 if (!class_exists($event['className'])) {
-                    $class = new $event['className'];
+                    $class = new $event['className']();
                 }
                 if (!method_exists($event['className'], $event['method'])) {
                     continue;
@@ -272,12 +270,12 @@ class Plugin
     /**
      * Indique si un plugin s'est détaché d'un évènement particulier
      *
-     * @param int $eventType
-     * @param  string  $eventToFire
-     * @param  string  $fullPathName
-     * @param  string  $className
-     * @param  string  $method
-     * @return boolean
+     * @param int     $eventType
+     * @param  string $eventToFire
+     * @param  string $fullPathName
+     * @param  string $className
+     * @param  string $method
+     * @return bool
      */
     public function isUnplug($eventType, $eventToFire, $fullPathName, $className, $method)
     {
@@ -294,12 +292,11 @@ class Plugin
     /**
      * Permet à un plugin de se détacher d'un évènement
      *
-     * @param int $eventType
-     * @param  string  $eventToFire
-     * @param  string  $fullPathName
-     * @param  string  $className
-     * @param  string  $method
-     * @return void
+     * @param int     $eventType
+     * @param  string $eventToFire
+     * @param  string $fullPathName
+     * @param  string $className
+     * @param  string $method
      */
     public function unplugFromEvent($eventType, $eventToFire, $fullPathName, $className, $method)
     {

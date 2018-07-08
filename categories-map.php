@@ -39,7 +39,7 @@ foreach ($tree as $key => $value) {
         $xoopsTpl->append('categories', [
             'cat_url_rewrited' => $category->getLink(),
             'cat_href_title'   => $category->getHrefTitle(),
-            'cat_title'        => $value
+            'cat_title'        => $value,
         ]);
     }
 }

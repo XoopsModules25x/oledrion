@@ -1,4 +1,6 @@
-<?php namespace XoopsModules\Oledrion;
+<?php
+
+namespace XoopsModules\Oledrion;
 
 /*
  You may not change or alter any portion of this comment or credits
@@ -34,8 +36,9 @@ class VendorsHandler extends OledrionPersistableObjectHandler
      * VendorsHandler constructor.
      * @param \XoopsDatabase $db
      */
-    public function __construct(\XoopsDatabase $db)
-    { //                            Table               Classe          Id          Libellé
+    public function __construct(\XoopsDatabase $db = null)
+    {
+        //                            Table               Classe          Id          Libellé
         parent::__construct($db, 'oledrion_vendors', Vendors::class, 'vendor_id', 'vendor_name');
     }
 
@@ -57,7 +60,7 @@ class VendorsHandler extends OledrionPersistableObjectHandler
                                                                       'limit'   => 0,
                                                                       'sort'    => 'vendor_name',
                                                                       'order'   => 'ASC',
-                                                                      'idaskey' => true
+                                                                      'idaskey' => true,
                                                                   ]));
         $critere    = new \Criteria('vendor_id', 0, '<>');
         $critere->setLimit($parameters['limit']);
@@ -74,7 +77,7 @@ class VendorsHandler extends OledrionPersistableObjectHandler
      * Retourne le nombre de produits associés à un vendeur
      *
      * @param int $vendor_id L'ID du vendeur
-     * @return integer Le nombre de produits du vendeur
+     * @return int Le nombre de produits du vendeur
      */
     public function getVendorProductsCount($vendor_id)
     {
@@ -87,7 +90,7 @@ class VendorsHandler extends OledrionPersistableObjectHandler
      * Supprime un vendeur
      *
      * @param  Vendors $vendor
-     * @return boolean          Le résultat de la suppression
+     * @return bool          Le résultat de la suppression
      */
     public function deleteVendor(Vendors $vendor)
     {

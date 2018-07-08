@@ -12,17 +12,16 @@
 /**
  * @copyright    XOOPS Project https://xoops.org/
  * @license      GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package
  * @since
  * @author       XOOPS Development Team
  */
-
 function getConfig()
 {
     $moduleDirName      = basename(dirname(__DIR__));
-    $moduleDirNameUpper = strtoupper($moduleDirName);
+    $moduleDirNameUpper = mb_strtoupper($moduleDirName);
+
     return (object)[
-        'name'           => strtoupper($moduleDirName) . ' Module Configurator',
+        'name'           => mb_strtoupper($moduleDirName) . ' Module Configurator',
         'paths'          => [
             'dirname'    => $moduleDirName,
             'admin'      => XOOPS_ROOT_PATH . '/modules/' . $moduleDirName . '/admin',
@@ -53,14 +52,13 @@ function getConfig()
             [
                 XOOPS_ROOT_PATH . '/modules/' . $moduleDirName . '/testdata/uploads/thumbs',
                 XOOPS_UPLOAD_PATH . '/' . $moduleDirName . '/thumbs',
-            ]
+            ],
         ],
 
         'templateFolders' => [
             '/templates/',
             '/templates/blocks/',
-            '/templates/admin/'
-
+            '/templates/admin/',
         ],
         'oldFiles'        => [
             '/class/request.php',

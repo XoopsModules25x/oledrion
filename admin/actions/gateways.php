@@ -18,7 +18,8 @@
  */
 
 use XoopsModules\Oledrion;
-use XoopsModules\Oledrion\Gateways;
+
+//use XoopsModules\Oledrion\Gateways;
 
 /**
  * Gestion des passerelles de paiement
@@ -27,11 +28,12 @@ if (!defined('OLEDRION_ADMIN')) {
     exit();
 }
 
-global $baseurl; // Pour faire taire les warnings de Zend Studio
+global $baseurl; // To silence the warnings of Zend Studio
 
 switch ($action) {
     // ****************************************************************************************************************
-    case 'default': // Liste des passerelles de paiement installés
+    case 'default': // List of payment gateways installed
+
         // ****************************************************************************************************************
         xoops_cp_header();
         $adminObject = \Xmf\Module\Admin::getInstance();
@@ -42,7 +44,7 @@ switch ($action) {
         if (file_exists(OLEDRION_GATEWAY_LOG_PATH)) {
             echo "<a href='" . $baseurl . "?op=gateways&action=seelog'>" . _AM_OLEDRION_GATEWAYS_SEELOG . '</a><br>';
         }
-        $currentGateway = \XoopsModules\Oledrion\Gateways::getCurrentGateway();
+        $currentGateway = ucfirst(\XoopsModules\Oledrion\Gateways::getCurrentGateway());
         $class          = '';
         echo "<form method='post' action='" . $baseurl . "'><input type='hidden' name='op' id='op' value='gateways'><input type='hidden' name='action' id='action' value='setDefaultGateway'>";
         echo "<table width='100%' cellspacing='1' cellpadding='3' border='0' class='outer'>\n";
@@ -59,17 +61,18 @@ switch ($action) {
              . "</th><th align='center'>"
              . _AM_OLEDRION_GATEWAYS_USED
              . "</th></tr>\n";
-        $installedGateways = Oledrion\Gateways::getInstalledGatewaysList();
+        $installedGateways = \XoopsModules\Oledrion\Gateways::getInstalledGatewaysList();
         $gatewaysCount     = 0;
 
         foreach ($installedGateways as $installedGateway) {
-            if (Gateways::gatewayClassFileExists($installedGateway)) { // Il y a une classe donc c'est bon
-                if (!Gateways::loadGatewaysLanguageDefines($installedGateway)) { // On n'a pas réussi à charger le fichier de traduction
+            if (\XoopsModules\Oledrion\Gateways::gatewayClassFileExists($installedGateway)) {
+                // There is a class, so it's good
+                if (!\XoopsModules\Oledrion\Gateways::loadGatewaysLanguageDefines($installedGateway)) {
+                    // We were unable to load the translation file
                     continue;
                 }
-                Gateways::includeGatewayClass($installedGateway); // Chargement du fichier de la classe
-                if (Gateways::gatewayClassExists($installedGateway)) {
-                    $gatewayClassName = Oledrion\Gateways::gatewayClassName($installedGateway);
+                $gatewayClassName = '\XoopsModules\Oledrion\Gateways\\' . $installedGateway . '\\' . $installedGateway;
+                if (class_exists($gatewayClassName)) {
                     $temporaryGateway = new $gatewayClassName();
                     if (is_object($temporaryGateway)) {
                         ++$gatewaysCount;
@@ -111,10 +114,11 @@ switch ($action) {
         }
         echo "</table>\n";
         require_once OLEDRION_ADMIN_PATH . 'admin_footer.php';
-        break;
 
+        break;
     // ****************************************************************************************************************
     case 'seelog': // Voir le contenu du fichier log
+
         // ****************************************************************************************************************
         xoops_cp_header();
         global $xoopsConfig;
@@ -130,16 +134,17 @@ switch ($action) {
         echo "</pre>\n";
         echo "</div>\n";
         require_once OLEDRION_ADMIN_PATH . 'admin_footer.php';
-        break;
 
+        break;
     // ****************************************************************************************************************
-    case 'setDefaultGateway': // Choix de la passerelle de paiement par défaut
+    case 'setdefaultgateway': // Choosing the default payment gateway
+
         // ****************************************************************************************************************
         xoops_cp_header();
         //        oledrion_adminMenu(12);
         $opRedirect = '?op=gateways';
-        $gateway    = isset($_POST['gateway']) ? strtolower($_POST['gateway']) : '';
-        $gateway    = Oledrion\Gateways::purifyGatewayName($gateway);
+        $gateway    = isset($_POST['gateway']) ? mb_strtolower($_POST['gateway']) : '';
+        $gateway    = \XoopsModules\Oledrion\Gateways::purifyGatewayName($gateway);
         if (empty($gateway)) {
             Oledrion\Utility::redirect(_AM_OLEDRION_ERROR_1, $baseurl . $opRedirect, 5);
         }
@@ -148,31 +153,32 @@ switch ($action) {
         } else {
             Oledrion\Utility::redirect(_AM_OLEDRION_SAVE_PB, $baseurl . $opRedirect, 4);
         }
-        break;
 
+        break;
     // ****************************************************************************************************************
-    case 'parameters': // Paramètres de la passerelle de paiement sélectionnée
+    case 'parameters': // Settings for the selected payment gateway
+
         // ****************************************************************************************************************
         xoops_cp_header();
         oledrion_adminMenu(12);
         Oledrion\Utility::htitle(_AM_OLEDRION_INSTALLED_GATEWAYS, 4);
         $opRedirect = '?op=gateways';
-        $gateway    = isset($_GET['gateway']) ? strtolower($_GET['gateway']) : '';
-        $gateway    = Oledrion\Gateways::purifyGatewayName($gateway);
+        $gateway    = mb_strtolower(\Xmf\Request::getString('gateway', '', 'GET')); //isset($_GET['gateway']) ? mb_strtolower($_GET['gateway']) : '';
+        $gateway    = ucfirst(\XoopsModules\Oledrion\Gateways::purifyGatewayName($gateway));
         if (empty($gateway)) {
             Oledrion\Utility::redirect(_AM_OLEDRION_ERROR_1, $baseurl . $opRedirect, 5);
         }
-        if (Gateways::gatewayClassFileExists($gateway)) { // Il y a une classe donc c'est bon
+        if (\XoopsModules\Oledrion\Gateways::gatewayClassFileExists($gateway)) {
+            // There is a class, so it's good
             $languageFilename     = '';
-            $languageFileIncluded = Oledrion\Gateways::loadGatewaysLanguageDefines($gateway, $languageFilename);
+            $languageFileIncluded = \XoopsModules\Oledrion\Gateways::loadGatewaysLanguageDefines($gateway, $languageFilename);
             if (!$languageFileIncluded) {
                 Oledrion\Utility::redirect(_AM_OLEDRION_GATEWAYS_ERROR2, $baseurl . $opRedirect, 4);
             }
-            Gateways::includeGatewayClass($gateway);
-            if (Gateways::gatewayClassExists($gateway)) {
-                $gatewayClassName = Oledrion\Gateways::gatewayClassName($gateway);
+            $gatewayClassName = '\XoopsModules\Oledrion\Gateways\\' . $gateway . '\\' . $gateway;
+            if (class_exists($gatewayClassName)) {
                 $temporaryGateway = new $gatewayClassName();
-                if (!Gateways::asGoodAncestor($temporaryGateway)) {
+                if (!\XoopsModules\Oledrion\Gateways::asGoodAncestor($temporaryGateway)) {
                     Oledrion\Utility::redirect(_AM_OLEDRION_GATEWAYS_ERROR4, $baseurl . $opRedirect, 4);
                 }
                 $temporaryGateway->languageFilename = $languageFilename;
@@ -185,31 +191,32 @@ switch ($action) {
         } else {
             Oledrion\Utility::redirect(_AM_OLEDRION_GATEWAYS_ERROR1, $baseurl . $opRedirect, 4);
         }
-        break;
 
+        break;
     // ****************************************************************************************************************
-    case 'saveparameters': // Enregistrement des paramètres de la passerelle de paiement
+    case 'saveparameters': // Saving payment gateway settings
+
         // ****************************************************************************************************************
         xoops_cp_header();
         oledrion_adminMenu(12);
         $opRedirect = '?op=gateways';
-        $gateway    = isset($_POST['gateway']) ? strtolower($_POST['gateway']) : '';
-        $gateway    = Oledrion\Gateways::purifyGatewayName($gateway);
+        $gateway    = isset($_POST['gateway']) ? mb_strtolower($_POST['gateway']) : '';
+        $gateway    = ucfirst(\XoopsModules\Oledrion\Gateways::purifyGatewayName($gateway));
         if (empty($gateway)) {
             Oledrion\Utility::redirect(_AM_OLEDRION_ERROR_1, $baseurl . $opRedirect, 5);
         }
-        if (!Gateways::isInstalledGatewayName($gateway)) {
+        if (!\XoopsModules\Oledrion\Gateways::isInstalledGatewayName($gateway)) {
             Oledrion\Utility::redirect(_AM_OLEDRION_GATEWAYS_ERROR5, $baseurl . $opRedirect, 4);
         }
-        if (Gateways::gatewayClassFileExists($gateway)) {
-            if (!Gateways::loadGatewaysLanguageDefines($gateway)) { // Le chargement des traductions a échoué
+        if (\XoopsModules\Oledrion\Gateways::gatewayClassFileExists($gateway)) {
+            if (!\XoopsModules\Oledrion\Gateways::loadGatewaysLanguageDefines($gateway)) {
+                // Translation loading failed
                 Oledrion\Utility::redirect(_AM_OLEDRION_GATEWAYS_ERROR2, $baseurl . $opRedirect, 4);
             }
-            Gateways::includeGatewayClass($gateway);
-            if (Gateways::gatewayClassExists($gateway)) {
-                $gatewayClassName = Oledrion\Gateways::gatewayClassName($gateway);
+            $gatewayClassName = '\XoopsModules\Oledrion\Gateways\\' . $gateway . '\\' . $gateway;
+            if (class_exists($gatewayClassName)) {
                 $temporaryGateway = new $gatewayClassName();
-                if (!Gateways::asGoodAncestor($temporaryGateway)) {
+                if (!\XoopsModules\Oledrion\Gateways::asGoodAncestor($temporaryGateway)) {
                     Oledrion\Utility::redirect(_AM_OLEDRION_GATEWAYS_ERROR4, $baseurl . $opRedirect, 4);
                 }
                 if ($temporaryGateway->saveParametersForm($_POST)) {
@@ -223,5 +230,6 @@ switch ($action) {
         } else {
             Oledrion\Utility::redirect(_AM_OLEDRION_GATEWAYS_ERROR1, $baseurl . $opRedirect, 4);
         }
+
         break;
 }

@@ -1,4 +1,6 @@
-<?php namespace XoopsModules\Oledrion;
+<?php
+
+namespace XoopsModules\Oledrion;
 
 /*
  You may not change or alter any portion of this comment or credits
@@ -31,8 +33,9 @@ class PaymentLogHandler extends OledrionPersistableObjectHandler
      * PaymentLogHandler constructor.
      * @param \XoopsDatabase $db
      */
-    public function __construct(\XoopsDatabase $db)
-    { //                                       Table                         Classe                  Id
+    public function __construct(\XoopsDatabase $db = null)
+    {
+        //                         Table                         Classe       Id
         parent::__construct($db, 'oledrion_payment_log', PaymentLog::class, 'log_id');
     }
 }

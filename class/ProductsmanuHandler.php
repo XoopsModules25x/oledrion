@@ -1,4 +1,6 @@
-<?php namespace XoopsModules\Oledrion;
+<?php
+
+namespace XoopsModules\Oledrion;
 
 /*
  You may not change or alter any portion of this comment or credits
@@ -35,8 +37,9 @@ class ProductsmanuHandler extends OledrionPersistableObjectHandler
      * ProductsmanuHandler constructor.
      * @param \XoopsDatabase $db
      */
-    public function __construct(\XoopsDatabase $db)
-    { //                            Table                   Classe              Id
+    public function __construct(\XoopsDatabase $db = null)
+    {
+        //                            Table                   Classe              Id
         parent::__construct($db, 'oledrion_productsmanu', Productsmanu::class, 'pm_id');
     }
 
@@ -44,7 +47,7 @@ class ProductsmanuHandler extends OledrionPersistableObjectHandler
      * Retourne le nombre de produits associé à un fabricant
      *
      * @param int $pm_manu_id L'identifiant du fabricant
-     * @return integer Le nombre de fabricants
+     * @return int Le nombre de fabricants
      */
     public function getManufacturerProductsCount($pm_manu_id)
     {
@@ -73,9 +76,9 @@ class ProductsmanuHandler extends OledrionPersistableObjectHandler
     /**
      * Retourne les identifiants des produits d'un fabricant
      *
-     * @param int $pm_manu_id L'identifiant du fabricant
-     * @param  int     $start
-     * @param  int     $limit
+     * @param int  $pm_manu_id L'identifiant du fabricant
+     * @param  int $start
+     * @param  int $limit
      * @return array  Les ID des produits
      */
     public function getProductsIdsFromManufacturer($pm_manu_id, $start = 0, $limit = 0)
@@ -98,7 +101,7 @@ class ProductsmanuHandler extends OledrionPersistableObjectHandler
      * Supprime un produit d'un fabricant
      *
      * @param int $pm_product_id
-     * @return boolean
+     * @return bool
      */
     public function removeManufacturerProduct($pm_product_id)
     {

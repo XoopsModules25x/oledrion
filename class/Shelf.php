@@ -1,4 +1,6 @@
-<?php namespace XoopsModules\Oledrion;
+<?php
+
+namespace XoopsModules\Oledrion;
 
 /*
  You may not change or alter any portion of this comment or credits
@@ -26,16 +28,15 @@
 
 use XoopsModules\Oledrion;
 
-include dirname(__DIR__) . '/preloads/autoloader.php';
-include dirname(__DIR__) . '/include/common.php';
+require_once dirname(__DIR__) . '/preloads/autoloader.php';
+require_once dirname(__DIR__) . '/include/common.php';
 
 /**
  * Class Shelf
- * @package XoopsModules\Oledrion
  */
 class Shelf
 {
-//mb    private $handlers;
+    //mb    private $handlers;
 
     /**
      * Shelf constructor.
@@ -63,8 +64,9 @@ class Shelf
      */
     public function getProductsCount($type = 'recent', $category = 0, $excluded = 0)
     {
-        switch (strtolower($type)) {
+        switch (mb_strtolower($type)) {
             case 'recent':
+
                 $db              = \XoopsDatabaseFactory::getDatabaseConnection();
                 $productsHandler = new Oledrion\ProductsHandler($db);
 
@@ -185,7 +187,7 @@ class Shelf
         $thisMonthOnly       = $parametersValues['thisMonthOnly'];
         $ret                 = $xoopsUsersIDs = $users = $relatedProducts = $productsManufacturers = $manufacturersPerProduct = $products = $productsIds = $categoriesIds = $vendorsIds = $manufacturersIds = $manufacturers = $categories = $vendors = [];
         // On commence par récupérer la liste des produits
-        switch (strtolower($productType)) {
+        switch (mb_strtolower($productType)) {
             case 'recent':
 
                 $products = $productsHandler->getRecentProducts(new Oledrion\Parameters([
@@ -195,19 +197,21 @@ class Shelf
                                                                                             'sort'          => $sort,
                                                                                             'order'         => $order,
                                                                                             'excluded'      => $excluded,
-                                                                                            'thisMonthOnly' => $thisMonthOnly
+                                                                                            'thisMonthOnly' => $thisMonthOnly,
                                                                                         ]));
-                break;
 
+                break;
             case 'mostsold':
+
                 $tempProductsIds = [];
                 $tempProductsIds = $caddyHandler->getMostSoldProducts($start, $limit, $category, $withQuantity);
                 if (count($tempProductsIds) > 0) {
                     $products = $productsHandler->getProductsFromIDs(array_keys($tempProductsIds));
                 }
-                break;
 
+                break;
             case 'recentlysold':
+
                 $tempProductsIds = [];
                 $tempProductsIds = $caddyHandler->getRecentlySoldProducts($start, $limit);
                 if (count($tempProductsIds) > 0) {
@@ -216,56 +220,61 @@ class Shelf
                 if (count($tempProductsIds) > 0) {
                     $products = $productsHandler->getProductsFromIDs(array_keys($tempProductsIds));
                 }
-                break;
 
+                break;
             case 'mostviewed':
+
                 $products = $productsHandler->getMostViewedProducts(new Oledrion\Parameters([
                                                                                                 'start'    => $start,
                                                                                                 'limit'    => $limit,
                                                                                                 'category' => $category,
                                                                                                 'sort'     => $sort,
-                                                                                                'order'    => $order
+                                                                                                'order'    => $order,
                                                                                             ]));
-                break;
 
+                break;
             case 'bestrated':
+
                 $products = $productsHandler->getBestRatedProducts(new Oledrion\Parameters([
                                                                                                'start'    => $start,
                                                                                                'limit'    => $limit,
                                                                                                'category' => $category,
                                                                                                'sort'     => $sort,
-                                                                                               'order'    => $order
+                                                                                               'order'    => $order,
                                                                                            ]));
-                break;
 
+                break;
             case 'recommended':
+
                 $products = $productsHandler->getRecentRecommended(new Oledrion\Parameters([
                                                                                                'start'    => $start,
                                                                                                'limit'    => $limit,
                                                                                                'category' => $category,
                                                                                                'sort'     => $sort,
-                                                                                               'order'    => $order
+                                                                                               'order'    => $order,
                                                                                            ]));
-                break;
 
+                break;
             case 'promotional':
+
                 $products = $productsHandler->getPromotionalProducts(new Oledrion\Parameters([
                                                                                                  'start'    => $start,
                                                                                                  'limit'    => $limit,
                                                                                                  'category' => $category,
                                                                                                  'sort'     => $sort,
-                                                                                                 'order'    => $order
+                                                                                                 'order'    => $order,
                                                                                              ]));
-                break;
 
+                break;
             case 'random':
+
                 $products = $productsHandler->getRandomProducts(new Oledrion\Parameters([
                                                                                             'start'         => $start,
                                                                                             'limit'         => $limit,
                                                                                             'category'      => $category,
                                                                                             'sort'          => $sort,
                                                                                             'order'         => $order,
-                                                                                            'thisMonthOnly' => $thisMonthOnly
+                                                                                            'thisMonthOnly' => $thisMonthOnly,
                                                                                         ]));
         }
 

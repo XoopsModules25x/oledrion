@@ -68,8 +68,9 @@ $op           = isset($_GET['op']) ? $_GET['op'] : 'default';
 switch ($op) {
     // product Print
     case 'print':
+
         require_once XOOPS_ROOT_PATH . '/header.php';
-        //
+
         $GLOBALS['current_category'] = 0;
         $xoopsConfig['sitename']     = $title;
         // product to array
@@ -86,15 +87,17 @@ switch ($op) {
         $xoopsTpl->assign('product', $product);
         // Display print page
         echo $xoopsTpl->fetch(OLEDRION_PATH . '/templates/oledrion_product_print.tpl');
-        break;
 
+        break;
     // product view
     case 'default':
+
     default:
         // Lecture des TVA ********************************************************************************
+
         $vatArray = [];
         $vatArray = $vatHandler->getAllVats(new Oledrion\Parameters());
-        //
+
         $GLOBALS['xoopsOption']['template_main'] = 'oledrion_product.tpl';
         $GLOBALS['current_category']             = $product->getVar('product_cid');
         require_once XOOPS_ROOT_PATH . '/header.php';
@@ -107,13 +110,11 @@ switch ($op) {
         //$xoTheme->addScript('browse.php?Frameworks/jquery/plugins/jquery.lightbox.js');
         //$xoTheme->addStylesheet(XOOPS_URL . '/modules/system/css/lightbox.css');
 
-        if (\Xmf\Request::hasVar('stock', 'GET') && 'add' === $_GET['stock']
-            && Oledrion\Utility::isMemberOfGroup(Oledrion\Utility::getModuleOption('grp_qty'))) {
+        if (\Xmf\Request::hasVar('stock', 'GET') && 'add' === $_GET['stock'] && Oledrion\Utility::isMemberOfGroup(Oledrion\Utility::getModuleOption('grp_qty'))) {
             $productsHandler->increaseStock($product);
         }
 
-        if (\Xmf\Request::hasVar('stock', 'GET') && 'substract' === $_GET['stock']
-            && Oledrion\Utility::isMemberOfGroup(Oledrion\Utility::getModuleOption('grp_qty'))) {
+        if (\Xmf\Request::hasVar('stock', 'GET') && 'substract' === $_GET['stock'] && Oledrion\Utility::isMemberOfGroup(Oledrion\Utility::getModuleOption('grp_qty'))) {
             $productsHandler->decreaseStock($product);
             $productsHandler->verifyLowStock($product);
         }
@@ -218,7 +219,7 @@ switch ($op) {
         $tbl_tmp       = $relatedHandler->getObjects($criteria);
 
         // S'il n'y a pas de produits relatifs et que la bonne option est activée, on recherche les produits relatfis "dans l'autre sens" (les cas où le produit courant est marqué comme produit relatif)
-        if (0 === count($tbl_tmp) && OLEDRION_RELATED_BOTH) {
+        if (OLEDRION_RELATED_BOTH && 0 === count($tbl_tmp)) {
             unset($criteria);
             $tbl_tmp       = [];
             $criteria      = new \Criteria('related_product_related', $product->getVar('product_id'), '=');
@@ -330,8 +331,7 @@ switch ($op) {
         // Breadcrumb *************************************************************************************
         $tbl_tmp       = [];
         $mytree        = new Oledrion\XoopsObjectTree($tbl_categories, 'cat_cid', 'cat_pid');
-        $tbl_ancestors = $mytree->getAllParent($product->getVar('product_cid'));
-        $tbl_ancestors = array_reverse($tbl_ancestors);
+        $tbl_ancestors = array_reverse($mytree->getAllParent($product->getVar('product_cid')));
         $tbl_tmp[]     = "<a href='" . OLEDRION_URL . "index.php' title='" . Oledrion\Utility::makeHrefTitle(Oledrion\Utility::getModuleName()) . "'>" . Oledrion\Utility::getModuleName() . '</a>';
         foreach ($tbl_ancestors as $item) {
             $tbl_tmp[] = "<a href='" . $item->getLink() . "' title='" . Oledrion\Utility::makeHrefTitle($item->getVar('cat_title')) . "'>" . $item->getVar('cat_title') . '</a>';
@@ -421,7 +421,7 @@ switch ($op) {
                                                                                       'category' => 0,
                                                                                       'sort'     => 'product_submitted DESC, product_title',
                                                                                       'order'    => '',
-                                                                                      'excluded' => $product_id
+                                                                                      'excluded' => $product_id,
                                                                                   ]));
             foreach ($tblTmp as $item) {
                 $product_price     = $item->getVar('product_price');
@@ -458,7 +458,7 @@ switch ($op) {
                     'product_new'                     => $item->isNewProduct(),
                     'product_stock'                   => $item->getVar('product_stock'),
                     'product_price'                   => $product_price,
-                    'product_price_ttc'               => $product_price_ttc
+                    'product_price_ttc'               => $product_price_ttc,
                 ];
                 $xoopsTpl->append('product_all_categs', $datas);
             }
@@ -476,7 +476,7 @@ switch ($op) {
                                                                                       'category' => $product->getVar('product_cid'),
                                                                                       'sort'     => 'product_submitted DESC, product_title',
                                                                                       'order'    => '',
-                                                                                      'excluded' => $product_id
+                                                                                      'excluded' => $product_id,
                                                                                   ]));
             foreach ($tblTmp as $item) {
                 $product_price     = $item->getVar('product_price');
@@ -513,7 +513,7 @@ switch ($op) {
                     'product_new'                     => $item->isNewProduct(),
                     'product_stock'                   => $item->getVar('product_stock'),
                     'product_price'                   => $product_price,
-                    'product_price_ttc'               => $product_price_ttc
+                    'product_price_ttc'               => $product_price_ttc,
                 ];
                 $xoopsTpl->append('product_current_categ', $datas);
             }
@@ -569,5 +569,6 @@ switch ($op) {
 
         require_once XOOPS_ROOT_PATH . '/include/comment_view.php';
         require_once XOOPS_ROOT_PATH . '/footer.php';
+
         break;
 }

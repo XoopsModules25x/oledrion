@@ -16,7 +16,6 @@ use XoopsModules\Oledrion;
  *
  * @return bool true if ready to uninstall, false if not
  */
-
 function xoops_module_pre_uninstall_oledrion(\XoopsModule $module)
 {
     // Do some synchronization if needed
@@ -24,7 +23,6 @@ function xoops_module_pre_uninstall_oledrion(\XoopsModule $module)
 }
 
 /**
- *
  * Performs tasks required during uninstallation of the module
  * @param \XoopsModule $module {@link XoopsModule}
  *
@@ -32,10 +30,10 @@ function xoops_module_pre_uninstall_oledrion(\XoopsModule $module)
  */
 function xoops_module_uninstall_oledrion(\XoopsModule $module)
 {
-    include dirname(__DIR__) . '/preloads/autoloader.php';
+    require_once dirname(__DIR__) . '/preloads/autoloader.php';
 
     $moduleDirName      = basename(dirname(__DIR__));
-    $moduleDirNameUpper = strtoupper($moduleDirName); //$capsDirName
+    $moduleDirNameUpper = mb_strtoupper($moduleDirName); //$capsDirName
     /** @var Oledrion\Helper $helper */
     /** @var Oledrion\Utility $utility */
     $helper  = Oledrion\Helper::getInstance();

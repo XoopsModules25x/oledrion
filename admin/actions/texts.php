@@ -29,6 +29,7 @@ if (!defined('OLEDRION_ADMIN')) {
 switch ($action) {
     // ****************************************************************************************************************
     case 'default': // Gestion des textes
+
         // ****************************************************************************************************************
         xoops_cp_header();
         // require_once OLEDRION_PATH . 'class/Registryfile.php';
@@ -78,10 +79,11 @@ switch ($action) {
         $sform->addElement($button_tray);
         $sform = Oledrion\Utility::formMarkRequiredFields($sform);
         $sform->display();
-        break;
 
+        break;
     // ****************************************************************************************************************
     case 'savetexts': // Sauvegarde des textes d'accueil ********************************************************
+
         // ****************************************************************************************************************
         // require_once OLEDRION_PATH . 'class/Registryfile.php';
         $registry = new Oledrion\Registryfile();
@@ -94,5 +96,6 @@ switch ($action) {
         $registry->savefile(Request::getText('welcome7', '', 'POST'), OLEDRION_TEXTFILE7);
         Oledrion\Utility::updateCache();
         Oledrion\Utility::redirect(_AM_OLEDRION_SAVE_OK, $baseurl . '?op=texts', 2);
+
         break;
 }

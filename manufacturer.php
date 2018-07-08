@@ -66,7 +66,8 @@ $products = [];
 $products = $manufacturerHandler->getManufacturerProducts($manu_id, $start, $limit);
 if (count($products) > 0) {
     $tmp = $categories = [];
-    foreach ($products as $product) { // Recherche des catégories
+    foreach ($products as $product) {
+        // Recherche des catégories
         $tmp[] = $product->getVar('product_cid');
     }
     $tmp = array_unique($tmp);
@@ -94,8 +95,8 @@ $helper->loadLanguage('modinfo');
 
 $xoopsTpl->assign('global_advert', Oledrion\Utility::getModuleOption('advertisement'));
 // By voltan
-$breadcrumb = [ /*OLEDRION_URL.'whoswho.php' => _OLEDRION_MANUFACTURERS,*/
-                OLEDRION_URL . basename(__FILE__) => $manufacturer->getVar('manu_name') . ' ' . $manufacturer->getVar('manu_commercialname')
+$breadcrumb = [/*OLEDRION_URL.'whoswho.php' => _OLEDRION_MANUFACTURERS,*/
+               OLEDRION_URL . basename(__FILE__) => $manufacturer->getVar('manu_name') . ' ' . $manufacturer->getVar('manu_commercialname'),
 ];
 $xoopsTpl->assign('breadcrumb', Oledrion\Utility::breadcrumb($breadcrumb));
 

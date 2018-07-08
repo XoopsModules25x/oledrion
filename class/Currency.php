@@ -1,4 +1,6 @@
-<?php namespace XoopsModules\Oledrion;
+<?php
+
+namespace XoopsModules\Oledrion;
 
 /*
  You may not change or alter any portion of this comment or credits
@@ -55,7 +57,6 @@ class Currency
      *
      * @return Currency
      */
-
     public static function getInstance()
     {
         static $instance;
@@ -89,10 +90,12 @@ class Currency
         $amount = $this->amountInCurrency($originalAmount);
 
         $monnaieLeft = $monnaieRight = $monnaieSleft = $monnaieSright = '';
-        if (1 == $this->_monnaiePlace) { // To the right
+        if (1 == $this->_monnaiePlace) {
+            // To the right
             $monnaieRight  = '' . $this->_moneyFull; // Long version
             $monnaieSright = '' . $this->_moneyShort; // Short version
-        } else { // To the left
+        } else {
+            // To the left
             $monnaieLeft  = $this->_moneyFull . ''; // Long version
             $monnaieSleft = $this->_moneyShort . ''; // Short version
         }

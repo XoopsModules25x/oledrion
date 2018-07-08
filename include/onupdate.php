@@ -12,7 +12,6 @@
 /**
  * @copyright    XOOPS Project https://xoops.org/
  * @license      GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package
  * @since
  * @author       XOOPS Development Team
  */
@@ -20,8 +19,7 @@
 use XoopsModules\Oledrion;
 use XoopsModules\Oledrion\Common;
 
-if ((!defined('XOOPS_ROOT_PATH')) || !($GLOBALS['xoopsUser'] instanceof \XoopsUser)
-    || !$GLOBALS['xoopsUser']->IsAdmin()) {
+if ((!defined('XOOPS_ROOT_PATH')) || !($GLOBALS['xoopsUser'] instanceof \XoopsUser) || !$GLOBALS['xoopsUser']->IsAdmin()) {
     exit('Restricted access' . PHP_EOL);
 }
 
@@ -38,7 +36,6 @@ function tableExists($tablename)
 }
 
 /**
- *
  * Prepares system prior to attempting to install module
  * @param \XoopsModule $module {@link XoopsModule}
  *
@@ -53,22 +50,21 @@ function xoops_module_pre_update_oledrion(\XoopsModule $module)
 
     $xoopsSuccess = $utility::checkVerXoops($module);
     $phpSuccess   = $utility::checkVerPhp($module);
+
     return $xoopsSuccess && $phpSuccess;
 }
 
 /**
- *
  * Performs tasks required during update of the module
  * @param \XoopsModule $module {@link XoopsModule}
  * @param null         $previousVersion
  *
  * @return bool true if update successful, false if not
  */
-
 function xoops_module_update_oledrion(\XoopsModule $module, $previousVersion = null)
 {
     $moduleDirName      = basename(dirname(__DIR__));
-    $moduleDirNameUpper = strtoupper($moduleDirName);
+    $moduleDirNameUpper = mb_strtoupper($moduleDirName);
 
     /** @var Oledrion\Helper $helper */
     /** @var Oledrion\Utility $utility */
@@ -80,8 +76,6 @@ function xoops_module_update_oledrion(\XoopsModule $module, $previousVersion = n
     $helper->loadLanguage('common');
 
     if ($previousVersion < 240) {
-
-
         //delete old HTML templates
         if (count($configurator->templateFolders) > 0) {
             foreach ($configurator->templateFolders as $folder) {
@@ -146,7 +140,9 @@ function xoops_module_update_oledrion(\XoopsModule $module, $previousVersion = n
 
         /** @var XoopsGroupPermHandler $grouppermHandler */
         $grouppermHandler = xoops_getHandler('groupperm');
+
         return $grouppermHandler->deleteByModule($module->getVar('mid'), 'item_read');
     }
+
     return true;
 }

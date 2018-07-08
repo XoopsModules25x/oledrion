@@ -16,7 +16,6 @@
  * @license     {@link http://www.fsf.org/copyleft/gpl.html GNU public license}
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
  */
-
 define('_OLEDRION_SEARCHFOR', 'جستجو برای');
 define('_OLEDRION_SEARCH', 'جستجو');
 define('_OLEDRION_CATEGORYC', 'شاخه: ');

@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * You may not change or alter any portion of this comment or credits
  * of supporting developers from this source code or any supporting source code
  * which is considered copyrighted (c) material of the original comment or credit authors.
@@ -10,7 +9,6 @@
  *
  * @copyright       XOOPS Project (https://xoops.org)
  * @license         GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
- * @package
  * @since           2.5.9
  * @author          Michael Beck (aka Mamba)
  */
@@ -20,19 +18,25 @@ use XoopsModules\Oledrion\Common;
 
 require_once dirname(dirname(dirname(__DIR__))) . '/mainfile.php';
 
-include dirname(__DIR__) . '/preloads/autoloader.php';
+require_once dirname(__DIR__) . '/preloads/autoloader.php';
 
 $op = \Xmf\Request::getCmd('op', '');
 
 switch ($op) {
     case 'load':
+
         loadSampleData();
+
         break;
     case 'save':
+
         saveSampleData();
+
         break;
     case 'exportschema':
+
         exportSchema();
+
         break;
 }
 
@@ -41,7 +45,7 @@ switch ($op) {
 function loadSampleData()
 {
     $moduleDirName      = basename(dirname(__DIR__));
-    $moduleDirNameUpper = strtoupper($moduleDirName); //$capsDirName
+    $moduleDirNameUpper = mb_strtoupper($moduleDirName); //$capsDirName
     /** @var Oledrion\Helper $helper */
     $helper       = Oledrion\Helper::getInstance();
     $utility      = new Oledrion\Utility();
@@ -197,9 +201,9 @@ function loadSampleData()
 function saveSampleData()
 {
     $moduleDirName      = basename(dirname(__DIR__));
-    $moduleDirNameUpper = strtoupper($moduleDirName);
+    $moduleDirNameUpper = mb_strtoupper($moduleDirName);
 
-    $tables = ['customer', 'part', 'service', 'servpart', 'vehicle', 'workorder', 'workserv',];
+    $tables = ['customer', 'part', 'service', 'servpart', 'vehicle', 'workorder', 'workserv'];
 
     foreach ($tables as $table) {
         \Xmf\Database\TableLoad::saveTableToYamlFile($moduleDirName . '_' . $table, $table . '.yml');
@@ -211,13 +215,16 @@ function saveSampleData()
 function exportSchema()
 {
     $moduleDirName      = basename(dirname(__DIR__));
-    $moduleDirNameUpper = strtoupper($moduleDirName);
-    try {
-        $migrate = new  Oledrion\Migrate($moduleDirName);
-        $migrate->saveCurrentSchema();
+    $moduleDirNameUpper = mb_strtoupper($moduleDirName);
 
-        redirect_header('../admin/index.php', 1, constant('CO_' . $moduleDirNameUpper . '_' . 'EXPORT_SCHEMA_SUCCESS'));
-    } catch (Exception $e) {
+    try {
+        // TODO set exportSchema
+//        $migrate = new Oledrion\Migrate($moduleDirName);
+//        $migrate->saveCurrentSchema();
+//
+//        redirect_header('../admin/index.php', 1, constant('CO_' . $moduleDirNameUpper . '_' . 'EXPORT_SCHEMA_SUCCESS'));
+    }
+    catch (\Throwable $e) {
         exit(constant('CO_' . $moduleDirNameUpper . '_' . 'EXPORT_SCHEMA_ERROR'));
     }
 }

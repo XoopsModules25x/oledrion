@@ -75,7 +75,7 @@ function oledrion_get_module_option($optionName = '')
  * Set a module's option
  * @param string $optionName
  * @param string $optionValue
- * @return
+ * @return bool
  */
 function oledrion_set_module_option($optionName = '', $optionValue = '')
 {

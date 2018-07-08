@@ -1,4 +1,6 @@
-<?php namespace XoopsModules\Oledrion;
+<?php
+
+namespace XoopsModules\Oledrion;
 
 /*
  You may not change or alter any portion of this comment or credits
@@ -14,7 +16,6 @@
  *
  * @copyright       XOOPS Project (https://xoops.org)
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package         wfdownload
  * @since           3.23
  * @author          Xoops Development Team
  */
@@ -37,7 +38,7 @@ class Directorychecker
      *
      * @return bool|string
      */
-    public static function getDirectoryStatus($path, $mode = 0777, array $languageConstants = [], $redirectFile)
+    public static function getDirectoryStatus($path, $mode, array $languageConstants, $redirectFile)
     {
         global $pathIcon16;
 
@@ -54,7 +55,7 @@ class Directorychecker
             $path_status = "<img src='" . $pathIcon16 . "/0.png'   >" . $path . ' ( ' . $languageConstants[1] . ' ) ' . '<a href=' . $_SERVER['PHP_SELF'] . "?op=dashboard&dircheck=createdir&amp;path=$path&amp;redirect=$redirectFile&amp;languageConstants=$myWords1>" . $languageConstants[2] . '</a>';
         } elseif (@is_writable($path)) {
             $path_status = "<img src='" . $pathIcon16 . "/1.png'   >" . $path . ' ( ' . $languageConstants[0] . ' ) ';
-            $currentMode = substr(decoct(fileperms($path)), 2);
+            $currentMode = mb_substr(decoct(fileperms($path)), 2);
             if ($currentMode != decoct($mode)) {
                 $path_status = "<img src='"
                                . $pathIcon16
@@ -68,7 +69,7 @@ class Directorychecker
                                . '</a>';
             }
         } else {
-            $currentMode = substr(decoct(fileperms($path)), 2);
+            $currentMode = mb_substr(decoct(fileperms($path)), 2);
             $path_status = "<img src='" . $pathIcon16 . "/0.png'   >" . $path . sprintf($languageConstants[3], decoct($mode), $currentMode) . '<a href=' . $_SERVER['PHP_SELF'] . "?mode&amp;path=$path&amp;redirect=$redirectFile&amp;languageConstants=$myWords2> " . $languageConstants[4] . '</a>';
         }
 
@@ -122,6 +123,7 @@ $dircheck = isset($_GET['dircheck']) ? filter_input(INPUT_GET, 'dircheck', FILTE
 
 switch ($dircheck) {
     case 'createdir':
+
         $languageConstants = [];
         if (\Xmf\Request::hasVar('path', 'GET')) {
             $path = filter_input(INPUT_GET, 'path', FILTER_SANITIZE_STRING);
@@ -138,6 +140,7 @@ switch ($dircheck) {
 
         break;
     case 'setperm':
+
         $languageConstants = [];
         if (\Xmf\Request::hasVar('path', 'GET')) {
             $path = filter_input(INPUT_GET, 'path', FILTER_SANITIZE_STRING);

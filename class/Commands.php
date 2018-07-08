@@ -1,4 +1,6 @@
-<?php namespace XoopsModules\Oledrion;
+<?php
+
+namespace XoopsModules\Oledrion;
 
 /*
  You may not change or alter any portion of this comment or credits
@@ -34,8 +36,6 @@ class Commands extends OledrionObject
      * constructor
      *
      * normally, this is called from child classes only
-     *
-     * @access public
      */
     public function __construct()
     {
@@ -90,12 +90,13 @@ class Commands extends OledrionObject
         require_once XOOPS_ROOT_PATH . '/class/xoopslists.php';
         $countries                           = [];
         $countries                           = \XoopsLists::getCountryList();
-        $oledrionCurrency                   = Oledrion\Currency::getInstance();
+        $oledrionCurrency                    = Oledrion\Currency::getInstance();
         $ret['cmd_total_fordisplay']         = $oledrionCurrency->amountForDisplay($this->getVar('cmd_total')); // Montant TTC de la commande
         $ret['cmd_shipping_fordisplay']      = $oledrionCurrency->amountForDisplay($this->getVar('cmd_shipping')); // Montant TTC des frais de port
         $ret['cmd_packing_price_fordisplay'] = $oledrionCurrency->amountForDisplay($this->getVar('cmd_packing_price'));
         $ret['cmd_text_fordisplay']          = nl2br($this->getVar('cmd_text')); // Liste des réductions accordées
-        if (isset($countries[$this->getVar('cmd_country')])) { // Libellé du pays de l'acheteur
+        if (isset($countries[$this->getVar('cmd_country')])) {
+            // Libellé du pays de l'acheteur
             $ret['cmd_country_label'] = $countries[$this->getVar('cmd_country')];
         }
         if ($this->getVar('cmd_uid') > 0) {

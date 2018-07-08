@@ -24,7 +24,7 @@
 use XoopsModules\Oledrion;
 
 require_once __DIR__ . '/header.php';
-$type       = isset($_GET['type']) ? strtolower($_GET['type']) : 'picture';
+$type       = isset($_GET['type']) ? mb_strtolower($_GET['type']) : 'picture';
 $product_id = \Xmf\Request::getInt('product_id', 0, 'GET');
 if ($product_id > 0) {
     $product = null;
@@ -48,6 +48,7 @@ if ($product_id > 0) {
 
 switch ($type) {
     case 'attachment': // Un fichier attaché à un produit
+
         $file_id = \Xmf\Request::getInt('file_id', 0, 'GET');
         if (0 == $file_id) {
             exit(_OLEDRION_ERROR13);
@@ -60,9 +61,10 @@ switch ($type) {
         header('Content-Type: ' . $attachedFile->getVar('file_mimetype'));
         header('Content-disposition: inline; filename="' . $attachedFile->getVar('file_filename') . '"');
         readfile($attachedFile->getPath());
-        break;
 
+        break;
     case 'picture': // L'image principale d'un produit
+
         xoops_header(true);
         echo "<div align='center' style='font-weight: bold;'><a href=\"javascript:self.close();\" title=\"" . _CLOSE . '">';
         if ($product->pictureExists()) {
@@ -77,6 +79,7 @@ switch ($type) {
         </div>
         <?php
         xoops_footer();
+
         break;
 }
 ?>

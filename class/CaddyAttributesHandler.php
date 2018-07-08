@@ -1,4 +1,6 @@
-<?php namespace XoopsModules\Oledrion;
+<?php
+
+namespace XoopsModules\Oledrion;
 
 /*
  You may not change or alter any portion of this comment or credits
@@ -34,8 +36,9 @@ class CaddyAttributesHandler extends OledrionPersistableObjectHandler
      * CaddyAttributesHandler constructor.
      * @param \XoopsDatabase $db
      */
-    public function __construct(\XoopsDatabase $db)
-    { //                                Table                   Classe                      Id
+    public function __construct(\XoopsDatabase $db = null)
+    {
+        //                                Table                   Classe                      Id
         parent::__construct($db, 'oledrion_caddy_attributes', CaddyAttributes::class, 'ca_id');
     }
 
@@ -43,7 +46,7 @@ class CaddyAttributesHandler extends OledrionPersistableObjectHandler
      * Retourne le nombre d'attributs liés à un caddy
      *
      * @param int $ca_caddy_id L'ID du caddy concerné
-     * @return integer
+     * @return int
      * @since 2.3.2009.03.23
      */
     public function getAttributesCountForCaddy($ca_caddy_id)
@@ -54,7 +57,7 @@ class CaddyAttributesHandler extends OledrionPersistableObjectHandler
     /**
      * Retourne la liste formatée des attributs liés à un caddy
      *
-     * @param int  $ca_caddy_id L'identifiant de caddy
+     * @param int       $ca_caddy_id L'identifiant de caddy
      * @param  Products $product     Le produit concerné par le caddy
      * @return array
      * @since 2.3.2009.03.23
@@ -85,7 +88,7 @@ class CaddyAttributesHandler extends OledrionPersistableObjectHandler
      * Retourne le nombre de caddy attributs liés à un attribut
      *
      * @param int $ca_attribute_id L'Identifiant de l'attribut concerné
-     * @return integer
+     * @return int
      * @since 2.3.2009.03.23
      */
     public function getCaddyCountFromAttributeId($ca_attribute_id)

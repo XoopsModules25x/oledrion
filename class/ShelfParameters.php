@@ -1,4 +1,6 @@
-<?php namespace XoopsModules\Oledrion;
+<?php
+
+namespace XoopsModules\Oledrion;
 
 /*
  You may not change or alter any portion of this comment or credits
@@ -159,7 +161,7 @@ class ShelfParameters
     /**
      * Indique s'il faut retourner les utilisateurs Xoops
      *
-     * @param  boolean $value
+     * @param  bool $value
      * @return ShelfParameters
      */
     public function setWithXoopsUser($value)
@@ -172,7 +174,7 @@ class ShelfParameters
     /**
      * Indique s'il faut retourner les produits relatifs
      *
-     * @param  boolean $value
+     * @param  bool $value
      * @return ShelfParameters
      */
     public function setWithRelatedProducts($value)
@@ -185,7 +187,7 @@ class ShelfParameters
     /**
      * Indique s'il faut retourner les quantités
      *
-     * @param  boolean $value
+     * @param  bool $value
      * @return ShelfParameters
      */
     public function setWithQuantity($value)
@@ -211,7 +213,7 @@ class ShelfParameters
     /**
      * Indique s'il faut retourner seulement les mois
      *
-     * @param  boolean $value
+     * @param  bool $value
      * @return ShelfParameters
      */
     public function setThisMonthOnly($value)

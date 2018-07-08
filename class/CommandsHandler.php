@@ -1,4 +1,6 @@
-<?php namespace XoopsModules\Oledrion;
+<?php
+
+namespace XoopsModules\Oledrion;
 
 /*
  You may not change or alter any portion of this comment or credits
@@ -19,7 +21,6 @@
  */
 
 use XoopsModules\Oledrion;
-use XoopsModules\Oledrion\Constants;
 
 /**
  * Gestion des commandes clients
@@ -35,8 +36,9 @@ class CommandsHandler extends OledrionPersistableObjectHandler
      * CommandsHandler constructor.
      * @param \XoopsDatabase $db
      */
-    public function __construct(\XoopsDatabase $db)
-    { //                        Table                   Classe           Id
+    public function __construct(\XoopsDatabase $db = null)
+    {
+        //                        Table                   Classe           Id
         parent::__construct($db, 'oledrion_commands', Commands::class, 'cmd_id');
     }
 
@@ -44,7 +46,7 @@ class CommandsHandler extends OledrionPersistableObjectHandler
      * Indique si c'est la première commande d'un client
      *
      * @param int $uid Identifiant de l'utilisateur
-     * @return boolean Indique si c'est le cas ou pas
+     * @return bool Indique si c'est le cas ou pas
      */
     public function isFirstCommand($uid = 0)
     {
@@ -52,11 +54,7 @@ class CommandsHandler extends OledrionPersistableObjectHandler
             $uid = Oledrion\Utility::getCurrentUserID();
         }
         $critere = new \Criteria('cmd_uid', (int)$uid, '=');
-        if ($this->getCount($critere) > 0) {
-            return true;
-        }
-
-        return false;
+        return $this->getCount($critere) > 0;
     }
 
     /**
@@ -64,7 +62,7 @@ class CommandsHandler extends OledrionPersistableObjectHandler
      *
      * @param int $uid       Identifiant de l'utilisateur
      * @param int $productId Identifiant du produit
-     * @return boolean Indique si c'est le cas ou pas
+     * @return bool Indique si c'est le cas ou pas
      */
     public function productAlreadyBought($uid = 0, $productId = 0)
     {
@@ -77,11 +75,7 @@ class CommandsHandler extends OledrionPersistableObjectHandler
             return 0;
         }
         list($count) = $this->db->fetchRow($result);
-        if ($count > 0) {
-            return true;
-        } else {
-            return false;
-        }
+        return $count > 0;
     }
 
     /**
@@ -382,7 +376,7 @@ class CommandsHandler extends OledrionPersistableObjectHandler
      * Retourne la dernière commande d'un utilisateur (si elle existe)
      *
      * @param int $uid Identifiant de la commande
-     * @return null
+     * @return null|string
      */
     public function getLastUserOrder($uid)
     {
@@ -406,7 +400,7 @@ class CommandsHandler extends OledrionPersistableObjectHandler
      * Supprime une commande et tout ce qui s'y rattache
      *
      * @param  Commands $order
-     * @return boolean
+     * @return bool
      */
     public function removeOrder(Commands $order)
     {

@@ -1,4 +1,6 @@
-<?php namespace XoopsModules\Oledrion;
+<?php
+
+namespace XoopsModules\Oledrion;
 
 /*
  You may not change or alter any portion of this comment or credits
@@ -16,7 +18,6 @@ use XoopsModules\Oledrion;
  * Persistable Object Handler class.
  * This class is responsible for providing data access mechanisms to the data source
  * of derived class objects. Original Author : Mithrandir
- *
  */
 class OledrionPersistableObjectHandler extends \XoopsPersistableObjectHandler
 {
@@ -25,10 +26,10 @@ class OledrionPersistableObjectHandler extends \XoopsPersistableObjectHandler
      *
      * @var string
      */
-//    public $table;
-//    public $keyName;
-//    public $className;
-//    public $identifierName;
+    //    public $table;
+    //    public $keyName;
+    //    public $className;
+    //    public $identifierName;
     public $cacheOptions = [];
 
     /**#@-*/
@@ -61,7 +62,7 @@ class OledrionPersistableObjectHandler extends \XoopsPersistableObjectHandler
                                          'cacheDir'               => OLEDRION_CACHE_PATH,
                                          'lifeTime'               => null,
                                          'automaticSerialization' => true,
-                                         'fileNameProtection'     => false
+                                         'fileNameProtection'     => false,
                                      ]);
         } else {
             $this->setCachingOptions($cacheOptions);
@@ -79,9 +80,9 @@ class OledrionPersistableObjectHandler extends \XoopsPersistableObjectHandler
     /**
      * Generates a unique ID for a Sql Query
      *
-     * @param  string  $query The SQL query for which we want a unidque ID
-     * @param int $start Which record to start at
-     * @param int $limit Max number of objects to fetch
+     * @param  string $query The SQL query for which we want a unidque ID
+     * @param int     $start Which record to start at
+     * @param int     $limit Max number of objects to fetch
      * @return string  An MD5 of the query
      */
     protected function _getIdForCache($query, $start, $limit)
@@ -95,8 +96,8 @@ class OledrionPersistableObjectHandler extends \XoopsPersistableObjectHandler
      * Convert a database resultset to a returnable array
      *
      * @param \mysqli_result $result    database resultset
-     * @param boolean        $id_as_key - should NOT be used with joint keys
-     * @param boolean        $as_object
+     * @param bool           $id_as_key - should NOT be used with joint keys
+     * @param bool           $as_object
      * @param string         $fields    Requested fields from the query
      *
      * @return array
@@ -164,7 +165,7 @@ class OledrionPersistableObjectHandler extends \XoopsPersistableObjectHandler
      *
      * @param  string           $field    Le champ dont on veut calculer le total
      * @param  \CriteriaElement $criteria {@link CriteriaElement} to match
-     * @return integer le total
+     * @return int le total
      */
     public function getSum($field, $criteria = null)
     {
@@ -220,8 +221,6 @@ class OledrionPersistableObjectHandler extends \XoopsPersistableObjectHandler
 
         return $retval;
     }
-
-
 
     //  check if target object is attempting to use duplicated info
 
@@ -316,11 +315,11 @@ class OledrionPersistableObjectHandler extends \XoopsPersistableObjectHandler
      *
      * @author Herve Thouzard - Instant Zero
      *
-     * @param int $start   Starting position
-     * @param int $limit   Maximum count of elements to return
-     * @param  string  $sort    Field to use for the sort
-     * @param  string  $order   Sort order
-     * @param  boolean $idAsKey Do we have to return an array whoses keys are the record's ID ?
+     * @param int     $start   Starting position
+     * @param int     $limit   Maximum count of elements to return
+     * @param  string $sort    Field to use for the sort
+     * @param  string $order   Sort order
+     * @param  bool   $idAsKey Do we have to return an array whoses keys are the record's ID ?
      * @return array   Array of current objects
      */
     public function getItems($start = 0, $limit = 0, $sort = '', $order = 'ASC', $idAsKey = true)

@@ -28,7 +28,7 @@ use XoopsModules\Oledrion\Constants;
  */
 function b_oledrion_my_lists_show($options)
 {
-    require XOOPS_ROOT_PATH . '/modules/oledrion/include/common.php';
+    require_once XOOPS_ROOT_PATH . '/modules/oledrion/include/common.php';
     $helper->loadLanguage('modinfo');
     $start = 0;
     $limit = (int)$options[0];
@@ -49,7 +49,7 @@ function b_oledrion_my_lists_show($options)
                                                                               'order'    => 'DESC',
                                                                               'idAsKey'  => true,
                                                                               'listType' => $listType,
-                                                                              'list_uid' => $uid
+                                                                              'list_uid' => $uid,
                                                                           ]));
     if (count($items) > 0) {
         foreach ($items as $item) {
@@ -68,7 +68,7 @@ function b_oledrion_my_lists_show($options)
  */
 function b_oledrion_my_lists_edit($options)
 {
-    include XOOPS_ROOT_PATH . '/modules/oledrion/include/common.php';
+    require_once XOOPS_ROOT_PATH . '/modules/oledrion/include/common.php';
     $form = '';
     $form .= "<table border='0'>";
     $form .= '<tr><td>' . _MB_OLEDRION_LISTS_COUNT . "</td><td><input type='text' name='options[]' id='options' value='" . (int)$options[0] . "'></td></tr>";

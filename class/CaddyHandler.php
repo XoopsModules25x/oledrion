@@ -1,4 +1,6 @@
-<?php namespace XoopsModules\Oledrion;
+<?php
+
+namespace XoopsModules\Oledrion;
 
 /*
  You may not change or alter any portion of this comment or credits
@@ -19,7 +21,6 @@
  */
 
 use XoopsModules\Oledrion;
-use XoopsModules\Oledrion\Constants;
 
 /**
  * Gestion des caddy
@@ -37,8 +38,9 @@ class CaddyHandler extends OledrionPersistableObjectHandler
      * Oledrion\CaddyHandler constructor.
      * @param \XoopsDatabase $db
      */
-    public function __construct(\XoopsDatabase $db)
-    { //                          Table             Classe          Id
+    public function __construct(\XoopsDatabase $db = null)
+    {
+        //                          Table             Classe          Id
         parent::__construct($db, 'oledrion_caddy', Caddy::class, 'caddy_id');
     }
 
@@ -46,7 +48,7 @@ class CaddyHandler extends OledrionPersistableObjectHandler
      * Renvoie, si on en trouve un, un produit qui s'est bien vendu avec un produit particulier
      *
      * @param  int $caddy_product_id Identifiant du produit dont on recherche le jumeau
-     * @return integer Le n° du produit le plus vendu avec le produit en question
+     * @return int Le n° du produit le plus vendu avec le produit en question
      */
     public function getBestWith($caddy_product_id)
     {
@@ -67,10 +69,10 @@ class CaddyHandler extends OledrionPersistableObjectHandler
     /**
      * Renvoie la liste des produits les plus vendus toutes catégories confondues
      *
-     * @param int $start Début de la recherche
-     * @param int $limit Nombre maximum d'enregistrements à retourner
-     * @param int|array     $product_cid
-     * @param bool    $withQuantity
+     * @param int       $start Début de la recherche
+     * @param int       $limit Nombre maximum d'enregistrements à retourner
+     * @param int|array $product_cid
+     * @param bool      $withQuantity
      * @return array   Les identifiants des X produits les plus vendus dans cette catégorie
      */
     public function getMostSoldProducts($start = 0, $limit = 0, $product_cid = 0, $withQuantity = false)
@@ -140,15 +142,15 @@ class CaddyHandler extends OledrionPersistableObjectHandler
     /**
      * Indique si le caddy est vide ou pas
      *
-     * @return boolean vide, ou pas...
+     * @return bool vide, ou pas...
      */
     public function isCartEmpty()
     {
         if (isset($_SESSION[self::CADDY_NAME])) {
             return false;
-        } else {
-            return true;
         }
+
+        return true;
     }
 
     /**
@@ -168,7 +170,7 @@ class CaddyHandler extends OledrionPersistableObjectHandler
     /**
      * Recharge le dernier panier de l'utilisateur
      *
-     * @return boolean
+     * @return bool
      */
     public function reloadPersistentCart()
     {
@@ -192,10 +194,9 @@ class CaddyHandler extends OledrionPersistableObjectHandler
     /**
      * Ajout d'un produit au caddy
      *
-     * @param  int $product_id Identifiant du produit
-     * @param  int $quantity   Quantité à ajouter
-     * @param  array   $attributes Les attributs du produit
-     * @return void
+     * @param  int   $product_id   Identifiant du produit
+     * @param  int   $quantity     Quantité à ajouter
+     * @param  array $attributes   Les attributs du produit
      * @note : Structure du panier (tableau en session) :
      *                             [clé] = numéro de 1 à N
      *                             [valeur] = array (
@@ -238,7 +239,8 @@ class CaddyHandler extends OledrionPersistableObjectHandler
             $_SESSION[self::CADDY_NAME] = $tbl_caddie;
         } else {
             $_SESSION[self::CADDY_NAME] = $tbl_caddie2;
-            if (is_object($xoopsUser)) { // Le produit était déjà dans le panier, on va mettre à jour la quantité
+            if (is_object($xoopsUser)) {
+                // Le produit était déjà dans le panier, on va mettre à jour la quantité
                 $persistentCartHandler->updateUserProductQuantity($product_id, $newQuantity);
             }
         }
@@ -468,7 +470,7 @@ class CaddyHandler extends OledrionPersistableObjectHandler
      * Marque un caddy comme ayant été téléchargé
      *
      * @param \XoopsModules\Oledrion\Caddy $caddy
-     * @return boolean        Le résultat de la mise à jour
+     * @return bool        Le résultat de la mise à jour
      */
     public function markCaddyAsNotDownloadableAnyMore(Caddy $caddy)
     {
@@ -481,7 +483,7 @@ class CaddyHandler extends OledrionPersistableObjectHandler
      * Supprime les caddies associés à une commande
      *
      * @param  int $caddy_cmd_id
-     * @return boolean
+     * @return bool
      */
     public function removeCartsFromOrderId($caddy_cmd_id)
     {

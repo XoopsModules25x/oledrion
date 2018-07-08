@@ -162,7 +162,7 @@ function xoops_module_update_oledrion($module, $version)
                     'product_price',
                     'product_shipping_price',
                     'product_discount_price',
-                    'product_ecotaxe'
+                    'product_ecotaxe',
                 ],
                 'oledrion_caddy'     => ['caddy_price'],
                 'oledrion_commands'  => ['cmd_shipping'],
@@ -171,8 +171,8 @@ function xoops_module_update_oledrion($module, $version)
                     'disc_price_degress_l2total',
                     'disc_price_degress_l3total',
                     'disc_price_degress_l4total',
-                    'disc_price_degress_l5total'
-                ]
+                    'disc_price_degress_l5total',
+                ],
             ];
             foreach ($tablesToUpdates as $tableName => $fields) {
                 foreach ($fields as $field) {

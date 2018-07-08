@@ -1,4 +1,6 @@
-<?php namespace XoopsModules\Oledrion;
+<?php
+
+namespace XoopsModules\Oledrion;
 
 /*
  You may not change or alter any portion of this comment or credits
@@ -34,8 +36,6 @@ class Vat extends OledrionObject
      * constructor
      *
      * normally, this is called from child classes only
-     *
-     * @access public
      */
     public function __construct()
     {
@@ -52,7 +52,7 @@ class Vat extends OledrionObject
     {
         $ret                      = [];
         $ret                      = parent::toArray($format);
-        $oledrionCurrency        = Oledrion\Currency::getInstance();
+        $oledrionCurrency         = Oledrion\Currency::getInstance();
         $ret['vat_rate_formated'] = $oledrionCurrency->amountInCurrency((float)$this->getVar('vat_rate', 'e'));
 
         return $ret;

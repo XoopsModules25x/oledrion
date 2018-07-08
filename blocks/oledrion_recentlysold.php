@@ -22,12 +22,12 @@ use XoopsModules\Oledrion;
 /**
  * This block shows the products that were recently sold
  * @param  array $options [0] = Nombre maximum de produits à voir
- * @return array
+ * @return array|bool
  */
 function b_oledrion_recentlysold_show($options)
 {
     global $xoopsConfig, $xoTheme;
-    require XOOPS_ROOT_PATH . '/modules/oledrion/include/common.php';
+    require_once XOOPS_ROOT_PATH . '/modules/oledrion/include/common.php';
     $categoryId = 0;
     $start      = 0;
     $limit      = $options[0];
@@ -56,7 +56,7 @@ function b_oledrion_recentlysold_show($options)
  */
 function b_oledrion_recentlysold_edit($options)
 {
-    require XOOPS_ROOT_PATH . '/modules/oledrion/include/common.php';
+    require_once XOOPS_ROOT_PATH . '/modules/oledrion/include/common.php';
     $form = '';
     $form .= "<table border='0'>";
     $form .= '<tr><td>' . _MB_OLEDRION_PRODUCTS_CNT . "</td><td><input type='text' name='options[]' id='options' value='" . $options[0] . "'></td></tr>";
@@ -75,7 +75,7 @@ function b_oledrion_recentlysold_duplicatable($options)
     if (!is_array($options)) {
         $options = explode('|', $options);
     }
-    $block   = b_oledrion_bestsales_show($options);
+    $block = b_oledrion_bestsales_show($options);
 
     $tpl = new \XoopsTpl();
     $tpl->assign('block', $block);

@@ -43,12 +43,14 @@ $isAdmin = Oledrion\Utility::isAdmin();
 switch ($op) {
     // ****************************************************************************************************************
     case 'updatePrice': // Mise à jour du prix du produit en fonction des attributs sélectionnés
+
         // ****************************************************************************************************************
         $product_id = \Xmf\Request::getInt('product_id', 0, 'POST');
-        $product = null;
-        if (\Xmf\Request::hasVar('formcontent', 'POST') && $product_id > 0) {
+        $product    = null;
+        if ($product_id > 0 && \Xmf\Request::hasVar('formcontent', 'POST')) {
             $data = $data = $attributesIds = $attributes = $templateProduct = [];
             //            $handlers = HandlerManager::getInstance();
+            /** @var \XoopsModules\Oledrion\Products $product */
             $product = $productsHandler->get($product_id);
             if (!is_object($product)) {
                 return _OLEDRION_NA;
@@ -119,9 +121,11 @@ switch ($op) {
             $template->assign('product', $templateProduct);
             $return = $template->fetch('db:oledrion_product_price.tpl');
         }
+
         break;
     // ajax search
     case 'search': // ajax search
+
         $key = $_GET['part'];
         if (isset($key) && '' !== $key) {
             // Set captul
@@ -185,9 +189,11 @@ switch ($op) {
             }
             $return = json_encode($results);
         }
+
         break;
     // Product output as json
     case 'product':
+
         $start = \Xmf\Request::getInt('start', 0, 'GET');
         $limit = \Xmf\Request::getInt('limit', 0, 'GET');
         if (isset($start) && '' !== $start) {
@@ -220,9 +226,11 @@ switch ($op) {
             }
             $return = json_encode($ret);
         }
+
         break;
     // Product output as json
     case 'category':
+
         $start = \Xmf\Request::getInt('start', 0, 'GET');
         if (isset($start) && '' !== $start) {
             $ret      = [];
@@ -245,10 +253,11 @@ switch ($op) {
             }
             $return = json_encode($ret);
         }
-        break;
 
+        break;
     // Product output as json
     case 'price':
+
         $product_id = \Xmf\Request::getInt('product_id', 0, 'GET');
         $product    = $productsHandler->get($product_id);
         if (is_object($product)) {
@@ -264,35 +273,31 @@ switch ($op) {
                 }
                 $ret = [
                     'product_id'    => $product->getVar('product_id'),
-                    'product_price' => $product_price
+                    'product_price' => $product_price,
                 ];
             } else {
                 $ret = [
                     'product_id'    => $product->getVar('product_id'),
-                    'product_price' => 0
+                    'product_price' => 0,
                 ];
             }
         } else {
             $ret = [
                 'product_id'    => 0,
-                'product_price' => 0
+                'product_price' => 0,
             ];
         }
         $return = json_encode($ret);
-        break;
 
+        break;
     // Ajax rate
     case 'rate':
+
         if (\Xmf\Request::hasVar('product_id', 'POST')) {
             $product_id = \Xmf\Request::getInt('product_id', 0, 'POST');
             $product    = null;
             $product    = $productsHandler->get($product_id);
-            if (is_object($product)
-                && $product->getVar('product_online')
-                && !Oledrion\Utility::getModuleOption('show_unpublished')
-                && Oledrion\Utility::getModuleOption('nostock_display')
-                && $product->getVar('product_submitted') < time()
-                && $product->getVar('product_stock')) {
+            if (is_object($product) && $product->getVar('product_online') && !Oledrion\Utility::getModuleOption('show_unpublished') && Oledrion\Utility::getModuleOption('nostock_display') && $product->getVar('product_submitted') < time() && $product->getVar('product_stock')) {
                 $GLOBALS['current_category'] = -1;
                 $ratinguser                  = Oledrion\Utility::getCurrentUserID();
                 $canRate                     = true;
@@ -307,8 +312,8 @@ switch ($op) {
                 }
                 if ($canRate) {
                     /* if ($_POST['rating'] == '--') {
-                        Oledrion\Utility::redirect(_OLEDRION_NORATING, OLEDRION_URL . 'product.php?product_id=' . $product->getVar('product_id'), 4);
-                    } */
+                                            Oledrion\Utility::redirect(_OLEDRION_NORATING, OLEDRION_URL . 'product.php?product_id=' . $product->getVar('product_id'), 4);
+                                        } */
                     $rating = \Xmf\Request::getInt('rating', 0, 'POST');
                     /* if ($rating < 1 || $rating > 10) {
                         exit(_ERRORS);
@@ -325,7 +330,7 @@ switch ($op) {
                         //$finalrating = number_format($finalrating, 4);
 
                         $productsHandler->updateRating($product_id, $sumRating, $totalVotes);
-                    //$ratemessage = _OLEDRION_VOTEAPPRE . '<br>' . sprintf(_OLEDRION_THANKYOU, $xoopsConfig['sitename']);
+                        //$ratemessage = _OLEDRION_VOTEAPPRE . '<br>' . sprintf(_OLEDRION_THANKYOU, $xoopsConfig['sitename']);
                         //Oledrion\Utility::redirect($ratemessage, OLEDRION_URL . 'product.php?product_id=' . $product->getVar('product_id'), 2);
                     } else {
                         $return = false;
@@ -335,9 +340,10 @@ switch ($op) {
                 }
             }
         }
-        break;
 
+        break;
     case 'order':
+
         $ret            = [];
         $ret['status']  = 0;
         $ret['message'] = 'error';
@@ -503,6 +509,7 @@ switch ($op) {
             }
         }
         $return = json_encode($ret);
+
         break;
 }
 echo $return;

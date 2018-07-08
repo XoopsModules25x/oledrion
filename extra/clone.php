@@ -18,7 +18,7 @@ $patterns = [
     // first one must be module directory name
     'oledrion' => 'bouquins',
     'OLEDRION' => 'BOUQUINS',
-    'Oledrion' => 'Bouquins'
+    'Oledrion' => 'Bouquins',
 ];
 
 $patKeys   = array_keys($patterns);

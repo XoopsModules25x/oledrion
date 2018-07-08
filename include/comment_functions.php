@@ -23,7 +23,7 @@
 
 function oledrion_com_update($product_id, $total_num)
 {
-    include XOOPS_ROOT_PATH . '/modules/oledrion/include/common.php';
+    require_once XOOPS_ROOT_PATH . '/modules/oledrion/include/common.php';
     global $productsHandler;
     if (!is_object($productsHandler)) {
         //        $handlers            = HandlerManager::getInstance();

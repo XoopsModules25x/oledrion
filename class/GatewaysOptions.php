@@ -1,4 +1,6 @@
-<?php namespace XoopsModules\Oledrion;
+<?php
+
+namespace XoopsModules\Oledrion;
 
 /*
  You may not change or alter any portion of this comment or credits
@@ -21,7 +23,7 @@
 use XoopsModules\Oledrion;
 
 /**
- * Gestion des options des passerelles de paiement
+ * Managing payment gateway options
  */
 // require_once __DIR__ . '/classheader.php';
 
@@ -34,8 +36,6 @@ class GatewaysOptions extends OledrionObject
      * constructor
      *
      * normally, this is called from child classes only
-     *
-     * @access public
      */
     public function __construct()
     {

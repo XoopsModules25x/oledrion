@@ -1,4 +1,6 @@
-<?php namespace XoopsModules\Oledrion;
+<?php
+
+namespace XoopsModules\Oledrion;
 
 /*
  You may not change or alter any portion of this comment or credits
@@ -31,8 +33,9 @@ class DeliveryHandler extends OledrionPersistableObjectHandler
      * DeliveryHandler constructor.
      * @param \XoopsDatabase $db
      */
-    public function __construct(\XoopsDatabase $db)
-    { //                            Table                   Classe              Id
+    public function __construct(\XoopsDatabase $db = null)
+    {
+        //                            Table                   Classe              Id
         parent::__construct($db, 'oledrion_delivery', Delivery::class, 'delivery_id');
     }
 
@@ -46,7 +49,7 @@ class DeliveryHandler extends OledrionPersistableObjectHandler
                                                                       'start' => 0,
                                                                       'limit' => 0,
                                                                       'sort'  => 'delivery_id',
-                                                                      'order' => 'ASC'
+                                                                      'order' => 'ASC',
                                                                   ]));
         $critere    = new \Criteria('delivery_id', 0, '<>');
         $critere->setLimit($parameters['limit']);
@@ -72,7 +75,7 @@ class DeliveryHandler extends OledrionPersistableObjectHandler
                                                                              'limit'    => 0,
                                                                              'sort'     => 'delivery_id',
                                                                              'order'    => 'ASC',
-                                                                             'location' => ''
+                                                                             'location' => '',
                                                                          ]));
         $location_delivery = $locationDeliveryHandler->getLocationDeliveryId($parameters);
 
@@ -86,8 +89,7 @@ class DeliveryHandler extends OledrionPersistableObjectHandler
             foreach ($obj as $root) {
                 $tab = [];
                 $tab = $root->toArray();
-                if (isset($location_delivery[$root->getVar('delivery_id')]['ld_delivery'])
-                    && $location_delivery[$root->getVar('delivery_id')]['ld_delivery'] == $root->getVar('delivery_id')) {
+                if (isset($location_delivery[$root->getVar('delivery_id')]['ld_delivery']) && $location_delivery[$root->getVar('delivery_id')]['ld_delivery'] == $root->getVar('delivery_id')) {
                     $tab['ld_id']['delivery_select']  = 1;
                     $tab['ld_id']['ld_id']            = $location_delivery[$root->getVar('delivery_id')]['ld_id'];
                     $tab['ld_id']['ld_location']      = $location_delivery[$root->getVar('delivery_id')]['ld_location'];
@@ -109,7 +111,7 @@ class DeliveryHandler extends OledrionPersistableObjectHandler
     public function getThisLocationDelivery($location_id)
     {
         global $locationDeliveryHandler;
-        $oledrionCurrency = Oledrion\Currency::getInstance();
+        $oledrionCurrency  = Oledrion\Currency::getInstance();
         $ret               = [];
         $parameters        = ['location' => $location_id];
         $location_delivery = $locationDeliveryHandler->getLocationDeliveryId($parameters);

@@ -1,4 +1,6 @@
-<?php namespace XoopsModules\Oledrion;
+<?php
+
+namespace XoopsModules\Oledrion;
 
 /*
  You may not change or alter any portion of this comment or credits
@@ -34,8 +36,6 @@ class Caddy extends OledrionObject
      * constructor
      *
      * normally, this is called from child classes only
-     *
-     * @access public
      */
     public function __construct()
     {
@@ -58,7 +58,7 @@ class Caddy extends OledrionObject
     {
         $ret                              = [];
         $ret                              = parent::toArray($format);
-        $oledrionCurrency                = Oledrion\Currency::getInstance();
+        $oledrionCurrency                 = Oledrion\Currency::getInstance();
         $ret['caddy_price_fordisplay']    = $oledrionCurrency->amountForDisplay($this->getVar('caddy_price'));
         $ret['caddy_shipping_fordisplay'] = $oledrionCurrency->amountForDisplay($this->getVar('caddy_shipping'));
 

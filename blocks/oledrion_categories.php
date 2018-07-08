@@ -28,18 +28,19 @@ function b_oledrion_category_show($options)
 {
     global $xoTheme;
     $block = [];
-    include XOOPS_ROOT_PATH . '/modules/oledrion/include/common.php';
+    require_once XOOPS_ROOT_PATH . '/modules/oledrion/include/common.php';
     $xoTheme->addStylesheet(OLEDRION_URL . 'assets/css/oledrion.css');
 
     $block['nostock_msg'] = Oledrion\Utility::getModuleOption('nostock_msg');
 
-    if (0 == (int)$options[0]) { // Catégories selon la page en cours
+    if (0 == (int)$options[0]) {
+        // Catégories selon la page en cours
         $block['block_option'] = 0;
         if (!isset($GLOBALS['current_category']) || -1 == $GLOBALS['current_category']) {
             return false;
         }
         $cat_cid = (int)$GLOBALS['current_category'];
-        include XOOPS_ROOT_PATH . '/modules/oledrion/include/common.php';
+        require_once XOOPS_ROOT_PATH . '/modules/oledrion/include/common.php';
 
         if ($cat_cid > 0) {
             require_once XOOPS_ROOT_PATH . '/class/tree.php';
@@ -60,7 +61,8 @@ function b_oledrion_category_show($options)
                     $block['block_current_category'] = $category->toArray();
                 }
             }
-        } else { // On est à la racine, on n'affiche donc que les catégories mères
+        } else {
+            // On est à la racine, on n'affiche donc que les catégories mères
             $tbl_categories = [];
             $criteria       = new \Criteria('cat_pid', 0, '=');
             $criteria->setSort('cat_title');
@@ -70,9 +72,10 @@ function b_oledrion_category_show($options)
             }
             $block['block_categories'] = $tbl_tmp;
         }
-    } elseif (1 == (int)$options[0]) { // Affichage classique
+    } elseif (1 == (int)$options[0]) {
+        // Affichage classique
         $block['block_option'] = 1;
-        include XOOPS_ROOT_PATH . '/modules/oledrion/include/common.php';
+        require_once XOOPS_ROOT_PATH . '/modules/oledrion/include/common.php';
         // require_once OLEDRION_PATH . 'class/tree.php';
         $tbl_categories = $categoryHandler->getAllCategories(new Oledrion\Parameters());
         $mytree         = new Oledrion\XoopsObjectTree($tbl_categories, 'cat_cid', 'cat_pid');
@@ -82,17 +85,17 @@ function b_oledrion_category_show($options)
         if (isset($GLOBALS['current_category']) && -1 != $GLOBALS['current_category']) {
             $cat_cid = (int)$GLOBALS['current_category'];
         }
-    //$htmlSelect = $mytree->makeSelBox('cat_cid', 'cat_title', '-', $cat_cid, false, 0, $additional);
+        //$htmlSelect = $mytree->makeSelBox('cat_cid', 'cat_title', '-', $cat_cid, false, 0, $additional);
         if (Oledrion\Utility::checkVerXoops($GLOBALS['xoopsModule'], '2.5.9')) {
-            $select0 = $mytree->makeSelectElement('cat_cid', 'cat_title', '-', $cat_cid, false, 0, '', $additional);
-            $htmlSelect  = $select0->render();
+            $select0    = $mytree->makeSelectElement('cat_cid', 'cat_title', '-', $cat_cid, false, 0, '', $additional);
+            $htmlSelect = $select0->render();
         } else {
-        $htmlSelect = $mytree->makeSelBox('cat_cid', 'cat_title', '-', $cat_cid, false, 0, $additional);
+            $htmlSelect = $mytree->makeSelBox('cat_cid', 'cat_title', '-', $cat_cid, false, 0, $additional);
         }
 
-
         $block['htmlSelect'] = $htmlSelect;
-    } else { // Affichage de toute l'arborescence, dépliée
+    } else {
+        // Affichage de toute l'arborescence, dépliée
         $block['block_option'] = 2;
         $block['liMenu']       = $categoryHandler->getUlMenu('category_title');
     }
@@ -107,7 +110,7 @@ function b_oledrion_category_show($options)
 function b_oledrion_category_edit($options)
 {
     global $xoopsConfig;
-    include XOOPS_ROOT_PATH . '/modules/oledrion/include/common.php';
+    require_once XOOPS_ROOT_PATH . '/modules/oledrion/include/common.php';
 
     $checkeds              = ['', '', ''];
     $checkeds[$options[0]] = 'checked';

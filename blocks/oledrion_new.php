@@ -28,7 +28,7 @@ function b_oledrion_new_show($options)
 {
     // '10|0|0';    // Voir 10 produits, pour toutes les catégories ou une catégorie particulière, uniquement les produits du mois ?
     global $xoopsConfig, $xoTheme;
-    include XOOPS_ROOT_PATH . '/modules/oledrion/include/common.php';
+    require_once XOOPS_ROOT_PATH . '/modules/oledrion/include/common.php';
     $start         = 0;
     $limit         = $options[0];
     $categoryId    = $options[1];
@@ -60,7 +60,7 @@ function b_oledrion_new_edit($options)
 {
     // '10|0|0';    // Voir 10 produits, pour toutes les catégories, uniquement les produits du mois ?
     global $xoopsConfig;
-    include XOOPS_ROOT_PATH . '/modules/oledrion/include/common.php';
+    require_once XOOPS_ROOT_PATH . '/modules/oledrion/include/common.php';
     // require_once OLEDRION_PATH . 'class/tree.php';
     $tblCategories = [];
     $tblCategories = $categoryHandler->getAllCategories(new Oledrion\Parameters());
@@ -76,7 +76,7 @@ function b_oledrion_new_edit($options)
         $select = $mytree->makeSelBox('options[]', 'cat_title', '-', $options[1], _MB_OLEDRION_ALL_CATEGORIES);
     }
 
-    $form          .= '<tr><td>' . _MB_OLEDRION_CATEGORY . '</td><td>' . $select . '</td></tr>';
+    $form .= '<tr><td>' . _MB_OLEDRION_CATEGORY . '</td><td>' . $select . '</td></tr>';
 
     $checked              = ['', ''];
     $checked[$options[2]] = 'checked';

@@ -60,10 +60,10 @@ class RssfitOledrion
     public function grabEntries($obj)
     {
         $ret = false;
-        include XOOPS_ROOT_PATH . '/modules/oledrion/include/common.php';
+        require_once XOOPS_ROOT_PATH . '/modules/oledrion/include/common.php';
         $items = $productsHandler->getRecentProducts(new Oledrion\Parameters([
                                                                                  'start' => 0,
-                                                                                 'limit' => $this->grab
+                                                                                 'limit' => $this->grab,
                                                                              ]));
         $i     = 0;
 

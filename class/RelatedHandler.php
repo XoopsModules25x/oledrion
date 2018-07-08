@@ -1,4 +1,6 @@
-<?php namespace XoopsModules\Oledrion;
+<?php
+
+namespace XoopsModules\Oledrion;
 
 /*
  You may not change or alter any portion of this comment or credits
@@ -35,8 +37,9 @@ class RelatedHandler extends OledrionPersistableObjectHandler
      * RelatedHandler constructor.
      * @param \XoopsDatabase $db
      */
-    public function __construct(\XoopsDatabase $db)
-    { //                            Table               Classe                   Id
+    public function __construct(\XoopsDatabase $db = null)
+    {
+        //                            Table               Classe                   Id
         parent::__construct($db, 'oledrion_related', Related::class, 'related_id');
     }
 
