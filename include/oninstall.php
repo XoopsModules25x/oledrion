@@ -20,6 +20,7 @@
  */
 
 use XoopsModules\Oledrion;
+use XoopsModules\Oledrion\Common;
 
 /**
  * @param \XoopsModule $module
@@ -27,9 +28,10 @@ use XoopsModules\Oledrion;
  */
 function xoops_module_pre_install_oledrion(\XoopsModule $module)
 {
-    require_once dirname(__DIR__) . '/preloads/autoloader.php';
-    /** @var Oledrion\Utility $utility */
-    $utility = new Oledrion\Utility();
+//    require_once dirname(__DIR__) . '/preloads/autoloader.php';
+//    include  __DIR__ . '/common.php';
+    /** @var  \XoopsModules\Oledrion\Utility $utility */
+    $utility = new  \XoopsModules\Oledrion\Utility();
 
     //check for minimum XOOPS version
     $xoopsSuccess = $utility::checkVerXoops($module);
@@ -106,7 +108,7 @@ function xoops_module_install_oledrion(\XoopsModule $module)
         foreach (array_keys($configurator->copyTestFolders) as $i) {
             $src  = $configurator->copyTestFolders[$i][0];
             $dest = $configurator->copyTestFolders[$i][1];
-            $utility::rcopy($src, $dest);
+            $utility::xcopy($src, $dest);
         }
     }
     */

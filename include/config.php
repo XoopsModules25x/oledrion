@@ -30,17 +30,14 @@ function getConfig()
             'uploadPath' => XOOPS_UPLOAD_PATH . '/' . $moduleDirName,
             'uploadUrl'  => XOOPS_UPLOAD_URL . '/' . $moduleDirName,
         ],
-        'uploadFolders'  => [
-            constant($moduleDirNameUpper . '_UPLOAD_PATH'),
-            constant($moduleDirNameUpper . '_UPLOAD_PATH') . '/images',
-            constant($moduleDirNameUpper . '_UPLOAD_PATH') . '/thumbs',
-            //XOOPS_UPLOAD_PATH . '/flags'
+        'uploadFolders' => [
+            XOOPS_UPLOAD_PATH . '/' . $moduleDirName,
+            XOOPS_UPLOAD_PATH . '/' . $moduleDirName . '/images',
+            XOOPS_UPLOAD_PATH . '/' . $moduleDirName . '/thumbs'
         ],
-        'copyBlankFiles' => [
-            constant($moduleDirNameUpper . '_UPLOAD_PATH'),
-            constant($moduleDirNameUpper . '_UPLOAD_PATH') . '/images',
-            constant($moduleDirNameUpper . '_UPLOAD_PATH') . '/thumbs',
-            //XOOPS_UPLOAD_PATH . '/flags'
+        'copyBlankFiles'     => [
+            XOOPS_UPLOAD_PATH . '/' . $moduleDirName . '/images',
+            XOOPS_UPLOAD_PATH . '/' . $moduleDirName . '/thumbs'
         ],
 
         'copyTestFolders' => [
