@@ -26,7 +26,7 @@ require_once __DIR__ . '/preloads/autoloader.php';
 $moduleDirName = basename(__DIR__);
 
 $modversion['version']             = 2.35;
-$modversion['module_status']       = 'Beta  1';
+$modversion['module_status']       = 'Beta  2';
 $modversion['release_date']        = '2018/07/08';
 $modversion['name']                = _MI_OLEDRION_NAME;
 $modversion['description']         = _MI_OLEDRION_DESC;
