@@ -4,7 +4,7 @@
 IP کاربر {IP}.
 
 - شماره سفارش : {NUM_COMMANDE}
-
+{TRANSACTION_ID} : Transaction ID
 - اطلاعات مشتری :
 نام و نام خانوادگی : {NOM} {PRENOM}
 آدرس : {ADRESSE}

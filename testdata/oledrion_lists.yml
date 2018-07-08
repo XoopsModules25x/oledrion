@@ -1,0 +1,32 @@
+---
+# oledrion_lists
+-
+  list_id: 1
+  list_uid: 1
+  list_title: "My List"
+  list_date: 1452948529
+  list_productscount: 2
+  list_views: 2
+  list_password: ""
+  list_type: 1
+  list_description: ""
+-
+  list_id: 2
+  list_uid: 1
+  list_title: "My List2"
+  list_date: 1452948529
+  list_productscount: 2
+  list_views: 2
+  list_password: ""
+  list_type: 1
+  list_description: ""
+-
+  list_id: 3
+  list_uid: 1
+  list_title: "My List3"
+  list_date: 1452948529
+  list_productscount: 2
+  list_views: 2
+  list_password: ""
+  list_type: 1
+  list_description: ""

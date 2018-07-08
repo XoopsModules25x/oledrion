@@ -18,7 +18,7 @@
  */
 
 // The name of this module
-define('_MI_OLEDRION_NAME', 'My Shop');
+define('_MI_OLEDRION_NAME', 'eCommerce');
 
 // A brief description of this module
 define('_MI_OLEDRION_DESC', 'Creates an online shop to display and sell products.');
@@ -75,21 +75,22 @@ define('_MI_OLEDRION_SMNAME11', 'All lists');
 define('_MI_OLEDRION_ADMENU0', 'Vendors');
 define('_MI_OLEDRION_ADMENU1', 'VAT');
 define('_MI_OLEDRION_ADMENU2', 'Categories');
-define('_MI_OLEDRION_ADMENU3', 'Manufacturers');
+define('_MI_OLEDRION_ADMENU3', 'Companies');
 define('_MI_OLEDRION_ADMENU4', 'Products');
 define('_MI_OLEDRION_ADMENU5', 'Orders');
 define('_MI_OLEDRION_ADMENU6', 'Discounts');
 define('_MI_OLEDRION_ADMENU7', 'Newsletter');
 define('_MI_OLEDRION_ADMENU8', 'Texts');
 define('_MI_OLEDRION_ADMENU9', 'Inventory');
-define('_MI_OLEDRION_ADMENU10', 'Dashboard');
-define('_MI_OLEDRION_ADMENU11', 'Attachments');
+define('_MI_OLEDRION_ADMENU10', 'Home');
+define('_MI_OLEDRION_ADMENU11', 'Files');
 define('_MI_OLEDRION_ADMENU12', 'Gateways');
-define('_MI_OLEDRION_ADMENU13', 'Prod. Options');
+define('_MI_OLEDRION_ADMENU13', 'Options');
+define('_MI_OLEDRION_ADMENU13_DESC', 'Product Options');
 define('_MI_OLEDRION_ADMENU14', 'Blocks');
 define('_MI_OLEDRION_ADMENU15', 'Lists');
 define('_MI_OLEDRION_ADMENU16', 'Maintain');
-define('_MI_OLEDRION_ADMENU17', 'Prod. Properties');
+define('_MI_OLEDRION_ADMENU17', 'Properties');
 define('_MI_OLEDRION_ADMENU18', 'Packing');
 define('_MI_OLEDRION_ADMENU19', 'Location');
 define('_MI_OLEDRION_ADMENU20', 'Delivery');
@@ -285,14 +286,14 @@ define('_MI_OLEDRION_ADMINGROUPS', 'Groups than have access to all admin parts')
 define('_MI_OLEDRION_ADMINGROUPS_DSC', 'Other groups just have access to seleted parts');
 define('_MI_OLEDRION_ADMINGROUPS_PARTS', 'Set just allowed parts for access by selected group');
 
-define('_MI_OLEDRION_BREAK_COMMENT_NOTIFICATION', 'Comments and Notifications');
-define('_MI_OLEDRION_BREAK_SEARCH', 'Search');
-define('_MI_OLEDRION_BREAK_IMAGE', 'Image');
-define('_MI_OLEDRION_BREAK_CHECKOUT', 'Checkout');
-define('_MI_OLEDRION_BREAK_VIEW', 'View');
-define('_MI_OLEDRION_BREAK_MONEY', 'Money');
-define('_MI_OLEDRION_BREAK_META', 'Meta');
-define('_MI_OLEDRION_BREAK_SMS', 'SMS');
+define('_MI_OLEDRION_BREAK_COMMENT_NOTIFICATION', '<span style="color: #FF0000; font-size: Small;  font-weight: bold;">--- Comments and Notifications ---</span> ');
+define('_MI_OLEDRION_BREAK_SEARCH', '<span style="color: #FF0000; font-size: Small;  font-weight: bold;">--- Search ---</span> ');
+define('_MI_OLEDRION_BREAK_IMAGE', '<span style="color: #FF0000; font-size: Small;  font-weight: bold;">--- Image ---</span> ');
+define('_MI_OLEDRION_BREAK_CHECKOUT', '<span style="color: #FF0000; font-size: Small;  font-weight: bold;">--- Checkout ---</span> ');
+define('_MI_OLEDRION_BREAK_VIEW', '<span style="color: #FF0000; font-size: Small;  font-weight: bold;">--- View ---</span> ');
+define('_MI_OLEDRION_BREAK_MONEY', '<span style="color: #FF0000; font-size: Small;  font-weight: bold;">--- Money ---</span> ');
+define('_MI_OLEDRION_BREAK_META', '<span style="color: #FF0000; font-size: Small;  font-weight: bold;">--- Meta ---</span> ');
+define('_MI_OLEDRION_BREAK_SMS', '<span style="color: #FF0000; font-size: Small;  font-weight: bold;">--- SMS ---</span> ');
 
 define('_MI_OLEDRION_SMS_PACK', 'SMS Pack');
 define('_MI_OLEDRION_SMS_PACK_TEXT', 'SMS Pack Description');
@@ -306,7 +307,7 @@ define('_MI_OLEDRION_SMS_TRACK_TEXT', 'SMS Track Description');
 //2.34
 //Help
 define('_MI_OLEDRION_DIRNAME', basename(dirname(dirname(__DIR__))));
-define('_MI_OLEDRION_HELP_HEADER', __DIR__ . '/help/helpheader.html');
+define('_MI_OLEDRION_HELP_HEADER', __DIR__ . '/help/helpheader.tpl');
 define('_MI_OLEDRION_BACK_2_ADMIN', 'Back to Administration of ');
 define('_MI_OLEDRION_OVERVIEW', 'Overview');
 
@@ -316,3 +317,14 @@ define('_MI_OLEDRION_OVERVIEW', 'Overview');
 define('_MI_OLEDRION_DISCLAIMER', 'Disclaimer');
 define('_MI_OLEDRION_LICENSE', 'License');
 define('_MI_OLEDRION_SUPPORT', 'Support');
+
+define('_MI_OLEDRION_SHOW_SAMPLE_BUTTON', 'Show Sample Button?');
+define('_MI_OLEDRION_SHOW_SAMPLE_BUTTON_DESC', 'If yes, the "Add Sample Data" button will be visible to the Admin. It is Yes as a default for first installation.');
+
+define('_MI_OLEDRION_FORM_OPTIONS_ADMIN', 'Editor: Admin');
+define('_MI_OLEDRION_FORM_OPTIONS_ADMIN_DESC', 'Select the Editor to use by the Admin');
+define('_MI_OLEDRION_FORM_OPTIONS_USER', 'Editor: User');
+define('_MI_OLEDRION_FORM_OPTIONS_USER_DESC', 'Select the Editor to use by the User');
+
+define('_MI_OLEDRION_HOME', 'Home');
+define('_MI_OLEDRION_ABOUT', 'About');

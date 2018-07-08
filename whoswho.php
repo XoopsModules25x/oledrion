@@ -20,31 +20,34 @@
 /**
  * Liste des fabricants
  */
+
+use XoopsModules\Oledrion;
+
 require_once __DIR__ . '/header.php';
 $GLOBALS['current_category']             = -1;
 $GLOBALS['xoopsOption']['template_main'] = 'oledrion_whoswho.tpl';
 require_once XOOPS_ROOT_PATH . '/header.php';
 
-$tblAll = $tblAnnuaire = array();
-$xoopsTpl->assign('alphabet', $h_oledrion_manufacturer->getAlphabet());
+$tblAll = $tblAnnuaire = [];
+$xoopsTpl->assign('alphabet', $manufacturerHandler->getAlphabet());
 $xoopsTpl->assign('mod_pref', $mod_pref); // Préférences du module
 
-$manufacturers = $h_oledrion_manufacturer->getItems(0, 0, 'manu_name, manu_commercialname');
+$manufacturers = $manufacturerHandler->getItems(0, 0, 'manu_name, manu_commercialname');
 foreach ($manufacturers as $item) {
-    $forTemplate              = array();
+    $forTemplate              = [];
     $forTemplate              = $item->toArray();
     $initiale                 = $item->getInitial();
     $tblAnnuaire[$initiale][] = $forTemplate;
 }
 $xoopsTpl->assign('manufacturers', $tblAnnuaire);
 
-OledrionUtility::setCSS();
-OledrionUtility::setLocalCSS($xoopsConfig['language']);
-OledrionUtility::loadLanguageFile('modinfo.php');
+Oledrion\Utility::setCSS();
+Oledrion\Utility::setLocalCSS($xoopsConfig['language']);
+$helper->loadLanguage('modinfo');
 
-$xoopsTpl->assign('global_advert', OledrionUtility::getModuleOption('advertisement'));
-$xoopsTpl->assign('breadcrumb', OledrionUtility::breadcrumb(array(OLEDRION_URL . basename(__FILE__) => _MI_OLEDRION_SMNAME5)));
+$xoopsTpl->assign('global_advert', Oledrion\Utility::getModuleOption('advertisement'));
+$xoopsTpl->assign('breadcrumb', Oledrion\Utility::breadcrumb([OLEDRION_URL . basename(__FILE__) => _MI_OLEDRION_SMNAME5]));
 
-$title = _MI_OLEDRION_SMNAME5 . ' - ' . OledrionUtility::getModuleName();
-OledrionUtility::setMetas($title, $title);
+$title = _MI_OLEDRION_SMNAME5 . ' - ' . Oledrion\Utility::getModuleName();
+Oledrion\Utility::setMetas($title, $title);
 require_once XOOPS_ROOT_PATH . '/footer.php';

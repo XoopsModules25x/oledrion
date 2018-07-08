@@ -20,12 +20,10 @@
 /**
  * Various parameters for the module
  */
-
 $moduleDirName = basename(__DIR__);
 
 // Location of attached files (url and physical path on your disk)
 if (!defined('OLEDRION_ATTACHED_FILES_URL')) {
-
     // Define oledrion dirname
     define('OLEDRION_DIRNAME', $moduleDirName);
 
@@ -46,11 +44,12 @@ if (!defined('OLEDRION_ATTACHED_FILES_URL')) {
     define('OLEDRION_ADMIN_PATH', OLEDRION_PATH . 'admin' . '/');
 
     // Set gateways path
-    define('OLEDRION_GATEWAY_PATH', OLEDRION_ADMIN_PATH . 'gateways' . '/');
+    //    define('OLEDRION_GATEWAY_PATH', OLEDRION_ADMIN_PATH . 'gateways' . '/');
+    define('OLEDRION_GATEWAY_PATH', XOOPS_ROOT_PATH . '/modules/' . $moduleDirName . '/class/Gateways' . '/');
 
     // Set plugin URL and PATH
-    define('OLEDRION_PLUGINS_PATH', OLEDRION_PATH . 'plugins/');
-    define('OLEDRION_PLUGINS_URL', OLEDRION_URL . 'plugins/');
+    define('OLEDRION_PLUGINS_PATH', OLEDRION_PATH . 'class/plugins/');
+    define('OLEDRION_PLUGINS_URL', OLEDRION_URL . 'class/plugins/');
 
     // Set text path
     define('OLEDRION_TEXT_PATH', XOOPS_UPLOAD_PATH . '/' . OLEDRION_DIRNAME . '/' . 'text/');
@@ -69,6 +68,10 @@ if (!defined('OLEDRION_ATTACHED_FILES_URL')) {
     // Define here where pictures are saved
     define('OLEDRION_PICTURES_URL', XOOPS_UPLOAD_URL . '/oledrion/images'); // WITHOUT Trailing slash
     define('OLEDRION_PICTURES_PATH', XOOPS_UPLOAD_PATH . '/oledrion/images'); // WITHOUT Trailing slash
+
+    // Define here where pictures are saved
+    define('OLEDRION_THUMBS_URL', XOOPS_UPLOAD_URL . '/oledrion/thumbs'); // WITHOUT Trailing slash
+    define('OLEDRION_THUMBS_PATH', XOOPS_UPLOAD_PATH . '/oledrion/thumbs'); // WITHOUT Trailing slash
 
     // Maximum length of product's summary for pages (in characters)
     define('OLEDRION_SUMMARY_MAXLENGTH', 150);
@@ -95,9 +98,12 @@ if (!defined('OLEDRION_ATTACHED_FILES_URL')) {
     // Gateway log's path (must be writable)
     // B.R. define('OLEDRION_GATEWAY_LOG_PATH', XOOPS_UPLOAD_PATH . '/oledrion/loggateway_oledrion.php');
     define('OLEDRION_GATEWAY_LOG_PATH', XOOPS_UPLOAD_PATH . '/oledrion/gateway_log.php');
-
     // B.R New: Filename of serialized confirmation email parameters
     define('OLEDRION_CONFIRMATION_EMAIL_FILENAME_SUFFIX', '_conf_email.parms');
+
+    // B.R. New: Absolute path and filename of optional database update script
+    // Must be located outside DOCUMENT_ROOT and change permissions to 'rwxr-x--x'
+    define('OLEDRION_DB_UPDATE_SCRIPT', '/home/e-smith/files/ibays/rossco/license_server/update_licenseDB.php');
 
     // Do you want to show the list of main categories on the category page when user is on category.php (without specifying a category to see)
     define('OLEDRION_SHOW_MAIN_CATEGORIES', true);

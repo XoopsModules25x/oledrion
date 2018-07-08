@@ -16,7 +16,6 @@
  * @license     {@link http://www.fsf.org/copyleft/gpl.html GNU public license}
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
  */
-
 define('_OLEDRION_SEARCHFOR', 'Search for');
 define('_OLEDRION_SEARCH', 'Search');
 define('_OLEDRION_CATEGORYC', 'Category: ');
@@ -219,6 +218,9 @@ define('_OLEDRION_CMD_STATE3', 'Orders pending');
 define('_OLEDRION_CMD_STATE4', 'Orders failed');
 define('_OLEDRION_CMD_STATE5', 'Orders cancelled');
 define('_OLEDRION_CMD_STATE6', 'Fraudulent orders');
+define('_OLEDRION_CMD_STATE7', 'Orders Packed');
+define('_OLEDRION_CMD_STATE8', 'Orders Submitted');
+define('_OLEDRION_CMD_STATE9', 'Orders Delivered');
 define('_OLEDRION_REQUIRED', '* Required fields');
 define('_OLEDRION_QUANTITY_STOCK', 'Quantity in stock : %d');
 define('_OLEDRION_SUBTRACT', 'Subtract');

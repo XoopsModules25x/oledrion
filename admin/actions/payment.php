@@ -17,6 +17,9 @@
  * @author      Hossein Azizabadi (azizabadi@faragostaresh.com)
  */
 
+use Xmf\Request;
+use XoopsModules\Oledrion;
+
 /**
  * Check is admin
  */
@@ -26,198 +29,211 @@ if (!defined('OLEDRION_ADMIN')) {
 
 switch ($action) {
     case 'default':
+
         xoops_cp_header();
         $adminObject = \Xmf\Module\Admin::getInstance();
         $adminObject->displayNavigation('index.php?op=payment');
 
-        $start   = isset($_GET['start']) ? (int)$_GET['start'] : 0;
-        $payment = array();
+        $start   = \Xmf\Request::getInt('start', 0, 'GET');
+        $payment = [];
         $form    = "<form method='post' action='$baseurl' name='frmaddpayment' id='frmaddpayment'><input type='hidden' name='op' id='op' value='payment'><input type='hidden' name='action' id='action' value='add'><input type='submit' name='btngo' id='btngo' value='"
                    . _AM_OLEDRION_ADD_ITEM
                    . "'></form>";
         echo $form;
-        //        OledrionUtility::htitle(_MI_OLEDRION_ADMENU21, 4);
-        $payment = $h_oledrion_payment->getAllPayment(new Oledrion_parameters(array(
-                                                                                  'start' => $start,
-                                                                                  'limit' => $limit
-                                                                              )));
+        //        Oledrion\Utility::htitle(_MI_OLEDRION_ADMENU21, 4);
+        $payment = $paymentHandler->getAllPayment(new Oledrion\Parameters([
+                                                                              'start' => $start,
+                                                                              'limit' => $limit,
+                                                                          ]));
 
         $class = '';
         echo "<table width='100%' cellspacing='1' cellpadding='3' border='0' class='outer'>";
         echo "<tr><th align='center'>" . _AM_OLEDRION_ID . "</th><th align='center'>" . _AM_OLEDRION_PAYMENT_TITLE . "</th><th align='center'>" . _AM_OLEDRION_PAYMENT_TYPE . "</th><th align='center'>" . _AM_OLEDRION_PAYMENT_ONLINE . "</th><th align='center'>" . _AM_OLEDRION_ACTION . '</th></tr>';
         foreach ($payment as $item) {
-            $id        = $item->getVar('payment_id');
-            $class     = ($class === 'even') ? 'odd' : 'even';
-            $actions   = array();
-            $actions[] = "<a href='$baseurl?op=payment&action=edit&id=" . $id . "' title='" . _OLEDRION_EDIT . "'>" . $icones['edit'] . '</a>';
-            $actions[] = "<a href='$baseurl?op=payment&action=delete&id=" . $id . "' title='" . _OLEDRION_DELETE . "'" . $conf_msg . '>' . $icones['delete'] . '</a>';
-            $online    = $item->getVar('payment_online') == 1 ? _YES : _NO;
-            if ($item->getVar('payment_type') === 'online') {
+            $id           = $item->getVar('payment_id');
+            $class        = ('even' === $class) ? 'odd' : 'even';
+            $actions      = [];
+            $actions[]    = "<a href='$baseurl?op=payment&action=edit&id=" . $id . "' title='" . _OLEDRION_EDIT . "'>" . $icons['edit'] . '</a>';
+            $actions[]    = "<a href='$baseurl?op=payment&action=delete&id=" . $id . "' title='" . _OLEDRION_DELETE . "'" . $conf_msg . '>' . $icons['delete'] . '</a>';
+            $online       = 1 == $item->getVar('payment_online') ? _YES : _NO;
+            $payment_type = _AM_OLEDRION_PAYMENT_OFFLINE;
+            if ('online' === $item->getVar('payment_type')) {
                 $payment_type = _AM_OLEDRION_PAYMENT_ONLINE . '( ' . $item->getVar('payment_gateway') . ' )';
-            } else {
-                $payment_type = _AM_OLEDRION_PAYMENT_OFFLINE;
             }
             echo "<tr class='" . $class . "'>\n";
             echo "<td align='center'>" . $id . "</td><td align='center'>" . $item->getVar('payment_title') . "</td><td align='center'>" . $payment_type . "</td><td align='center'>" . $online . "</td><td align='center'>" . implode(' ', $actions) . "</td>\n";
             echo "<tr>\n";
         }
-        $class = ($class === 'even') ? 'odd' : 'even';
+        $class = ('even' === $class) ? 'odd' : 'even';
         echo "<tr class='" . $class . "'>\n";
         echo "<td colspan='5' align='center'>" . $form . "</td>\n";
         echo "</tr>\n";
         echo '</table>';
         require_once OLEDRION_ADMIN_PATH . 'admin_footer.php';
-        break;
 
+        break;
     case 'add':
+
     case 'edit':
+
         xoops_cp_header();
-        if ($action === 'edit') {
+        if ('edit' === $action) {
             $title = _AM_OLEDRION_PAYMENT_EDIT;
-            $id    = isset($_GET['id']) ? (int)$_GET['id'] : 0;
+            $id    = \Xmf\Request::getInt('id', 0, 'GET');
             if (empty($id)) {
-                OledrionUtility::redirect(_AM_OLEDRION_ERROR_1, $baseurl, 5);
+                Oledrion\Utility::redirect(_AM_OLEDRION_ERROR_1, $baseurl, 5);
             }
             // Item exits ?
             $item = null;
-            $item = $h_oledrion_payment->get($id);
+            $item = $paymentHandler->get($id);
             if (!is_object($item)) {
-                OledrionUtility::redirect(_AM_OLEDRION_NOT_FOUND, $baseurl, 5);
+                Oledrion\Utility::redirect(_AM_OLEDRION_NOT_FOUND, $baseurl, 5);
             }
             $edit         = true;
             $label_submit = _AM_OLEDRION_MODIFY;
         } else {
             $title        = _AM_OLEDRION_PAYMENT_ADD;
-            $item         = $h_oledrion_payment->create(true);
+            $item         = $paymentHandler->create(true);
             $label_submit = _AM_OLEDRION_ADD;
             $edit         = false;
         }
-        $sform = new XoopsThemeForm($title, 'frmaddpayment', $baseurl);
-        $sform->addElement(new XoopsFormHidden('op', 'payment'));
-        $sform->addElement(new XoopsFormHidden('action', 'save'));
-        $sform->addElement(new XoopsFormHidden('payment_id', $item->getVar('payment_id')));
-        $sform->addElement(new XoopsFormText(_AM_OLEDRION_PAYMENT_TITLE, 'payment_title', 50, 150, $item->getVar('payment_title', 'e')), true);
-        $product_type = new XoopsFormSelect(_AM_OLEDRION_PAYMENT_TYPE, 'payment_type', $item->getVar('payment_type'));
+        $sform = new \XoopsThemeForm($title, 'frmaddpayment', $baseurl);
+        $sform->addElement(new \XoopsFormHidden('op', 'payment'));
+        $sform->addElement(new \XoopsFormHidden('action', 'save'));
+        $sform->addElement(new \XoopsFormHidden('payment_id', $item->getVar('payment_id')));
+        $sform->addElement(new \XoopsFormText(_AM_OLEDRION_PAYMENT_TITLE, 'payment_title', 50, 150, $item->getVar('payment_title', 'e')), true);
+        $product_type = new \XoopsFormSelect(_AM_OLEDRION_PAYMENT_TYPE, 'payment_type', $item->getVar('payment_type'));
         $product_type->addOption('offline', _AM_OLEDRION_PAYMENT_OFFLINE);
         $product_type->addOption('online', _AM_OLEDRION_PAYMENT_ONLINE);
         $sform->addElement($product_type, true);
-        $payment_gateway = new XoopsFormSelect(_AM_OLEDRION_PAYMENT_GATEWAY, 'payment_gateway', $item->getVar('payment_gateway'));
+        $payment_gateway = new \XoopsFormSelect(_AM_OLEDRION_PAYMENT_GATEWAY, 'payment_gateway', $item->getVar('payment_gateway'));
         $payment_gateway->addOption('offline', _AM_OLEDRION_PAYMENT_GATEWAY_OFFLINE);
-        $payment_gateway_list = Oledrion_gateways::getInstalledGatewaysList();
+        $payment_gateway_list = Oledrion\Gateways::getInstalledGatewaysList();
         foreach ($payment_gateway_list as $payment_gateway_item) {
             $payment_gateway->addOption($payment_gateway_item);
         }
         $sform->addElement($payment_gateway, true);
-        if ($action === 'edit' && $item->pictureExists()) {
-            $pictureTray = new XoopsFormElementTray(_AM_OLEDRION_CURRENT_PICTURE, '<br>');
-            $pictureTray->addElement(new XoopsFormLabel('', "<img src='" . $item->getPictureUrl() . "' alt='' border='0'>"));
-            $deleteCheckbox = new XoopsFormCheckBox('', 'delpicture');
+        if ('edit' === $action && $item->pictureExists()) {
+            $pictureTray = new \XoopsFormElementTray(_AM_OLEDRION_CURRENT_PICTURE, '<br>');
+            $pictureTray->addElement(new \XoopsFormLabel('', "<img src='" . $item->getPictureUrl() . "' alt='' border='0'>"));
+            $deleteCheckbox = new \XoopsFormCheckBox('', 'delpicture');
             $deleteCheckbox->addOption(1, _DELETE);
             $pictureTray->addElement($deleteCheckbox);
             $sform->addElement($pictureTray);
             unset($pictureTray, $deleteCheckbox);
         }
-        $sform->addElement(new XoopsFormFile(_AM_OLEDRION_PICTURE, 'attachedfile', OledrionUtility::getModuleOption('maxuploadsize')), false);
-        $editor = OledrionUtility::getWysiwygForm(_AM_OLEDRION_DESCRIPTION, 'payment_description', $item->getVar('payment_description', 'e'), 15, 60, 'description_hidden');
+        $sform->addElement(new \XoopsFormFile(_AM_OLEDRION_PICTURE, 'attachedfile', Oledrion\Utility::getModuleOption('maxuploadsize')), false);
+
+        $editor = Oledrion\Utility::getWysiwygForm(_AM_OLEDRION_DESCRIPTION, 'payment_description', $item->getVar('payment_description', 'e'), 15, 60, 'description_hidden');
         if ($editor) {
             $sform->addElement($editor, false);
         }
-        $sform->addElement(new XoopsFormRadioYN(_OLEDRION_ONLINE_HLP, 'payment_online', $item->getVar('payment_online')), true);
-        $button_tray = new XoopsFormElementTray('', '');
-        $submit_btn  = new XoopsFormButton('', 'post', $label_submit, 'submit');
+        $sform->addElement(new \XoopsFormRadioYN(_OLEDRION_ONLINE_HLP, 'payment_online', $item->getVar('payment_online')), true);
+        $button_tray = new \XoopsFormElementTray('', '');
+        $submit_btn  = new \XoopsFormButton('', 'post', $label_submit, 'submit');
         $button_tray->addElement($submit_btn);
         $sform->addElement($button_tray);
-        $sform =& OledrionUtility::formMarkRequiredFields($sform);
+        $sform = Oledrion\Utility::formMarkRequiredFields($sform);
         $sform->display();
         require_once OLEDRION_ADMIN_PATH . 'admin_footer.php';
-        break;
 
+        break;
     case 'save':
+
         xoops_cp_header();
-        $id = isset($_POST['payment_id']) ? (int)$_POST['payment_id'] : 0;
+        $id = \Xmf\Request::getInt('payment_id', 0, 'POST');
         if (!empty($id)) {
             $edit = true;
-            $item = $h_oledrion_payment->get($id);
+            $item = $paymentHandler->get($id);
             if (!is_object($item)) {
-                OledrionUtility::redirect(_AM_OLEDRION_NOT_FOUND, $baseurl, 5);
+                Oledrion\Utility::redirect(_AM_OLEDRION_NOT_FOUND, $baseurl, 5);
             }
             $item->unsetNew();
         } else {
-            $item = $h_oledrion_payment->create(true);
+            $item = $paymentHandler->create(true);
         }
         $opRedirect = 'payment';
         $item->setVars($_POST);
 
-        if ($_POST['payment_type'] === 'offline') {
+        if ('offline' === $_POST['payment_type']) {
             $item->setVar('payment_gateway', 'offline');
         }
 
-        if ($_POST['payment_type'] === 'online'
-            && !in_array($_POST['payment_gateway'], Oledrion_gateways::getInstalledGatewaysList())) {
-            $item->setVar('payment_gateway', Oledrion_gateways::getDefaultGateway());
+        if ('online' === $_POST['payment_type'] && !in_array($_POST['payment_gateway'], Oledrion\Gateways::getInstalledGatewaysList(), true)) {
+            $item->setVar('payment_gateway', Oledrion\Gateways::getDefaultGateway());
         }
 
-        if (isset($_POST['delpicture']) && (int)$_POST['delpicture'] == 1) {
+        if (\Xmf\Request::hasVar('delpicture', 'POST') && 1 == \Xmf\Request::getInt('delpicture', 0, 'POST')) {
             $item->deletePicture();
         }
-        $destname = '';
-        $res1     = OledrionUtility::uploadFile(0, OLEDRION_PICTURES_PATH);
-        if ($res1) {
-            if (OledrionUtility::getModuleOption('resize_others')) { // Eventuellement on redimensionne l'image
-                OledrionUtility::resizePicture(OLEDRION_PICTURES_PATH . '/' . $destname, OLEDRION_PICTURES_PATH . '/' . $destname, OledrionUtility::getModuleOption('images_width'), OledrionUtility::getModuleOption('images_height'), true);
-            }
-            $item->setVar('payment_image', basename($destname));
-        } else {
-            if ($res1 !== false) {
-                echo $res1;
-            }
-        }
-        $res = $h_oledrion_payment->insert($item);
-        if ($res) {
-            OledrionUtility::updateCache();
-            OledrionUtility::redirect(_AM_OLEDRION_SAVE_OK, $baseurl . '?op=' . $opRedirect, 2);
-        } else {
-            OledrionUtility::redirect(_AM_OLEDRION_SAVE_PB, $baseurl . '?op=' . $opRedirect, 5);
-        }
-        break;
 
+        $bingo1 = Request::getString('payment_image', '', 'POST');
+        $bingo2 = Request::getString('attachedfile', '', 'POST');
+
+        if (Request::hasVar('attachedfile', 'POST') && '' !== Request::getString('attachedfile', '', 'POST')) {
+            $destname = '';
+
+            $res1 = Oledrion\Utility::uploadFile(0, OLEDRION_PICTURES_PATH);
+            if ($res1) {
+                if (Oledrion\Utility::getModuleOption('resize_others')) {
+                    // Eventuellement on redimensionne l'image
+                    Oledrion\Utility::resizePicture(OLEDRION_PICTURES_PATH . '/' . $destname, OLEDRION_PICTURES_PATH . '/' . $destname, Oledrion\Utility::getModuleOption('images_width'), Oledrion\Utility::getModuleOption('images_height'), true);
+                }
+                $item->setVar('payment_image', basename($destname));
+            } else {
+                if (false !== $res1) {
+                    echo $res1;
+                }
+            }
+        }
+
+        $res = $paymentHandler->insert($item);
+        if ($res) {
+            Oledrion\Utility::updateCache();
+            Oledrion\Utility::redirect(_AM_OLEDRION_SAVE_OK, $baseurl . '?op=' . $opRedirect, 2);
+        } else {
+            Oledrion\Utility::redirect(_AM_OLEDRION_SAVE_PB, $baseurl . '?op=' . $opRedirect, 5);
+        }
+
+        break;
     case 'delete':
+
         xoops_cp_header();
-        $id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
-        if ($id == 0) {
-            OledrionUtility::redirect(_AM_OLEDRION_ERROR_1, $baseurl, 5);
+        $id = \Xmf\Request::getInt('id', 0, 'GET');
+        if (0 == $id) {
+            Oledrion\Utility::redirect(_AM_OLEDRION_ERROR_1, $baseurl, 5);
         }
         $payment = null;
-        $payment = $h_oledrion_payment->get($id);
+        $payment = $paymentHandler->get($id);
         if (!is_object($payment)) {
-            OledrionUtility::redirect(_AM_OLEDRION_ERROR_10, $baseurl, 5);
+            Oledrion\Utility::redirect(_AM_OLEDRION_ERROR_10, $baseurl, 5);
         }
         $msg = sprintf(_AM_OLEDRION_CONF_DEL_ITEM, $payment->getVar('payment_title'));
-        xoops_confirm(array('op' => 'payment', 'action' => 'confdelete', 'id' => $id), 'index.php', $msg);
+        xoops_confirm(['op' => 'payment', 'action' => 'confdelete', 'id' => $id], 'index.php', $msg);
 
         break;
-
     case 'confdelete':
 
         xoops_cp_header();
-        $id = isset($_POST['id']) ? (int)$_POST['id'] : 0;
+        $id = \Xmf\Request::getInt('id', 0, 'POST');
         if (empty($id)) {
-            OledrionUtility::redirect(_AM_OLEDRION_ERROR_1, $baseurl, 5);
+            Oledrion\Utility::redirect(_AM_OLEDRION_ERROR_1, $baseurl, 5);
         }
         $opRedirect = 'payment';
 
         $item = null;
-        $item = $h_oledrion_payment->get($id);
+        $item = $paymentHandler->get($id);
         if (is_object($item)) {
-            $res = $h_oledrion_payment->delete($item);
+            $res = $paymentHandler->delete($item);
             if ($res) {
-                OledrionUtility::updateCache();
-                OledrionUtility::redirect(_AM_OLEDRION_SAVE_OK, $baseurl . '?op=' . $opRedirect, 2);
+                Oledrion\Utility::updateCache();
+                Oledrion\Utility::redirect(_AM_OLEDRION_SAVE_OK, $baseurl . '?op=' . $opRedirect, 2);
             } else {
-                OledrionUtility::redirect(_AM_OLEDRION_SAVE_PB, $baseurl . '?op=' . $opRedirect, 5);
+                Oledrion\Utility::redirect(_AM_OLEDRION_SAVE_PB, $baseurl . '?op=' . $opRedirect, 5);
             }
         } else {
-            OledrionUtility::redirect(_AM_OLEDRION_NOT_FOUND, $baseurl . '?op=' . $opRedirect, 5);
+            Oledrion\Utility::redirect(_AM_OLEDRION_NOT_FOUND, $baseurl . '?op=' . $opRedirect, 5);
         }
+
         break;
 }

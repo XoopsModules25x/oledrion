@@ -20,41 +20,44 @@
 /**
  * Page d'index, liste des derniers produits
  */
+
+use XoopsModules\Oledrion;
+
 require_once __DIR__ . '/header.php';
 $GLOBALS['current_category']             = -1;
 $GLOBALS['xoopsOption']['template_main'] = 'oledrion_index.tpl';
 require_once XOOPS_ROOT_PATH . '/header.php';
-require_once OLEDRION_PATH . 'class/registryfile.php';
+// require_once OLEDRION_PATH . 'class/Registryfile.php';
 
 // Initialisations
-$start     = isset($_GET['start']) ? (int)$_GET['start'] : 0;
-$limit     = OledrionUtility::getModuleOption('newproducts'); // Nombre maximum d'éléments à afficher
+$start     = \Xmf\Request::getInt('start', 0, 'GET');
+$limit     = Oledrion\Utility::getModuleOption('newproducts'); // Nombre maximum d'éléments à afficher
 $baseurl   = OLEDRION_URL . basename(__FILE__); // URL de ce script (sans son nom)
-$registry  = new oledrion_registryfile();
+$registry  = new Oledrion\Registryfile();
 $lastTitle = '';
 
 // Quelques options pour le template
-$xoopsTpl->assign('nostock_msg', OledrionUtility::getModuleOption('nostock_msg'));
+$xoopsTpl->assign('nostock_msg', Oledrion\Utility::getModuleOption('nostock_msg'));
 $xoopsTpl->assign('mod_pref', $mod_pref); // Préférences du module
 $xoopsTpl->assign('welcome_msg', nl2br($registry->getfile(OLEDRION_TEXTFILE1)));
-$xoopsTpl->assign('columnsCount', OledrionUtility::getModuleOption('index_colums'));
+$xoopsTpl->assign('columnsCount', Oledrion\Utility::getModuleOption('index_colums'));
 
 // Lecture des TVA ********************************************************************************
-$vatArray = $h_oledrion_vat->getAllVats(new Oledrion_parameters());
+$vatArray = $vatHandler->getAllVats(new Oledrion\Parameters());
 
 // Récupération du nombre total de produits de la base
-$xoopsTpl->assign('total_products_count', sprintf(_OLEDRION_THEREARE, $h_oledrion_products->getTotalPublishedProductsCount()));
+$xoopsTpl->assign('total_products_count', sprintf(_OLEDRION_THEREARE, $productsHandler->getTotalPublishedProductsCount()));
 
 if ($limit > 0) {
-    $itemsCount = $h_oledrion_products->getRecentProductsCount();
+    $itemsCount = $productsHandler->getRecentProductsCount();
     if ($itemsCount > $limit) {
         require_once XOOPS_ROOT_PATH . '/class/pagenav.php';
-        $pagenav = new XoopsPageNav($itemsCount, $limit, $start);
+        $pagenav = new \XoopsPageNav($itemsCount, $limit, $start);
         $xoopsTpl->assign('pagenav', $pagenav->renderNav());
     }
 
-    $oledrion_shelf_parameters->resetDefaultValues()->setProductsType('recent')->setStart($start)->setLimit($limit)->setSort('product_id DESC, product_title')->setWithXoopsUser(true)->setWithRelatedProducts(true);
-    $products = $oledrion_shelf->getProducts($oledrion_shelf_parameters);
+    $shelfParameters->resetDefaultValues()->setProductsType('recent')->setStart($start)->setLimit($limit)->setSort('product_id DESC, product_title')->setWithXoopsUser(true)->setWithRelatedProducts(true);
+    $products = $shelf->getProducts($shelfParameters);
 
     if (isset($products['lastTitle'])) {
         $lastTitle = strip_tags($products['lastTitle']);
@@ -65,7 +68,7 @@ if ($limit > 0) {
 
 // Mise en place des catégories de niveau 1
 $count      = 1;
-$categories = $h_oledrion_cat->getMotherCategories();
+$categories = $categoryHandler->getMotherCategories();
 foreach ($categories as $category) {
     $tmp          = $category->toArray();
     $tmp['count'] = $count;
@@ -73,7 +76,7 @@ foreach ($categories as $category) {
     ++$count;
 }
 
-OledrionUtility::setCSS();
-OledrionUtility::setLocalCSS($xoopsConfig['language']);
-OledrionUtility::setMetas($lastTitle . ' - ' . OledrionUtility::getModuleName(), OledrionUtility::getModuleName());
+Oledrion\Utility::setCSS();
+Oledrion\Utility::setLocalCSS($xoopsConfig['language']);
+Oledrion\Utility::setMetas($lastTitle . ' - ' . Oledrion\Utility::getModuleName(), Oledrion\Utility::getModuleName());
 require_once XOOPS_ROOT_PATH . '/footer.php';

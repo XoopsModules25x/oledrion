@@ -20,30 +20,33 @@
 /**
  * Page appelée par la passerelle après le paiement en ligne
  */
+
+use XoopsModules\Oledrion;
+
 require_once __DIR__ . '/header.php';
 $GLOBALS['current_category'] = -1;
 $success                     = true;
 
 $GLOBALS['xoopsOption']['template_main'] = 'oledrion_thankyou.tpl';
 require_once XOOPS_ROOT_PATH . '/header.php';
-$h_oledrion_caddy->emptyCart();
+$caddyHandler->emptyCart();
 
 // On donne la possibilité à la passerelle de traiter la commande
 $gateway = null;
-$gateway = Oledrion_gateways::getGatewayObject();
+$gateway = \XoopsModules\Oledrion\Gateways::getGatewayObject();
 if (is_object($gateway) && method_exists($gateway, 'thankYou')) {
     if (!file_exists(OLEDRION_GATEWAY_LOG_PATH)) {
-        file_put_contents(OLEDRION_GATEWAY_LOG_PATH, '<?php exit(); ?>');
+        file_put_contents(OLEDRION_GATEWAY_LOG_PATH, '<?php exit(); ?>', LOCK_EX);
     }
     $gateway->thankYou(OLEDRION_GATEWAY_LOG_PATH);
     unset($gateway);
 }
 $xoopsTpl->assign('success', $success);
-$xoopsTpl->assign('global_advert', OledrionUtility::getModuleOption('advertisement'));
-$xoopsTpl->assign('breadcrumb', OledrionUtility::breadcrumb(array(OLEDRION_URL . basename(__FILE__) => _OLEDRION_PURCHASE_FINSISHED)));
+$xoopsTpl->assign('global_advert', Oledrion\Utility::getModuleOption('advertisement'));
+$xoopsTpl->assign('breadcrumb', Oledrion\Utility::breadcrumb([OLEDRION_URL . basename(__FILE__) => _OLEDRION_PURCHASE_FINSISHED]));
 
-$title = _OLEDRION_PURCHASE_FINSISHED . ' - ' . OledrionUtility::getModuleName();
-OledrionUtility::setMetas($title, $title);
-OledrionUtility::setCSS();
-OledrionUtility::setLocalCSS($xoopsConfig['language']);
+$title = _OLEDRION_PURCHASE_FINSISHED . ' - ' . Oledrion\Utility::getModuleName();
+Oledrion\Utility::setMetas($title, $title);
+Oledrion\Utility::setCSS();
+Oledrion\Utility::setLocalCSS($xoopsConfig['language']);
 require_once XOOPS_ROOT_PATH . '/footer.php';

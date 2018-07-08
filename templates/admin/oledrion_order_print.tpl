@@ -60,7 +60,7 @@
                 <th class="center">مبلغ</th>
             </tr>
             <{foreach item=product from=$products}>
-                <{if count($product.product_attributes) > 0}>
+                <{if isset($product.product_attributes) && count($product.product_attributes) > 0}>
                     <tr>
                         <td rowspan="<{math equation='x + y' x=$product.product_attributes_count y=1}>"
                             class="center"><{$product.product_extraid}></td>

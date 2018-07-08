@@ -1,0 +1,20 @@
+---
+# oledrion_files
+-
+  file_id: 1
+  file_product_id: 1
+  file_filename: "0000003a2f86f2.zip"
+  file_description: "Extra file"
+  file_mimetype: "application/zip"
+-
+  file_id: 2
+  file_product_id: 2
+  file_filename: "0000003a2f86f2.zip"
+  file_description: "Extra file"
+  file_mimetype: "application/zip"
+-
+  file_id: 3
+  file_product_id: 3
+  file_filename: "0000003a2f86f2.zip"
+  file_description: "Extra file"
+  file_mimetype: "application/zip"

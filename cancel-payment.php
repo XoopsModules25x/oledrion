@@ -17,6 +17,8 @@
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
  */
 
+use XoopsModules\Oledrion;
+
 /**
  * Page appelée par la passerelle de paiement dans le cas de l'annulation d'une commande
  */
@@ -27,26 +29,26 @@ require_once XOOPS_ROOT_PATH . '/header.php';
 
 // On donne la possibilité à la passerelle d'annuler la commande
 $gateway = null;
-$gateway = Oledrion_gateways::getGatewayObject();
+$gateway = \XoopsModules\Oledrion\Gateways::getGatewayObject();
 if (is_object($gateway) && method_exists($gateway, 'cancelOrder')) {
     if (!file_exists(OLEDRION_GATEWAY_LOG_PATH)) {
-        file_put_contents(OLEDRION_GATEWAY_LOG_PATH, '<?php exit(); ?>');
+        file_put_contents(OLEDRION_GATEWAY_LOG_PATH, '<?php exit(); ?>', LOCK_EX);
     }
     $gateway->cancelOrder(OLEDRION_GATEWAY_LOG_PATH);
     unset($gateway);
-} elseif (isset($_GET['id'])) {
+} elseif (\Xmf\Request::hasVar('id', 'GET')) {
     $order = null;
-    $order = $h_oledrion_commands->getOrderFromCancelPassword($_GET['id']);
+    $order = $commandsHandler->getOrderFromCancelPassword($_GET['id']);
     if (is_object($order)) {
-        $h_oledrion_commands->setOrderCanceled($order);
+        $commandsHandler->setOrderCanceled($order);
     }
 }
-$h_oledrion_caddy->emptyCart();
+$caddyHandler->emptyCart();
 $xoopsTpl->assign('mod_pref', $mod_pref);
-$xoopsTpl->assign('breadcrumb', OledrionUtility::breadcrumb(array(OLEDRION_URL . basename(__FILE__) => _OLEDRION_ORDER_CANCELED)));
+$xoopsTpl->assign('breadcrumb', Oledrion\Utility::breadcrumb([OLEDRION_URL . basename(__FILE__) => _OLEDRION_ORDER_CANCELED]));
 
-$title = _OLEDRION_ORDER_CANCELED . ' - ' . OledrionUtility::getModuleName();
-OledrionUtility::setMetas($title, $title);
-OledrionUtility::setCSS();
-OledrionUtility::setLocalCSS($xoopsConfig['language']);
+$title = _OLEDRION_ORDER_CANCELED . ' - ' . Oledrion\Utility::getModuleName();
+Oledrion\Utility::setMetas($title, $title);
+Oledrion\Utility::setCSS();
+Oledrion\Utility::setLocalCSS($xoopsConfig['language']);
 require_once XOOPS_ROOT_PATH . '/footer.php';

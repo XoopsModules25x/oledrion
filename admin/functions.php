@@ -42,27 +42,26 @@ function oledrion_get_configHandler()
     if (!is_object($configHandler)) {
         trigger_error('Error, unable to get and handler on the Config object');
         exit;
-    } else {
-        return $configHandler;
     }
+
+    return $configHandler;
 }
 
 /**
  * Returns a module option
  *
- * @param  string $optionName
- * @return object The requested module's option
- * @internal param string $option_name The module's option
+ * @param  string $optionName The module's option
+ * @return \XoopsConfigOption The requested module's option
  */
 function oledrion_get_module_option($optionName = '')
 {
-    $ret            = null;
-    $tbl_options    = array();
-    $mid            = oledrion_get_mid();
+    $ret           = null;
+    $tbl_options   = [];
+    $mid           = oledrion_get_mid();
     $configHandler = oledrion_get_configHandler();
-    $critere        = new CriteriaCompo();
-    $critere->add(new Criteria('conf_modid', $mid, '='));
-    $critere->add(new Criteria('conf_name', $optionName, '='));
+    $critere       = new \CriteriaCompo();
+    $critere->add(new \Criteria('conf_modid', $mid, '='));
+    $critere->add(new \Criteria('conf_name', $optionName, '='));
     $tbl_options = $configHandler->getConfigs($critere, false, false);
     if (count($tbl_options) > 0) {
         $option = $tbl_options[0];
@@ -76,12 +75,12 @@ function oledrion_get_module_option($optionName = '')
  * Set a module's option
  * @param string $optionName
  * @param string $optionValue
- * @return
+ * @return bool
  */
 function oledrion_set_module_option($optionName = '', $optionValue = '')
 {
     $configHandler = oledrion_get_configHandler();
-    $option         = oledrion_get_module_option($optionName, true);
+    $option        = oledrion_get_module_option($optionName, true);
     $option->setVar('conf_value', $optionValue);
     $retval = $configHandler->insertConfig($option, true);
 

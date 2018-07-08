@@ -20,56 +20,62 @@
 /**
  * Recherche dans les produits
  */
+
+use XoopsModules\Oledrion;
+
 require_once __DIR__ . '/header.php';
-require_once OLEDRION_PATH . 'class/tree.php';
+// require_once OLEDRION_PATH . 'class/tree.php';
 $GLOBALS['current_category']             = -1; // Pour le bloc des catégories
 $GLOBALS['xoopsOption']['template_main'] = 'oledrion_search.tpl';
 require_once XOOPS_ROOT_PATH . '/header.php';
 
-$limit      = OledrionUtility::getModuleOption('newproducts'); // Nombre maximum d'éléments à afficher
-$categories = $manufacturers = $vendors = array();
+$limit      = Oledrion\Utility::getModuleOption('newproducts'); // Nombre maximum d'éléments à afficher
+$categories = $manufacturers = $vendors = [];
 $baseurl    = OLEDRION_URL . basename(__FILE__); // URL de ce script (sans son nom)
 
 $xoopsTpl->assign('mod_pref', $mod_pref); // Préférences du module
-$xoopsTpl->assign('columnsCount', OledrionUtility::getModuleOption('catagory_colums'));
+$xoopsTpl->assign('columnsCount', Oledrion\Utility::getModuleOption('category_colums'));
 
-$categories    = $h_oledrion_cat->getAllCategories(new Oledrion_parameters());
-$vendors       = $h_oledrion_vendors->getAllVendors(new Oledrion_parameters());
-$manufacturers = $h_oledrion_manufacturer->getItems(0, 0, 'manu_name', 'ASC', false);
+$categories    = $categoryHandler->getAllCategories(new Oledrion\Parameters());
+$vendors       = $vendorsHandler->getAllVendors(new Oledrion\Parameters());
+$manufacturers = $manufacturerHandler->getItems(0, 0, 'manu_name', 'ASC', false);
 
-if ((isset($_POST['op']) && $_POST['op'] === 'go') || isset($_GET['start'])) { // Recherche des résultats
+if ((isset($_POST['op']) && 'go' === $_POST['op']) || isset($_GET['start'])) {
+    // Recherche des résultats
     $xoopsTpl->assign('search_results', true);
-    $xoopsTpl->assign('global_advert', OledrionUtility::getModuleOption('advertisement'));
-    $xoopsTpl->assign('breadcrumb', OledrionUtility::breadcrumb(array(OLEDRION_URL . basename(__FILE__) => _OLEDRION_SEARCHRESULTS)));
-    OledrionUtility::setMetas(OledrionUtility::getModuleName() . ' - ' . _OLEDRION_SEARCHRESULTS, OledrionUtility::getModuleName() . ' - ' . _OLEDRION_SEARCHRESULTS);
+    $xoopsTpl->assign('global_advert', Oledrion\Utility::getModuleOption('advertisement'));
+    $xoopsTpl->assign('breadcrumb', Oledrion\Utility::breadcrumb([OLEDRION_URL . basename(__FILE__) => _OLEDRION_SEARCHRESULTS]));
+    Oledrion\Utility::setMetas(Oledrion\Utility::getModuleName() . ' - ' . _OLEDRION_SEARCHRESULTS, Oledrion\Utility::getModuleName() . ' - ' . _OLEDRION_SEARCHRESULTS);
 
     if (!isset($_GET['start'])) {
         $sql = 'SELECT b.product_id, b.product_title, b.product_submitted, b.product_submitter, b.product_thumb_url, b.product_price, b.product_property1, b.product_property2, b.product_property3, b.product_property4, b.product_property5, b.product_property6, b.product_property7, b.product_property8, b.product_property9, b.product_property10, b.product_stock, b.product_summary FROM '
                . $xoopsDB->prefix('oledrion_products')
                . ' b, '
                . $xoopsDB->prefix('oledrion_productsmanu')
-               . ' a WHERE (b.product_id = a.pm_product_id AND b.product_online = 1 ';
-        if (OledrionUtility::getModuleOption('show_unpublished') == 0) { // Ne pas afficher les produits qui ne sont pas publiés
+               . ' a WHERE (b.product_id = a.pm_product_id AND b.product_online = 1) ';
+        if (0 == Oledrion\Utility::getModuleOption('show_unpublished')) {
+            // Ne pas afficher les produits qui ne sont pas publiés
             $sql .= ' AND b.product_submitted <= ' . time();
         }
-        if (OledrionUtility::getModuleOption('nostock_display') == 0) { // Se limiter aux seuls produits encore en stock
+        if (0 == Oledrion\Utility::getModuleOption('nostock_display')) {
+            // Se limiter aux seuls produits encore en stock
             $sql .= ' AND b.product_stock > 0';
         }
         $sql .= ') ';
 
         // Recherche sur une catégorie
-        if (isset($_POST['product_category'])) {
-            $cat_cid = (int)$_POST['product_category'];
+        if (\Xmf\Request::hasVar('product_category', 'POST')) {
+            $cat_cid = \Xmf\Request::getInt('product_category', 0, 'POST');
             if ($cat_cid > 0) {
                 $sql .= 'AND (b.product_cid = ' . $cat_cid . ')';
             }
         }
 
         // Recherche sur les fabricants
-        if (isset($_POST['product_manufacturers'])) {
+        if (\Xmf\Request::hasVar('product_manufacturers', 'POST')) {
             $submittedManufacturers = null;
             $submittedManufacturers = $_POST['product_manufacturers'];
-            if (is_array($submittedManufacturers) && (int)$submittedManufacturers[0] == 0) {
+            if (is_array($submittedManufacturers) && 0 == (int)$submittedManufacturers[0]) {
                 $submittedManufacturers = array_shift($submittedManufacturers);
             }
             if (is_array($submittedManufacturers) && count($submittedManufacturers) > 0) {
@@ -84,98 +90,98 @@ if ((isset($_POST['op']) && $_POST['op'] === 'go') || isset($_GET['start'])) { /
         }
 
         // Recherche sur les vendeurs
-        if (isset($_POST['product_vendors'])) {
-            $vendor = (int)$_POST['product_vendors'];
+        if (\Xmf\Request::hasVar('product_vendors', 'POST')) {
+            $vendor = \Xmf\Request::getInt('product_vendors', 0, 'POST');
             if ($vendor > 0) {
                 $sql .= ' AND (product_vendor_id = ' . $vendor . ')';
             }
         }
 
         // set from
-        if (isset($_POST['product_from'])) {
-            $product_from = (int)$_POST['product_from'];
+        if (\Xmf\Request::hasVar('product_from', 'POST')) {
+            $product_from = \Xmf\Request::getInt('product_from', 0, 'POST');
             if ($product_from > 0) {
                 $sql .= ' AND (product_price > ' . $product_from . ')';
             }
         }
 
         // set to
-        if (isset($_POST['product_to'])) {
-            $product_to = (int)$_POST['product_to'];
+        if (\Xmf\Request::hasVar('product_to', 'POST')) {
+            $product_to = \Xmf\Request::getInt('product_to', 0, 'POST');
             if ($product_to > 0) {
                 $sql .= ' AND (product_price < ' . $product_to . ')';
             }
         }
 
-        if ($_POST['product_stock'] == 2) {
+        if (2 == $_POST['product_stock']) {
             $sql .= ' AND (product_stock > 0)';
-        } elseif ($_POST['product_stock'] == 0) {
+        } elseif (0 == $_POST['product_stock']) {
             $sql .= ' AND (product_stock = 0)';
         }
 
-        if (isset($_POST['product_property1'])) {
+        if (\Xmf\Request::hasVar('product_property1', 'POST')) {
             if ($_POST['product_property1']) {
                 $sql .= ' AND (b.product_property1 = "' . $_POST['product_property1'] . '")';
             }
         }
 
-        if (isset($_POST['product_property2'])) {
+        if (\Xmf\Request::hasVar('product_property2', 'POST')) {
             if ($_POST['product_property2']) {
                 $sql .= ' AND (b.product_property2 = "' . $_POST['product_property2'] . '")';
             }
         }
 
-        if (isset($_POST['product_property3'])) {
+        if (\Xmf\Request::hasVar('product_property3', 'POST')) {
             if ($_POST['product_property3']) {
                 $sql .= ' AND (b.product_property3 = "' . $_POST['product_property3'] . '")';
             }
         }
 
-        if (isset($_POST['product_property4'])) {
+        if (\Xmf\Request::hasVar('product_property4', 'POST')) {
             if ($_POST['product_property4']) {
                 $sql .= ' AND (b.product_property4 = "' . $_POST['product_property4'] . '")';
             }
         }
 
-        if (isset($_POST['product_property5'])) {
+        if (\Xmf\Request::hasVar('product_property5', 'POST')) {
             if ($_POST['product_property5']) {
                 $sql .= ' AND (b.product_property5 = "' . $_POST['product_property5'] . '")';
             }
         }
 
-        if (isset($_POST['product_property6'])) {
+        if (\Xmf\Request::hasVar('product_property6', 'POST')) {
             if ($_POST['product_property6']) {
                 $sql .= ' AND (b.product_property6 = "' . $_POST['product_property6'] . '")';
             }
         }
 
-        if (isset($_POST['product_property7'])) {
+        if (\Xmf\Request::hasVar('product_property7', 'POST')) {
             if ($_POST['product_property7']) {
                 $sql .= ' AND (b.product_property7 = "' . $_POST['product_property7'] . '")';
             }
         }
 
-        if (isset($_POST['product_property8'])) {
+        if (\Xmf\Request::hasVar('product_property8', 'POST')) {
             if ($_POST['product_property8']) {
                 $sql .= ' AND (b.product_property8 = "' . $_POST['product_property8'] . '")';
             }
         }
 
-        if (isset($_POST['product_property9'])) {
+        if (\Xmf\Request::hasVar('product_property9', 'POST')) {
             if ($_POST['product_property9']) {
                 $sql .= ' AND (b.product_property9 = "' . $_POST['product_property9'] . '")';
             }
         }
 
-        if (isset($_POST['product_property10'])) {
+        if (\Xmf\Request::hasVar('product_property10', 'POST')) {
             if ($_POST['product_property10']) {
                 $sql .= ' AND (b.product_property10 = "' . $_POST['product_property10'] . '")';
             }
         }
 
         // Recherche sur du texte
-        if (isset($_POST['product_text']) && xoops_trim($_POST['product_text']) != '') {
-            $temp_queries = $queries = array();
+        if (\Xmf\Request::hasVar('product_text', 'POST') && '' !== xoops_trim($_POST['product_text'])) {
+            $temp_queries = $queries = [];
             $temp_queries = preg_split('/[\s,]+/', $_POST['product_text']);
 
             foreach ($temp_queries as $q) {
@@ -183,13 +189,13 @@ if ((isset($_POST['op']) && $_POST['op'] === 'go') || isset($_GET['start'])) { /
                 $queries[] = $myts->addSlashes($q);
             }
             if (count($queries) > 0) {
-                $tmpObject = new oledrion_products();
-                $datas     =& $tmpObject->getVars();
-                $fields    = array();
+                $tmpObject = new Oledrion\Products();
+                $datas     = $tmpObject->getVars();
+                $fields    = [];
                 $cnt       = 0;
                 foreach ($datas as $key => $value) {
-                    if ($value['data_type'] == XOBJ_DTYPE_TXTBOX || $value['data_type'] == XOBJ_DTYPE_TXTAREA) {
-                        if ($cnt == 0) {
+                    if (XOBJ_DTYPE_TXTBOX == $value['data_type'] || XOBJ_DTYPE_TXTAREA == $value['data_type']) {
+                        if (0 == $cnt) {
                             $fields[] = 'b.' . $key;
                         } else {
                             $fields[] = ' OR b.' . $key;
@@ -200,22 +206,30 @@ if ((isset($_POST['op']) && $_POST['op'] === 'go') || isset($_GET['start'])) { /
                 $count      = count($queries);
                 $cnt        = 0;
                 $sql        .= ' AND ';
-                $searchType = (int)$_POST['search_type'];
+                $searchType = \Xmf\Request::getInt('search_type', 0, 'POST');
                 $andor      = ' OR ';
                 foreach ($queries as $oneQuery) {
                     $sql .= '(';
                     switch ($searchType) {
                         case 0: // Commence par
+
                             $cond = " LIKE '" . $oneQuery . "%' ";
+
                             break;
                         case 1: // Finit par
+
                             $cond = " LIKE '%" . $oneQuery . "' ";
+
                             break;
                         case 2: // Correspond à
+
                             $cond = " = '" . $oneQuery . "' ";
+
                             break;
                         case 3: // Contient
+
                             $cond = " LIKE '%" . $oneQuery . "%' ";
+
                             break;
                     }
                     $sql .= implode($cond, $fields) . $cond . ')';
@@ -227,31 +241,32 @@ if ((isset($_POST['op']) && $_POST['op'] === 'go') || isset($_GET['start'])) { /
             }
         }
         $_SESSION['criteria_oledrion'] = serialize($sql);
-    } else { // $_GET['start'] est en place, on a cliqué sur un chevron pour aller voir les autres pages, il faut travailler à partir des informations de la session
-        if (isset($_SESSION['criteria_oledrion'])) {
+    } else {
+        // $_GET['start'] est en place, on a cliqué sur un chevron pour aller voir les autres pages, il faut travailler à partir des informations de la session
+        if (\Xmf\Request::hasVar('criteria_oledrion', 'SESSION')) {
             $sql = unserialize($_SESSION['criteria_oledrion']);
         }
     }
-    $start    = isset($_GET['start']) ? (int)$_GET['start'] : 0;
+    $start    = \Xmf\Request::getInt('start', 0, 'GET');
     $sqlCount = str_replace('b.product_id, b.product_title, b.product_submitted, b.product_submitter', 'Count(*) as cpt', $sql);
     $result   = $xoopsDB->query($sqlCount);
     $rowCount = $xoopsDB->fetchArray($result);
     if ($rowCount['cpt'] > $limit) {
         require_once XOOPS_ROOT_PATH . '/class/pagenav.php';
-        $pagenav = new XoopsPageNav($rowCount['cpt'], $limit, $start, 'start');
+        $pagenav = new \XoopsPageNav($rowCount['cpt'], $limit, $start, 'start');
         $xoopsTpl->assign('pagenav', $pagenav->renderNav());
     }
 
     $sql         .= ' GROUP BY b.product_id ORDER BY product_submitted DESC';
     $result      = $xoopsDB->query($sql, $limit, $start);
-    $ret         = array();
-    $tempProduct = $h_oledrion_products->create(true);
+    $ret         = [];
+    $tempProduct = $productsHandler->create(true);
     $count       = 1;
-    while ($myrow = $xoopsDB->fetchArray($result)) {
-        $ret                           = array();
+    while (false !== ($myrow = $xoopsDB->fetchArray($result))) {
+        $ret                           = [];
         $ret['product_url_rewrited']   = $tempProduct->getLink($myrow['product_id'], $myrow['product_title']);
         $ret['product_title']          = $myts->htmlSpecialChars($myrow['product_title']);
-        $ret['product_href_title']     = OledrionUtility::makeHrefTitle($myts->htmlSpecialChars($myrow['product_title']));
+        $ret['product_href_title']     = Oledrion\Utility::makeHrefTitle($myts->htmlSpecialChars($myrow['product_title']));
         $ret['product_time']           = $myrow['product_submitted'];
         $ret['product_uid']            = $myrow['product_submitter'];
         $ret['product_id']             = $myrow['product_id'];
@@ -268,16 +283,16 @@ if ((isset($_POST['op']) && $_POST['op'] === 'go') || isset($_GET['start'])) { /
         $ret['product_property9']      = $myrow['product_property9'];
         $ret['product_property10']     = $myrow['product_property10'];
         $ret['product_price']          = $myrow['product_price'];
-        if ($myrow['product_price'] == 0) {
-            $criteria = new CriteriaCompo();
-            $criteria->add(new Criteria('attribute_product_id', $myrow['product_id']));
-            $attribute = OledrionHandler::getInstance()->h_oledrion_attributes->getObjects($criteria, false);
+        if (0 == $myrow['product_price']) {
+            $criteria = new \CriteriaCompo();
+            $criteria->add(new \Criteria('attribute_product_id', $myrow['product_id']));
+            $attribute = $attributesHandler->getObjects($criteria, false);
             foreach ($attribute as $root) {
                 $ret['product_price'] = $root->getVar('attribute_default_value');
             }
         }
         $ret['product_stock']     = $myrow['product_stock'];
-        $ret['product_price_ttc'] = OledrionUtility::getTTC($ret['product_price'], '');
+        $ret['product_price_ttc'] = Oledrion\Utility::getTTC($ret['product_price'], '');
         $ret['product_count']     = $count;
         $ret['product_summary']   = $myrow['product_summary'];
         $xoopsTpl->append('products', $ret);
@@ -286,16 +301,16 @@ if ((isset($_POST['op']) && $_POST['op'] === 'go') || isset($_GET['start'])) { /
     unset($tempProduct);
 } else {
     $xoopsTpl->assign('search_results', false);
-    $xoopsTpl->assign('global_advert', OledrionUtility::getModuleOption('advertisement'));
-    $xoopsTpl->assign('breadcrumb', OledrionUtility::breadcrumb(array(OLEDRION_URL . basename(__FILE__) => _OLEDRION_SEARCHFOR)));
-    OledrionUtility::setMetas(OledrionUtility::getModuleName() . ' - ' . _OLEDRION_SEARCHFOR, OledrionUtility::getModuleName() . ' - ' . _OLEDRION_SEARCHFOR);
+    $xoopsTpl->assign('global_advert', Oledrion\Utility::getModuleOption('advertisement'));
+    $xoopsTpl->assign('breadcrumb', Oledrion\Utility::breadcrumb([OLEDRION_URL . basename(__FILE__) => _OLEDRION_SEARCHFOR]));
+    Oledrion\Utility::setMetas(Oledrion\Utility::getModuleName() . ' - ' . _OLEDRION_SEARCHFOR, Oledrion\Utility::getModuleName() . ' - ' . _OLEDRION_SEARCHFOR);
 }
 
 require_once OLEDRION_PATH . 'include/product_search_form.php';
-$sform =& OledrionUtility::formMarkRequiredFields($sform);
+$sform = Oledrion\Utility::formMarkRequiredFields($sform);
 $xoopsTpl->assign('search_form', $sform->render());
 
-OledrionUtility::setCSS();
-OledrionUtility::setLocalCSS($xoopsConfig['language']);
+Oledrion\Utility::setCSS();
+Oledrion\Utility::setLocalCSS($xoopsConfig['language']);
 
 require_once XOOPS_ROOT_PATH . '/footer.php';

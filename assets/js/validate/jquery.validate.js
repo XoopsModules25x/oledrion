@@ -1057,7 +1057,7 @@
 // ajax mode: abort
 // usage: $.ajax({ mode: "abort"[, port: "uniqueport"]});
 // if mode:"abort" is used, the previous request on that port (port can be undefined) is aborted via XMLHttpRequest.abort()
-;(function ($) {
+(function ($) {
     var ajax = $.ajax;
     var pendingRequests = {};
     $.ajax = function (settings) {
@@ -1081,7 +1081,7 @@
 // handler is only called when $(event.target).is(delegate), in the scope of the jquery-object for event.target
 
 // provides triggerEvent(type: String, target: Element) to trigger delegated events
-;(function ($) {
+(function ($) {
     $.each({
         focus: 'focusin',
         blur: 'focusout'

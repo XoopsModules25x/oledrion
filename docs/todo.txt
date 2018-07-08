@@ -3,10 +3,10 @@
 ---------------------------------------
 Needed options :
 1- Make a calculation of Shipping costs based on the weight of the package.
-2- Add PDF 
+2- Add PDF
 3- Final and printable Sales Invoice for user at finish of ordring (finish)
 4- User order / invoice history
-5- AJAX checkout levels 
+5- AJAX checkout levels
 
 Bugs :
 1- Print page didnt work (finish)
@@ -28,3 +28,15 @@ Bugs :
        - Most viewed lists (OK)
 7- Shipping price accumulate when buying multiple items. Example, if I buy two items, the addition contains 2 times the shipping price.
 8- Upload image in order steps on admin didnt work
+
+Suggestions from Ross B.:
+- Add admin hints when required config such as Packing, location, Delivery are missing which is confusing to users (no way to select, empty radio buttons)
+- SMS order notification incomplete. Currently sent before payment verification. Completely rework to add transaction ID (from gateway / paypal) and send after payment verification
+- Cannot select more than one gateway (#1). See "TODO" in gateway.php.
+- Bug(s) No images can be loaded, all configuration pages. Xoops version?
+- fix bug with selecting Picture for payment (admin). May be the wrong place to select picture, since it is used to represent gateway and should be a gateway property (ie; paypal image).
+- change templates (checkout) for "Select delivery method form" and "Select payment method form" so that radio button fields are one line each.
+- Add stub update DB (at payment verification) function which calls script sh/php for update other DB (such as licensing, access priveleges). Consider making gateway or payment config property.
+- Fix receipt email templates such that header and columns line up. Perhaps pretty html option?
+- Document this module (not me)
+

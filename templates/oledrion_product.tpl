@@ -63,7 +63,7 @@
                 <table cellspacing="0">
                     <tr>
                         <td colspan="2" class="oledrion_producttitle_view-product">
-                            <h2><{$product.product_recommended_picture}><{$product.product_title}></h2>
+                            <strong><{$product.product_recommended_picture}><{$product.product_title}></strong>
                         </td>
                     </tr>
                     <tr>
@@ -138,15 +138,15 @@
                                     <div class="oledrion_view-product_price">
                                         <{if $product.product_stock ==  0 }>
                                             <{$mod_pref.nostock_msg}>
-                                        <{elseif count($product.product_attributes) == 0 }>
+                                        <{elseif isset($product.product_attributes) && count($product.product_attributes) == 0 }>
                                             <span class="oledrion_productdescription-contentTitles"><{$smarty.const._OLEDRION_PRICE}></span>
                                             :
                                             <span class="bold">
            <{if $product.product_discount_price_ttc != ''}>
-               <s><{$product.product_price_ttc_long}> </s>
+               <s><{$product.product_price_ttc}> </s>
                <{$product.product_discount_price_ttc}>
            <{else}>
-               <{$product.product_price_ttc_long}>
+               <{$product.product_price_ttc}>
            <{/if}>
                             </span>
                                             <a href="<{$smarty.const.OLEDRION_URL}>caddy.php?op=addproduct&product_id=<{$product.product_id}>"
@@ -174,9 +174,9 @@
                                                                     <s><{$product.product_price_ttc}> </s>
                                                                     <b><{$product.product_discount_price_ttc}></b>
                                                                 <{else}>
-                                                                    <{$product.product_price_ttc_long}>
+                                                                    <{$product.product_price_ttc}>
                                                                 <{/if}>
-                                                                <span id="oledrion_final_price_ttc"><{$product.product_final_price_ttc_formated_long}></span>
+                                                                <span class="oledrion_final_price_ttc"><{$product.product_final_price_ttc_formated}></span>
                                                                 <{if $product.product_ecotaxe != ''}>
                                                                     <div class="oledrion_view-product_price_ecotaxe"><span
                                                                                 class="oledrion_productdescription-contentTitles"><{$smarty.const._OLEDRION_ECOTAXE}></span>
@@ -357,7 +357,7 @@
                                 </div>
                             <{/if}>
 
-                            <{if count($product.attached_files) > 0}>
+                            <{if isset($product.attached_files) && count($product.attached_files) > 0}>
                                 <div class="oledrion_otherinf">
                                     <h3><{$smarty.const._OLEDRION_ATTACHED_FILES}></h3>
                                     <{if $product.attached_mp3_count > 0}>
@@ -413,7 +413,7 @@
     <!--**** /product INFORMATIONS *****-->
 
     <!--***** RELATED PRODUCTS *****-->
-    <{if count($product_related_products) > 0}>
+    <{if isset($product_related_products) && count($product_related_products) > 0}>
         <div id="oledrion_related">
             <h2><img src="<{$smarty.const.OLEDRION_IMAGES_URL}>icon-product-person.png"
                      alt="<{$smarty.const._OLEDRION_CART}>"><{$smarty.const._OLEDRION_RELATED_PRODUCTS}></h2>
@@ -423,7 +423,7 @@
                     <td class="center top">
                         <{include file="db:oledrion_product_box.tpl" product=$oneitem}>
                     </td>
-                    <{if $oneitem.count % $columnsCount == 0}>
+                    <{if $columnsCount != 0 && $oneitem.count % $columnsCount == 0}>
                 </tr>
                 <tr>
                     <{/if}>
@@ -465,7 +465,7 @@
                    title="<{$bestwith.product_href_title}>"><{$bestwith.product_title}></a>
             <{/if}>
 
-            <{if count($product_all_categs) > 0}>
+            <{if isset($product_all_categs) && count($product_all_categs) > 0}>
                 <h2><img src="<{$smarty.const.OLEDRION_IMAGES_URL}>icon-product-person.png"
                          alt="<{$smarty.const._OLEDRION_RECENT_CATEGS}>"><{$smarty.const._OLEDRION_RECENT_CATEGS}></h2>
                 <table class='center oledrion_lastproducts'>
@@ -474,7 +474,7 @@
                         <td class="center top">
                             <{include file="db:oledrion_product_box.tpl" product=$oneitem}>
                         </td>
-                        <{if $oneitem.count % $columnsCount == 0}>
+                        <{if $columnsCount != 0 && $oneitem.count % $columnsCount == 0}>
                     </tr>
                     <tr>
                         <{/if}>
@@ -483,7 +483,7 @@
                 </table>
             <{/if}>
 
-            <{if count($product_current_categ) > 0}>
+            <{if isset($product_current_categ) && count($product_current_categ) > 0}>
                 <h2><img src="<{$smarty.const.OLEDRION_IMAGES_URL}>icon-product-person.png"
                          alt="<{$smarty.const._OLEDRION_RECENT_CATEG}>"><{$smarty.const._OLEDRION_RECENT_CATEG}></h2>
                 <table class='center oledrion_lastproducts'>
@@ -492,7 +492,7 @@
                         <td class="center top">
                             <{include file="db:oledrion_product_box.tpl" product=$oneitem}>
                         </td>
-                        <{if $oneitem.count % $columnsCount == 0}>
+                        <{if $columnsCount != 0 && $oneitem.count % $columnsCount == 0}>
                     </tr>
                     <tr>
                         <{/if}>

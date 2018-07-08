@@ -23,32 +23,44 @@
  * @return array
  */
 
+use XoopsModules\Oledrion;
+
+/**
+ * @param $queryarray
+ * @param $andor
+ * @param $limit
+ * @param $offset
+ * @param $userid
+ * @return array
+ */
 function oledrion_search($queryarray, $andor, $limit, $offset, $userid)
 {
     global $xoopsDB;
-    require XOOPS_ROOT_PATH . '/modules/oledrion/include/common.php';
-    require_once XOOPS_ROOT_PATH . '/modules/oledrion/class/oledrion_products.php';
+    require_once __DIR__ . '/common.php';
+    //require_once XOOPS_ROOT_PATH . '/modules/oledrion/class/Products.php';
 
     // Recherche dans les produits
-    $sql = 'SELECT product_id, product_title, product_submitted, product_submitter FROM ' . $xoopsDB->prefix('oledrion_products') . ' WHERE (product_online = 1';
-    if (OledrionUtility::getModuleOption('show_unpublished') == 0) { // Ne pas afficher les produits qui ne sont pas publiés
+    $sql = 'SELECT product_id, product_title, product_submitted, product_submitter FROM ' . $xoopsDB->prefix('oledrion_products') . ' WHERE (product_online = 1)';
+    if (0 == Oledrion\Utility::getModuleOption('show_unpublished')) {
+        // Ne pas afficher les produits qui ne sont pas publiés
         $sql .= ' AND product_submitted <= ' . time();
     }
-    if (OledrionUtility::getModuleOption('nostock_display') == 0) { // Se limiter aux seuls produits encore en stock
+    if (0 == Oledrion\Utility::getModuleOption('nostock_display')) {
+        // Se limiter aux seuls produits encore en stock
         $sql .= ' AND product_stock > 0';
     }
-    if ($userid != 0) {
+    if (0 != $userid) {
         $sql .= '  AND product_submitter = ' . $userid;
     }
     $sql .= ') ';
 
-    $tmpObject = new oledrion_products();
-    $datas     =& $tmpObject->getVars();
-    $tblFields = array();
+    $tmpObject = new Oledrion\Products();
+    $datas     = &$tmpObject->getVars();
+    $tblFields = [];
     $cnt       = 0;
     foreach ($datas as $key => $value) {
-        if ($value['data_type'] == XOBJ_DTYPE_TXTBOX || $value['data_type'] == XOBJ_DTYPE_TXTAREA) {
-            if ($cnt == 0) {
+        if (XOBJ_DTYPE_TXTBOX == $value['data_type'] || XOBJ_DTYPE_TXTAREA == $value['data_type']) {
+            if (0 == $cnt) {
                 $tblFields[] = $key;
             } else {
                 $tblFields[] = ' OR ' . $key;
@@ -57,9 +69,12 @@ function oledrion_search($queryarray, $andor, $limit, $offset, $userid)
         }
     }
 
-    $count = count($queryarray);
-    $more  = '';
-    if (is_array($queryarray) && $count > 0) {
+    $count = 0;
+    if (is_array($queryarray)) {
+        $count = count($queryarray);
+    }
+    $more = '';
+    if ($count > 0) {
         $cnt  = 0;
         $sql  .= ' AND (';
         $more = ')';
@@ -75,10 +90,10 @@ function oledrion_search($queryarray, $andor, $limit, $offset, $userid)
     }
     $sql    .= $more . ' ORDER BY product_submitted DESC';
     $i      = 0;
-    $ret    = array();
-    $myts   = MyTextSanitizer::getInstance();
+    $ret    = [];
+    $myts   = \MyTextSanitizer::getInstance();
     $result = $xoopsDB->query($sql, $limit, $offset);
-    while ($myrow = $xoopsDB->fetchArray($result)) {
+    while (false !== ($myrow = $xoopsDB->fetchArray($result))) {
         $ret[$i]['image'] = 'assets/images/product.png';
         $ret[$i]['link']  = 'product.php?product_id=' . $myrow['product_id'];
         $ret[$i]['title'] = $myts->htmlSpecialChars($myrow['product_title']);

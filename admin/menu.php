@@ -17,105 +17,144 @@
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
  */
 
-$moduleDirName = basename(dirname(__DIR__));
+use XoopsModules\Oledrion;
 
-if (false !== ($moduleHelper = Xmf\Module\Helper::getHelper($moduleDirName))) {
-} else {
-    $moduleHelper = Xmf\Module\Helper::getHelper('system');
-}
-$adminObject = \Xmf\Module\Admin::getInstance();
+//require_once  dirname(__DIR__) . '/include/common.php';
+/** @var Oledrion\Helper $helper */
+$helper = Oledrion\Helper::getInstance();
 
 $pathIcon32    = \Xmf\Module\Admin::menuIconPath('');
-$pathModIcon32 = $moduleHelper->getModule()->getInfo('modicons32');
+$pathModIcon32 = $helper->getModule()->getInfo('modicons32');
 
-$moduleHelper->loadLanguage('modinfo');
+$adminmenu[] = [
+    'title' => _MI_OLEDRION_ADMENU10,
+    'link'  => 'admin/index.php?op=dashboard',
+    'icon'  => $pathIcon32 . '/home.png',
+];
 
-$adminmenu              = array();
-$i                      = 0;
-$adminmenu[$i]['title'] = _MI_OLEDRION_ADMENU10;
-$adminmenu[$i]['link']  = 'admin/index.php?op=dashboard';
-$adminmenu[$i]['icon']  = $pathIcon32 . '/home.png';
-++$i;
-$adminmenu[$i]['title'] = _MI_OLEDRION_ADMENU0;
-$adminmenu[$i]['link']  = 'admin/index.php?op=vendors';
-$adminmenu[$i]['icon']  = $pathIcon32 . '/user-icon.png';
-++$i;
-$adminmenu[$i]['title'] = _MI_OLEDRION_ADMENU1;
-$adminmenu[$i]['link']  = 'admin/index.php?op=vat';
-$adminmenu[$i]['icon']  = $pathModIcon32 . '/money_delete.png';
-++$i;
-$adminmenu[$i]['title'] = _MI_OLEDRION_ADMENU2;
-$adminmenu[$i]['link']  = 'admin/index.php?op=categories';
-$adminmenu[$i]['icon']  = $pathIcon32 . '/category.png';
-++$i;
-$adminmenu[$i]['title'] = _MI_OLEDRION_ADMENU3;
-$adminmenu[$i]['link']  = 'admin/index.php?op=manufacturers';
-$adminmenu[$i]['icon']  = $pathModIcon32 . '/factory.png';
-++$i;
-$adminmenu[$i]['title'] = _MI_OLEDRION_ADMENU4;
-$adminmenu[$i]['link']  = 'admin/index.php?op=products';
-$adminmenu[$i]['icon']  = $pathIcon32 . '/fileshare.png';
-++$i;
-$adminmenu[$i]['title'] = _MI_OLEDRION_ADMENU13;
-$adminmenu[$i]['link']  = 'admin/index.php?op=attributes';
-$adminmenu[$i]['icon']  = $pathIcon32 . '/highlight.png';
-++$i;
-$adminmenu[$i]['title'] = _MI_OLEDRION_ADMENU17;
-$adminmenu[$i]['link']  = 'admin/index.php?op=property';
-$adminmenu[$i]['icon']  = $pathIcon32 . '/view_detailed.png';
-++$i;
-$adminmenu[$i]['title'] = _MI_OLEDRION_ADMENU5;
-$adminmenu[$i]['link']  = 'admin/index.php?op=orders';
-$adminmenu[$i]['icon']  = $pathIcon32 . '/cart_add.png';
-++$i;
-$adminmenu[$i]['title'] = _MI_OLEDRION_ADMENU6;
-$adminmenu[$i]['link']  = 'admin/index.php?op=discounts';
-$adminmenu[$i]['icon']  = $pathIcon32 . '/discount.png';
-++$i;
-$adminmenu[$i]['title'] = _MI_OLEDRION_ADMENU7;
-$adminmenu[$i]['link']  = 'admin/index.php?op=newsletter';
-$adminmenu[$i]['icon']  = $pathIcon32 . '/newsletter.png';
-++$i;
-$adminmenu[$i]['title'] = _MI_OLEDRION_ADMENU8;
-$adminmenu[$i]['link']  = 'admin/index.php?op=texts';
-$adminmenu[$i]['icon']  = $pathIcon32 . '/content.png';
-++$i;
-$adminmenu[$i]['title'] = _MI_OLEDRION_ADMENU9;
-$adminmenu[$i]['link']  = 'admin/index.php?op=lowstock';
-$adminmenu[$i]['icon']  = $pathIcon32 . '/alert.png';
-++$i;
-$adminmenu[$i]['title'] = _MI_OLEDRION_ADMENU11;
-$adminmenu[$i]['link']  = 'admin/index.php?op=files';
-$adminmenu[$i]['icon']  = $pathIcon32 . '/attach.png';
-++$i;
-$adminmenu[$i]['title'] = _MI_OLEDRION_ADMENU12;
-$adminmenu[$i]['link']  = 'admin/index.php?op=gateways';
-$adminmenu[$i]['icon']  = $pathIcon32 . '/export.png';
-++$i;
-$adminmenu[$i]['title'] = _MI_OLEDRION_ADMENU15;
-$adminmenu[$i]['link']  = 'admin/index.php?op=lists';
-$adminmenu[$i]['icon']  = $pathIcon32 . '/index.png';
-++$i;
-$adminmenu[$i]['title'] = _MI_OLEDRION_ADMENU18;
-$adminmenu[$i]['link']  = 'admin/index.php?op=packing';
-$adminmenu[$i]['icon']  = $pathModIcon32 . '/package.png';
-++$i;
-$adminmenu[$i]['title'] = _MI_OLEDRION_ADMENU19;
-$adminmenu[$i]['link']  = 'admin/index.php?op=location';
-$adminmenu[$i]['icon']  = $pathIcon32 . '/globe.png';
-++$i;
-$adminmenu[$i]['title'] = _MI_OLEDRION_ADMENU20;
-$adminmenu[$i]['link']  = 'admin/index.php?op=delivery';
-$adminmenu[$i]['icon']  = $pathIcon32 . '/delivery.png';
-++$i;
-$adminmenu[$i]['title'] = _MI_OLEDRION_ADMENU21;
-$adminmenu[$i]['link']  = 'admin/index.php?op=payment';
-$adminmenu[$i]['icon']  = $pathIcon32 . '/cash_stack.png';
-++$i;
-$adminmenu[$i]['title'] = _MI_OLEDRION_ADMENU16;
-$adminmenu[$i]['link']  = 'admin/index.php?op=maintain';
-$adminmenu[$i]['icon']  = $pathIcon32 . '/synchronized.png';
-++$i;
-$adminmenu[$i]['title'] = _AM_MODULEADMIN_ABOUT;
-$adminmenu[$i]['link']  = 'admin/about.php';
-$adminmenu[$i]['icon']  = $pathIcon32 . '/about.png';
+$adminmenu[] = [
+    'title' => _MI_OLEDRION_ADMENU0,
+    'link'  => 'admin/index.php?op=vendors',
+    'icon'  => $pathIcon32 . '/user-icon.png',
+];
+
+$adminmenu[] = [
+    'title' => _MI_OLEDRION_ADMENU1,
+    'link'  => 'admin/index.php?op=vat',
+    'icon'  => $pathModIcon32 . '/money_delete.png',
+];
+
+$adminmenu[] = [
+    'title' => _MI_OLEDRION_ADMENU2,
+    'link'  => 'admin/index.php?op=categories',
+    'icon'  => $pathIcon32 . '/category.png',
+];
+
+$adminmenu[] = [
+    'title' => _MI_OLEDRION_ADMENU3,
+    'link'  => 'admin/index.php?op=manufacturers',
+    'icon'  => $pathModIcon32 . '/factory.png',
+];
+
+$adminmenu[] = [
+    'title' => _MI_OLEDRION_ADMENU4,
+    'link'  => 'admin/index.php?op=products',
+    'icon'  => $pathIcon32 . '/fileshare.png',
+];
+
+$adminmenu[] = [
+    'title' => _MI_OLEDRION_ADMENU13,
+    'desc'  => _MI_OLEDRION_ADMENU13_DESC,
+    'link'  => 'admin/index.php?op=attributes',
+    'icon'  => $pathIcon32 . '/highlight.png',
+];
+
+$adminmenu[] = [
+    'title' => _MI_OLEDRION_ADMENU17,
+    'link'  => 'admin/index.php?op=property',
+    'icon'  => $pathIcon32 . '/view_detailed.png',
+];
+
+$adminmenu[] = [
+    'title' => _MI_OLEDRION_ADMENU5,
+    'link'  => 'admin/index.php?op=orders',
+    'icon'  => $pathIcon32 . '/cart_add.png',
+];
+
+$adminmenu[] = [
+    'title' => _MI_OLEDRION_ADMENU6,
+    'link'  => 'admin/index.php?op=discounts',
+    'icon'  => $pathIcon32 . '/discount.png',
+];
+
+$adminmenu[] = [
+    'title' => _MI_OLEDRION_ADMENU7,
+    'link'  => 'admin/index.php?op=newsletter',
+    'icon'  => $pathIcon32 . '/newsletter.png',
+];
+
+$adminmenu[] = [
+    'title' => _MI_OLEDRION_ADMENU8,
+    'link'  => 'admin/index.php?op=texts',
+    'icon'  => $pathIcon32 . '/content.png',
+];
+
+$adminmenu[] = [
+    'title' => _MI_OLEDRION_ADMENU9,
+    'link'  => 'admin/index.php?op=lowstock',
+    'icon'  => $pathIcon32 . '/alert.png',
+];
+
+$adminmenu[] = [
+    'title' => _MI_OLEDRION_ADMENU11,
+    'link'  => 'admin/index.php?op=files',
+    'icon'  => $pathIcon32 . '/attach.png',
+];
+
+$adminmenu[] = [
+    'title' => _MI_OLEDRION_ADMENU12,
+    'link'  => 'admin/index.php?op=gateways',
+    'icon'  => $pathIcon32 . '/export.png',
+];
+
+$adminmenu[] = [
+    'title' => _MI_OLEDRION_ADMENU15,
+    'link'  => 'admin/index.php?op=lists',
+    'icon'  => $pathIcon32 . '/index.png',
+];
+
+$adminmenu[] = [
+    'title' => _MI_OLEDRION_ADMENU18,
+    'link'  => 'admin/index.php?op=packing',
+    'icon'  => $pathModIcon32 . '/package.png',
+];
+
+$adminmenu[] = [
+    'title' => _MI_OLEDRION_ADMENU19,
+    'link'  => 'admin/index.php?op=location',
+    'icon'  => $pathIcon32 . '/globe.png',
+];
+
+$adminmenu[] = [
+    'title' => _MI_OLEDRION_ADMENU20,
+    'link'  => 'admin/index.php?op=delivery',
+    'icon'  => $pathIcon32 . '/delivery.png',
+];
+
+$adminmenu[] = [
+    'title' => _MI_OLEDRION_ADMENU21,
+    'link'  => 'admin/index.php?op=payment',
+    'icon'  => $pathIcon32 . '/cash_stack.png',
+];
+
+$adminmenu[] = [
+    'title' => _MI_OLEDRION_ADMENU16,
+    'link'  => 'admin/index.php?op=maintain',
+    'icon'  => $pathIcon32 . '/synchronized.png',
+];
+
+$adminmenu[] = [
+    'title' => _MI_OLEDRION_ABOUT,
+    'link'  => 'admin/about.php',
+    'icon'  => $pathIcon32 . '/about.png',
+];

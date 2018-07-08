@@ -17,6 +17,8 @@
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
  */
 
+use XoopsModules\Oledrion;
+
 if (!defined('RSSFIT_ROOT_PATH')) {
     exit();
 }
@@ -58,11 +60,11 @@ class RssfitOledrion
     public function grabEntries($obj)
     {
         $ret = false;
-        include XOOPS_ROOT_PATH . '/modules/oledrion/include/common.php';
-        $items = $h_oledrion_products->getRecentProducts(new Oledrion_parameters(array(
-                                                                                     'start' => 0,
-                                                                                     'limit' => $this->grab
-                                                                                 )));
+        require_once XOOPS_ROOT_PATH . '/modules/oledrion/include/common.php';
+        $items = $productsHandler->getRecentProducts(new Oledrion\Parameters([
+                                                                                 'start' => 0,
+                                                                                 'limit' => $this->grab,
+                                                                             ]));
         $i     = 0;
 
         if (false !== $items && count($items) > 0) {
@@ -70,7 +72,7 @@ class RssfitOledrion
                 $ret[$i]['link']      = $ret[$i]['guid'] = $item->getLink();
                 $ret[$i]['title']     = $item->getVar('product_title', 'n');
                 $ret[$i]['timestamp'] = $item->getVar('product_submitted');
-                if (xoops_trim($item->getVar('product_summary')) != '') {
+                if ('' !== xoops_trim($item->getVar('product_summary'))) {
                     $description = $item->getVar('product_summary');
                 } else {
                     $description = $item->getVar('product_description');

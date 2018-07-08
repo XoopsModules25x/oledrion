@@ -17,82 +17,243 @@
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
  */
 
-// defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
+use XoopsModules\Oledrion;
+use XoopsModules\Oledrion\Plugins\Models;
 
-// Load config file
-require XOOPS_ROOT_PATH . '/modules/oledrion/config.php';
+require_once dirname(__DIR__) . '/preloads/autoloader.php';
+//require_once  dirname(__DIR__) . '/config.php';
 
-// Les classes pour les plugins
-require_once OLEDRION_CLASS_PATH . 'oledrion_plugins.php'; // Classe principale
-require_once OLEDRION_PLUGINS_PATH . 'models/oledrion_action.php'; // modèle
-require_once OLEDRION_PLUGINS_PATH . 'models/oledrion_filter.php'; // modèle
+$moduleDirName      = basename(dirname(__DIR__));
+$moduleDirNameUpper = mb_strtoupper($moduleDirName); //$capsDirName
 
-// Les classes métier ou utilitaires (non ORM)
-require_once OLEDRION_CLASS_PATH . 'utility.php';
-require_once OLEDRION_CLASS_PATH . 'oledrion_handlers.php';
-require_once OLEDRION_CLASS_PATH . 'oledrion_parameters.php';
-require_once OLEDRION_CLASS_PATH . 'oledrion_currency.php';
-require_once OLEDRION_CLASS_PATH . 'oledrion_shelf.php';
-require_once OLEDRION_CLASS_PATH . 'oledrion_shelf_parameters.php';
-require_once OLEDRION_CLASS_PATH . 'oledrion_reductions.php';
-require_once OLEDRION_CLASS_PATH . 'oledrion_gateways.php';
-require_once OLEDRION_ADMIN_PATH . 'gateways/gateway.php'; // La classe abstraite
-require_once OLEDRION_CLASS_PATH . 'oledrion_lists.php';
-require_once OLEDRION_CLASS_PATH . 'oledrion_sms.php';
+/** @var \XoopsDatabase $db */
+/** @var Oledrion\Helper $helper */
+/** @var Oledrion\Utility $utility */
+$db      = \XoopsDatabaseFactory::getDatabaseConnection();
+$helper  = Oledrion\Helper::getInstance();
+$utility = new Oledrion\Utility();
+//$configurator = new Oledrion\Common\Configurator();
 
-$oledrionHandlers = OledrionHandler::getInstance();
+$helper->loadLanguage('common');
+$helper->loadLanguage('main');
 
-$myts = MyTextSanitizer::getInstance();
+if (!defined($moduleDirNameUpper . '_CONSTANTS_DEFINED')) {
+    define($moduleDirNameUpper . '_DIRNAME', basename(dirname(__DIR__)));
+    define($moduleDirNameUpper . '_PATH', XOOPS_ROOT_PATH . '/modules/' . $moduleDirName . '/');
+    define($moduleDirNameUpper . '_ROOT_PATH', XOOPS_ROOT_PATH . '/modules/' . $moduleDirName . '/');
+    define($moduleDirNameUpper . '_URL', XOOPS_URL . '/modules/' . $moduleDirName . '/');
+    define($moduleDirNameUpper . '_IMAGES_URL', constant($moduleDirNameUpper . '_URL') . '/assets/images/');
+    define($moduleDirNameUpper . '_IMAGES_PATH', constant($moduleDirNameUpper . '_ROOT_PATH') . '/assets/images/');
+    define($moduleDirNameUpper . '_CLASS_PATH', constant($moduleDirNameUpper . '_ROOT_PATH') . '/class/');
+    define($moduleDirNameUpper . '_PLUGINS_PATH', constant($moduleDirNameUpper . '_ROOT_PATH') . '/plugins/');
+    define($moduleDirNameUpper . '_ADMIN_URL', constant($moduleDirNameUpper . '_URL') . '/admin/');
+    define($moduleDirNameUpper . '_ADMIN_PATH', constant($moduleDirNameUpper . '_ROOT_PATH') . '/admin/');
+    //    define($moduleDirNameUpper . '_PATH', XOOPS_ROOT_PATH . '/modules/' . constant($moduleDirNameUpper . '_DIRNAME'));
+    define($moduleDirNameUpper . '_ADMIN', constant($moduleDirNameUpper . '_URL') . '/admin/index.php');
+    define($moduleDirNameUpper . '_AUTHOR_LOGOIMG', constant($moduleDirNameUpper . '_URL') . '/assets/images/logoModule.png');
+    define($moduleDirNameUpper . '_UPLOAD_URL', XOOPS_UPLOAD_URL . '/' . $moduleDirName); // WITHOUT Trailing slash
+    define($moduleDirNameUpper . '_UPLOAD_PATH', XOOPS_UPLOAD_PATH . '/' . $moduleDirName); // WITHOUT Trailing slash
+    define($moduleDirNameUpper . '_CACHE_PATH', XOOPS_UPLOAD_PATH . '/' . $moduleDirName . '/' . 'cache/');
+    define($moduleDirNameUpper . '_CONSTANTS_DEFINED', 1);
 
-// Chargement des handlers
-$h_oledrion_manufacturer     = $oledrionHandlers->h_oledrion_manufacturer;
-$h_oledrion_products         = $oledrionHandlers->h_oledrion_products;
-$h_oledrion_productsmanu     = $oledrionHandlers->h_oledrion_productsmanu;
-$h_oledrion_caddy            = $oledrionHandlers->h_oledrion_caddy;
-$h_oledrion_cat              = $oledrionHandlers->h_oledrion_cat;
-$h_oledrion_commands         = $oledrionHandlers->h_oledrion_commands;
-$h_oledrion_related          = $oledrionHandlers->h_oledrion_related;
-$h_oledrion_vat              = $oledrionHandlers->h_oledrion_vat;
-$h_oledrion_votedata         = $oledrionHandlers->h_oledrion_votedata;
-$h_oledrion_discounts        = $oledrionHandlers->h_oledrion_discounts;
-$h_oledrion_vendors          = $oledrionHandlers->h_oledrion_vendors;
-$h_oledrion_files            = $oledrionHandlers->h_oledrion_files;
-$h_oledrion_persistent_cart  = $oledrionHandlers->h_oledrion_persistent_cart;
-$h_oledrion_gateways_options = $oledrionHandlers->h_oledrion_gateways_options;
-// Add by voltan
-$h_oledrion_attributes        = $oledrionHandlers->h_oledrion_attributes;
-$h_oledrion_caddy_attributes  = $oledrionHandlers->h_oledrion_caddy_attributes;
-$h_oledrion_products_list     = $oledrionHandlers->h_oledrion_products_list;
-$h_oledrion_lists             = $oledrionHandlers->h_oledrion_lists;
-$h_oledrion_delivery          = $oledrionHandlers->h_oledrion_delivery;
-$h_oledrion_location          = $oledrionHandlers->h_oledrion_location;
-$h_oledrion_packing           = $oledrionHandlers->h_oledrion_packing;
-$h_oledrion_payment           = $oledrionHandlers->h_oledrion_payment;
-$h_oledrion_location_delivery = $oledrionHandlers->h_oledrion_location_delivery;
-$h_oledrion_delivery_payment  = $oledrionHandlers->h_oledrion_delivery_payment;
-$h_oledrion_payment_log       = $oledrionHandlers->h_oledrion_payment_log;
+    // Define oledrion URL and PATH
+    //    define('OLEDRION_URL', XOOPS_URL . '/modules/' . OLEDRION_DIRNAME . '/');
+    //    define('OLEDRION_PATH', XOOPS_ROOT_PATH . '/modules/' . OLEDRION_DIRNAME . '/');
 
-$oledrion_shelf            = new oledrion_shelf(); // Façade
-$oledrion_shelf_parameters = new oledrion_shelf_parameters(); // Les paramètres de la façade
+    // Set class path
+    //    define('OLEDRION_CLASS_PATH', OLEDRION_PATH . 'class/');
 
-// Définition des images
-if (!defined('_OLEDRION_EDIT')) {
-    global $xoopsConfig;
-    if (file_exists(OLEDRION_PATH . 'language/' . $xoopsConfig['language'] . '/main.php')) {
-        include OLEDRION_PATH . 'language/' . $xoopsConfig['language'] . '/main.php';
-    } else {
-        include OLEDRION_PATH . 'language/english/main.php';
-    }
+    // Set image , js and css url
+    //    define('OLEDRION_IMAGES_URL', OLEDRION_URL . 'assets/images/');
+    define('OLEDRION_JS_URL', OLEDRION_URL . 'assets/js/');
+    define('OLEDRION_CSS_URL', OLEDRION_URL . 'assets/css/');
+
+    // Set admin URL and PATH
+    //    define('OLEDRION_ADMIN_URL', OLEDRION_URL . 'admin/');
+    //    define('OLEDRION_ADMIN_PATH', OLEDRION_PATH . 'admin' . '/');
+
+    // Set gateways path
+    define('OLEDRION_GATEWAY_PATH', XOOPS_ROOT_PATH . '/modules/' . $moduleDirName . '/class/Gateways' . '/');
+
+    // Set plugin URL and PATH
+    //    define('OLEDRION_PLUGINS_PATH', OLEDRION_PATH . 'plugins/');
+    define('OLEDRION_PLUGINS_URL', OLEDRION_URL . 'plugins/');
+
+    // Set text path
+    define('OLEDRION_TEXT_PATH', XOOPS_UPLOAD_PATH . '/' . OLEDRION_DIRNAME . '/' . 'text/');
+
+    // Set cache path
+    //    define('OLEDRION_CACHE_PATH', XOOPS_UPLOAD_PATH . '/' . OLEDRION_DIRNAME . '/' . 'cache/');
+
+    // Define here the place where main upload path
+    //    define('OLEDRION_UPLOAD_URL', XOOPS_UPLOAD_URL . '/oledrion'); // WITHOUT Trailing slash
+    //    define('OLEDRION_UPLOAD_PATH', XOOPS_UPLOAD_PATH . '/oledrion'); // WITHOUT Trailing slash
+
+    // Define here the place where files attached to products are saved
+    define('OLEDRION_ATTACHED_FILES_URL', XOOPS_UPLOAD_URL . '/oledrion/attached'); // WITHOUT Trailing slash
+    define('OLEDRION_ATTACHED_FILES_PATH', XOOPS_UPLOAD_PATH . '/oledrion/attached'); // WITHOUT Trailing slash
+
+    // Define here where pictures are saved
+    define('OLEDRION_PICTURES_URL', XOOPS_UPLOAD_URL . '/oledrion/images'); // WITHOUT Trailing slash
+    define('OLEDRION_PICTURES_PATH', XOOPS_UPLOAD_PATH . '/oledrion/images'); // WITHOUT Trailing slash
+
+    // Maximum length of product's summary for pages (in characters)
+    define('OLEDRION_SUMMARY_MAXLENGTH', 150);
+
+    // Used in checkout to select a default country
+    define('OLEDRION_DEFAULT_COUNTRY', 'US');
+
+    // RSS Feed cache duration (in minutes)
+    define('OLEDRION_RSS_CACHE', 3600);
+
+    // Dimensions of the popup used to select product(s) when there are a lot of products
+    define('OLEDRION_MAX_PRODUCTS_POPUP_WIDTH', 800);
+    define('OLEDRION_MAX_PRODUCTS_POPUP_HEIGHT', 600);
+
+    // Newsletter URL and PATH (the folder must be writable)
+    define('OLEDRION_NEWSLETTER_URL', XOOPS_URL . '/uploads/oledrion/oledrion_newsletter.txt');
+    define('OLEDRION_NEWSLETTER_PATH', XOOPS_ROOT_PATH . '/uploads/oledrion/oledrion_newsletter.txt');
+
+    // CSV URL and path (the folder must be writable) and Separator
+    define('OLEDRION_CSV_PATH', XOOPS_UPLOAD_PATH . '/oledrion/cvs');
+    define('OLEDRION_CSV_URL', XOOPS_UPLOAD_URL . '/oledrion/cvs');
+    define('OLEDRION_CSV_SEP', ';');
+
+    // Gateway log's path (must be writable)
+    define('OLEDRION_GATEWAY_LOG_PATH', XOOPS_UPLOAD_PATH . '/oledrion/loggateway_oledrion.php');
+
+    // Do you want to show the list of main categories on the category page when user is on category.php (without specifying a category to see)
+    define('OLEDRION_SHOW_MAIN_CATEGORIES', true);
+    // Do you want to sho the list of sub categories of the current category on the category page (when viewing a specific category)
+    define('OLEDRION_SHOW_SUB_CATEGORIES', true);
+
+    // String to use to join the list of manufacturers of each product
+    define('OLEDRION_STRING_TO_JOIN_MANUFACTURERS', ', ');
+
+    // Thumbs prefix (when thumbs are automatically created)
+    define('OLEDRION_THUMBS_PREFIX', 'thumb_');
+
+    // Popup width and height (used in the product.php page to show the media.php page)
+    define('OLEDRION_POPUP_MEDIA_WIDTH', 640);
+    define('OLEDRION_POPUP_MEDIA_HEIGHT', 480);
+
+    // Maximum attached files count to display on the product page
+    define('OLEDRION_MAX_ATTACHMENTS', 20);
+
+    // Define the MP3 player's dimensions (dewplayer)
+    define('OLEDRION_DEWPLAYER_WIDTH', 240); // I do not recommend to go lower than 240 pixels !!!!
+    define('OLEDRION_DEWPLAYER_HEIGHT', 20);
+
+    // Place for the "duplicated" text inside the product's title
+    define('OLEDRION_DUPLICATED_PLACE', 'right'); // or 'left'
+
+    // Define the excluded tabs in the module's administration
+    // '' = don't remove anything
+    // To remove the first, third and fourth tabs only, type : '0,2,4'
+    define('OLEDRION_EXCLUDED_TABS', '');
+
+    // When this option is set to false, if Product A has Product B as a related product but Product A is not noted as related to Product B then the display of product A will display Product B as a related product.
+    // But Product B will not show Product A as a related product.
+    // When this option is set to true, Product A and Product B display each other as two related products even if Product A was not set as a related product to Product A.
+    define('OLEDRION_RELATED_BOTH', true);
+
+    // Do we resize pictures when they are smaller than defined dimensions  ?
+    define('OLEDRION_DONT_RESIZE_IF_SMALLER', true);
+
+    // Do you want to automatically fill the manual date when you create a new product ?
+    define('OLEDRION_AUTO_FILL_MANUAL_DATE', true);
+
+    // Set this option to true if you can't see the products when you add them to your cart
+    define('OLEDRION_CART_BUG', false);
+
+    // Set this option to true if your theme uses jQuery, else, set it to false
+    define('OLEDRION_MY_THEME_USES_JQUERY', true);
+
+    // Set Text file names
+    define('OLEDRION_TEXTFILE1', 'oledrion_index.txt');
+    define('OLEDRION_TEXTFILE2', 'oledrion_cgv.txt');
+    define('OLEDRION_TEXTFILE3', 'oledrion_recomm.txt');
+    define('OLEDRION_TEXTFILE4', 'oledrion_offlinepayment.txt');
+    define('OLEDRION_TEXTFILE5', 'oledrion_restrictorders.txt');
+    define('OLEDRION_TEXTFILE6', 'oledrion_checkout1.txt');
+    define('OLEDRION_TEXTFILE7', 'oledrion_checkout2.txt');
+
+    // Set SMS gateway
+    define('OLEDRION_SMS_GATEWAY', 'example');
 }
 
-global $xoopsModule;
-$dirname = basename(dirname(__DIR__));
-/** @var XoopsModuleHandler $moduleHandler */
-$moduleHandler = xoops_getHandler('module');
-$module        = $moduleHandler->getByDirname($dirname);
-$pathIcon16    = \Xmf\Module\Admin::iconUrl('', 16);
+//_CACHE_PATH  XOOPS_UPLOAD_PATH . '/' . OLEDRION_DIRNAME . '/' . 'cache/'
+//OLEDRION_PICTURES_URL
+//OLEDRION_SUMMARY_MAXLENGTH
+//OLEDRION_STRING_TO_JOIN_MANUFACTURERS
 
-$icones = array(
+// Classes for plugins
+//require_once OLEDRION_CLASS_PATH . 'Plugin.php'; // Main class
+//require_once OLEDRION_PLUGINS_PATH . 'models/Action.php'; // model
+//require_once OLEDRION_PLUGINS_PATH . 'models/Filter.php'; // model
+
+// Les classes métier ou utilitaires (non ORM)
+//require_once OLEDRION_CLASS_PATH . 'Utility.php';
+//require_once OLEDRION_CLASS_PATH . 'HandlerManager.php';
+//require_once OLEDRION_CLASS_PATH . 'Parameters.php';
+//require_once OLEDRION_CLASS_PATH . 'Currency.php';
+//require_once OLEDRION_CLASS_PATH . 'Shelf.php';
+//require_once OLEDRION_CLASS_PATH . 'ShelfParameters.php';
+//require_once OLEDRION_CLASS_PATH . 'oledrion_reductions.php';
+//require_once OLEDRION_CLASS_PATH . 'Gateways.php';
+//require_once OLEDRION_ADMIN_PATH . 'gateways/gateway.php'; // Abstract class
+//require_once OLEDRION_CLASS_PATH . 'Lists.php';
+//require_once OLEDRION_CLASS_PATH . 'Sms.php';
+
+$oledrionHandlers = Oledrion\HandlerManager::getInstance();
+
+$myts = \MyTextSanitizer::getInstance();
+
+// Loading handlers
+$caddyHandler           = new Oledrion\CaddyHandler($db);
+$categoryHandler        = new Oledrion\CategoryHandler($db);
+$commandsHandler        = new Oledrion\CommandsHandler($db);
+$discountsHandler       = new Oledrion\DiscountsHandler($db);
+$filesHandler           = new Oledrion\FilesHandler($db);
+$gatewaysOptionsHandler = new Oledrion\GatewaysOptionsHandler($db);
+$manufacturerHandler    = new Oledrion\ManufacturerHandler($db);
+$persistentCartHandler  = new Oledrion\PersistentCartHandler($db);
+$productsHandler        = new Oledrion\ProductsHandler($db);
+$productsmanuHandler    = new Oledrion\ProductsmanuHandler($db);
+$relatedHandler         = new Oledrion\RelatedHandler($db);
+$vatHandler             = new Oledrion\VatHandler($db);
+$vendorsHandler         = new Oledrion\VendorsHandler($db);
+$votedataHandler        = new Oledrion\VotedataHandler($db);
+// Added by voltan
+$attributesHandler       = new Oledrion\AttributesHandler($db);
+$caddyAttributesHandler  = new Oledrion\CaddyAttributesHandler($db);
+$deliveryHandler         = new Oledrion\DeliveryHandler($db);
+$deliveryPaymentHandler  = new Oledrion\DeliveryPaymentHandler($db);
+$listsHandler            = new Oledrion\ListsHandler($db);
+$locationDeliveryHandler = new Oledrion\LocationDeliveryHandler($db);
+$locationHandler         = new Oledrion\LocationHandler($db);
+$packingHandler          = new Oledrion\PackingHandler($db);
+$paymentHandler          = new Oledrion\PaymentHandler($db);
+$paymentLogHandler       = new Oledrion\PaymentLogHandler($db);
+$productsListHandler     = new Oledrion\ProductsListHandler($db);
+
+$shelf           = new Oledrion\Shelf(); // Facade
+$shelfParameters = new Oledrion\ShelfParameters(); // Parameters of the facade
+
+// Definition of Images
+if (!defined('_OLEDRION_EDIT')) {
+    //    global $xoopsConfig;
+    //    if (file_exists(OLEDRION_PATH . 'language/' . $xoopsConfig['language'] . '/main.php')) {
+    //        include OLEDRION_PATH . 'language/' . $xoopsConfig['language'] . '/main.php';
+    //    } else {
+    //        include OLEDRION_PATH . 'language/english/main.php';
+    //    }
+    //    $helper->loadLanguage('main');
+}
+
+$pathIcon16 = \Xmf\Module\Admin::iconUrl('', 16);
+
+$icons = [
     'edit'     => "<img src='" . $pathIcon16 . "/edit.png'  alt=" . _OLEDRION_EDIT . "' align='middle'>",
     'delete'   => "<img src='" . $pathIcon16 . "/delete.png' alt='" . _OLEDRION_DELETE . "' align='middle'>",
     'online'   => "<img src='" . OLEDRION_IMAGES_URL . "online.gif' alt='" . _OLEDRION_ONLINE . "' align='middle'>",
@@ -104,19 +265,54 @@ $icones = array(
     'delivery' => "<img src='" . OLEDRION_IMAGES_URL . "delivery.png' alt='" . _OLEDRION_DELIVERY . "' align='middle'>",
     'package'  => "<img src='" . OLEDRION_IMAGES_URL . "package.png' alt='" . _OLEDRION_PACK . "' align='middle'>",
     'submit'   => "<img src='" . OLEDRION_IMAGES_URL . "submit.png' alt='" . _OLEDRION_SUBMIT . "' align='middle'>",
-    'track'    => "<img src='" . OLEDRION_IMAGES_URL . "track.png' alt='" . _OLEDRION_TRACK . "' align='middle'>"
-);
+    'track'    => "<img src='" . OLEDRION_IMAGES_URL . "track.png' alt='" . _OLEDRION_TRACK . "' align='middle'>",
+];
 
-// Chargement de quelques préférences
-$mod_pref = array(
-    'money_short'     => OledrionUtility::getModuleOption('money_short'),
-    'money_full'      => OledrionUtility::getModuleOption('money_full'),
-    'url_rewriting'   => OledrionUtility::getModuleOption('urlrewriting'),
-    'tooltip'         => OledrionUtility::getModuleOption('infotips'),
-    'advertisement'   => OledrionUtility::getModuleOption('advertisement'),
-    'rss'             => OledrionUtility::getModuleOption('use_rss'),
-    'nostock_msg'     => OledrionUtility::getModuleOption('nostock_msg'),
-    'use_price'       => OledrionUtility::getModuleOption('use_price'),
-    'restrict_orders' => OledrionUtility::getModuleOption('restrict_orders'),
-    'isAdmin'         => OledrionUtility::isAdmin()
-);
+// Loading some preferences
+$mod_pref = [
+    //    'money_short'     => Oledrion\Utility::getModuleOption('money_short'),
+    //    'money_full'      => Oledrion\Utility::getModuleOption('money_full'),
+    //    'url_rewriting'   => Oledrion\Utility::getModuleOption('urlrewriting'),
+    //    'tooltip'         => Oledrion\Utility::getModuleOption('infotips'),
+    //    'advertisement'   => Oledrion\Utility::getModuleOption('advertisement'),
+    //    'rss'             => Oledrion\Utility::getModuleOption('use_rss'),
+    //    'nostock_msg'     => Oledrion\Utility::getModuleOption('nostock_msg'),
+    //    'use_price'       => Oledrion\Utility::getModuleOption('use_price'),
+    //    'restrict_orders' => Oledrion\Utility::getModuleOption('restrict_orders'),
+    //    'isAdmin'         => Oledrion\Utility::isAdmin()
+    'money_short'     => $helper->getConfig('money_short'),
+    'money_full'      => $helper->getConfig('money_full'),
+    'url_rewriting'   => $helper->getConfig('urlrewriting'),
+    'tooltip'         => $helper->getConfig('infotips'),
+    'advertisement'   => $helper->getConfig('advertisement'),
+    'rss'             => $helper->getConfig('use_rss'),
+    'nostock_msg'     => $helper->getConfig('nostock_msg'),
+    'use_price'       => $helper->getConfig('use_price'),
+    'restrict_orders' => $helper->getConfig('restrict_orders'),
+    'isAdmin'         => $helper->isUserAdmin(),
+];
+
+$pathIcon16 = \Xmf\Module\Admin::iconUrl('', 16);
+$pathIcon32 = \Xmf\Module\Admin::iconUrl('', 32);
+//$pathModIcon16 = $helper->getModule()->getInfo('modicons16');
+//$pathModIcon32 = $helper->getModule()->getInfo('modicons32');
+
+$debug = false;
+
+// MyTextSanitizer object
+$myts = \MyTextSanitizer::getInstance();
+
+if (!isset($GLOBALS['xoopsTpl']) || !($GLOBALS['xoopsTpl'] instanceof \XoopsTpl)) {
+    require_once $GLOBALS['xoops']->path('class/template.php');
+    $GLOBALS['xoopsTpl'] = new \XoopsTpl();
+}
+
+$GLOBALS['xoopsTpl']->assign('mod_url', XOOPS_URL . '/modules/' . $moduleDirName);
+// Local icons path
+if (is_object($helper->getModule())) {
+    $pathModIcon16 = $helper->getModule()->getInfo('modicons16');
+    $pathModIcon32 = $helper->getModule()->getInfo('modicons32');
+
+    $GLOBALS['xoopsTpl']->assign('pathModIcon16', XOOPS_URL . '/modules/' . $moduleDirName . '/' . $pathModIcon16);
+    $GLOBALS['xoopsTpl']->assign('pathModIcon32', $pathModIcon32);
+}

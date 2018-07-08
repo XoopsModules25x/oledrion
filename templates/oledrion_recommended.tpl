@@ -31,7 +31,7 @@
     </table>
 <{/if}>
 
-<{if count($products) > 0 }>
+<{if isset($products) && count($products) > 0 }>
     <div class="featured-blocks-titles"><h2><img src="<{$smarty.const.OLEDRION_IMAGES_URL}>icon-product-person.png"
                                                  alt="<{$smarty.const._OLEDRION_RECOMMENDED}>"><{$smarty.const._OLEDRION_RECOMMENDED}>
         </h2></div>
@@ -41,7 +41,7 @@
             <td>
                 <{include file="db:oledrion_product_box.tpl"}>
             </td>
-            <{if $product.product_count % $columnsCount == 0}>
+            <{if $columnsCount != 0 && $product.product_count % $columnsCount == 0}>
         </tr>
         <tr>
             <{/if}>

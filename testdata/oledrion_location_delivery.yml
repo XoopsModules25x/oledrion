@@ -1,0 +1,20 @@
+---
+# oledrion_location_delivery
+-
+  ld_id: 1
+  ld_location: 1
+  ld_delivery: 1
+  ld_price: 0.00
+  ld_delivery_time: 1
+-
+  ld_id: 2
+  ld_location: 2
+  ld_delivery: 2
+  ld_price: 0.00
+  ld_delivery_time: 1
+-
+  ld_id: 3
+  ld_location: 3
+  ld_delivery: 3
+  ld_price: 0.00
+  ld_delivery_time: 1

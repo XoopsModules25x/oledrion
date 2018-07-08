@@ -1,0 +1,14 @@
+---
+# oledrion_vendors
+-
+  vendor_id: 2
+  vendor_name: "Vendor Jenny Smith"
+-
+  vendor_id: 1
+  vendor_name: "Vendor Joe Doe"
+-
+  vendor_id: 3
+  vendor_name: "Vendor Versacci"
+-
+  vendor_id: 4
+  vendor_name: "Vendor Chanel"

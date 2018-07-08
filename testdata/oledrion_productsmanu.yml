@@ -1,0 +1,26 @@
+---
+# oledrion_productsmanu
+-
+  pm_id: 2
+  pm_product_id: 1
+  pm_manu_id: 1
+-
+  pm_id: 4
+  pm_product_id: 3
+  pm_manu_id: 1
+-
+  pm_id: 5
+  pm_product_id: 4
+  pm_manu_id: 1
+-
+  pm_id: 8
+  pm_product_id: 5
+  pm_manu_id: 1
+-
+  pm_id: 9
+  pm_product_id: 6
+  pm_manu_id: 1
+-
+  pm_id: 10
+  pm_product_id: 2
+  pm_manu_id: 1

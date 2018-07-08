@@ -1,6 +1,8 @@
 ![alt XOOPS CMS](https://xoops.org/images/logoXoops4GithubRepository.png)
-## Oledrion module for [XOOPS CMS 2.5.7+](https://xoops.org)
-[![Software License](https://img.shields.io/badge/license-GPL-brightgreen.svg?style=flat)](LICENSE) 
+## Oledrion module for [XOOPS CMS 2.5.9+](https://xoops.org)
+[![XOOPS CMS Module](https://img.shields.io/badge/XOOPS%20CMS-Module-blue.svg)](https://xoops.org)
+[![Software License](https://img.shields.io/badge/license-GPL-brightgreen.svg?style=flat)](http://www.gnu.org/licenses/gpl-2.0.html) 
+
 [![Scrutinizer Code Quality](https://img.shields.io/scrutinizer/g/XoopsModules25x/oledrion.svg?style=flat)](https://scrutinizer-ci.com/g/XoopsModules25x/oledrion/?branch=master)
 [![Latest Pre-Resease](https://img.shields.io/github/tag/XoopsModules25x/oledrion.svg?style=flat)](https://github.com/XoopsModules25x/oledrion/tags/)
 [![Latest Version](https://img.shields.io/github/release/XoopsModules25x/oledrion.svg?style=flat)](https://github.com/XoopsModules25x/oledrion/releases/)
@@ -14,4 +16,4 @@ To contribute to the Tutorial, [fork it on GitHub](https://github.com/XoopsDocs/
 
 Please visit us on https://xoops.org
 
-The upcoming "next generation" version of XOOPS CMS is being crafted on GitHub at: https://github.com/XOOPS
+Current and upcoming "next generation" versions of XOOPS CMS are being crafted on GitHub at: https://github.com/XOOPS

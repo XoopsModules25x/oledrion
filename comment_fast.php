@@ -16,13 +16,12 @@
  * @license     {@link http://www.fsf.org/copyleft/gpl.html GNU public license}
  * @author      Hossein Azizabadi (AKA Voltan)
  */
-
-$productid      = isset($_GET['product_id']) ? (int)$_GET['product_id'] : 0;
+$productid      = \Xmf\Request::getInt('product_id', 0, 'GET');
 $com_replytitle = '';
 if ($product_id > 0) {
     require_once XOOPS_ROOT_PATH . '/modules/oledrion/include/common.php';
     $product = null;
-    $product = $h_oledrion_products->get($product_id);
+    $product = $productsHandler->get($product_id);
     if (is_object($product)) {
         $com_replytitle = $product->getVar('product_title');
     }

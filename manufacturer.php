@@ -20,6 +20,9 @@
 /**
  * Page d'informations sur un fabricant
  */
+
+use XoopsModules\Oledrion;
+
 require_once __DIR__ . '/header.php';
 $GLOBALS['current_category']             = -1;
 $GLOBALS['xoopsOption']['template_main'] = 'oledrion_manufacturer.tpl';
@@ -27,53 +30,55 @@ require_once XOOPS_ROOT_PATH . '/header.php';
 require_once XOOPS_ROOT_PATH . '/class/pagenav.php';
 
 // Les tests **************************************************************************************
-if (isset($_GET['manu_id'])) {
-    $manu_id = (int)$_GET['manu_id'];
+if (\Xmf\Request::hasVar('manu_id', 'GET')) {
+    $manu_id = \Xmf\Request::getInt('manu_id', 0, 'GET');
 } else {
-    OledrionUtility::redirect(_OLEDRION_ERROR7, 'index.php', 5);
+    Oledrion\Utility::redirect(_OLEDRION_ERROR7, 'index.php', 5);
 }
-$start = isset($_GET['start']) ? (int)$_GET['start'] : 0;
+
+$start = \Xmf\Request::getInt('start', 0, 'GET');
 
 // Le fabricant existe ?
 $manufacturer = null;
-$manufacturer = $h_oledrion_manufacturer->get($manu_id);
+$manufacturer = $manufacturerHandler->get($manu_id);
 if (!is_object($manufacturer)) {
-    OledrionUtility::redirect(_OLEDRION_ERROR7, 'index.php', 5);
+    Oledrion\Utility::redirect(_OLEDRION_ERROR7, 'index.php', 5);
 }
 
 $xoopsTpl->assign('mod_pref', $mod_pref); // Préférences du module
-$xoopsTpl->assign('columnsCount', OledrionUtility::getModuleOption('catagory_colums'));
+$xoopsTpl->assign('columnsCount', Oledrion\Utility::getModuleOption('category_colums'));
 $xoopsTpl->assign('manufacturer', $manufacturer->toArray());
-$limit = OledrionUtility::getModuleOption('perpage');
+$limit = Oledrion\Utility::getModuleOption('perpage');
 
 // Lecture des TVA ********************************************************************************
-$vatArray = array();
-$vatArray = $h_oledrion_vat->getAllVats(new Oledrion_parameters());
+$vatArray = [];
+$vatArray = $vatHandler->getAllVats(new Oledrion\Parameters());
 
 // Recherche des produits de ce fabricant *********************************************************
 // On commence par chercher le nombre total de ses produits
-$itemsCount = $h_oledrion_manufacturer->getManufacturerProductsCount($manu_id);
+$itemsCount = $manufacturerHandler->getManufacturerProductsCount($manu_id);
 if ($itemsCount > $limit) {
-    $pagenav = new XoopsPageNav($itemsCount, $limit, $start, 'start', 'manu_id=' . $manu_id);
+    $pagenav = new \XoopsPageNav($itemsCount, $limit, $start, 'start', 'manu_id=' . $manu_id);
     $xoopsTpl->assign('pagenav', $pagenav->renderNav());
 }
 
-$products = array();
-$products = $h_oledrion_manufacturer->getManufacturerProducts($manu_id, $start, $limit);
+$products = [];
+$products = $manufacturerHandler->getManufacturerProducts($manu_id, $start, $limit);
 if (count($products) > 0) {
-    $tmp = $categories = array();
-    foreach ($products as $product) { // Recherche des catégories
+    $tmp = $categories = [];
+    foreach ($products as $product) {
+        // Recherche des catégories
         $tmp[] = $product->getVar('product_cid');
     }
     $tmp = array_unique($tmp);
     sort($tmp);
     if (count($tmp) > 0) {
-        $categories = $h_oledrion_cat->getCategoriesFromIds($tmp);
+        $categories = $categoryHandler->getCategoriesFromIds($tmp);
     }
     $cpt   = 1;
     $count = 1;
     foreach ($products as $product) {
-        $productForTemplate                     = array();
+        $productForTemplate                     = [];
         $productForTemplate                     = $product->toArray();
         $productForTemplate['count']            = $cpt;
         $productForTemplate['product_category'] = isset($categories[$product->getVar('product_cid')]) ? $categories[$product->getVar('product_cid')]->toArray() : null;
@@ -84,19 +89,19 @@ if (count($products) > 0) {
     }
 }
 
-OledrionUtility::setCSS();
-OledrionUtility::setLocalCSS($xoopsConfig['language']);
-OledrionUtility::loadLanguageFile('modinfo.php');
+Oledrion\Utility::setCSS();
+Oledrion\Utility::setLocalCSS($xoopsConfig['language']);
+$helper->loadLanguage('modinfo');
 
-$xoopsTpl->assign('global_advert', OledrionUtility::getModuleOption('advertisement'));
+$xoopsTpl->assign('global_advert', Oledrion\Utility::getModuleOption('advertisement'));
 // By voltan
-$breadcrumb = array( /*OLEDRION_URL.'whoswho.php' => _OLEDRION_MANUFACTURERS,*/
-                     OLEDRION_URL . basename(__FILE__) => $manufacturer->getVar('manu_name') . ' ' . $manufacturer->getVar('manu_commercialname')
-);
-$xoopsTpl->assign('breadcrumb', OledrionUtility::breadcrumb($breadcrumb));
+$breadcrumb = [/*OLEDRION_URL.'whoswho.php' => _OLEDRION_MANUFACTURERS,*/
+               OLEDRION_URL . basename(__FILE__) => $manufacturer->getVar('manu_name') . ' ' . $manufacturer->getVar('manu_commercialname'),
+];
+$xoopsTpl->assign('breadcrumb', Oledrion\Utility::breadcrumb($breadcrumb));
 
-//$title = $manufacturer->getVar('manu_name') . ' ' . $manufacturer->getVar('manu_commercialname') . ' - ' . OledrionUtility::getModuleName();
+//$title = $manufacturer->getVar('manu_name') . ' ' . $manufacturer->getVar('manu_commercialname') . ' - ' . Oledrion\Utility::getModuleName();
 
 $title = $manufacturer->getVar('manu_name') . ' ' . $manufacturer->getVar('manu_commercialname');
-OledrionUtility::setMetas($title, $title, OledrionUtility::createMetaKeywords($manufacturer->getVar('manu_name') . ' ' . $manufacturer->getVar('manu_commercialname') . ' ' . $manufacturer->getVar('manu_bio')));
+Oledrion\Utility::setMetas($title, $title, Oledrion\Utility::createMetaKeywords($manufacturer->getVar('manu_name') . ' ' . $manufacturer->getVar('manu_commercialname') . ' ' . $manufacturer->getVar('manu_bio')));
 require_once XOOPS_ROOT_PATH . '/footer.php';

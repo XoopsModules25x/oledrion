@@ -67,7 +67,7 @@
                     </td>
                     <td class="center"><{$product.product_caddy.caddy_shipping_fordisplay}></td>
                 </tr>
-                <{if count($product.product_attributes) > 0}>
+                <{if isset($product.product_attributes) && count($product.product_attributes) > 0}>
                     <tr>
                         <td colspan='4' class="center">
                             <ul>

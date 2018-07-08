@@ -21,23 +21,25 @@
  * Script chargé d'afficher un média d'un produit
  */
 
+use XoopsModules\Oledrion;
+
 require_once __DIR__ . '/header.php';
-$type       = isset($_GET['type']) ? strtolower($_GET['type']) : 'picture';
-$product_id = isset($_GET['product_id']) ? (int)$_GET['product_id'] : 0;
+$type       = isset($_GET['type']) ? mb_strtolower($_GET['type']) : 'picture';
+$product_id = \Xmf\Request::getInt('product_id', 0, 'GET');
 if ($product_id > 0) {
     $product = null;
-    $product = $h_oledrion_products->get($product_id);
+    $product = $productsHandler->get($product_id);
     if (!is_object($product)) {
         exit(_OLEDRION_ERROR1);
     }
 
     // Produit en ligne ?
-    if ($product->getVar('product_online') == 0) {
+    if (0 == $product->getVar('product_online')) {
         exit(_OLEDRION_ERROR2);
     }
 
     // Le produit est publié ?
-    if (OledrionUtility::getModuleOption('show_unpublished') == 0 && $product->getVar('product_submitted') > time()) {
+    if (0 == Oledrion\Utility::getModuleOption('show_unpublished') && $product->getVar('product_submitted') > time()) {
         exit(_OLEDRION_ERROR3);
     }
 } else {
@@ -46,23 +48,25 @@ if ($product_id > 0) {
 
 switch ($type) {
     case 'attachment': // Un fichier attaché à un produit
-        $file_id = isset($_GET['file_id']) ? (int)$_GET['file_id'] : 0;
-        if ($file_id == 0) {
+
+        $file_id = \Xmf\Request::getInt('file_id', 0, 'GET');
+        if (0 == $file_id) {
             exit(_OLEDRION_ERROR13);
         }
         $attachedFile = null;
-        $attachedFile = $h_oledrion_files->get($file_id);
+        $attachedFile = $filesHandler->get($file_id);
         if (!is_object($attachedFile)) {
             exit(_OLEDRION_ERROR19);
         }
         header('Content-Type: ' . $attachedFile->getVar('file_mimetype'));
         header('Content-disposition: inline; filename="' . $attachedFile->getVar('file_filename') . '"');
         readfile($attachedFile->getPath());
-        break;
 
+        break;
     case 'picture': // L'image principale d'un produit
+
         xoops_header(true);
-        echo "<div align='center' style='font-weight: bold;'><a href=\"javascript:self.close();\" title=\"" . _CLOSE . "\">";
+        echo "<div align='center' style='font-weight: bold;'><a href=\"javascript:self.close();\" title=\"" . _CLOSE . '">';
         if ($product->pictureExists()) {
             echo "<img src='" . $product->getPictureUrl() . "' alt=''>";
         } else {
@@ -75,6 +79,7 @@ switch ($type) {
         </div>
         <?php
         xoops_footer();
+
         break;
 }
 ?>

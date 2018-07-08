@@ -1,0 +1,32 @@
+---
+# oledrion_packing
+-
+  packing_id: 1
+  packing_title: "Packing 1"
+  packing_width: 20
+  packing_length: 50
+  packing_weight: 35
+  packing_image: ""
+  packing_description: "<p><span style=\"color: #828282; font-family: Arial, Helvetica, sans-serif; font-size: 12.6px; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: 20px; orphans: auto; text-align: justify; text-indent: 0px; text-transform: none; white-space: normal; widows: 1; word-spacing: 0px; -webkit-text-stroke-width: 0px; display: inline !important; float: none; background-color: #ffffff;\">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse mattis, nulla id pretium malesuada, dui est laoreet risus, ac rhoncus eros diam id odio.</span></p>"
+  packing_price: 32.00
+  packing_online: 1
+-
+  packing_id: 2
+  packing_title: "Packing 2"
+  packing_width: 20
+  packing_length: 50
+  packing_weight: 35
+  packing_image: ""
+  packing_description: "<p><span style=\"color: #828282; font-family: Arial, Helvetica, sans-serif; font-size: 12.6px; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: 20px; orphans: auto; text-align: justify; text-indent: 0px; text-transform: none; white-space: normal; widows: 1; word-spacing: 0px; -webkit-text-stroke-width: 0px; display: inline !important; float: none; background-color: #ffffff;\">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse mattis, nulla id pretium malesuada, dui est laoreet risus, ac rhoncus eros diam id odio.</span></p>"
+  packing_price: 32.00
+  packing_online: 1
+-
+  packing_id: 3
+  packing_title: "Packing 3"
+  packing_width: 20
+  packing_length: 50
+  packing_weight: 35
+  packing_image: ""
+  packing_description: "<p><span style=\"color: #828282; font-family: Arial, Helvetica, sans-serif; font-size: 12.6px; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: 20px; orphans: auto; text-align: justify; text-indent: 0px; text-transform: none; white-space: normal; widows: 1; word-spacing: 0px; -webkit-text-stroke-width: 0px; display: inline !important; float: none; background-color: #ffffff;\">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse mattis, nulla id pretium malesuada, dui est laoreet risus, ac rhoncus eros diam id odio.</span></p>"
+  packing_price: 32.00
+  packing_online: 1

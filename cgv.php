@@ -20,21 +20,24 @@
 /**
  * Affichage des conditions générales de vente
  */
+
+use XoopsModules\Oledrion;
+
 require_once __DIR__ . '/header.php';
 $GLOBALS['current_category']             = -1;
 $GLOBALS['xoopsOption']['template_main'] = 'oledrion_cgv.tpl';
 require_once XOOPS_ROOT_PATH . '/header.php';
-require_once OLEDRION_PATH . 'class/registryfile.php';
+//require_once OLEDRION_PATH . 'class/Registryfile.php';
 
-$registry = new oledrion_registryfile();
+$registry = new Oledrion\Registryfile();
 
-$xoopsTpl->assign('nostock_msg', OledrionUtility::getModuleOption('nostock_msg'));
+$xoopsTpl->assign('nostock_msg', Oledrion\Utility::getModuleOption('nostock_msg'));
 $xoopsTpl->assign('mod_pref', $mod_pref); // Préférences du module
 $xoopsTpl->assign('cgv_msg', $registry->getfile(OLEDRION_TEXTFILE2));
 
-$xoopsTpl->assign('breadcrumb', OledrionUtility::breadcrumb(array(OLEDRION_URL . basename(__FILE__) => _OLEDRION_CGV)));
+$xoopsTpl->assign('breadcrumb', Oledrion\Utility::breadcrumb([OLEDRION_URL . basename(__FILE__) => _OLEDRION_CGV]));
 
-OledrionUtility::setCSS();
-OledrionUtility::setLocalCSS($xoopsConfig['language']);
-OledrionUtility::setMetas(_OLEDRION_CGV . ' ' . OledrionUtility::getModuleName(), _OLEDRION_CGV . ' ' . OledrionUtility::getModuleName());
+Oledrion\Utility::setCSS();
+Oledrion\Utility::setLocalCSS($xoopsConfig['language']);
+Oledrion\Utility::setMetas(_OLEDRION_CGV . ' ' . Oledrion\Utility::getModuleName(), _OLEDRION_CGV . ' ' . Oledrion\Utility::getModuleName());
 require_once XOOPS_ROOT_PATH . '/footer.php';

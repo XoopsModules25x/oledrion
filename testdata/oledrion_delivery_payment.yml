@@ -1,0 +1,14 @@
+---
+# oledrion_delivery_payment
+-
+  dp_id: 1
+  dp_delivery: 1
+  dp_payment: 1
+-
+  dp_id: 2
+  dp_delivery: 1
+  dp_payment: 1
+-
+  dp_id: 3
+  dp_delivery: 1
+  dp_payment: 1

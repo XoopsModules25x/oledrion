@@ -12,17 +12,23 @@
 <table border="0">
     <tr>
         <td><b><{$smarty.const._OLEDRION_TITLE}></b></td>
-        <td width="50" class="center"><b><{$smarty.const._OLEDRION_PRICE}></b></td>
-        <td width="50"><b><{$smarty.const._OLEDRION_QUANTITY}></b></td>
-        <td width="50"><b><{$smarty.const._OLEDRION_TOTAL}></b></td>
+        <td width="100" class="center"><b><{$smarty.const._OLEDRION_PRICE}></b></td>
+        <td width="70"><b><{$smarty.const._OLEDRION_QUANTITY}></b></td>
+        <td width="100"><b><{$smarty.const._OLEDRION_TOTAL}></b></td>
     </tr>
     <{foreach item=product from=$products}>
         <tr>
             <td><{$product.product_title|strip_tags|wordwrap:100|nl2br}></td>
-            <td width="50"
-                class="right"><{if $product.product_discount_price_ttc != 0}><{$product.product_discount_price_ttc}><{else}><{$product.product_price_ttc}><{/if}></td>
-            <td width="50">x</td>
-            <td width="50" class="right">=</td>
+            <td width="100"
+                class="right">
+                <{if $product.product_discount_price_ttc != 0}>
+                    <{$product.product_discount_price_ttc}>
+                <{else}>
+                    <{$product.product_price_ttc}>
+                    <{/if}>
+            </td>
+            <td width="70">x</td>
+            <td width="100" class="right">=</td>
         </tr>
     <{/foreach}>
 </table>

@@ -16,17 +16,16 @@
  * @license     {@link http://www.fsf.org/copyleft/gpl.html GNU public license}
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
  */
-
 require_once dirname(dirname(__DIR__)) . '/mainfile.php';
 require_once __DIR__ . '/header.php';
-$com_itemid = isset($_GET['com_itemid']) ? (int)$_GET['com_itemid'] : 0;
+$com_itemid = \Xmf\Request::getInt('com_itemid', 0, 'GET');
 if ($com_itemid > 0) {
-    include XOOPS_ROOT_PATH . '/modules/oledrion/include/common.php';
+    require_once XOOPS_ROOT_PATH . '/modules/oledrion/include/common.php';
     $product = null;
-    $product = $h_oledrion_products->get($com_itemid);
+    $product = $productsHandler->get($com_itemid);
     if (is_object($product)) {
         $com_replytitle = $product->getVar('product_title');
-        require XOOPS_ROOT_PATH . '/include/comment_new.php';
+        require_once XOOPS_ROOT_PATH . '/include/comment_new.php';
     } else {
         exit();
     }

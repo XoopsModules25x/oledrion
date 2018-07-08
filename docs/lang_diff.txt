@@ -175,4 +175,4 @@ __modinfo.php__
 - _MI_OLEDRION_PDT
 
 New file to translate :
-	/xoops/modules/admin/gateways/paypal/language/mylanguage/main.php
+    /xoops/modules/admin/gateways/paypal/language/mylanguage/main.php

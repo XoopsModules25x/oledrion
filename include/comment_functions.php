@@ -19,17 +19,17 @@
  * @param $total_num
  */
 
-// defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
+// defined('XOOPS_ROOT_PATH') || die('Restricted access');
 
 function oledrion_com_update($product_id, $total_num)
 {
-    include XOOPS_ROOT_PATH . '/modules/oledrion/include/common.php';
-    global $h_oledrion_products;
-    if (!is_object($h_oledrion_products)) {
-        $handlers            = OledrionHandler::getInstance();
-        $h_oledrion_products = $handlers->oledrion_products;
+    require_once XOOPS_ROOT_PATH . '/modules/oledrion/include/common.php';
+    global $productsHandler;
+    if (!is_object($productsHandler)) {
+        //        $handlers            = HandlerManager::getInstance();
+        $productsHandler = $handlers->oledrion_products;
     }
-    $h_oledrion_products->updateCommentsCount($product_id, $total_num);
+    $productsHandler->updateCommentsCount($product_id, $total_num);
 }
 
 /**

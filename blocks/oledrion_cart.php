@@ -17,33 +17,35 @@
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
  */
 
+use XoopsModules\Oledrion;
+
 /**
  * block to display items in cart
  *
- * @param  integer $options [0] Count of items to show (0 = no limit)
- * @return array   Block's content
+ * @param int $options [0] Count of items to show (0 = no limit)
+ * @return array|string   Block's content
  */
 function b_oledrion_cart_show($options)
 {
     global $mod_pref, $xoopsConfig;
-    include XOOPS_ROOT_PATH . '/modules/oledrion/include/common.php';
+    require_once XOOPS_ROOT_PATH . '/modules/oledrion/include/common.php';
     $productsCount = (int)$options[0];
 
-    $cartForTemplate      = $block = array();
+    $cartForTemplate      = $block = [];
     $emptyCart            = false;
     $shippingAmount       = $commandAmount = $vatAmount = $discountsCount = 0;
     $goOn                 = '';
     $commandAmountTTC     = 0;
-    $discountsDescription = array();
+    $discountsDescription = [];
     // Calcul du montant total du caddy
-    $reductions = new oledrion_reductions();
-    $reductions->computeCart($cartForTemplate, $emptyCart, $shippingAmount, $commandAmount, $vatAmount, $goOn, $commandAmountTTC, $discountsDescription, $discountsCount);
-    $dec = OledrionUtility::getModuleOption('decimals_count');
+    $reductions = new Oledrion\Reductions();
+    $reductions->computeCart($cartForTemplate, $emptyCart, $shippingAmount, $commandAmount, $vatAmount, $goOn, $commandAmountTTC, $discountsDescription, $discountsCount, $checkoutAttributes);
+    $dec = Oledrion\Utility::getModuleOption('decimals_count');
     if ($emptyCart) {
         return '';
     }
-    $block['block_money_full']           = OledrionUtility::getModuleOption('money_full');
-    $block['block_money_short']          = OledrionUtility::getModuleOption('money_short');
+    $block['block_money_full']           = Oledrion\Utility::getModuleOption('money_full');
+    $block['block_money_short']          = Oledrion\Utility::getModuleOption('money_short');
     $block['block_shippingAmount']       = sprintf('%0.' . $dec . 'f', $shippingAmount); // Montant des frais de port
     $block['block_commandAmount']        = sprintf('%0.' . $dec . 'f', $commandAmount); // Montant HT de la commande
     $block['block_vatAmount']            = sprintf('%0.' . $dec . 'f', $vatAmount); // Montant de la TVA
@@ -64,7 +66,7 @@ function b_oledrion_cart_show($options)
 function b_oledrion_cart_edit($options)
 {
     global $xoopsConfig;
-    include XOOPS_ROOT_PATH . '/modules/oledrion/include/common.php';
+    require_once XOOPS_ROOT_PATH . '/modules/oledrion/include/common.php';
     $form = '';
     $form .= "<table border='0'>";
     $form .= '<tr><td>' . _MB_OLEDRION_MAX_ITEMS . "</td><td><input type='text' name='options[]' id='options' value='" . $options[0] . "'></td></tr>";

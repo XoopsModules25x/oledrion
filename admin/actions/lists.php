@@ -17,6 +17,8 @@
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
  */
 
+use XoopsModules\Oledrion;
+
 /**
  * Gestion des listes
  *
@@ -31,28 +33,29 @@ $operation = 'lists';
 switch ($action) {
     // ****************************************************************************************************************
     case 'default': // Liste des listes
+
         // ****************************************************************************************************************
         xoops_cp_header();
         $adminObject = \Xmf\Module\Admin::getInstance();
         $adminObject->displayNavigation('index.php?op=lists');
 
         global $xoopsConfig;
-        $items = $usersList = array();
+        $items = $usersList = [];
         $class = '';
 
-        //        OledrionUtility::htitle(_MI_OLEDRION_ADMENU15, 4);
+        //        Oledrion\Utility::htitle(_MI_OLEDRION_ADMENU15, 4);
 
-        $start      = isset($_GET['start']) ? (int)$_GET['start'] : 0;
-        $itemsCount = $oledrionHandlers->h_oledrion_lists->getRecentListsCount();
+        $start      = \Xmf\Request::getInt('start', 0, 'GET');
+        $itemsCount = $listsHandler->getRecentListsCount();
         if ($itemsCount > $limit) {
-            $pagenav = new XoopsPageNav($itemsCount, $limit, $start, 'start', 'op=' . $operation);
+            $pagenav = new \XoopsPageNav($itemsCount, $limit, $start, 'start', 'op=' . $operation);
         }
-        $items = $oledrionHandlers->h_oledrion_lists->getRecentLists(new Oledrion_parameters(array(
-                                                                                                 'start' => $start,
-                                                                                                 'limit' => $limit
-                                                                                             )));
+        $items = $listsHandler->getRecentLists(new Oledrion\Parameters([
+                                                                           'start' => $start,
+                                                                           'limit' => $limit,
+                                                                       ]));
         if (count($items) > 0) {
-            $usersList = $oledrionHandlers->h_oledrion_lists->getUsersFromLists($items);
+            $usersList = $listsHandler->getUsersFromLists($items);
         }
         echo "<table width='100%' cellspacing='1' cellpadding='3' border='0' class='outer'>";
         if (isset($pagenav) && is_object($pagenav)) {
@@ -72,10 +75,10 @@ switch ($action) {
              . _AM_OLEDRION_ACTION
              . '</th></tr>';
         foreach ($items as $item) {
-            $class     = ($class === 'even') ? 'odd' : 'even';
+            $class     = ('even' === $class) ? 'odd' : 'even';
             $id        = $item->getVar('list_id');
-            $actions   = array();
-            $actions[] = "<a href='$baseurl?op=$operation&action=delete&id=" . $id . "' title='" . _OLEDRION_DELETE . "'" . $conf_msg . '>' . $icones['delete'] . '</a>';
+            $actions   = [];
+            $actions[] = "<a href='$baseurl?op=$operation&action=delete&id=" . $id . "' title='" . _OLEDRION_DELETE . "'" . $conf_msg . '>' . $icons['delete'] . '</a>';
             $userName  = isset($usersList[$item->list_uid]) ? $usersList[$item->list_uid]->getVar('uname') : _AM_OLEDRION_ANONYMOUS;
             echo "<tr class='" . $class . "'>\n";
             echo "<td align='center'>" . $id . '</td>';
@@ -91,26 +94,28 @@ switch ($action) {
             echo "<div align='right'>" . $pagenav->renderNav() . '</div>';
         }
         require_once OLEDRION_ADMIN_PATH . 'admin_footer.php';
-        break;
 
+        break;
     // ****************************************************************************************************************
     case 'delete': // Suppression d'une liste
+
         // ****************************************************************************************************************
         xoops_cp_header();
-        $id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
-        if (empty($id)) {
-            OledrionUtility::redirect(_AM_OLEDRION_ERROR_1, $baseurl . '?op=' . $operation, 5);
-        }
         $list = null;
-        $list = $oledrionHandlers->h_oledrion_lists->get($id);
+        $id   = \Xmf\Request::getInt('id', 0, 'GET');
+        if (empty($id)) {
+            Oledrion\Utility::redirect(_AM_OLEDRION_ERROR_1, $baseurl . '?op=' . $operation, 5);
+        }
+        $list = $listsHandler->get($id);
         if (!is_object($list)) {
-            OledrionUtility::redirect(_AM_OLEDRION_NOT_FOUND, $baseurl . '?op=' . $operation, 5);
+            Oledrion\Utility::redirect(_AM_OLEDRION_NOT_FOUND, $baseurl . '?op=' . $operation, 5);
         }
-        if ($oledrionHandlers->h_oledrion_lists->deleteList($list)) {
-            OledrionUtility::updateCache();
-            OledrionUtility::redirect(_AM_OLEDRION_SAVE_OK, $baseurl . '?op=' . $operation, 2);
+        if ($listsHandler->deleteList($list)) {
+            Oledrion\Utility::updateCache();
+            Oledrion\Utility::redirect(_AM_OLEDRION_SAVE_OK, $baseurl . '?op=' . $operation, 2);
         } else {
-            OledrionUtility::redirect(_AM_OLEDRION_SAVE_PB, $baseurl . '?op=' . $operation, 5);
+            Oledrion\Utility::redirect(_AM_OLEDRION_SAVE_PB, $baseurl . '?op=' . $operation, 5);
         }
+
         break;
 }

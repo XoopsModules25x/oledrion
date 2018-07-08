@@ -17,6 +17,8 @@
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
  */
 
+use XoopsModules\Oledrion;
+
 /**
  * block to display ajax search
  * @param $options
@@ -26,16 +28,16 @@ function b_oledrion_ajax_search_show($options)
 {
     global $xoopsConfig, $xoTheme;
 
-    include XOOPS_ROOT_PATH . '/modules/oledrion/include/common.php';
+    require_once XOOPS_ROOT_PATH . '/modules/oledrion/include/common.php';
 
-    if ($options[0] == 1) {
+    if (1 == $options[0]) {
         $xoTheme->addScript('browse.php?Frameworks/jquery/jquery.js');
         $xoTheme->addScript(OLEDRION_URL . 'assets/js/autocomplete.js');
         $xoTheme->addStylesheet(OLEDRION_URL . 'assets/css/autocomplete.css');
         $xoTheme->addStylesheet(OLEDRION_URL . 'assets/css/oledrion.css');
     }
 
-    $block           = array();
+    $block           = [];
     $block['custom'] = $options[0];
 
     return $block;
@@ -48,7 +50,7 @@ function b_oledrion_ajax_search_show($options)
 function b_oledrion__ajax_search_edit($options)
 {
     $form                  = '';
-    $checkeds              = array('', '');
+    $checkeds              = ['', ''];
     $checkeds[$options[0]] = 'checked';
     $form                  .= "<table border='0'>";
     $form                  .= '<tr><td>' . _MB_OLEDRION_USE_STYLE_JS . "</td><td><input type='radio' name='options[]' id='options[]' value='0' " . $checkeds[0] . '>' . _NO . " <input type='radio' name='options[]' id='options[]' value='1' " . $checkeds[1] . '>' . _YES . '</td></tr>';

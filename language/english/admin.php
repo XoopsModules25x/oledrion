@@ -16,7 +16,6 @@
  * @license     {@link http://www.fsf.org/copyleft/gpl.html GNU public license}
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
  */
-
 define('_AM_OLEDRION_COUNTRY', 'Country');
 define('_AM_OLEDRION_GO_TO_MODULE', 'Go to module');
 define('_AM_OLEDRION_PREFERENCES', 'Settings');
@@ -306,9 +305,9 @@ define('_AM_OLEDRION_IMPORT_DATA_TEXT', 'If you want import test information cli
 define('_AM_OLEDRION_IMPORT_CONF', 'Do you want import test information?');
 
 //directories
-define('_AM_OLEDRION_AVAILABLE', "<span style='color : green;'>Available. </span>");
-define('_AM_OLEDRION_NOTAVAILABLE', "<span style='color : red;'>is not available. </span>");
-define('_AM_OLEDRION_NOTWRITABLE', "<span style='color : red;'>" . ' should have permission ( %1$d ), but it has ( %2$d )' . '</span>');
+define('_AM_OLEDRION_AVAILABLE', "<span style='color : #008000;'>Available. </span>");
+define('_AM_OLEDRION_NOTAVAILABLE', "<span style='color : #ff0000;'>is not available. </span>");
+define('_AM_OLEDRION_NOTWRITABLE', "<span style='color : #ff0000;'>" . ' should have permission ( %1$d ), but it has ( %2$d )' . '</span>');
 define('_AM_OLEDRION_CREATETHEDIR', 'Create it');
 define('_AM_OLEDRION_SETMPERM', 'Set the permission');
 
@@ -317,9 +316,9 @@ define('_AM_OLEDRION_DIRNOTCREATED', 'The directory can not be created');
 define('_AM_OLEDRION_PERMSET', 'The permission has been set');
 define('_AM_OLEDRION_PERMNOTSET', 'The permission can not be set');
 
-define('_OLEDRION_CMD_STATE7', 'Option 7');
-define('_OLEDRION_CMD_STATE8', 'Option 8');
-define('_OLEDRION_CMD_STATE9', 'Option 9');
+define('_AM_OLEDRION_CMD_STATE7', 'Option 7');
+define('_AM_OLEDRION_CMD_STATE8', 'Option 8');
+define('_AM_OLEDRION_CMD_STATE9', 'Option 9');
 define('_AM_OLEDRION_CONF_PACK', 'Confirmation pack');
 define('_AM_OLEDRION_CONF_SUBMIT', 'Confirmation Submit');
 define('_AM_OLEDRION_CONF_DELIVERY', 'Delivery');

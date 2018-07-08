@@ -246,8 +246,6 @@
         event.preventDefault();
     }
 
-    ;
-
     //some default votes.
     $.fn.rateit.defaults = {
         min: 0,

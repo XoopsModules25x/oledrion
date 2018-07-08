@@ -17,11 +17,16 @@
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
  */
 
+use XoopsModules\Oledrion;
+
+/**
+ * @return array
+ */
 function b_sitemap_oledrion()
 {
-    require_once __DIR__ . '/../oledrion/header.php';
+    require_once dirname(__DIR__) . '/oledrion/header.php';
     global $sitemap_configs;
-    $xoopsDB    = XoopsDatabaseFactory::getDatabaseConnection();
+    $xoopsDB    = \XoopsDatabaseFactory::getDatabaseConnection();
     $table      = $xoopsDB->prefix('oledrion_cat');
     $id_name    = 'cat_cid';
     $pid_name   = 'cat_pid';
@@ -30,24 +35,26 @@ function b_sitemap_oledrion()
     $order      = 'cat_title';
 
     require_once XOOPS_ROOT_PATH . '/class/xoopstree.php';
-    $mytree  = new XoopsTree($table, $id_name, $pid_name);
-    $xoopsDB = XoopsDatabaseFactory::getDatabaseConnection();
+    $mytree  = new \XoopsTree($table, $id_name, $pid_name);
+    $xoopsDB = \XoopsDatabaseFactory::getDatabaseConnection();
 
-    $sitemap = array();
-    $myts    = MyTextSanitizer::getInstance();
+    $sitemap = [];
+    $myts    = \MyTextSanitizer::getInstance();
 
     $i   = 0;
     $sql = "SELECT `$id_name`,`$title_name` FROM `$table` WHERE `$pid_name`=0";
-    if ($order != '') {
+    if ('' !== $order) {
         $sql .= " ORDER BY `$order`";
     }
     $result = $xoopsDB->query($sql);
-    while (list($catid, $name) = $xoopsDB->fetchRow($result)) {
+    while (false !== (list($catid, $name) = $xoopsDB->fetchRow($result))) {
         $sitemap['parent'][$i]['id']    = $catid;
         $sitemap['parent'][$i]['title'] = $myts->htmlSpecialChars($name);
-        if (OledrionUtility::getModuleOption('urlrewriting') == 1) { // On utilise l'url rewriting
-            $url = 'category' . '-' . (int)$catid . OledrionUtility::makeSeoUrl($name) . '.html';
-        } else { // Pas d'utilisation de l'url rewriting
+        if (1 == Oledrion\Utility::getModuleOption('urlrewriting')) {
+            // On utilise l'url rewriting
+            $url = 'category' . '-' . (int)$catid . Oledrion\Utility::makeSeoUrl($name) . '.html';
+        } else {
+            // Pas d'utilisation de l'url rewriting
             $url = 'category.php?cat_cid=' . (int)$catid;
         }
         $sitemap['parent'][$i]['url'] = $url;
@@ -56,13 +63,15 @@ function b_sitemap_oledrion()
             $j         = 0;
             $child_ary = $mytree->getChildTreeArray($catid, $order);
             foreach ($child_ary as $child) {
-                $count                                       = strlen($child['prefix']) + 1;
+                $count                                       = mb_strlen($child['prefix']) + 1;
                 $sitemap['parent'][$i]['child'][$j]['id']    = $child[$id_name];
                 $sitemap['parent'][$i]['child'][$j]['title'] = $myts->htmlSpecialChars($child[$title_name]);
                 $sitemap['parent'][$i]['child'][$j]['image'] = (($count > 3) ? 4 : $count);
-                if (OledrionUtility::getModuleOption('urlrewriting') == 1) { // On utilise l'url rewriting
-                    $url = 'category' . '-' . (int)$child[$id_name] . OledrionUtility::makeSeoUrl($child[$title_name]) . '.html';
-                } else { // Pas d'utilisation de l'url rewriting
+                if (1 == Oledrion\Utility::getModuleOption('urlrewriting')) {
+                    // On utilise l'url rewriting
+                    $url = 'category' . '-' . (int)$child[$id_name] . Oledrion\Utility::makeSeoUrl($child[$title_name]) . '.html';
+                } else {
+                    // Pas d'utilisation de l'url rewriting
                     $url = 'category.php?cat_cid=' . (int)$child[$id_name];
                 }
                 $sitemap['parent'][$i]['child'][$j]['url'] = $url;
