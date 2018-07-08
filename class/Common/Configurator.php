@@ -21,6 +21,7 @@ namespace XoopsModules\Oledrion\Common;
  * @since       1.05
  */
 
+use XoopsModules\Oledrion;
 //require_once dirname(dirname(__DIR__)) . '/include/common.php';
 
 /**
@@ -46,7 +47,7 @@ class Configurator
         $moduleDirName = basename(dirname(dirname(__DIR__)));
         $capsDirName   = mb_strtoupper($moduleDirName);
 
-        require_once dirname(dirname(__DIR__)) . '/include/config.php';
+        include dirname(dirname(__DIR__)) . '/include/config.php';
         $config = getConfig();
 
         $this->name            = $config->name;
