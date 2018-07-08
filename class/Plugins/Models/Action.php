@@ -29,6 +29,7 @@ abstract class Action
 {
     /**
      * Retourne la liste des évènements traités par le plugin
+     * Returns list of events processed by the plugin
      * @return array
      */
     abstract public static function registerEvents();
