@@ -291,9 +291,9 @@ class ListsHandler extends OledrionPersistableObjectHandler
         $list_uid               = (int)$list_uid;
         $productlist_product_id = (int)$productlist_product_id;
         $sql                    = 'SELECT COUNT(*) FROM ' . $this->table . ' l, ' . $this->db->prefix('oledrion_products_list') . ' p WHERE (p.productlist_list_id = l.list_id) AND (l.list_uid = ' . $list_uid . ') AND (p.productlist_product_id =' . $productlist_product_id . ')';
-        //$Cache_Lite = new Oledrion_Cache_Lite($this->cacheOptions);
+        //$CacheLite = new Oledrion_CacheLite($this->cacheOptions);
         $id = $this->_getIdForCache($sql, $start, $limit);
-        //$cacheData = $Cache_Lite->get($id);
+        //$cacheData = $CacheLite->get($id);
         //if ($cacheData === false) {
         $result = $this->db->query($sql, $limit, $start);
         if ($result) {
@@ -303,7 +303,7 @@ class ListsHandler extends OledrionPersistableObjectHandler
             }
         }
 
-        //$Cache_Lite->save($ret);
+        //$CacheLite->save($ret);
         return $ret;
         //} else {
         //return $cacheData;
@@ -338,9 +338,9 @@ class ListsHandler extends OledrionPersistableObjectHandler
                       . ') AND (p.product_cid = '
                       . $categoryId
                       . ') AND (l.list_id = z.productlist_list_id) AND (z.productlist_product_id = p.product_id) AND (p.product_online = 1) ORDER BY l.list_date DESC';
-        //$Cache_Lite = new Oledrion_Cache_Lite($this->cacheOptions);
+        //$CacheLite = new Oledrion_CacheLite($this->cacheOptions);
         $id = $this->_getIdForCache($sql, $start, $limit);
-        //$cacheData = $Cache_Lite->get($id);
+        //$cacheData = $CacheLite->get($id);
         //if ($cacheData === false) {
         $result = $this->db->query($sql, $limit, $start);
         if ($result) {
@@ -350,7 +350,7 @@ class ListsHandler extends OledrionPersistableObjectHandler
             $ret = $this->getItemsFromIds($ret);
         }
 
-        //$Cache_Lite->save($ret);
+        //$CacheLite->save($ret);
         return $ret;
         //} else {
         //  return $cacheData;

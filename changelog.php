@@ -216,7 +216,7 @@ Version 1.4
 Version 1.3
 ************
 15/11/2007 & 17/11/2007
-- Ajout d'une gestion de cache avec Cache_Lite (de Pear)
+- Ajout d'une gestion de cache avec CacheLite (de Pear)
 - Possibilité de supprimer images et fichiers attachés dans les catégories, fabricants et produits
 - Modification de toutes les classes pour fonctionner avec Php5
 - Modification de l'ORM
