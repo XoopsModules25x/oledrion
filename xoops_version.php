@@ -362,7 +362,7 @@ $modversion['sub'][$cptm]['url']  = 'all-lists.php';
 
 // Adding parent categories in submenu ********************************************************
 global $xoopsModule;
-if ($xoopsModule->getVar('isactive') && is_object($xoopsModule) && $xoopsModule->getVar('dirname') == $modversion['dirname']) {
+if (is_object($xoopsModule) && $xoopsModule->getVar('isactive') && $xoopsModule->getVar('dirname') == $modversion['dirname']) {
     if (!isset($categoryHandler)) {
         //mb        $categoryHandler = xoops_getModuleHandler('oledrion_cat', 'oledrion');
         $db              = \XoopsDatabaseFactory::getDatabaseConnection();
