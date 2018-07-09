@@ -181,21 +181,21 @@ class OledrionPersistableObjectHandler extends \XoopsPersistableObjectHandler
             $limit = $criteria->getLimit();
             $start = $criteria->getStart();
         }
-        //$Cache_Lite = new oledrion_Cache_Lite($this->cacheOptions);
+        //$CacheLite = new oledrion_CacheLite($this->cacheOptions);
         $id = $this->_getIdForCache($sql, $start, $limit);
-        //$cacheData = $Cache_Lite->get($id);
+        //$cacheData = $CacheLite->get($id);
         //if ($cacheData === false) {
         $result = $this->db->query($sql, $limit, $start);
         if (!$result) {
             $ret = 0;
 
-            //$Cache_Lite->save($ret);
+            //$CacheLite->save($ret);
             return $ret;
         }
         $row   = $this->db->fetchArray($result);
         $count = $row['cpt'];
 
-        //$Cache_Lite->save($count);
+        //$CacheLite->save($count);
         return $count;
         //} else {
         //  return $cacheData;
@@ -291,9 +291,9 @@ class OledrionPersistableObjectHandler extends \XoopsPersistableObjectHandler
         }
         $sql .= ' GROUP BY ' . $field . ' ORDER BY ' . $field;
 
-        //$Cache_Lite = new oledrion_Cache_Lite($this->cacheOptions);
+        //$CacheLite = new oledrion_CacheLite($this->cacheOptions);
         $id = $this->_getIdForCache($sql, $start, $limit);
-        //$cacheData = $Cache_Lite->get($id);
+        //$cacheData = $CacheLite->get($id);
         //if ($cacheData === false) {
         $result = $this->db->query($sql, $limit, $start);
         $ret    = [];
@@ -303,7 +303,7 @@ class OledrionPersistableObjectHandler extends \XoopsPersistableObjectHandler
             $ret[$myrow[$this->keyName]] = $obj->getVar($field, $format);
         }
 
-        //$Cache_Lite->save($ret);
+        //$CacheLite->save($ret);
         return $ret;
         //} else {
         //return $cacheData;
@@ -348,7 +348,7 @@ class OledrionPersistableObjectHandler extends \XoopsPersistableObjectHandler
     public function forceCacheClean()
     {
         //require_once __DIR__ . '/lite.php';
-        //$Cache_Lite = new oledrion_Cache_Lite($this->cacheOptions);
+        //$CacheLite = new oledrion_CacheLite($this->cacheOptions);
         //$Cache_Lite->clean();
     }
 }
