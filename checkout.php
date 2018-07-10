@@ -25,6 +25,7 @@ use XoopsModules\Oledrion;
 use XoopsModules\Oledrion\Constants;
 
 require_once __DIR__ . '/header.php';
+
 $GLOBALS['current_category']             = -1;
 $GLOBALS['xoopsOption']['template_main'] = 'oledrion_command.tpl';
 require_once XOOPS_ROOT_PATH . '/header.php';
