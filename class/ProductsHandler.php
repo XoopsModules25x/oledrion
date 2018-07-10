@@ -364,7 +364,7 @@ class ProductsHandler extends OledrionPersistableObjectHandler
     /**
      * Récupération de l'ID et du titre d'une série de produits répondants à un critère
      *
-     * @param  null|\CriteriaElement $criteria critère de sélection
+     * @param  null|\CriteriaElement|\CriteriaCompo $criteria critère de sélection
      * @return array  Tableau dont la clé = ID produit et la valeur le titre du produit
      */
     public function getIdTitle($criteria = null)

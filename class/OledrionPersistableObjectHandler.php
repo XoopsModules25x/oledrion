@@ -164,7 +164,7 @@ class OledrionPersistableObjectHandler extends \XoopsPersistableObjectHandler
      * Retourne le total d'un champ
      *
      * @param  string           $field    Le champ dont on veut calculer le total
-     * @param  \CriteriaElement $criteria {@link CriteriaElement} to match
+     * @param  \CriteriaElement|\CriteriaCompo $criteria to match
      * @return int le total
      */
     public function getSum($field, $criteria = null)
@@ -275,7 +275,7 @@ class OledrionPersistableObjectHandler extends \XoopsPersistableObjectHandler
      * Get distincted values of a field in the table
      *
      * @param  string           $field    Field's name
-     * @param  \CriteriaElement $criteria {@link CriteriaElement} conditions to be met
+     * @param  \CriteriaElement|\CriteriaCompo $criteria conditions to be met
      * @param  string           $format   Format in wich we want the datas
      * @return array  containing the distinct values
      */
