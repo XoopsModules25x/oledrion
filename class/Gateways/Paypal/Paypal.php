@@ -382,7 +382,9 @@ class Paypal extends Gateway
                                         }
                                         //R.B. end
 
-                                        unlink($email_name);
+                                        if (false === @unlink($email_name)) {
+                                            throw new \RuntimeException('The file '.$email_name.' could not be deleted.');
+                                        }
                                     } else {
                                         $duplicate_ipn = 1;
                                     }

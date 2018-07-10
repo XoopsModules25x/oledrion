@@ -116,7 +116,9 @@ class Manufacturer extends OledrionObject
         $pictureNumber = (int)$pictureNumber;
         if ($pictureNumber > 0 && $pictureNumber < 6) {
             if ($this->pictureExists($pictureNumber)) {
-                @unlink(OLEDRION_PICTURES_PATH . '/' . $this->getVar('manu_photo' . $pictureNumber));
+                if (false === @unlink(OLEDRION_PICTURES_PATH . '/' . $this->getVar('manu_photo' . $pictureNumber))){
+                    throw new \RuntimeException('The picture '.OLEDRION_PICTURES_PATH . '/' . $this->getVar('manu_photo' . $pictureNumber).' could not be deleted.');
+                }
             }
             $this->setVar('manu_photo' . $pictureNumber, '');
         }

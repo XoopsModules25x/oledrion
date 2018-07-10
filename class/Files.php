@@ -55,7 +55,9 @@ class Files extends OledrionObject
         if (!defined('OLEDRION_ATTACHED_FILES_PATH')) {
             include OLEDRION_PATH . 'config.php';
         }
-        @unlink(OLEDRION_ATTACHED_FILES_PATH . '/' . $this->getVar('file_filename'));
+        if (false === @unlink(OLEDRION_ATTACHED_FILES_PATH . '/' . $this->getVar('file_filename'))) {
+            throw new \RuntimeException('The file '.OLEDRION_ATTACHED_FILES_PATH . '/' . $this->getVar('file_filename').' could not be deleted.');
+        }
     }
 
     /**

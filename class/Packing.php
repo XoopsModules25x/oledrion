@@ -81,7 +81,9 @@ class Packing extends OledrionObject
     public function deletePicture()
     {
         if ($this->pictureExists()) {
-            @unlink(OLEDRION_PICTURES_PATH . '/' . $this->getVar('packing_image'));
+            if (false === @unlink(OLEDRION_PICTURES_PATH . '/' . $this->getVar('packing_image'))){
+                throw new \RuntimeException('The picture '.OLEDRION_PICTURES_PATH . '/' . $this->getVar('packing_image').' could not be deleted.');
+            }
         }
         $this->setVar('packing_image', '');
     }

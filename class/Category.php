@@ -93,7 +93,9 @@ class Category extends OledrionObject
     public function deletePicture()
     {
         if ($this->pictureExists()) {
-            @unlink(OLEDRION_PICTURES_PATH . '/' . $this->getVar('cat_imgurl'));
+            if (false === @unlink(OLEDRION_PICTURES_PATH . '/' . $this->getVar('cat_imgurl'))){
+                throw new \RuntimeException('The picture '.OLEDRION_PICTURES_PATH . '/' . $this->getVar('cat_imgurl').' could not be deleted.');
+            }
         }
         $this->setVar('cat_imgurl', '');
     }

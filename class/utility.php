@@ -358,7 +358,9 @@ class Utility extends \XoopsObject
                 if (is_array($files_del) && count($files_del) > 0) {
                     foreach ($files_del as $one_file) {
                         if (is_file($one_file)) {
-                            unlink($one_file);
+                            if (false === @unlink($one_file)) {
+                                throw new \RuntimeException('The file '.$one_file.' could not be deleted.');
+                            }
                         }
                     }
                 }
@@ -1201,7 +1203,9 @@ class Utility extends \XoopsObject
         }
 
         if (!$keep_original) {
-            @unlink($src_path);
+            if (false === @unlink($src_path)) {
+                throw new \RuntimeException('The file '.$src_path.' could not be deleted.');
+            }
         }
 
         return true;

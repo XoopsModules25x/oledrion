@@ -220,7 +220,9 @@ class Products extends OledrionObject
     public function deletePicture()
     {
         if ($this->pictureExists()) {
-            @unlink(OLEDRION_PICTURES_PATH . '/' . $this->getVar('product_image_url'));
+            if (false === @unlink(OLEDRION_PICTURES_PATH . '/' . $this->getVar('product_image_url'))){
+                throw new \RuntimeException('The picture '.OLEDRION_PICTURES_PATH . '/' . $this->getVar('product_image_url').' could not be deleted.');
+            }
         }
         $this->setVar('product_image_url', '');
     }
@@ -246,7 +248,10 @@ class Products extends OledrionObject
     public function deleteAttachment()
     {
         if ($this->attachmentExists()) {
-            @unlink(OLEDRION_ATTACHED_FILES_PATH . '/' . $this->getVar('product_attachment'));
+            if (false === @unlink(OLEDRION_ATTACHED_FILES_PATH . '/' . $this->getVar('product_attachment'))) {
+                throw new \RuntimeException('The file '.OLEDRION_ATTACHED_FILES_PATH . '/' . $this->getVar('product_attachment').' could not be deleted.');
+            }
+
         }
         $this->setVar('product_attachment', '');
     }
@@ -257,7 +262,9 @@ class Products extends OledrionObject
     public function deleteThumb()
     {
         if ($this->thumbExists()) {
-            @unlink(OLEDRION_PICTURES_PATH . '/' . $this->getVar('product_thumb_url'));
+            if (false === @unlink(OLEDRION_PICTURES_PATH . '/' . $this->getVar('product_thumb_url'))){
+                throw new \RuntimeException('The thumb '.OLEDRION_PICTURES_PATH . '/' . $this->getVar('product_thumb_url').' could not be deleted.');
+            }
         }
         $this->setVar('product_thumb_url', '');
     }
