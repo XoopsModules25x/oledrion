@@ -37,7 +37,7 @@ class OledrionObject extends \XoopsObject
         return $ret;
     }
 
-    // TODO: Rajouter une méthode intsert() et delete()
+    // TODO: Add an insert() method and delete()
 
     /**
      * Permet de valoriser un champ de la table comme si c'était une propriété de la classe

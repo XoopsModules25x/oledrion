@@ -25,6 +25,7 @@ use XoopsModules\Oledrion;
 use XoopsModules\Oledrion\Constants;
 
 require_once __DIR__ . '/header.php';
+
 $GLOBALS['current_category']             = -1;
 $GLOBALS['xoopsOption']['template_main'] = 'oledrion_command.tpl';
 require_once XOOPS_ROOT_PATH . '/header.php';
@@ -703,7 +704,7 @@ switch ($op) {
         } else {
             // B.R. New
             $payment_id = 1; // TODO: figure out how to get
-            $payment    = $h_oledrion_payment->get($payment_id);
+            $payment    = $paymentHandler->get($payment_id);
             // End new
             // B.R. if (!isset($payment) || $payment['payment_type'] === 'offline' || $commandAmountTTC == 0) {
             if (0 == $commandAmountTTC || !isset($payment) || 'offline' === $payment->getVar('payment_type')) {

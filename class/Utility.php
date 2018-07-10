@@ -391,8 +391,8 @@ class Utility extends \XoopsObject
             if (null !== $xoopsModule && is_object($xoopsModule) && OLEDRION_DIRNAME == $xoopsModule->getVar('dirname')) {
                 $mymodule = $xoopsModule;
             } else {
-                $hModule  = xoops_getHandler('module');
-                $mymodule = $hModule->getByDirname(OLEDRION_DIRNAME);
+                $moduleHandler  = xoops_getHandler('module');
+                $mymodule = $moduleHandler->getByDirname(OLEDRION_DIRNAME);
             }
         }
 
