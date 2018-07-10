@@ -22,7 +22,7 @@ use XoopsModules\Oledrion;
 //use XoopsModules\Oledrion\Gateways;
 
 /**
- * Gestion des passerelles de paiement
+ * Management of payment gateways
  */
 if (!defined('OLEDRION_ADMIN')) {
     exit();
@@ -117,7 +117,7 @@ switch ($action) {
 
         break;
     // ****************************************************************************************************************
-    case 'seelog': // Voir le contenu du fichier log
+    case 'seelog': // View the contents of the log file
 
         // ****************************************************************************************************************
         xoops_cp_header();
@@ -143,7 +143,7 @@ switch ($action) {
         xoops_cp_header();
         //        oledrion_adminMenu(12);
         $opRedirect = '?op=gateways';
-        $gateway    = isset($_POST['gateway']) ? mb_strtolower($_POST['gateway']) : '';
+        $gateway    = mb_strtolower(\Xmf\Request::getString('gateway', '', 'POST'));
         $gateway    = \XoopsModules\Oledrion\Gateways::purifyGatewayName($gateway);
         if (empty($gateway)) {
             Oledrion\Utility::redirect(_AM_OLEDRION_ERROR_1, $baseurl . $opRedirect, 5);
@@ -163,7 +163,7 @@ switch ($action) {
         oledrion_adminMenu(12);
         Oledrion\Utility::htitle(_AM_OLEDRION_INSTALLED_GATEWAYS, 4);
         $opRedirect = '?op=gateways';
-        $gateway    = mb_strtolower(\Xmf\Request::getString('gateway', '', 'GET')); //isset($_GET['gateway']) ? mb_strtolower($_GET['gateway']) : '';
+        $gateway    = mb_strtolower(\Xmf\Request::getString('gateway', '', 'GET'));
         $gateway    = ucfirst(\XoopsModules\Oledrion\Gateways::purifyGatewayName($gateway));
         if (empty($gateway)) {
             Oledrion\Utility::redirect(_AM_OLEDRION_ERROR_1, $baseurl . $opRedirect, 5);
@@ -200,7 +200,7 @@ switch ($action) {
         xoops_cp_header();
         oledrion_adminMenu(12);
         $opRedirect = '?op=gateways';
-        $gateway    = isset($_POST['gateway']) ? mb_strtolower($_POST['gateway']) : '';
+        $gateway    = mb_strtolower(\Xmf\Request::getString('gateway', '', 'POST'));
         $gateway    = ucfirst(\XoopsModules\Oledrion\Gateways::purifyGatewayName($gateway));
         if (empty($gateway)) {
             Oledrion\Utility::redirect(_AM_OLEDRION_ERROR_1, $baseurl . $opRedirect, 5);

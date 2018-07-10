@@ -23,7 +23,7 @@ namespace XoopsModules\Oledrion;
 use XoopsModules\Oledrion;
 
 /**
- * Gestion des commandes clients
+ * Sales order management
  */
 
 
@@ -43,7 +43,7 @@ class CommandsHandler extends OledrionPersistableObjectHandler
     }
 
     /**
-     * Indique si c'est la première commande d'un client
+     * Indicates if this is the first order of a customer
      *
      * @param int $uid Identifiant de l'utilisateur
      * @return bool Indique si c'est le cas ou pas
@@ -79,7 +79,7 @@ class CommandsHandler extends OledrionPersistableObjectHandler
     }
 
     /**
-     * Mise à jour des stocks pour chaque produit composant la commande
+     * Inventory update for each product composing the order
      *
      * @param  Commands $order La commande à traiter
      * @return bool
@@ -111,7 +111,7 @@ class CommandsHandler extends OledrionPersistableObjectHandler
     }
 
     /**
-     * Retourne la liste des URLs de téléchargement liés à une commande
+     * Returns the list of download URLs linked to a command
      *
      * @param  Commands $order La commande en question
      * @return array                    Les URL
@@ -144,7 +144,7 @@ class CommandsHandler extends OledrionPersistableObjectHandler
     }
 
     /**
-     * Envoi du mail chargé de prévenir le client et le magasin qu'une commande est validée
+     * Sending the mail to inform the customer and the store that an order is validated
      *
      * @param Commands $order   La commande en question
      * @param string   $comment Optionel, un commentaire pour le webmaster
@@ -166,7 +166,7 @@ class CommandsHandler extends OledrionPersistableObjectHandler
     }
 
     /**
-     * Validation d'une commande et mise à jour des stocks
+     * Validation of an order and inventory update
      *
      * @param  Commands $order   La commande à traiter
      * @param  string   $comment Optionel, un commentaire pour le mail envoyé au webmaster
@@ -188,7 +188,7 @@ class CommandsHandler extends OledrionPersistableObjectHandler
     }
 
     /**
-     * pack d'une commande et mise à jour des stocks
+     * pack an order and update inventory
      *
      * @param  Commands $order   La commande à traiter
      * @param  string   $comment Optionel, un commentaire pour le mail envoyé au webmaster
@@ -205,7 +205,7 @@ class CommandsHandler extends OledrionPersistableObjectHandler
     }
 
     /**
-     * submit d'une commande et mise à jour des stocks
+     * submit an order and inventory update
      *
      * @param  Commands $order   La commande à traiter
      * @param  string   $comment Optionel, un commentaire pour le mail envoyé au webmaster
@@ -222,7 +222,7 @@ class CommandsHandler extends OledrionPersistableObjectHandler
     }
 
     /**
-     * delivery d'une commande et mise à jour des stocks
+     * delivery an order and inventory update
      *
      * @param  Commands $order   La commande à traiter
      * @param  string   $comment Optionel, un commentaire pour le mail envoyé au webmaster
@@ -239,7 +239,7 @@ class CommandsHandler extends OledrionPersistableObjectHandler
     }
 
     /**
-     * Informe le propriétaire du site qu'une commande est frauduleuse
+     * Inform the site owner that an order is fraudulent
      *
      * @param Commands $order   La commande en question
      * @param string   $comment Optionel, un commentaire pour le mail envoyé au webmaster
@@ -253,7 +253,7 @@ class CommandsHandler extends OledrionPersistableObjectHandler
     }
 
     /**
-     * Applique le statut de commande frauduleuse à une commande
+     * Apply fraudulent order status to an order
      *
      * @param object|Commands $order   La commande à traiter
      * @param string          $comment Optionel, un commentaire pour le mail envoyé au webmaster
@@ -267,7 +267,7 @@ class CommandsHandler extends OledrionPersistableObjectHandler
     }
 
     /**
-     * Informe le propriétaire du site qu'une commande est en attente
+     * Inform the site owner that an order is pending
      *
      * @param Commands $order   La commande en question
      * @param string   $comment Optionel, un commentaire pour le mail envoyé au webmaster
@@ -281,7 +281,7 @@ class CommandsHandler extends OledrionPersistableObjectHandler
     }
 
     /**
-     * Applique le statut de commande en attente à une commande
+     * Apply pending order status to an order
      *
      * @param Commands $order   La commande à traiter
      * @param string   $comment Optionel, un commentaire pour le mail envoyé au webmaster
@@ -295,7 +295,7 @@ class CommandsHandler extends OledrionPersistableObjectHandler
     }
 
     /**
-     * Informe le propriétaire du site qu'une commande à échoué (le paiement)
+     * Inform the site owner that an order has failed (payment)
      *
      * @param Commands $order   La commande en question
      * @param string   $comment Optionel, un commentaire pour le mail envoyé au webmaster
@@ -309,7 +309,7 @@ class CommandsHandler extends OledrionPersistableObjectHandler
     }
 
     /**
-     * Applique le statut de commande échouée à une commande
+     * Applies failed order status to an order
      *
      * @param Commands $order   La commande à traiter
      * @param string   $comment Optionel, un commentaire pour le mail envoyé au webmaster
@@ -323,7 +323,7 @@ class CommandsHandler extends OledrionPersistableObjectHandler
     }
 
     /**
-     * Informe le propriétaire du site qu'une commande à échoué (le paiement)
+     * Inform the site owner that an order has failed (payment)
      *
      * @param Commands $order   La commande en question
      * @param string   $comment Optionel, un commentaire pour le mail envoyé au webmaster
@@ -338,7 +338,7 @@ class CommandsHandler extends OledrionPersistableObjectHandler
     }
 
     /**
-     * Applique le statut de commande annulée à une commande
+     * Apply canceled order status to an order
      *
      * @param Commands $order   La commande à traiter
      * @param string   $comment Optionel, un commentaire pour le mail envoyé au webmaster
@@ -352,7 +352,7 @@ class CommandsHandler extends OledrionPersistableObjectHandler
     }
 
     /**
-     * Retourne une commande à partir de son mot de passe d'annulation
+     * Returns an order from its cancellation password
      *
      * @param  string $cmd_cancel Le mot de passe d'annulation
      * @return mixed  Soit un objet soit null
@@ -372,7 +372,7 @@ class CommandsHandler extends OledrionPersistableObjectHandler
     }
 
     /**
-     * Retourne la dernière commande d'un utilisateur (si elle existe)
+     * Returns the last command of a user (if it exists)
      *
      * @param int $uid Identifiant de la commande
      * @return null|string
@@ -396,7 +396,7 @@ class CommandsHandler extends OledrionPersistableObjectHandler
     }
 
     /**
-     * Supprime une commande et tout ce qui s'y rattache
+     * Deletes an order and everything related to it
      *
      * @param  Commands $order
      * @return bool
@@ -408,8 +408,10 @@ class CommandsHandler extends OledrionPersistableObjectHandler
         $res    = $this->delete($order);
         // Suppression des objets associés
         // 1) Ses propres caddies
+        $caddyHandler = new Oledrion\CaddyHandler();
         $caddyHandler->removeCartsFromOrderId($cmd_id);
         // 2) Les caddies des attributs
+        $caddyAttributesHandler = new Oledrion\CaddyAttributesHandler();
         $caddyAttributesHandler->removeCartsFromOrderId($cmd_id);
 
         return $res;

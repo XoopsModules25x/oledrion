@@ -115,7 +115,7 @@ switch ($action) {
         //------------- End Test Data ----------------------------
         $adminObject->displayIndex();
 
-        echo $utility::getServerStats();
+//        echo $utility::getServerStats();
 
         $itemsCount = 5; // Nombre d'éléments à afficher
         if ($productsHandler->getCount() > 0) {
@@ -210,6 +210,8 @@ switch ($action) {
             echo "</td></tr>\n";
             echo "</table>\n";
         }
+
+        echo $utility::getServerStats();
 
         require_once OLEDRION_ADMIN_PATH . 'admin_footer.php';
 

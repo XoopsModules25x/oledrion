@@ -23,7 +23,7 @@ namespace XoopsModules\Oledrion;
 use XoopsModules\Oledrion;
 
 /**
- * Gestion des commandes clients
+ * Sales order management
  */
 
 
@@ -78,10 +78,10 @@ class Commands extends OledrionObject
     }
 
     /**
-     * Retourne les éléments du produits formatés pour affichage
+     * Returns the elements of the products formatted for display
      *
-     * @param  string $format Le format à utiliser
-     * @return array  Les informations formatées
+     * @param  string $format The format to use
+     * @return array  Formatted information
      */
     public function toArray($format = 's')
     {
