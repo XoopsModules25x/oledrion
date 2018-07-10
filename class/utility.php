@@ -1948,4 +1948,27 @@ class Utility extends \XoopsObject
 
         return \XoopsLists::getCountryList();
     }
+
+    /**
+     * Retourne la liste des groupes de l'utlisateur courant (avec cache)
+     * @return array Les ID des groupes auquel l'utilisateur courant appartient
+     */
+    public static function getCurrentMemberGroups()
+    {
+        static $buffer = [];
+
+        if (is_array($buffer) && count($buffer) > 0) {
+            return $buffer;
+        } else {
+            $uid = self::getCurrentUserID();
+            if ($uid > 0) {
+                $memberHandler = xoops_getHandler('member');
+                $buffer        = $memberHandler->getGroupsByUser($uid, false);    // Renvoie un tableau d'ID (de groupes)
+            } else {
+                $buffer = [XOOPS_GROUP_ANONYMOUS];
+            }
+        }
+
+        return $buffer;
+    }
 }
