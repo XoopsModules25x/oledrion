@@ -35,7 +35,7 @@ class RelatedHandler extends OledrionPersistableObjectHandler
 {
     /**
      * RelatedHandler constructor.
-     * @param \XoopsDatabase $db
+     * @param \XoopsDatabase|null $db
      */
     public function __construct(\XoopsDatabase $db = null)
     {

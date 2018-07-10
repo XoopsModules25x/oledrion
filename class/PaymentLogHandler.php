@@ -31,7 +31,7 @@ class PaymentLogHandler extends OledrionPersistableObjectHandler
 {
     /**
      * PaymentLogHandler constructor.
-     * @param \XoopsDatabase $db
+     * @param \XoopsDatabase|null $db
      */
     public function __construct(\XoopsDatabase $db = null)
     {

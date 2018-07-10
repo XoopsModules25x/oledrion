@@ -38,7 +38,7 @@ class PersistentCartHandler extends OledrionPersistableObjectHandler
 {
     /**
      * PersistentCartHandler constructor.
-     * @param \XoopsDatabase $db
+     * @param \XoopsDatabase|null $db
      */
     public function __construct(\XoopsDatabase $db = null)
     {

@@ -35,7 +35,7 @@ class CategoryHandler extends OledrionPersistableObjectHandler
 {
     /**
      * CategoryHandler constructor.
-     * @param \XoopsDatabase $db
+     * @param \XoopsDatabase|null $db
      */
     public function __construct(\XoopsDatabase $db = null)
     {
@@ -77,10 +77,10 @@ class CategoryHandler extends OledrionPersistableObjectHandler
     /**
      * Internal function to make an expanded view of categories via <li>
      *
-     * @param  string                   $fieldName
-     * @param  string                   $key
-     * @param  string                   $ret
-     * @param  Oledrion\XoopsObjectTree $tree
+     * @param  string                         $fieldName
+     * @param  string                         $key
+     * @param  string                         $ret
+     * @param  array $tree
      * @return string
      */
     private function _makeLi($fieldName, $key, &$ret, $tree)
@@ -108,7 +108,7 @@ class CategoryHandler extends OledrionPersistableObjectHandler
      */
     public function getUlMenu($fieldName, $key = 0)
     {
-        require_once XOOPS_ROOT_PATH . '/class/tree.php';
+//        require_once XOOPS_ROOT_PATH . '/class/tree.php';
         $items      = $this->getAllCategories(new Oledrion\Parameters());
         $treeObject = new Oledrion\XoopsObjectTree($items, 'cat_cid', 'cat_pid');
         $tree       = $treeObject->getTree();

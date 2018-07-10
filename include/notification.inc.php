@@ -46,7 +46,6 @@ function oledrion_notify_iteminfo($category, $item_id)
 
     if ('new_category' === $category) {
         include OLEDRION_PATH . 'include/common.php';
-        $category = null;
         $categoryHandler = new \XoopsModules\Oledrion\CategoryHandler();
         $category = $categoryHandler->get($item_id);
         if (is_object($category)) {
@@ -59,7 +58,6 @@ function oledrion_notify_iteminfo($category, $item_id)
 
     if ('new_product' === $category) {
         include OLEDRION_PATH . 'include/common.php';
-        $product = null;
         $productsHandler = new \XoopsModules\Oledrion\ProductsHandler();
         $product = $productsHandler->get($item_id);
         if (is_object($product)) {

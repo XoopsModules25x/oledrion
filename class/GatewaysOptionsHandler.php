@@ -34,7 +34,7 @@ class GatewaysOptionsHandler extends OledrionPersistableObjectHandler
 {
     /**
      * GatewaysOptionsHandler constructor.
-     * @param \XoopsDatabase $db
+     * @param \XoopsDatabase|null $db
      */
     public function __construct(\XoopsDatabase $db = null)
     {

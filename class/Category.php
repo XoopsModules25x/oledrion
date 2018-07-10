@@ -23,7 +23,7 @@ namespace XoopsModules\Oledrion;
 use XoopsModules\Oledrion;
 
 /**
- * Gestion des catégories de produits
+ * Product category management
  */
 
 
@@ -55,8 +55,8 @@ class Category extends OledrionObject
     }
 
     /**
-     * Retourne l'URL de l'image de la catégorie courante
-     * @return string L'URL
+     * Returns the image URL of the current category
+     * @return string URL
      */
     public function getPictureUrl()
     {
@@ -64,8 +64,8 @@ class Category extends OledrionObject
     }
 
     /**
-     * Retourne le chemin de l'image de la catégorie courante
-     * @return string Le chemin
+     * Return the image path of the current category
+     * @return string The path
      */
     public function getPicturePath()
     {
@@ -73,9 +73,9 @@ class Category extends OledrionObject
     }
 
     /**
-     * Indique si l'image de la catégorie existe
+     * Indicates whether the category image exists
      *
-     * @return bool Vrai si l'image existe sinon faux
+     * @return bool True if the image exists if not false
      */
     public function pictureExists()
     {
@@ -88,7 +88,7 @@ class Category extends OledrionObject
     }
 
     /**
-     * Supprime l'image associée à une catégorie
+     * Deletes the image associated with a category
      */
     public function deletePicture()
     {
@@ -101,9 +101,9 @@ class Category extends OledrionObject
     }
 
     /**
-     * Retourne l'url à utiliser pour accéder à la catégorie en tenant compte des préférences du module
+     * Returns the url to use to access the category taking into account the preferences of the module
      *
-     * @return string L'url à utiliser
+     * @return string The url to use
      */
     public function getLink()
     {
@@ -121,9 +121,9 @@ class Category extends OledrionObject
     }
 
     /**
-     * Rentourne la chaine à envoyer dans une balise <a> pour l'attribut href
+     * Gets the string to send in a <a> tag for the href attribute
      *
-     * @return string
+     * @return string|array
      */
     public function getHrefTitle()
     {
@@ -131,7 +131,7 @@ class Category extends OledrionObject
     }
 
     /**
-     * Retourne les éléments du produits formatés pour affichage
+     * Returns the elements of the products formatted for display
      *
      * @param  string $format
      * @return array

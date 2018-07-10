@@ -135,7 +135,7 @@ function b_oledrion_category_edit($options)
 }
 
 /**
- * Bloc à la volée
+ * Block on the fly
  * @param $options
  */
 function b_oledrion_category_duplicatable($options)

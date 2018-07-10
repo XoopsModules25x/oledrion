@@ -34,7 +34,7 @@ class CommandsHandler extends OledrionPersistableObjectHandler
 {
     /**
      * CommandsHandler constructor.
-     * @param \XoopsDatabase $db
+     * @param \XoopsDatabase|null $db
      */
     public function __construct(\XoopsDatabase $db = null)
     {
@@ -58,11 +58,11 @@ class CommandsHandler extends OledrionPersistableObjectHandler
     }
 
     /**
-     * Indique si un produit a déajà été acheté par un utilisateur
+     * Indicates if a product has already been purchased by a user
      *
-     * @param int $uid       Identifiant de l'utilisateur
-     * @param int $productId Identifiant du produit
-     * @return bool Indique si c'est le cas ou pas
+     * @param int $uid       User ID
+     * @param int $productId Product ID
+     * @return bool Indicates whether this is the case or not
      */
     public function productAlreadyBought($uid = 0, $productId = 0)
     {
@@ -72,7 +72,7 @@ class CommandsHandler extends OledrionPersistableObjectHandler
         $sql    = 'SELECT Count(*) AS cpt FROM ' . $this->db->prefix('oledrion_caddy') . ' c, ' . $this->db->prefix('oledrion_commands') . ' f WHERE c.caddy_product_id = ' . (int)$productId . ' AND c.caddy_cmd_id = f.cmd_id AND f.cmd_uid = ' . (int)$uid;
         $result = $this->db->query($sql);
         if (!$result) {
-            return 0;
+            return false;
         }
         list($count) = $this->db->fetchRow($result);
         return $count > 0;
@@ -119,9 +119,8 @@ class CommandsHandler extends OledrionPersistableObjectHandler
     public function getOrderUrls(Commands $order)
     {
         global $caddyHandler, $productsHandler;
-        $retval = [];
+        $retval = $carts = $productsList = $products = [];
         // Recherche des produits du caddy associés à cette commande
-        $carts = $productsList = $products = [];
         $carts = $caddyHandler->getObjects(new \Criteria('caddy_cmd_id', $order->getVar('cmd_id'), '='));
         foreach ($carts as $item) {
             $productsList[] = $item->getVar('caddy_product_id');

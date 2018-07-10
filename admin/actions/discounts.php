@@ -240,8 +240,8 @@ switch ($action) {
 
         // Groupes
         $xoopsTpl->assign('disc_groups_selected', $item->getVar('disc_group'));
+    /** @var \XoopsMemberHandler $memberHandler */
         $memberHandler = xoops_getHandler('member');
-        $groups        = [];
         $groups        = $memberHandler->getGroupList();
         $groups[0]     = _ALL;
         ksort($groups);

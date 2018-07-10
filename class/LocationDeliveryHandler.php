@@ -31,7 +31,7 @@ class LocationDeliveryHandler extends OledrionPersistableObjectHandler
 {
     /**
      * LocationDeliveryHandler constructor.
-     * @param \XoopsDatabase $db
+     * @param \XoopsDatabase|null $db
      */
     public function __construct(\XoopsDatabase $db = null)
     {

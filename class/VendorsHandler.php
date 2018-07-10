@@ -34,7 +34,7 @@ class VendorsHandler extends OledrionPersistableObjectHandler
 {
     /**
      * VendorsHandler constructor.
-     * @param \XoopsDatabase $db
+     * @param \XoopsDatabase|null $db
      */
     public function __construct(\XoopsDatabase $db = null)
     {

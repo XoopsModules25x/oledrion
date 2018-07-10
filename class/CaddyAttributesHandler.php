@@ -34,7 +34,7 @@ class CaddyAttributesHandler extends OledrionPersistableObjectHandler
 {
     /**
      * CaddyAttributesHandler constructor.
-     * @param \XoopsDatabase $db
+     * @param \XoopsDatabase|null $db
      */
     public function __construct(\XoopsDatabase $db = null)
     {

@@ -1218,12 +1218,12 @@ class Utility extends \XoopsObject
     }
 
     /**
-     * Déclenchement d'une alerte Xoops suite à un évènement
+     * Triggering a Xoops alert after an event
      *
-     * @param string $category La catégorie de l'évènement
-     * @param int    $itemId   L'ID de l'élément (trop général pour être décris précisément)
-     * @param mixed  $event    L'évènement qui est déclencé
-     * @param mixed  $tags     Les variables à passer au template
+     * @param int   $category The category ID of the event
+     * @param int   $itemId   The ID of the element (too general to be precisely described)
+     * @param mixed $event    The event that is triggered
+     * @param mixed $tags     Variables to pass to the template
      */
     public static function notify($category, $itemId, $event, $tags)
     {

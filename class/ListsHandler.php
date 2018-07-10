@@ -37,7 +37,7 @@ class ListsHandler extends OledrionPersistableObjectHandler
 {
     /**
      * ListsHandler constructor.
-     * @param \XoopsDatabase $db
+     * @param \XoopsDatabase|null $db
      */
     public function __construct(\XoopsDatabase $db = null)
     {

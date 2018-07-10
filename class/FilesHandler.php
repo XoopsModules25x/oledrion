@@ -35,7 +35,7 @@ class FilesHandler extends OledrionPersistableObjectHandler
 {
     /**
      * FilesHandler constructor.
-     * @param \XoopsDatabase $db
+     * @param \XoopsDatabase|null $db
      */
     public function __construct(\XoopsDatabase $db = null)
     {

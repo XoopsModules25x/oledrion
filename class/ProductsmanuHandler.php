@@ -35,7 +35,7 @@ class ProductsmanuHandler extends OledrionPersistableObjectHandler
 {
     /**
      * ProductsmanuHandler constructor.
-     * @param \XoopsDatabase $db
+     * @param \XoopsDatabase|null $db
      */
     public function __construct(\XoopsDatabase $db = null)
     {

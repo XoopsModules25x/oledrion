@@ -654,7 +654,7 @@ class Attributes extends OledrionObject
             } else {
                 // On prend la valeur par défaut
                 $defaultValue = [$this->getVar('attribute_default_value')];
-                if (Constants::OLEDRION_ATTRIBUTE_RADIO == $this->attribute_type) {
+                if (Constants::OLEDRION_ATTRIBUTE_RADIO == $this->getVar('attribute_type')) {
                     // Pour les boutons radio, il ne peut y avoir qu'un élément de sélectionné
                     $defaultValue = $this->getVar('attribute_default_value');
                 }

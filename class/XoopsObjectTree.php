@@ -161,7 +161,7 @@ class XoopsObjectTree extends \XoopsObjectTree
     public function makeTreeAsArray($fieldName, $prefix = '-', $key = 0, $empty = null)
     {
         $ret = [];
-        if (null != $empty) {
+        if (null !== $empty) {
             $ret[0] = $empty;
         }
         $this->_recursiveMakeTreeAsArray($fieldName, $key, $ret, $prefix);
