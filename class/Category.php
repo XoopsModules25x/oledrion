@@ -26,7 +26,7 @@ use XoopsModules\Oledrion;
  * Gestion des catégories de produits
  */
 
-// require_once __DIR__ . '/classheader.php';
+
 
 /**
  * Class Category

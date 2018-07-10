@@ -178,7 +178,7 @@ class DbaseExport extends Export
 
     /**
      * Retourne le lien à utiliser pour télécharger le fichier d'export
-     * @return string Le lien à utiliser
+     * @return bool|string Le lien à utiliser
      */
     public function getDownloadUrl()
     {

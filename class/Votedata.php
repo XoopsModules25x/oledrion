@@ -25,7 +25,7 @@ use XoopsModules\Oledrion;
 /**
  * Gestion des votes sur les produits
  */
-// require_once __DIR__ . '/classheader.php';
+
 
 /**
  * Class Votedata

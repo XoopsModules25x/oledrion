@@ -29,7 +29,7 @@ use XoopsModules\Oledrion;
  *
  * @since 2.3.2009.03.10
  */
-// require_once __DIR__ . '/classheader.php';
+
 
 /*
 // Les types d'option

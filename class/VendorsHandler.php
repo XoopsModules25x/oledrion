@@ -25,7 +25,7 @@ use XoopsModules\Oledrion;
 /**
  * Gestion des vendeurs
  */
-// require_once __DIR__ . '/classheader.php';
+
 
 /**
  * Class VendorsHandler

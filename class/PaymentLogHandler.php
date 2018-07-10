@@ -22,7 +22,7 @@ namespace XoopsModules\Oledrion;
 
 use XoopsModules\Oledrion;
 
-// require_once __DIR__ . '/classheader.php';
+
 
 /**
  * Class PaymentLogHandler

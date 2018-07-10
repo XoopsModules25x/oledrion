@@ -25,7 +25,7 @@ use XoopsModules\Oledrion;
 /**
  * Managing payment gateway options
  */
-// require_once __DIR__ . '/classheader.php';
+
 
 /**
  * Class GatewaysOptionsHandler

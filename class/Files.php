@@ -26,7 +26,7 @@ use XoopsModules\Oledrion;
  * Gestion des fichies attachés aux produits
  */
 
-// require_once __DIR__ . '/classheader.php';
+
 
 /**
  * Class Files
