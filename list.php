@@ -41,6 +41,7 @@ $db           = \XoopsDatabaseFactory::getDatabaseConnection();
 $listsHandler = new Oledrion\ListsHandler($db);
 
 // La liste existe ?
+/** @var Oledrion\Lists $list */
 $list = null;
 $list = $listsHandler->get($list_id);
 if (!is_object($list)) {
@@ -62,6 +63,7 @@ $vatArray = $vatHandler->getAllVats(new Oledrion\Parameters());
 // Recherche des produits de la liste
 $products = $listsHandler->getListProducts($list);
 if (count($products) > 0) {
+    /** @var Oledrion\Products $product */
     foreach ($products as $product) {
         $xoopsTpl->append('products', $product->toArray());
     }

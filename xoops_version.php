@@ -657,6 +657,7 @@ $modversion['config'][] = [
 // Get Admin groups
 $criteria = new \CriteriaCompo();
 $criteria->add(new \Criteria('group_type', 'Admin'));
+/** @var \XoopsMemberHandler $memberHandler */
 $memberHandler     = xoops_getHandler('member');
 $admin_xoopsgroups = $memberHandler->getGroupList($criteria);
 foreach ($admin_xoopsgroups as $key => $admin_group) {

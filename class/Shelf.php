@@ -92,9 +92,11 @@ class Shelf
         xoops_comment_delete($mid, $id);
 
         // Puis les votes
+        $votedataHandler = new \XoopsModules\Oledrion\VotedataHandler();
         $votedataHandler->deleteProductRatings($id);
 
         // Puis les produits relatifs
+        $relatedHandler = new \XoopsModules\Oledrion\RelatedHandler();
         $relatedHandler->deleteProductRelatedProducts($id);
 
         // Les images (la grande et la miniature)
@@ -104,24 +106,31 @@ class Shelf
         $product->deleteAttachment();
 
         // Les fichiers attachés
+        $filesHandler = new \XoopsModules\Oledrion\FilesHandler();
         $filesHandler->deleteProductFiles($id);
 
         // Suppression dans les paniers persistants enregistrés
+        $persistentCartHandler = new \XoopsModules\Oledrion\PersistentCartHandler();
         $persistentCartHandler->deleteProductForAllCarts($id);
 
         // Les attributs qui lui sont rattachés
+        $attributesHandler = new \XoopsModules\Oledrion\AttributesHandler();
         $attributesHandler->deleteProductAttributes($id);
 
         // Le produit dans les listes
+        $productsListHandler = new \XoopsModules\Oledrion\ProductsListHandler();
         $productsListHandler->deleteProductFromLists($id);
 
         // La relation entre le produit et le fabricant
+        $productsmanuHandler = new \XoopsModules\Oledrion\productsmanuHandler();
         $productsmanuHandler->removeManufacturerProduct($id);
 
         // Le produit dans les remises
+        $discountsHandler = new \XoopsModules\Oledrion\DiscountsHandler();
         $discountsHandler->removeProductFromDiscounts($id);
 
         // Et le produit en lui même, à la fin
+        $productsHandler = new \XoopsModules\Oledrion\ProductsHandler();
         return $productsHandler->delete($product, true);
     }
 
@@ -148,6 +157,7 @@ class Shelf
                 sort($tmp);
                 if (count($tmp) > 0) {
                     $tempRelatedProducts = $productsHandler->getProductsFromIDs($tmp);
+                    /** @var \XoopsModules\Oledrion\Products $relatedProductId */
                     foreach ($relatedProductsIds as $relatedProductId) {
                         if (isset($tempRelatedProducts[$relatedProductId->getVar('related_product_related')])) {
                             $relatedProducts[$relatedProductId->getVar('related_product_id')][] = $tempRelatedProducts[$relatedProductId->getVar('related_product_related')];

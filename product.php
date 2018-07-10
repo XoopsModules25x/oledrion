@@ -36,6 +36,7 @@ if (\Xmf\Request::hasVar('product_id', 'GET')) {
 }
 // Le produit existe ?
 $product = null;
+/** @var Oledrion\Products $product */
 $product = $productsHandler->get($product_id);
 if (!is_object($product)) {
     Oledrion\Utility::redirect(_OLEDRION_ERROR1, 'index.php', 5);
