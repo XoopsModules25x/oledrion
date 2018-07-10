@@ -124,7 +124,14 @@ if (!defined($moduleDirNameUpper . '_CONSTANTS_DEFINED')) {
     define('OLEDRION_CSV_SEP', ';');
 
     // Gateway log's path (must be writable)
-    define('OLEDRION_GATEWAY_LOG_PATH', XOOPS_UPLOAD_PATH . '/oledrion/loggateway_oledrion.php');
+    // B.R. define('OLEDRION_GATEWAY_LOG_PATH', XOOPS_UPLOAD_PATH . '/oledrion/loggateway_oledrion.php');
+    define('OLEDRION_GATEWAY_LOG_PATH', XOOPS_UPLOAD_PATH . '/oledrion/gateway_log.php');
+    // B.R New: Filename of serialized confirmation email parameters
+    define('OLEDRION_CONFIRMATION_EMAIL_FILENAME_SUFFIX', '_conf_email.parms');
+
+    // B.R. New: Absolute path and filename of optional database update script
+    // Must be located outside DOCUMENT_ROOT and change permissions to 'rwxr-x--x'
+    define('OLEDRION_DB_UPDATE_SCRIPT', '/home/e-smith/files/ibays/rossco/license_server/update_licenseDB.php');
 
     // Do you want to show the list of main categories on the category page when user is on category.php (without specifying a category to see)
     define('OLEDRION_SHOW_MAIN_CATEGORIES', true);
