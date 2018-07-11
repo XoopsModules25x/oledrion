@@ -18,7 +18,7 @@
  */
 
 /**
- * Saisie des données du client + affichage des informations saisies pour validation avec redirection vers la passerelle de paiement
+ * Entering customer data + displaying information entered for validation with redirection to the payment gateway
  */
 
 use XoopsModules\Oledrion;
@@ -38,7 +38,7 @@ require_once XOOPS_ROOT_PATH . '/class/tree.php';
 $uid = Oledrion\Utility::getCurrentUserID();
 // Get checkout level
 $checkout_level = Oledrion\Utility::getModuleOption('checkout_level');
-// Passage de commandes réservé aux utilisateurs enregistrés
+// Ordering reserved for registered users
 if (0 == $uid && 1 == Oledrion\Utility::getModuleOption('restrict_orders', false)) {
     $registry = new Oledrion\Registryfile();
     $text     = $registry->getfile(OLEDRION_TEXTFILE5);
@@ -301,7 +301,7 @@ switch ($op) {
         break;
     // ****************************************************************************************************************
     case 'default':
-        // Présentation du formulaire
+        // Presentation of the form
 
         // ****************************************************************************************************************
         if ($caddyHandler->isCartEmpty()) {
@@ -312,7 +312,7 @@ switch ($op) {
         $commande = null;
 
         if ($uid > 0) {
-            // Si c'est un utlisateur enregistré, on recherche dans les anciennes commandes pour pré-remplir les champs
+            // If it is a registered user, one looks in the old commands to pre-fill the fields
             $commande = $commandsHandler->getLastUserOrder($uid);
             if (is_object($commande)) {
                 $notFound = false;
@@ -324,7 +324,7 @@ switch ($op) {
             $commande->setVar('cmd_country', OLEDRION_DEFAULT_COUNTRY);
         }
 
-        // texte à afficher
+        // Text to display
         $registry = new Oledrion\Registryfile();
         $text     = $registry->getfile(OLEDRION_TEXTFILE6);
         $xoopsTpl->assign('text', xoops_trim($text));
@@ -423,7 +423,7 @@ switch ($op) {
         $sform = Oledrion\Utility::formMarkRequiredFields($sform);
         $xoopsTpl->assign('form', $sform->render());
 
-        // texte à afficher
+        // Text to display
         $registry = new Oledrion\Registryfile();
         $text     = $registry->getfile(OLEDRION_TEXTFILE6);
         $xoopsTpl->assign('text', xoops_trim($text));
@@ -486,7 +486,7 @@ switch ($op) {
                 break;
         }
 
-        // texte à afficher
+        // Text to display
         $registry = new Oledrion\Registryfile();
         $text     = $registry->getfile(OLEDRION_TEXTFILE6);
         $xoopsTpl->assign('text', xoops_trim($text));
@@ -528,7 +528,7 @@ switch ($op) {
         $sform = Oledrion\Utility::formMarkRequiredFields($sform);
         $xoopsTpl->assign('form', $sform->render());
 
-        // texte à afficher
+        // Text to display
         $registry = new Oledrion\Registryfile();
         $text     = $registry->getfile(OLEDRION_TEXTFILE6);
         $xoopsTpl->assign('text', xoops_trim($text));
@@ -572,7 +572,7 @@ switch ($op) {
         $sform = Oledrion\Utility::formMarkRequiredFields($sform);
         $xoopsTpl->assign('form', $sform->render());
 
-        // texte à afficher
+        // Text to display
         $registry = new Oledrion\Registryfile();
         $text     = $registry->getfile(OLEDRION_TEXTFILE6);
         $xoopsTpl->assign('text', xoops_trim($text));
@@ -580,7 +580,7 @@ switch ($op) {
         break;
     // ****************************************************************************************************************
     case 'confirm':
-        // Validation finale avant envoi sur la passerelle de paiement (ou arrêt)
+        // Final validation before sending to the payment gateway (or stop)
 
         // ****************************************************************************************************************
         if ($caddyHandler->isCartEmpty()) {
@@ -610,7 +610,7 @@ switch ($op) {
         // Save command and empty cart
         $caddyHandler->emptyCart();
 
-        // Enregistrement du panier
+        // Registering the Cart
         $msgCommande = '';
         //        $handlers    = HandlerManager::getInstance();
         foreach ($cartForTemplate as $line) {
@@ -618,11 +618,11 @@ switch ($op) {
             $panier->setVar('caddy_product_id', $line['product_id']);
             $panier->setVar('caddy_qte', $line['product_qty']);
             $panier->setVar('caddy_price', Oledrion\Utility::formatFloatForDB($line['totalPrice']));
-            // Attention, prix TTC avec frais de port
+            // Attention, price including all taxes
             $panier->setVar('caddy_cmd_id', $commande->getVar('cmd_id'));
             $panier->setVar('caddy_shipping', Oledrion\Utility::formatFloatForDB($line['discountedShipping']));
             $panier->setVar('caddy_pass', md5(xoops_makepass()));
-            // Pour le téléchargement
+            // For download
             $res = $caddyHandler->insert($panier, true);
             // Make msg
             $cat         = $categoryHandler->get($line['product_cid'])->toArray();
@@ -635,7 +635,7 @@ switch ($op) {
             $msgCommande .= "\n";
             // Attributs
             if ($res && is_array($line['attributes']) && count($line['attributes']) > 0) {
-                // Enregistrement des attributs pour ce produit
+                // Registering attributes for this product
                 foreach ($line['attributes'] as $attributeId => $attributeInformation) {
                     $caddyAttribute = $caddyAttributesHandler->create(true);
                     $caddyAttribute->setVar('ca_cmd_id', $commande->getVar('cmd_id'));
@@ -652,7 +652,7 @@ switch ($op) {
             }
         }
 
-        // Totaux généraux
+        // General totals
         //$msgCommande .= "\n\n"._OLEDRION_SHIPPING_PRICE.' '.$oledrionCurrency->amountForDisplay($shippingAmount)."\n";
         $msgCommande .= "\n\n" . _OLEDRION_TOTAL . ' ' . $oledrionCurrency->amountForDisplay($commandAmountTTC) . "\n";
         if (count($discountsDescription) > 0) {
@@ -690,8 +690,8 @@ switch ($op) {
         //Oledrion\Utility::sendEmailFromTpl('command_shop.tpl', Oledrion\Utility::getEmailsFromGroup(Oledrion\Utility::getModuleOption('grp_sold')), _OLEDRION_NEW_COMMAND, $msg);
         // End New
 
-        // Présentation du formulaire pour envoi à la passerelle de paiement
-        // Présentation finale avec panier en variables cachées ******************************
+        // Presentation of the form to send to the payment gateway
+        // Final presentation with Cart in hidden variables ******************************
         $registry = new Oledrion\Registryfile();
         $text     = $registry->getfile(OLEDRION_TEXTFILE7);
         $xoopsTpl->assign('text', xoops_trim($text));
@@ -703,7 +703,7 @@ switch ($op) {
             $sform  = new \XoopsThemeForm(_OLEDRION_FINISH, 'payform', $payURL, 'post', true);
         } else {
             // B.R. New
-            $payment_id = 1; // TODO: figure out how to get
+            $payment_id = $commande->getVar('cmd_payment_id');
             $payment    = $paymentHandler->get($payment_id);
             // End new
             // B.R. if (!isset($payment) || $payment['payment_type'] === 'offline' || $commandAmountTTC == 0) {
@@ -715,9 +715,14 @@ switch ($op) {
             } else {
                 // Set gateway
                 // B.R. $gateway = \XoopsModules\Oledrion\Gateways::getGatewayObject($payment['payment_gateway']);
-                $gateway = \XoopsModules\Oledrion\Gateways::getGatewayObject($payment->getVar('payment_gateway'));
+
+                $gatewayName      = \XoopsModules\Oledrion\Gateways::getCurrentGateway();
+                $gatewayClassName = '\XoopsModules\Oledrion\Gateways\\' . $gatewayName . '\\' .  $gatewayName . 'Gateway';
+                if (class_exists($gatewayClassName)) {
+                    $gateway = new $gatewayClassName();
+                }
                 if (!is_object($gateway)) {
-                    die(_OLEDRION_ERROR20);
+                    die(_OLEDRION_ERROR28);
                 }
                 if (is_object($gateway)) {
                     $payURL = $gateway->getRedirectURL($commande->getVar('cmd_total'), $commande->getVar('cmd_id'));
