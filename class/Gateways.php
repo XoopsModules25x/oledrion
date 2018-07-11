@@ -159,7 +159,7 @@ class Gateways
     {
         $gatewayPath = self::getGatewayPath($gatewayName);
 
-        return $gatewayPath . '/' . $gatewayName . '.php';
+        return $gatewayPath . '/' . $gatewayName . 'Gateway.php';
     }
 
     /**
