@@ -28,7 +28,7 @@ use XoopsModules\Oledrion\Gateways\Gateway;
  */
 // defined('XOOPS_ROOT_PATH') || die('Restricted access');
 
-class Paypal extends Gateway
+class PaypalGateway extends Gateway
 {
     /**
      * Paypal constructor.
@@ -45,7 +45,7 @@ class Paypal extends Gateway
     {
         $gateway                  = [];
         $gateway['name']          = 'Paypal';
-        $gateway['foldername']    = 'paypal';
+        $gateway['foldername']    = 'Paypal';
         $gateway['version']       = '1.1';
         $gateway['description']   = 'PayPal is the safer, easier way to pay and get paid online';
         $gateway['author']        = 'Instant Zero (http://www.herve-thouzard.com/)';
