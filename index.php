@@ -38,7 +38,7 @@ $lastTitle = '';
 
 // Quelques options pour le template
 $xoopsTpl->assign('nostock_msg', Oledrion\Utility::getModuleOption('nostock_msg'));
-$xoopsTpl->assign('mod_pref', $mod_pref); // Préférences du module
+$xoopsTpl->assign('mod_pref', $mod_pref); // Module Preferences
 $xoopsTpl->assign('welcome_msg', nl2br($registry->getfile(OLEDRION_TEXTFILE1)));
 $xoopsTpl->assign('columnsCount', Oledrion\Utility::getModuleOption('index_colums'));
 

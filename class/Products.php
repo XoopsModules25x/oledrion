@@ -26,8 +26,6 @@ namespace XoopsModules\Oledrion;
 
 use XoopsModules\Oledrion;
 
-
-
 /**
  * Class Products
  */
@@ -72,8 +70,8 @@ class Products extends OledrionObject
         $this->initVar('product_discount_price', XOBJ_DTYPE_TXTBOX, null, false);
         $this->initVar('product_stock', XOBJ_DTYPE_INT, null, false);
         $this->initVar('product_alert_stock', XOBJ_DTYPE_INT, null, false);
-        $this->initVar('product_summary', XOBJ_DTYPE_TXTAREA, null, false);
-        $this->initVar('product_description', XOBJ_DTYPE_TXTAREA, null, false);
+        $this->initVar('product_summary', XOBJ_DTYPE_OTHER, null, false);
+        $this->initVar('product_description', XOBJ_DTYPE_OTHER, null, false);
         $this->initVar('product_attachment', XOBJ_DTYPE_TXTBOX, null, false);
         $this->initVar('product_weight', XOBJ_DTYPE_TXTBOX, null, false);
         $this->initVar('product_unitmeasure2', XOBJ_DTYPE_TXTBOX, null, false);

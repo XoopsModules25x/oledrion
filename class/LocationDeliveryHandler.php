@@ -54,7 +54,6 @@ class LocationDeliveryHandler extends OledrionPersistableObjectHandler
         $obj = $this->getObjects($critere);
         if ($obj) {
             foreach ($obj as $root) {
-                $tab                               = [];
                 $tab                               = $root->toArray();
                 $ret[$root->getVar('ld_delivery')] = $tab;
             }

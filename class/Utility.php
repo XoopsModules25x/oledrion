@@ -1188,12 +1188,20 @@ class Utility extends \XoopsObject
         //        require_once OLEDRION_PATH . 'class/wideimage/WideImage.inc.php';
         $resize = true;
         if (OLEDRION_DONT_RESIZE_IF_SMALLER) {
-            $pictureDimensions = getimagesize($src_path);
-            if (is_array($pictureDimensions)) {
-                $width  = $pictureDimensions[0];
-                $height = $pictureDimensions[1];
-                if ($width < $param_width && $height < $param_height) {
-                    $resize = false;
+            if (false === @getimagesize($src_path)) {
+                $message = 'The picture ' . $src_path . ' could not be found and resized.';
+//                throw new \RuntimeException($message);
+                self::redirect($message);
+
+                return false;
+            } else {
+                $pictureDimensions = getimagesize($src_path);
+                if (is_array($pictureDimensions)) {
+                    $width  = $pictureDimensions[0];
+                    $height = $pictureDimensions[1];
+                    if ($width < $param_width && $height < $param_height) {
+                        $resize = false;
+                    }
                 }
             }
         }
@@ -1252,11 +1260,10 @@ class Utility extends \XoopsObject
     }
 
     /**
-     * Retourne un breadcrumb en fonction des paramètres passés et en partant (d'office) de la racine du module
-     *
-     * @param  array  $path  Le chemin complet (excepté la racine) du breadcrumb sous la forme clé=url valeur=titre
-     * @param  string $raquo Le séparateur par défaut à utiliser
-     * @return string le breadcrumb
+     * Returns a breadcrumb based on the parameters passed and starting (automatically) from the root of the module     *
+     * @param array  $path  The complete path (except root) of the breadcrumb as key = url value = title
+     * @param string $raquo The default separator to use
+     * @return string the breadcrumb
      */
     public static function breadcrumb($path, $raquo = ' &raquo; ')
     {

@@ -26,8 +26,8 @@ require_once __DIR__ . '/preloads/autoloader.php';
 $moduleDirName = basename(__DIR__);
 
 $modversion['version']             = 2.35;
-$modversion['module_status']       = 'Beta  2';
-$modversion['release_date']        = '2018/07/08';
+$modversion['module_status']       = 'Beta  3';
+$modversion['release_date']        = '2018/07/11';
 $modversion['name']                = _MI_OLEDRION_NAME;
 $modversion['description']         = _MI_OLEDRION_DESC;
 $modversion['author']              = 'Hervé Thouzard (http://www.herve-thouzard.com/)';

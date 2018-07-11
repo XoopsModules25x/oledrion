@@ -51,7 +51,7 @@ class LocationDelivery extends OledrionObject
      */
     public function toArray($format = 's')
     {
-        $ret = [];
+//        $ret = [];
         $ret = parent::toArray($format);
 
         return $ret;

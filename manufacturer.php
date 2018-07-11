@@ -45,7 +45,7 @@ if (!is_object($manufacturer)) {
     Oledrion\Utility::redirect(_OLEDRION_ERROR7, 'index.php', 5);
 }
 
-$xoopsTpl->assign('mod_pref', $mod_pref); // Préférences du module
+$xoopsTpl->assign('mod_pref', $mod_pref); // Module Preferences
 $xoopsTpl->assign('columnsCount', Oledrion\Utility::getModuleOption('category_colums'));
 $xoopsTpl->assign('manufacturer', $manufacturer->toArray());
 $limit = Oledrion\Utility::getModuleOption('perpage');

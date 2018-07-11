@@ -69,10 +69,11 @@ class PaymentHandler extends OledrionPersistableObjectHandler
     public function getThisDeliveryPayment($delivery_id)
     {
         global $deliveryPaymentHandler;
+//        $deliveryPaymentHandler0 = new Oledrion\DeliveryPaymentHandler();
         $ret              = [];
         $parameters       = ['delivery' => $delivery_id];
-        $delivery_payment = $deliveryPaymentHandler->getDeliveryPaymantId($parameters);
-        foreach ($delivery_payment as $payment) {
+        $deliveryPayment = $deliveryPaymentHandler->getDeliveryPaymantId($parameters);
+        foreach ($deliveryPayment as $payment) {
             $id[] = $payment['dp_payment'];
         }
 

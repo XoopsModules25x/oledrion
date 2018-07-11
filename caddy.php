@@ -28,7 +28,7 @@ $GLOBALS['xoopsOption']['template_main'] = 'oledrion_caddy.tpl';
 require_once XOOPS_ROOT_PATH . '/header.php';
 // require_once OLEDRION_PATH . 'class/Registryfile.php';
 
-$xoopsTpl->assign('mod_pref', $mod_pref); // Préférences du module
+$xoopsTpl->assign('mod_pref', $mod_pref); // Module Preferences
 
 if (Oledrion\Utility::getModuleOption('restrict_orders', false)) {
     $registry = new Oledrion\Registryfile();

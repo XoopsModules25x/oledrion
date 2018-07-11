@@ -71,7 +71,7 @@ switch ($action) {
                     // We were unable to load the translation file
                     continue;
                 }
-                $gatewayClassName = '\XoopsModules\Oledrion\Gateways\\' . $installedGateway . '\\' . $installedGateway;
+                $gatewayClassName = '\XoopsModules\Oledrion\Gateways\\' . $installedGateway . '\\' . $installedGateway . 'Gateway';
                 if (class_exists($gatewayClassName)) {
                     $temporaryGateway = new $gatewayClassName();
                     if (is_object($temporaryGateway)) {
@@ -164,10 +164,11 @@ switch ($action) {
         Oledrion\Utility::htitle(_AM_OLEDRION_INSTALLED_GATEWAYS, 4);
         $opRedirect = '?op=gateways';
         $gateway    = mb_strtolower(\Xmf\Request::getString('gateway', '', 'GET'));
-        $gateway    = ucfirst(\XoopsModules\Oledrion\Gateways::purifyGatewayName($gateway));
+        $gateway    = ucfirst(\XoopsModules\Oledrion\Gateways::purifyGatewayName($gateway)) ;
         if (empty($gateway)) {
             Oledrion\Utility::redirect(_AM_OLEDRION_ERROR_1, $baseurl . $opRedirect, 5);
         }
+
         if (\XoopsModules\Oledrion\Gateways::gatewayClassFileExists($gateway)) {
             // There is a class, so it's good
             $languageFilename     = '';
@@ -175,7 +176,7 @@ switch ($action) {
             if (!$languageFileIncluded) {
                 Oledrion\Utility::redirect(_AM_OLEDRION_GATEWAYS_ERROR2, $baseurl . $opRedirect, 4);
             }
-            $gatewayClassName = '\XoopsModules\Oledrion\Gateways\\' . $gateway . '\\' . $gateway;
+            $gatewayClassName = '\XoopsModules\Oledrion\Gateways\\' . $gateway . '\\' . $gateway . 'Gateway';
             if (class_exists($gatewayClassName)) {
                 $temporaryGateway = new $gatewayClassName();
                 if (!\XoopsModules\Oledrion\Gateways::asGoodAncestor($temporaryGateway)) {
@@ -213,7 +214,7 @@ switch ($action) {
                 // Translation loading failed
                 Oledrion\Utility::redirect(_AM_OLEDRION_GATEWAYS_ERROR2, $baseurl . $opRedirect, 4);
             }
-            $gatewayClassName = '\XoopsModules\Oledrion\Gateways\\' . $gateway . '\\' . $gateway;
+            $gatewayClassName = '\XoopsModules\Oledrion\Gateways\\' . $gateway . '\\' . $gateway . 'Gateway';
             if (class_exists($gatewayClassName)) {
                 $temporaryGateway = new $gatewayClassName();
                 if (!\XoopsModules\Oledrion\Gateways::asGoodAncestor($temporaryGateway)) {

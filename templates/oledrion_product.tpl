@@ -21,7 +21,7 @@
                 });
                 updatePrice();
 
-                // Champs obligatoires
+                // Required fields
                 jQuery.validator.messages.required = "";
 
                 jQuery("#frmCart").validate({
@@ -127,9 +127,9 @@
                             <{/if}>
                             <{if $product_joined_manufacturers != ''}>
                                 <div class="oledrion_productauthor_view-product">
-                                    <img src="<{$smarty.const.OLEDRION_IMAGES_URL}>author.png"
-                                         alt="<{$product_joined_manufacturers}>"><span
-                                            class="oledrion_productdescription-contentTitles"><{$smarty.const._OLEDRION_BY}></span> <{$product_joined_manufacturers}>
+                                    <img src="<{$smarty.const.OLEDRION_IMAGES_URL}>author.png" alt="<{$product_joined_manufacturers}>">
+                                    <span class="oledrion_productdescription-contentTitles"><{$smarty.const._OLEDRION_BY}></span>
+                                    <{$product_joined_manufacturers}>
                                 </div>
                             <{/if}>
                             <!-- Price box -->
@@ -140,22 +140,21 @@
                                             <{$mod_pref.nostock_msg}>
                                         <{elseif isset($product.product_attributes) && count($product.product_attributes) == 0 }>
                                             <span class="oledrion_productdescription-contentTitles"><{$smarty.const._OLEDRION_PRICE}></span>
-                                            :
-                                            <span class="bold">
-           <{if $product.product_discount_price_ttc != ''}>
-               <s><{$product.product_price_ttc}> </s>
-               <{$product.product_discount_price_ttc}>
-           <{else}>
-               <{$product.product_price_ttc}>
-           <{/if}>
-                            </span>
+                                            :<span class="bold">
+                                                   <{if $product.product_discount_price_ttc != ''}>
+                                                       <s><{$product.product_price_ttc}> </s>
+                                                       <{$product.product_discount_price_ttc}>
+                                                   <{else}>
+                                                       <{$product.product_price_ttc}>
+                                                   <{/if}>
+                                            </span>
                                             <a href="<{$smarty.const.OLEDRION_URL}>caddy.php?op=addproduct&product_id=<{$product.product_id}>"
-                                               title="<{$smarty.const._OLEDRION_ADD_TO_CART}>"><img
-                                                        src="<{$smarty.const.OLEDRION_IMAGES_URL}>cartadd.png" alt=""></a>
+                                               title="<{$smarty.const._OLEDRION_ADD_TO_CART}>"><img src="<{$smarty.const.OLEDRION_IMAGES_URL}>cartadd.png" alt=""></a>
                                             <{if $product.product_ecotaxe != ''}>
-                                                <div class="oledrion_view-product_price_ecotaxe"><span
-                                                            class="oledrion_productdescription-contentTitles"><{$smarty.const._OLEDRION_ECOTAXE}></span>
-                                                    : <{$product.product_ecotaxe_formated}></div>
+                                                <div class="oledrion_view-product_price_ecotaxe">
+                                                    <span class="oledrion_productdescription-contentTitles"><{$smarty.const._OLEDRION_ECOTAXE}></span>
+                                                    : <{$product.product_ecotaxe_formated}>
+                                                </div>
                                             <{/if}>
                                         <{else}>
                                             <div class="oledrion_view-product_price_frmcart">
@@ -188,12 +187,11 @@
                                                                        alt="<{$smarty.const._OLEDRION_ADD_TO_CART}>"
                                                                        title="<{$smarty.const._OLEDRION_ADD_TO_CART}>"
                                                                        value="<{$smarty.const._OLEDRION_ADD_TO_CART}>">
-                                                                <div class="error" style="display: none;">
-                                                                    <br><img
-                                                                            src="<{$smarty.const.OLEDRION_IMAGES_URL}>warning.png"
-                                                                            width="24" height="24"
-                                                                            style="float:left; margin: -5px 10px 0 0; "><span></span>.<br
-                                                                            clear="all">
+                                                                <div class="error" style="display: none;"><br>
+                                                                    <img src="<{$smarty.const.OLEDRION_IMAGES_URL}>warning.png"
+                                                                             width="24" height="24"
+                                                                             style="float:left; margin: -5px 10px 0 0; ">
+                                                                    <span></span>.<br clear="all">
                                                                 </div>
                                                             </td>
                                                         </tr>

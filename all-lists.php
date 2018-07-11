@@ -31,7 +31,7 @@ $GLOBALS['xoopsOption']['template_main'] = 'oledrion_all_lists.tpl';
 require_once XOOPS_ROOT_PATH . '/header.php';
 require_once XOOPS_ROOT_PATH . '/class/pagenav.php';
 
-$xoopsTpl->assign('mod_pref', $mod_pref); // Préférences du module
+$xoopsTpl->assign('mod_pref', $mod_pref); // Module Preferences
 $start = \Xmf\Request::getInt('start', 0, 'GET');
 $limit = Oledrion\Utility::getModuleOption('perpage');
 

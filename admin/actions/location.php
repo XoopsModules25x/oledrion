@@ -82,7 +82,7 @@ switch ($action) {
                 Oledrion\Utility::redirect(_AM_OLEDRION_ERROR_1, $baseurl, 5);
             }
             // Item exits ?
-            $item = null;
+//            $item = null;
             $item = $locationHandler->get($id);
             if (!is_object($item)) {
                 Oledrion\Utility::redirect(_AM_OLEDRION_NOT_FOUND, $baseurl, 5);
@@ -96,10 +96,7 @@ switch ($action) {
             $edit         = false;
         }
         // Get delivery methods
-        $deliveres = $deliveryHandler->getLocationDelivery(new Oledrion\Parameters([
-                                                                                       'limit'    => $limit,
-                                                                                       'location' => $id,
-                                                                                   ]));
+        $deliveres = $deliveryHandler->getLocationDelivery(new Oledrion\Parameters(['limit'    => $limit, 'location' => $id,]));
         if (empty($deliveres)) {
             Oledrion\Utility::redirect(_AM_OLEDRION_LOCATION_DELIVERYADD, $baseurl, 5);
         }
@@ -170,10 +167,7 @@ switch ($action) {
 
         $post              = $_POST;
         $location_delivery = [];
-        $deliveres         = $deliveryHandler->getLocationDelivery(new Oledrion\Parameters([
-                                                                                               'limit'    => $limit,
-                                                                                               'location' => $id,
-                                                                                           ]));
+        $deliveres         = $deliveryHandler->getLocationDelivery(new Oledrion\Parameters(['limit'    => $limit, 'location' => $id,]));
         foreach ($deliveres as $delivery) {
             if (isset($post[$delivery['delivery_id'] . '_ld_select'])) {
                 $location_delivery[$delivery['delivery_id']]['ld_location']      = $id;
@@ -245,7 +239,7 @@ switch ($action) {
         }
         $opRedirect = 'location';
 
-        $item = null;
+//        $item = null;
         $item = $locationHandler->get($id);
         if (is_object($item)) {
             //Delete location_delivery info

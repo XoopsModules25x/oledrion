@@ -32,7 +32,7 @@ require_once XOOPS_ROOT_PATH . '/header.php';
 $registry = new Oledrion\Registryfile();
 
 $xoopsTpl->assign('nostock_msg', Oledrion\Utility::getModuleOption('nostock_msg'));
-$xoopsTpl->assign('mod_pref', $mod_pref); // Préférences du module
+$xoopsTpl->assign('mod_pref', $mod_pref); // Module Preferences
 $xoopsTpl->assign('cgv_msg', $registry->getfile(OLEDRION_TEXTFILE2));
 
 $xoopsTpl->assign('breadcrumb', Oledrion\Utility::breadcrumb([OLEDRION_URL . basename(__FILE__) => _OLEDRION_CGV]));

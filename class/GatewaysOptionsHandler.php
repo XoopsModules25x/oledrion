@@ -46,7 +46,7 @@ class GatewaysOptionsHandler extends OledrionPersistableObjectHandler
      * Returns all the options of a payment gateway
      *
      * @param  string $option_gateway The name of the payment gateway
-     * @return array  Tableau d'objets de type GatewaysOptions
+     * @return array  Array of GatewaysOptions objects
      */
     public function getGatewayOptions($option_gateway)
     {
@@ -73,7 +73,7 @@ class GatewaysOptionsHandler extends OledrionPersistableObjectHandler
      *
      * @param  string $option_gateway The name of the payment gateway
      * @param  string $option_name    The option you want to recover
-     * @return array Objet de type GatewaysOptions
+     * @return array Objects of type GatewaysOptions
      */
     public function getGatewayOption($option_gateway, $option_name)
     {
