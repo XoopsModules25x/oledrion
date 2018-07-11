@@ -42,7 +42,7 @@ class Manufacturer extends OledrionObject
         $this->initVar('manu_name', XOBJ_DTYPE_TXTBOX, null, false);
         $this->initVar('manu_commercialname', XOBJ_DTYPE_TXTBOX, null, false);
         $this->initVar('manu_email', XOBJ_DTYPE_TXTBOX, null, false);
-        $this->initVar('manu_bio', XOBJ_DTYPE_TXTAREA, null, false);
+        $this->initVar('manu_bio', XOBJ_DTYPE_OTHER, null, false);
         $this->initVar('manu_url', XOBJ_DTYPE_TXTBOX, null, false);
         $this->initVar('manu_photo1', XOBJ_DTYPE_TXTBOX, null, false);
         $this->initVar('manu_photo2', XOBJ_DTYPE_TXTBOX, null, false);

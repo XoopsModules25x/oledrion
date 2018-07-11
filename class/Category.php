@@ -44,12 +44,12 @@ class Category extends OledrionObject
         $this->initVar('cat_pid', XOBJ_DTYPE_INT, null, false);
         $this->initVar('cat_title', XOBJ_DTYPE_TXTBOX, null, false);
         $this->initVar('cat_imgurl', XOBJ_DTYPE_TXTBOX, null, false);
-        $this->initVar('cat_description', XOBJ_DTYPE_TXTAREA, null, false);
-        $this->initVar('cat_advertisement', XOBJ_DTYPE_TXTAREA, null, false);
+        $this->initVar('cat_description', XOBJ_DTYPE_OTHER, null, false);
+        $this->initVar('cat_advertisement', XOBJ_DTYPE_OTHER, null, false);
         $this->initVar('cat_metakeywords', XOBJ_DTYPE_TXTBOX, null, false);
         $this->initVar('cat_metadescription', XOBJ_DTYPE_TXTBOX, null, false);
         $this->initVar('cat_metatitle', XOBJ_DTYPE_TXTBOX, null, false);
-        $this->initVar('cat_footer', XOBJ_DTYPE_TXTAREA, null, false);
+        $this->initVar('cat_footer', XOBJ_DTYPE_OTHER, null, false);
         // Pour autoriser le html
         $this->initVar('dohtml', XOBJ_DTYPE_INT, 1, false);
     }

@@ -47,7 +47,7 @@ class Commands extends OledrionObject
         $this->initVar('cmd_ip', XOBJ_DTYPE_TXTBOX, null, false);
         $this->initVar('cmd_lastname', XOBJ_DTYPE_TXTBOX, null, false);
         $this->initVar('cmd_firstname', XOBJ_DTYPE_TXTBOX, null, false);
-        $this->initVar('cmd_adress', XOBJ_DTYPE_TXTAREA, null, false);
+        $this->initVar('cmd_adress', XOBJ_DTYPE_OTHER, null, false);
         $this->initVar('cmd_zip', XOBJ_DTYPE_TXTBOX, null, false);
         $this->initVar('cmd_town', XOBJ_DTYPE_TXTBOX, null, false);
         $this->initVar('cmd_country', XOBJ_DTYPE_TXTBOX, null, false);
@@ -60,9 +60,9 @@ class Commands extends OledrionObject
         $this->initVar('cmd_packing_price', XOBJ_DTYPE_TXTBOX, null, false);
         $this->initVar('cmd_bill', XOBJ_DTYPE_INT, null, false);
         $this->initVar('cmd_password', XOBJ_DTYPE_TXTBOX, null, false);
-        $this->initVar('cmd_text', XOBJ_DTYPE_TXTAREA, null, false);
+        $this->initVar('cmd_text', XOBJ_DTYPE_OTHER, null, false);
         $this->initVar('cmd_cancel', XOBJ_DTYPE_TXTBOX, null, false);
-        $this->initVar('cmd_comment', XOBJ_DTYPE_TXTAREA, null, false);
+        $this->initVar('cmd_comment', XOBJ_DTYPE_OTHER, null, false);
         $this->initVar('cmd_vat_number', XOBJ_DTYPE_TXTAREA, null, false);
         $this->initVar('cmd_packing', XOBJ_DTYPE_TXTBOX, null, false);
         $this->initVar('cmd_packing_id', XOBJ_DTYPE_INT, null, false);

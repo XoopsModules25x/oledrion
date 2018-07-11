@@ -38,7 +38,7 @@ class Delivery extends OledrionObject
     {
         $this->initVar('delivery_id', XOBJ_DTYPE_INT, null, false);
         $this->initVar('delivery_title', XOBJ_DTYPE_TXTBOX, null, false);
-        $this->initVar('delivery_description', XOBJ_DTYPE_TXTAREA, null, false);
+        $this->initVar('delivery_description', XOBJ_DTYPE_OTHER, null, false);
         $this->initVar('delivery_online', XOBJ_DTYPE_INT, null, false);
         $this->initVar('delivery_image', XOBJ_DTYPE_TXTBOX, null, false);
 

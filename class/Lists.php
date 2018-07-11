@@ -50,7 +50,7 @@ class Lists extends OledrionObject
         $this->initVar('list_views', XOBJ_DTYPE_INT, null, false);
         $this->initVar('list_password', XOBJ_DTYPE_TXTBOX, null, false);
         $this->initVar('list_type', XOBJ_DTYPE_INT, null, false);
-        $this->initVar('list_description', XOBJ_DTYPE_TXTAREA, null, false);
+        $this->initVar('list_description', XOBJ_DTYPE_OTHER, null, false);
     }
 
     /**

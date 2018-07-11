@@ -38,7 +38,7 @@ class Payment extends OledrionObject
     {
         $this->initVar('payment_id', XOBJ_DTYPE_INT, null, false);
         $this->initVar('payment_title', XOBJ_DTYPE_TXTBOX, null, false);
-        $this->initVar('payment_description', XOBJ_DTYPE_TXTAREA, null, false);
+        $this->initVar('payment_description', XOBJ_DTYPE_OTHER, null, false);
         $this->initVar('payment_online', XOBJ_DTYPE_INT, null, false);
         $this->initVar('payment_type', XOBJ_DTYPE_TXTBOX, null, false);
         $this->initVar('payment_gateway', XOBJ_DTYPE_TXTBOX, null, false);

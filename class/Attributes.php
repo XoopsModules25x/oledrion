@@ -66,10 +66,10 @@ class Attributes extends OledrionObject
         $this->initVar('attribute_name', XOBJ_DTYPE_TXTBOX, null, false);
         $this->initVar('attribute_type', XOBJ_DTYPE_INT, null, false);
         $this->initVar('attribute_mandatory', XOBJ_DTYPE_INT, null, false);
-        $this->initVar('attribute_names', XOBJ_DTYPE_TXTAREA, null, false);
-        $this->initVar('attribute_values', XOBJ_DTYPE_TXTAREA, null, false);
-        $this->initVar('attribute_prices', XOBJ_DTYPE_TXTAREA, null, false);
-        $this->initVar('attribute_stocks', XOBJ_DTYPE_TXTAREA, null, false);
+        $this->initVar('attribute_names', XOBJ_DTYPE_OTHER, null, false);
+        $this->initVar('attribute_values', XOBJ_DTYPE_OTHER, null, false);
+        $this->initVar('attribute_prices', XOBJ_DTYPE_OTHER, null, false);
+        $this->initVar('attribute_stocks', XOBJ_DTYPE_OTHER, null, false);
         $this->initVar('attribute_product_id', XOBJ_DTYPE_INT, null, false);
         $this->initVar('attribute_default_value', XOBJ_DTYPE_TXTBOX, null, false);
         $this->initVar('attribute_option1', XOBJ_DTYPE_INT, null, false);
