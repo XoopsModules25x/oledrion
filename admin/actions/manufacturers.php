@@ -156,6 +156,7 @@ switch ($action) {
         $id = \Xmf\Request::getInt('manu_id', 0, 'POST');
         if (!empty($id)) {
             $edit = true;
+            /** @var Oledrion\Manufacturer $item */
             $item = $manufacturerHandler->get($id);
             if (!is_object($item)) {
                 Oledrion\Utility::redirect(_AM_OLEDRION_NOT_FOUND, $baseurl, 5);
@@ -167,7 +168,7 @@ switch ($action) {
         $opRedirect = 'manufacturers';
         $item->setVars($_POST);
         for ($i = 1; $i <= 5; ++$i) {
-            if (isset($_POST['delpicture' . $i]) && 1 == \Xmf\Request::getInt('delpicture' . $i, 'POST')) {
+            if (\Xmf\Request::hasVar('delpicture' . $i, 'POST') && 1 == \Xmf\Request::getInt('delpicture' . $i, 0,'POST')) {
                 $item->deletePicture($i);
             }
         }

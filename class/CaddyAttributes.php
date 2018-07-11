@@ -25,7 +25,7 @@ use XoopsModules\Oledrion;
 /**
  * Gestion des options (attributs) produits dans les commandes
  */
-// require_once __DIR__ . '/classheader.php';
+
 
 /**
  * Class Caddy_attributes
@@ -43,9 +43,9 @@ class CaddyAttributes extends OledrionObject
         $this->initVar('ca_cmd_id', XOBJ_DTYPE_INT, null, false);
         $this->initVar('ca_caddy_id', XOBJ_DTYPE_INT, null, false);
         $this->initVar('ca_attribute_id', XOBJ_DTYPE_INT, null, false);
-        $this->initVar('ca_attribute_values', XOBJ_DTYPE_TXTAREA, null, false);
-        $this->initVar('ca_attribute_names', XOBJ_DTYPE_TXTAREA, null, false);
-        $this->initVar('ca_attribute_prices', XOBJ_DTYPE_TXTAREA, null, false);
+        $this->initVar('ca_attribute_values', XOBJ_DTYPE_OTHER, null, false);
+        $this->initVar('ca_attribute_names', XOBJ_DTYPE_OTHER, null, false);
+        $this->initVar('ca_attribute_prices', XOBJ_DTYPE_OTHER, null, false);
     }
 
     /**

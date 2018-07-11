@@ -30,7 +30,7 @@ require_once XOOPS_ROOT_PATH . '/header.php';
 
 $tblAll = $tblAnnuaire = [];
 $xoopsTpl->assign('alphabet', $manufacturerHandler->getAlphabet());
-$xoopsTpl->assign('mod_pref', $mod_pref); // Préférences du module
+$xoopsTpl->assign('mod_pref', $mod_pref); // Module Preferences
 
 $manufacturers = $manufacturerHandler->getItems(0, 0, 'manu_name, manu_commercialname');
 foreach ($manufacturers as $item) {

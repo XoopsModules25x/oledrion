@@ -51,7 +51,7 @@ $vatArray = $vatHandler->getAllVats(new Oledrion\Parameters());
 $categories = $categoryHandler->getAllCategories(new Oledrion\Parameters());
 
 // Options pour le template ***********************************************************************
-$xoopsTpl->assign('mod_pref', $mod_pref); // Préférences du module
+$xoopsTpl->assign('mod_pref', $mod_pref); // Module Preferences
 $xoopsTpl->assign('columnsCount', Oledrion\Utility::getModuleOption('category_colums'));
 
 $tbl_tmp               = [];

@@ -107,7 +107,7 @@ if (!empty($_POST['btnsubmit'])) {
     $GLOBALS['current_category'] = $product->getVar('product_cid');
     $GLOBALS['xoopsOption']['template_main'] = 'oledrion_rate_product.html';
     require_once XOOPS_ROOT_PATH.'/header.php';
-    $xoopsTpl->assign('mod_pref', $mod_pref);   // Préférences du module
+    $xoopsTpl->assign('mod_pref', $mod_pref);   // Module Preferences
     $xoopsTpl->assign('product', $product->toArray());
 
     $xoopsTpl->assign('global_advert', Oledrion\Utility::getModuleOption('advertisement'));

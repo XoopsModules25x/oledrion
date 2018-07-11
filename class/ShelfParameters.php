@@ -21,7 +21,7 @@ namespace XoopsModules\Oledrion;
  */
 
 /**
- * Classe interne dont le but est de passer des paramètres à la classe oeldrion_shelf
+ * Internal class whose purpose is to pass parameters to the Shelf class
  */
 
 use XoopsModules\Oledrion;
@@ -146,7 +146,7 @@ class ShelfParameters
     }
 
     /**
-     * Fixe la liste des produits à exclure
+     * Set the list of products to exclude
      *
      * @param  mixed $value
      * @return string

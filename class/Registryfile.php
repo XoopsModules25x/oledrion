@@ -97,7 +97,9 @@ class Registryfile
             $fw = OLEDRION_TEXT_PATH . $fichier;
         }
         if (file_exists($fw)) {
-            @unlink($fw);
+            if (false === @unlink($fw)) {
+                throw new \RuntimeException('The file '.$fw.' could not be deleted.');
+            }
         }
         $fp = fopen($fw, 'wb') || die('Error, impossible to create the file ' . $this->filename);
         fwrite($fp, $content);

@@ -287,7 +287,7 @@ define('_AM_OLEDRION_LOCATION_ADD', 'Add a Location');
 define('_AM_OLEDRION_LOCATION_EDIT', 'Edit a Location');
 define('_AM_OLEDRION_LOCATION_PID', 'Parent');
 define('_AM_OLEDRION_LOCATION_DELIVERY', 'Location delivery methods');
-define('_AM_OLEDRION_LOCATION_PRICE', 'Prive');
+define('_AM_OLEDRION_LOCATION_PRICE', 'Price');
 define('_AM_OLEDRION_LOCATION_DELIVERY_TIME', 'Time');
 define('_AM_OLEDRION_LOCATION_DELIVERYADD', 'Please, add delivery methods first');
 

@@ -131,6 +131,7 @@ define('_OLEDRION_ERROR24', 'Error, you must specify a title for your list');
 define('_OLEDRION_ERROR25', 'Error, you are not the owner of this list');
 define('_OLEDRION_ERROR26', 'Error, this product is already in the list');
 define('_OLEDRION_ERROR27', 'There was an error while adding the product to the list, please contact us');
+define('_OLEDRION_ERROR28', 'Error, could not create the Gateway object');
 
 define('_OLEDRION_OTHER_INFORMATIONS', 'Other information');
 define('_OLEDRION_ONEVOTE', '1 vote');

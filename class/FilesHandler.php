@@ -26,7 +26,7 @@ use XoopsModules\Oledrion;
  * Gestion des fichies attachés aux produits
  */
 
-// require_once __DIR__ . '/classheader.php';
+
 
 /**
  * Class FilesHandler
@@ -35,7 +35,7 @@ class FilesHandler extends OledrionPersistableObjectHandler
 {
     /**
      * FilesHandler constructor.
-     * @param \XoopsDatabase $db
+     * @param \XoopsDatabase|null $db
      */
     public function __construct(\XoopsDatabase $db = null)
     {

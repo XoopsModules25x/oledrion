@@ -11,7 +11,7 @@ use XoopsModules\Oledrion\Gateways\Gateway;
 /**
  * Class Pec24
  */
-class Pec24 extends Gateway
+class Pec24Gateway extends Gateway
 {
     /**
      * Pec24 constructor.
@@ -25,7 +25,7 @@ class Pec24 extends Gateway
     {
         $gateway                  = [];
         $gateway['name']          = 'Parsian';
-        $gateway['foldername']    = 'pec24';
+        $gateway['foldername']    = 'Pec24';
         $gateway['version']       = '1.0';
         $gateway['description']   = 'سيستم پرداخت الکترونيک بانک پارسیان'; //Parsian Electronic Banking System
         $gateway['author']        = 'Hossein Azizabadi';

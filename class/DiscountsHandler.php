@@ -25,7 +25,7 @@ use XoopsModules\Oledrion;
 /**
  * Gestion des réductions
  */
-// require_once __DIR__ . '/classheader.php';
+
 
 /**
  * Class DiscountsHandler
@@ -34,7 +34,7 @@ class DiscountsHandler extends OledrionPersistableObjectHandler
 {
     /**
      * DiscountsHandler constructor.
-     * @param \XoopsDatabase $db
+     * @param \XoopsDatabase|null $db
      */
     public function __construct(\XoopsDatabase $db = null)
     {

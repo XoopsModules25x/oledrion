@@ -25,7 +25,7 @@ use XoopsModules\Oledrion;
 /**
  * Managing payment gateway options
  */
-// require_once __DIR__ . '/classheader.php';
+
 
 /**
  * Class GatewaysOptions
@@ -42,6 +42,6 @@ class GatewaysOptions extends OledrionObject
         $this->initVar('option_id', XOBJ_DTYPE_INT, null, false);
         $this->initVar('option_gateway', XOBJ_DTYPE_TXTBOX, null, false);
         $this->initVar('option_name', XOBJ_DTYPE_TXTBOX, null, false);
-        $this->initVar('option_value', XOBJ_DTYPE_TXTAREA, null, false);
+        $this->initVar('option_value', XOBJ_DTYPE_OTHER, null, false);
     }
 }

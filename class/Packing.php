@@ -22,7 +22,7 @@ namespace XoopsModules\Oledrion;
 
 use XoopsModules\Oledrion;
 
-// require_once __DIR__ . '/classheader.php';
+
 
 /**
  * Class Packing
@@ -42,7 +42,7 @@ class Packing extends OledrionObject
         $this->initVar('packing_length', XOBJ_DTYPE_TXTBOX, null, false);
         $this->initVar('packing_weight', XOBJ_DTYPE_TXTBOX, null, false);
         $this->initVar('packing_image', XOBJ_DTYPE_TXTBOX, null, false);
-        $this->initVar('packing_description', XOBJ_DTYPE_TXTAREA, null, false);
+        $this->initVar('packing_description',  XOBJ_DTYPE_OTHER, null, false);
         $this->initVar('packing_price', XOBJ_DTYPE_INT, null, false);
         $this->initVar('packing_online', XOBJ_DTYPE_INT, null, false);
     }
@@ -81,7 +81,9 @@ class Packing extends OledrionObject
     public function deletePicture()
     {
         if ($this->pictureExists()) {
-            @unlink(OLEDRION_PICTURES_PATH . '/' . $this->getVar('packing_image'));
+            if (false === @unlink(OLEDRION_PICTURES_PATH . '/' . $this->getVar('packing_image'))){
+                throw new \RuntimeException('The picture '.OLEDRION_PICTURES_PATH . '/' . $this->getVar('packing_image').' could not be deleted.');
+            }
         }
         $this->setVar('packing_image', '');
     }

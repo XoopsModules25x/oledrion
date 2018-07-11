@@ -22,7 +22,7 @@ namespace XoopsModules\Oledrion;
 
 use XoopsModules\Oledrion;
 
-// require_once __DIR__ . '/classheader.php';
+
 
 /**
  * Class Delivery
@@ -38,7 +38,7 @@ class Delivery extends OledrionObject
     {
         $this->initVar('delivery_id', XOBJ_DTYPE_INT, null, false);
         $this->initVar('delivery_title', XOBJ_DTYPE_TXTBOX, null, false);
-        $this->initVar('delivery_description', XOBJ_DTYPE_TXTAREA, null, false);
+        $this->initVar('delivery_description', XOBJ_DTYPE_OTHER, null, false);
         $this->initVar('delivery_online', XOBJ_DTYPE_INT, null, false);
         $this->initVar('delivery_image', XOBJ_DTYPE_TXTBOX, null, false);
 
@@ -79,7 +79,9 @@ class Delivery extends OledrionObject
     public function deletePicture()
     {
         if ($this->pictureExists()) {
-            @unlink(OLEDRION_PICTURES_PATH . '/' . $this->getVar('delivery_image'));
+            if (false === @unlink(OLEDRION_PICTURES_PATH . '/' . $this->getVar('delivery_image'))){
+                throw new \RuntimeException('The picture '.OLEDRION_PICTURES_PATH . '/' . $this->getVar('delivery_image').' could not be deleted.');
+            }
         }
         $this->setVar('delivery_image', '');
     }

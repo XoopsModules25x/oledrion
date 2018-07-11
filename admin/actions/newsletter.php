@@ -86,7 +86,6 @@ switch ($action) {
         $helper = Oledrion\Helper::getInstance();
         $helper->loadLanguage('newsletter');
         echo '<br>';
-        $removeBr   = $removeHtml = false;
         $removeBr   = \Xmf\Request::getInt('removebr', 0, 'POST');
         $removeHtml = \Xmf\Request::getInt('removehtml', 0, 'POST');
         $header     = \Xmf\Request::getString('header', '', 'POST');

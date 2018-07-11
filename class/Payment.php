@@ -22,7 +22,7 @@ namespace XoopsModules\Oledrion;
 
 use XoopsModules\Oledrion;
 
-// require_once __DIR__ . '/classheader.php';
+
 
 /**
  * Class Payment
@@ -38,7 +38,7 @@ class Payment extends OledrionObject
     {
         $this->initVar('payment_id', XOBJ_DTYPE_INT, null, false);
         $this->initVar('payment_title', XOBJ_DTYPE_TXTBOX, null, false);
-        $this->initVar('payment_description', XOBJ_DTYPE_TXTAREA, null, false);
+        $this->initVar('payment_description', XOBJ_DTYPE_OTHER, null, false);
         $this->initVar('payment_online', XOBJ_DTYPE_INT, null, false);
         $this->initVar('payment_type', XOBJ_DTYPE_TXTBOX, null, false);
         $this->initVar('payment_gateway', XOBJ_DTYPE_TXTBOX, null, false);
@@ -79,7 +79,9 @@ class Payment extends OledrionObject
     public function deletePicture()
     {
         if ($this->pictureExists()) {
-            @unlink(OLEDRION_PICTURES_PATH . '/' . $this->getVar('payment_image'));
+            if (false === @unlink(OLEDRION_PICTURES_PATH . '/' . $this->getVar('payment_image'))){
+                throw new \RuntimeException('The picture '.OLEDRION_PICTURES_PATH . '/' . $this->getVar('payment_image').' could not be deleted.');
+            }
         }
         $this->setVar('payment_image', '');
     }

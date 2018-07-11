@@ -25,7 +25,7 @@ use XoopsModules\Oledrion;
 /**
  * Gestion des vendeurs
  */
-// require_once __DIR__ . '/classheader.php';
+
 
 /**
  * Class VendorsHandler
@@ -34,7 +34,7 @@ class VendorsHandler extends OledrionPersistableObjectHandler
 {
     /**
      * VendorsHandler constructor.
-     * @param \XoopsDatabase $db
+     * @param \XoopsDatabase|null $db
      */
     public function __construct(\XoopsDatabase $db = null)
     {

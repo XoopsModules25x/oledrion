@@ -27,7 +27,7 @@ use XoopsModules\Oledrion;
  *
  * @since 2.3.2009.06.13
  */
-// require_once __DIR__ . '/classheader.php';
+
 
 /**
  * Class ProductsList

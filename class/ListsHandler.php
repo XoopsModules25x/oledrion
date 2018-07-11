@@ -28,7 +28,7 @@ namespace XoopsModules\Oledrion;
 
 use XoopsModules\Oledrion;
 
-// require_once __DIR__ . '/classheader.php';
+
 
 /**
  * Class ListsHandler
@@ -37,7 +37,7 @@ class ListsHandler extends OledrionPersistableObjectHandler
 {
     /**
      * ListsHandler constructor.
-     * @param \XoopsDatabase $db
+     * @param \XoopsDatabase|null $db
      */
     public function __construct(\XoopsDatabase $db = null)
     {

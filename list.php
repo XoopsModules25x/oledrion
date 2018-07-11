@@ -18,9 +18,9 @@
  */
 
 /**
- * Affichage du contenu d'une liste
+ * Displaying the contents of a list
  *
- * @param int list_id    Identifiant de la liste
+ * @param int list_id    Identifier of the list
  */
 
 use XoopsModules\Oledrion;
@@ -40,37 +40,39 @@ if (\Xmf\Request::hasVar('list_id', 'GET')) {
 $db           = \XoopsDatabaseFactory::getDatabaseConnection();
 $listsHandler = new Oledrion\ListsHandler($db);
 
-// La liste existe ?
-$list = null;
+// The list exists ?
+/** @var Oledrion\Lists $list */
+//$list = null;
 $list = $listsHandler->get($list_id);
 if (!is_object($list)) {
     Oledrion\Utility::redirect(_OLEDRION_ERROR21, 'index.php', 5);
 }
 
-// Vérification du type de liste (publique/privée)
+// Verification of the type of list (public / private)
 if (!$list->isSuitableForCurrentUser()) {
     Oledrion\Utility::redirect(_OLEDRION_ERROR22, 'index.php', 5);
 }
-$xoopsTpl->assign('mod_pref', $mod_pref); // Préférences du module
+$xoopsTpl->assign('mod_pref', $mod_pref); // Module Preferences
 $xoopsTpl->assign('columnsCount', Oledrion\Utility::getModuleOption('category_colums'));
 $xoopsTpl->assign('list', $list->toArray());
 
 // TVA
-$vatArray = [];
+// $vatArray = [];
 $vatArray = $vatHandler->getAllVats(new Oledrion\Parameters());
 
-// Recherche des produits de la liste
+// Search products from the list
 $products = $listsHandler->getListProducts($list);
 if (count($products) > 0) {
+    /** @var Oledrion\Products $product */
     foreach ($products as $product) {
         $xoopsTpl->append('products', $product->toArray());
     }
 }
 
-// Mise à jour du compte de vues
+// Update view count
 $listsHandler->incrementListViews($list);
 
-// Recherce des autres listes de cet utilisateur
+// Search this user's other lists
 if ($listsHandler->getRecentListsCount(Constants::OLEDRION_LISTS_ALL_PUBLIC, Oledrion\Utility::getCurrentUserID()) > 1) {
     $otherUserLists = $listsHandler->getRecentLists(new Oledrion\Parameters([
                                                                                 'start'    => 0,

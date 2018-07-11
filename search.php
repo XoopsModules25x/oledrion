@@ -33,7 +33,7 @@ $limit      = Oledrion\Utility::getModuleOption('newproducts'); // Nombre maximu
 $categories = $manufacturers = $vendors = [];
 $baseurl    = OLEDRION_URL . basename(__FILE__); // URL de ce script (sans son nom)
 
-$xoopsTpl->assign('mod_pref', $mod_pref); // Préférences du module
+$xoopsTpl->assign('mod_pref', $mod_pref); // Module Preferences
 $xoopsTpl->assign('columnsCount', Oledrion\Utility::getModuleOption('category_colums'));
 
 $categories    = $categoryHandler->getAllCategories(new Oledrion\Parameters());

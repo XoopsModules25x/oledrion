@@ -76,6 +76,7 @@ function xoops_module_install_oledrion(\XoopsModule $module)
     $moduleId  = $module->getVar('mid');
     $moduleId2 = $helper->getModule()->mid();
     //$moduleName = $module->getVar('name');
+    /** @var \XoopsGroupPermHandler $grouppermHandler */
     $grouppermHandler = xoops_getHandler('groupperm');
     // access rights ------------------------------------------
     $grouppermHandler->addRight($moduleDirName . '_approve', 1, XOOPS_GROUP_ADMIN, $moduleId);

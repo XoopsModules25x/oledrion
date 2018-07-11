@@ -28,7 +28,7 @@ $GLOBALS['xoopsOption']['template_main'] = 'oledrion_map.tpl';
 require_once XOOPS_ROOT_PATH . '/header.php';
 // require_once OLEDRION_PATH . 'class/tree.php';
 
-$xoopsTpl->assign('mod_pref', $mod_pref); // Préférences du module
+$xoopsTpl->assign('mod_pref', $mod_pref); // Module Preferences
 $categories = [];
 $categories = $categoryHandler->getAllCategories(new Oledrion\Parameters());
 $mytree     = new Oledrion\XoopsObjectTree($categories, 'cat_cid', 'cat_pid');

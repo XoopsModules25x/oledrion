@@ -26,8 +26,6 @@ namespace XoopsModules\Oledrion;
 
 use XoopsModules\Oledrion;
 
-// require_once __DIR__ . '/classheader.php';
-
 /**
  * Class Products
  */
@@ -72,8 +70,8 @@ class Products extends OledrionObject
         $this->initVar('product_discount_price', XOBJ_DTYPE_TXTBOX, null, false);
         $this->initVar('product_stock', XOBJ_DTYPE_INT, null, false);
         $this->initVar('product_alert_stock', XOBJ_DTYPE_INT, null, false);
-        $this->initVar('product_summary', XOBJ_DTYPE_TXTAREA, null, false);
-        $this->initVar('product_description', XOBJ_DTYPE_TXTAREA, null, false);
+        $this->initVar('product_summary', XOBJ_DTYPE_OTHER, null, false);
+        $this->initVar('product_description', XOBJ_DTYPE_OTHER, null, false);
         $this->initVar('product_attachment', XOBJ_DTYPE_TXTBOX, null, false);
         $this->initVar('product_weight', XOBJ_DTYPE_TXTBOX, null, false);
         $this->initVar('product_unitmeasure2', XOBJ_DTYPE_TXTBOX, null, false);
@@ -220,7 +218,9 @@ class Products extends OledrionObject
     public function deletePicture()
     {
         if ($this->pictureExists()) {
-            @unlink(OLEDRION_PICTURES_PATH . '/' . $this->getVar('product_image_url'));
+            if (false === @unlink(OLEDRION_PICTURES_PATH . '/' . $this->getVar('product_image_url'))){
+                throw new \RuntimeException('The picture '.OLEDRION_PICTURES_PATH . '/' . $this->getVar('product_image_url').' could not be deleted.');
+            }
         }
         $this->setVar('product_image_url', '');
     }
@@ -246,7 +246,10 @@ class Products extends OledrionObject
     public function deleteAttachment()
     {
         if ($this->attachmentExists()) {
-            @unlink(OLEDRION_ATTACHED_FILES_PATH . '/' . $this->getVar('product_attachment'));
+            if (false === @unlink(OLEDRION_ATTACHED_FILES_PATH . '/' . $this->getVar('product_attachment'))) {
+                throw new \RuntimeException('The file '.OLEDRION_ATTACHED_FILES_PATH . '/' . $this->getVar('product_attachment').' could not be deleted.');
+            }
+
         }
         $this->setVar('product_attachment', '');
     }
@@ -257,7 +260,9 @@ class Products extends OledrionObject
     public function deleteThumb()
     {
         if ($this->thumbExists()) {
-            @unlink(OLEDRION_PICTURES_PATH . '/' . $this->getVar('product_thumb_url'));
+            if (false === @unlink(OLEDRION_PICTURES_PATH . '/' . $this->getVar('product_thumb_url'))){
+                throw new \RuntimeException('The thumb '.OLEDRION_PICTURES_PATH . '/' . $this->getVar('product_thumb_url').' could not be deleted.');
+            }
         }
         $this->setVar('product_thumb_url', '');
     }

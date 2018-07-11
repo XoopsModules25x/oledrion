@@ -22,7 +22,7 @@ namespace XoopsModules\Oledrion;
 
 use XoopsModules\Oledrion;
 
-// require_once __DIR__ . '/classheader.php';
+
 
 /**
  * Class DeliveryHandler
@@ -31,7 +31,7 @@ class DeliveryHandler extends OledrionPersistableObjectHandler
 {
     /**
      * DeliveryHandler constructor.
-     * @param \XoopsDatabase $db
+     * @param \XoopsDatabase|null $db
      */
     public function __construct(\XoopsDatabase $db = null)
     {
@@ -87,7 +87,7 @@ class DeliveryHandler extends OledrionPersistableObjectHandler
         $obj = $this->getObjects($critere);
         if ($obj) {
             foreach ($obj as $root) {
-                $tab = [];
+//                $tab = [];
                 $tab = $root->toArray();
                 if (isset($location_delivery[$root->getVar('delivery_id')]['ld_delivery']) && $location_delivery[$root->getVar('delivery_id')]['ld_delivery'] == $root->getVar('delivery_id')) {
                     $tab['ld_id']['delivery_select']  = 1;

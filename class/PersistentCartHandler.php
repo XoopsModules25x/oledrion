@@ -29,7 +29,7 @@ use XoopsModules\Oledrion;
  * enregistré en base de données (à condition que l'utilisateur soit connecté).
  * Si l'utilisateur quitte le site et revient plus tard, cela permet de recharger son panier.
  */
-// require_once __DIR__ . '/classheader.php';
+
 
 /**
  * Class PersistentCartHandler
@@ -38,7 +38,7 @@ class PersistentCartHandler extends OledrionPersistableObjectHandler
 {
     /**
      * PersistentCartHandler constructor.
-     * @param \XoopsDatabase $db
+     * @param \XoopsDatabase|null $db
      */
     public function __construct(\XoopsDatabase $db = null)
     {

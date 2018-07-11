@@ -1,3 +1,11 @@
+<h5>2.35  Beta 3                  [2018-07-08]</h5>  Dev: Xoops 2.5.9, PHP 7.2.7, PHP 7.3.0 Alpha 3
+- fix checkout process (rossbcan/mamba)
+- renamed gateways (mamba)
+- changed field types from XOBJ_DTYPE_TXTAREA to XOBJ_DTYPE_OTHER (mamba)
+-
+
+
+
 <h5>2.35  Beta 2                  [2018-07-08]</h5>  Dev: Xoops 2.5.9, PHP 7.2.7, PHP 7.3.0 Alpha 3
 - fix installation issue: removed duplicated columns in oledrion_products table (rossbcan/mamba)
 

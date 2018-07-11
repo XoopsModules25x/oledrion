@@ -29,7 +29,7 @@ use XoopsModules\Oledrion;
  *
  * @since 2.3.2009.03.10
  */
-// require_once __DIR__ . '/classheader.php';
+
 
 /*
 // Les types d'option
@@ -57,7 +57,7 @@ class AttributesHandler extends OledrionPersistableObjectHandler
 {
     /**
      * OledrionOledrion_attributesHandler constructor.
-     * @param \XoopsDatabase $db
+     * @param null|\XoopsDatabase $db
      */
     public function __construct(\XoopsDatabase $db = null)
     {
@@ -95,7 +95,7 @@ class AttributesHandler extends OledrionPersistableObjectHandler
      * Retourne la liste des attributs d'un produit
      *
      * @param  int|array $product_id Le produit concerné
-     * @param  null      $attributesIds
+     * @param  null|array      $attributesIds
      * @return array
      */
     public function getProductsAttributesList($product_id, $attributesIds = null)
@@ -126,7 +126,7 @@ class AttributesHandler extends OledrionPersistableObjectHandler
      */
     public function constructHtmlProductAttributes(Products $product, &$mandatoryFieldsCount = 0)
     {
-        $attributes = $ret = [];
+        $ret = [];
         $attributes = $this->getProductsAttributesList($product->getVar('product_id'));
         if (0 === count($attributes)) {
             return $ret;
@@ -213,7 +213,7 @@ class AttributesHandler extends OledrionPersistableObjectHandler
     public function deleteAttribute(Attributes $attribute)
     {
         return $this->delete($attribute, true);
-        // TODO: Supprimer dans les attributs paniers
+        // TODO: Delete attributes in basket
     }
 
     /**

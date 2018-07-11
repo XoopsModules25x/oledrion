@@ -25,7 +25,7 @@ use XoopsModules\Oledrion;
 /**
  * Gestion des options (attributs) produits dans les commandes
  */
-// require_once __DIR__ . '/classheader.php';
+
 
 /**
  * Class CaddyAttributesHandler
@@ -34,7 +34,7 @@ class CaddyAttributesHandler extends OledrionPersistableObjectHandler
 {
     /**
      * CaddyAttributesHandler constructor.
-     * @param \XoopsDatabase $db
+     * @param \XoopsDatabase|null $db
      */
     public function __construct(\XoopsDatabase $db = null)
     {

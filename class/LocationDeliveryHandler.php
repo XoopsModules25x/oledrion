@@ -22,7 +22,7 @@ namespace XoopsModules\Oledrion;
 
 use XoopsModules\Oledrion;
 
-// require_once __DIR__ . '/classheader.php';
+
 
 /**
  * Class LocationDeliveryHandler
@@ -31,7 +31,7 @@ class LocationDeliveryHandler extends OledrionPersistableObjectHandler
 {
     /**
      * LocationDeliveryHandler constructor.
-     * @param \XoopsDatabase $db
+     * @param \XoopsDatabase|null $db
      */
     public function __construct(\XoopsDatabase $db = null)
     {
@@ -54,7 +54,6 @@ class LocationDeliveryHandler extends OledrionPersistableObjectHandler
         $obj = $this->getObjects($critere);
         if ($obj) {
             foreach ($obj as $root) {
-                $tab                               = [];
                 $tab                               = $root->toArray();
                 $ret[$root->getVar('ld_delivery')] = $tab;
             }

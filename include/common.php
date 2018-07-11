@@ -282,28 +282,28 @@ $icons = [
 
 // Loading some preferences
 $mod_pref = [
-    //    'money_short'     => Oledrion\Utility::getModuleOption('money_short'),
-    //    'money_full'      => Oledrion\Utility::getModuleOption('money_full'),
-    //    'url_rewriting'   => Oledrion\Utility::getModuleOption('urlrewriting'),
-    //    'tooltip'         => Oledrion\Utility::getModuleOption('infotips'),
-    //    'advertisement'   => Oledrion\Utility::getModuleOption('advertisement'),
-    //    'rss'             => Oledrion\Utility::getModuleOption('use_rss'),
-    //    'nostock_msg'     => Oledrion\Utility::getModuleOption('nostock_msg'),
-    //    'use_price'       => Oledrion\Utility::getModuleOption('use_price'),
-    //    'restrict_orders' => Oledrion\Utility::getModuleOption('restrict_orders'),
-    //    'isAdmin'         => Oledrion\Utility::isAdmin()
+//        'money_short'     => Oledrion\Utility::getModuleOption('money_short'),
+//        'money_full'      => Oledrion\Utility::getModuleOption('money_full'),
+//        'url_rewriting'   => Oledrion\Utility::getModuleOption('urlrewriting'),
+//        'tooltip'         => Oledrion\Utility::getModuleOption('infotips'),
+//        'advertisement'   => Oledrion\Utility::getModuleOption('advertisement'),
+//        'rss'             => Oledrion\Utility::getModuleOption('use_rss'),
+//        'nostock_msg'     => Oledrion\Utility::getModuleOption('nostock_msg'),
+//        'use_price'       => Oledrion\Utility::getModuleOption('use_price'),
+//        'restrict_orders' => Oledrion\Utility::getModuleOption('restrict_orders'),
+//        'isAdmin'         => Oledrion\Utility::isAdmin()
 
 
-//    'money_short'     => $helper->getConfig('money_short'),
-//    'money_full'      => $helper->getConfig('money_full'),
-//    'url_rewriting'   => $helper->getConfig('urlrewriting'),
-//    'tooltip'         => $helper->getConfig('infotips'),
-//    'advertisement'   => $helper->getConfig('advertisement'),
-//    'rss'             => $helper->getConfig('use_rss'),
-//    'nostock_msg'     => $helper->getConfig('nostock_msg'),
-//    'use_price'       => $helper->getConfig('use_price'),
-//    'restrict_orders' => $helper->getConfig('restrict_orders'),
-//    'isAdmin'         => $helper->isUserAdmin(),
+    'money_short'     => $helper->getConfig('money_short'),
+    'money_full'      => $helper->getConfig('money_full'),
+    'url_rewriting'   => $helper->getConfig('urlrewriting'),
+    'tooltip'         => $helper->getConfig('infotips'),
+    'advertisement'   => $helper->getConfig('advertisement'),
+    'rss'             => $helper->getConfig('use_rss'),
+    'nostock_msg'     => $helper->getConfig('nostock_msg'),
+    'use_price'       => $helper->getConfig('use_price'),
+    'restrict_orders' => $helper->getConfig('restrict_orders'),
+    'isAdmin'         => $helper->isUserAdmin(),
 ];
 
 

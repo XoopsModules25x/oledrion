@@ -25,7 +25,7 @@ use XoopsModules\Oledrion;
 /**
  * Gestion des réductions
  */
-// require_once __DIR__ . '/classheader.php';
+
 
 /**
  * Class Discounts
@@ -88,7 +88,7 @@ class Discounts extends OledrionObject
         $this->initVar('disc_shipping_degress_l5total', XOBJ_DTYPE_TXTBOX, null, false);
         $this->initVar('disc_date_from', XOBJ_DTYPE_INT, null, false); // Date de début de la promo
         $this->initVar('disc_date_to', XOBJ_DTYPE_INT, null, false); // Date de fin de la promo
-        $this->initVar('disc_description', XOBJ_DTYPE_TXTAREA, null, false);
+        $this->initVar('disc_description', XOBJ_DTYPE_OTHER, null, false);
 
         // Pour autoriser le html
         $this->initVar('dohtml', XOBJ_DTYPE_INT, 1, false);

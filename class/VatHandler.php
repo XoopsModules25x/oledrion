@@ -25,7 +25,7 @@ use XoopsModules\Oledrion;
 /**
  * Gestion des TVA
  */
-// require_once __DIR__ . '/classheader.php';
+
 
 /**
  * Class VatHandler
@@ -34,7 +34,7 @@ class VatHandler extends OledrionPersistableObjectHandler
 {
     /**
      * VatHandler constructor.
-     * @param \XoopsDatabase $db
+     * @param \XoopsDatabase|null $db
      */
     public function __construct(\XoopsDatabase $db = null)
     {

@@ -25,7 +25,6 @@ use XoopsModules\Oledrion;
 /**
  * Gestion des fabricants
  */
-//require_once __DIR__ . '/classheader.php';
 
 /**
  * Class ManufacturerHandler
@@ -34,7 +33,7 @@ class ManufacturerHandler extends OledrionPersistableObjectHandler
 {
     /**
      * ManufacturerHandler constructor.
-     * @param \XoopsDatabase $db
+     * @param \XoopsDatabase|null $db
      */
     public function __construct(\XoopsDatabase $db = null)
     {

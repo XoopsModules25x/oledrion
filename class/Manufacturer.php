@@ -26,8 +26,6 @@ namespace XoopsModules\Oledrion;
 
 use XoopsModules\Oledrion;
 
-//require_once __DIR__ . '/classheader.php';
-
 /**
  * Class Manufacturer
  */
@@ -44,7 +42,7 @@ class Manufacturer extends OledrionObject
         $this->initVar('manu_name', XOBJ_DTYPE_TXTBOX, null, false);
         $this->initVar('manu_commercialname', XOBJ_DTYPE_TXTBOX, null, false);
         $this->initVar('manu_email', XOBJ_DTYPE_TXTBOX, null, false);
-        $this->initVar('manu_bio', XOBJ_DTYPE_TXTAREA, null, false);
+        $this->initVar('manu_bio', XOBJ_DTYPE_OTHER, null, false);
         $this->initVar('manu_url', XOBJ_DTYPE_TXTBOX, null, false);
         $this->initVar('manu_photo1', XOBJ_DTYPE_TXTBOX, null, false);
         $this->initVar('manu_photo2', XOBJ_DTYPE_TXTBOX, null, false);
@@ -116,7 +114,9 @@ class Manufacturer extends OledrionObject
         $pictureNumber = (int)$pictureNumber;
         if ($pictureNumber > 0 && $pictureNumber < 6) {
             if ($this->pictureExists($pictureNumber)) {
-                @unlink(OLEDRION_PICTURES_PATH . '/' . $this->getVar('manu_photo' . $pictureNumber));
+                if (false === @unlink(OLEDRION_PICTURES_PATH . '/' . $this->getVar('manu_photo' . $pictureNumber))){
+                    throw new \RuntimeException('The picture '.OLEDRION_PICTURES_PATH . '/' . $this->getVar('manu_photo' . $pictureNumber).' could not be deleted.');
+                }
             }
             $this->setVar('manu_photo' . $pictureNumber, '');
         }

@@ -23,10 +23,10 @@ namespace XoopsModules\Oledrion;
 use XoopsModules\Oledrion;
 
 /**
- * Gestion des catégories de produits
+ * Product category management
  */
 
-// require_once __DIR__ . '/classheader.php';
+
 
 /**
  * Class Category
@@ -44,19 +44,19 @@ class Category extends OledrionObject
         $this->initVar('cat_pid', XOBJ_DTYPE_INT, null, false);
         $this->initVar('cat_title', XOBJ_DTYPE_TXTBOX, null, false);
         $this->initVar('cat_imgurl', XOBJ_DTYPE_TXTBOX, null, false);
-        $this->initVar('cat_description', XOBJ_DTYPE_TXTAREA, null, false);
-        $this->initVar('cat_advertisement', XOBJ_DTYPE_TXTAREA, null, false);
+        $this->initVar('cat_description', XOBJ_DTYPE_OTHER, null, false);
+        $this->initVar('cat_advertisement', XOBJ_DTYPE_OTHER, null, false);
         $this->initVar('cat_metakeywords', XOBJ_DTYPE_TXTBOX, null, false);
         $this->initVar('cat_metadescription', XOBJ_DTYPE_TXTBOX, null, false);
         $this->initVar('cat_metatitle', XOBJ_DTYPE_TXTBOX, null, false);
-        $this->initVar('cat_footer', XOBJ_DTYPE_TXTAREA, null, false);
+        $this->initVar('cat_footer', XOBJ_DTYPE_OTHER, null, false);
         // Pour autoriser le html
         $this->initVar('dohtml', XOBJ_DTYPE_INT, 1, false);
     }
 
     /**
-     * Retourne l'URL de l'image de la catégorie courante
-     * @return string L'URL
+     * Returns the image URL of the current category
+     * @return string URL
      */
     public function getPictureUrl()
     {
@@ -64,8 +64,8 @@ class Category extends OledrionObject
     }
 
     /**
-     * Retourne le chemin de l'image de la catégorie courante
-     * @return string Le chemin
+     * Return the image path of the current category
+     * @return string The path
      */
     public function getPicturePath()
     {
@@ -73,9 +73,9 @@ class Category extends OledrionObject
     }
 
     /**
-     * Indique si l'image de la catégorie existe
+     * Indicates whether the category image exists
      *
-     * @return bool Vrai si l'image existe sinon faux
+     * @return bool True if the image exists if not false
      */
     public function pictureExists()
     {
@@ -88,20 +88,22 @@ class Category extends OledrionObject
     }
 
     /**
-     * Supprime l'image associée à une catégorie
+     * Deletes the image associated with a category
      */
     public function deletePicture()
     {
         if ($this->pictureExists()) {
-            @unlink(OLEDRION_PICTURES_PATH . '/' . $this->getVar('cat_imgurl'));
+            if (false === @unlink(OLEDRION_PICTURES_PATH . '/' . $this->getVar('cat_imgurl'))){
+                throw new \RuntimeException('The picture '.OLEDRION_PICTURES_PATH . '/' . $this->getVar('cat_imgurl').' could not be deleted.');
+            }
         }
         $this->setVar('cat_imgurl', '');
     }
 
     /**
-     * Retourne l'url à utiliser pour accéder à la catégorie en tenant compte des préférences du module
+     * Returns the url to use to access the category taking into account the preferences of the module
      *
-     * @return string L'url à utiliser
+     * @return string The url to use
      */
     public function getLink()
     {
@@ -119,9 +121,9 @@ class Category extends OledrionObject
     }
 
     /**
-     * Rentourne la chaine à envoyer dans une balise <a> pour l'attribut href
+     * Gets the string to send in a <a> tag for the href attribute
      *
-     * @return string
+     * @return string|array
      */
     public function getHrefTitle()
     {
@@ -129,7 +131,7 @@ class Category extends OledrionObject
     }
 
     /**
-     * Retourne les éléments du produits formatés pour affichage
+     * Returns the elements of the products formatted for display
      *
      * @param  string $format
      * @return array

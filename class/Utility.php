@@ -345,10 +345,12 @@ class Utility extends \XoopsObject
         $tpllist = [];
         require_once XOOPS_ROOT_PATH . '/class/xoopsblock.php';
         require_once XOOPS_ROOT_PATH . '/class/template.php';
+        /** @var \XoopsTplfileHandler $tplfileHandler */
         $tplfileHandler = xoops_getHandler('tplfile');
         $tpllist        = $tplfileHandler->find(null, null, null, $folder);
         xoops_template_clear_module_cache($xoopsModule->getVar('mid')); // Clear module's blocks cache
 
+        /** @var \XoopsTplfile $onetemplate */
         foreach ($tpllist as $onetemplate) {
             // Remove cache for each page.
             if ('module' === $onetemplate->getVar('tpl_type')) {
@@ -358,7 +360,9 @@ class Utility extends \XoopsObject
                 if (is_array($files_del) && count($files_del) > 0) {
                     foreach ($files_del as $one_file) {
                         if (is_file($one_file)) {
-                            unlink($one_file);
+                            if (false === @unlink($one_file)) {
+                                throw new \RuntimeException('The file '.$one_file.' could not be deleted.');
+                            }
                         }
                     }
                 }
@@ -391,8 +395,9 @@ class Utility extends \XoopsObject
             if (null !== $xoopsModule && is_object($xoopsModule) && OLEDRION_DIRNAME == $xoopsModule->getVar('dirname')) {
                 $mymodule = $xoopsModule;
             } else {
-                $moduleHandler  = xoops_getHandler('module');
-                $mymodule = $moduleHandler->getByDirname(OLEDRION_DIRNAME);
+                /** @var \XoopsModuleHandler $moduleHandler */
+                $moduleHandler = xoops_getHandler('module');
+                $mymodule      = $moduleHandler->getByDirname(OLEDRION_DIRNAME);
             }
         }
 
@@ -437,6 +442,7 @@ class Utility extends \XoopsObject
     public static function getUsersFromGroup($groupId)
     {
         $users         = [];
+        /** @var \XoopsMemberHandler $memberHandler */
         $memberHandler = xoops_getHandler('member');
         $users         = $memberHandler->getUsersByGroup($groupId, true);
 
@@ -1182,12 +1188,20 @@ class Utility extends \XoopsObject
         //        require_once OLEDRION_PATH . 'class/wideimage/WideImage.inc.php';
         $resize = true;
         if (OLEDRION_DONT_RESIZE_IF_SMALLER) {
-            $pictureDimensions = getimagesize($src_path);
-            if (is_array($pictureDimensions)) {
-                $width  = $pictureDimensions[0];
-                $height = $pictureDimensions[1];
-                if ($width < $param_width && $height < $param_height) {
-                    $resize = false;
+            if (false === @getimagesize($src_path)) {
+                $message = 'The picture ' . $src_path . ' could not be found and resized.';
+//                throw new \RuntimeException($message);
+                self::redirect($message);
+
+                return false;
+            } else {
+                $pictureDimensions = getimagesize($src_path);
+                if (is_array($pictureDimensions)) {
+                    $width  = $pictureDimensions[0];
+                    $height = $pictureDimensions[1];
+                    if ($width < $param_width && $height < $param_height) {
+                        $resize = false;
+                    }
                 }
             }
         }
@@ -1197,26 +1211,31 @@ class Utility extends \XoopsObject
             $result = $img->resize($param_width, $param_height, $fit);
             $result->saveToFile($dst_path);
         } else {
-            @copy($src_path, $dst_path);
+            if (false === @copy($src_path, $dst_path)) {
+                throw new \RuntimeException('The file '.$src_path.' could not be copied.');
+            }
         }
 
         if (!$keep_original) {
-            @unlink($src_path);
+            if (false === @unlink($src_path)) {
+                throw new \RuntimeException('The file '.$src_path.' could not be deleted.');
+            }
         }
 
         return true;
     }
 
     /**
-     * Déclenchement d'une alerte Xoops suite à un évènement
+     * Triggering a Xoops alert after an event
      *
-     * @param string $category La catégorie de l'évènement
-     * @param int    $itemId   L'ID de l'élément (trop général pour être décris précisément)
-     * @param mixed  $event    L'évènement qui est déclencé
-     * @param mixed  $tags     Les variables à passer au template
+     * @param int   $category The category ID of the event
+     * @param int   $itemId   The ID of the element (too general to be precisely described)
+     * @param mixed $event    The event that is triggered
+     * @param mixed $tags     Variables to pass to the template
      */
     public static function notify($category, $itemId, $event, $tags)
     {
+        /** @var \XoopsNotificationHandler $notificationHandler */
         $notificationHandler  = xoops_getHandler('notification');
         $tags['X_MODULE_URL'] = OLEDRION_URL;
         $notificationHandler->triggerEvent($category, $itemId, $event, $tags);
@@ -1241,11 +1260,10 @@ class Utility extends \XoopsObject
     }
 
     /**
-     * Retourne un breadcrumb en fonction des paramètres passés et en partant (d'office) de la racine du module
-     *
-     * @param  array  $path  Le chemin complet (excepté la racine) du breadcrumb sous la forme clé=url valeur=titre
-     * @param  string $raquo Le séparateur par défaut à utiliser
-     * @return string le breadcrumb
+     * Returns a breadcrumb based on the parameters passed and starting (automatically) from the root of the module     *
+     * @param array  $path  The complete path (except root) of the breadcrumb as key = url value = title
+     * @param string $raquo The default separator to use
+     * @return string the breadcrumb
      */
     public static function breadcrumb($path, $raquo = ' &raquo; ')
     {
@@ -1524,10 +1542,11 @@ class Utility extends \XoopsObject
             $xoopsUsersIDs = array_unique($xoopsUsersIDs);
             sort($xoopsUsersIDs);
             if (count($xoopsUsersIDs) > 0) {
-                $memberHandler = xoops_getHandler('user');
+                /** @var \XoopsUserHandler $userHandler */
+                $userHandler = xoops_getHandler('user');
                 $criteria      = new \Criteria('uid', '(' . implode(',', $xoopsUsersIDs) . ')', 'IN');
                 $criteria->setSort('uid');
-                $users = $memberHandler->getObjects($criteria, true);
+                $users = $userHandler->getObjects($criteria, true);
             }
         }
 
@@ -1563,6 +1582,7 @@ class Utility extends \XoopsObject
         }
 
         if ($uid > 0) {
+            /** @var \XoopsMemberHandler $memberHandler */
             $memberHandler = xoops_getHandler('member');
             $buffer[$uid]  = $memberHandler->getGroupsByUser($uid, false); // Renvoie un tableau d'ID (de groupes)
         } else {
@@ -1589,6 +1609,7 @@ class Utility extends \XoopsObject
         if (is_array($buffer) && array_key_exists($group, $buffer)) {
             $retval = $buffer[$group];
         } else {
+            /** @var \XoopsMemberHandler $memberHandler */
             $memberHandler  = xoops_getHandler('member');
             $groups         = $memberHandler->getGroupsByUser($uid, false); // Renvoie un tableau d'ID (de groupes)
             $retval         = in_array($group, $groups, true);
@@ -1943,5 +1964,29 @@ class Utility extends \XoopsObject
         require_once XOOPS_ROOT_PATH . '/class/xoopslists.php';
 
         return \XoopsLists::getCountryList();
+    }
+
+    /**
+     * Retourne la liste des groupes de l'utlisateur courant (avec cache)
+     * @return array Les ID des groupes auquel l'utilisateur courant appartient
+     */
+    public static function getCurrentMemberGroups()
+    {
+        static $buffer = [];
+
+        if (is_array($buffer) && count($buffer) > 0) {
+            return $buffer;
+        } else {
+            $uid = self::getCurrentUserID();
+            if ($uid > 0) {
+                /** @var \XoopsMemberHandler $memberHandler */
+                $memberHandler = xoops_getHandler('member');
+                $buffer        = $memberHandler->getGroupsByUser($uid, false);    // Renvoie un tableau d'ID (de groupes)
+            } else {
+                $buffer = [XOOPS_GROUP_ANONYMOUS];
+            }
+        }
+
+        return $buffer;
     }
 }

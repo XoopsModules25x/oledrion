@@ -34,7 +34,7 @@ $vatHandler = new Oledrion\VatHandler($db);
 
 // Lecture des TVA
 $vatArray = $vatHandler->getAllVats(new Oledrion\Parameters());
-// Préférences du module
+// Module Preferences
 $xoopsTpl->assign('mod_pref', $mod_pref);
 
 $start = \Xmf\Request::getInt('start', 0, 'GET');

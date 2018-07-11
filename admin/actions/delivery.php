@@ -40,10 +40,7 @@ switch ($action) {
                     . "'></form>";
         echo $form;
         //        Oledrion\Utility::htitle(_MI_OLEDRION_ADMENU20, 4);
-        $delivery = $deliveryHandler->getAllDelivery(new Oledrion\Parameters([
-                                                                                 'start' => $start,
-                                                                                 'limit' => $limit,
-                                                                             ]));
+        $delivery = $deliveryHandler->getAllDelivery(new Oledrion\Parameters(['start' => $start, 'limit' => $limit,]));
 
         $class = '';
         echo "<table width='100%' cellspacing='1' cellpadding='3' border='0' class='outer'>";

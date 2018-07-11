@@ -26,7 +26,7 @@ use XoopsModules\Oledrion;
  * Gestion des votes sur les produits
  */
 
-// require_once __DIR__ . '/classheader.php';
+
 
 /**
  * Class VotedataHandler
@@ -35,7 +35,7 @@ class VotedataHandler extends OledrionPersistableObjectHandler
 {
     /**
      * VotedataHandler constructor.
-     * @param \XoopsDatabase $db
+     * @param \XoopsDatabase|null $db
      */
     public function __construct(\XoopsDatabase $db = null)
     {

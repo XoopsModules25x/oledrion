@@ -230,10 +230,10 @@ switch ($action) {
             $id          = $item->getVar('product_id');
             $recommended = '';
             if ($item->isRecommended()) {
-                // Si le produit est recommandé, on affiche le lien qui permet d'arrêter de le recommander
+                // If the product is recommended, the link is displayed to stop recommending it
                 $recommended = "<a href='" . $baseurl . '?op=products&action=unrecommend&product_id=' . $id . "' title='" . _AM_OLEDRION_DONOTRECOMMEND_IT . "'><img alt='" . _AM_OLEDRION_DONOTRECOMMEND_IT . "' src='" . OLEDRION_IMAGES_URL . "heart_delete.png' alt=''></a>";
             } else {
-                // Sinon on affiche le lien qui permet de le recommander
+                // Otherwise we will display the link that allows us to recommend it
                 $recommended = "<a href='" . $baseurl . '?op=products&action=recommend&product_id=' . $id . "' title='" . _AM_OLEDRION_RECOMMEND_IT . "'><img alt='" . _AM_OLEDRION_RECOMMEND_IT . "' src='" . OLEDRION_IMAGES_URL . "heart_add.png' alt=''></a>";
             }
 
@@ -395,7 +395,7 @@ switch ($action) {
         // TVA
         $vats = $vatsForDisplay = [];
         $vats = $vatHandler->getAllVats(new Oledrion\Parameters());
-        if (0 === count($vats) && Oledrion\Utility::getModuleOption('use_price')) {
+        if (0 == count($vats) && Oledrion\Utility::getModuleOption('use_price')) {
             Oledrion\Utility::redirect(_AM_OLEDRION_ERROR_9, $baseurl, 5);
         }
         foreach ($vats as $onevat) {
@@ -470,7 +470,7 @@ switch ($action) {
         $sform->addElement(new \XoopsFormFile(_AM_OLEDRION_IMAGE1_CHANGE, 'attachedfile1', Oledrion\Utility::getModuleOption('maxuploadsize')), false);
 
         if (!Oledrion\Utility::getModuleOption('create_thumbs')) {
-            // L'utilisateur se charge de créer la vignette lui même
+            // The user is responsible for creating the thumbnail itself
             if ('edit' === $action && $item->thumbExists()) {
                 $pictureTray = new \XoopsFormElementTray(_AM_OLEDRION_IMAGE2_HELP, '<br>');
                 $pictureTray->addElement(new \XoopsFormLabel('', "<img src='" . $item->getThumbUrl() . "' alt='' border='0'>"));
@@ -496,7 +496,7 @@ switch ($action) {
         $sform->addElement(new \XoopsFormHidden('product_votes', $item->getVar('product_votes')));
         $sform->addElement(new \XoopsFormHidden('product_comments', $item->getVar('product_comments')));
 
-        // Fabricants ************************************************************
+        // manufacturers ************************************************************
         $manufacturers = $productsManufacturers = $manufacturers_d = $productsManufacturers_d = [];
         // Recherche de tous les fabricants
         $criteria = new \Criteria('manu_id', 0, '<>');

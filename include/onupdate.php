@@ -86,7 +86,9 @@ function xoops_module_update_oledrion(\XoopsModule $module, $previousVersion = n
                         $fileInfo = new \SplFileInfo($templateFolder . $v);
                         if ('html' === $fileInfo->getExtension() && 'index.html' !== $fileInfo->getFilename()) {
                             if (file_exists($templateFolder . $v)) {
-                                unlink($templateFolder . $v);
+                                if (false === @unlink($templateFolder . $v)) {
+                                    throw new \RuntimeException('The file '.$templateFolder . $v.' could not be deleted.');
+                                }
                             }
                         }
                     }
@@ -100,7 +102,9 @@ function xoops_module_update_oledrion(\XoopsModule $module, $previousVersion = n
             foreach (array_keys($configurator->oldFiles) as $i) {
                 $tempFile = $GLOBALS['xoops']->path('modules/' . $moduleDirName . $configurator->oldFiles[$i]);
                 if (is_file($tempFile)) {
-                    unlink($tempFile);
+                    if (false === @unlink($tempFile)) {
+                        throw new \RuntimeException('The file '.$tempFile.' could not be deleted.');
+                    }
                 }
             }
         }
