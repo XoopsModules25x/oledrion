@@ -749,10 +749,10 @@ class ProductsHandler extends OledrionPersistableObjectHandler
     /**
      * Clone d'un produit
      *
-     * @param  Products $originalProduct Le produit à cloner
+     * @param  \XoopsModules\Oledrion\Products $originalProduct Le produit à cloner
      * @return mixed                    Soit l'objet représentant le nouveau produit soit false
      */
-    public function cloneProduct(Products $originalProduct)
+    public function cloneProduct(\XoopsModules\Oledrion\Products $originalProduct)
     {
         global $productsmanuHandler, $filesHandler, $productsmanuHandler, $relatedHandler, $oledrionHandlers;
         $newProduct = $originalProduct->xoopsClone();
