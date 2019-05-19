@@ -87,7 +87,7 @@ class HandlerManager
         //            return null;
         //        }
 
-        if (!in_array(mb_substr($name, 2), $this->handlersNames, true)) {
+        if (!in_array(mb_substr($name, 2), $this->handlersNames)) {
             return null;
         }
         if (!isset($this->handlersNames[$name])) {

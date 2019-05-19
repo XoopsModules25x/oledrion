@@ -55,10 +55,10 @@ class Pec24Gateway extends Gateway
         $pin = new \XoopsFormText(_OLEDRION_SAMAN_MID, 'parsian_mid', 50, 255, $gatewaysOptionsHandler->getGatewayOptionValue($this->gatewayInformation['foldername'], 'parsian_mid'));
         $pin->setDescription(_OLEDRION_SAMAN_MIDDSC);
         $sform->addElement($pin, true);
-        $button_tray = new \XoopsFormElementTray('', '');
-        $submit_btn  = new \XoopsFormButton('', 'post', _AM_OLEDRION_GATEWAYS_UPDATE, 'submit');
-        $button_tray->addElement($submit_btn);
-        $sform->addElement($button_tray);
+        $buttonTray = new \XoopsFormElementTray('', '');
+        $submit_btn = new \XoopsFormButton('', 'post', _AM_OLEDRION_GATEWAYS_UPDATE, 'submit');
+        $buttonTray->addElement($submit_btn);
+        $sform->addElement($buttonTray);
 
         return $sform;
     }

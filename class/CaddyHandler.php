@@ -26,7 +26,6 @@ use XoopsModules\Oledrion;
  * Gestion des caddy
  */
 
-
 /**
  * Class CaddyHandler
  */
@@ -79,7 +78,7 @@ class CaddyHandler extends OledrionPersistableObjectHandler
     {
         //require_once __DIR__ . '/lite.php';
         $ret = [];
-        if (is_array($product_cid) && count($product_cid) > 0) {
+        if ($product_cid && is_array($product_cid)) {
             $sql = 'SELECT c.caddy_product_id, sum( c.caddy_qte ) AS mv FROM ' . $this->table . ' c, ' . $this->db->prefix('oledrion_products') . ' b WHERE (c.caddy_product_id = b.product_id) AND b.product_cid IN (' . implode(',', $product_cid) . ') GROUP BY c.caddy_product_id ORDER BY mv DESC';
         } elseif ($product_cid > 0) {
             $sql = 'SELECT c.caddy_product_id, sum( c.caddy_qte ) AS mv FROM ' . $this->table . ' c, ' . $this->db->prefix('oledrion_products') . ' b WHERE (c.caddy_product_id = b.product_id) AND b.product_cid = ' . (int)$product_cid . ' GROUP BY c.caddy_product_id ORDER BY mv DESC';

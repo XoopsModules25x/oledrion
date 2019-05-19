@@ -22,8 +22,7 @@ use XoopsModules\Oledrion;
 /**
  * Sélecteur de produits
  */
-require_once dirname(dirname(dirname(__DIR__))) . '/include/cp_header.php';
-require_once dirname(__DIR__) . '/include/common.php';
+require_once __DIR__ . '/admin_header.php';
 require_once XOOPS_ROOT_PATH . '/class/template.php';
 // require_once OLEDRION_PATH . 'class/tree.php';
 
@@ -154,13 +153,9 @@ if (\Xmf\Request::hasVar('op', 'REQUEST') && 'search' === $_REQUEST['op']) {
 $helper->loadLanguage('modinfo');
 $helper->loadLanguage('main');
 
-if (Oledrion\Utility::checkVerXoops($GLOBALS['xoopsModule'], '2.5.9')) {
-    $categoriesSelect = $mytree->makeSelectElement('product_cid', 'cat_title', '-', $selectedCategory, true, 0, '', '');
-    $xoopsTpl->assign('searchCategory', $categoriesSelect->render());
-} else {
-    $categoriesSelect = $mytree->makeSelBox('product_cid', 'cat_title', '-', $selectedCategory, '---', 0, "class='selectLists'");
-    $xoopsTpl->assign('searchCategory', $categoriesSelect);
-}
+$categoriesSelect = $mytree->makeSelectElement('product_cid', 'cat_title', '-', $selectedCategory, true, 0, '', '');
+$xoopsTpl->assign('searchCategory', $categoriesSelect->render());
+
 $xoopsTpl->assign('callerName', $callerName);
 $xoopsTpl->assign('sart', $start);
 $xoopsTpl->assign('theme_set', xoops_getcss($xoopsConfig['theme_set']));

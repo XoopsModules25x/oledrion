@@ -365,10 +365,10 @@ switch ($action) {
         $sform->addElement(new \XoopsFormHidden('action', 'savetrack'));
         $sform->addElement(new \XoopsFormHidden('cmd_id', $item->getVar('cmd_id')));
         $sform->addElement(new \XoopsFormText(_OLEDRION_TRACK, 'cmd_track', 50, 255, $item->getVar('cmd_track', 'e')), true);
-        $button_tray = new \XoopsFormElementTray('', '');
-        $submit_btn  = new \XoopsFormButton('', 'post', _SUBMIT, 'submit');
-        $button_tray->addElement($submit_btn);
-        $sform->addElement($button_tray);
+        $buttonTray = new \XoopsFormElementTray('', '');
+        $submit_btn = new \XoopsFormButton('', 'post', _SUBMIT, 'submit');
+        $buttonTray->addElement($submit_btn);
+        $sform->addElement($buttonTray);
         $sform = Oledrion\Utility::formMarkRequiredFields($sform);
         $sform->display();
 

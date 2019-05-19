@@ -169,7 +169,7 @@ if (Oledrion\Utility::getModuleOption('search_property10') && Oledrion\Utility::
 
 $sform->addElement(new \XoopsFormHidden('op', 'go'));
 
-$button_tray = new \XoopsFormElementTray('', '');
-$submit_btn  = new \XoopsFormButton('', 'post', _SUBMIT, 'submit');
-$button_tray->addElement($submit_btn);
-$sform->addElement($button_tray);
+$buttonTray = new \XoopsFormElementTray('', '');
+$submit_btn = new \XoopsFormButton('', 'post', _SUBMIT, 'submit');
+$buttonTray->addElement($submit_btn);
+$sform->addElement($buttonTray);

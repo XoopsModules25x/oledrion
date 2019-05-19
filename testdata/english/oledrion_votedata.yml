@@ -1,0 +1,23 @@
+---
+# oledrion_votedata
+-
+  vote_ratingid: 1
+  vote_product_id: 1
+  vote_uid: 1
+  vote_rating: 1
+  vote_ratinghostname: ddno
+  vote_ratingtimestamp: 1452948529
+-
+  vote_ratingid: 2
+  vote_product_id: 2
+  vote_uid: 2
+  vote_rating: 2
+  vote_ratinghostname: ntnt
+  vote_ratingtimestamp: 1452948529
+-
+  vote_ratingid: 3
+  vote_product_id: 3
+  vote_uid: 3
+  vote_rating: 3
+  vote_ratinghostname: ththtt
+  vote_ratingtimestamp: 1452948529

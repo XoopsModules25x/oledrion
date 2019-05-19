@@ -21,7 +21,6 @@ namespace XoopsModules\Oledrion\Common;
  * @since       1.05
  */
 
-use XoopsModules\Oledrion;
 //require_once dirname(dirname(__DIR__)) . '/include/common.php';
 
 /**
@@ -37,6 +36,7 @@ class Configurator
     public $templateFolders = [];
     public $oldFiles        = [];
     public $oldFolders      = [];
+    public $renameTables    = [];
     public $modCopyright;
 
     /**
@@ -44,8 +44,8 @@ class Configurator
      */
     public function __construct()
     {
-        $moduleDirName = basename(dirname(dirname(__DIR__)));
-        $capsDirName   = mb_strtoupper($moduleDirName);
+        $moduleDirName      = basename(dirname(dirname(__DIR__)));
+        $moduleDirNameUpper = mb_strtoupper($moduleDirName);
 
         include dirname(dirname(__DIR__)) . '/include/config.php';
         $config = getConfig();
@@ -58,6 +58,7 @@ class Configurator
         $this->templateFolders = $config->templateFolders;
         $this->oldFiles        = $config->oldFiles;
         $this->oldFolders      = $config->oldFolders;
+        $this->renameTables    = $config->renameTables;
         $this->modCopyright    = $config->modCopyright;
     }
 }

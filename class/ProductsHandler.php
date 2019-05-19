@@ -26,8 +26,6 @@ namespace XoopsModules\Oledrion;
 
 use XoopsModules\Oledrion;
 
-
-
 /**
  * Class ProductsHandler
  */
@@ -372,7 +370,7 @@ class ProductsHandler extends OledrionPersistableObjectHandler
         global $myts;
         $ret = [];
         $sql = 'SELECT product_id, product_title FROM ' . $this->table;
-        if (null !== $criteria && is_subclass_of($criteria, 'CriteriaElement')) {
+        if (null !== $criteria && $criteria instanceof \CriteriaElement) {
             $sql .= ' ' . $criteria->renderWhere();
             if ('' !== $criteria->getSort()) {
                 $sql .= ' ORDER BY ' . $criteria->getSort() . ' ' . $criteria->getOrder();
@@ -749,10 +747,10 @@ class ProductsHandler extends OledrionPersistableObjectHandler
     /**
      * Clone d'un produit
      *
-     * @param  Products $originalProduct Le produit à cloner
+     * @param  \XoopsModules\Oledrion\Products $originalProduct Le produit à cloner
      * @return mixed                    Soit l'objet représentant le nouveau produit soit false
      */
-    public function cloneProduct(Products $originalProduct)
+    public function cloneProduct(\XoopsModules\Oledrion\Products $originalProduct)
     {
         global $productsmanuHandler, $filesHandler, $productsmanuHandler, $relatedHandler, $oledrionHandlers;
         $newProduct = $originalProduct->xoopsClone();

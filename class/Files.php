@@ -26,8 +26,6 @@ use XoopsModules\Oledrion;
  * Gestion des fichies attachés aux produits
  */
 
-
-
 /**
  * Class Files
  */
@@ -56,7 +54,7 @@ class Files extends OledrionObject
             include OLEDRION_PATH . 'config.php';
         }
         if (false === @unlink(OLEDRION_ATTACHED_FILES_PATH . '/' . $this->getVar('file_filename'))) {
-            throw new \RuntimeException('The file '.OLEDRION_ATTACHED_FILES_PATH . '/' . $this->getVar('file_filename').' could not be deleted.');
+            throw new \RuntimeException('The file ' . OLEDRION_ATTACHED_FILES_PATH . '/' . $this->getVar('file_filename') . ' could not be deleted.');
         }
     }
 

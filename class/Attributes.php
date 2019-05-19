@@ -30,7 +30,6 @@ use XoopsModules\Oledrion;
  * @since 2.3.2009.03.10
  */
 
-
 //// Les types d'option
 //define('OLEDRION_ATTRIBUTE_RADIO', 1);
 //define('OLEDRION_ATTRIBUTE_CHECKBOX', 2);
@@ -123,7 +122,7 @@ class Attributes extends OledrionObject
      */
     public function getOptionsCount()
     {
-        return substr_count($this->getVar('attribute_names', 's'), Constants::OLEDRION_ATTRIBUTE_SEPARATOR) + 1;
+        return mb_substr_count($this->getVar('attribute_names', 's'), Constants::OLEDRION_ATTRIBUTE_SEPARATOR) + 1;
     }
 
     /**

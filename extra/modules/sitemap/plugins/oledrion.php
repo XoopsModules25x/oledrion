@@ -47,7 +47,7 @@ function b_sitemap_oledrion()
         $sql .= " ORDER BY `$order`";
     }
     $result = $xoopsDB->query($sql);
-    while (false !== (list($catid, $name) = $xoopsDB->fetchRow($result))) {
+    while (list($catid, $name) = $xoopsDB->fetchRow($result)) {
         $sitemap['parent'][$i]['id']    = $catid;
         $sitemap['parent'][$i]['title'] = $myts->htmlSpecialChars($name);
         if (1 == Oledrion\Utility::getModuleOption('urlrewriting')) {

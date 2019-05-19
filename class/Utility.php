@@ -357,11 +357,11 @@ class Utility extends \XoopsObject
                 //  Note, I've been testing all the other methods (like the one of Smarty) and none of them run, that's why I have used this code
                 $files_del = [];
                 $files_del = glob(XOOPS_CACHE_PATH . '/*' . $onetemplate->getVar('tpl_file') . '*');
-                if (is_array($files_del) && count($files_del) > 0) {
+                if ($files_del && is_array($files_del)) {
                     foreach ($files_del as $one_file) {
                         if (is_file($one_file)) {
                             if (false === @unlink($one_file)) {
-                                throw new \RuntimeException('The file '.$one_file.' could not be deleted.');
+                                throw new \RuntimeException('The file ' . $one_file . ' could not be deleted.');
                             }
                         }
                     }
@@ -441,7 +441,7 @@ class Utility extends \XoopsObject
      */
     public static function getUsersFromGroup($groupId)
     {
-        $users         = [];
+        $users = [];
         /** @var \XoopsMemberHandler $memberHandler */
         $memberHandler = xoops_getHandler('member');
         $users         = $memberHandler->getUsersByGroup($groupId, true);
@@ -476,7 +476,7 @@ class Utility extends \XoopsObject
     {
         global $xoopsUser, $xoopsModule;
         if (is_object($xoopsUser)) {
-            if (in_array(XOOPS_GROUP_ADMIN, $xoopsUser->getGroups(), true)) {
+            if (in_array(XOOPS_GROUP_ADMIN, $xoopsUser->getGroups())) {
                 return true;
             }
 
@@ -594,7 +594,7 @@ class Utility extends \XoopsObject
             $elements = $sform->getElements();
             $cnt      = count($elements);
             foreach ($elements as $i => $iValue) {
-                if (is_object($elements[$i]) && in_array($iValue->_name, $required, true)) {
+                if (is_object($elements[$i]) && in_array($iValue->_name, $required)) {
                     $iValue->_caption .= ' *';
                 }
             }
@@ -1190,18 +1190,17 @@ class Utility extends \XoopsObject
         if (OLEDRION_DONT_RESIZE_IF_SMALLER) {
             if (false === @getimagesize($src_path)) {
                 $message = 'The picture ' . $src_path . ' could not be found and resized.';
-//                throw new \RuntimeException($message);
+                //                throw new \RuntimeException($message);
                 self::redirect($message);
 
                 return false;
-            } else {
-                $pictureDimensions = getimagesize($src_path);
-                if (is_array($pictureDimensions)) {
-                    $width  = $pictureDimensions[0];
-                    $height = $pictureDimensions[1];
-                    if ($width < $param_width && $height < $param_height) {
-                        $resize = false;
-                    }
+            }
+            $pictureDimensions = getimagesize($src_path);
+            if (is_array($pictureDimensions)) {
+                $width  = $pictureDimensions[0];
+                $height = $pictureDimensions[1];
+                if ($width < $param_width && $height < $param_height) {
+                    $resize = false;
                 }
             }
         }
@@ -1212,13 +1211,13 @@ class Utility extends \XoopsObject
             $result->saveToFile($dst_path);
         } else {
             if (false === @copy($src_path, $dst_path)) {
-                throw new \RuntimeException('The file '.$src_path.' could not be copied.');
+                throw new \RuntimeException('The file ' . $src_path . ' could not be copied.');
             }
         }
 
         if (!$keep_original) {
             if (false === @unlink($src_path)) {
-                throw new \RuntimeException('The file '.$src_path.' could not be deleted.');
+                throw new \RuntimeException('The file ' . $src_path . ' could not be deleted.');
             }
         }
 
@@ -1448,7 +1447,7 @@ class Utility extends \XoopsObject
         static $vats = [];
         $vat_rate   = null;
         $vatHandler = new Oledrion\VatHandler(\XoopsDatabaseFactory::getDatabaseConnection());
-        if (is_array($vats) && in_array($vat_id, $vats, true)) {
+        if (is_array($vats) && in_array($vat_id, $vats)) {
             $vat_rate = $vats[$vat_id];
         } else {
             //            $handlers = \HandlerManager::getInstance();
@@ -1538,13 +1537,13 @@ class Utility extends \XoopsObject
     public static function getUsersFromIds($xoopsUsersIDs)
     {
         $users = [];
-        if (is_array($xoopsUsersIDs) && count($xoopsUsersIDs) > 0) {
+        if ($xoopsUsersIDs && is_array($xoopsUsersIDs)) {
             $xoopsUsersIDs = array_unique($xoopsUsersIDs);
             sort($xoopsUsersIDs);
             if (count($xoopsUsersIDs) > 0) {
                 /** @var \XoopsUserHandler $userHandler */
                 $userHandler = xoops_getHandler('user');
-                $criteria      = new \Criteria('uid', '(' . implode(',', $xoopsUsersIDs) . ')', 'IN');
+                $criteria    = new \Criteria('uid', '(' . implode(',', $xoopsUsersIDs) . ')', 'IN');
                 $criteria->setSort('uid');
                 $users = $userHandler->getObjects($criteria, true);
             }
@@ -1612,7 +1611,7 @@ class Utility extends \XoopsObject
             /** @var \XoopsMemberHandler $memberHandler */
             $memberHandler  = xoops_getHandler('member');
             $groups         = $memberHandler->getGroupsByUser($uid, false); // Renvoie un tableau d'ID (de groupes)
-            $retval         = in_array($group, $groups, true);
+            $retval         = in_array($group, $groups);
             $buffer[$group] = $retval;
         }
 
@@ -1974,17 +1973,16 @@ class Utility extends \XoopsObject
     {
         static $buffer = [];
 
-        if (is_array($buffer) && count($buffer) > 0) {
+        if ($buffer && is_array($buffer)) {
             return $buffer;
+        }
+        $uid = self::getCurrentUserID();
+        if ($uid > 0) {
+            /** @var \XoopsMemberHandler $memberHandler */
+            $memberHandler = xoops_getHandler('member');
+            $buffer        = $memberHandler->getGroupsByUser($uid, false);    // Renvoie un tableau d'ID (de groupes)
         } else {
-            $uid = self::getCurrentUserID();
-            if ($uid > 0) {
-                /** @var \XoopsMemberHandler $memberHandler */
-                $memberHandler = xoops_getHandler('member');
-                $buffer        = $memberHandler->getGroupsByUser($uid, false);    // Renvoie un tableau d'ID (de groupes)
-            } else {
-                $buffer = [XOOPS_GROUP_ANONYMOUS];
-            }
+            $buffer = [XOOPS_GROUP_ANONYMOUS];
         }
 
         return $buffer;

@@ -631,7 +631,7 @@ class Nusoap_base
                 if ('arraySimple' === $valueType || preg_match('/^ArrayOf/', $type)) {
                     $this->debug('serialize_val: serialize array');
                     $i = 0;
-                    if (is_array($val) && count($val) > 0) {
+                    if ($val && is_array($val)) {
                         foreach ($val as $v) {
                             if (is_object($v) && 'Soapval' === get_class($v)) {
                                 $tt_ns = $v->type_ns;
@@ -1330,7 +1330,7 @@ class Nusoap_xmlschema extends Nusoap_base
         }
 
         // loop thru attributes, expanding, and registering namespace declarations
-        if (is_array($attrs) && count($attrs) > 0) {
+        if ($attrs && is_array($attrs)) {
             foreach ($attrs as $k => $v) {
                 // if ns declarations, add to class level array of valid namespaces
                 if (preg_match('/^xmlns/', $k)) {
@@ -1536,7 +1536,7 @@ class Nusoap_xmlschema extends Nusoap_base
 
                 break;
             case 'enumeration':
-                //	restriction value list member
+                //  restriction value list member
                 $this->xdebug('enumeration ' . $attrs['value']);
                 if ($this->currentSimpleType) {
                     $this->simpleTypes[$this->currentSimpleType]['enumeration'][] = $attrs['value'];
@@ -1711,7 +1711,7 @@ class Nusoap_xmlschema extends Nusoap_base
         $schemaPrefix = $this->getPrefixFromNamespace($this->XMLSchemaVersion);
         $xml          = '';
         // imports
-        if (is_array($this->imports) && count($this->imports) > 0) {
+        if ($this->imports && is_array($this->imports)) {
             foreach ($this->imports as $ns => $list) {
                 foreach ($list as $ii) {
                     if ('' !== $ii['location']) {
@@ -4167,7 +4167,7 @@ class Nusoap_server extends Nusoap_base
             }
         } else {
             $method_to_compare = (0 === mb_strpos(PHP_VERSION, '4.')) ? mb_strtolower($method) : $method;
-            if (!in_array($method_to_compare, get_class_methods($class), true)) {
+            if (!in_array($method_to_compare, get_class_methods($class))) {
                 $this->debug("in invoke_method, method '$this->methodname' not found in class '$class'!");
                 $this->result = 'fault: method not found';
                 $this->fault('SOAP-ENV:Client', "method '$this->methodname'/'$method_to_compare'('$orig_methodname') not defined in service/'$class'('$try_class' '$delim')");
@@ -4883,7 +4883,7 @@ class Wsdl extends Nusoap_base
                                     if (!isset($urlparts['host'])) {
                                         $url = $wsdlparts['scheme'] . '://' . $wsdlparts['host'] . (isset($wsdlparts['port']) ? ':' . $wsdlparts['port'] : '') . mb_substr($wsdlparts['path'], 0, mb_strrpos($wsdlparts['path'], '/') + 1) . $urlparts['path'];
                                     }
-                                    if (!in_array($url, $imported_urls, true)) {
+                                    if (!in_array($url, $imported_urls)) {
                                         $this->parseWSDL($url);
                                         ++$imported;
                                         $imported_urls[] = $url;
@@ -4908,7 +4908,7 @@ class Wsdl extends Nusoap_base
                             if (!isset($urlparts['host'])) {
                                 $url = $wsdlparts['scheme'] . '://' . $wsdlparts['host'] . (isset($wsdlparts['port']) ? ':' . $wsdlparts['port'] : '') . mb_substr($wsdlparts['path'], 0, mb_strrpos($wsdlparts['path'], '/') + 1) . $urlparts['path'];
                             }
-                            if (!in_array($url, $imported_urls, true)) {
+                            if (!in_array($url, $imported_urls)) {
                                 $this->parseWSDL($url);
                                 ++$imported;
                                 $imported_urls[] = $url;
@@ -5081,7 +5081,7 @@ class Wsdl extends Nusoap_base
             $this->depth_array[$depth] = $pos;
             $this->message[$pos]       = ['cdata' => ''];
             // process attributes
-            if (is_array($attrs) && count($attrs) > 0) {
+            if ($attrs && is_array($attrs)) {
                 // register namespace declarations
                 foreach ($attrs as $k => $v) {
                     if (preg_match('/^xmlns/', $k)) {
@@ -5581,25 +5581,25 @@ class Wsdl extends Nusoap_base
         $b = '
         <html><head><title>NuSOAP: ' . $this->serviceName . '</title>
         <style type="text/css">
-		    body    { font-family: arial sans-serif; color: #000000; background-color: #ffffff; margin: 0px 0px 0px 0px; }
-		    p       { font-family: arial sans-serif; color: #000000; margin-top: 0px; margin-bottom: 12px; }
+            body    { font-family: arial sans-serif; color: #000000; background-color: #ffffff; margin: 0px 0px 0px 0px; }
+            p       { font-family: arial sans-serif; color: #000000; margin-top: 0px; margin-bottom: 12px; }
             pre { background-color: silver; padding: 5px; font-family: Courier New; font-size: x-small; color: #000000;}
             ul      { margin-top: 10px; margin-left: 20px; }
             li      { list-style-type: none; margin-top: 10px; color: #000000; }
             .content{
-			margin-left: 0px; padding-bottom: 2em; }
+            margin-left: 0px; padding-bottom: 2em; }
             .nav {
             padding-top: 10px; padding-bottom: 10px; padding-left: 15px; font-size: .70em;
-			margin-top: 10px; margin-left: 0px; color: #000000;
+            margin-top: 10px; margin-left: 0px; color: #000000;
             background-color: #ccccff; width: 20%; margin-left: 20px; margin-top: 20px; }
             .title {
-			font-family: arial sans-serif; font-size: 26px; color: #ffffff;
+            font-family: arial sans-serif; font-size: 26px; color: #ffffff;
             background-color: #999999; width: 100%;
-			margin-left: 0px; margin-right: 0px;
+            margin-left: 0px; margin-right: 0px;
             padding-top: 10px; padding-bottom: 10px;}
             .hidden {
             position: absolute; visibility: hidden; z-index: 200; left: 250px; top: 100px;
-			font-family: arial sans-serif; overflow: hidden; width: 600;
+            font-family: arial sans-serif; overflow: hidden; width: 600;
             padding: 20px; font-size: 10px; background-color: #999999;
             layer-background-color:#FFFFFF; }
             a,a:active  { color: charcoal; font-weight: bold; }
@@ -5723,7 +5723,7 @@ class Wsdl extends Nusoap_base
         }
         $xml .= '>';
         // imports
-        if (is_array($this->import) && count($this->import) > 0) {
+        if ($this->import && is_array($this->import)) {
             foreach ($this->import as $ns => $list) {
                 foreach ($list as $ii) {
                     if ('' !== $ii['location']) {
@@ -5903,6 +5903,7 @@ class Wsdl extends Nusoap_base
             }
 
             $this->debug("in parametersMatchWrapped: $matches parameter names match $elements wrapped parameter names");
+
             return !(0 == $matches);
         }
 
@@ -6378,7 +6379,7 @@ class Wsdl extends Nusoap_base
                 foreach ($value as $k => $v) {
                     $this->debug("serializing array element: $k, " . (is_array($v) ? 'array' : $v) . " of type: $typeDef[arrayType]");
                     //if (strpos($typeDef['arrayType'], ':') ) {
-                    if (!in_array($typeDef['arrayType'], $this->typemap['http://www.w3.org/2001/XMLSchema'], true)) {
+                    if (!in_array($typeDef['arrayType'], $this->typemap['http://www.w3.org/2001/XMLSchema'])) {
                         $contents .= $this->serializeType('item', $typeDef['arrayType'], $v, $use);
                     } else {
                         $contents .= $this->serialize_val($v, 'item', $typeDef['arrayType'], null, $this->XMLSchemaVersion, false, $use);
@@ -6623,7 +6624,7 @@ class Wsdl extends Nusoap_base
         $attrs = [],
         $arrayType = '')
     {
-        if (is_array($elements) && count($elements) > 0) {
+        if ($elements && is_array($elements)) {
             $eElements = [];
             foreach ($elements as $n => $e) {
                 // expand each element
@@ -6638,7 +6639,7 @@ class Wsdl extends Nusoap_base
             $elements = $eElements;
         }
 
-        if (is_array($attrs) && count($attrs) > 0) {
+        if ($attrs && is_array($attrs)) {
             foreach ($attrs as $n => $a) {
                 // expand each attribute
                 foreach ($a as $k => $v) {
@@ -6907,7 +6908,7 @@ class Nusoap_parser extends Nusoap_base
                     $this->soapheader = $this->message[$this->root_header]['result'];
                 }
                 // resolve hrefs/ids
-                if (is_array($this->multirefs) && count($this->multirefs) > 0) {
+                if ($this->multirefs && is_array($this->multirefs)) {
                     foreach ($this->multirefs as $id => $hrefs) {
                         $this->debug('resolving multirefs for id: ' . $id);
                         $idVal = $this->buildVal($this->ids[$id]);
@@ -8377,7 +8378,7 @@ class Nusoap_client extends Nusoap_base
     {
         if (0 === count($this->cookies)) {
             // no existing cookies: take whatever is new
-            if (is_array($cookies) && count($cookies) > 0) {
+            if ($cookies && is_array($cookies)) {
                 $this->debug('Setting new cookie(s)');
                 $this->cookies = $cookies;
             }

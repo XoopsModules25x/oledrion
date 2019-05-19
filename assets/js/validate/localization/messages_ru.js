@@ -1,11 +1,21 @@
+(function( factory ) {
+    if ( typeof define === "function" && define.amd ) {
+        define( ["jquery", "../jquery.validate"], factory );
+    } else if (typeof module === "object" && module.exports) {
+        module.exports = factory( require( "jquery" ) );
+    } else {
+        factory( jQuery );
+    }
+}(function( $ ) {
+
 /*
  * Translated default messages for the jQuery validation plugin.
- * Language: RU
+ * Locale: RU (Russian; русский язык)
  */
-jQuery.extend(jQuery.validator.messages, {
+$.extend( $.validator.messages, {
     required: "Это поле необходимо заполнить.",
     remote: "Пожалуйста, введите правильное значение.",
-    email: "Пожалуйста, введите корретный адрес электронной почты.",
+    email: "Пожалуйста, введите корректный адрес электронной почты.",
     url: "Пожалуйста, введите корректный URL.",
     date: "Пожалуйста, введите корректную дату.",
     dateISO: "Пожалуйста, введите корректную дату в формате ISO.",
@@ -13,11 +23,13 @@ jQuery.extend(jQuery.validator.messages, {
     digits: "Пожалуйста, вводите только цифры.",
     creditcard: "Пожалуйста, введите правильный номер кредитной карты.",
     equalTo: "Пожалуйста, введите такое же значение ещё раз.",
-    accept: "Пожалуйста, выберите файл с правильным расширением.",
-    maxlength: jQuery.format("Пожалуйста, введите не больше {0} символов."),
-    minlength: jQuery.format("Пожалуйста, введите не меньше {0} символов."),
-    rangelength: jQuery.format("Пожалуйста, введите значение длиной от {0} до {1} символов."),
-    range: jQuery.format("Пожалуйста, введите число от {0} до {1}."),
-    max: jQuery.format("Пожалуйста, введите число, меньшее или равное {0}."),
-    min: jQuery.format("Пожалуйста, введите число, большее или равное {0}.")
-});
+    extension: "Пожалуйста, выберите файл с правильным расширением.",
+    maxlength: $.validator.format( "Пожалуйста, введите не больше {0} символов." ),
+    minlength: $.validator.format( "Пожалуйста, введите не меньше {0} символов." ),
+    rangelength: $.validator.format( "Пожалуйста, введите значение длиной от {0} до {1} символов." ),
+    range: $.validator.format( "Пожалуйста, введите число от {0} до {1}." ),
+    max: $.validator.format( "Пожалуйста, введите число, меньшее или равное {0}." ),
+    min: $.validator.format( "Пожалуйста, введите число, большее или равное {0}." )
+} );
+return $;
+}));

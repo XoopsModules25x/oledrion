@@ -86,17 +86,20 @@ class Shelf
     {
         global $xoopsModule;
         $id = $product->getVar('product_id');
+        /** @var \XoopsDatabase $db */
+        $db = \XoopsDatabaseFactory::getDatabaseConnection();
+
 
         // On commence par supprimer les commentaires
         $mid = $xoopsModule->getVar('mid');
         xoops_comment_delete($mid, $id);
 
         // Puis les votes
-        $votedataHandler = new \XoopsModules\Oledrion\VotedataHandler();
+        $votedataHandler = new \XoopsModules\Oledrion\VotedataHandler($db);
         $votedataHandler->deleteProductRatings($id);
 
         // Puis les produits relatifs
-        $relatedHandler = new \XoopsModules\Oledrion\RelatedHandler();
+        $relatedHandler = new \XoopsModules\Oledrion\RelatedHandler($db);
         $relatedHandler->deleteProductRelatedProducts($id);
 
         // Les images (la grande et la miniature)
@@ -106,31 +109,32 @@ class Shelf
         $product->deleteAttachment();
 
         // Les fichiers attachés
-        $filesHandler = new \XoopsModules\Oledrion\FilesHandler();
+        $filesHandler = new \XoopsModules\Oledrion\FilesHandler($db);
         $filesHandler->deleteProductFiles($id);
 
         // Suppression dans les paniers persistants enregistrés
-        $persistentCartHandler = new \XoopsModules\Oledrion\PersistentCartHandler();
+        $persistentCartHandler = new \XoopsModules\Oledrion\PersistentCartHandler($db);
         $persistentCartHandler->deleteProductForAllCarts($id);
 
         // Les attributs qui lui sont rattachés
-        $attributesHandler = new \XoopsModules\Oledrion\AttributesHandler();
+        $attributesHandler = new \XoopsModules\Oledrion\AttributesHandler($db);
         $attributesHandler->deleteProductAttributes($id);
 
         // Le produit dans les listes
-        $productsListHandler = new \XoopsModules\Oledrion\ProductsListHandler();
+        $productsListHandler = new \XoopsModules\Oledrion\ProductsListHandler($db);
         $productsListHandler->deleteProductFromLists($id);
 
         // La relation entre le produit et le fabricant
-        $productsmanuHandler = new \XoopsModules\Oledrion\productsmanuHandler();
+        $productsmanuHandler = new \XoopsModules\Oledrion\productsmanuHandler($db);
         $productsmanuHandler->removeManufacturerProduct($id);
 
         // Le produit dans les remises
-        $discountsHandler = new \XoopsModules\Oledrion\DiscountsHandler();
+        $discountsHandler = new \XoopsModules\Oledrion\DiscountsHandler($db);
         $discountsHandler->removeProductFromDiscounts($id);
 
         // Et le produit en lui même, à la fin
-        $productsHandler = new \XoopsModules\Oledrion\ProductsHandler();
+        $productsHandler = new \XoopsModules\Oledrion\ProductsHandler($db);
+
         return $productsHandler->delete($product, true);
     }
 
@@ -146,7 +150,7 @@ class Shelf
         $db              = \XoopsDatabaseFactory::getDatabaseConnection();
         $relatedHandler  = new Oledrion\RelatedHandler($db);
         $productsHandler = new Oledrion\ProductsHandler($db);
-        if (is_array($productsIds) && count($productsIds) > 0) {
+        if ($productsIds && is_array($productsIds)) {
             $relatedProductsIds = $relatedHandler->getRelatedProductsFromProductsIds($productsIds);
             if (count($relatedProductsIds) > 0) {
                 $tmp = [];

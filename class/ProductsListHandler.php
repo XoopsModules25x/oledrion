@@ -28,8 +28,6 @@ namespace XoopsModules\Oledrion;
 
 use XoopsModules\Oledrion;
 
-
-
 /**
  * Class ProductsListHandler
  */
@@ -124,6 +122,7 @@ class ProductsListHandler extends OledrionPersistableObjectHandler
         $criteria = new \CriteriaCompo();
         $criteria->add(new \Criteria('productlist_list_id', $productlist_list_id, '='));
         $criteria->add(new \Criteria('productlist_product_id', $productlist_product_id, '='));
+
         return $this->getCount($criteria) > 0;
     }
 }

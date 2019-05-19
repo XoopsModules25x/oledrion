@@ -15,28 +15,35 @@
 
 use XoopsModules\Oledrion;
 use XoopsModules\Oledrion\Common;
+use XoopsModules\Oledrion\Utility;
 
-require_once dirname(dirname(dirname(__DIR__))) . '/mainfile.php';
-
-require_once dirname(__DIR__) . '/preloads/autoloader.php';
+require_once dirname(dirname(dirname(__DIR__))) . '/include/cp_header.php';
+require dirname(__DIR__) . '/preloads/autoloader.php';
 
 $op = \Xmf\Request::getCmd('op', '');
 
+$moduleDirName      = basename(dirname(__DIR__));
+$moduleDirNameUpper = mb_strtoupper($moduleDirName);
+
+$helper = Oledrion\Helper::getInstance();
+// Load language files
+$helper->loadLanguage('common');
+
 switch ($op) {
     case 'load':
-
-        loadSampleData();
-
+        if (\Xmf\Request::hasVar('ok', 'REQUEST') && 1 == $_REQUEST['ok']) {
+            if (!$GLOBALS['xoopsSecurity']->check()) {
+                redirect_header('../admin/index.php', 3, implode(',', $GLOBALS['xoopsSecurity']->getErrors()));
+            }
+            loadSampleData();
+        } else {
+            xoops_cp_header();
+            xoops_confirm(['ok' => 1, 'op' => 'load'], 'index.php', sprintf(constant('CO_' . $moduleDirNameUpper . '_' . 'ADD_SAMPLEDATA_OK')), constant('CO_' . $moduleDirNameUpper . '_' . 'CONFIRM'), true);
+            xoops_cp_footer();
+        }
         break;
     case 'save':
-
         saveSampleData();
-
-        break;
-    case 'exportschema':
-
-        exportSchema();
-
         break;
 }
 
@@ -44,47 +51,52 @@ switch ($op) {
 
 function loadSampleData()
 {
+    global $xoopsConfig;
     $moduleDirName      = basename(dirname(__DIR__));
-    $moduleDirNameUpper = mb_strtoupper($moduleDirName); //$capsDirName
-    /** @var Oledrion\Helper $helper */
-    $helper       = Oledrion\Helper::getInstance();
+    $moduleDirNameUpper = mb_strtoupper($moduleDirName);
+
     $utility      = new Oledrion\Utility();
     $configurator = new Common\Configurator();
-    // Load language files
-    $helper->loadLanguage('admin');
-    $helper->loadLanguage('modinfo');
-    $helper->loadLanguage('common');
 
     $tables = \Xmf\Module\Helper::getHelper($moduleDirName)->getModule()->getInfo('tables');
 
+    $language = 'english/';
+    if (is_dir(__DIR__ . '/' . $xoopsConfig['language'])) {
+        $language = $xoopsConfig['language'] . '/';
+    }
+
     foreach ($tables as $table) {
-        $tabledata = \Xmf\Yaml::readWrapped($table . '.yml');
+        $tabledata = \Xmf\Yaml::readWrapped($language . $table . '.yml');
         \Xmf\Database\TableLoad::truncateTable($table);
         \Xmf\Database\TableLoad::loadTableFromArray($table, $tabledata);
     }
 
     //  ---  COPY test folder files ---------------
-    if (count($configurator->copyTestFolders) > 0) {
-        //        $file =  dirname(__DIR__) . '/testdata/images/';
+    if (is_array($configurator->copyTestFolders) && count($configurator->copyTestFolders) > 0) {
+        //        $file = __DIR__ . '/../testdata/images/';
         foreach (array_keys($configurator->copyTestFolders) as $i) {
             $src  = $configurator->copyTestFolders[$i][0];
             $dest = $configurator->copyTestFolders[$i][1];
             $utility::rcopy($src, $dest);
         }
     }
-
-    redirect_header('../admin/index.php', 0, constant('CO_' . $moduleDirNameUpper . '_SAMPLEDATA_SUCCESS'));
+    redirect_header('../admin/index.php', 1, constant('CO_' . $moduleDirNameUpper . '_' . 'SAMPLEDATA_SUCCESS'));
 }
 
 function saveSampleData()
 {
+    global $xoopsConfig;
     $moduleDirName      = basename(dirname(__DIR__));
     $moduleDirNameUpper = mb_strtoupper($moduleDirName);
 
     $tables = \Xmf\Module\Helper::getHelper($moduleDirName)->getModule()->getInfo('tables');
 
-    $exportFolder = __DIR__ . '/Exports-' . date("Y-m-d-H-i-s") . '/';
-    \XoopsModules\Oledrion\Utility::createFolder($exportFolder);
+    $languageFolder = __DIR__ . '/' . $xoopsConfig['language'];
+    if (!file_exists($languageFolder . '/')) {
+        Utility::createFolder($languageFolder . '/');
+    }
+    $exportFolder = $languageFolder . '/Exports-' . date('Y-m-d-H-i-s') . '/';
+    Utility::createFolder($exportFolder);
 
     foreach ($tables as $table) {
         \Xmf\Database\TableLoad::saveTableToYamlFile($table, $exportFolder . $table . '.yml');
@@ -105,7 +117,8 @@ function exportSchema()
         //
         //        redirect_header('../admin/index.php', 1, constant('CO_' . $moduleDirNameUpper . '_' . 'EXPORT_SCHEMA_SUCCESS'));
     }
-    catch (\Throwable $e) {
+    catch (\Exception $e) {
         exit(constant('CO_' . $moduleDirNameUpper . '_' . 'EXPORT_SCHEMA_ERROR'));
     }
+
 }

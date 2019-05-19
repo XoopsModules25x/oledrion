@@ -26,7 +26,6 @@ use XoopsModules\Oledrion;
  * Managing payment gateway options
  */
 
-
 /**
  * Class GatewaysOptionsHandler
  */

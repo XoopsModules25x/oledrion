@@ -26,8 +26,6 @@ use XoopsModules\Oledrion;
  * Gestion des catégories de produits
  */
 
-
-
 /**
  * Class CategoryHandler
  */
@@ -77,10 +75,10 @@ class CategoryHandler extends OledrionPersistableObjectHandler
     /**
      * Internal function to make an expanded view of categories via <li>
      *
-     * @param  string                         $fieldName
-     * @param  string                         $key
-     * @param  string                         $ret
-     * @param  array $tree
+     * @param  string $fieldName
+     * @param  string $key
+     * @param  string $ret
+     * @param  array  $tree
      * @return string
      */
     private function _makeLi($fieldName, $key, &$ret, $tree)
@@ -108,7 +106,7 @@ class CategoryHandler extends OledrionPersistableObjectHandler
      */
     public function getUlMenu($fieldName, $key = 0)
     {
-//        require_once XOOPS_ROOT_PATH . '/class/tree.php';
+        //        require_once XOOPS_ROOT_PATH . '/class/tree.php';
         $items      = $this->getAllCategories(new Oledrion\Parameters());
         $treeObject = new Oledrion\XoopsObjectTree($items, 'cat_cid', 'cat_pid');
         $tree       = $treeObject->getTree();
@@ -176,7 +174,7 @@ class CategoryHandler extends OledrionPersistableObjectHandler
     public function getCategoriesFromIds($ids)
     {
         $ret = [];
-        if (is_array($ids) && count($ids) > 0) {
+        if ($ids && is_array($ids)) {
             $criteria = new \Criteria('cat_cid', '(' . implode(',', $ids) . ')', 'IN');
             $ret      = $this->getObjects($criteria, true, true, '*', false);
         }

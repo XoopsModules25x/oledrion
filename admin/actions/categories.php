@@ -43,12 +43,8 @@ switch ($action) {
         $categories = $categoryHandler->getAllCategories(new Oledrion\Parameters());
         $mytree     = new Oledrion\XoopsObjectTree($categories, 'cat_cid', 'cat_pid');
 
-        if (Oledrion\Utility::checkVerXoops($GLOBALS['xoopsModule'], '2.5.9')) {
-            $categoriesSelect0 = $mytree->makeSelectElement('id', 'cat_title', '--', '', true, 0, '', '');
-            $categoriesSelect  = $categoriesSelect0->render();
-        } else {
-            $categoriesSelect = $mytree->makeSelBox('id', 'cat_title', '-- ', '', true);
-        }
+        $categoriesSelect0 = $mytree->makeSelectElement('id', 'cat_title', '--', '', true, 0, '', '');
+        $categoriesSelect  = $categoriesSelect0->render();
 
         echo "<div class='even'><form method='post' name='quickaccess' id='quickaccess' action='$baseurl' >"
              . _AM_OLEDRION_LIST
@@ -96,10 +92,10 @@ switch ($action) {
         $chunk->addOptionArray($positions);
         $sform->addElement($chunk, true);
 
-        $button_tray = new \XoopsFormElementTray('', '');
-        $submit_btn  = new \XoopsFormButton('', 'post', _AM_OLEDRION_OK, 'submit');
-        $button_tray->addElement($submit_btn);
-        $sform->addElement($button_tray);
+        $buttonTray = new \XoopsFormElementTray('', '');
+        $submit_btn = new \XoopsFormButton('', 'post', _AM_OLEDRION_OK, 'submit');
+        $buttonTray->addElement($submit_btn);
+        $sform->addElement($buttonTray);
         $sform = Oledrion\Utility::formMarkRequiredFields($sform);
         $sform->display();
         require_once OLEDRION_ADMIN_PATH . 'admin_footer.php';
@@ -155,13 +151,8 @@ switch ($action) {
         $sform->addElement(new \XoopsFormHidden('cat_cid', $item->getVar('cat_cid')));
         $sform->addElement(new \XoopsFormText(_AM_OLEDRION_CATEG_TITLE, 'cat_title', 50, 255, $item->getVar('cat_title', 'e')), true);
 
-        if (Oledrion\Utility::checkVerXoops($GLOBALS['xoopsModule'], '2.5.9')) {
-            $select_categ = $mytree->makeSelectElement('cat_pid', 'cat_title', '--', $item->getVar('cat_pid'), true, 0, '', _AM_OLEDRION_PARENT_CATEG);
-            $sform->addElement($select_categ);
-        } else {
-            $select_categ = $mytree->makeSelBox('cat_pid', 'cat_title', '-', $item->getVar('cat_pid'), true);
-            $sform->addElement(new \XoopsFormLabel(_AM_OLEDRION_PARENT_CATEG, $select_categ), false);
-        }
+        $select_categ = $mytree->makeSelectElement('cat_pid', 'cat_title', '--', $item->getVar('cat_pid'), true, 0, '', _AM_OLEDRION_PARENT_CATEG);
+        $sform->addElement($select_categ);
 
         if ('edit' === $action && $item->pictureExists()) {
             $pictureTray = new \XoopsFormElementTray(_AM_OLEDRION_CURRENT_PICTURE, '<br>');
@@ -195,10 +186,10 @@ switch ($action) {
             $sform->addElement(new \XoopsFormText(_AM_OLEDRION_META_PAGETITLE, 'cat_metatitle', 50, 255, $item->getVar('cat_metatitle', 'e')), false);
         }
 
-        $button_tray = new \XoopsFormElementTray('', '');
-        $submit_btn  = new \XoopsFormButton('', 'post', $label_submit, 'submit');
-        $button_tray->addElement($submit_btn);
-        $sform->addElement($button_tray);
+        $buttonTray = new \XoopsFormElementTray('', '');
+        $submit_btn = new \XoopsFormButton('', 'post', $label_submit, 'submit');
+        $buttonTray->addElement($submit_btn);
+        $sform->addElement($buttonTray);
 
         $sform = Oledrion\Utility::formMarkRequiredFields($sform);
         $sform->display();

@@ -23,8 +23,10 @@ use XoopsModules\Oledrion;
 /** @var Oledrion\Helper $helper */
 $helper = Oledrion\Helper::getInstance();
 
-$pathIcon32    = \Xmf\Module\Admin::menuIconPath('');
-$pathModIcon32 = $helper->getModule()->getInfo('modicons32');
+$pathIcon32 = \Xmf\Module\Admin::menuIconPath('');
+if (is_object($helper->getModule())) {
+    $pathModIcon32 = $helper->getModule()->getInfo('modicons32');
+}
 
 $adminmenu[] = [
     'title' => _MI_OLEDRION_ADMENU10,

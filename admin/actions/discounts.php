@@ -240,7 +240,7 @@ switch ($action) {
 
         // Groupes
         $xoopsTpl->assign('disc_groups_selected', $item->getVar('disc_group'));
-    /** @var \XoopsMemberHandler $memberHandler */
+        /** @var \XoopsMemberHandler $memberHandler */
         $memberHandler = xoops_getHandler('member');
         $groups        = $memberHandler->getGroupList();
         $groups[0]     = _ALL;
@@ -251,13 +251,8 @@ switch ($action) {
         $categories = $categoryHandler->getAllCategories(new Oledrion\Parameters());
         $mytree     = new Oledrion\XoopsObjectTree($categories, 'cat_cid', 'cat_pid');
 
-        if (Oledrion\Utility::checkVerXoops($GLOBALS['xoopsModule'], '2.5.9')) {
-            $categoriesSelect0 = $mytree->makeSelectElement('disc_cat_cid', 'cat_title', '-', $item->getVar('disc_cat_cid'), true, 0, '', '');
-            $categoriesSelect  = $categoriesSelect0->render();
-        } else {
-            $categoriesSelect = $mytree->makeSelBox('disc_cat_cid', 'cat_title', '-', $item->getVar('disc_cat_cid'), _ALL);
-        }
-
+        $categoriesSelect0                          = $mytree->makeSelectElement('disc_cat_cid', 'cat_title', '-', $item->getVar('disc_cat_cid'), true, 0, '', '');
+        $categoriesSelect                           = $categoriesSelect0->render();
         $discountForTemplate['disc_cat_cid_select'] = $categoriesSelect;
 
         // Fabricants

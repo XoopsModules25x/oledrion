@@ -98,10 +98,10 @@ switch ($action) {
         $sform->addElement(new \XoopsFormText(_AM_OLEDRION_RATE, 'vat_rate', 10, 15, $item->getVar('vat_rate', 'e')), true);
         $sform->addElement(new \XoopsFormText(_AM_OLEDRION_COUNTRY, 'vat_country', 35, 128, $item->getVar('vat_country', 'e')), true);
 
-        $button_tray = new \XoopsFormElementTray('', '');
-        $submit_btn  = new \XoopsFormButton('', 'post', $label_submit, 'submit');
-        $button_tray->addElement($submit_btn);
-        $sform->addElement($button_tray);
+        $buttonTray = new \XoopsFormElementTray('', '');
+        $submit_btn = new \XoopsFormButton('', 'post', $label_submit, 'submit');
+        $buttonTray->addElement($submit_btn);
+        $sform->addElement($buttonTray);
         $sform = Oledrion\Utility::formMarkRequiredFields($sform);
         $sform->display();
         require_once OLEDRION_ADMIN_PATH . 'admin_footer.php';

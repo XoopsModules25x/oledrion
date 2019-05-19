@@ -22,10 +22,12 @@
 function oledrion_notify_iteminfo($category, $item_id)
 {
     global $xoopsModule, $xoopsModuleConfig;
+    /** @var \XoopsDatabase $db */
+    $db = \XoopsDatabaseFactory::getDatabaseConnection();
     $item_id = (int)$item_id;
 
     if (empty($xoopsModule) || 'oledrion' !== $xoopsModule->getVar('dirname')) {
-        /** @var XoopsModuleHandler $moduleHandler */
+        /** @var \XoopsModuleHandler $moduleHandler */
         $moduleHandler = xoops_getHandler('module');
         $module        = $moduleHandler->getByDirname('oledrion');
         /** @var \XoopsConfigHandler $configHandler */
@@ -46,8 +48,8 @@ function oledrion_notify_iteminfo($category, $item_id)
 
     if ('new_category' === $category) {
         include OLEDRION_PATH . 'include/common.php';
-        $categoryHandler = new \XoopsModules\Oledrion\CategoryHandler();
-        $category = $categoryHandler->get($item_id);
+        $categoryHandler = new \XoopsModules\Oledrion\CategoryHandler($db);
+        $category        = $categoryHandler->get($item_id);
         if (is_object($category)) {
             $item['name'] = $category->getVar('cat_title');
             $item['url']  = OLEDRION_URL . 'category.php?cat_cid=' . $item_id;
@@ -58,8 +60,8 @@ function oledrion_notify_iteminfo($category, $item_id)
 
     if ('new_product' === $category) {
         include OLEDRION_PATH . 'include/common.php';
-        $productsHandler = new \XoopsModules\Oledrion\ProductsHandler();
-        $product = $productsHandler->get($item_id);
+        $productsHandler = new \XoopsModules\Oledrion\ProductsHandler($db);
+        $product         = $productsHandler->get($item_id);
         if (is_object($product)) {
             $item['name'] = $product->getVar('product_title');
             $item['url']  = OLEDRION_URL . 'product.php?product_id=' . $item_id;

@@ -117,10 +117,10 @@ function listForm($op, $product_id = 0)
             $sform->addElement(new \XoopsFormHidden('product_id', $product_id));
         }
     }
-    $button_tray = new \XoopsFormElementTray('', '');
-    $submit_btn  = new \XoopsFormButton('', 'post', $label_submit, 'submit');
-    $button_tray->addElement($submit_btn);
-    $sform->addElement($button_tray);
+    $buttonTray = new \XoopsFormElementTray('', '');
+    $submit_btn = new \XoopsFormButton('', 'post', $label_submit, 'submit');
+    $buttonTray->addElement($submit_btn);
+    $sform->addElement($buttonTray);
 
     $sform = Oledrion\Utility::formMarkRequiredFields($sform);
 

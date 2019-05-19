@@ -26,7 +26,6 @@ use XoopsModules\Oledrion;
  * Gestion des caddy
  */
 
-
 /**
  * Class Caddy
  */

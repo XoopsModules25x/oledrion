@@ -1,0 +1,17 @@
+---
+# oledrion_related
+-
+  related_id: 1
+  related_product_id: 1
+  related_product_related: 1
+  related_product_percent: 10
+-
+  related_id: 2
+  related_product_id: 2
+  related_product_related: 2
+  related_product_percent: 20
+-
+  related_id: 3
+  related_product_id: 3
+  related_product_related: 3
+  related_product_percent: 30

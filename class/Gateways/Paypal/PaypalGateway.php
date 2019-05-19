@@ -104,10 +104,10 @@ class PaypalGateway extends Gateway
         // Forced to true ...
         $sform->addElement(new \XoopsFormHidden('use_ipn', 1));
 
-        $button_tray = new \XoopsFormElementTray('', '');
-        $submit_btn  = new \XoopsFormButton('', 'post', _AM_OLEDRION_GATEWAYS_UPDATE, 'submit');
-        $button_tray->addElement($submit_btn);
-        $sform->addElement($button_tray);
+        $buttonTray = new \XoopsFormElementTray('', '');
+        $submit_btn = new \XoopsFormButton('', 'post', _AM_OLEDRION_GATEWAYS_UPDATE, 'submit');
+        $buttonTray->addElement($submit_btn);
+        $sform->addElement($buttonTray);
 
         return $sform;
     }
@@ -383,7 +383,7 @@ class PaypalGateway extends Gateway
                                         //R.B. end
 
                                         if (false === @unlink($email_name)) {
-                                            throw new \RuntimeException('The file '.$email_name.' could not be deleted.');
+                                            throw new \RuntimeException('The file ' . $email_name . ' could not be deleted.');
                                         }
                                     } else {
                                         $duplicate_ipn = 1;

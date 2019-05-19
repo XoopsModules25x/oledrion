@@ -22,8 +22,6 @@ namespace XoopsModules\Oledrion;
 
 use XoopsModules\Oledrion;
 
-
-
 /**
  * Class DeliveryHandler
  */
@@ -87,7 +85,7 @@ class DeliveryHandler extends OledrionPersistableObjectHandler
         $obj = $this->getObjects($critere);
         if ($obj) {
             foreach ($obj as $root) {
-//                $tab = [];
+                //                $tab = [];
                 $tab = $root->toArray();
                 if (isset($location_delivery[$root->getVar('delivery_id')]['ld_delivery']) && $location_delivery[$root->getVar('delivery_id')]['ld_delivery'] == $root->getVar('delivery_id')) {
                     $tab['ld_id']['delivery_select']  = 1;

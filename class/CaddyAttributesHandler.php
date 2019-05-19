@@ -26,7 +26,6 @@ use XoopsModules\Oledrion;
  * Gestion des options (attributs) produits dans les commandes
  */
 
-
 /**
  * Class CaddyAttributesHandler
  */

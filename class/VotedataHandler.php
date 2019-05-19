@@ -26,8 +26,6 @@ use XoopsModules\Oledrion;
  * Gestion des votes sur les produits
  */
 
-
-
 /**
  * Class VotedataHandler
  */
@@ -39,7 +37,10 @@ class VotedataHandler extends OledrionPersistableObjectHandler
      */
     public function __construct(\XoopsDatabase $db = null)
     {
-        //                                Table                   Classe           Id
+        if (null === $db) {
+            $db = \XoopsDatabaseFactory::getDatabaseConnection();
+        }
+        //                                Table                   Classe                             Id
         parent::__construct($db, 'oledrion_votedata', Votedata::class, 'vote_ratingid');
     }
 
@@ -113,6 +114,7 @@ class VotedataHandler extends OledrionPersistableObjectHandler
         $criteria->add(new \Criteria('vote_product_id', $vote_product_id, '='));
         $criteria->add(new \Criteria('vote_uid', $vote_uid, '='));
         $count = $this->getCount($criteria);
+
         return $count > 0;
     }
 
@@ -136,6 +138,7 @@ class VotedataHandler extends OledrionPersistableObjectHandler
         $criteria->add(new \Criteria('vote_ratinghostname', $ip, '='));
         $criteria->add(new \Criteria('vote_ratingtimestamp', $yesterday, '>'));
         $count = $this->getCount($criteria);
+
         return $count > 0;
     }
 

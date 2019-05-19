@@ -28,7 +28,6 @@ use XoopsModules\Oledrion;
  * @since 2.3.2009.06.13
  */
 
-
 /**
  * Class ProductsList
  */

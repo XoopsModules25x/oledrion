@@ -30,7 +30,6 @@ use XoopsModules\Oledrion;
  * Si l'utilisateur quitte le site et revient plus tard, cela permet de recharger son panier.
  */
 
-
 /**
  * Class PersistentCartHandler
  */

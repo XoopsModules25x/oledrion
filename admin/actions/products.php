@@ -35,7 +35,7 @@ switch ($action) {
         $adminObject = \Xmf\Module\Admin::getInstance();
         $adminObject->displayNavigation('index.php?op=products');
 
-        $products = $categories = [];
+        $products = $categories = $vats = [];
 
         // Récupération des données uniques
         $categories = $categoryHandler->getAllCategories(new Oledrion\Parameters([
@@ -60,7 +60,6 @@ switch ($action) {
              . _GO
              . "'></form>";
 
-        $vats = [];
         $vats = $vatHandler->getAllVats(new Oledrion\Parameters());
 
         $start = \Xmf\Request::getInt('start', 0, 'GET');
@@ -162,12 +161,8 @@ switch ($action) {
         }
         $mytree = new Oledrion\XoopsObjectTree($categories, 'cat_cid', 'cat_pid');
 
-        if (Oledrion\Utility::checkVerXoops($GLOBALS['xoopsModule'], '2.5.9')) {
-            $selectCateg0 = $mytree->makeSelectElement('filter_product_cid', 'cat_title', '-', $filter_product_cid, true, 0, '', '');
-            $selectCateg  = $selectCateg0->render();
-        } else {
-            $selectCateg = $mytree->makeSelBox('filter_product_cid', 'cat_title', '-', $filter_product_cid, '---', 0, "style='width: 170px; max-width: 170px;'");
-        }
+        $selectCateg0 = $mytree->makeSelectElement('filter_product_cid', 'cat_title', '-', $filter_product_cid, true, 0, '', '');
+        $selectCateg  = $selectCateg0->render();
 
         $onlineSelect = Oledrion\Utility::htmlSelect('filter_product_online', [2 => _YES, 1 => _NO], $filter_product_online);
         // B.R. New
@@ -423,13 +418,9 @@ switch ($action) {
         $vendorsSelect->addOptionArray($vendorsForDisplay);
         $sform->addElement($vendorsSelect, true);
 
-        if (Oledrion\Utility::checkVerXoops($GLOBALS['xoopsModule'], '2.5.9')) {
-            $select_categ = $mytree->makeSelectElement('product_cid', 'cat_title', '-', $item->getVar('product_cid'), true, 0, '', _AM_OLEDRION_CATEG_HLP);
-            $sform->addElement($select_categ);
-        } else {
-            $select_categ = $mytree->makeSelBox('product_cid', 'cat_title', '-', $item->getVar('product_cid'));
-            $sform->addElement(new \XoopsFormLabel(_AM_OLEDRION_CATEG_HLP, $select_categ), true);
-        }
+        $select_categ = $mytree->makeSelectElement('product_cid', 'cat_title', '-', $item->getVar('product_cid'), true, 0, '', _AM_OLEDRION_CATEG_HLP);
+        $sform->addElement($select_categ);
+
         // B.R. New
         $sform->addElement(new \XoopsFormRadioYN(_OLEDRION_SKIP_PACKING, 'skip_packing', $item->getVar('skip_packing')), true);
         $sform->addElement(new \XoopsFormRadioYN(_OLEDRION_SKIP_LOCATION, 'skip_location', $item->getVar('skip_location')), true);
@@ -583,7 +574,7 @@ switch ($action) {
         // Tags
         if (Oledrion\Utility::getModuleOption('use_tags')) {
             require_once XOOPS_ROOT_PATH . '/modules/tag/include/formtag.php';
-            $sform->addElement(new TagFormTag('item_tag', 60, 255, $item->getVar('product_id'), 0));
+            $sform->addElement(new \XoopsModules\Tag\FormTag('item_tag', 60, 255, $item->getVar('product_id'), 0));
         }
 
         // META Data
@@ -696,10 +687,10 @@ switch ($action) {
             $sform->addElement($property10select, false);
         }
 
-        $button_tray = new \XoopsFormElementTray('', '');
-        $submit_btn  = new \XoopsFormButton('', 'post', $label_submit, 'submit');
-        $button_tray->addElement($submit_btn);
-        $sform->addElement($button_tray);
+        $buttonTray = new \XoopsFormElementTray('', '');
+        $submit_btn = new \XoopsFormButton('', 'post', $label_submit, 'submit');
+        $buttonTray->addElement($submit_btn);
+        $sform->addElement($buttonTray);
 
         $sform = Oledrion\Utility::formMarkRequiredFields($sform);
         $sform->display();
@@ -993,10 +984,10 @@ switch ($action) {
             $sform->addElement(new \XoopsFormText($value['title'], $value['id'], 5, 5, $value['percent']), false);
         }
 
-        $button_tray = new \XoopsFormElementTray('', '');
-        $submit_btn  = new \XoopsFormButton('', 'post', _SUBMIT, 'submit');
-        $button_tray->addElement($submit_btn);
-        $sform->addElement($button_tray);
+        $buttonTray = new \XoopsFormElementTray('', '');
+        $submit_btn = new \XoopsFormButton('', 'post', _SUBMIT, 'submit');
+        $buttonTray->addElement($submit_btn);
+        $sform->addElement($buttonTray);
         $sform = Oledrion\Utility::formMarkRequiredFields($sform);
         $sform->display();
 

@@ -264,7 +264,6 @@ if (!defined('_OLEDRION_EDIT')) {
 
 $pathIcon16 = \Xmf\Module\Admin::iconUrl('', 16);
 
-
 $icons = [
     'edit'     => "<img src='" . $pathIcon16 . "/edit.png'  alt=" . _OLEDRION_EDIT . "' align='middle'>",
     'delete'   => "<img src='" . $pathIcon16 . "/delete.png' alt='" . _OLEDRION_DELETE . "' align='middle'>",
@@ -282,17 +281,16 @@ $icons = [
 
 // Loading some preferences
 $mod_pref = [
-//        'money_short'     => Oledrion\Utility::getModuleOption('money_short'),
-//        'money_full'      => Oledrion\Utility::getModuleOption('money_full'),
-//        'url_rewriting'   => Oledrion\Utility::getModuleOption('urlrewriting'),
-//        'tooltip'         => Oledrion\Utility::getModuleOption('infotips'),
-//        'advertisement'   => Oledrion\Utility::getModuleOption('advertisement'),
-//        'rss'             => Oledrion\Utility::getModuleOption('use_rss'),
-//        'nostock_msg'     => Oledrion\Utility::getModuleOption('nostock_msg'),
-//        'use_price'       => Oledrion\Utility::getModuleOption('use_price'),
-//        'restrict_orders' => Oledrion\Utility::getModuleOption('restrict_orders'),
-//        'isAdmin'         => Oledrion\Utility::isAdmin()
-
+    //        'money_short'     => Oledrion\Utility::getModuleOption('money_short'),
+    //        'money_full'      => Oledrion\Utility::getModuleOption('money_full'),
+    //        'url_rewriting'   => Oledrion\Utility::getModuleOption('urlrewriting'),
+    //        'tooltip'         => Oledrion\Utility::getModuleOption('infotips'),
+    //        'advertisement'   => Oledrion\Utility::getModuleOption('advertisement'),
+    //        'rss'             => Oledrion\Utility::getModuleOption('use_rss'),
+    //        'nostock_msg'     => Oledrion\Utility::getModuleOption('nostock_msg'),
+    //        'use_price'       => Oledrion\Utility::getModuleOption('use_price'),
+    //        'restrict_orders' => Oledrion\Utility::getModuleOption('restrict_orders'),
+    //        'isAdmin'         => Oledrion\Utility::isAdmin()
 
     'money_short'     => $helper->getConfig('money_short'),
     'money_full'      => $helper->getConfig('money_full'),
@@ -306,10 +304,8 @@ $mod_pref = [
     'isAdmin'         => $helper->isUserAdmin(),
 ];
 
-
 //$pathModIcon16 = $helper->getModule()->getInfo('modicons16');
 //$pathModIcon32 = $helper->getModule()->getInfo('modicons32');
-
 
 $icons2 = [
     'edit'    => "<img src='" . $pathIcon16 . "/edit.png'  alt=" . _EDIT . "' align='middle'>",
@@ -322,7 +318,7 @@ $icons2 = [
     '0'       => "<img src='" . $pathIcon16 . "/0.png' alt='" . 0 . "' align='middle'>",
     '1'       => "<img src='" . $pathIcon16 . "/1.png' alt='" . 1 . "' align='middle'>",
 ];
-$debug = false;
+$debug  = false;
 
 // MyTextSanitizer object
 $myts = \MyTextSanitizer::getInstance();

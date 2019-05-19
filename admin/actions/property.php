@@ -98,10 +98,10 @@ switch ($action) {
         $property10->setDescription(_AM_OLEDRION_PRODUCT_PROPERTY_DESC);
         $sform->addElement($property10);
 
-        $button_tray = new \XoopsFormElementTray('', '');
-        $submit_btn  = new \XoopsFormButton('', 'post', _AM_OLEDRION_MODIFY, 'submit');
-        $button_tray->addElement($submit_btn);
-        $sform->addElement($button_tray);
+        $buttonTray = new \XoopsFormElementTray('', '');
+        $submit_btn = new \XoopsFormButton('', 'post', _AM_OLEDRION_MODIFY, 'submit');
+        $buttonTray->addElement($submit_btn);
+        $sform->addElement($buttonTray);
         $sform = Oledrion\Utility::formMarkRequiredFields($sform);
         $sform->display();
 

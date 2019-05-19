@@ -40,7 +40,7 @@ switch ($action) {
                     . "'></form>";
         echo $form;
         //        Oledrion\Utility::htitle(_MI_OLEDRION_ADMENU20, 4);
-        $delivery = $deliveryHandler->getAllDelivery(new Oledrion\Parameters(['start' => $start, 'limit' => $limit,]));
+        $delivery = $deliveryHandler->getAllDelivery(new Oledrion\Parameters(['start' => $start, 'limit' => $limit]));
 
         $class = '';
         echo "<table width='100%' cellspacing='1' cellpadding='3' border='0' class='outer'>";
@@ -137,10 +137,10 @@ switch ($action) {
             $sform->addElement($editor, false);
         }
         $sform->addElement(new \XoopsFormRadioYN(_OLEDRION_ONLINE_HLP, 'delivery_online', $item->getVar('delivery_online')), true);
-        $button_tray = new \XoopsFormElementTray('', '');
-        $submit_btn  = new \XoopsFormButton('', 'post', $label_submit, 'submit');
-        $button_tray->addElement($submit_btn);
-        $sform->addElement($button_tray);
+        $buttonTray = new \XoopsFormElementTray('', '');
+        $submit_btn = new \XoopsFormButton('', 'post', $label_submit, 'submit');
+        $buttonTray->addElement($submit_btn);
+        $sform->addElement($buttonTray);
         $sform = Oledrion\Utility::formMarkRequiredFields($sform);
         $sform->display();
         require_once OLEDRION_ADMIN_PATH . 'admin_footer.php';

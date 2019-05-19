@@ -152,7 +152,7 @@ class OledrionPersistableObjectHandler extends \XoopsPersistableObjectHandler
     public function getItemsFromIds($ids)
     {
         $ret = [];
-        if (is_array($ids) && count($ids) > 0) {
+        if ($ids && is_array($ids)) {
             $criteria = new \Criteria($this->keyName, '(' . implode(',', $ids) . ')', 'IN');
             $ret      = $this->getObjects($criteria, true);
         }
@@ -163,7 +163,7 @@ class OledrionPersistableObjectHandler extends \XoopsPersistableObjectHandler
     /**
      * Retourne le total d'un champ
      *
-     * @param  string           $field    Le champ dont on veut calculer le total
+     * @param  string                          $field    Le champ dont on veut calculer le total
      * @param  \CriteriaElement|\CriteriaCompo $criteria to match
      * @return int le total
      */
@@ -173,7 +173,7 @@ class OledrionPersistableObjectHandler extends \XoopsPersistableObjectHandler
         //require_once __DIR__ . '/lite.php';
 
         $sql = 'SELECT Sum(' . $field . ') as cpt FROM ' . $this->table;
-        if (null !== $criteria && is_subclass_of($criteria, 'CriteriaElement')) {
+        if (null !== $criteria && $criteria instanceof \CriteriaElement) {
             $sql .= ' ' . $criteria->renderWhere();
             if ('' !== $criteria->groupby) {
                 $sql .= $criteria->getGroupby();
@@ -274,9 +274,9 @@ class OledrionPersistableObjectHandler extends \XoopsPersistableObjectHandler
     /**
      * Get distincted values of a field in the table
      *
-     * @param  string           $field    Field's name
+     * @param  string                          $field    Field's name
      * @param  \CriteriaElement|\CriteriaCompo $criteria conditions to be met
-     * @param  string           $format   Format in wich we want the datas
+     * @param  string                          $format   Format in wich we want the datas
      * @return array  containing the distinct values
      */
     public function getDistincts($field, $criteria = null, $format = 's')
@@ -284,7 +284,7 @@ class OledrionPersistableObjectHandler extends \XoopsPersistableObjectHandler
         //require_once __DIR__ . '/lite.php';
         $limit = $start = 0;
         $sql   = 'SELECT ' . $this->keyName . ', ' . $field . ' FROM ' . $this->table;
-        if (null !== $criteria && is_subclass_of($criteria, 'CriteriaElement')) {
+        if (null !== $criteria && $criteria instanceof \CriteriaElement) {
             $sql   .= ' ' . $criteria->renderWhere();
             $limit = $criteria->getLimit();
             $start = $criteria->getStart();

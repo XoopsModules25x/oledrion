@@ -225,7 +225,7 @@ class Gateways
      */
     public static function asGoodAncestor($gateway)
     {
-        return 'XoopsModules\Oledrion\Gateways\Gateway' === get_parent_class($gateway);
+        return $gateway instanceof \XoopsModules\Oledrion\Gateways\Gateway;
     }
 
     /**
@@ -237,7 +237,7 @@ class Gateways
     public static function isInstalledGatewayName($gatewayName)
     {
         $installedGateways = self::getInstalledGatewaysList();
-        if (!in_array($gatewayName, $installedGateways, true)) {
+        if (!in_array($gatewayName, $installedGateways)) {
             return false;
         }
 

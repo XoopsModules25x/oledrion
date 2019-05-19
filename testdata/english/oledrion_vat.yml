@@ -5,10 +5,10 @@
   vat_rate: 5.00
   vat_country: "US"
 -
-  vat_id: 1
+  vat_id: 2
   vat_rate: 10.00
   vat_country: "DE"
 -
-  vat_id: 1
+  vat_id: 3
   vat_rate: 8.00
   vat_country: "CA"

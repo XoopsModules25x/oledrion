@@ -22,8 +22,6 @@ namespace XoopsModules\Oledrion;
 
 use XoopsModules\Oledrion;
 
-
-
 /**
  * Class Delivery
  */
@@ -79,8 +77,8 @@ class Delivery extends OledrionObject
     public function deletePicture()
     {
         if ($this->pictureExists()) {
-            if (false === @unlink(OLEDRION_PICTURES_PATH . '/' . $this->getVar('delivery_image'))){
-                throw new \RuntimeException('The picture '.OLEDRION_PICTURES_PATH . '/' . $this->getVar('delivery_image').' could not be deleted.');
+            if (false === @unlink(OLEDRION_PICTURES_PATH . '/' . $this->getVar('delivery_image'))) {
+                throw new \RuntimeException('The picture ' . OLEDRION_PICTURES_PATH . '/' . $this->getVar('delivery_image') . ' could not be deleted.');
             }
         }
         $this->setVar('delivery_image', '');

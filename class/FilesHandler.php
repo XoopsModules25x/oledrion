@@ -26,8 +26,6 @@ use XoopsModules\Oledrion;
  * Gestion des fichies attachés aux produits
  */
 
-
-
 /**
  * Class FilesHandler
  */
