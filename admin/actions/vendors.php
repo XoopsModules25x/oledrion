@@ -101,10 +101,10 @@ switch ($action) {
         $sform->addElement(new \XoopsFormHidden('vendor_id', $item->getVar('vendor_id')));
         $sform->addElement(new \XoopsFormText(_OLEDRION_VENDOR, 'vendor_name', 50, 150, $item->getVar('vendor_name', 'e')), true);
 
-        $button_tray = new \XoopsFormElementTray('', '');
-        $submit_btn  = new \XoopsFormButton('', 'post', $label_submit, 'submit');
-        $button_tray->addElement($submit_btn);
-        $sform->addElement($button_tray);
+        $buttonTray = new \XoopsFormElementTray('', '');
+        $submit_btn = new \XoopsFormButton('', 'post', $label_submit, 'submit');
+        $buttonTray->addElement($submit_btn);
+        $sform->addElement($buttonTray);
         $sform = Oledrion\Utility::formMarkRequiredFields($sform);
         $sform->display();
         require_once OLEDRION_ADMIN_PATH . 'admin_footer.php';

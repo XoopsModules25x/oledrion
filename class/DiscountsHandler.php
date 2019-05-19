@@ -26,7 +26,6 @@ use XoopsModules\Oledrion;
  * Gestion des réductions
  */
 
-
 /**
  * Class DiscountsHandler
  */
@@ -60,7 +59,7 @@ class DiscountsHandler extends OledrionPersistableObjectHandler
     public function getRulesForThisPeriod()
     {
         static $buffer = [];
-        if (is_array($buffer) && count($buffer) > 0) {
+        if ($buffer && is_array($buffer)) {
             return $buffer;
         }
 
@@ -90,7 +89,7 @@ class DiscountsHandler extends OledrionPersistableObjectHandler
     public function getRulesOnEachProduct()
     {
         static $buffer = [];
-        if (is_array($buffer) && count($buffer) > 0) {
+        if ($buffer && is_array($buffer)) {
         } else {
             $groups  = Oledrion\Utility::getCurrentMemberGroups();
             $critere = new \CriteriaCompo();
@@ -112,7 +111,7 @@ class DiscountsHandler extends OledrionPersistableObjectHandler
     public function getRulesOnAllProducts()
     {
         static $buffer = [];
-        if (is_array($buffer) && count($buffer) > 0) {
+        if ($buffer && is_array($buffer)) {
         } else {
             $critere = new \CriteriaCompo();
             $critere->add(new \Criteria('disc_on_what', Constants::OLEDRION_DISCOUNT_ON2, '='));
@@ -132,7 +131,7 @@ class DiscountsHandler extends OledrionPersistableObjectHandler
     public function getRulesOnShipping()
     {
         static $buffer = [];
-        if (is_array($buffer) && count($buffer) > 0) {
+        if ($buffer && is_array($buffer)) {
         } else {
             $critere = new \CriteriaCompo();
             $critere->add(new \Criteria('disc_on_what', Constants::OLEDRION_DISCOUNT_ON4, '='));
@@ -152,7 +151,7 @@ class DiscountsHandler extends OledrionPersistableObjectHandler
     public function getRulesOnShipping2()
     {
         static $buffer = [];
-        if (is_array($buffer) && count($buffer) > 0) {
+        if ($buffer && is_array($buffer)) {
         } else {
             $critere = new \CriteriaCompo();
             $critere->add(new \Criteria('disc_on_what', Constants::OLEDRION_DISCOUNT_ON5, '='));
@@ -173,7 +172,7 @@ class DiscountsHandler extends OledrionPersistableObjectHandler
     public function getRulesOnCommand()
     {
         static $buffer = [];
-        if (is_array($buffer) && count($buffer) > 0) {
+        if ($buffer && is_array($buffer)) {
         } else {
             $critere = new \CriteriaCompo();
             $critere->add(new \Criteria('disc_on_what', Constants::OLEDRION_DISCOUNT_ON1, '='));

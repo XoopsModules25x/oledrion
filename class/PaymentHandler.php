@@ -22,8 +22,6 @@ namespace XoopsModules\Oledrion;
 
 use XoopsModules\Oledrion;
 
-
-
 /**
  * Class PaymentHandler
  */
@@ -68,10 +66,11 @@ class PaymentHandler extends OledrionPersistableObjectHandler
      */
     public function getThisDeliveryPayment($delivery_id)
     {
-        global $deliveryPaymentHandler;
-//        $deliveryPaymentHandler0 = new Oledrion\DeliveryPaymentHandler();
-        $ret              = [];
-        $parameters       = ['delivery' => $delivery_id];
+        /** @var \XoopsDatabase $db */
+        $db = \XoopsDatabaseFactory::getDatabaseConnection();
+        $deliveryPaymentHandler = new Oledrion\DeliveryPaymentHandler($db);
+        $ret             = [];
+        $parameters      = ['delivery' => $delivery_id];
         $deliveryPayment = $deliveryPaymentHandler->getDeliveryPaymantId($parameters);
         foreach ($deliveryPayment as $payment) {
             $id[] = $payment['dp_payment'];

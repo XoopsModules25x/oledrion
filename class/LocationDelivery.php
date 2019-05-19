@@ -22,8 +22,6 @@ namespace XoopsModules\Oledrion;
 
 use XoopsModules\Oledrion;
 
-
-
 /**
  * Class LocationDelivery
  */
@@ -51,7 +49,7 @@ class LocationDelivery extends OledrionObject
      */
     public function toArray($format = 's')
     {
-//        $ret = [];
+        //        $ret = [];
         $ret = parent::toArray($format);
 
         return $ret;

@@ -22,13 +22,17 @@ namespace XoopsModules\Oledrion;
 
 use XoopsModules\Oledrion;
 
-
-
 /**
  * Class Location
  */
 class Location extends OledrionObject
 {
+    public $location_id;
+    public $location_pid;
+    public $location_title;
+    public $location_online;
+    public $location_type;
+
     /**
      * constructor
      *

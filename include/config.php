@@ -30,18 +30,17 @@ function getConfig()
             'uploadPath' => XOOPS_UPLOAD_PATH . '/' . $moduleDirName,
             'uploadUrl'  => XOOPS_UPLOAD_URL . '/' . $moduleDirName,
         ],
-        'uploadFolders' => [
+        'uploadFolders'  => [
             XOOPS_UPLOAD_PATH . '/' . $moduleDirName,
             XOOPS_UPLOAD_PATH . '/' . $moduleDirName . '/images',
-            XOOPS_UPLOAD_PATH . '/' . $moduleDirName . '/thumbs'
+            XOOPS_UPLOAD_PATH . '/' . $moduleDirName . '/thumbs',
         ],
-        'copyBlankFiles'     => [
+        'copyBlankFiles' => [
             XOOPS_UPLOAD_PATH . '/' . $moduleDirName . '/images',
-            XOOPS_UPLOAD_PATH . '/' . $moduleDirName . '/thumbs'
+            XOOPS_UPLOAD_PATH . '/' . $moduleDirName . '/thumbs',
         ],
 
         'copyTestFolders' => [
-            //        XOOPS_UPLOAD_PATH . '/' . $moduleDirName,
             [
                 XOOPS_ROOT_PATH . '/modules/' . $moduleDirName . '/testdata/uploads/images',
                 XOOPS_UPLOAD_PATH . '/' . $moduleDirName . '/images',
@@ -72,6 +71,8 @@ function getConfig()
             '/js',
             '/tcpdf',
             '/images',
+        ],
+        'renameTables'    => [//         'XX_archive'     => 'ZZZZ_archive',
         ],
         'modCopyright'    => "<a href='https://xoops.org' title='XOOPS Project' target='_blank'>
                      <img src='" . constant($moduleDirNameUpper . '_AUTHOR_LOGOIMG') . '\' alt=\'XOOPS Project\' /></a>',

@@ -65,9 +65,9 @@ class Products extends OledrionObject
         $this->initVar('product_rating', XOBJ_DTYPE_INT, null, false);
         $this->initVar('product_votes', XOBJ_DTYPE_INT, null, false);
         $this->initVar('product_comments', XOBJ_DTYPE_INT, null, false);
-        $this->initVar('product_price', XOBJ_DTYPE_TXTBOX, null, false);
-        $this->initVar('product_shipping_price', XOBJ_DTYPE_TXTBOX, null, false);
-        $this->initVar('product_discount_price', XOBJ_DTYPE_TXTBOX, null, false);
+        $this->initVar('product_price', XOBJ_DTYPE_TXTBOX, 0, false);
+        $this->initVar('product_shipping_price', XOBJ_DTYPE_TXTBOX, 0, false);
+        $this->initVar('product_discount_price', XOBJ_DTYPE_TXTBOX, 0, false);
         $this->initVar('product_stock', XOBJ_DTYPE_INT, null, false);
         $this->initVar('product_alert_stock', XOBJ_DTYPE_INT, null, false);
         $this->initVar('product_summary', XOBJ_DTYPE_OTHER, null, false);
@@ -82,7 +82,7 @@ class Products extends OledrionObject
         $this->initVar('product_metadescription', XOBJ_DTYPE_TXTBOX, null, false);
         $this->initVar('product_metatitle', XOBJ_DTYPE_TXTBOX, null, false);
         $this->initVar('product_delivery_time', XOBJ_DTYPE_INT, null, false);
-        $this->initVar('product_ecotaxe', XOBJ_DTYPE_TXTBOX, null, false);
+        $this->initVar('product_ecotaxe', XOBJ_DTYPE_TXTBOX, 0, false);
         $this->initVar('product_property1', XOBJ_DTYPE_TXTBOX, null, false);
         $this->initVar('product_property2', XOBJ_DTYPE_TXTBOX, null, false);
         $this->initVar('product_property3', XOBJ_DTYPE_TXTBOX, null, false);
@@ -218,8 +218,8 @@ class Products extends OledrionObject
     public function deletePicture()
     {
         if ($this->pictureExists()) {
-            if (false === @unlink(OLEDRION_PICTURES_PATH . '/' . $this->getVar('product_image_url'))){
-                throw new \RuntimeException('The picture '.OLEDRION_PICTURES_PATH . '/' . $this->getVar('product_image_url').' could not be deleted.');
+            if (false === @unlink(OLEDRION_PICTURES_PATH . '/' . $this->getVar('product_image_url'))) {
+                throw new \RuntimeException('The picture ' . OLEDRION_PICTURES_PATH . '/' . $this->getVar('product_image_url') . ' could not be deleted.');
             }
         }
         $this->setVar('product_image_url', '');
@@ -247,9 +247,8 @@ class Products extends OledrionObject
     {
         if ($this->attachmentExists()) {
             if (false === @unlink(OLEDRION_ATTACHED_FILES_PATH . '/' . $this->getVar('product_attachment'))) {
-                throw new \RuntimeException('The file '.OLEDRION_ATTACHED_FILES_PATH . '/' . $this->getVar('product_attachment').' could not be deleted.');
+                throw new \RuntimeException('The file ' . OLEDRION_ATTACHED_FILES_PATH . '/' . $this->getVar('product_attachment') . ' could not be deleted.');
             }
-
         }
         $this->setVar('product_attachment', '');
     }
@@ -260,8 +259,8 @@ class Products extends OledrionObject
     public function deleteThumb()
     {
         if ($this->thumbExists()) {
-            if (false === @unlink(OLEDRION_PICTURES_PATH . '/' . $this->getVar('product_thumb_url'))){
-                throw new \RuntimeException('The thumb '.OLEDRION_PICTURES_PATH . '/' . $this->getVar('product_thumb_url').' could not be deleted.');
+            if (false === @unlink(OLEDRION_PICTURES_PATH . '/' . $this->getVar('product_thumb_url'))) {
+                throw new \RuntimeException('The thumb ' . OLEDRION_PICTURES_PATH . '/' . $this->getVar('product_thumb_url') . ' could not be deleted.');
             }
         }
         $this->setVar('product_thumb_url', '');

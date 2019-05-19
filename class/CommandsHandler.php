@@ -26,7 +26,6 @@ use XoopsModules\Oledrion;
  * Sales order management
  */
 
-
 /**
  * Class CommandsHandler
  */
@@ -54,6 +53,7 @@ class CommandsHandler extends OledrionPersistableObjectHandler
             $uid = Oledrion\Utility::getCurrentUserID();
         }
         $critere = new \Criteria('cmd_uid', (int)$uid, '=');
+
         return $this->getCount($critere) > 0;
     }
 
@@ -75,6 +75,7 @@ class CommandsHandler extends OledrionPersistableObjectHandler
             return false;
         }
         list($count) = $this->db->fetchRow($result);
+
         return $count > 0;
     }
 
@@ -403,15 +404,17 @@ class CommandsHandler extends OledrionPersistableObjectHandler
      */
     public function removeOrder(Commands $order)
     {
+        /** @var \XoopsDatabase $db */
+        $db = \XoopsDatabaseFactory::getDatabaseConnection();
         //        $handlers = HandlerManager::getInstance();
         $cmd_id = $order->getVar('cmd_id');
         $res    = $this->delete($order);
         // Suppression des objets associés
         // 1) Ses propres caddies
-        $caddyHandler = new Oledrion\CaddyHandler();
+        $caddyHandler = new Oledrion\CaddyHandler($db);
         $caddyHandler->removeCartsFromOrderId($cmd_id);
         // 2) Les caddies des attributs
-        $caddyAttributesHandler = new Oledrion\CaddyAttributesHandler();
+        $caddyAttributesHandler = new Oledrion\CaddyAttributesHandler($db);
         $caddyAttributesHandler->removeCartsFromOrderId($cmd_id);
 
         return $res;

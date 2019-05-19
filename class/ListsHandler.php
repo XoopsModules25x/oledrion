@@ -28,8 +28,6 @@ namespace XoopsModules\Oledrion;
 
 use XoopsModules\Oledrion;
 
-
-
 /**
  * Class ListsHandler
  */
@@ -41,6 +39,9 @@ class ListsHandler extends OledrionPersistableObjectHandler
      */
     public function __construct(\XoopsDatabase $db = null)
     {
+        if (null === $db) {
+            $db = \XoopsDatabaseFactory::getDatabaseConnection();
+        }
         //                            Table               Classe           Id       Identifiant
         parent::__construct($db, 'oledrion_lists', Lists::class, 'list_id', 'list_title');
     }

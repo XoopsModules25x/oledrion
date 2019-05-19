@@ -19,8 +19,6 @@
 
 use XoopsModules\Oledrion;
 
-require_once dirname(dirname(dirname(__DIR__))) . '/include/cp_header.php';
-require_once dirname(__DIR__) . '/include/common.php';
 require_once __DIR__ . '/admin_header.php';
 
 require_once OLEDRION_PATH . 'admin/functions.php';
@@ -67,7 +65,7 @@ $action = \Xmf\Request::getCmd('action', 'default');
 // Check admin have access to this page
 $part = Oledrion\Utility::getModuleOption('admin_groups_part');
 $part = explode('|', $part);
-if (!in_array($op, $part, true)) {
+if (!in_array($op, $part)) {
     $group  = $xoopsUser->getGroups();
     $groups = Oledrion\Utility::getModuleOption('admin_groups');
     if (count(array_intersect($group, $groups)) <= 0) {

@@ -23,11 +23,11 @@ namespace XoopsModules\Oledrion;
 use XoopsModules\Oledrion;
 
 /**
- * Gestion des fichiers textes utilisés pour afficher des messages aux utilisateurs sur certaines pages
+ * Management of text files used to display messages to users on certain pages
  */
 class Registryfile
 {
-    public $filename; // Nom du fichier à traiter
+    public $filename; // File name to process
 
     /**
      * Access the only instance of this class
@@ -98,7 +98,7 @@ class Registryfile
         }
         if (file_exists($fw)) {
             if (false === @unlink($fw)) {
-                throw new \RuntimeException('The file '.$fw.' could not be deleted.');
+                throw new \RuntimeException('The file ' . $fw . ' could not be deleted.');
             }
         }
         $fp = fopen($fw, 'wb') || die('Error, impossible to create the file ' . $this->filename);

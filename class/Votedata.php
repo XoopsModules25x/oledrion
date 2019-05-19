@@ -26,7 +26,6 @@ use XoopsModules\Oledrion;
  * Gestion des votes sur les produits
  */
 
-
 /**
  * Class Votedata
  */

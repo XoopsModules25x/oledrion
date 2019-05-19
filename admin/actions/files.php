@@ -144,10 +144,10 @@ switch ($action) {
         }
         $sform->addElement(new \XoopsFormFile(_AM_OLEDRION_FILENAME, 'attachedfile', Oledrion\Utility::getModuleOption('maxuploadsize')), false);
 
-        $button_tray = new \XoopsFormElementTray('', '');
-        $submit_btn  = new \XoopsFormButton('', 'post', $label_submit, 'submit');
-        $button_tray->addElement($submit_btn);
-        $sform->addElement($button_tray);
+        $buttonTray = new \XoopsFormElementTray('', '');
+        $submit_btn = new \XoopsFormButton('', 'post', $label_submit, 'submit');
+        $buttonTray->addElement($submit_btn);
+        $sform->addElement($buttonTray);
         $sform = Oledrion\Utility::formMarkRequiredFields($sform);
         $sform->display();
         require_once OLEDRION_ADMIN_PATH . 'admin_footer.php';

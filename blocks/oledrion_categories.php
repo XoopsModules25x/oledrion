@@ -85,13 +85,9 @@ function b_oledrion_category_show($options)
         if (isset($GLOBALS['current_category']) && -1 != $GLOBALS['current_category']) {
             $cat_cid = (int)$GLOBALS['current_category'];
         }
-        //$htmlSelect = $mytree->makeSelBox('cat_cid', 'cat_title', '-', $cat_cid, false, 0, $additional);
-        if (Oledrion\Utility::checkVerXoops($GLOBALS['xoopsModule'], '2.5.9')) {
-            $select0    = $mytree->makeSelectElement('cat_cid', 'cat_title', '-', $cat_cid, false, 0, '', $additional);
-            $htmlSelect = $select0->render();
-        } else {
-            $htmlSelect = $mytree->makeSelBox('cat_cid', 'cat_title', '-', $cat_cid, false, 0, $additional);
-        }
+
+        $select0    = $mytree->makeSelectElement('cat_cid', 'cat_title', '-', $cat_cid, false, 0, '', $additional);
+        $htmlSelect = $select0->render();
 
         $block['htmlSelect'] = $htmlSelect;
     } else {

@@ -26,7 +26,6 @@ use XoopsModules\Oledrion;
  * Gestion des vendeurs
  */
 
-
 /**
  * Class VendorsHandler
  */
@@ -106,7 +105,7 @@ class VendorsHandler extends OledrionPersistableObjectHandler
     public function getVendorsFromIds($ids)
     {
         $ret = [];
-        if (is_array($ids) && count($ids) > 0) {
+        if ($ids && is_array($ids)) {
             $criteria = new \Criteria('vendor_id', '(' . implode(',', $ids) . ')', 'IN');
             $ret      = $this->getObjects($criteria, true, true, '*', false);
         }

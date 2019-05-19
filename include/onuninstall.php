@@ -38,7 +38,7 @@ function xoops_module_uninstall_oledrion(\XoopsModule $module)
     /** @var Oledrion\Utility $utility */
     $helper  = Oledrion\Helper::getInstance();
     $utility = new Oledrion\Utility();
-    //    $configurator = new xoopstube\Common\Configurator();
+    //    $configurator = new Oledrion\Common\Configurator();
 
     // Load language files
     $helper->loadLanguage('admin');

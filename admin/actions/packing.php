@@ -116,10 +116,10 @@ switch ($action) {
         }
         $sform->addElement(new \XoopsFormText(_AM_OLEDRION_PACKING_PRICE, 'packing_price', 20, 20, $item->getVar('packing_price', 'e')), false);
         $sform->addElement(new \XoopsFormRadioYN(_OLEDRION_ONLINE_HLP, 'packing_online', $item->getVar('packing_online')), true);
-        $button_tray = new \XoopsFormElementTray('', '');
-        $submit_btn  = new \XoopsFormButton('', 'post', $label_submit, 'submit');
-        $button_tray->addElement($submit_btn);
-        $sform->addElement($button_tray);
+        $buttonTray = new \XoopsFormElementTray('', '');
+        $submit_btn = new \XoopsFormButton('', 'post', $label_submit, 'submit');
+        $buttonTray->addElement($submit_btn);
+        $sform->addElement($buttonTray);
         $sform = Oledrion\Utility::formMarkRequiredFields($sform);
         $sform->display();
         require_once OLEDRION_ADMIN_PATH . 'admin_footer.php';

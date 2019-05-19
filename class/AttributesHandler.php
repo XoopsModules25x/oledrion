@@ -30,7 +30,6 @@ use XoopsModules\Oledrion;
  * @since 2.3.2009.03.10
  */
 
-
 /*
 // Les types d'option
 define('OLEDRION_ATTRIBUTE_RADIO', 1);
@@ -94,8 +93,8 @@ class AttributesHandler extends OledrionPersistableObjectHandler
     /**
      * Retourne la liste des attributs d'un produit
      *
-     * @param  int|array $product_id Le produit concerné
-     * @param  null|array      $attributesIds
+     * @param  int|array  $product_id Le produit concerné
+     * @param  null|array $attributesIds
      * @return array
      */
     public function getProductsAttributesList($product_id, $attributesIds = null)
@@ -107,7 +106,7 @@ class AttributesHandler extends OledrionPersistableObjectHandler
         } else {
             $criteria->add(new \Criteria('attribute_product_id', $product_id, '='));
         }
-        if (is_array($attributesIds) && count($attributesIds) > 0) {
+        if ($attributesIds && is_array($attributesIds)) {
             $criteria->add(new \Criteria('attribute_id', '(' . implode(',', array_keys($attributesIds)) . ')', 'IN'));
         }
         $criteria->setSort('attribute_weight, attribute_title');    // L'ajout du titre dans le tri permet de trier même lorsque le poids n'est pas valorisé
@@ -126,7 +125,7 @@ class AttributesHandler extends OledrionPersistableObjectHandler
      */
     public function constructHtmlProductAttributes(Products $product, &$mandatoryFieldsCount = 0)
     {
-        $ret = [];
+        $ret        = [];
         $attributes = $this->getProductsAttributesList($product->getVar('product_id'));
         if (0 === count($attributes)) {
             return $ret;
@@ -290,7 +289,7 @@ class AttributesHandler extends OledrionPersistableObjectHandler
                 $attribute           = $attributes[$userAttributeId];
                 $dataForDescriptions = [];
                 $optionDescription   = '';
-                if (is_array($userAttributeValues) && count($userAttributeValues) > 0) {
+                if ($userAttributeValues && is_array($userAttributeValues)) {
                     foreach ($userAttributeValues as $option) {
                         $optionName            = Oledrion\Utility::getName($option);
                         $price                 = $attribute->getOptionPriceFromValue($optionName);

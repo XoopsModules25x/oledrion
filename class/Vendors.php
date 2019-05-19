@@ -26,7 +26,6 @@ use XoopsModules\Oledrion;
  * Gestion des vendeurs
  */
 
-
 /**
  * Class Vendors
  */

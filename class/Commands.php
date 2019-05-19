@@ -26,7 +26,6 @@ use XoopsModules\Oledrion;
  * Sales order management
  */
 
-
 /**
  * Class Commands
  */

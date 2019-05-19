@@ -26,7 +26,6 @@ use XoopsModules\Oledrion;
  * Gestion des TVA
  */
 
-
 /**
  * Class VatHandler
  */

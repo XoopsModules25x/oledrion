@@ -159,7 +159,7 @@ class Plugin
         require_once $fullPathName;
         $className = mb_strtolower($pluginFolder) . $this->pluginsTypeLabel[$type];
         if (class_exists($className) && get_parent_class($className) == $this->pluginsClassName[$type]) {
-            // TODO: Vérifier que l'évènement n'est pas déjà en mémoire
+            // TODO: Check that the event is not already in memory
             $events = call_user_func([$className, self::PLUGIN_DESCRIBE_METHOD]);
             foreach ($events as $event) {
                 $eventName                                         = $event[0];

@@ -198,7 +198,7 @@ trait FilesManagement
                 $filename = $fObj->getPathname();
                 $fObj     = null; // clear this iterator object to close the file
                 if (false === @unlink($filename)) {
-//                    throw new \RuntimeException('The file '.$filename.' could not be deleted.');
+                    //                    throw new \RuntimeException('The file '.$filename.' could not be deleted.');
                     return false; // couldn't delete the file
                 }
             } elseif (!$fObj->isDot() && $fObj->isDir()) {

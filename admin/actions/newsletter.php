@@ -49,13 +49,8 @@ switch ($action) {
         $categories = $categoryHandler->getAllCategories(new Oledrion\Parameters());
         $mytree     = new Oledrion\XoopsObjectTree($categories, 'cat_cid', 'cat_pid');
 
-        if (Oledrion\Utility::checkVerXoops($GLOBALS['xoopsModule'], '2.5.9')) {
-            $htmlSelect = $mytree->makeSelectElement('cat_cid', 'cat_title', '-', 0, true, 0, _AM_OLEDRION_ALL, _AM_OLEDRION_IN_CATEGORY);
-            $sform->addElement($htmlSelect);
-        } else {
-            $htmlSelect = $mytree->makeSelBox('cat_cid', 'cat_title', '-', 0, _AM_OLEDRION_ALL);
-            $sform->addElement(new \XoopsFormLabel(_AM_OLEDRION_IN_CATEGORY, $htmlSelect), true);
-        }
+        $htmlSelect = $mytree->makeSelectElement('cat_cid', 'cat_title', '-', 0, true, 0, _AM_OLEDRION_ALL, _AM_OLEDRION_IN_CATEGORY);
+        $sform->addElement($htmlSelect);
 
         $sform->addElement(new \XoopsFormHidden('op', 'newsletter'), false);
         $sform->addElement(new \XoopsFormHidden('action', 'launch'), false);
@@ -63,10 +58,10 @@ switch ($action) {
         $sform->addElement(new \XoopsFormRadioYN(_AM_OLEDRION_NEWSLETTER_HTML_TAGS, 'removehtml', 0), false);
         $sform->addElement(new \XoopsFormTextArea(_AM_OLEDRION_NEWSLETTER_HEADER, 'header', '', 4, 70), false);
         $sform->addElement(new \XoopsFormTextArea(_AM_OLEDRION_NEWSLETTER_FOOTER, 'footer', '', 4, 70), false);
-        $button_tray = new \XoopsFormElementTray('', '');
-        $submit_btn  = new \XoopsFormButton('', 'post', _SUBMIT, 'submit');
-        $button_tray->addElement($submit_btn);
-        $sform->addElement($button_tray);
+        $buttonTray = new \XoopsFormElementTray('', '');
+        $submit_btn = new \XoopsFormButton('', 'post', _SUBMIT, 'submit');
+        $buttonTray->addElement($submit_btn);
+        $sform->addElement($buttonTray);
         $sform = Oledrion\Utility::formMarkRequiredFields($sform);
         $sform->display();
         require_once OLEDRION_ADMIN_PATH . 'admin_footer.php';

@@ -96,7 +96,7 @@ switch ($op) {
     default:
         // VAT reading ********************************************************************************
 
-//        $vatArray = [];
+        //        $vatArray = [];
         $vatArray = $vatHandler->getAllVats(new Oledrion\Parameters());
 
         $GLOBALS['xoopsOption']['template_main'] = 'oledrion_product.tpl';

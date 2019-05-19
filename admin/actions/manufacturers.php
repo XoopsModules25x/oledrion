@@ -138,10 +138,10 @@ switch ($action) {
             $sform->addElement(new \XoopsFormFile(_AM_OLEDRION_PICTURE . ' ' . $i, 'attachedfile' . $i, Oledrion\Utility::getModuleOption('maxuploadsize')), false);
         }
 
-        $button_tray = new \XoopsFormElementTray('', '');
-        $submit_btn  = new \XoopsFormButton('', 'post', $label_submit, 'submit');
-        $button_tray->addElement($submit_btn);
-        $sform->addElement($button_tray);
+        $buttonTray = new \XoopsFormElementTray('', '');
+        $submit_btn = new \XoopsFormButton('', 'post', $label_submit, 'submit');
+        $buttonTray->addElement($submit_btn);
+        $sform->addElement($buttonTray);
 
         $sform = Oledrion\Utility::formMarkRequiredFields($sform);
         $sform->display();
@@ -168,7 +168,7 @@ switch ($action) {
         $opRedirect = 'manufacturers';
         $item->setVars($_POST);
         for ($i = 1; $i <= 5; ++$i) {
-            if (\Xmf\Request::hasVar('delpicture' . $i, 'POST') && 1 == \Xmf\Request::getInt('delpicture' . $i, 0,'POST')) {
+            if (\Xmf\Request::hasVar('delpicture' . $i, 'POST') && 1 == \Xmf\Request::getInt('delpicture' . $i, 0, 'POST')) {
                 $item->deletePicture($i);
             }
         }

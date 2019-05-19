@@ -339,7 +339,7 @@ switch ($op) {
         }
         $sform->addElement(new \XoopsFormLabel(_OLEDRION_TOTAL, $oledrionCurrency->amountForDisplay($commandAmountTTC)));
         // By voltan
-        if ($shippingAmount > 0 && in_array(Oledrion\Utility::getModuleOption('checkout_shipping'), [1, 2], true)) {
+        if ($shippingAmount > 0 && in_array(Oledrion\Utility::getModuleOption('checkout_shipping'), [1, 2])) {
             $sform->addElement(new \XoopsFormLabel(_OLEDRION_SHIPPING_PRICE, $oledrionCurrency->amountForDisplay($shippingAmount)));
         }
         $sform->addElement(new \XoopsFormText(_OLEDRION_LASTNAME, 'cmd_lastname', 50, 255, $commande->getVar('cmd_lastname', 'e')), true);
@@ -381,10 +381,10 @@ switch ($op) {
         // B.R. $sform->addElement(new XoopsFormTextArea(_OLEDRION_STREET, 'cmd_adress', $commande->getVar('cmd_adress', 'e'), 3, 50), true);
         $sform->addElement(new \XoopsFormTextArea(_OLEDRION_STREET, 'cmd_adress', $commande->getVar('cmd_adress', 'e'), 3, 50), $mandatory);
         $sform->addElement(new \XoopsFormText(_OLEDRION_GIFT, 'cmd_gift', 15, 30, $commande->getVar('cmd_gift', 'e')), false);
-        $button_tray = new \XoopsFormElementTray('', '');
-        $submit_btn  = new \XoopsFormButton('', 'post', _OLEDRION_SAVE_NEXT, 'submit');
-        $button_tray->addElement($submit_btn);
-        $sform->addElement($button_tray);
+        $buttonTray = new \XoopsFormElementTray('', '');
+        $submit_btn = new \XoopsFormButton('', 'post', _OLEDRION_SAVE_NEXT, 'submit');
+        $buttonTray->addElement($submit_btn);
+        $sform->addElement($buttonTray);
         $sform = Oledrion\Utility::formMarkRequiredFields($sform);
         $xoopsTpl->assign('form', $sform->render());
 
@@ -717,7 +717,7 @@ switch ($op) {
                 // B.R. $gateway = \XoopsModules\Oledrion\Gateways::getGatewayObject($payment['payment_gateway']);
 
                 $gatewayName      = \XoopsModules\Oledrion\Gateways::getCurrentGateway();
-                $gatewayClassName = '\XoopsModules\Oledrion\Gateways\\' . $gatewayName . '\\' .  $gatewayName . 'Gateway';
+                $gatewayClassName = '\XoopsModules\Oledrion\Gateways\\' . $gatewayName . '\\' . $gatewayName . 'Gateway';
                 if (class_exists($gatewayClassName)) {
                     $gateway = new $gatewayClassName();
                 }
@@ -782,15 +782,15 @@ switch ($op) {
                 $sform->addElement(new \XoopsFormLabel(_OLEDRION_INVOICE, _YES));
             }
         }
-        $button_tray = new \XoopsFormElementTray('', '');
+        $buttonTray = new \XoopsFormElementTray('', '');
         //B.R. if (!isset($payment) || $payment['payment_type'] === 'offline' || $commandAmountTTC == 0 || $checkout_level == 1 ) {
         if (0 == $commandAmountTTC || !isset($payment) || 'offline' === $payment->getVar('payment_type') || 1 == $checkout_level) {
             $submit_btn = new \XoopsFormButton('', 'post', _OLEDRION_FINISH, 'submit');
         } else {
             $submit_btn = new \XoopsFormButton('', 'post', _OLEDRION_PAY_GATEWAY, 'submit');
         }
-        $button_tray->addElement($submit_btn);
-        $sform->addElement($button_tray);
+        $buttonTray->addElement($submit_btn);
+        $sform->addElement($buttonTray);
         $xoopsTpl->assign('form', $sform->render());
 
         // Send sms

@@ -408,6 +408,8 @@ class Reductions
      * @param int    $discountsCount        Le nombre TOTAL de réductions appliquées (individuellement ou sur la globalité du panier)
      *                                      B.R. @param array $checkoutAttributes
      *                                      TODO: Passer les paramètres sous forme d'objet
+     * @param mixed  $emptyCart
+     * @param mixed  $checkoutAttributes
      * @return bool
      */
 

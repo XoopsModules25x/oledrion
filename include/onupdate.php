@@ -87,7 +87,7 @@ function xoops_module_update_oledrion(\XoopsModule $module, $previousVersion = n
                         if ('html' === $fileInfo->getExtension() && 'index.html' !== $fileInfo->getFilename()) {
                             if (file_exists($templateFolder . $v)) {
                                 if (false === @unlink($templateFolder . $v)) {
-                                    throw new \RuntimeException('The file '.$templateFolder . $v.' could not be deleted.');
+                                    throw new \RuntimeException('The file ' . $templateFolder . $v . ' could not be deleted.');
                                 }
                             }
                         }
@@ -103,7 +103,7 @@ function xoops_module_update_oledrion(\XoopsModule $module, $previousVersion = n
                 $tempFile = $GLOBALS['xoops']->path('modules/' . $moduleDirName . $configurator->oldFiles[$i]);
                 if (is_file($tempFile)) {
                     if (false === @unlink($tempFile)) {
-                        throw new \RuntimeException('The file '.$tempFile.' could not be deleted.');
+                        throw new \RuntimeException('The file ' . $tempFile . ' could not be deleted.');
                     }
                 }
             }
@@ -142,7 +142,7 @@ function xoops_module_update_oledrion(\XoopsModule $module, $previousVersion = n
         $sql = 'DELETE FROM ' . $GLOBALS['xoopsDB']->prefix('tplfile') . " WHERE `tpl_module` = '" . $module->getVar('dirname', 'n') . "' AND `tpl_file` LIKE '%.html%'";
         $GLOBALS['xoopsDB']->queryF($sql);
 
-        /** @var XoopsGroupPermHandler $grouppermHandler */
+        /** @var \XoopsGroupPermHandler $grouppermHandler */
         $grouppermHandler = xoops_getHandler('groupperm');
 
         return $grouppermHandler->deleteByModule($module->getVar('mid'), 'item_read');

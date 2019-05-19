@@ -55,7 +55,7 @@ CREATE TABLE `oledrion_products` (
   `product_unitmeasure2`    VARCHAR(20)           NOT NULL DEFAULT '',
   `product_vat_id`          MEDIUMINT(8) UNSIGNED NOT NULL DEFAULT '0',
   `product_download_url`    VARCHAR(255)          NOT NULL DEFAULT '',
-  `product_recommended`     DATE                  NOT NULL,
+  `product_recommended`     DATETIME              NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `product_metakeywords`    VARCHAR(255)          NOT NULL DEFAULT '',
   `product_metadescription` VARCHAR(255)          NOT NULL DEFAULT '',
   `product_metatitle`       VARCHAR(255)          NOT NULL DEFAULT '',
@@ -82,8 +82,8 @@ CREATE TABLE `oledrion_products` (
   KEY `product_width` (`product_width`),
   KEY `recent_online` (`product_online`, `product_submitted`),
   KEY `product_recommended` (`product_recommended`),
-  KEY `product_summary` (`product_summary` (1000)),
-  KEY `product_description` (`product_description` (1000))
+  KEY `product_summary` (`product_summary` (300)),
+  KEY `product_description` (`product_description` (300))
 )
   ENGINE = InnoDB;
 

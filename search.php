@@ -78,7 +78,7 @@ if ((isset($_POST['op']) && 'go' === $_POST['op']) || isset($_GET['start'])) {
             if (is_array($submittedManufacturers) && 0 == (int)$submittedManufacturers[0]) {
                 $submittedManufacturers = array_shift($submittedManufacturers);
             }
-            if (is_array($submittedManufacturers) && count($submittedManufacturers) > 0) {
+            if ($submittedManufacturers && is_array($submittedManufacturers)) {
                 array_walk($submittedManufacturers, 'intval');
                 $sql .= ' AND (a.pm_manu_id IN ( ' . implode(',', $submittedManufacturers) . '))';
             } else {

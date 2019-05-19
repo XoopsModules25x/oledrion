@@ -129,10 +129,10 @@ switch ($action) {
             $sform->addElement($editor, false);
         }
         $sform->addElement(new \XoopsFormRadioYN(_OLEDRION_ONLINE_HLP, 'payment_online', $item->getVar('payment_online')), true);
-        $button_tray = new \XoopsFormElementTray('', '');
-        $submit_btn  = new \XoopsFormButton('', 'post', $label_submit, 'submit');
-        $button_tray->addElement($submit_btn);
-        $sform->addElement($button_tray);
+        $buttonTray = new \XoopsFormElementTray('', '');
+        $submit_btn = new \XoopsFormButton('', 'post', $label_submit, 'submit');
+        $buttonTray->addElement($submit_btn);
+        $sform->addElement($buttonTray);
         $sform = Oledrion\Utility::formMarkRequiredFields($sform);
         $sform->display();
         require_once OLEDRION_ADMIN_PATH . 'admin_footer.php';
@@ -159,7 +159,7 @@ switch ($action) {
             $item->setVar('payment_gateway', 'offline');
         }
 
-        if ('online' === $_POST['payment_type'] && !in_array($_POST['payment_gateway'], Oledrion\Gateways::getInstalledGatewaysList(), true)) {
+        if ('online' === $_POST['payment_type'] && !in_array($_POST['payment_gateway'], Oledrion\Gateways::getInstalledGatewaysList())) {
             $item->setVar('payment_gateway', Oledrion\Gateways::getDefaultGateway());
         }
 

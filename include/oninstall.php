@@ -28,9 +28,9 @@ use XoopsModules\Oledrion\Common;
  */
 function xoops_module_pre_install_oledrion(\XoopsModule $module)
 {
-//    require_once dirname(__DIR__) . '/preloads/autoloader.php';
-//    include  __DIR__ . '/common.php';
-    /** @var  \XoopsModules\Oledrion\Utility $utility */
+    //    require_once dirname(__DIR__) . '/preloads/autoloader.php';
+    //    include  __DIR__ . '/common.php';
+    /** @var \XoopsModules\Oledrion\Utility $utility */
     $utility = new  \XoopsModules\Oledrion\Utility();
 
     //check for minimum XOOPS version
@@ -74,7 +74,7 @@ function xoops_module_install_oledrion(\XoopsModule $module)
 
     // default Permission Settings ----------------------
     $moduleId  = $module->getVar('mid');
-    $moduleId2 = $helper->getModule()->mid();
+    // $moduleId2 = $helper->getModule()->mid();
     //$moduleName = $module->getVar('name');
     /** @var \XoopsGroupPermHandler $grouppermHandler */
     $grouppermHandler = xoops_getHandler('groupperm');
@@ -109,7 +109,7 @@ function xoops_module_install_oledrion(\XoopsModule $module)
         foreach (array_keys($configurator->copyTestFolders) as $i) {
             $src  = $configurator->copyTestFolders[$i][0];
             $dest = $configurator->copyTestFolders[$i][1];
-            $utility::xcopy($src, $dest);
+            $utility::rcopy($src, $dest);
         }
     }
     */

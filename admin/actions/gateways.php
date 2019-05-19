@@ -164,7 +164,7 @@ switch ($action) {
         Oledrion\Utility::htitle(_AM_OLEDRION_INSTALLED_GATEWAYS, 4);
         $opRedirect = '?op=gateways';
         $gateway    = mb_strtolower(\Xmf\Request::getString('gateway', '', 'GET'));
-        $gateway    = ucfirst(\XoopsModules\Oledrion\Gateways::purifyGatewayName($gateway)) ;
+        $gateway    = ucfirst(\XoopsModules\Oledrion\Gateways::purifyGatewayName($gateway));
         if (empty($gateway)) {
             Oledrion\Utility::redirect(_AM_OLEDRION_ERROR_1, $baseurl . $opRedirect, 5);
         }
